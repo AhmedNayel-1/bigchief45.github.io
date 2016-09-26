@@ -1,0 +1,659 @@
+/*   
+ * Template Name: Developer - Responsive Website Template for Developers
+ * Version: 1.5
+ * Author: Xiaoying Riley
+ * Twitter: @3rdwave_themes
+ * License: Creative Commons Attribution 3.0 License
+ * Website: http://themes.3rdwavemedia.com/
+*/
+/* ======= Base ======= */
+/* line 12, theme.css.scss */
+body {
+  font-family: 'Lato', arial, sans-serif;
+  color: #434343;
+  background: #b5a397;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+/* line 21, theme.css.scss */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #6a5750; }
+
+/* line 31, theme.css.scss */
+a {
+  color: #4075bf;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out; }
+
+/* line 38, theme.css.scss */
+a:hover {
+  color: #335d99;
+  text-decoration: none; }
+
+/* line 42, theme.css.scss */
+a:focus {
+  text-decoration: none; }
+
+/* line 45, theme.css.scss */
+.btn,
+a.btn {
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  font-family: 'Montserrat', arial, sans-serif;
+  padding: 8px 16px;
+  font-weight: bold; }
+
+/* line 55, theme.css.scss */
+.btn .fa,
+a.btn .fa {
+  margin-right: 5px; }
+
+/* line 59, theme.css.scss */
+.btn:focus,
+a.btn:focus {
+  color: #fff; }
+
+/* line 63, theme.css.scss */
+a.btn-cta-primary,
+.btn-cta-primary {
+  background: #6a5750;
+  border: 1px solid #30231d;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase; }
+
+/* line 71, theme.css.scss */
+a.btn-cta-primary:hover,
+.btn-cta-primary:hover {
+  background: #b5a397;
+  border: 1px solid #b5a397;
+  color: #fff; }
+
+/* line 77, theme.css.scss */
+a.btn-cta-secondary,
+.btn-cta-secondary {
+  background: #479FC8;
+  border: 1px solid #479FC8;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase; }
+
+/* line 85, theme.css.scss */
+a.btn-cta-secondary:hover,
+.btn-cta-secondary:hover {
+  background: #3893bd;
+  border: 1px solid #3893bd;
+  color: #fff; }
+
+/* line 91, theme.css.scss */
+.text-highlight {
+  color: #32383e; }
+
+/* line 94, theme.css.scss */
+.label-theme {
+  background: #3AAA64;
+  font-size: 12px; }
+
+/* line 98, theme.css.scss */
+a.dotted-link {
+  border-bottom: 1px dotted #778492;
+  color: #778492; }
+
+/* line 102, theme.css.scss */
+a.dotted-link:hover {
+  text-decoration: none;
+  color: #49515a; }
+
+/*
+iframe {
+
+    .header {
+        padding: 0;
+    }
+}
+
+.iframe-wrapper {
+    overflow: auto;
+    -webkit-overflow-scrolling:touch;
+}
+*/
+/* ======= Header ======= */
+/* line 120, theme.css.scss */
+.header {
+  padding: 30px 0;
+  background: #30231d;
+  border-top: 10px solid #6a5750; }
+
+/* line 126, theme.css.scss */
+.header .btn {
+  margin-top: 60px;
+  font-weight: bold; }
+
+/* line 130, theme.css.scss */
+.header .profile-image {
+  margin-right: 30px; }
+
+/* line 133, theme.css.scss */
+.header .profile-content .name {
+  color: #f6f1ed;
+  font-size: 38px;
+  margin-bottom: 5px;
+  margin-top: 30px; }
+
+/* line 139, theme.css.scss */
+.header .profile-content .desc {
+  color: #b5a397;
+  font-family: "Lato", arial, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 15px; }
+
+/* line 147, theme.css.scss */
+.header .profile-content .social a {
+  background: #b5a397;
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  color: #f6f1ed;
+  text-align: center; }
+
+/* line 163, theme.css.scss */
+.header .profile-content .social a:hover {
+  background: #30231d; }
+
+/* line 166, theme.css.scss */
+.header .profile-content .social a .fa {
+  font-size: 20px;
+  padding-top: 8px; }
+
+/* ======= Sections======= */
+/* line 171, theme.css.scss */
+.sections-wrapper {
+  padding-top: 60px;
+  padding-bottom: 60px; }
+
+/* line 175, theme.css.scss */
+.section {
+  margin-bottom: 30px; }
+
+/* line 178, theme.css.scss */
+.section .section-inner {
+  background: #f6f1ed;
+  border-radius: 10px;
+  padding: 30px; }
+
+/* line 184, theme.css.scss */
+.section .heading {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #6a5750;
+  font-size: 24px; }
+
+/* line 190, theme.css.scss */
+.section .content .more-link .fa {
+  margin-right: 5px;
+  font-size: 14px; }
+
+/* About Section */
+/* Latest Section */
+/* line 196, theme.css.scss */
+.latest .item {
+  margin-bottom: 30px; }
+
+/* line 199, theme.css.scss */
+.latest .item .title {
+  font-size: 18px;
+  margin-top: 0; }
+
+/* line 203, theme.css.scss */
+.latest .item .title .label {
+  margin-left: 5px;
+  font-size: 12px; }
+
+/* line 207, theme.css.scss */
+.latest .item .title a {
+  color: #b5a397; }
+
+/* line 210, theme.css.scss */
+.latest .item .title a:hover {
+  color: #6a5750; }
+
+/* line 213, theme.css.scss */
+.latest .item .project-image:hover {
+  -webkit-opacity: 0.8;
+  -moz-opacity: 0.8;
+  opacity: 0.8; }
+
+/* line 218, theme.css.scss */
+.latest .divider {
+  margin-bottom: 60px; }
+
+/* line 221, theme.css.scss */
+.latest .featured {
+  margin-bottom: 60px; }
+
+/* line 224, theme.css.scss */
+.latest .featured .title {
+  margin-bottom: 5px;
+  font-size: 20px; }
+
+/* line 228, theme.css.scss */
+.latest .featured .summary {
+  margin-bottom: 30px;
+  color: #b5a397; }
+
+/* line 232, theme.css.scss */
+.latest .featured img {
+  margin-bottom: 30px; }
+
+/* line 235, theme.css.scss */
+.latest .featured .desc {
+  margin-bottom: 30px; }
+
+/* line 238, theme.css.scss */
+.latest .featured-image {
+  position: relative; }
+
+/* line 241, theme.css.scss */
+.latest .featured-image .text {
+  background: #3AAA64;
+  color: #fff; }
+
+/* line 245, theme.css.scss */
+.latest .featured-image .ribbon {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 110px;
+  height: 110px;
+  overflow: hidden; }
+
+/* line 253, theme.css.scss */
+.latest .featured-image .ribbon .text {
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  left: -8px;
+  top: 18px;
+  width: 158px;
+  padding: 10px 10px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  color: #f6f1ed;
+  background-color: #6a5750;
+  -webkit-transform: rotate(45deg) translate3d(0, 0, 0);
+  -moz-transform: rotate(45deg) translate3d(0, 0, 0);
+  -ms-transform: rotate(45deg) translate3d(0, 0, 0);
+  -o-transform: rotate(45deg) translate3d(0, 0, 0); }
+
+/* line 271, theme.css.scss */
+.latest .featured-image .ribbon .text:before,
+.latest .featured-image .ribbon .text:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  border-top: 5px solid #30231d;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent; }
+
+/* line 280, theme.css.scss */
+.latest .featured-image .ribbon .text:before {
+  left: 0; }
+
+/* line 283, theme.css.scss */
+.latest .featured-image .ribbon .text:after {
+  right: 0; }
+
+/* Projects Section */
+/* line 287, theme.css.scss */
+.projects .item {
+  margin-bottom: 30px; }
+
+/* line 290, theme.css.scss */
+.projects .item .title {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  line-height: 1.5; }
+
+/* line 296, theme.css.scss */
+.projects .item .title a {
+  color: #778492; }
+
+/* line 299, theme.css.scss */
+.projects .item .title a:hover {
+  color: #5f6b77; }
+
+/* Work Section */
+/* line 303, theme.css.scss */
+.experience .item {
+  margin-bottom: 30px; }
+
+/* line 306, theme.css.scss */
+.experience .item .title {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  line-height: 1.5; }
+
+/* line 312, theme.css.scss */
+.experience .item .title .place {
+  color: #6a5750;
+  font-weight: normal; }
+
+/* line 316, theme.css.scss */
+.experience .item .title .place a {
+  color: #6a5750; }
+
+/* line 319, theme.css.scss */
+.experience .item .title .place a:hover {
+  color: #b5a397; }
+
+/* line 322, theme.css.scss */
+.experience .item .title .year {
+  color: #b5a397;
+  font-weight: normal; }
+
+/* Git section */
+/* line 327, theme.css.scss */
+.github-graph {
+  margin-bottom: 30px; }
+
+/* line 330, theme.css.scss */
+.github-graph .js-calendar-graph-svg {
+  max-width: 100%; }
+
+/* line 333, theme.css.scss */
+.ghfeed {
+  height: 600px; }
+
+/* line 336, theme.css.scss */
+.ghfeed,
+.ghfeed *,
+.ghfeed *:before,
+.ghfeed *:after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box; }
+
+/* Info Section */
+/* line 345, theme.css.scss */
+.info .fa {
+  margin-right: 15px;
+  color: #ccd1d6; }
+
+/* line 349, theme.css.scss */
+.info .fa.fa-envelope-o {
+  font-size: 14px; }
+
+/* line 352, theme.css.scss */
+.info ul {
+  margin-bottom: 0; }
+
+/* line 355, theme.css.scss */
+.info li {
+  margin-bottom: 15px; }
+
+/* line 358, theme.css.scss */
+.info li:last-child {
+  margin-bottom: 0; }
+
+/* Skills Section */
+/* line 362, theme.css.scss */
+.skills .intro {
+  margin-bottom: 30px; }
+
+/* line 365, theme.css.scss */
+.skills .skillset .item {
+  margin-bottom: 30px; }
+
+/* line 368, theme.css.scss */
+.skills .skillset .level-title {
+  font-size: 16px;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 10; }
+
+/* line 374, theme.css.scss */
+.skills .skillset .level-title .level-label {
+  color: body-bg;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Lato", arial, sans-serif;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+/* line 383, theme.css.scss */
+.skills .skillset .level-bar {
+  height: 15px;
+  background: #b5a397; }
+
+/* line 387, theme.css.scss */
+.skills .skillset .level-bar-inner {
+  height: 15px;
+  background: #6a5750; }
+
+/* Testimonials section */
+/* line 392, theme.css.scss */
+.testimonials .item {
+  margin-bottom: 30px; }
+
+/* line 395, theme.css.scss */
+.testimonials .item:last-child {
+  margin-bottom: 0; }
+
+/* line 398, theme.css.scss */
+.testimonials .item .quote {
+  color: #666;
+  font-size: 16px;
+  border-left-color: #9fdeb7;
+  margin-bottom: 15px; }
+
+/* line 404, theme.css.scss */
+.testimonials .item .quote .fa {
+  color: #79d19a;
+  margin-right: 15px; }
+
+/* line 408, theme.css.scss */
+.testimonials .item .source {
+  font-size: 14px;
+  padding-left: 30px;
+  font-weight: 500; }
+
+/* line 413, theme.css.scss */
+.testimonials .item .source .name {
+  color: #939ea9;
+  font-weight: 600; }
+
+/* line 417, theme.css.scss */
+.testimonials .item .source .title {
+  color: #999; }
+
+/* Education section */
+/* line 421, theme.css.scss */
+.education .item {
+  margin-bottom: 30px; }
+
+/* line 424, theme.css.scss */
+.education .item:last-child {
+  margin-bottom: 0; }
+
+/* line 427, theme.css.scss */
+.education .item .title {
+  font-size: 16px;
+  margin-top: 0; }
+
+/* line 431, theme.css.scss */
+.education .item .university {
+  font-family: "Lato", arial, sans-serif;
+  font-size: 13px;
+  color: #b5a397;
+  font-weight: 600;
+  padding-left: 25px; }
+
+/* line 438, theme.css.scss */
+.education .item .university .year {
+  color: #b0b7bf;
+  font-weight: 500; }
+
+/* Language Section */
+/* line 443, theme.css.scss */
+.languages .item {
+  margin-bottom: 15px; }
+
+/* line 446, theme.css.scss */
+.languages .item .title {
+  color: #6a5750; }
+
+/* line 449, theme.css.scss */
+.languages .item .level {
+  color: #b5a397; }
+
+/* line 452, theme.css.scss */
+.languages .item:last-child {
+  margin-bottom: 0; }
+
+/* line 455, theme.css.scss */
+.languages .item .fa {
+  color: #6a5750; }
+
+/* Blog Section */
+/* line 459, theme.css.scss */
+.blog .item {
+  margin-bottom: 30px; }
+
+/* line 462, theme.css.scss */
+.blog .item .title {
+  font-size: 18px;
+  line-height: 1.3; }
+
+/* line 466, theme.css.scss */
+.blog .item .title a {
+  color: #778492; }
+
+/* line 469, theme.css.scss */
+.blog .item .title a:hover {
+  color: #5f6b77; }
+
+/* line 472, theme.css.scss */
+.blog .item:last-child {
+  margin-bottom: 0; }
+
+/* List section */
+/* line 476, theme.css.scss */
+.list ul li {
+  margin-bottom: 10px; }
+
+/* line 479, theme.css.scss */
+.list ul li .fa {
+  margin-right: 5px; }
+
+/* line 482, theme.css.scss */
+.list ul li a {
+  color: #778492; }
+
+/* line 485, theme.css.scss */
+.list ul li a:hover {
+  color: #49515a; }
+
+/* Credits */
+/* line 489, theme.css.scss */
+.credits ul li {
+  margin-bottom: 10px; }
+
+/* line 492, theme.css.scss */
+.credits ul li .fa {
+  margin-right: 5px; }
+
+/* line 495, theme.css.scss */
+.credits ul li a {
+  color: #778492; }
+
+/* line 498, theme.css.scss */
+.credits ul li a:hover {
+  color: #49515a; }
+
+/* line 501, theme.css.scss */
+.credits .btn {
+  margin-bottom: 15px; }
+
+/* ======= Footer ======= */
+/* line 505, theme.css.scss */
+.footer {
+  background: #32383e;
+  color: #fff;
+  padding: 10px 0; }
+
+/* line 510, theme.css.scss */
+.footer .copyright {
+  line-height: 1.6;
+  color: #a1aab4;
+  font-size: 14px; }
+
+/* line 515, theme.css.scss */
+.footer a {
+  color: #fff; }
+
+/* line 518, theme.css.scss */
+.footer .fa-heart {
+  color: #fb866a; }
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 767px) {
+  /* line 523, theme.css.scss */
+  .header {
+    text-align: center; }
+
+  /* line 526, theme.css.scss */
+  .header .profile-image {
+    float: none !important;
+    margin: 0 auto; }
+
+  /* line 530, theme.css.scss */
+  .header .profile-content {
+    float: none !important;
+    text-align: center; }
+
+  /* line 534, theme.css.scss */
+  .header .btn {
+    margin-top: 30px;
+    float: none !important; }
+
+  /* line 538, theme.css.scss */
+  .project-image {
+    margin-bottom: 15px; } }
+/* Small devices (tablets, 768px and up) */
+/* Medium devices (desktops, 992px and up) */
+/* Large devices (large desktops, 1200px and up) */
+/* Ex-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1400px) {
+  /* line 547, theme.css.scss */
+  .container {
+    width: 1360px; } }
+/* Bootstrap overrides */
+/* line 553, theme.css.scss */
+.media-heading.title {
+  color: #6a5750; }
