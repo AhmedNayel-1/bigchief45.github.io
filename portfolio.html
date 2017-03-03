@@ -4,16 +4,19 @@
     <meta content='IE=edge' http-equiv='X-UA-Compatible'>
     <meta charset='utf-8'>
     <meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no' name='viewport'>
-    <!-- Use title if it's in the page YAML frontmatter -->
-    <title>My Portfolio</title>
+    <title>
+      Andres Alvarez
+       :: My Portfolio
+    </title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
     <!-- FontAwesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="stylesheets/theme.css" rel="stylesheet" />
+    <link href="stylesheets/base.css" rel="stylesheet" />
     <script src="javascripts/jquery-1.11.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="javascripts/all.js"></script>
@@ -44,53 +47,301 @@
         </div>
         <!-- //profile -->
         <ul class='list-inline pull-right'>
-          <li><a href="./" class="btn btn-cta-primary">HOME</a></li>
+          <li><a href="./" class="btn btn-cta-primary">ABOUT</a></li>
           <li><a href="http://aalvarez.me/blog/" class="btn btn-cta-primary">BLOG</a></li>
         </ul>
       </div>
       <!-- //container -->
     </header>
     <!-- //header -->
-    <div class='container'>
-      <br>
+    <div class='container sections-wrapper'>
       <div class='row'>
-        <div class='col-md-12'>
-          <div class='panel'>
-            <div class='panel-body'>
-              <div class='row'>
-                <div class='col-md-1'>
-                  <img class='img-thumbnail' src='http://wbpreview.com/previews/WB0P38639/images/avatar.png'>
-                </div>
-                <div class='col-md-10'>
-                  <h4>Andres Alvarez</h4>
-                  <ul class='list-inline'>
-                    <li>
-                      <i class='glyphicon glyphicon-map-marker'></i>
-                      <strong>Taiwan</strong>
-                    </li>
-                    <li>
-                      <i class='glyphicon glyphicon-globe'></i>
-                      <strong>
-                        <a href="./">bigchief45.github.io</a>
-                      </strong>
-                    </li>
-                    <li>
-                      <i class='glyphicon glyphicon-email'></i>
-                      <strong>
-                        <a href='mailto:andresalvarez353@gmail.com'>andresalvarez353@gmail.com</a>
-                      </strong>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <hr>
-              <div class='row'>
-                <div class='col-md-12'>
-                  <!-- PROJECTS -->
+        <div class='primary col-md-8 col-sm-12 col-xs-12'>
+          <div class='container'>
+            <br>
+            <div class='row'>
+              <div class='col-md-12'>
+                <div class='panel'>
+                  <div class='panel-body'>
+                    <div class='row'>
+                      <div class='col-md-1'>
+                        <img class='img-thumbnail' src='http://wbpreview.com/previews/WB0P38639/images/avatar.png'>
+                      </div>
+                      <div class='col-md-10'>
+                        <h4>Andres Alvarez</h4>
+                        <ul class='list-inline'>
+                          <li>
+                            <i class='glyphicon glyphicon-map-marker'></i>
+                            <strong>Taiwan</strong>
+                          </li>
+                          <li>
+                            <i class='glyphicon glyphicon-globe'></i>
+                            <strong>
+                              <a href="./">bigchief45.github.io</a>
+                            </strong>
+                          </li>
+                          <li>
+                            <i class='glyphicon glyphicon-email'></i>
+                            <strong>
+                              <a href='mailto:andresalvarez353@gmail.com'>andresalvarez353@gmail.com</a>
+                            </strong>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class='row'>
+                      <div class='col-md-12'>
+                        <!-- PROJECTS -->
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class='secondary col-md-4 col-sm-12 col-xs-12'>
+          <aside class='info aside section'>
+            <div class='section-inner'>
+              <h2 class='heading sr-only'>Basic Information</h2>
+              <div class='content'>
+                <ul class='list-unstyled'>
+                  <li>
+                    <i class='fa fa-map-marker'></i>
+                    <span class='sr-only'>Location:</span>
+                    Hsinchu, Taiwan
+                  </li>
+                  <li>
+                    <i class='fa fa-envelope-o'></i>
+                    <span class='sr-only'>Email:</span>
+                    <a href="mailto:andresalvarez353@gmail.com">andresalvarez353@gmail.com</a>
+                  </li>
+                  <li>
+                    <i class='fa fa-file-pdf-o'></i>
+                    <span class='sr-only'>English CV:</span>
+                    <a href="pdfs/cv_eng.pdf" target="_blank">Read my CV</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- //content -->
+            </div>
+            <!-- //section-inner -->
+          </aside>
+          <!-- //aside -->
+          <aside class='skills aside section'>
+            <div class='section-inner'>
+              <h2 class='heading'>Skills</h2>
+              <div class='content'>
+                <p class='intro'>
+                  <div class='skillset'>
+                    <div class='item'>
+                      <h3 class='level-title'>
+                        Ruby on Rails
+                        <span class='level-label'>Advanced</span>
+                      </h3>
+                      <div class='level-bar'>
+                        <div class='level-bar-inner' data-level='70%'></div>
+                      </div>
+                    </div>
+                    <div class='item'>
+                      <h3 class='level-title'>
+                        Javascript & jQuery
+                        <span class='level-label'>Intermediate</span>
+                      </h3>
+                      <div class='level-bar'>
+                        <div class='level-bar-inner' data-level='70%'></div>
+                      </div>
+                      <!-- //level-bar -->
+                    </div>
+                    <!-- //item -->
+                    <div class='item'>
+                      <h3 class='level-title'>
+                        HTML5, CSS3, SASS
+                        <span class='level-label'>Advanced</span>
+                      </h3>
+                      <div class='level-bar'>
+                        <div class='level-bar-inner' data-level='90%'></div>
+                      </div>
+                    </div>
+                    <div class='item'>
+                      <h3 class='level-title'>
+                        Python
+                        <span class='level-label'>Intermediate</span>
+                      </h3>
+                      <div class='level-bar'>
+                        <div class='level-bar-inner' data-level='60%'></div>
+                      </div>
+                      <!-- //level-bar -->
+                    </div>
+                    <!-- //item -->
+                    <div class='item'>
+                      <h3 class='level-title'>
+                        Zenoss
+                        <span class='level-label'>Intermediate</span>
+                      </h3>
+                      <div class='level-bar'>
+                        <div class='level-bar-inner' data-level='80%'></div>
+                      </div>
+                      <!-- //level-bar -->
+                    </div>
+                    <!-- //item -->
+                    <div class='item'>
+                      <h3 class='level-title'>
+                        OpenStack
+                        <span class='level-label'>Beginner</span>
+                      </h3>
+                      <div class='level-bar'>
+                        <div class='level-bar-inner' data-level='35%'></div>
+                      </div>
+                      <!-- //level-bar -->
+                    </div>
+                    <!-- //item -->
+                    <div class='item'>
+                      <h3 class='level-title'>
+                        Juju
+                        <span class='level-label'>Beginner</span>
+                      </h3>
+                      <div class='level-bar'>
+                        <div class='level-bar-inner' data-level='35%'></div>
+                      </div>
+                      <!-- //level-bar -->
+                    </div>
+                    <!-- //item -->
+                  </div>
+                </p>
+                <!-- //content -->
+              </div>
+              <!-- //section-inner -->
+            </div>
+            <!-- //section -->
+          </aside>
+          <aside class='education aside section'>
+            <div class='section-inner'>
+              <h2 class='heading'>Education</h2>
+              <div class='content'>
+                <div class='item'>
+                  <h3 class='title'>
+                    <i class='fa fa-graduation-cap'></i>
+                    Masters in Information Systems and Applications
+                  </h3>
+                  <h4 class='university small'>
+                    National Tsing Hua University, Taiwan
+                    <span class='year'>(2013-2015)</span>
+                  </h4>
+                </div>
+                <!-- //item -->
+                <div class='item'>
+                  <h3 class='title'>
+                    <i class='fa fa-graduation-cap'></i>
+                    BSc Computer Science
+                  </h3>
+                  <h4 class='university small'>
+                    UNITEC, Honduras
+                    <span class='year'>(2008-2012)</span>
+                  </h4>
+                </div>
+                <!-- //item -->
+              </div>
+              <!-- //content -->
+            </div>
+            <!-- //section-inner -->
+          </aside>
+          <!-- //section -->
+          <aside class='languages aside section'>
+            <div class='section-inner'>
+              <h2 class='heading'>Languages</h2>
+              <div class='content'>
+                <ul class='list-unstyled'>
+                  <li class='item'>
+                    <span class='title'>
+                      <strong>Spanish</strong>
+                    </span>
+                    <span class='level small'>
+                      (Native Speaker)
+                      <br class='visible-xs'>
+                      <div class='pull-right'>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                      </div>
+                    </span>
+                  </li>
+                  <!-- //item -->
+                  <li class='item'>
+                    <span class='title'>
+                      <strong>English</strong>
+                    </span>
+                    <span class='level small'>
+                      (Fluent)
+                      <br class='visible-sm visible-xs'>
+                      <div class='pull-right'>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                      </div>
+                    </span>
+                  </li>
+                  <!-- //item -->
+                  <li class='item'>
+                    <span class='title'>
+                      <strong>Mandarin Chinese</strong>
+                    </span>
+                    <span class='level small'>
+                      (Advanced)
+                      <br class='visible-sm visible-xs'>
+                      <div class='pull-right'>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                      </div>
+                    </span>
+                  </li>
+                  <li class='item'>
+                    <span class='title'>
+                      <strong>Italian</strong>
+                    </span>
+                    <span class='level small'>
+                      (Beginner)
+                      <br class='visible-sm visible-xs'>
+                      <div class='pull-right'>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                      </div>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <!-- //content -->
+            </div>
+            <!-- //section-inner -->
+          </aside>
+          <!-- //section -->
+          <aside class='info aside section'>
+            <div class='section-inner'>
+              <h2 class='heading'>Certificates</h2>
+              <div class='content'>
+                <ul class='list-unstyled'>
+                  <li>
+                    <i class='fa fa-file-text-o'></i>
+                    <a href="pdfs/tocfl/lr_cert.pdf" target="_blank">TOCFL Listening & Reading</a>
+                  </li>
+                  <li>
+                    <i class='fa fa-file-text-o'></i>
+                    <a href="pdfs/tocfl/speaking_cert.pdf" target="_blank">TOCFL Speaking</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- //content -->
+            </div>
+            <!-- //section-inner -->
+          </aside>
+          <!-- //section -->
         </div>
       </div>
     </div>
