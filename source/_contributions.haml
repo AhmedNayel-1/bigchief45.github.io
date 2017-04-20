@@ -1,0 +1,17 @@
+%aside.languages.aside.section
+  .section-inner
+    %h2.heading Open Source
+    .content
+      %ul.list-group
+        - JSON.parse(File.read('lib/data/contributions.json')).each do |repository|
+          %li.list-group-item
+            .media
+              .media-left
+                = link_to "https://github.com/#{repository['url']}/commits/master?author=bigchief45", target: '_blank' do
+                  = image_tag "contributions/#{repository['image']}.png", class: 'media-object', title: "#{repository['url']}"
+              .media-body
+                %h5.media-heading= link_to repository['url'], "https://github.com/#{repository['url']}/commits/master?author=bigchief45", target: '_blank'
+                %ul.list-inline.small.contrib
+                  %li.text-muted.small #{repository['commits']} commits
+                  %li.contrib-additions.small #{repository['additions']}++
+                  %li.contrib-deletions.small #{repository['deletions']}--

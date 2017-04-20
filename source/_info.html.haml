@@ -1,0 +1,20 @@
+%aside.info.aside.section
+  .section-inner
+    %h2.heading.sr-only Basic Information
+    .content
+      %ul.list-unstyled
+        %li
+          %i.fa.fa-map-marker
+          %span.sr-only Location:
+          Hsinchu, Taiwan
+        %li
+          %i.fa.fa-envelope-o
+          %span.sr-only Email:
+          = mail_to 'andresalvarez353@gmail.com', 'andresalvarez353@gmail.com'
+        %li
+          %i.fa.fa-file-pdf-o
+          %span.sr-only English CV:
+          = link_to 'Read my CV', 'pdfs/cv_eng.pdf', target: '_blank'
+    / //content
+  / //section-inner
+/ //aside
