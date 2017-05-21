@@ -50,6 +50,7 @@ configure :build do
 
   activate :deploy do |deploy|
     deploy.build_before = true # runs build before deploying
+    deploy.remote = 'git@github.com:BigChief45/bigchief45.github.io.git'
     deploy.deploy_method = :git
     deploy.branch = 'master'
   end

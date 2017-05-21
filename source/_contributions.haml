@@ -12,6 +12,6 @@
               .media-body
                 %h5.media-heading= link_to repository['url'], "https://github.com/#{repository['url']}/commits/master?author=bigchief45", target: '_blank'
                 %ul.list-inline.small.contrib
-                  %li.text-muted.small #{repository['commits']} commits
-                  %li.contrib-additions.small #{repository['additions']}++
-                  %li.contrib-deletions.small #{repository['deletions']}--
+                  %li.text-muted.small= pluralize(repository['commits'], 'commit')
+                  -#%li.contrib-additions.small #{repository['additions']}++
+                  -#%li.contrib-deletions.small #{repository['deletions']}--
