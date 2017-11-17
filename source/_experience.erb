@@ -1,0 +1,40 @@
+<h2>Work Experience</h2>
+<br>
+
+<% data.work_experience.jobs.each do |job| %>
+  <div class="media">
+    <div class="media-left media-top">
+      <% link_to job.link, target: '_blank' do %>
+        <%= image_tag job.image, class: 'media-object' %>
+      <% end %>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">
+        <%= job.position %> -
+        <%= link_to job.company, job.link, target: '_blank' %>
+
+        <small class="text-muted">(<%= job.period %>)</small>
+      </h4>
+
+      <p><%= job.description %></p>
+
+      <!-- Tasks -->
+      <p>
+        <ul>
+          <% job.tasks.each do |task| %>
+            <li class="small"><%= task %></li>
+          <% end %>
+        </ul>
+      </p>
+
+      <!-- Tags -->
+      <p>
+        <ul class="list-inline">
+          <% job.tags.each do |tag| %>
+            <li><span class="label label-default"><strong><%= tag %></strong></li>
+          <% end %>
+        </ul>
+      </p>
+    </div>
+  </div>
+<% end %>

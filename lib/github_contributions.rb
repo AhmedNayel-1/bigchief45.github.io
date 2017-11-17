@@ -4,8 +4,10 @@ module GithubContributions
   require 'octokit'
 
   REPOS = [
-    'ajaxorg/ace', 'jneen/rouge', 'ElemeFE/element', 'iview/iview-doc',
-    'openstack-dev/pbr', 'gnocchixyz/gnocchi', 'gnocchixyz/python-gnocchiclient'
+    'rails/rails', 'aws/chalice',
+    'ajaxorg/ace', 'jneen/rouge', 'gnocchixyz/gnocchi',
+    'gnocchixyz/python-gnocchiclient', 'ElemeFE/element', 'iview/iview-doc',
+    'openstack-dev/pbr',
   ]
 
   class << self

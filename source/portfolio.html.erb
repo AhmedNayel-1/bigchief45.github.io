@@ -1,0 +1,53 @@
+<h1>Projects</h1>
+
+<% data.portfolio.projects.each do |project| %>
+  <div class="row">
+    <!-- Image -->
+    <div class="col-md-4">
+      <% link_to project.link, target: '_blank' do %>
+        <%= image_tag project.image, class: 'img-responsive img-rounded' %>
+      <% end %>
+      </a>
+    </div>
+
+    <!-- Description -->
+    <div class="col-md-8">
+      <h4><%= project.title %></h4>
+      <p><%= project.description %></p>
+
+      <!-- Features -->
+      <p><strong>Features:</strong></p>
+
+      <ul class="fa-ul">
+        <% project.features.each do |f| %>
+          <li class="small">
+            <span class="fa-li fa fa-check text-success"></span>
+            <%= f %>
+          </li>
+        <% end %>
+      </ul>
+
+      <!-- Links -->
+      <ul class="list-inline text-center">
+        <li class="small">
+          <% link_to project.link do %>
+            <span class="fa fa-external-link"></span>
+            View Application
+          <% end %>
+        </li>
+
+        <% unless project.github.empty? %>
+          <li class="small">
+            <% link_to project.github do %>
+              <span class="fa fa-github-square"></span>
+              View on Github
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  
+  <hr>
+<% end %>
+

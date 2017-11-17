@@ -1,0 +1,50 @@
+<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+  <div id="menu-content" class="vertical-align">
+
+    <h1 class="text-center">
+      <% link_to 'index.html' do %>
+        Andrés Álvarez
+      <% end %>
+    </h1>
+    <small class="text-center center-block">My Blog</small>
+
+    <%= image_tag 'profile.jpg', id: 'profile-pic', class: 'img-circle center-block img-responsive' %>
+
+    <!-- SOCIAL -->
+    <div id="social" class="text-center">
+      <ul class="list-inline">
+        <li>
+          <% link_to 'mailto:andresalvarez353@gmail.com' do %>
+            <span class="fa fa-envelope fa-2x"></span>
+          <% end %>
+        </li>
+
+        <li>
+          <% link_to 'http://tw.linkedin.com/in/aalvarez4', target: '_blank' do %>
+            <span class="fa fa-linkedin fa-2x"></span>
+          <% end %>
+        </li>
+
+        <li>
+          <% link_to 'http://www.github.com/bigchief45', target: '_blank' do %>
+            <span class="fa fa-github-alt fa-2x"></span>
+          <% end %>
+        </li>
+
+        <li>
+          <% link_to 'feed.xml' do %>
+            <span class="fa fa-rss fa-2x"></span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+
+    <!-- LINKS -->
+    <div id="links" class="text-center">
+      <%= link_to 'About', 'http://aalvarez.me/' %>
+      <%= link_to 'Portfolio', 'portfolio.html' %>
+      <%= link_to 'Blog', 'index.html' %>
+    </div>
+
+  </div>
+</div>
