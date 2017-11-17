@@ -25,7 +25,7 @@ module GithubContributions
     end
 
     def write_json(contributions)
-      path = '/home/ubuntu/workspace/portfolio/lib/data/contributions.json'
+      path = '/home/ubuntu/workspace/portfolio/data/open_source.json'
       File.open(path, 'w') do |f|
         f.puts contributions.map(&:to_json).to_json
       end

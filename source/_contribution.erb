@@ -1,0 +1,27 @@
+<div class="media">
+  <div class="media-left">
+    <% link_to c.url, target: '_blank' do %>
+      <%= image_tag "contributions/#{c.image}.png", class: 'media-object', title: c.url %>
+    <% end %>
+  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><%= link_to c.url, "https://github.com/#{c.url}/commits/master?author=bigchief45", target: '_blank' %></h5>
+
+    <p class="small"><%= c.description %></p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small"><%= pluralize(c.commits, 'commit') %></li>
+
+      <!-- Additions -->
+      <% unless c.additions.nil? %>
+        <li class="small text-success"><%= "#{c.additions}++" %></li>
+      <% end %>
+
+      <!-- Deletions -->
+      <% unless c.deletions.nil? %>
+        <li class="small text-danger"><%= "#{c.deletions}--" %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
