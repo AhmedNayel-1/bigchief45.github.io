@@ -1,1132 +1,568 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
   <head>
-    <meta content='IE=edge' http-equiv='X-UA-Compatible'>
-    <meta charset='utf-8'>
-    <meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no' name='viewport'>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge;chrome=1" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
     <title>
-      Andres Alvarez
-      
+      Andrés Álvarez
     </title>
+
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
     <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,600,600italic,300italic|Oswald|Inconsolata" rel="stylesheet" />
+
     <!-- FontAwesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+
     <link href="stylesheets/base.css" rel="stylesheet" />
-    <script src="javascripts/jquery-1.11.2.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="javascripts/all.js"></script>
-    <!-- FAVICON -->
+
     <link href="images/favicon.png" rel="icon" type="image/png" />
   </head>
-  <body class='index'>
-    <header class='header'>
-      <div class='container'>
-        <a href="./"><img src="http://bigchief45.github.io/images/pictures/header_image.jpg" class="profile-image img-responsive pull-left img-circle" alt="Header image" />
-        </a>
-        <div class='profile-content pull-left'>
-          <h1 class='name'>Andrés Álvarez</h1>
-          <h2 class='desc'>Software Engineer / Web Developer</h2>
-          <ul class='social list-inline'>
-            <li>
-              <a href="mailto:andresalvarez353@gmail.com"><i class='fa fa-envelope'></i>
-              </a>
-            </li>
-            <li>
-              <a href="http://tw.linkedin.com/in/aalvarez4" target="_blank"><i class='fa fa-linkedin'></i>
-              </a>
-            </li>
-            <li class='last-item'>
-              <a href="http://www.github.com/bigchief45" target="_blank"><i class='fa fa-github-alt'></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <ul class='list-inline pull-right'>
-          <li><a href="http://aalvarez.me/" class="btn btn-cta-primary">ABOUT</a></li>
-          <li><a href="http://aalvarez.me/blog/" class="btn btn-cta-primary">BLOG</a></li>
+
+  <body class="container-fluid">
+    <div class="row">
+      <div id="menu" class="hidden-xs col-sm-4 col-md-3">
+  <div id="menu-content" class="vertical-align">
+
+    <h1 class="text-center">
+<a href="./">        Andrés Álvarez
+</a>    </h1>
+    <small class="text-center center-block">My Blog</small>
+
+    <img src="images/profile.jpg" id="profile-pic" class="img-circle center-block img-responsive" alt="Profile" />
+
+    <!-- SOCIAL -->
+    <div id="social" class="text-center">
+      <ul class="list-inline">
+        <li>
+<a href="mailto:andresalvarez353@gmail.com">            <span class="fa fa-envelope fa-2x"></span>
+</a>        </li>
+
+        <li>
+<a href="http://tw.linkedin.com/in/aalvarez4" target="_blank">            <span class="fa fa-linkedin fa-2x"></span>
+</a>        </li>
+
+        <li>
+<a href="http://www.github.com/bigchief45" target="_blank">            <span class="fa fa-github-alt fa-2x"></span>
+</a>        </li>
+
+        <li>
+<a href="feed.xml">            <span class="fa fa-rss fa-2x"></span>
+</a>        </li>
+      </ul>
+    </div>
+
+    <!-- LINKS -->
+    <div id="links" class="text-center">
+      <a href="http://aalvarez.me/">About</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="./">Blog</a>
+    </div>
+
+  </div>
+</div>
+
+
+      <div id="content" class="col-md-9">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="page-header">
+  <h1>About Me</h1>
+</div>
+
+<p>I am Andrés , a web developer from Honduras.</p>
+
+<p>I focus mainly on back-end web development using Ruby on Rails, but I am also a very good Python programmer and developer with experience in using various monitoring tools and cloud computing technologies.</p>
+
+<p>
+  When I am not coding, I love to spend my time playing flamenco guitar, weight training, learning languages, hiking, diving, exploring new places, planning my next adventure, learning new things and just trying to become better everyday.
+</p>
+
+
+<div class="page-header">
+  <h2>Education</h2>
+</div>
+
+<div class="media">
+  <div class="media-left media-top">
+    <h4><span class="fa fa-graduation-cap"></span></h4>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">Masters in Information Systems and Applications</h4>
+
+    <h5 class="small text-muted">National Tsing Hua University, Taiwan (2013-2015)</h5>
+  </div>
+</div>
+
+<div class="media">
+  <div class="media-left media-top">
+    <h4><span class="fa fa-graduation-cap"></span></h4>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">BSc Computer Science</h4>
+
+    <h5 class="small text-muted">UNITEC, Honduras (2008-2012)</h5>
+  </div>
+</div>
+
+<div class="page-header">
+  <h2>Work Experience</h2>
+</div>
+
+  <div class="media">
+    <div class="media-left media-top">
+<a href="http://www.e-libro.com/" target="_blank">        <img src="images/work_experience/e_libro.png" class="media-object" alt="E libro" />
+</a>    </div>
+    <div class="media-body">
+      <h4 class="media-heading">
+        Software Engineer -
+        <a href="http://www.e-libro.com/" target="_blank">E-Libro</a>
+
+        <small class="text-muted">(2017 - Present)</small>
+      </h4>
+
+      <p></p>
+
+      <!-- Tasks -->
+      <p>
+        <ul>
+            <li class="small">Development of back-end Sinatra application to process book files and serve them to a front-end book reader.</li>
+            <li class="small">Development of a content manager desktop Java application for uploading book data to database and book files to storage server.</li>
         </ul>
+      </p>
+
+      <!-- Tags -->
+      <p>
+        <ul class="list-inline">
+            <li><span class="label label-default"><strong>Python 3</strong></li>
+            <li><span class="label label-default"><strong>Django</strong></li>
+            <li><span class="label label-default"><strong>Django REST Framework</strong></li>
+            <li><span class="label label-default"><strong>Ruby</strong></li>
+            <li><span class="label label-default"><strong>Sinatra</strong></li>
+            <li><span class="label label-default"><strong>Capistrano</strong></li>
+            <li><span class="label label-default"><strong>Nginx</strong></li>
+            <li><span class="label label-default"><strong>Java</strong></li>
+            <li><span class="label label-default"><strong>Maven</strong></li>
+            <li><span class="label label-default"><strong>Git</strong></li>
+            <li><span class="label label-default"><strong>Bitbucket</strong></li>
+            <li><span class="label label-default"><strong>ElasticSearch</strong></li>
+            <li><span class="label label-default"><strong>AWS S3</strong></li>
+            <li><span class="label label-default"><strong>AWS Lambda</strong></li>
+            <li><span class="label label-default"><strong>AWS API Gateway</strong></li>
+            <li><span class="label label-default"><strong>Chalice</strong></li>
+        </ul>
+      </p>
+    </div>
+  </div>
+  <div class="media">
+    <div class="media-left media-top">
+<a href="https://www.itri.org.tw/eng/" target="_blank">        <img src="images/work_experience/itri_logo_small.png" class="media-object" alt="Itri logo small" />
+</a>    </div>
+    <div class="media-body">
+      <h4 class="media-heading">
+        Software Engineer -
+        <a href="https://www.itri.org.tw/eng/" target="_blank">Industrial Technology Research Institute (ITRI)</a>
+
+        <small class="text-muted">(2015 - 2017)</small>
+      </h4>
+
+      <p></p>
+
+      <!-- Tasks -->
+      <p>
+        <ul>
+            <li class="small">Maintenance of ITRI’s OpenStack and data center monitoring platform (PDCM).</li>
+            <li class="small">Development of new features and add-ons for PDCM.</li>
+            <li class="small">ZenPack development for Zenoss Core 4.</li>
+            <li class="small">Integration between OpenStack’s Ceilometer and PDCM.</li>
+            <li class="small">Juju Charm development</li>
+        </ul>
+      </p>
+
+      <!-- Tags -->
+      <p>
+        <ul class="list-inline">
+            <li><span class="label label-default"><strong>Python 2</strong></li>
+            <li><span class="label label-default"><strong>Python 3</strong></li>
+            <li><span class="label label-default"><strong>JavaScript</strong></li>
+            <li><span class="label label-default"><strong>ExtJS</strong></li>
+            <li><span class="label label-default"><strong>Zenoss Core 4</strong></li>
+            <li><span class="label label-default"><strong>Zenpacklib</strong></li>
+            <li><span class="label label-default"><strong>Zope 2</strong></li>
+            <li><span class="label label-default"><strong>Twisted</strong></li>
+            <li><span class="label label-default"><strong>rrdtool</strong></li>
+            <li><span class="label label-default"><strong>SNMP</strong></li>
+            <li><span class="label label-default"><strong>IPMI</strong></li>
+            <li><span class="label label-default"><strong>OpenStack</strong></li>
+            <li><span class="label label-default"><strong>Ceilometer</strong></li>
+            <li><span class="label label-default"><strong>Gnocchi</strong></li>
+            <li><span class="label label-default"><strong>Gerrit</strong></li>
+            <li><span class="label label-default"><strong>Ubuntu</strong></li>
+            <li><span class="label label-default"><strong>CentOS</strong></li>
+            <li><span class="label label-default"><strong>Logstash</strong></li>
+            <li><span class="label label-default"><strong>Kibana</strong></li>
+            <li><span class="label label-default"><strong>Juju</strong></li>
+            <li><span class="label label-default"><strong>RabbitMQ</strong></li>
+            <li><span class="label label-default"><strong>Redis</strong></li>
+            <li><span class="label label-default"><strong>BashScript</strong></li>
+            <li><span class="label label-default"><strong>Git</strong></li>
+            <li><span class="label label-default"><strong>Gitlab</strong></li>
+            <li><span class="label label-default"><strong>D3</strong></li>
+        </ul>
+      </p>
+    </div>
+  </div>
+  <div class="media">
+    <div class="media-left media-top">
+<a href="http://www.popa.hn" target="_blank">        <img src="images/work_experience/popa.png" class="media-object" alt="Popa" />
+</a>    </div>
+    <div class="media-body">
+      <h4 class="media-heading">
+        SAP Developer -
+        <a href="http://www.popa.hn" target="_blank">Grupo POPA</a>
+
+        <small class="text-muted">(2011)</small>
+      </h4>
+
+      <p>Development of add-on applications for SAP BusinessOne using Microsoft Visual Studio and SAP SDK.</p>
+
+      <!-- Tasks -->
+      <p>
+        <ul>
+        </ul>
+      </p>
+
+      <!-- Tags -->
+      <p>
+        <ul class="list-inline">
+            <li><span class="label label-default"><strong>SAP BusinessOne</strong></li>
+            <li><span class="label label-default"><strong>C#</strong></li>
+            <li><span class="label label-default"><strong>Visual Basic</strong></li>
+            <li><span class="label label-default"><strong>.NET</strong></li>
+            <li><span class="label label-default"><strong>SQL</strong></li>
+            <li><span class="label label-default"><strong>Microsoft SQL Server</strong></li>
+            <li><span class="label label-default"><strong>Microsoft Visual Studio</strong></li>
+        </ul>
+      </p>
+    </div>
+  </div>
+
+<div class="page-header">
+  <h2>Open Source Contributions</h2>
+</div>
+
+  <div class="row">
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="rails/rails" target="_blank">      <img src="images/contributions/rails.png" class="media-object" title="rails/rails" alt="Rails" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/rails/rails/commits/master?author=bigchief45" target="_blank">rails/rails</a></h5>
+
+    <p class="small">Ruby on Rails</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">1 commit</li>
+
+      <!-- Additions -->
+
+      <!-- Deletions -->
+    </ul>
+  </div>
+</div>
       </div>
-    </header>
-    <div class='container sections-wrapper'>
-      <div class='row'>
-        <div class='primary col-md-8 col-sm-12 col-xs-12'>
-          <section class='about section'>
-            <div class='section-inner'>
-              <h2 class='heading'>About Me</h2>
-              <div class='content'>
-                <div class='row'>
-                  <div class='col-md-3'>
-                    <img src="images/pictures/xitou.jpg" class="img-rounded" alt="Xitou" />
-                  </div>
-                  <div class='col-md-3'>
-                    <img src="images/pictures/nanhu.jpg" class="img-rounded" alt="Nanhu" />
-                  </div>
-                  <div class='col-md-3'>
-                    <img src="images/pictures/luguang.jpg" class="img-rounded" alt="Luguang" />
-                  </div>
-                  <div class='col-md-3'>
-                    <img src="images/pictures/hiroshima.jpg" class="img-rounded" alt="Hiroshima" />
-                  </div>
-                </div>
-                <br>
-                <div class='row text-center'>
-                  <div class='col-md-12'>
-                    <p>
-                      Hello! I am
-                      <strong>Andrés</strong>
-                      , a web developer from
-                      <strong>Honduras</strong>.
-                    </p>
-                    <p>I focus mainly on back-end web development using Ruby on Rails, but I am also a good Python programmer with experience in using various monitoring tools and cloud computing technologies.</p>
-                    <p>When I am not coding, I love to spend my time playing flamenco guitar, weight training, learning languages, hiking, diving, exploring new places, planning my next adventure, learning new things and just trying to become better everyday.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section class='latest section'>
-            <div class='section-inner'>
-              <h2 class='heading'>Latest Projects</h2>
-              <div class='content'>
-                <div class='alert alert-warning'>
-                  <ul class='fa-ul small'>
-                    <li><i class='fa-li fa fa-warning'></i>Most of my application projects are deployed to
-                      <a href='https://www.heroku.com/' target='_blank'>
-                        <strong>Heroku</strong>
-                      </a>,
-                    </li>
-                    <li><i class='fa-li fa fa-info-circle'></i>You can use a test account (
-                      <strong>username:</strong>
-                      <i>test@test.com</i>,
-                      <strong>password:</strong>
-                      <i>12345678</i>)
-                    </li>
-                  </ul>
-                </div>
-                <hr>
-                <!-- FEATURED: NOURISH -->
-                <div class='item featured text-center'>
-                  <h3 class='title'>
-                    <a href='http://nourishapp.herokuapp.com' target='_blank'>Nourish</a>
-                  </h3>
-                  <p class='summary'>
-                    Personal meal plans delivered straight to your home
-                    <br>
-                    <span class='label label-danger'>Ruby on Rails</span>
-                  </p>
-                  <div class='featured-image'>
-                    <a href='http://nourishapp.herokuapp.com' target='_blank'>
-                      <img src="images/portfolio/nourish/nourish1.jpg" class="img-responsive project-image img-rounded" alt="Nourish1" />
-                    </a>
-                    <div class='ribbon'>
-                      <div class='text'>New</div>
-                    </div>
-                  </div>
-                  <div class='desc text-left'>
-                    <p>Nourish is a platform where users can create personal meal plans. Meals can be choosen from a variety of delicious available meals cooked by the chefs. Each day from Monday to Friday, users will receive their selected breakfast, lunch, and dinner meals for that day, according to their meal plan.</p>
-                    <p>
-                      Meals obtained from
-                      <a href='http://www.allrecipes.com' target='_blank'>www.allrecipes.com</a>
-                    </p>
-                    <p>
-                      <strong>Features:</strong>
-                    </p>
-                    <ul class='fa-ul'>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Wide variety of meals in the platform.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Users can review and rate meals.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Users can create meal plans for each day from Monday to Friday.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Scheduled tasks for creating daily orders for each meal time for each user, using
-                        <a href='https://devcenter.heroku.com/articles/scheduler' target='_blank'>Heroku Scheduler</a>.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Authorization system for admins, users, chefs, and couriers. Using
-                        <b>Devise</b>,
-                        <b>CanCan</b>
-                        and
-                        <b>Rolify</b>
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Testing suite using
-                        <b>Rspec</b>
-                        and
-                        <b>FactoryGirl</b>
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Code coverage using
-                        <b>simplecov</b>
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        <a href='http://getbootstrap.com/' target='_blank'>Bootstrap 3</a>
-                        for front-end.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-times text-danger'></i>Pricing Plans and Stripe integration.
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- //desc -->
-                  <p></p>
-                  <ul class='list-inline'>
-                    <li>
-                      <a class='more-link small' href='http://nourishapp.herokuapp.com/' target='_blank'>
-                        <i class='fa fa-external-link'></i>
-                        View Application
-                      </a>
-                    </li>
-                    <li>
-                      <a class='more-link small' href='https://github.com/BigChief45/Nourish' target='_blank'>
-                        <i class='fa fa-github-square'></i>
-                        View on Github
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- //item -->
-                <hr class='divider'>
-                <!-- HACKSPOTS -->
-                <div class='item row'>
-                  <a class='col-md-4 col-sm-4 col-xs-12' href='#' target='_blank'>
-                    <img src="images/portfolio/hackspots/hackspots_logo.png" class="img-responsive project-image img-rounded" alt="Hackspots logo" />
-                  </a>
-                  <div class='desc col-md-8 col-sm-8 col-xs-12'>
-                    <h3 class='title'>
-                      <a href='#' target='_blank'>Hackspots</a>
-                      <div class='pull-right'>
-                        <span class='label label-danger'>Ruby on Rails</span>
-                        <span class='label label-warning'>EmberJS</span>
-                      </div>
-                    </h3>
-                    <p>A Ruby on Rails API application that serves JSON information about good Hackspots (places where you can work remotely) around the world, combined with a client application made using EmberJS.</p>
-                    <p>
-                      <strong>Features:</strong>
-                    </p>
-                    <ul class='fa-ul'>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        RESTful Rails 5 API only application using
-                        <a href="http://jsonapi.org/" target="_blank">JSON API specification</a>
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        API Versioning
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        JSON API Serialization/Deserialization using
-                        <a href="https://github.com/rails-api/active_model_serializers" target="_blank">ActiveModelSerializers</a>
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        API authentication using
-                        <a href="https://en.wikipedia.org/wiki/JSON_Web_Token" target="_blank">JSON Web Tokens (JWT)</a>
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        Testing suite using RSpec.
-                      </li>
-                      <br>
-                      <li class='small'>
-                        <i class='fa-li fa fa-times text-danger'></i>
-                        Client application using EmberJS.
-                      </li>
-                    </ul>
-                    <ul class='list-inline'>
-                      <li>
-                        <a href="https://github.com/BigChief45/hackspots-api" target="_blank" class="more-link small"><i class='fa fa-github-square'></i>
-                        View API on Github
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- //desc -->
-                </div>
-                <!-- //item -->
-                <hr class='divider'>
-                <!-- JUSTIX -->
-                <div class='item row'>
-                  <a class='col-md-4 col-sm-4 col-xs-12' href='http://justix.herokuapp.com' target='_blank'>
-                    <img src="images/portfolio/justix/justix.jpg" class="img-responsive project-image img-rounded" alt="Justix" />
-                  </a>
-                  <div class='desc col-md-8 col-sm-8 col-xs-12'>
-                    <h3 class='title'>
-                      <a href='http://justix.herokuapp.com' target='_blank'>Justix</a>
-                      <div class='pull-right'>
-                        <span class='label label-danger'>Ruby on Rails</span>
-                      </div>
-                    </h3>
-                    <p>Justix helps lawyers manage and keep their cases ordered for easy access and assesment. Lawyers can easily manage and keep records of their clients, evidences, witnesses, cases, and many other elements, everything inside Justix.</p>
-                    <p>
-                      <strong>Features:</strong>
-                    </p>
-                    <ul class='fa-ul'>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>One account for each law firm, with different pricing plans available.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Management of clients, witnesses, and counterpart person objects.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Management of cases.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Assignment of clients, witnesses, and counterparts to cases.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Log journal management for each case.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Evidence management for each case, using Amazon S3 for storage.
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        <a href='http://getbootstrap.com/' target='_blank'>Bootstrap 3</a>
-                        for front-end with custom theme.
-                      </li>
-                    </ul>
-                    <p></p>
-                    <ul class='list-inline'>
-                      <li>
-                        <a class='more-link small' href='http://justix.herokuapp.com' target='_blank'>
-                          <i class='fa fa-external-link'></i>
-                          View Application
-                        </a>
-                      </li>
-                      <li>
-                        <a class='more-link small' href='https://github.com/BigChief45/Justix' target='_blank'>
-                          <i class='fa fa-github-square'></i>
-                          View on Github
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- //desc -->
-                </div>
-                <!-- //item -->
-                <hr class='divider'>
-                <!-- LIKOR -->
-                <div class='item row'>
-                  <a class='col-md-4 col-sm-4 col-xs-12' href='http://guaro.herokuapp.com' target='_blank'>
-                    <img src="images/portfolio/likor/likor.jpg" class="img-responsive project-image img-rounded" alt="Likor" />
-                  </a>
-                  <div class='desc col-md-8 col-sm-8 col-xs-12'>
-                    <h3 class='title'>
-                      <a href='http://guaro.herokuapp.com' target='_blank'>Likor</a>
-                      <div class='pull-right'>
-                        <span class='label label-danger'>Ruby on Rails</span>
-                      </div>
-                    </h3>
-                    <p>
-                      An alcohol delivery service application where clients can place their orders on a wide variety of alcohol products. The products
-                      are stored in many different locations throughout the city, and the application automatically determines the closest storage location from the client, using the
-                      <a href='http://www.rubygeocoder.com/' target='_blank'>Geocoder gem</a>.
-                    </p>
-                    <p>Couriers can then pick up the products from the assigned storage location, and then deliver it to the client's address. Marking the order as 'complete' after delivery.</p>
-                    <p>
-                      <strong>Features:</strong>
-                    </p>
-                    <ul class='fa-ul'>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Administrator and courier accounts.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Authorization of actions for courier, clients, and administrators using
-                        <a href='https://github.com/CanCanCommunity/cancancan' target='_blank'>CanCan</a>
-                        and
-                        <a href='https://github.com/RolifyCommunity/rolify' target='_blank'>Rolify</a>
-                        gems.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Management of storage locations.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Product Inventory management per each storage location.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Order placements by clients.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Order assignment and taking by administrators and couriers.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Automatic storage location assignment to orders using
-                        <a href='http://www.rubygeocoder.com/' target='_blank'>Geocoder</a>
-                        gem.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Google Maps integration.
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        <a href='http://getbootstrap.com/' target='_blank'>Bootstrap 3</a>
-                        for front-end.
-                      </li>
-                    </ul>
-                    <p></p>
-                    <ul class='list-inline'>
-                      <li>
-                        <a class='more-link small' href='http://guaro.herokuapp.com' target='_blank'>
-                          <i class='fa fa-external-link'></i>
-                          View Application
-                        </a>
-                      </li>
-                      <li>
-                        <a class='more-link small' href='https://github.com/Appcoholic/AppcoholicBackend' target='_blank'>
-                          <i class='fa fa-github-square'></i>
-                          View on Github
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- //desc -->
-                </div>
-                <!-- //item -->
-                <hr class='divider'>
-                <!-- HOURGLASS -->
-                <div class='item row'>
-                  <a class='col-md-4 col-sm-4 col-xs-12' href='http://hourglazz.herokuapp.com' target='_blank'>
-                    <img src="images/portfolio/hourglass/hourglass_logo.png" class="img-responsive project-image img-rounded" alt="Hourglass logo" />
-                  </a>
-                  <div class='desc col-md-8 col-sm-8 col-xs-12'>
-                    <h3 class='title'>
-                      <a href='http://hourglazz.herokuapp.com' target='_blank'>Hourglass</a>
-                      <div class='pull-right'>
-                        <span class='label label-danger'>Ruby on Rails</span>
-                      </div>
-                    </h3>
-                    <p>
-                      <strong>Time</strong>
-                      is the most important thing we got, and with Hourglass I can keep track of how I spend my time.
-                    </p>
-                    <p>For all activities that I am interested in, I can log how many hours I spend on them in order to get better at them. Easy, small, and simple to use.</p>
-                    <p>
-                      <strong>Features:</strong>
-                    </p>
-                    <ul class='fa-ul'>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        Time recording and tracking of unlimited activities.
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        Views loading through AJAX
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        Show amount of hours spent in an activity for each session in a calendar
-                        view, Github contributions style.
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        <a href='http://getbootstrap.com/' target='_blank'>Bootstrap 3</a>
-                        for front-end.
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        Continuous integration using
-                        <a href="http://www.travisci.org" target="_blank">TravisCI</a>
-                        and
-                        <a href="http://www.heroku.com" target="_blank">Heroku</a>
-                      </li>
-                    </ul>
-                    <p></p>
-                    <ul class='list-inline'>
-                      <li>
-                        <a class='more-link small' href='http://hourglazz.herokuapp.com' target='_blank'>
-                          <i class='fa fa-external-link'></i>
-                          View Application
-                        </a>
-                      </li>
-                      <li>
-                        <a class='more-link small' href='https://github.com/BigChief45/Hourglass' target='_blank'>
-                          <i class='fa fa-github-square'></i>
-                          View on Github
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- //desc -->
-                </div>
-                <!-- //item -->
-                <hr class='divider'>
-                <!-- TERRATNT.COM -->
-                <div class='item row'>
-                  <a class='col-md-4 col-sm-4 col-xs-12' href='http://terratnt.herokuapp.com/' target='_blank'>
-                    <img src="images/portfolio/terratnt/terratnt.jpg" class="img-responsive project-image img-rounded" alt="Terratnt" />
-                  </a>
-                  <div class='desc col-md-8 col-sm-8 col-xs-12'>
-                    <h3 class='title'>
-                      <a href='http://terratnt.herokuapp.com/' target='_blank'>Terratnt.com</a>
-                      <div class='pull-right'>
-                        <span class='label label-danger'>Ruby on Rails</span>
-                      </div>
-                    </h3>
-                    <p>
-                      Terratnt.com is an online real estate listing platform aimed at Honduras, inspired by a similar platform:
-                      <a href='http://www.591.com.tw' target='_blank'>591.com.tw from Taiwan</a>
-                    </p>
-                    <p>Terratnt.com serves as a platform where users can list their own properties that are for sale or for rent, to other users. It displays information in a very clean and neat fashion, and makes navigation super easy for users, without any distractions.</p>
-                    <p>
-                      <strong>Features:</strong>
-                    </p>
-                    <ul class='fa-ul'>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Registering properties for rent or sale.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Uploading multiple images for the properties.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Commenting system on properties page.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Image galeries for properties.
-                      </li>
-                      <li class='small'><i class='fa-li fa fa-check text-success'></i>Search for properties and apply filters.
-                      </li>
-                      <li class='small'>
-                        <i class='fa-li fa fa-check text-success'></i>
-                        <a href='http://getbootstrap.com/' target='_blank'>Bootstrap 3</a>
-                        for front-end.
-                      </li>
-                    </ul>
-                    <p></p>
-                    <ul class='list-inline'>
-                      <li>
-                        <a class='more-link small' href='http://terratnt.com' target='_blank'>
-                          <i class='fa fa-external-link'></i>
-                          View Application
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- //desc -->
-                </div>
-                <!-- //item -->
-              </div>
-              <!-- //content -->
-            </div>
-            <!-- //section-inner -->
-          </section>
-          <!-- //section -->
-          <section class='experience section'>
-            <div class='section-inner'>
-              <h2 class='heading'>Work Experience</h2>
-              <div class='content'>
-                <!-- E-Libro Corp -->
-                <div class='item'>
-                  <div class='media'>
-                    <div class='media-left media-top'>
-                      <a href="http://www.e-libro.com/" target="_blank"><img src="images/work_experience/e_libro.png" class="media-object" alt="E libro" />
-                      </a>
-                    </div>
-                    <div class='media-body'>
-                      <h4 class='media-heading title'>
-                        Software Engineer -
-                        <span class='place'>
-                          <a href='http://www.e-libro.com/' target='_blank'>e-Libro</a>
-                        </span>
-                        <span class='year small'>(2017 - Present)</span>
-                      </h4>
-                      <p>
-                        <ul>
-                          <li class='small'>Development of back-end Sinatra application to process book files and serve them to a front-end book reader.</li>
-                          <li class='small'>Development of a content manager desktop Java application for uploading book data to database and book files to storage server.</li>
-                        </ul>
-                      </p>
-                      <p>
-                        <ul class='list-inline'>
-                          <li>
-                            <span class='label label-default'>Python 3</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Django</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Django REST Framework</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Ruby</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Sinatra</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Capistrano</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Nginx</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Java</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Maven</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Git</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Bitbucket</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>ElasticSearch</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>AWS S3</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>AWS Lambda</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>AWS API Gateway</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Chalice</span>
-                          </li>
-                        </ul>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <!-- ITRI -->
-                <div class='item'>
-                  <div class='media'>
-                    <div class='media-left media-top'>
-                      <a href="https://www.itri.org.tw/eng/" target="_blank"><img src="images/work_experience/itri_logo_small.png" class="media-object" alt="Itri logo small" />
-                      </a>
-                    </div>
-                    <div class='media-body'>
-                      <h4 class='media-heading title'>
-                        Software Engineer -
-                        <span class='place'>
-                          <a href='https://www.itri.org.tw/eng/' target='_blank'>Industrial Technology Research Institute (ITRI)</a>
-                        </span>
-                        <span class='year small'>(2015 - 2017)</span>
-                      </h4>
-                      <p>
-                        <ul>
-                          <li class='small'>Maintenance of ITRI’s OpenStack and data center monitoring platform (PDCM).</li>
-                          <li class='small'>Development of new features and add-ons for PDCM.</li>
-                          <li class='small'>ZenPack development for Zenoss Core 4.</li>
-                          <li class='small'>Integration between OpenStack’s Ceilometer and PDCM.</li>
-                          <li class='small'>Development of Unified Logging Access system which collects and analyses IaaS and PaaS logs, built using open source software such as ELK stack (Elasticsearch + Logstash + Kibana).</li>
-                          <li class='small'>Juju Charm development</li>
-                        </ul>
-                      </p>
-                      <p>
-                        <ul class='list-inline'>
-                          <li>
-                            <span class='label label-default'>Python 2</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Python 3</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>JavaScript</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>ExtJS</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Zenoss Core 4</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Zenpacklib</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Zope 2</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Twisted</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>rrdtool</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>SNMP</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>IPMI</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>OpenStack</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Ceilometer</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Gnocchi</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Gerrit</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Ubuntu</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>CentOS</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>ElasticSearch</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Logstash</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Kibana</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Juju</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>RabbitMQ</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Redis</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Bash</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Git</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>Gitlab</span>
-                          </li>
-                          <li>
-                            <span class='label label-default'>D3</span>
-                          </li>
-                        </ul>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <!-- Grupo Popa -->
-                <div class='item'>
-                  <div class='media'>
-                    <div class='media-left media-top'>
-                      <a href="http://www.popa.hn" target="_blank"><img src="images/work_experience/popa.png" class="media-object" alt="Popa" />
-                      </a>
-                    </div>
-                    <div class='media-body'>
-                      <h4 class='media-heading title'>
-                        SAP Developer -
-                        <span class='place'>
-                          <a href='http://www.popa.hn' target='_blank'>Grupo POPA</a>
-                        </span>
-                        <span class='year small'>(2011)</span>
-                      </h4>
-                      <p>
-                        Development of add-on applications for
-                        <a href='http://go.sap.com/product/enterprise-management/business-one.html' target='_blank'>SAP BusinessOne</a>
-                        using Microsoft Visual Studio and SAP SDK.
-                      </p>
-                      <ul class='list-inline'>
-                        <li>
-                          <span class='label label-default'>SAP BusinessOne</span>
-                        </li>
-                        <li>
-                          <span class='label label-default'>C#</span>
-                        </li>
-                        <li>
-                          <span class='label label-default'>Visual Basic</span>
-                        </li>
-                        <li>
-                          <span class='label label-default'>.NET</span>
-                        </li>
-                        <li>
-                          <span class='label label-default'>SQL</span>
-                        </li>
-                        <li>
-                          <span class='label label-default'>Microsoft SQL Server</span>
-                        </li>
-                        <li>
-                          <span class='label label-default'>Microsoft Visual Studio</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-        <div class='secondary col-md-4 col-sm-12 col-xs-12'>
-          <aside class='info aside section'>
-            <div class='section-inner'>
-              <h2 class='heading sr-only'>Basic Information</h2>
-              <div class='content'>
-                <ul class='list-unstyled'>
-                  <li>
-                    <i class='fa fa-map-marker'></i>
-                    <span class='sr-only'>Location:</span>
-                    Hsinchu, Taiwan
-                  </li>
-                  <li>
-                    <i class='fa fa-envelope-o'></i>
-                    <span class='sr-only'>Email:</span>
-                    <a href="mailto:andresalvarez353@gmail.com">andresalvarez353@gmail.com</a>
-                  </li>
-                  <li>
-                    <i class='fa fa-file-pdf-o'></i>
-                    <span class='sr-only'>English CV:</span>
-                    <a href="pdfs/cv_eng.pdf" target="_blank">Read my CV</a>
-                  </li>
-                </ul>
-                <br>
-                <p><img src="https://projecteuler.net/profile/bigchief45.png" class="img-responsive center-block" alt="Bigchief45" /></p>
-              </div>
-            </div>
-          </aside>
-          <aside class='skills aside section'>
-            <div class='section-inner'>
-              <h2 class='heading'>Skills</h2>
-              <div class='content'>
-                <p class='intro'>
-                  <div class='skillset'>
-                    <div class='item'>
-                      <h3 class='level-title'>
-                        Ruby on Rails
-                        <span class='level-label'>Advanced</span>
-                      </h3>
-                      <div class='level-bar'>
-                        <div class='level-bar-inner' data-level='70%'></div>
-                      </div>
-                    </div>
-                    <div class='item'>
-                      <h3 class='level-title'>
-                        Javascript & jQuery
-                        <span class='level-label'>Intermediate</span>
-                      </h3>
-                      <div class='level-bar'>
-                        <div class='level-bar-inner' data-level='70%'></div>
-                      </div>
-                    </div>
-                    <div class='item'>
-                      <h3 class='level-title'>
-                        HTML5, CSS3, SASS
-                        <span class='level-label'>Advanced</span>
-                      </h3>
-                      <div class='level-bar'>
-                        <div class='level-bar-inner' data-level='90%'></div>
-                      </div>
-                    </div>
-                    <div class='item'>
-                      <h3 class='level-title'>
-                        Python
-                        <span class='level-label'>Intermediate</span>
-                      </h3>
-                      <div class='level-bar'>
-                        <div class='level-bar-inner' data-level='70%'></div>
-                      </div>
-                    </div>
-                    <div class='item'>
-                      <h3 class='level-title'>
-                        Zenoss
-                        <span class='level-label'>Intermediate</span>
-                      </h3>
-                      <div class='level-bar'>
-                        <div class='level-bar-inner' data-level='80%'></div>
-                      </div>
-                    </div>
-                    <div class='item'>
-                      <h3 class='level-title'>
-                        OpenStack
-                        <span class='level-label'>Beginner</span>
-                      </h3>
-                      <div class='level-bar'>
-                        <div class='level-bar-inner' data-level='40%'></div>
-                      </div>
-                    </div>
-                    <div class='item'>
-                      <h3 class='level-title'>
-                        Juju
-                        <span class='level-label'>Beginner</span>
-                      </h3>
-                      <div class='level-bar'>
-                        <div class='level-bar-inner' data-level='60%'></div>
-                      </div>
-                    </div>
-                  </div>
-                </p>
-              </div>
-            </div>
-          </aside>
-          <aside class='education aside section'>
-            <div class='section-inner'>
-              <h2 class='heading'>Education</h2>
-              <div class='content'>
-                <div class='item'>
-                  <h3 class='title'>
-                    <i class='fa fa-graduation-cap'></i>
-                    Masters in Information Systems and Applications
-                  </h3>
-                  <h4 class='university small'>
-                    National Tsing Hua University, Taiwan
-                    <span class='year'>(2013-2015)</span>
-                  </h4>
-                </div>
-                <!-- //item -->
-                <div class='item'>
-                  <h3 class='title'>
-                    <i class='fa fa-graduation-cap'></i>
-                    BSc Computer Science
-                  </h3>
-                  <h4 class='university small'>
-                    UNITEC, Honduras
-                    <span class='year'>(2008-2012)</span>
-                  </h4>
-                </div>
-                <!-- //item -->
-              </div>
-              <!-- //content -->
-            </div>
-            <!-- //section-inner -->
-          </aside>
-          <!-- //section -->
-          <aside class='languages aside section'>
-            <div class='section-inner'>
-              <h2 class='heading'>Languages</h2>
-              <div class='content'>
-                <ul class='list-unstyled'>
-                  <li class='item'>
-                    <span class='title'>
-                      <strong>Spanish</strong>
-                    </span>
-                    <span class='level small'>
-                      (Native Speaker)
-                      <br class='visible-xs'>
-                      <div class='pull-right'>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                      </div>
-                    </span>
-                  </li>
-                  <!-- //item -->
-                  <li class='item'>
-                    <span class='title'>
-                      <strong>English</strong>
-                    </span>
-                    <span class='level small'>
-                      (Fluent)
-                      <br class='visible-sm visible-xs'>
-                      <div class='pull-right'>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                      </div>
-                    </span>
-                  </li>
-                  <!-- //item -->
-                  <li class='item'>
-                    <span class='title'>
-                      <strong>Mandarin Chinese</strong>
-                    </span>
-                    <span class='level small'>
-                      (Advanced)
-                      <br class='visible-sm visible-xs'>
-                      <div class='pull-right'>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                      </div>
-                    </span>
-                  </li>
-                  <li class='item'>
-                    <span class='title'>
-                      <strong>Italian</strong>
-                    </span>
-                    <span class='level small'>
-                      (Beginner)
-                      <br class='visible-sm visible-xs'>
-                      <div class='pull-right'>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                      </div>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <!-- //content -->
-            </div>
-            <!-- //section-inner -->
-          </aside>
-          <!-- //section -->
-          <aside class='info aside section'>
-            <div class='section-inner'>
-              <h2 class='heading'>Certificates</h2>
-              <div class='content'>
-                <ul class='list-unstyled'>
-                  <li>
-                    <i class='fa fa-file-text-o'></i>
-                    <a href="pdfs/tocfl/lr_cert.pdf" target="_blank">TOCFL Listening & Reading</a>
-                  </li>
-                  <li>
-                    <i class='fa fa-file-text-o'></i>
-                    <a href="pdfs/tocfl/speaking_cert.pdf" target="_blank">TOCFL Speaking</a>
-                  </li>
-                </ul>
-              </div>
-              <!-- //content -->
-            </div>
-            <!-- //section-inner -->
-          </aside>
-          <!-- //section -->
-          <aside class='languages aside section'>
-            <div class='section-inner'>
-              <h2 class='heading'>Open Source</h2>
-              <div class='content'>
-                <ul class='list-group'>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/rails/rails/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/rails.png" class="media-object" title="rails/rails" alt="Rails" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/rails/rails/commits/master?author=bigchief45" target="_blank">rails/rails</a></h5>
-                        <p class='small'>Ruby on Rails</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>1 commit</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/aws/chalice/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/chalice.png" class="media-object" title="aws/chalice" alt="Chalice" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/aws/chalice/commits/master?author=bigchief45" target="_blank">aws/chalice</a></h5>
-                        <p class='small'>Python Serverless Microframework for AWS</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>2 commits</li>
-                          <li class='contrib-additions small'>27++</li>
-                          <li class='contrib-deletions small'>18--</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/ajaxorg/ace/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/ace.png" class="media-object" title="ajaxorg/ace" alt="Ace" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/ajaxorg/ace/commits/master?author=bigchief45" target="_blank">ajaxorg/ace</a></h5>
-                        <p class='small'>Ace (Ajax.org Cloud9 Editor)</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>11 commits</li>
-                          <li class='contrib-additions small'>472++</li>
-                          <li class='contrib-deletions small'>231--</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/jneen/rouge/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/rouge.png" class="media-object" title="jneen/rouge" alt="Rouge" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/jneen/rouge/commits/master?author=bigchief45" target="_blank">jneen/rouge</a></h5>
-                        <p class='small'>A pure-ruby code highlighter that is compatible with pygments http://rouge.jneen.net/</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>3 commits</li>
-                          <li class='contrib-additions small'>10++</li>
-                          <li class='contrib-deletions small'>1--</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/gnocchixyz/gnocchi/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/gnocchi.png" class="media-object" title="gnocchixyz/gnocchi" alt="Gnocchi" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/gnocchixyz/gnocchi/commits/master?author=bigchief45" target="_blank">gnocchixyz/gnocchi</a></h5>
-                        <p class='small'>Timeseries database</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>5 commits</li>
-                          <li class='contrib-additions small'>108++</li>
-                          <li class='contrib-deletions small'>14--</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/gnocchixyz/python-gnocchiclient/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/python-gnocchiclient.png" class="media-object" title="gnocchixyz/python-gnocchiclient" alt="Python gnocchiclient" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/gnocchixyz/python-gnocchiclient/commits/master?author=bigchief45" target="_blank">gnocchixyz/python-gnocchiclient</a></h5>
-                        <p class='small'>Python client from Gnocchi</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>1 commit</li>
-                          <li class='contrib-additions small'>0++</li>
-                          <li class='contrib-deletions small'>17--</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/ElemeFE/element/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/element.png" class="media-object" title="ElemeFE/element" alt="Element" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/ElemeFE/element/commits/master?author=bigchief45" target="_blank">ElemeFE/element</a></h5>
-                        <p class='small'>A Vue.js 2.0 UI Toolkit for Web</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>3 commits</li>
-                          <li class='contrib-additions small'>12++</li>
-                          <li class='contrib-deletions small'>5--</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/iview/iview-doc/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/iview-doc.png" class="media-object" title="iview/iview-doc" alt="Iview doc" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/iview/iview-doc/commits/master?author=bigchief45" target="_blank">iview/iview-doc</a></h5>
-                        <p class='small'>iView document. [CN & EN]</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>8 commits</li>
-                          <li class='contrib-additions small'>827++</li>
-                          <li class='contrib-deletions small'>26--</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class='list-group-item'>
-                    <div class='media'>
-                      <div class='media-left'>
-                        <a href="https://github.com/openstack-dev/pbr/commits/master?author=bigchief45" target="_blank"><img src="images/contributions/pbr.png" class="media-object" title="openstack-dev/pbr" alt="Pbr" />
-                        </a>
-                      </div>
-                      <div class='media-body'>
-                        <h5 class='media-heading'><a href="https://github.com/openstack-dev/pbr/commits/master?author=bigchief45" target="_blank">openstack-dev/pbr</a></h5>
-                        <p class='small'>Python Build Reasonableness</p>
-                        <ul class='list-inline small contrib'>
-                          <li class='text-muted small'>1 commit</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </aside>
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="aws/chalice" target="_blank">      <img src="images/contributions/chalice.png" class="media-object" title="aws/chalice" alt="Chalice" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/aws/chalice/commits/master?author=bigchief45" target="_blank">aws/chalice</a></h5>
+
+    <p class="small">Python Serverless Microframework for AWS</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">2 commits</li>
+
+      <!-- Additions -->
+        <li class="small text-success">27++</li>
+
+      <!-- Deletions -->
+        <li class="small text-danger">18--</li>
+    </ul>
+  </div>
+</div>
+      </div>
+  </div>
+
+  <hr>
+  <div class="row">
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="ajaxorg/ace" target="_blank">      <img src="images/contributions/ace.png" class="media-object" title="ajaxorg/ace" alt="Ace" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/ajaxorg/ace/commits/master?author=bigchief45" target="_blank">ajaxorg/ace</a></h5>
+
+    <p class="small">Ace (Ajax.org Cloud9 Editor)</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">11 commits</li>
+
+      <!-- Additions -->
+        <li class="small text-success">472++</li>
+
+      <!-- Deletions -->
+        <li class="small text-danger">231--</li>
+    </ul>
+  </div>
+</div>
+      </div>
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="jneen/rouge" target="_blank">      <img src="images/contributions/rouge.png" class="media-object" title="jneen/rouge" alt="Rouge" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/jneen/rouge/commits/master?author=bigchief45" target="_blank">jneen/rouge</a></h5>
+
+    <p class="small">A pure-ruby code highlighter that is compatible with pygments http://rouge.jneen.net/</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">3 commits</li>
+
+      <!-- Additions -->
+        <li class="small text-success">10++</li>
+
+      <!-- Deletions -->
+        <li class="small text-danger">1--</li>
+    </ul>
+  </div>
+</div>
+      </div>
+  </div>
+
+  <hr>
+  <div class="row">
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="gnocchixyz/gnocchi" target="_blank">      <img src="images/contributions/gnocchi.png" class="media-object" title="gnocchixyz/gnocchi" alt="Gnocchi" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/gnocchixyz/gnocchi/commits/master?author=bigchief45" target="_blank">gnocchixyz/gnocchi</a></h5>
+
+    <p class="small">Timeseries database</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">5 commits</li>
+
+      <!-- Additions -->
+        <li class="small text-success">108++</li>
+
+      <!-- Deletions -->
+        <li class="small text-danger">14--</li>
+    </ul>
+  </div>
+</div>
+      </div>
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="gnocchixyz/python-gnocchiclient" target="_blank">      <img src="images/contributions/python-gnocchiclient.png" class="media-object" title="gnocchixyz/python-gnocchiclient" alt="Python gnocchiclient" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/gnocchixyz/python-gnocchiclient/commits/master?author=bigchief45" target="_blank">gnocchixyz/python-gnocchiclient</a></h5>
+
+    <p class="small">Python client from Gnocchi</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">1 commit</li>
+
+      <!-- Additions -->
+        <li class="small text-success">0++</li>
+
+      <!-- Deletions -->
+        <li class="small text-danger">17--</li>
+    </ul>
+  </div>
+</div>
+      </div>
+  </div>
+
+  <hr>
+  <div class="row">
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="ElemeFE/element" target="_blank">      <img src="images/contributions/element.png" class="media-object" title="ElemeFE/element" alt="Element" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/ElemeFE/element/commits/master?author=bigchief45" target="_blank">ElemeFE/element</a></h5>
+
+    <p class="small">A Vue.js 2.0 UI Toolkit for Web</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">3 commits</li>
+
+      <!-- Additions -->
+        <li class="small text-success">12++</li>
+
+      <!-- Deletions -->
+        <li class="small text-danger">5--</li>
+    </ul>
+  </div>
+</div>
+      </div>
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="iview/iview-doc" target="_blank">      <img src="images/contributions/iview-doc.png" class="media-object" title="iview/iview-doc" alt="Iview doc" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/iview/iview-doc/commits/master?author=bigchief45" target="_blank">iview/iview-doc</a></h5>
+
+    <p class="small">iView document. [CN & EN]</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">8 commits</li>
+
+      <!-- Additions -->
+        <li class="small text-success">827++</li>
+
+      <!-- Deletions -->
+        <li class="small text-danger">26--</li>
+    </ul>
+  </div>
+</div>
+      </div>
+  </div>
+
+  <hr>
+  <div class="row">
+      <div class="col-md-6">
+        <div class="media">
+  <div class="media-left">
+<a href="openstack-dev/pbr" target="_blank">      <img src="images/contributions/pbr.png" class="media-object" title="openstack-dev/pbr" alt="Pbr" />
+</a>  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="https://github.com/openstack-dev/pbr/commits/master?author=bigchief45" target="_blank">openstack-dev/pbr</a></h5>
+
+    <p class="small">Python Build Reasonableness</p>
+
+    <ul class="list-inline small">
+      <!-- Commits -->
+      <li class="text-muted small">1 commit</li>
+
+      <!-- Additions -->
+
+      <!-- Deletions -->
+    </ul>
+  </div>
+</div>
+      </div>
+  </div>
+
+  <hr>
+
+<div class="page-header">
+  <h2>Certificates</h2>
+</div>
+
+<ul>
+  <li>
+    <a href="pdfs/tocfl/lr_cert.pdf" target="_blank">TOCFL Listening & Reading</a>
+  </li>
+
+  <li>
+    <a href="pdfs/tocfl/speaking_cert.pdf" target="_blank">TOCFL Speaking</a>
+  </li>
+</ul>
+<div class="page-header">
+  <h2>Languages</h2>
+</div>
+
+<ul class="list-unstyled">
+
+  <!-- Spanish -->
+  <li>
+    <strong>Spanish</strong>
+    <small class="text-muted">(Native Speaker)</small>
+    <br class="visible-xs"/>
+
+    <div class="pull-right text-warning">
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+    </div>
+  </li>
+
+  <!-- English -->
+  <li>
+    <strong>English</strong>
+    <small class="text-muted">(Fluent)</small>
+    <br class="visible-xs"/>
+
+    <div class="pull-right text-warning">
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+    </div>
+  </li>
+
+  <!-- Chinese -->
+  <li>
+    <strong>Mandarin Chinese</strong>
+    <small class="text-muted">(Advanced)</small>
+    <br class="visible-xs"/>
+
+    <div class="pull-right text-warning">
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+    </div>
+  </li>
+
+  <!-- Italian -->
+  <li>
+    <strong>Italian</strong>
+    <small class="text-muted">(Beginner)</small>
+    <br class="visible-xs"/>
+
+    <div class="pull-right text-warning">
+      <i class="fa fa-star"></i>
+      <i class="fa fa-star"></i>
+    </div>
+  </li>
+
+</ul>
+
+
+<br />
+          </div>
         </div>
       </div>
     </div>
+
   </body>
 </html>
