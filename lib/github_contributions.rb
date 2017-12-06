@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
+require 'octokit'
 
 module GithubContributions
-  require 'octokit'
 
   REPOS = [
     'rails/rails', 'aws/chalice',
@@ -9,6 +9,8 @@ module GithubContributions
     'gnocchixyz/python-gnocchiclient', 'ElemeFE/element', 'iview/iview-doc',
     'openstack-dev/pbr',
   ]
+
+  OUTPUT_PATH = '/home/ubuntu/workspace/portfolio/data/open_source.json'
 
   class << self
     def login
@@ -25,8 +27,7 @@ module GithubContributions
     end
 
     def write_json(contributions)
-      path = '/home/ubuntu/workspace/portfolio/data/open_source.json'
-      File.open(path, 'w') do |f|
+      File.open(OUTPUT_PATH, 'w') do |f|
         f.puts contributions.map(&:to_json).to_json
       end
     end

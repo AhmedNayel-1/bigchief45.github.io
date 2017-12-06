@@ -4,60 +4,17 @@
 
 <ul class="list-unstyled">
 
-  <!-- Spanish -->
-  <li>
-    <strong>Spanish</strong>
-    <small class="text-muted">(Native Speaker)</small>
-    <br class="visible-xs"/>
+  <% data.language.languages.each do |language| %>
+    <li>
+      <span><%= language.name %></span>
+      <small class="text-muted">(<%= language.level %>)</small>
+      <br class="visible-xs"/>
 
-    <div class="pull-right text-warning">
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-    </div>
-  </li>
-
-  <!-- English -->
-  <li>
-    <strong>English</strong>
-    <small class="text-muted">(Fluent)</small>
-    <br class="visible-xs"/>
-
-    <div class="pull-right text-warning">
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-    </div>
-  </li>
-
-  <!-- Chinese -->
-  <li>
-    <strong>Mandarin Chinese</strong>
-    <small class="text-muted">(Advanced)</small>
-    <br class="visible-xs"/>
-
-    <div class="pull-right text-warning">
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-    </div>
-  </li>
-
-  <!-- Italian -->
-  <li>
-    <strong>Italian</strong>
-    <small class="text-muted">(Beginner)</small>
-    <br class="visible-xs"/>
-
-    <div class="pull-right text-warning">
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-    </div>
-  </li>
-
+      <div class="pull-right text-info">
+        <% language.stars.times do %>
+          <span class="fa fa-star"></span>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
 </ul>
