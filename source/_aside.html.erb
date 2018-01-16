@@ -6,9 +6,11 @@
         Andrés Álvarez
       <% end %>
     </h1>
-    <small class="text-center center-block">My Blog</small>
+    <small class="text-center center-block">Dev Blog</small>
 
-    <%= image_tag 'profile.jpg', id: 'profile-pic', class: 'img-circle center-block img-responsive' %>
+    <% link_to 'index.html' do %>
+      <%= image_tag config[:avatar_url], id: 'profile-pic', class: 'img-circle center-block img-responsive' %>
+    <% end %>
 
     <!-- SOCIAL -->
     <div id="social" class="text-center">
