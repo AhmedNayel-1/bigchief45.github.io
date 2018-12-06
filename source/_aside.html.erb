@@ -17,25 +17,31 @@
       <ul class="list-inline">
         <li>
           <% link_to 'mailto:andresalvarez353@gmail.com' do %>
-            <span class="fa fa-envelope fa-2x"></span>
+            <span class="fa fa-envelope fa-2x" title="E-Mail"></span>
           <% end %>
         </li>
 
         <li>
-          <% link_to 'http://tw.linkedin.com/in/aalvarez4', target: '_blank' do %>
-            <span class="fa fa-linkedin fa-2x"></span>
+          <% link_to 'http://linkedin.com/in/aalvarez4', target: '_blank' do %>
+            <span class="fa fa-linkedin fa-2x" title="LinkedIn"></span>
           <% end %>
         </li>
 
         <li>
           <% link_to 'http://www.github.com/bigchief45', target: '_blank' do %>
-            <span class="fa fa-github-alt fa-2x"></span>
+            <span class="fa fa-github-alt fa-2x" title="Github"></span>
+          <% end %>
+        </li>
+        
+        <li>
+          <% link_to 'https://www.instagram.com/aalvarez300/', target: '_blank' do %>
+            <span class="fa fa-instagram fa-2x" title="Instagram"></span>
           <% end %>
         </li>
 
         <li>
-          <% link_to 'feed.xml' do %>
-            <span class="fa fa-rss fa-2x"></span>
+          <% link_to '/blog/feed.xml' do %>
+            <span class="fa fa-rss fa-2x" title="RSS"></span>
           <% end %>
         </li>
       </ul>

@@ -4,10 +4,10 @@ require 'octokit'
 module GithubContributions
 
   REPOS = [
-    'rails/rails', 'aws/chalice',
+    'rails/rails', 'aws/chalice', 'aws/aws-sdk-java', 'serverless/serverless',
     'ajaxorg/ace', 'jneen/rouge', 'gnocchixyz/gnocchi',
     'gnocchixyz/python-gnocchiclient', 'ElemeFE/element', 'iview/iview-doc',
-    'openstack-dev/pbr',
+    'openstack-dev/pbr', 'GetStream/Winds'
   ]
 
   OUTPUT_PATH = '/home/ubuntu/workspace/portfolio/data/open_source.json'
