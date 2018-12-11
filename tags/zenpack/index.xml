@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zenpack on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/zenpack/</link>
+    <description>Recent content in Zenpack on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 09 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/zenpack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Custom Notification Action Types in Zenoss</title>
+      <link>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</link>
+      <pubDate>Tue, 09 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create &lt;em&gt;command&lt;/em&gt; type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a &lt;a href=&#34;http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html&#34;&gt;more recent post&lt;/a&gt; I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.&lt;/p&gt;
+
+&lt;p&gt;In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.&lt;/p&gt;
+
+&lt;h2 id=&#34;zenoss-default-notification-actions&#34;&gt;Zenoss Default Notification Actions&lt;/h2&gt;
+
+&lt;p&gt;By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;These action types are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Command&lt;/strong&gt;: Runs an executable script. Discussed in one of my &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous posts&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: Sends an e-mail to a user.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Page&lt;/strong&gt;: Sends a message to a user&amp;rsquo;s &lt;a href=&#34;https://en.wikipedia.org/wiki/Pager&#34;&gt;pager&lt;/a&gt;, also known as &lt;em&gt;beeper&lt;/em&gt;. Probably safe to say that this is not used by anyone anymore.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Syslog&lt;/strong&gt;: Logs a message to &lt;a href=&#34;https://en.wikipedia.org/wiki/Syslog&#34;&gt;syslog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SNMP Trap&lt;/strong&gt;: Sends an SNMP trap.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All these notifications are sent when an event matches a trigger rule.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-new-action&#34;&gt;Creating the New Action&lt;/h2&gt;
+
+&lt;p&gt;Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&amp;rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Custom Triggers and Notifications in a ZenPack</title>
+      <link>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</link>
+      <pubDate>Thu, 04 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how to use &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;command notifications&lt;/strong&gt; in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.&lt;/p&gt;
+
+&lt;p&gt;In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.&lt;/p&gt;
+
+&lt;h2 id=&#34;defining-zenpack-triggers-notifications&#34;&gt;Defining ZenPack Triggers &amp;amp; Notifications&lt;/h2&gt;
+
+&lt;p&gt;Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named &lt;code&gt;actions.json&lt;/code&gt; in a directory called &lt;code&gt;zep&lt;/code&gt; (create it if it doesn&amp;rsquo;t exist), within the ZenPack&amp;rsquo;s top directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;actions.json&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
+  &amp;#34;triggers&amp;#34;: [
+    {
+      &amp;#34;name&amp;#34;: &amp;#34;Critical_death_event&amp;#34;,
+      &amp;#34;uuid&amp;#34;: &amp;#34;4c055067-98b7-483e-8f49-2820b4f2f721&amp;#34;,
+      &amp;#34;enabled&amp;#34;: false,
+      &amp;#34;rule&amp;#34;: {
+        &amp;#34;api_version&amp;#34;: 1,
+        &amp;#34;type&amp;#34;: 1,
+        &amp;#34;source&amp;#34;: &amp;#34;(evt.event_class.startswith(\&amp;#34;/Status/Ping\&amp;#34;)) and (evt.status == 0) and (evt.severity &amp;gt; 2)&amp;#34;
+      }
+    }
+  ],
+
+  &amp;#34;notifications&amp;#34;: [
+    {
+      &amp;#34;id&amp;#34;: &amp;#34;send_sms_message&amp;#34;,
+      &amp;#34;description&amp;#34;: &amp;#34;Send SMS using Twilio&amp;#34;,
+      &amp;#34;action&amp;#34;: &amp;#34;command&amp;#34;,
+      &amp;#34;guid&amp;#34;: &amp;#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&amp;#34;,
+      &amp;#34;enabled&amp;#34;: false,
+      &amp;#34;action_timeout&amp;#34;: 60,
+      &amp;#34;delay_seconds&amp;#34;: 0,
+      &amp;#34;repeat_seconds&amp;#34;: 0,
+      &amp;#34;send_initial_occurrence&amp;#34;: false,
+      &amp;#34;send_clear&amp;#34;: false,
+      &amp;#34;body_format&amp;#34;: &amp;#34;echo \&amp;#34;Hello World!\&amp;#34;&amp;#34;,
+      &amp;#34;clear_body_format&amp;#34;: &amp;#34;&amp;#34;,
+      &amp;#34;subscriptions&amp;#34;: [&amp;#34;4c055067-98b7-483e-8f49-2820b4f2f721&amp;#34;]
+    }
+  ]
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

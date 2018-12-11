@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Loosely Coupled Node Actions in Netbeans Platform &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Loosely Coupled Node Actions in Netbeans Platform</h1>
+  <time datetime=2018-07-25T00:00:00Z class="post-date">Wed, Jul 25, 2018</time>
+
+  <p>Nodes in Netbeans Platform can possess actions that can be executed with the node object as context. For example, the Project, Package, and Class nodes in the Netbeans IDE have a set of actions which can be seen by right clicking on the nodes:</p>
+
+<p><img src="/posts/loosely-coupled-node-actions-in-netbeans-platform/netbeans_ide_node_actions.png" alt="Netbeans IDE Node Actions" /></p>
+
+<p>In the Netbeans Platform tutorials I found <a href="https://platform.netbeans.org/tutorials/nbm-nodesapi2.html#actions">a tutorial</a> that explains how to add these actions to nodes. The problem is that in that tutorial the action class was created as an <strong>inner class</strong> of the node class. Making the action <strong>tightly coupled</strong> with the node.</p>
+
+<p>I managed to implement a more modular and loosely coupled approach, which is what I will explain in this post.</p>
+
+<p>Our loosely coupled approach will basically allow us to:</p>
+
+<ol>
+<li>Keep the domain logic (Java Beans and POJOs) in its own domain module.</li>
+<li>Keep the view logic (nodes that represent beans) in another module.</li>
+<li>Keep the node actions logic in yet another module. This allows us to plug and unplug different action&rsquo;s that belong to separate modules. Making our application&rsquo;s node actions very modular.</li>
+</ol>
+
+<p>Let&rsquo;s begin!</p>
+
+<h2 id="tracking-selection-in-our-view">Tracking Selection in Our View</h2>
+
+<p>For our example, let&rsquo;s assume that we are using a BeanTreeView to represent our nodes in our application. Naturally our node actions menu will be displayed when we right click on a selected node. Hence, we will first going to track the selection that happens in the BeanTreeView.</p>
+
+<p>Here is an example of a <code>BeanTreeView</code>:</p>
+
+<p><img src="https://platform.netbeans.org/images/tutorials/selection-2/73/new-node-1.png" alt="Netbeans Platform BeanTreeView" /></p>
+
+<p>Create a new TopComponent in the explorer view. For this TopComponent we will implement the <code>LookupListener</code> and <code>ExplorerManager.Provider</code> interfaces. Also, we will instantiate a lookup result (which will contain the current selection) and an explorer manager (which is used to generate the nodes):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BooksViewerTopComponent</span> <span style="color:#080;font-weight:bold">extends</span> TopComponent <span style="color:#080;font-weight:bold">implements</span> LookupListener<span style="color:#333">,</span> ExplorerManager<span style="color:#333">.</span><span style="color:#00c">Provider</span> <span style="color:#333">{</span>
+
+  <span style="color:#080;font-weight:bold">private</span> Lookup<span style="color:#333">.</span><span style="color:#00c">Result</span><span style="color:#333">&lt;</span>Book<span style="color:#333">&gt;</span> result <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">null</span><span style="color:#333">;</span>
+  <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">static</span> ExplorerManager em <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> ExplorerManager<span style="color:#333">();</span>
+
+<span style="color:#333">}</span></code></pre></div>
+<p>Next, in the constructor we will associate the lookup and generate the nodes:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">BooksViewerTopComponent</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+  <span style="color:#888">// Generated code...
+</span><span style="color:#888"></span>
+  associateLookup<span style="color:#333">(</span>ExplorerUtils<span style="color:#333">.</span><span style="color:#00c">createLookup</span><span style="color:#333">(</span>em<span style="color:#333">,</span> getActionMap<span style="color:#333">()));</span>
+  em<span style="color:#333">.</span><span style="color:#00c">setRootContext</span><span style="color:#333">(</span><span style="color:#080;font-weight:bold">new</span> AbstractNode<span style="color:#333">(</span>Children<span style="color:#333">.</span><span style="color:#00c">create</span><span style="color:#333">(</span><span style="color:#080;font-weight:bold">new</span> BookChildFactory<span style="color:#333">(),</span> <span style="color:#080;font-weight:bold">true</span><span style="color:#333">)));</span>
+<span style="color:#333">}</span></code></pre></div>
+<p>Keep in mind that I am assuming that the factories already exist and that we are operating with a <code>Book</code> bean.</p>
+
+<p>Finally let&rsquo;s implement the necessary methods in our TopComponent:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#555;font-weight:bold">@Override</span>
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">componentOpened</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+  result <span style="color:#333">=</span> Utilities<span style="color:#333">.</span><span style="color:#00c">actionsGlobalContext</span><span style="color:#333">().</span><span style="color:#00c">lookupResult</span><span style="color:#333">(</span>Book<span style="color:#333">.</span><span style="color:#00c">class</span><span style="color:#333">);</span>
+  result<span style="color:#333">.</span><span style="color:#00c">addLookupListener</span><span style="color:#333">(</span><span style="color:#080;font-weight:bold">this</span><span style="color:#333">);</span>
+<span style="color:#333">}</span>
+
+<span style="color:#555;font-weight:bold">@Override</span>
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">componentClosed</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+  result<span style="color:#333">.</span><span style="color:#00c">removeLookupListener</span><span style="color:#333">(</span><span style="color:#080;font-weight:bold">this</span><span style="color:#333">);</span>
+<span style="color:#333">}</span>
+
+<span style="color:#555;font-weight:bold">@Override</span>
+<span style="color:#080;font-weight:bold">public</span> ExplorerManager <span style="color:#06b;font-weight:bold">getExplorerManager</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+  <span style="color:#080;font-weight:bold">return</span> em<span style="color:#333">;</span>
+<span style="color:#333">}</span>
+
+<span style="color:#555;font-weight:bold">@Override</span>
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">resultChanged</span><span style="color:#333">(</span>LookupEvent evt<span style="color:#333">)</span> <span style="color:#333">{</span>
+  <span style="color:#888">// Will contain the current selection everytime it changes.
+</span><span style="color:#888"></span>  Collection<span style="color:#333">&lt;?</span> <span style="color:#080;font-weight:bold">extends</span> Book<span style="color:#333">&gt;</span> allBooks <span style="color:#333">=</span> result<span style="color:#333">.</span><span style="color:#00c">allInstances</span><span style="color:#333">();</span>
+<span style="color:#333">}</span></code></pre></div>
+<p>And that is all we need to track the top component&rsquo;s selection of nodes. To access it we only need to access the TopComponent&rsquo;s own lookup.</p>
+
+<h2 id="creating-our-loosely-coupled-node-action">Creating Our Loosely Coupled Node Action</h2>
+
+<p>Since our node action will be loosely coupled, we will create a new module in our application. After that is done you can use the wizard to add a new context sensitive action on the <code>Book</code> object. In the end what we want is our action to look like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#555;font-weight:bold">@ActionID</span><span style="color:#333">(</span>
+        category <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;File&#34;</span><span style="color:#333">,</span>
+        id <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;com.myapp.mymodule.AnalyzeBookAction&#34;</span>
+<span style="color:#333">)</span>
+<span style="color:#555;font-weight:bold">@ActionRegistration</span><span style="color:#333">(</span>
+        iconBase <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;path/to/icon.png&#34;</span><span style="color:#333">,</span>
+        displayName <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;#CTL_AnalyzeBookAction&#34;</span>
+<span style="color:#333">)</span>
+<span style="color:#555;font-weight:bold">@ActionReference</span><span style="color:#333">(</span>path <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;Actions/BookNode&#34;</span><span style="color:#333">)</span>
+<span style="color:#555;font-weight:bold">@Messages</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;CTL_AnalyzeBookAction=Analyze Book&#34;</span><span style="color:#333">)</span>
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AnalyzeBookAction</span> <span style="color:#080;font-weight:bold">implements</span> ActionListener <span style="color:#333">{</span>
+
+  <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">final</span> Book context<span style="color:#333">;</span>
+
+  <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">AnalyzeBookAction</span><span style="color:#333">(</span>Book context<span style="color:#333">)</span> <span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">this</span><span style="color:#333">.</span><span style="color:#00c">context</span> <span style="color:#333">=</span> context<span style="color:#333">;</span>
+  <span style="color:#333">}</span>
+
+  <span style="color:#555;font-weight:bold">@Override</span>
+  <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">actionPerformed</span><span style="color:#333">(</span>ActionEvent ev<span style="color:#333">)</span> <span style="color:#333">{</span>
+    <span style="color:#888">// Our custom action logic here
+</span><span style="color:#888"></span>  <span style="color:#333">}</span>
+<span style="color:#333">}</span></code></pre></div>
+<p>There are quite a few important things going on here. First, is the <code>@ActionReference</code> annotation. We use this annotation to tell Netbeans Platform <em>where</em> we want to register our action. This could be a menu item, a toolbar, or in this case, the popup menu of a node. The magic here is the <code>path</code> parameter, which is a string that represents a path where Netbeans Platform will place the action. <strong>This is what gives us loose coupling</strong>. You will see how in just a bit.</p>
+
+<p>=&gt; The path string could be any path (if I am not mistaken). However notice how I use a very intuitive path consisting of the word &ldquo;Actions&rdquo; and the node which the action belongs to.</p>
+
+<p>Another thing is this action&rsquo;s <strong>context</strong>. We are using a variable called <code>context</code> which is of the type of the class we are working with and that our nodes represent (a book, or books). When we declare this variable and also pass it in the constructor, Netbeans Platform automatically will treat this action as a <strong>context-sensitive action</strong>. This means that the action will only become enabled when a node is selected. Otherwise it will automatically become disabled.</p>
+
+<h2 id="adding-the-action-to-the-node-s-list-of-actions">Adding The Action To The Node&rsquo;s List of Actions</h2>
+
+<p>Now that we have created the action and we have registered it in a specific path. We will go to the module that contains our <code>BookNode</code> and add the action in the <code>getActions</code> method:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookNode</span> <span style="color:#080;font-weight:bold">extends</span> BeanNode<span style="color:#333">&lt;</span>Book<span style="color:#333">&gt;</span> <span style="color:#333">{</span>
+
+  <span style="color:#888">// ...
+</span><span style="color:#888"></span>
+  <span style="color:#555;font-weight:bold">@Override</span>
+  <span style="color:#080;font-weight:bold">public</span> Action<span style="color:#333">[]</span> <span style="color:#06b;font-weight:bold">getActions</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">boolean</span> popup<span style="color:#333">)</span> <span style="color:#333">{</span>
+    List<span style="color:#333">&lt;?</span> <span style="color:#080;font-weight:bold">extends</span> Action<span style="color:#333">&gt;</span> actions <span style="color:#333">=</span> Utilities<span style="color:#333">.</span><span style="color:#00c">actionsForPath</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;Actions/BookNode&#34;</span><span style="color:#333">);</span>
+    <span style="color:#080;font-weight:bold">return</span> actions<span style="color:#333">.</span><span style="color:#00c">toArray</span><span style="color:#333">(</span><span style="color:#080;font-weight:bold">new</span> Action<span style="color:#333">[</span>actions<span style="color:#333">.</span><span style="color:#00c">size</span><span style="color:#333">()]);</span>
+  <span style="color:#333">}</span>
+<span style="color:#333">}</span></code></pre></div>
+<p>Another great example of our loosely coupled design! In the method above, we retrieve <em>all</em> the actions in the path we mentioned before. Naturally this will fetch the action we created, so that it can too be displayed in the node&rsquo;s popup menu.</p>
+
+<p>If you remember, in the tutorial I mentioned at the beginning, they hardcode the node action (which was an inner class) in this method. Creating tight-coupling between the node and the action, all in the same module.</p>
+
+<p>You could also fetch other actions from different paths, as well as include built-in node actions such as <em>Copy</em>, <em>Delete</em>, etc.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In this post we managed to add a new node action to our application in a loosely coupled manner, using 3 modules:</p>
+
+<ol>
+<li>A module for domain logic</li>
+<li>A module for view logic</li>
+<li>A module for the new action</li>
+</ol>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="http://wiki.netbeans.org/DevFaqActionContextSensitive">http://wiki.netbeans.org/DevFaqActionContextSensitive</a></li>
+<li><a href="https://blogs.oracle.com/geertjan/overriding-default-context-sensitive-action-enablement">https://blogs.oracle.com/geertjan/overriding-default-context-sensitive-action-enablement</a></li>
+<li><a href="https://platform.netbeans.org/tutorials/nbm-selection-1.html">https://platform.netbeans.org/tutorials/nbm-selection-1.html</a></li>
+<li><a href="https://platform.netbeans.org/tutorials/nbm-selection-2.html">https://platform.netbeans.org/tutorials/nbm-selection-2.html</a></li>
+<li><a href="https://benkiew.wordpress.com/2012/12/28/netbeans-how-to-create-a-context-aware-action-with-an-icon-for-the-context-menu/">https://benkiew.wordpress.com/2012/12/28/netbeans-how-to-create-a-context-aware-action-with-an-icon-for-the-context-menu/</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

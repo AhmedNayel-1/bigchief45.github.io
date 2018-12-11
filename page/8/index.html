@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/understanding-gnocchi-measures/">Understanding Gnocchi Measures</a>
+  </h1>
+  <time datetime="2017-05-24T00:00:00Z" class="post-date">Wed, May 24, 2017</time>
+  <p>Measures are simple objects that represent the timeseries data. They simply contain a <strong>timestamp</strong> and a <strong>value</strong>, and they belong to <a href="/posts/understanding-gnocchi-metrics.html">metrics</a>. You could say that a measure <em>has many</em> metrics.</p>
+
+<h2 id="adding-measures-to-a-metric">Adding Measures to a Metric</h2>
+
+<p>Using the REST API, we can easily add measures to a metric:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#06b;font-weight:bold">POST</span> <span style="color:#0e84b5;font-weight:bold">/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures</span> <span style="color:#080;font-weight:bold">HTTP</span><span style="color:#333">/</span><span style="color:#60e;font-weight:bold">1.1</span>
+Content-Type<span style="color:#333">:</span> application/json
+Content-Length<span style="color:#333">:</span> 198
+
+[
+  {
+    <span style="color:#070">&#34;timestamp&#34;</span>: <span style="background-color:#fff0f0">&#34;2014-10-06T14:33:57&#34;</span>,
+    <span style="color:#070">&#34;value&#34;</span>: <span style="color:#60e;font-weight:bold">43.1</span>
+  },
+  {
+    <span style="color:#070">&#34;timestamp&#34;</span>: <span style="background-color:#fff0f0">&#34;2014-10-06T14:34:12&#34;</span>,
+    <span style="color:#070">&#34;value&#34;</span>: <span style="color:#00d;font-weight:bold">12</span>
+  },
+  {
+    <span style="color:#070">&#34;timestamp&#34;</span>: <span style="background-color:#fff0f0">&#34;2014-10-06T14:34:20&#34;</span>,
+    <span style="color:#070">&#34;value&#34;</span>: <span style="color:#00d;font-weight:bold">2</span>
+  }
+]</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/understanding-gnocchi-measures/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/understanding-gnocchi-metrics/">Understanding Gnocchi Metrics</a>
+  </h1>
+  <time datetime="2017-05-18T00:00:00Z" class="post-date">Thu, May 18, 2017</time>
+  <p>Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store <strong>measures</strong>, and the way they do this is defined by <strong>archive policies</strong>. These are concepts that I will cover in future articles.</p>
+
+<p>Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
+
+<p><img src="http://gnocchi.xyz/_images/architecture.png" alt="Gnocchi Architecture" /></p>
+
+<p>In the Gnocchi architecture, the <strong>storage</strong> back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/understanding-gnocchi-metrics/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/testing-a-rails-api-with-rspec/">Testing a Rails API With RSpec</a>
+  </h1>
+  <time datetime="2017-05-15T00:00:00Z" class="post-date">Mon, May 15, 2017</time>
+  <p>As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.</p>
+
+<h2 id="setting-up-the-necessary-tools">Setting Up the Necessary Tools</h2>
+
+<p>In addition to RSpec, there are a few tools that make my testing experience much easier. These are:</p>
+
+<ul>
+<li><a href="https://github.com/thoughtbot/factory_girl_rails">Factory Girl</a></li>
+<li><a href="https://github.com/stympy/faker">Faker</a></li>
+<li><a href="https://github.com/thoughtbot/shoulda-matchers">Shoulda Matchers</a></li>
+<li><a href="https://github.com/DatabaseCleaner/database_cleaner">Database Cleaner</a></li>
+</ul>
+
+<p>After Adding these gems to the Gemfile. I proceed to create a <code>/support</code> directory under the <code>/spec</code> directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.</p>
+
+<p><strong>/spec/support/shoulda.rb</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#036;font-weight:bold">Shoulda</span><span style="color:#333">::</span><span style="color:#036;font-weight:bold">Matchers</span><span style="color:#333">.</span>configure <span style="color:#080;font-weight:bold">do</span> <span style="color:#333">|</span>config<span style="color:#333">|</span>
+  config<span style="color:#333">.</span>integrate <span style="color:#080;font-weight:bold">do</span> <span style="color:#333">|</span>with<span style="color:#333">|</span>
+    <span style="color:#888"># Choose a test framework:</span>
+    with<span style="color:#333">.</span>test_framework <span style="color:#a60;background-color:#fff0f0">:rspec</span>
+
+    <span style="color:#888"># Or, choose the following (which implies all of the above):</span>
+    with<span style="color:#333">.</span>library <span style="color:#a60;background-color:#fff0f0">:rails</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/tdd" class="label label-default">tdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/bdd" class="label label-default">bdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/rspec" class="label label-default">rspec</a></li>
+  
+    <a href="http://aalvarez.me/tags/json" class="label label-default">json</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/testing-a-rails-api-with-rspec/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/">Custom Notification Action Types in Zenoss</a>
+  </h1>
+  <time datetime="2017-05-09T00:00:00Z" class="post-date">Tue, May 9, 2017</time>
+  <p>In a <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how we could create <em>command</em> type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a <a href="/posts/custom-triggers-and-notifications-in-a-zenpack.html">more recent post</a> I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.</p>
+
+<p>In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.</p>
+
+<h2 id="zenoss-default-notification-actions">Zenoss Default Notification Actions</h2>
+
+<p>By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:</p>
+
+<p><img src="/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg" alt="Zenoss Default Actions" /></p>
+
+<p>These action types are:</p>
+
+<ul>
+<li><strong>Command</strong>: Runs an executable script. Discussed in one of my <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous posts</a>.</li>
+<li><strong>Email</strong>: Sends an e-mail to a user.</li>
+<li><strong>Page</strong>: Sends a message to a user&rsquo;s <a href="https://en.wikipedia.org/wiki/Pager">pager</a>, also known as <em>beeper</em>. Probably safe to say that this is not used by anyone anymore.</li>
+<li><strong>Syslog</strong>: Logs a message to <a href="https://en.wikipedia.org/wiki/Syslog">syslog</a></li>
+<li><strong>SNMP Trap</strong>: Sends an SNMP trap.</li>
+</ul>
+
+<p>All these notifications are sent when an event matches a trigger rule.</p>
+
+<h2 id="creating-the-new-action">Creating the New Action</h2>
+
+<p>Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpack" class="label label-default">zenpack</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/custom-notification-action-types-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/rails-api-with-nested-resources/">Rails API With Nested Resources</a>
+  </h1>
+  <time datetime="2017-05-08T00:00:00Z" class="post-date">Mon, May 8, 2017</time>
+  <p><a href="https://github.com/nathanvda/cocoon">Cocoon</a> is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &ldquo;mini forms&rdquo; of another model into a main model&rsquo;s form and create all objects at once when the form is saved.</p>
+
+<p>I was recently finding myself trying to implement a similar functionality using only Rails 5 API and <a href="http://jsonapi.org">JSON API specification</a>.</p>
+
+<p>As an example, we will try to implement the commonly seen <em>Work Experience</em> and <em>Educational Background</em> features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.</p>
+
+<p><img src="/posts/rails-api-with-nested-resources/education.jpg" alt="Education" /></p>
+
+<h2 id="accepts-nested-attributes-for">accepts_nested_attributes_for</h2>
+
+<p><a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html"><code>accepts_nested_attributes_for</code> </a> allows us to save attributes on <strong>associated</strong> records (work experience, educational background) through a parent record (user). By default nested attribute updating is turned off and you can enable it using the <code>#accepts_nested_attributes_for</code> class method.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/api" class="label label-default">api</a></li>
+  
+    <a href="http://aalvarez.me/tags/back-end" class="label label-default">back-end</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/rails-api-with-nested-resources/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/7/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/9/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Modifying the Zenoss Infrastructure Grid &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Modifying the Zenoss Infrastructure Grid</h1>
+  <time datetime=2016-11-10T00:00:00Z class="post-date">Thu, Nov 10, 2016</time>
+
+  <p>Continuing from my previous post, where I explained <a href="/posts/modifying-the-zenoss-device-detail-bar.html">how to modify the device detail bar from a ZenPack using ExtJS</a>, in this post I will explain how we can modify the device list grid shown in the infrastructure page.</p>
+
+<h2 id="the-infrastructure-grid">The Infrastructure Grid</h2>
+
+<p>This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include <em>device name</em>, <em>device class</em>, <em>IP address</em>, <em>production state</em>, and <em>events</em>, as shown in the image below:</p>
+
+<p><img src="/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png" alt="Zenoss Infrastructure Grid" /></p>
+
+<p>However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&rsquo;t do this by default is beyond me).</p>
+
+<h2 id="devicepanels-js">DevicePanels.js</h2>
+
+<p>The source code for the grid is found in <code>$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js</code>. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called <code>deviceColumns</code>.</p>
+
+<h3 id="device-grid-panel">Device Grid Panel</h3>
+
+<p>The grid panel object itself is an instance of a <code>Zenoss.DeviceGridPanel</code> class. Its ExtJS definition in the source code looks like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#888">/**
+</span><span style="color:#888"> * @class Zenoss.DeviceGridPanel
+</span><span style="color:#888"> * @extends Zenoss.FilterGridPanel
+</span><span style="color:#888"> * Main grid panel for displaying a device. Used on the It Infrastructure page.
+</span><span style="color:#888"> **/</span>
+Ext.define(<span style="background-color:#fff0f0">&#34;Zenoss.DeviceGridPanel&#34;</span>, {
+  extend<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;Zenoss.FilterGridPanel&#34;</span>,
+  alias<span style="color:#333">:</span> [<span style="background-color:#fff0f0">&#39;widget.DeviceGridPanel&#39;</span>, <span style="background-color:#fff0f0">&#39;widget.SimpleDeviceGridPanel&#39;</span>],
+  lastHash<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">null</span>,
+  constructor<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(config) {
+    <span style="color:#080;font-weight:bold">var</span> storeConfig <span style="color:#333">=</span> config.storeCfg <span style="color:#333">||</span> {};
+    <span style="color:#080;font-weight:bold">var</span> store <span style="color:#333">=</span> Ext.create(<span style="background-color:#fff0f0">&#39;Zenoss.DeviceStore&#39;</span>, storeConfig);
+
+    Ext.applyIf(config, {
+        store<span style="color:#333">:</span> store,
+        columns<span style="color:#333">:</span> deviceColumns
+    });
+
+    <span style="color:#080;font-weight:bold">this</span>.callParent(arguments);
+    <span style="color:#080;font-weight:bold">this</span>.on(<span style="background-color:#fff0f0">&#39;itemdblclick&#39;</span>, <span style="color:#080;font-weight:bold">this</span>.onItemDblClick, <span style="color:#080;font-weight:bold">this</span>);
+  },
+
+  onItemDblClick<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(view, record) {
+    <span style="color:#007020">window</span>.location <span style="color:#333">=</span> record.get(<span style="background-color:#fff0f0">&#34;uid&#34;</span>);
+  },
+  applyOptions<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(options){
+    <span style="color:#888">// only request the visible columns
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> visibleColumns <span style="color:#333">=</span> Zenoss.util.filter(<span style="color:#080;font-weight:bold">this</span>.columns, <span style="color:#080;font-weight:bold">function</span>(c){
+            <span style="color:#080;font-weight:bold">return</span> <span style="color:#333">!</span>c.hidden;
+        }),
+        keys <span style="color:#333">=</span> Ext.<span style="color:#007020">Array</span>.pluck(visibleColumns, <span style="background-color:#fff0f0">&#39;dataIndex&#39;</span>);
+
+    keys.push(<span style="background-color:#fff0f0">&#39;ipAddressString&#39;</span>);
+    keys.push(<span style="background-color:#fff0f0">&#39;pythonClass&#39;</span>);
+    Ext.apply(options.params, {
+        keys<span style="color:#333">:</span> keys
+    });
+  }
+});
+</code></pre></div>
+<p>The inheritance hierarchy for this class is quite a long one. Nevertheless, it is worth mentioning that the topmost parent is a <code>Ext.grid.Panel</code> class. The <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.grid.Panel">documentation</a> for this class is highly recommended.</p>
+
+<p>Because we are now dealing with a ExtJS grid panel object, pulling and displaying data becomes a bit more complicated than the scenario where we modified the device detail bar. The reason is because this component has to deal with many other ExtJS components such as Models, Stores, and Proxies, to name a few.</p>
+
+<h2 id="extjs-stores-and-models">ExtJS Stores and Models</h2>
+
+<p>The grid panel class deals with other built-in ExtJs classes: <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.data.Store"><code>Ext.data.Store</code></a> and <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.data.Model"><code>Ext.data.Model</code></a>.</p>
+
+<p>A <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.data.Model"><strong>model</strong></a> basically represents some object that your application manages. For example, one might define a Model for Users, Products, Cars, or any other real-world object that we want to model in the system. They are registered via the model manager, and are used by <strong>stores</strong>, which are in turn used by many of the data-bound components in Ext.</p>
+
+<p>We can see the definition of the Zenoss device model:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.define(<span style="background-color:#fff0f0">&#39;Zenoss.device.DeviceModel&#39;</span>,{
+  extend<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;Ext.data.Model&#39;</span>,
+  fields<span style="color:#333">:</span> [
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;uid&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;name&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;ipAddress&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;int&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;ipAddressString&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;productionState&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;serialNumber&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;tagNumber&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;hwManufacturer&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;hwModel&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;osManufacturer&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;osModel&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;collector&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;priority&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;systems&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;groups&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;location&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;events&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;availability&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;float&#39;</span>},
+    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;pythonClass&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>}
+  ],
+  idProperty<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;uid&#39;</span>
+});
+</code></pre></div>
+<p>On the other hand, the <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.data.Store"><strong>Store</strong></a> class encapsulates a client side cache of Model objects. Stores load data via a Proxy, and also provide functions for sorting, filtering and querying the model instances contained within it.</p>
+
+<p>A Store is just a collection of Model instances - usually loaded from a server somewhere. Store can also maintain a set of added, updated and removed Model instances to be synchronized with the server via the Proxy.</p>
+
+<p>We can also see the device store defined by Zenoss:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.define(<span style="background-color:#fff0f0">&#34;Zenoss.DeviceStore&#34;</span>, {
+  alias<span style="color:#333">:</span> [<span style="background-color:#fff0f0">&#39;widget.DeviceStore&#39;</span>],
+  extend<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;Zenoss.DirectStore&#34;</span>,
+  constructor<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(config) {
+    config <span style="color:#333">=</span> config <span style="color:#333">||</span> {};
+    Ext.applyIf(config, {
+      autoLoad<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">false</span>,
+      pageSize<span style="color:#333">:</span> Zenoss.settings.deviceGridBufferSize,
+      model<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;Zenoss.device.DeviceModel&#39;</span>,
+      initialSortColumn<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;name&#34;</span>,
+      directFn<span style="color:#333">:</span> Zenoss.remote.DeviceRouter.getDevices,
+      root<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;devices&#39;</span>
+    });
+    <span style="color:#080;font-weight:bold">this</span>.callParent(arguments);
+  }
+});
+</code></pre></div>
+<p>If you look closely, you will notice that the store extends <code>Zenoss.DirectStore</code>. This is store acts as a base store parent class that Zenoss stores inherit from, somewhere up the hierarchy tree there will be a parent Zenoss store class that will end up extending <code>Ext.data.Store</code>.</p>
+
+<p>Another important thing worth mentioning is the <code>model</code> field in the store. In this case, Zenoss is assigning the <code>Zenoss.device.DeviceModel</code> (previously shown) to this store.</p>
+
+<p>Looking back at the defined model, we see that there is a big list of fields. However, the ping status is nowhere to be seen, and our power status is obviously not defined there either. This is the first hint as to what we should do first: <strong>Add our fields to this model definition, from our ZenPack</strong>.</p>
+
+<h2 id="modifying-the-grid">Modifying the Grid</h2>
+
+<p>We will handle the grid additions in a separate <code>resources/global.js</code> (In this case, <code>global</code> indicates that the JavaScript will be loaded for <strong>all</strong> Zenoss pages) file. In order to achieve what we want, this is the approach I took:</p>
+
+<ol>
+<li>Obtain the grid and its <code>Store</code> object.</li>
+<li>Add the two new  <code>Field</code>s to the <code>Zenoss.device.DeviceModel</code>.</li>
+<li>Create two new and fresh <code>Ext.grid.column.Column</code> objects, each making reference to the new fields.</li>
+<li>Iterate through the store&rsquo;s records (the devices shown in the grid) and for each record:
+
+<ul>
+<li>Query the Zenoss backend using <code>Zenoss.remote.DeviceRouter.getInfo</code> method to obtain the <code>status</code> and <code>power_status</code>.</li>
+<li>Assign the obtained values to the model.</li>
+</ul></li>
+<li>Insert both columns into the grid.</li>
+<li>Refresh the grid.</li>
+</ol>
+
+<p>The code that accomplishes the above is the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.onReady(<span style="color:#080;font-weight:bold">function</span>() {
+  <span style="color:#080;font-weight:bold">var</span> DEVICE_GRID_ID <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;device_grid&#39;</span>;
+
+  Ext.ComponentMgr.onAvailable(DEVICE_GRID_ID, <span style="color:#080;font-weight:bold">function</span>() {
+    <span style="color:#080;font-weight:bold">var</span> grid <span style="color:#333">=</span> Ext.getCmp(DEVICE_GRID_ID);
+    <span style="color:#080;font-weight:bold">var</span> store <span style="color:#333">=</span> grid.getStore();
+
+    <span style="color:#888">// Add &#39;status&#39; and &#39;power_status&#39; fields to the Zenoss.device.DeviceModel model
+</span><span style="color:#888"></span>    Zenoss.device.DeviceModel.prototype.fields.add(<span style="color:#080;font-weight:bold">new</span> Ext.data.Field({name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;status&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;boolean&#39;</span>}));
+    Zenoss.device.DeviceModel.prototype.fields.add(<span style="color:#080;font-weight:bold">new</span> Ext.data.Field({name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;power_status&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;boolean&#39;</span>}));
+
+    <span style="color:#888">// Create the &#39;status&#39; column
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> status_column <span style="color:#333">=</span> Ext.create(<span style="background-color:#fff0f0">&#39;Ext.grid.column.Column&#39;</span>, {
+      id<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;status&#39;</span>,
+      width<span style="color:#333">:</span> <span style="color:#00d;font-weight:bold">70</span>,
+      dataIndex<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;status&#39;</span>,
+      header<span style="color:#333">:</span> _t(<span style="background-color:#fff0f0">&#39;Status&#39;</span>),
+      renderer<span style="color:#333">:</span> Zenoss.render.pingStatus
+    });
+
+    <span style="color:#080;font-weight:bold">var</span> power_status_column <span style="color:#333">=</span> Ext.create(<span style="background-color:#fff0f0">&#39;Ext.grid.column.Column&#39;</span>, {
+      id<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;power_status&#39;</span>,
+      width<span style="color:#333">:</span> <span style="color:#00d;font-weight:bold">70</span>,
+      dataIndex<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;power_status&#39;</span>,
+      header<span style="color:#333">:</span> _t(<span style="background-color:#fff0f0">&#39;Power Status&#39;</span>),
+      renderer<span style="color:#333">:</span> Zenoss.render.pingStatus
+    });
+
+    <span style="color:#888">// Obtain the Ping Status for each record in the store and assign it to the model
+</span><span style="color:#888"></span>    store.each(<span style="color:#080;font-weight:bold">function</span>(record){
+      Zenoss.remote.DeviceRouter.getInfo({uid<span style="color:#333">:</span> record.data.uid}, <span style="color:#080;font-weight:bold">function</span>(result){
+        record.data.status <span style="color:#333">=</span> result.data.status;
+        record.data.power_status <span style="color:#333">=</span> result.data.power_status;
+
+        grid.getView().refresh();
+      });
+    });
+
+    <span style="color:#888">// Insert the status column into the device grid
+</span><span style="color:#888"></span>    grid.headerCt.insert(<span style="color:#00d;font-weight:bold">1</span>, status_column);
+    grid.headerCt.insert(<span style="color:#00d;font-weight:bold">2</span>, power_status_column);
+
+    grid.getView().refresh();
+
+  });
+});
+</code></pre></div>
+<p>I want to mention that this is <strong>NOT</strong> the approach I wanted to implement initially. In fact, I am not a fan of even iterating through the store&rsquo;s records, but I could not make other approaches work at all. If I find a better solution to this, I will make a new post about it.</p>
+
+<p>The good thing is that apparently the grid autorefreshes itself every few seconds without any extra configuration needed. One drawback however, is that the columns are not being inserted according to the index parameter passed to the <code>insert()</code> method. However, when I try it in the browser console it works perfectly. Very strange.</p>
+
+<p>Anyways, this is the end result:</p>
+
+<p><img src="/posts/modifying-the-zenoss-infrastructure-grid/modified_it_grid.jpg" alt="Modified IT grid" /></p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

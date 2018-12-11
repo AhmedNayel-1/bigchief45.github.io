@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Elasticsearch on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/elasticsearch/</link>
+    <description>Recent content in Elasticsearch on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/elasticsearch/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Django AJAX Search With Elasticsearch</title>
+      <link>http://aalvarez.me/posts/django-ajax-search-with-elasticsearch/</link>
+      <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/django-ajax-search-with-elasticsearch/</guid>
+      <description>&lt;p&gt;In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&amp;rsquo;s get started!&lt;/p&gt;
+
+&lt;h2 id=&#34;the-search-template&#34;&gt;The Search Template&lt;/h2&gt;
+
+&lt;p&gt;The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.&lt;/p&gt;
+
+&lt;p&gt;This template is extremely simple and does not need a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; tag. I will create it as a partial under &lt;code&gt;templates/search.html&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
+&amp;lt;input id=&amp;#34;search&amp;#34; name=&amp;#34;q&amp;#34; placeholder=&amp;#34;Search...&amp;#34;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notice how we have given the input a &lt;code&gt;name&lt;/code&gt; with the value of &lt;code&gt;q&lt;/code&gt;. This will be important when our view receives the query from this input field.&lt;/p&gt;
+
+&lt;p&gt;I can then render this partial in the main template like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &amp;#39;search.html&amp;#39; %}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Querying Nested Documents in ElasticSearch</title>
+      <link>http://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/</link>
+      <pubDate>Mon, 23 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/</guid>
+      <description>&lt;p&gt;The other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.&lt;/p&gt;
+
+&lt;p&gt;I wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its &lt;code&gt;text&lt;/code&gt; field.&lt;/p&gt;
+
+&lt;h2 id=&#34;nested-documents&#34;&gt;Nested Documents&lt;/h2&gt;
+
+&lt;p&gt;ElasticSearch 5 supports [nested documents](). These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a &lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-mapping.html&#34;&gt;nested object mapping&lt;/a&gt; for the index:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;PUT /my_index
+
+{
+  &amp;quot;mappings&amp;quot;: {
+    &amp;quot;book&amp;quot;: {
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;pages&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;nested&amp;quot;,
+          &amp;quot;properties&amp;quot;: {
+            &amp;quot;id&amp;quot;:    { &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;  },
+            &amp;quot;text&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;text&amp;quot;  },
+          }
+        }
+      }
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice how the mapping is created using a &lt;code&gt;PUT&lt;/code&gt; request at the &lt;strong&gt;index&lt;/strong&gt; level.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

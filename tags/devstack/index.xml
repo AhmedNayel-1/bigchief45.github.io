@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Devstack on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/devstack/</link>
+    <description>Recent content in Devstack on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 22 Mar 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/devstack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Setting Up an OpenStack Dev Environment</title>
+      <link>http://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</link>
+      <pubDate>Wed, 22 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</guid>
+      <description>&lt;p&gt;Before beginning to &lt;a href=&#34;http://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html&#34;&gt;contribute to OpenStack&lt;/a&gt;, it is necessary that we setup an ideal development environment for a smoother workflow.&lt;/p&gt;
+
+&lt;p&gt;In this post I will cover how to setup a Devstack development environment in a &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt; virtual machine using &lt;a href=&#34;http://www.vmware.com/&#34;&gt;VMware Player&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;setting-up-the-ubuntu-virtual-machine&#34;&gt;Setting Up the Ubuntu Virtual Machine&lt;/h2&gt;
+
+&lt;p&gt;Make sure you have &lt;a href=&#34;http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html&#34;&gt;VMware Player&lt;/a&gt; installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a &lt;a href=&#34;http://releases.ubuntu.com/xenial/&#34;&gt;Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)&lt;/a&gt; for &lt;strong&gt;32-bit PC i836&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu &lt;code&gt;.iso&lt;/code&gt; image file when prompted. Proceed with the installation and select the &lt;em&gt;Erase Disk and Install Ubuntu&lt;/em&gt; option when prompted.&lt;/p&gt;
+
+&lt;p&gt;~&amp;gt; I tried using &lt;a href=&#34;https://www.virtualbox.org/&#34;&gt;VirtualBox&lt;/a&gt; for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once the installation is finished, restart the virtual machine.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

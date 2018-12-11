@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Managing Debian Package Dependencies &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Managing Debian Package Dependencies</h1>
+  <time datetime=2016-10-14T00:00:00Z class="post-date">Fri, Oct 14, 2016</time>
+
+  <p>In a previous post, I talked about <a href="2016-10-11-debian-packaging-in-ubuntu.html">building a simple Debian package in Ubuntu</a>, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.</p>
+
+<h2 id="dpkg-and-dependencies">dpkg and Dependencies</h2>
+
+<p>Previously we installed our package using the <kbd>dpkg -i</kbd> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
+
+<blockquote>
+<p>dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.</p>
+</blockquote>
+
+<h2 id="specifying-dependencies">Specifying Dependencies</h2>
+
+<p>We can specify the required dependencies of our package in our package&rsquo;s control file (located in <code>DEBIAN/control</code>) by listing them as a list of package names separated by commas in the <code>Depends</code> field:</p>
+
+<pre><code>Package: mypackage
+Version: 1.0-0
+Section: base
+Priority: optional
+Architecture: all
+Depends: erlang-nox, erlang
+Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
+Description: A new and improved C++ Compiler
+</code></pre>
+
+<p>We can see that the package depends on <code>erlang</code> and <code>erlang-nox</code>. We could also be more specific and specify an exact version of the dependency:</p>
+
+<pre><code>Depends: erlang (&gt;= 1.2)
+</code></pre>
+
+<p>Additionally, we can use pipe symbols (<code>|</code>) to specify alternative package names, similar to saying &ldquo;or&rdquo; in conditional operations:</p>
+
+<pre><code>Depends: erlang-nox | erlang, maven, rrdtool
+</code></pre>
+
+<h2 id="installing-dependencies">Installing Dependencies</h2>
+
+<p>What we want is to install the package&rsquo;s dependencies the momment we begin to install the package, <strong>NOT</strong> after it has finished installing (which can be done with <kbd>apt-get -f install</kbd>)</p>
+
+<h3 id="introducing-gdebi">Introducing Gdebi</h3>
+
+<p>Gdebi is a tool that can install a Debian package along with its dependencies. However in newer versions of Ubuntu it is not installed by default, so you need to install it using <kbd>apt-get install gdebi-core</kbd>.</p>
+
+<p>Once installed, we can install our package using the following command:</p>
+
+<pre><code>gdebi install my-package.deb
+</code></pre>
+
+<p>This will proceed to install to install the package as well as the dependencies listed in the <code>control</code> file.</p>
+
+<p>Unfortuntely for some reason, <code>gdebi</code> does not provide a <code>-y</code> option like <code>apt-get</code> does. This makes it unappropriate for using it inside shell scripts.</p>
+
+<h3 id="enter-apt-get">Enter apt-get</h3>
+
+<p><code>apt-get</code> is a better choice if you want to install your package with its dependencies from shell scripts, since we can pass the <code>-y</code> option to the <code>install</code> command. Moreover, this approach is more optimal when you <a href="2016-10-17-configuring-a-local-apt-repository.html">set up and use a local apt repository</a>.</p>
+
+<p>Assuming we have added our package to our local apt repository, we can proceed to install it like this:</p>
+
+<pre><code>apt-get install mypackage
+</code></pre>
+
+<p>apt will search our repository for the package, and once it finds it it will proceed to install the listed dependencies, and then install the package. It is worth mentioning that <kbd>apt-get install</kbd> also uses <code>dpkg</code> internally.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control">http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control</a></li>
+</ul>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="http://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="http://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

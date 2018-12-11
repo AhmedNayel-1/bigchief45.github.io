@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Appending Modeler Plugins in ZenPacks &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Appending Modeler Plugins in ZenPacks</h1>
+  <time datetime=2017-01-20T00:00:00Z class="post-date">Fri, Jan 20, 2017</time>
+
+  <p>When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class&rsquo;s modeler plugins to be <strong>replaced</strong> by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply <em>added</em> to the device class&rsquo;s list of modeler plugins.</p>
+
+<p>In a previous post I explained how we can <a href="/posts/customizing-the-zenpack-installation-process.html">customize the ZenPacks installation process</a> to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.</p>
+
+<p>Let&rsquo;s assume that we have the <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a> installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the <code>/Server/SSH/Linux/NovaHost</code> device class. We want our custom ZenPack to add <em>new</em> modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.</p>
+
+<p>This will be done upon installation (like in the previous post) inside the <code>__init__.py</code> file in the ZenPack top directory. This is how the code looks like:</p>
+
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.</span> <span style="color:#080;font-weight:bold">import</span> zenpacklib
+
+zenpacklib<span style="color:#333">.</span>load_yaml()
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.</span> <span style="color:#080;font-weight:bold">import</span> schema
+
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenPack</span>(schema<span style="color:#333">.</span>ZenPack):
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">install</span>(self, app):
+        self<span style="color:#333">.</span>_update_plugins(<span style="background-color:#fff0f0">&#39;/Server/SSH/Linux/NovaHost&#39;</span>)
+
+        <span style="color:#888"># Call super last to perform the rest of the installation</span>
+        <span style="color:#007020">super</span>(ZenPack, self)<span style="color:#333">.</span>install(app)
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_update_plugins</span>(self, organizer):
+        <span style="color:#080;font-weight:bold">try</span>:
+            <span style="color:#888"># NovaHost device class</span>
+            novahost_dc <span style="color:#333">=</span> self<span style="color:#333">.</span>dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>getOrganizer(organizer)
+        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span>:
+            <span style="color:#888"># Device class doesn&#39;t exist.</span>
+            <span style="color:#080;font-weight:bold">pass</span>
+        <span style="color:#080;font-weight:bold">else</span>:
+            <span style="color:#888"># Our ZenPack&#39;s Modeler Plugins</span>
+            myPlugins <span style="color:#333">=</span> [<span style="background-color:#fff0f0">&#39;aalvarez.snmp.HardDisk&#39;</span>, <span style="background-color:#fff0f0">&#39;aalvarez.snmp.RaidCard&#39;</span>]
+
+            <span style="color:#888"># Append Plugins to NovaHost&#39;s existing plugins</span>
+            zCollectorPlugins <span style="color:#333">=</span> <span style="color:#007020">list</span>(novahost_dc<span style="color:#333">.</span>zCollectorPlugins) <span style="color:#333">+</span> myPlugins
+
+            <span style="color:#888"># Assign to the device class</span>
+            self<span style="color:#333">.</span>device_classes[<span style="background-color:#fff0f0">&#39;/Server/SSH/Linux/NovaHost&#39;</span>]<span style="color:#333">.</span>zProperties[<span style="background-color:#fff0f0">&#39;zCollectorPlugins&#39;</span>] <span style="color:#333">=</span> zCollectorPlugins</code></pre></div>
+<p>The key concepts that we can gather from this code are:</p>
+
+<ul>
+<li>We can obtain a device class object using the <em>dmd</em> <code>getOrganizer()</code> method.</li>
+<li>We can obtain a list of modeler plugins strings of the device class using <code>zCollectorPlugins</code> property of the device class object.</li>
+<li>We can make use of <code>self.device_classes[].zProperties[]</code> inside <code>__init__.py</code> to set new values.</li>
+</ul>
+
+<p>~&gt; When appending your ZenPack&rsquo;s modeler plugins using this approach, it is no longer necessary for you to specify this list of modeler plugins in the <code>zenpack.yaml</code> file.</p>
+
+<h3 id="some-gotchas">Some Gotchas</h3>
+
+<p>The <code>self.device_classes[]</code> array of device classes belongs to the ZenPack instance, and if this device class is not declared in the YAML file with zProperties like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">device_classes:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>/Server/SSH/Linux/NovaHost:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>zProperties:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#888"># ...</span></code></pre></div>
+<p>It will raise a <code>KeyError</code>.</p>
+
+<p>Fortunately I found a workaround for this. Instead of using <code>self.device_classes[]</code>, we will directly set the plugins into the organizer object obtained using DMD:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">MY_PLUGINS <span style="color:#333">=</span> [<span style="background-color:#fff0f0">&#39;aalvarez.Interface&#39;</span>, <span style="background-color:#fff0f0">&#39;aalvarez.snmp.HardDisk&#39;</span>]
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenPack</span>(schema<span style="color:#333">.</span>ZenPack):
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">install</span>(self, app):
+        self<span style="color:#333">.</span>_update_plugins(<span style="background-color:#fff0f0">&#39;/Server/SSH/Linux/NovaHost&#39;</span>)
+
+        <span style="color:#007020">super</span>(ZenPack, self)<span style="color:#333">.</span>install(app)
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_update_plugins</span>(self, organizer):
+        <span style="color:#080;font-weight:bold">try</span>:
+            dc <span style="color:#333">=</span> self<span style="color:#333">.</span>dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>getOrganizer(organizer)
+        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
+            log<span style="color:#333">.</span>error(e)
+        <span style="color:#080;font-weight:bold">else</span>:
+            dc<span style="color:#333">.</span>setZenProperty(
+                <span style="background-color:#fff0f0">&#39;zCollectorPlugins&#39;</span>, dc<span style="color:#333">.</span>zCollectorPlugins <span style="color:#333">+</span> MY_PLUGINS)</code></pre></div>
+<p>As we can see, we use a <code>setZenProperty</code> method to do this. Since the ZenPack will be installed shortly after this, no <code>commit()</code> call is needed.</p>
+
+<p>Now When the ZenPack is installed these new modeler plugins will be appended to the list, without overriding the previous plugins.</p>
+
+<h2 id="appending-monitoring-templates">Appending Monitoring Templates</h2>
+
+<p>A similar approach can be used to append monitoring templates to a specific device class as well:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_update_templates</span>(self, organizer):
+        <span style="color:#080;font-weight:bold">try</span>:
+            dc <span style="color:#333">=</span> self<span style="color:#333">.</span>dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>getOrganizer(organizer)
+        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
+            log<span style="color:#333">.</span>error(e)
+        <span style="color:#080;font-weight:bold">else</span>:
+            dc<span style="color:#333">.</span>setZenProperty(
+                <span style="background-color:#fff0f0">&#39;zDeviceTemplates&#39;</span>, dc<span style="color:#333">.</span>zDeviceTemplates <span style="color:#333">+</span> MY_TEMPLATES)</code></pre></div>
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://github.com/zenoss/ZenPacks.zenoss.OpenStackInfrastructure">ZenPacks.zenoss.OpenStackInfrastructure</a></li>
+<li><a href="https://github.com/zenoss/ZenPacks.zenoss.ZenPackLib/issues/151">ZenPackLib Issue #151: Multiple ZenPacks affecting same device class</a></li>
+<li>ZenPack Developer&rsquo;s Guide v1.0.1 - Jane Curry, page 134</li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Djangorestframework on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/djangorestframework/</link>
+    <description>Recent content in Djangorestframework on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/djangorestframework/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing Django and DRF With Pytest</title>
+      <link>http://aalvarez.me/posts/testing-django-and-drf-with-pytest/</link>
+      <pubDate>Fri, 09 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/testing-django-and-drf-with-pytest/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt; has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and &lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We will be using the following tools:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt;: Python testing framework&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://pytest-django.readthedocs.io/&#34;&gt;pytest-django&lt;/a&gt;: Pytest extensions for Django&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://factoryboy.readthedocs.io/&#34;&gt;factoryboy&lt;/a&gt;: Factories for easy test data generation.&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Bulk Create With Django REST Framework</title>
+      <link>http://aalvarez.me/posts/bulk-create-with-django-rest-framework/</link>
+      <pubDate>Mon, 27 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/bulk-create-with-django-rest-framework/</guid>
+      <description>&lt;p&gt;In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using &lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-serializer&#34;&gt;The Serializer&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s assume that we will be working with an existing &lt;code&gt;Book&lt;/code&gt; model in our Django application. We will create a serializer for this model using Django REST&amp;rsquo;s &lt;a href=&#34;http://www.django-rest-framework.org/api-guide/serializers/#modelserializer&#34;&gt;ModelSerializer&lt;/a&gt; helper class:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# serializers.py&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;myapp.models&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; Book
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;rest_framework&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; serializers
+
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;BookSerializer&lt;/span&gt;(serializers&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ModelSerializer):
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Meta&lt;/span&gt;:
+        model &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Book
+        fields &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;__all__&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;&amp;quot;__all__&amp;quot;&lt;/code&gt; string indicates that we want to serialize &lt;strong&gt;all&lt;/strong&gt; of the model&amp;rsquo;s fields.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

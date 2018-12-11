@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Creating an Upload Progress Dialog in Java</a>
+  </h1>
+  <time datetime="2017-11-16T00:00:00Z" class="post-date">Thu, Nov 16, 2017</time>
+  <p>Many Java file upload <a href="http://www.codejava.net/coding/swing-application-to-upload-files-to-ftp-server-with-progress-bar">tutorials</a> teach you how to show the current progress of a file upload using a JProgressBar in the user interface, usually placed in the main JFrame.</p>
+
+<p>However I was trying make this much more visually appealing, like the way <a href="https://winscp.net/eng/index.php">WinSCP</a> does it:</p>
+
+<p><img src="/posts/creating-an-upload-progress-dialog-in-java/scp_file_upload.png" alt="SCP File Upload" /></p>
+
+<p>This will require the use of another Swing class: JDialog. Basically the flow of the program will be like this:</p>
+
+<ol>
+<li>Main class with main method calls <code>SwingWorker</code> class.</li>
+<li><code>SwingWorker</code> is in charge of doing the <em>actual</em> upload. It will also create an instance of a <code>JDialog</code> to show the current upload progress.</li>
+<li><code>JDialog</code> class will contain the progress bar and other useful upload information.</li>
+</ol>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/java" class="label label-default">java</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/creating-an-upload-progress-dialog-in-java/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/">Querying Nested Documents in ElasticSearch</a>
+  </h1>
+  <time datetime="2017-10-23T00:00:00Z" class="post-date">Mon, Oct 23, 2017</time>
+  <p>The other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.</p>
+
+<p>I wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its <code>text</code> field.</p>
+
+<h2 id="nested-documents">Nested Documents</h2>
+
+<p>ElasticSearch 5 supports [nested documents](). These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-mapping.html">nested object mapping</a> for the index:</p>
+
+<pre><code>PUT /my_index
+
+{
+  &quot;mappings&quot;: {
+    &quot;book&quot;: {
+      &quot;properties&quot;: {
+        &quot;pages&quot;: {
+          &quot;type&quot;: &quot;nested&quot;,
+          &quot;properties&quot;: {
+            &quot;id&quot;:    { &quot;type&quot;: &quot;integer&quot;  },
+            &quot;text&quot;: { &quot;type&quot;: &quot;text&quot;  },
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>Notice how the mapping is created using a <code>PUT</code> request at the <strong>index</strong> level.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/elasticsearch" class="label label-default">elasticsearch</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/querying-nested-documents-in-elasticsearch/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/">Umask Permissions in a Puma Production Environment</a>
+  </h1>
+  <time datetime="2017-10-18T00:00:00Z" class="post-date">Wed, Oct 18, 2017</time>
+  <p>Recently I was having an issue with a Sinatra application deployed in a staging
+server. The application was deployed with Puma and Nginx in the following location:</p>
+
+<pre><code>/var/www/
+</code></pre>
+
+<p>This web service would then try to access some files in another directory on the server,
+mounted as an SFTP directory. The Sinatra app would open these files and generate some
+new files from them, depending on the HTTP request received.</p>
+
+<p>The problem was that the operation would fail due to a permissions issue. I was baffled
+since I had set <strong>read</strong> and <strong>write</strong> permissions to the directory and the files in it.</p>
+
+<h2 id="umask-the-problem-and-solution">Umask: The Problem and Solution</h2>
+
+<p>It took around two days to find the culprit: <strong>umask</strong>. In Linux, <a href="https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work">umask</a>
+acts as another set of permissions for <strong>processes</strong> and cannot be set for directories,
+basically speaking.</p>
+
+<p>I realized that this probably meant that the process running the Puma application server had
+a umask configuration that was not allowing the generation of new files.</p>
+
+<p>I decided to test this if this was the case. In the <a href="https://github.com/puma/puma">Puma</a>
+documentation, I found an option to change the permissions of the UNIX socket using
+umask:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/sinatra" class="label label-default">sinatra</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/umask-permissions-in-a-puma-production-environment/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/easy-notification-system-in-rails-part-3/">Easy Notification System in Rails Part 3</a>
+  </h1>
+  <time datetime="2017-09-12T00:00:00Z" class="post-date">Tue, Sep 12, 2017</time>
+  <p><em>Read <a href="/posts/easy-notification-system-in-rails.html">part 1</a> and <a href="/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series</em></p>
+
+<p>In this post, we will be sending automatic e-emails every time notifications are created.</p>
+
+<h2 id="creating-the-mailer">Creating the Mailer</h2>
+
+<p>We will work with one <a href="http://guides.rubyonrails.org/action_mailer_basics.html">mailer</a> that will send e-mails for every notification that is created. We can generate our mailer with this command:</p>
+
+<pre><code>rails g mailer NotificationsMailer
+</code></pre>
+
+<p>Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&rsquo;ve been using <strong>comments</strong> and <strong>posts</strong> as examples.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/easy-notification-system-in-rails-part-3/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Easy Notification System in Rails Part 2</a>
+  </h1>
+  <time datetime="2017-09-05T00:00:00Z" class="post-date">Tue, Sep 5, 2017</time>
+  <p><em>Read Part 1 of this series <a href="/posts/easy-notification-system-in-rails.html">here</a></em></p>
+
+<p>In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.</p>
+
+<p>In this post we will be adding more functionality to our notification system.s</p>
+
+<h2 id="mark-as-read-feature">Mark as Read Feature</h2>
+
+<p>We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:</p>
+
+<ul>
+<li>For a single notification, it should be marked <em>as read</em> when it is clicked from the list of notifications.</li>
+<li>For all notifications, they should be marked as read when a specific button is pressed.</li>
+</ul>
+
+<h3 id="setting-up-the-routes">Setting up the Routes</h3>
+
+<p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># config/routes.rb</span>
+<span style="color:#036;font-weight:bold">Rails</span><span style="color:#333">.</span>application<span style="color:#333">.</span>routes<span style="color:#333">.</span>draw <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#888"># ...</span>
+
+  resources <span style="color:#a60;background-color:#fff0f0">:notifications</span>, <span style="color:#a60;background-color:#fff0f0">only</span>: <span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:index</span><span style="color:#333">]</span> <span style="color:#080;font-weight:bold">do</span>
+    post <span style="color:#a60;background-color:#fff0f0">:mark_as_read</span>, <span style="color:#a60;background-color:#fff0f0">on</span>: <span style="color:#a60;background-color:#fff0f0">:collection</span>
+    post <span style="color:#a60;background-color:#fff0f0">:mark_as_read</span>, <span style="color:#a60;background-color:#fff0f0">on</span>: <span style="color:#a60;background-color:#fff0f0">:member</span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/easy-notification-system-in-rails-part-2/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/4/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/6/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

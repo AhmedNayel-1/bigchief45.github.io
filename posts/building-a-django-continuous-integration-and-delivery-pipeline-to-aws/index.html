@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Building a Django Continuous Integration and Delivery Pipeline to AWS &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Building a Django Continuous Integration and Delivery Pipeline to AWS</h1>
+  <time datetime=2018-01-30T00:00:00Z class="post-date">Tue, Jan 30, 2018</time>
+
+  <p>Building a CI/CD (Continuous Integration / Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.</p>
+
+<p>In this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to <a href="https://www.heroku.com/">Heroku</a>. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.</p>
+
+<p>The pipeline will work as follows:</p>
+
+<ol>
+<li>Code will be pushed to source control repository. For this article, I will use Github.</li>
+<li>Project will be built and tested in a CI job at <a href="https://travis-ci.com/">TravisCI</a>.</li>
+<li>TravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.</li>
+</ol>
+
+<p>We will be using both the <strong><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html">ElasticBeanstalk CLI (ebcli)</a></strong> and the <strong>AWS ElasticBeanstalk Console</strong> to achieve this.</p>
+
+<h2 id="creating-the-elasticbeanstalk-application-and-environment">Creating the ElasticBeanstalk Application and Environment</h2>
+
+<p>Before we can even start building our pipeline, we have to first create an ElasticBeanstalk application and an environment for this application in the AWS ElasticBeanstalk Console. Otherwise when we our CI/CD pipeline runs, we will receive errors such as <em>no application named <name></em>.</p>
+
+<p>Head over the the Elasticbeanstalk service in the AWS Console and create a new application. After that, create a new environment and select <em>Web server environment</em> as the environment type, and select a <em>Python</em> platform:</p>
+
+<p><img src="/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_environment_config.png" alt="Environment Basic Configuration" /></p>
+
+<h3 id="wsgi-path">WSGI Path</h3>
+
+<p>After the environment process is finished, we will proceed to change the preconfigured path to the WSGI file that ElasticBeanstalk uses (<code>application.py</code> by default). Head over to <em>Configuration &gt; Software</em> and you will see a field where we can specify a custom path. This path will depend on the location of the <code>wsgi.py</code> file in your Django application:</p>
+
+<p><img src="/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_wsgi_path.png" alt="WSGI Configuration" /></p>
+
+<p>If the WSGI path configuration is not correctly set. You will get a log error in your dashboard saying <code>ERROR   Your WSGIPath refers to a file that does not exist.</code>, and when you try accessing your application with the generated URL, you will get a <em>404 not found</em> error page.</p>
+
+<h3 id="environment-variables">Environment Variables</h3>
+
+<p>We will need to set some environment variables in the environment&rsquo;s configuration. To set these variables, got to <em>Configuration &gt; Software &gt; Environment properties</em>. We will configure the following settings:</p>
+
+<ul>
+<li><code>AWS_ACCESS_KEY_ID</code></li>
+<li><code>AWS_SECRET_ACCESS_KEY</code></li>
+<li><code>DJANGO_SETTINGS_MODULE</code></li>
+</ul>
+
+<p>For the AWS Credentials variables, you can create a IAM User and use those users credentials. For the <code>DJANGO_SETTINGS_MODULE</code> you will need to specify a path to your <code>settings.py</code> settings module in your Django application. If you are using a multi-module settings configuration, you will need to point to the correct module. Usually this will be the production settings file.</p>
+
+<h2 id="static-and-media-files-with-s3">Static and Media Files With S3</h2>
+
+<p>We will need to correctly configure our Django application and our ElasticBeanstalk application so that static files and media files work properly. This was an extremely tedious and frustrating process for me, but turns out to be really simple (like everything huh!).</p>
+
+<h3 id="django-configuration">Django Configuration</h3>
+
+<p>I am going to store media files in S3 and static files in the same server of the Django application, but you can store both in S3 if you&rsquo;d like. Take a look at <a href="https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/">this article</a> for details on that.</p>
+
+<p>I will be following a similar approach to that article, so make sure you install django-storages and boto3 and include them in your installed apps.</p>
+
+<p>Also, since I am using a multi-module settings configuration, I will add the necessary configurations in a <code>prod.py</code> settings module:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os</span>
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.common</span> <span style="color:#080;font-weight:bold">import</span> <span style="color:#333">*</span>
+
+
+
+<span style="color:#888"># AWS</span>
+AWS_ACCESS_KEY_ID <span style="color:#333">=</span> os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;AWS_ACCESS_KEY_ID&#39;</span>]
+AWS_SECRET_ACCESS_KEY <span style="color:#333">=</span> os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;AWS_SECRET_ACCESS_KEY&#39;</span>]
+
+<span style="color:#888"># Static Files</span>
+STATIC_ROOT <span style="color:#333">=</span> os<span style="color:#333">.</span>path<span style="color:#333">.</span>join(BASE_DIR, <span style="background-color:#fff0f0">&#39;..&#39;</span>, <span style="background-color:#fff0f0">&#39;www&#39;</span>, <span style="background-color:#fff0f0">&#39;static&#39;</span>)
+STATIC_URL <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;/static/&#39;</span>
+
+
+<span style="color:#888"># MEDIA FILES</span>
+MEDIAFILES_BUCKET <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;myapp-media&#39;</span>
+AWS_S3_REGION_NAME <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;sa-east-1&#39;</span>
+AWS_S3_CUSTOM_DOMAIN <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">.s3.amazonaws.com&#39;</span> <span style="color:#333">%</span> MEDIAFILES_BUCKET
+DEFAULT_FILE_STORAGE <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;custom_storages.MediaStorage&#39;</span>
+
+AWS_S3_OBJECT_PARAMETERS <span style="color:#333">=</span> {
+    <span style="background-color:#fff0f0">&#39;Expires&#39;</span>: <span style="background-color:#fff0f0">&#39;Thu, 31 Dec 2099 20:00:00 GMT&#39;</span>,
+    <span style="background-color:#fff0f0">&#39;CacheControl&#39;</span>: <span style="background-color:#fff0f0">&#39;max-age=94608000&#39;</span>,
+}</code></pre></div>
+<p>Those AWS credential settings are the ones that will be picked up in the instance after the deployment. They are the exact credentials we set before as environment variables.</p>
+
+<p>Notice the <code>DEFAULT_FILE_STORAGE</code> configuration. This tells Django where to store media files. We will implement media file storage in S3 by creating a special storage class in a <code>custom_storages.py</code> module at the root of our application:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">django.conf</span> <span style="color:#080;font-weight:bold">import</span> settings
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">storages.backends.s3boto3</span> <span style="color:#080;font-weight:bold">import</span> S3Boto3Storage
+
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MediaStorage</span>(S3Boto3Storage):
+    bucket_name <span style="color:#333">=</span> settings<span style="color:#333">.</span>MEDIAFILES_BUCKET</code></pre></div>
+<p>We simply tell the class in what bucket we want to store those media files.</p>
+
+<h3 id="elasticbeanstalk-configuration">ElasticBeanstalk Configuration</h3>
+
+<p>Now in the AWS ElasticBeanstalk console head over to <em>Configuration &gt; Software &gt; Static files</em> and set the following configuration:</p>
+
+<p><img src="/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_staticfiles_config.png" alt="ElasticBeanstalk Static Files Configuration" /></p>
+
+<p>That configuration will work properly along with the <code>STATIC_ROOT</code> and <code>STATIC_URL</code> settings we added in Django.</p>
+
+<p>~&gt; Since we are now storing media files and/or storage files in S3. We will need to use the correct references to these assets in our templates, otherwise they will not be able to be fetched in the deployed application.
+<br><br>
+For <strong>static files</strong> use <code>&lt;img src=&quot;{% static '/url' %}&quot;&gt;</code>
+<br>
+For <strong>media files</strong> use something like <code>&lt;img src=&quot;{{ myobject.avatar.url }}&quot;&gt;</code></p>
+
+<p>One of the biggest issues I found when using this deployment workflow was setting up the static files correctly in the ElasticBeanstalk environment after the app is deployed. Initially I tried using the <code>after_deploy</code> stage in <code>.travis.yml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">after_deploy:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>python<span style="color:#bbb"> </span>manage.py<span style="color:#bbb"> </span>collectstatic</code></pre></div>
+<p>But this would simply just get executed in the same TravisCI environment, not in the ElasticBeanstalk instance.</p>
+
+<h2 id="setting-up-rds-relational-database-service">Setting Up RDS (Relational Database Service)</h2>
+
+<p>We will want our database to live <em>outside</em> the instance that is holding the application. To do this, go to your dashboard, <em>Configuration &gt; Database</em> and add the settings that resemble your development database settings. In my case I am using Postgresql 9.6.</p>
+
+<p>After you assign the RDS database, RDS will expose the database and user credentials via environment variables, which we can access from our Django application. This means that we could set the following production configuration in our application:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># settings/prod.py</span>
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os</span>
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.common</span> <span style="color:#080;font-weight:bold">import</span> <span style="color:#333">*</span>
+
+
+DEBUG <span style="color:#333">=</span> False
+
+<span style="color:#888"># DATABASE</span>
+<span style="color:#080;font-weight:bold">if</span> <span style="background-color:#fff0f0">&#39;RDS_DB_NAME&#39;</span> <span style="color:#000;font-weight:bold">in</span> os<span style="color:#333">.</span>environ:
+    DATABASES <span style="color:#333">=</span> {
+        <span style="background-color:#fff0f0">&#39;default&#39;</span>: {
+            <span style="background-color:#fff0f0">&#39;ENGINE&#39;</span>: <span style="background-color:#fff0f0">&#39;django.db.backends.postgresql_psycopg2&#39;</span>,
+            <span style="background-color:#fff0f0">&#39;NAME&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_DB_NAME&#39;</span>],
+            <span style="background-color:#fff0f0">&#39;USER&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_USERNAME&#39;</span>],
+            <span style="background-color:#fff0f0">&#39;PASSWORD&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_PASSWORD&#39;</span>],
+            <span style="background-color:#fff0f0">&#39;HOST&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_HOSTNAME&#39;</span>],
+            <span style="background-color:#fff0f0">&#39;PORT&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_PORT&#39;</span>],
+        }
+    }</code></pre></div>
+<h2 id="levaraging-ebcli">Levaraging ebcli</h2>
+
+<p>We will need to leverage the ElasticBeanstalk CLI (ebcli) in order to run necessary tasks after deployment inside the instance. These tasks are (not limited to):</p>
+
+<ol>
+<li>Create a Django superuser</li>
+<li>Run Migrations</li>
+<li>Collect static files</li>
+</ol>
+
+<p>The way ebcli does this is through a configuration folder called <code>.ebextensions</code> in the root of the repository. This directorycontains the steps in YAML on how to perform these tasks. For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># django.config</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>container_commands:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>01_migrate:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py migrate --noinput&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>leader_only:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>02_auto_createsuperuser:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py auto_createsuperuser&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>leader_only:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>03_collectstatic:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py collectstatic --settings=myapp.settings.prod --noinput&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>04_wsgipass:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#39;echo &#34;WSGIPassAuthorization On&#34; &gt;&gt; ../wsgi.conf&#39;</span></code></pre></div>
+<p>This <code>.ebextensions</code> directory should be commited to your repository&rsquo;s source control. When you run the command <code>eb deploy</code>, it will bundle your application and deploy it to the ElasticBeanstalk environment we created before, and run those commands.</p>
+
+<p>-&gt; The <code>WSGIPassAuthorization On</code> setting must be set in the WSGI configuration in order to be able to pass authorization headers in your application. If you are using Django REST Framework&rsquo;s <code>TokenAuthorization</code> and this setting is not set, you will not be able to perform requests even with a valid token.</p>
+
+<p>~&gt; Django&rsquo;s <code>createsuperuser</code> command does not support passing in a password as input. This is why I am using a custom command called <code>auto_createsuperuser</code> which automatically creates a super user in the database using hard coded credentials.</p>
+
+<h2 id="building-the-pipeline">Building the Pipeline</h2>
+
+<p>Finally we can start creating the CI/CD pipeline. Assuming that your project&rsquo;s source code is hosted in a Github repository, head over and register an account at <a href="www.travis-ci.org">TravisCI</a>.</p>
+
+<p>Afterwards, go to your Github repository&rsquo;s <em>Settings &gt; Integrations &amp; services &gt; Add service</em> and choose TravisCI. Sign in to TravisCI and add this repository to the list.</p>
+
+<h3 id="pipeline-configuration">Pipeline Configuration</h3>
+
+<p>We will place the configuration in a <code>.travis.yml</code> file at the root of the repository. This configuration will tell Travis what to prepare in the build and how to run the tests.</p>
+
+<p>In my case, I am using <a href="http://pytest.org/">pytest</a> and <a href="https://pytest-django.readthedocs.io/">pytest-dango</a> for my test suite, and PostgreSQL 9.6 for my database:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language:<span style="color:#bbb"> </span>python<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>python:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;3.6&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>services:<span style="color:#bbb"> </span>postgresql<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>install:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>pip<span style="color:#bbb"> </span>install<span style="color:#bbb"> </span>-r<span style="color:#bbb"> </span>requirements.txt<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>pip<span style="color:#bbb"> </span>install<span style="color:#bbb"> </span>-r<span style="color:#bbb"> </span>requirements-dev.txt<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>before_script:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>flake8<span style="color:#bbb"> </span>.<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;CREATE DATABASE mydb;&#34;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;CREATE USER myuser WITH PASSWORD &#39;password&#39;;&#34;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;ALTER USER myuser CREATEDB;&#34;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>python<span style="color:#bbb"> </span>manage.py<span style="color:#bbb"> </span>migrate<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>script:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>pytest<span style="color:#bbb"> </span>--nomigrations<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>addons:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>postgresql:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;9.6&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>deploy:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>provider:<span style="color:#bbb"> </span>elasticbeanstalk<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>access_key_id:<span style="color:#bbb"> </span>$ACCESSKEYID<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>secret_access_key:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>secure:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;$SECRETACCESSKEY&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>region:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;us-east-1&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>app:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;myapp&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>env:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;myapp-prod&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>bucket_name:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;myapp&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>on:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>branch:<span style="color:#bbb"> </span>master</code></pre></div>
+<p>=&gt; Notice how we are passing sensitive AWS credentials through <strong>environment variables</strong>. You can set these in TravisCI at <em>Your repository &gt; More Options &gt; Settings &gt; Environment Variables</em> Make sure that the names match this configuration.</p>
+
+<p>Make sure that the <code>app</code> and <code>env</code> values match the correct values you used when creating the application and environment in ElasticBeanstalk.</p>
+
+<p>~&gt; AWS S3 Bucket names are <strong>unique</strong> names accross <strong>all users and domains</strong>. This means that you must select a bucket name that hasn&rsquo;t already been taken, or else your deployment will fail.</p>
+
+<p>After this configuration is added to your repository, the next push to the <code>master</code> branch will trigger this CI/CD pipeline and if successfull, will begin deploying to ElasticBeanstalk.</p>
+
+<h3 id="a-note-on-travisci-elasticbeanstalk-deployment">A Note on TravisCI ElasticBeanstalk Deployment</h3>
+
+<p>Sadly the deployment from TravisCI to ElasticBeanstalk will not run the commands we configured in <code>.ebextensions</code>. This is probably because <a href="https://github.com/travis-ci/dpl">dpl (TravisCI&rsquo;s deployment tool)</a> does not use ebcli to deploy the application.</p>
+
+<p>You might be tempted (like I did) to try and use the <code>after_deploy</code> hook in <code>.travis.yml</code> as mentioned in the <a href="https://docs.travis-ci.com/user/deployment/elasticbeanstalk/#Running-commands-before-and-after-deploy">docs</a>, like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">after_deploy:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>python<span style="color:#bbb"> </span>manage.py<span style="color:#bbb"> </span>collectstatic<span style="color:#bbb"> </span>--settings=myapp.settings.prod<span style="color:#bbb"> </span>--noinput</code></pre></div>
+<p>Unfortunately the above will run inside the TravisCI build machine and not in the AWS instance.</p>
+
+<p>However though, maybe you could still install ebcli inside the travis build and create a <code>.sh</code> file that contains the <code>ebcli deploy</code> command and execute it. But I haven&rsquo;t gotten to test this yet.</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://www.caktusgroup.com/blog/2017/03/23/hosting-django-sites-amazon-elastic-beanstalk/">https://www.caktusgroup.com/blog/2017/03/23/hosting-django-sites-amazon-elastic-beanstalk/</a></li>
+<li><a href="https://realpython.com/blog/python/deploying-a-django-app-and-postgresql-to-aws-elastic-beanstalk/#using-s3-for-media-storage">https://realpython.com/blog/python/deploying-a-django-app-and-postgresql-to-aws-elastic-beanstalk/#using-s3-for-media-storage</a></li>
+<li><a href="https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/">https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/</a></li>
+<li><a href="https://www.caktusgroup.com/blog/2017/08/28/advanced-django-file-handling/">https://www.caktusgroup.com/blog/2017/08/28/advanced-django-file-handling/</a></li>
+<li><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-container.html">https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-container.html</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/aws" class="label label-default">aws</a></li>
+  
+    <a href="http://aalvarez.me/tags/elasticbeanstalk" class="label label-default">elasticbeanstalk</a></li>
+  
+    <a href="http://aalvarez.me/tags/ci/cd" class="label label-default">ci/cd</a></li>
+  
+    <a href="http://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

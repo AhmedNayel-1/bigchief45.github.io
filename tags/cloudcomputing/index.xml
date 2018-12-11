@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloudcomputing on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/cloudcomputing/</link>
+    <description>Recent content in Cloudcomputing on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 07 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/cloudcomputing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Understanding Ceilometer Transformers</title>
+      <link>http://aalvarez.me/posts/understanding-ceilometer-transformers/</link>
+      <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/understanding-ceilometer-transformers/</guid>
+      <description>&lt;p&gt;Ceilometer &lt;strong&gt;transformers&lt;/strong&gt; are part of the Ceilometer &lt;strong&gt;pipeline&lt;/strong&gt;, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for &lt;strong&gt;samples&lt;/strong&gt; and a pipeline for &lt;strong&gt;events&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Configurations for these pipelines can be found in &lt;code&gt;/etc/ceilometer/pipeline.yaml&lt;/code&gt; and &lt;code&gt;/etc/ceilometer/event_pipeline.yaml&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png&#34; alt=&#34;Ceilometer Pipeline&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Name of transformer&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Reference name for configuration&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Accumulator&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;accumulator&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Aggregator&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;aggregator&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Arithmetic&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;arithmetic&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Rate of change&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;rate_of_change&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Unit conversion&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;unit_conversion&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Delta&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;delta&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Let&amp;rsquo;s take a more detailed look into the accumulator transformer.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ceilometer and OpenStack Notifications</title>
+      <link>http://aalvarez.me/posts/ceilometer-and-openstack-notifications/</link>
+      <pubDate>Thu, 06 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/ceilometer-and-openstack-notifications/</guid>
+      <description>&lt;p&gt;Ceilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are &lt;strong&gt;notifications&lt;/strong&gt;, which will be explained in this post.&lt;/p&gt;
+
+&lt;h2 id=&#34;openstack-notifications&#34;&gt;OpenStack Notifications&lt;/h2&gt;
+
+&lt;p&gt;All OpenStack services (such as Nova Compute, Neutron, etc.) send notifications about executed operations or the state of the system. Many of these notifications carry information that can be metered such as &lt;strong&gt;CPU time&lt;/strong&gt; of a virtual machine instance created by the compute service.&lt;/p&gt;
+
+&lt;p&gt;OpenStack services send these notifications through an AMQP message queue. However, not all these notifications are consumed by the Telemetry service, as the intention is only to capture the billable events and notifications that can be used for monitoring or profiling purposes. The notification agent filters by the &lt;strong&gt;event type&lt;/strong&gt;. Each notification message contains the event type.&lt;/p&gt;
+
+&lt;p&gt;Here is a table with a few examples:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;OpenStack Service&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Event types&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;OpenStack Compute&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;code&gt;scheduler.run_instance.scheduled&lt;/code&gt;, &lt;code&gt;scheduler.select_destinations&lt;/code&gt;, &lt;code&gt;compute.instance.*&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;OpenStack Image&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;code&gt;image.update&lt;/code&gt;, &lt;code&gt;image.upload&lt;/code&gt;,  &lt;code&gt;image.delete&lt;/code&gt;, &lt;code&gt;image.send&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;In Ceilometer, the &lt;strong&gt;notification agent&lt;/strong&gt; is reponsible for consuming these notifications from the AMQP message bus, and then transforming them into &lt;strong&gt;events&lt;/strong&gt; and &lt;strong&gt;samples&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/2-1-collection-notification.png&#34; alt=&#34;Notifications Collection&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

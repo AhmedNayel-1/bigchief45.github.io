@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Easy Notification System in Rails Part 3 &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Easy Notification System in Rails Part 3</h1>
+  <time datetime=2017-09-12T00:00:00Z class="post-date">Tue, Sep 12, 2017</time>
+
+  <p><em>Read <a href="/posts/easy-notification-system-in-rails.html">part 1</a> and <a href="/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series</em></p>
+
+<p>In this post, we will be sending automatic e-emails every time notifications are created.</p>
+
+<h2 id="creating-the-mailer">Creating the Mailer</h2>
+
+<p>We will work with one <a href="http://guides.rubyonrails.org/action_mailer_basics.html">mailer</a> that will send e-mails for every notification that is created. We can generate our mailer with this command:</p>
+
+<pre><code>rails g mailer NotificationsMailer
+</code></pre>
+
+<p>Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&rsquo;ve been using <strong>comments</strong> and <strong>posts</strong> as examples.</p>
+
+<p>Therefore, we can create an action for each:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># app/mailers/notifications_mailer.rb</span>
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">NotificationsMailer</span> <span style="color:#333">&lt;</span> <span style="color:#036;font-weight:bold">ApplicationMailer</span>
+  before_action { <span style="color:#33b">@notification</span> <span style="color:#333">=</span> params<span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:notification</span><span style="color:#333">]</span> }
+
+  default <span style="color:#a60;background-color:#fff0f0">from</span>: <span style="background-color:#fff0f0">&#39;youremail@yourdomain.com&#39;</span>
+
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">post_notification</span>
+    <span style="color:#33b">@recipient</span> <span style="color:#333">=</span> <span style="color:#33b">@notification</span><span style="color:#333">.</span>recipient
+    <span style="color:#33b">@url</span> <span style="color:#333">=</span> post_url(<span style="color:#33b">@notification</span><span style="color:#333">.</span>notifiable)
+
+    mail(<span style="color:#a60;background-color:#fff0f0">to</span>: <span style="color:#33b">@recipient</span><span style="color:#333">.</span>email, <span style="color:#a60;background-color:#fff0f0">subject</span>: t(<span style="background-color:#fff0f0">&#39;email.notifications.subject&#39;</span>))
+  <span style="color:#080;font-weight:bold">end</span>
+
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">comment_notification</span>
+    <span style="color:#33b">@recipient</span> <span style="color:#333">=</span> <span style="color:#33b">@notification</span><span style="color:#333">.</span>recipient
+    <span style="color:#33b">@url</span> <span style="color:#333">=</span> post_url(<span style="color:#33b">@notification</span><span style="color:#333">.</span>notifiable<span style="color:#333">.</span>post)
+
+    mail(<span style="color:#a60;background-color:#fff0f0">to</span>: <span style="color:#33b">@recipient</span><span style="color:#333">.</span>email, <span style="color:#a60;background-color:#fff0f0">subject</span>: t(<span style="background-color:#fff0f0">&#39;email.notifications.subject&#39;</span>))
+  <span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>Notice that we are using a new Rails 5.1 <a href="http://edgeapi.rubyonrails.org/classes/ActionMailer/Parameterized.html">ActionMailer::Parameterized</a> feature. This allows us to use a <code>before_action</code> to set instance variables before all actions, similar to controllers. These parameters will then be manually passed when the mailer is called.</p>
+
+<h3 id="mailer-views">Mailer Views</h3>
+
+<p>Let&rsquo;s go ahead and build the mailer&rsquo;s views. For each mailer action, we must create a HTML view and a plain text view with the same name. Here is an example view for posts mail:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">-# app/views/notifications_mailer/post_notification.html.haml
+
+!!!
+%html
+  %head
+    %meta{:content =&gt; &#34;text/html; charset=UTF-8&#34;, &#34;http-equiv&#34; =&gt; &#34;Content-Type&#34;}
+  %body
+    %p
+      %strong #{@notification.actor.full_name}
+      = t(&#34;notifications.actions.#{@notification.action}&#34;)
+      a new post titled
+      %strong= @notification.notifiable.title
+
+    %p= simple_format h @notification.notifiable.description
+
+    %hr
+
+    = link_to &#39;View in application&#39;, @url</code></pre></div>
+<p>Notice how I am using I18n to localize and internationalize some strings using the <code>t()</code> method in the mailer actions and views. You can discard this and simply enter a hardcoded string if you want.</p>
+
+<h2 id="sending-the-e-mails">Sending the E-mails</h2>
+
+<p>We will be using again ActiveRecord callbacks on our Notification model to send the e-mail:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># app/models/notification.rb</span>
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Notification</span> <span style="color:#333">&lt;</span> <span style="color:#036;font-weight:bold">ApplicationRecord</span>
+  <span style="color:#888"># ...</span>
+
+  after_create <span style="color:#a60;background-color:#fff0f0">:mail_notification</span>
+
+  <span style="color:#038;font-weight:bold">private</span>
+
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">mail_notification</span>
+    action <span style="color:#333">=</span> (<span style="color:#007020">self</span><span style="color:#333">.</span>notifiable_type<span style="color:#333">.</span>underscore <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;_notification&#39;</span>)<span style="color:#333">.</span>to_sym
+
+    <span style="color:#036;font-weight:bold">NotificationMailer</span><span style="color:#333">.</span>with(<span style="color:#a60;background-color:#fff0f0">notification</span>: <span style="color:#007020">self</span>)<span style="color:#333">.</span>send(action)<span style="color:#333">.</span>deliver_now
+  <span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>With the <code>after_create</code> callback, after the notification object is persisted in the database, Raisl will proceed to call the <code>mail_notification</code> method. In this method we will use the notification&rsquo;s <code>notifiable_type</code> attribute to form an underscored string that should match the corresponding *action** in the mailer (<code>post_notification</code>, <code>comment_notification</code>, or any other actions added in the future), represented by a Ruby symbol.</p>
+
+<p>Next we proceed to call the mailer to send the e-mail. We use the <code>with</code> method to manually pass in the notification as a parameter, as mentioned before. We then use the Ruby method <strong>send</strong> to call the corresponding mailer action based on the symbol we constructed.</p>
+
+<p>~&gt; One downside of using an ActiveRecord callback in this situation is that your application will send e-mails for every notification object created in your application. This may be exactly what you want, but this also means that e-mails will also be sent when creating notifications using the Rails console, or when seeding the database with test data.</p>
+
+<h2 id="other-enhancements">Other Enhancements</h2>
+
+<p>You can also pretty up your HTML emails by using a framework such as <a href="https://www.driftingruby.com/episodes/mail-previews-and-templates">Foundation for E-mails</a></p>
+
+<h2 id="references">References</h2>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debian on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/debian/</link>
+    <description>Recent content in Debian on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 13 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/debian/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Debian Package Versioning</title>
+      <link>http://aalvarez.me/posts/debian-package-versioning/</link>
+      <pubDate>Thu, 13 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/debian-package-versioning/</guid>
+      <description>&lt;p&gt;In a previous post I talked about &lt;a href=&#34;http://aalvarez.me/posts/managing-debian-package-dependencies.html&#34;&gt;managing Debian package dependencies&lt;/a&gt;. However I did not go into detail about the structure the versioning of packages must have.&lt;/p&gt;
+
+&lt;p&gt;To recap, let&amp;rsquo;s see how we can specify a specific package version of a dependency that our package needs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Depends: erlang (&amp;gt;= 1.2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the example above, the required version for erlang is simply &lt;code&gt;1.2&lt;/code&gt; or greater. A package&amp;rsquo;s version format however, can be a bit more complex than this.&lt;/p&gt;
+
+&lt;h2 id=&#34;version-format-and-components&#34;&gt;Version Format and Components&lt;/h2&gt;
+
+&lt;p&gt;The official format of a Debian package&amp;rsquo;s version is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[epoch:]upstream_version[-debian_revision]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go into detail about each of the components in that format.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Managing Debian Package Dependencies</title>
+      <link>http://aalvarez.me/posts/managing-debian-package-dependencies/</link>
+      <pubDate>Fri, 14 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/managing-debian-package-dependencies/</guid>
+      <description>&lt;p&gt;In a previous post, I talked about &lt;a href=&#34;2016-10-11-debian-packaging-in-ubuntu.html&#34;&gt;building a simple Debian package in Ubuntu&lt;/a&gt;, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.&lt;/p&gt;
+
+&lt;h2 id=&#34;dpkg-and-dependencies&#34;&gt;dpkg and Dependencies&lt;/h2&gt;
+
+&lt;p&gt;Previously we installed our package using the &lt;kbd&gt;dpkg -i&lt;/kbd&gt; command. However, the problem with &lt;code&gt;dpkg&lt;/code&gt; is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as &lt;code&gt;apt-get&lt;/code&gt;) are required to fetch dependencies from repositories.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Debian Packaging in Ubuntu</title>
+      <link>http://aalvarez.me/posts/debian-packaging-in-ubuntu/</link>
+      <pubDate>Tue, 11 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/debian-packaging-in-ubuntu/</guid>
+      <description>&lt;p&gt;Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.&lt;/p&gt;
+
+&lt;h2 id=&#34;package-source-structure&#34;&gt;Package Source &amp;amp; Structure&lt;/h2&gt;
+
+&lt;p&gt;We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&amp;rsquo;s title:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir mypackage-1.0.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd mypackage-1.0.0
+mkdir DEBIAN
+touch DEBIAN/control
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This &lt;code&gt;control&lt;/code&gt; file will describe our package to the Debian package manager (&lt;code&gt;dpkg&lt;/code&gt;). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Package: mypackage
+Version: 1.0-0
+Section: base
+Priority: optional
+Architecture: all
+Depends: python2.7
+Maintainer: Andres Alvarez &amp;lt;myemail@gmail.com&amp;gt;
+Description: A new and improved C++ Compiler
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

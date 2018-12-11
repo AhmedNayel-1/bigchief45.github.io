@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Using Objects and Ranges With Cases in Ruby &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Using Objects and Ranges With Cases in Ruby</h1>
+  <time datetime=2017-03-29T00:00:00Z class="post-date">Wed, Mar 29, 2017</time>
+
+  <p>Ruby&rsquo;s <a href="http://www.techotopia.com/index.php/The_Ruby_case_Statement"><code>case</code> statement</a> provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of <code>if</code> statements and I actually found a pretty neat way to implement using the Ruby <code>case</code>.</p>
+
+<p>In my application I have a Rails model called <code>Entry</code> which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3&rsquo;s nice <a href="http://getbootstrap.com/components/#progress">progress bars</a> and I want the progress bar&rsquo;s contextual class to be changed and determined by the range in which this data point sits in.</p>
+
+<p>If we take <a href="https://en.wikipedia.org/wiki/Cholesterol">total cholesterol</a> as an example, a quick Google search indicates that an ideal value would be less than 200 mg/dL, a high value (not good) would be between 200-239 mg/dL, and a very high value (definitely not good) would be above 240 mg/dL.</p>
+
+<p>To implement this, I created a <code>Recommendations</code> module under the <code>/models</code> directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:</p>
+
+<pre><code>app/models/
+├── application_record.rb
+├── concerns
+├── entry.rb
+├── recommendations
+│   ├── blood_glucose.rb
+│   ├── diastolic_pressure.rb
+│   ├── hdl.rb
+│   ├── ldl.rb
+│   ├── systolic_pressure.rb
+│   └── total_cholesterol.rb
+└── user.rb
+</code></pre>
+
+<p>If we pick one of those PORO (Plain Old Ruby Object) classes, it looks something like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">module</span> <span style="color:#0e84b5;font-weight:bold">Recommendations</span>
+  <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TotalCholesterol</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">info</span>
+    <span style="color:#080;font-weight:bold">end</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">ideal</span>
+      (<span style="color:#00d;font-weight:bold">0</span><span style="color:#333">..</span><span style="color:#00d;font-weight:bold">200</span>)
+    <span style="color:#080;font-weight:bold">end</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">warning</span>
+      (<span style="color:#00d;font-weight:bold">200</span><span style="color:#333">..</span><span style="color:#00d;font-weight:bold">239</span>)
+    <span style="color:#080;font-weight:bold">end</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">danger</span>
+      (<span style="color:#00d;font-weight:bold">240</span><span style="color:#333">..</span><span style="color:#00d;font-weight:bold">300</span>)
+    <span style="color:#080;font-weight:bold">end</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">top</span>
+      <span style="color:#00d;font-weight:bold">300</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>Notice that the class simply consists of <strong>class methods</strong> that return a range. We will now use these methods along with the <code>case</code> statement in some helpers that we will define to be used on the view. We can define this in <code>EntriesHelper</code> module (<code>app/helpers/entries_helper.rb</code>):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">module</span> <span style="color:#0e84b5;font-weight:bold">EntriesHelper</span>
+
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">progress_bar_color</span>(item, current_value)
+    <span style="color:#888"># &#39;item&#39; is a class of the Recommendations module which represents</span>
+    <span style="color:#888"># a test result item (i.e Systolic Blood Pressure)</span>
+    <span style="color:#080;font-weight:bold">case</span> current_value
+      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>ideal <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-success&#39;</span>
+      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>info <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-info&#39;</span>
+      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>warning <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-warning&#39;</span>
+      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>danger <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-danger&#39;</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">progress_bar_width</span>(item, current_value)
+    (current_value <span style="color:#000;background-color:#fff0ff">/ item.top ) * 100
+</span><span style="color:#000;background-color:#fff0ff">  end
+</span><span style="color:#000;background-color:#fff0ff">
+</span><span style="color:#000;background-color:#fff0ff">end</span></code></pre></div>
+<p>In the code above, the <code>progress_bar_color</code> method shows the magic of using the <code>case</code> statement with a current value to determine if it is inside a range, by simply using the <code>when</code> statement with a class method. By comparing to different ranges we simply return a different contextual CSS class for the progress bar.</p>
+
+<p>The second method is simply for setting an appropriate width for the progress bar. This one uses an additional class method called <code>top</code>, which simply returns an integer that should represent the end of the bar. A percentage between this integer and the current data point is calculated.</p>
+
+<p>We can then use these helper methods when setting the progress bar&rsquo;s class and width like this (using <a href="http://haml.info/">HAML</a>):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">.progress-bar{class: &#34;#{progress_bar_color(Recommendations::DiastolicPressure, @entry.diastolic_blood_pressure)}&#34;, &#39;aria-valuenow&#39;: @entry.diastolic_blood_pressure, &#39;aria-valuemin&#39;: &#39;0&#39;, &#39;aria-valuemax&#39;: &#39;100&#39;, style: &#34;width: #{progress_bar_width(Recommendations::DiastolicPressure, @entry.diastolic_blood_pressure)}%;&#34; }</code></pre></div>
+<p>Using this implementation in the view with the rest of the data points, we obtain some nice progress bars that will automatically have a good contextual class to represent the severity (or lack thereof) of a blood test item:</p>
+
+<p><img src="/posts/using-objects-and-ranges-with-cases-in-ruby/progress_bars.jpg" alt="Progress Bars" /></p>
+
+<p>Some nice <a href="http://getbootstrap.com/javascript/#popovers">Bootstrap popovers</a> can be added to help user understand different optimal and dangerous levels for different items, greatly improving the user interface and experience.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/bootstrap" class="label label-default">bootstrap</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

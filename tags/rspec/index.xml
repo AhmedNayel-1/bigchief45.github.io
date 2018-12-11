@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rspec on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/rspec/</link>
+    <description>Recent content in Rspec on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/rspec/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing JSON API Strong Parameters in Rails</title>
+      <link>http://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/</link>
+      <pubDate>Thu, 25 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/</guid>
+      <description>&lt;p&gt;Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&amp;rsquo;s factory, and then add the corresponding model and request specs.&lt;/p&gt;
+
+&lt;p&gt;The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&amp;rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.&lt;/p&gt;
+
+&lt;p&gt;In an API following the &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API&lt;/a&gt; specification, here is an example of how the strong parameters method would look like:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;thing_params&lt;/span&gt;
+  params&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;require(&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:data&lt;/span&gt;)&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;require(&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:attributes&lt;/span&gt;)&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;permit(&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:color&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:size&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:age&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:name&lt;/span&gt;,
+      &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:owner&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:origin&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:location&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:purpose&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:price&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:alive&lt;/span&gt;)
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As you can see, the list of attributes is getting pretty long. And we &lt;strong&gt;do not&lt;/strong&gt; want to explicitly keep adding more attributes to the test.&lt;/p&gt;
+
+&lt;h2 id=&#34;testing-strong-parameters-in-controller-specs&#34;&gt;Testing Strong Parameters in Controller Specs&lt;/h2&gt;
+
+&lt;p&gt;After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&amp;rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that &lt;strong&gt;all&lt;/strong&gt; attributes of importance are whitelisted in the controller.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testing a Rails API With RSpec</title>
+      <link>http://aalvarez.me/posts/testing-a-rails-api-with-rspec/</link>
+      <pubDate>Mon, 15 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/testing-a-rails-api-with-rspec/</guid>
+      <description>&lt;p&gt;As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.&lt;/p&gt;
+
+&lt;h2 id=&#34;setting-up-the-necessary-tools&#34;&gt;Setting Up the Necessary Tools&lt;/h2&gt;
+
+&lt;p&gt;In addition to RSpec, there are a few tools that make my testing experience much easier. These are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/thoughtbot/factory_girl_rails&#34;&gt;Factory Girl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/stympy/faker&#34;&gt;Faker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/thoughtbot/shoulda-matchers&#34;&gt;Shoulda Matchers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/DatabaseCleaner/database_cleaner&#34;&gt;Database Cleaner&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After Adding these gems to the Gemfile. I proceed to create a &lt;code&gt;/support&lt;/code&gt; directory under the &lt;code&gt;/spec&lt;/code&gt; directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;/spec/support/shoulda.rb&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Shoulda&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Matchers&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;configure &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;config&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
+  config&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;integrate &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;with&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# Choose a test framework:&lt;/span&gt;
+    with&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;test_framework &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:rspec&lt;/span&gt;
+
+    &lt;span style=&#34;color:#888&#34;&gt;# Or, choose the following (which implies all of the above):&lt;/span&gt;
+    with&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;library &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:rails&lt;/span&gt;
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Integrating TravisCI With Rails and Heroku</title>
+      <link>http://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/</link>
+      <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/</guid>
+      <description>&lt;p&gt;Adding &lt;a href=&#34;https://travis-ci.org/&#34;&gt;TravisCI&lt;/a&gt; to your application&amp;rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.&lt;/p&gt;
+
+&lt;p&gt;In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.&lt;/p&gt;
+
+&lt;h2 id=&#34;setting-up-travisci&#34;&gt;Setting up TravisCI&lt;/h2&gt;
+
+&lt;p&gt;Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a &lt;code&gt;.travis.yml&lt;/code&gt; file to the application&amp;rsquo;s root directory with the following contents:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;language:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Ruby&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;rvm:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2.3&lt;/span&gt;.&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.&lt;/p&gt;
+
+&lt;h3 id=&#34;configure-postgresql&#34;&gt;Configure Postgresql&lt;/h3&gt;
+
+&lt;p&gt;Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to &lt;code&gt;.travis.yml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;services:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;postgresql&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then we will add another configuration that will make Travis create a Postgresql database with username &lt;code&gt;postgres&lt;/code&gt; and blank password for the build:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;before_script:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;psql&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;-c&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;create database travis_ci_test;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;-U&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;postgres&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

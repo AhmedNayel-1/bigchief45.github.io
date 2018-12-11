@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bulk Create With Django REST Framework &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Bulk Create With Django REST Framework</h1>
+  <time datetime=2017-11-27T00:00:00Z class="post-date">Mon, Nov 27, 2017</time>
+
+  <p>In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
+
+<h2 id="the-serializer">The Serializer</h2>
+
+<p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># serializers.py</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> Book
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> serializers
+
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookSerializer</span>(serializers<span style="color:#333">.</span>ModelSerializer):
+    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Meta</span>:
+        model <span style="color:#333">=</span> Book
+        fields <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;__all__&#39;</span></code></pre></div>
+<p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>
+
+<h2 id="the-view">The View</h2>
+
+<p>Before creating the view, we will first need to create a mixin that will allow the view to handle an array of JSON objects in the request so that the actual view can process and create new objects in a bulk fashion:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CreateListMixin</span>:
+    <span style="background-color:#fff0f0">&#34;&#34;&#34;Allows bulk creation of a resource.&#34;&#34;&#34;</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_serializer</span>(self, <span style="color:#333">*</span>args, <span style="color:#333">**</span>kwargs):
+        <span style="color:#080;font-weight:bold">if</span> <span style="color:#007020">isinstance</span>(kwargs<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;data&#39;</span>, {}), <span style="color:#007020">list</span>):
+            kwargs[<span style="background-color:#fff0f0">&#39;many&#39;</span>] <span style="color:#333">=</span> True
+
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#007020">super</span>()<span style="color:#333">.</span>get_serializer(<span style="color:#333">*</span>args, <span style="color:#333">**</span>kwargs)</code></pre></div>
+<p>This mixin overwrites the <code>get_serializer</code> method and makes it check if the incoming body is a list. If it is, it proceeds to assign a boolean value for the <code>many</code> key in the kwargs.</p>
+
+<p>=&gt; Adding the <code>CreateList</code> prefix to the mixin class name is a good naming practice that quickly allows us to know that this is a mixin for bulk creation. Additionally, you will probably want to place this mixin in its own module (i.e <code>views/mixins/rest.py</code>)</p>
+
+<p>We can now create this view and make it use the mixin. We will make use of Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/viewsets/#modelviewset">ModelViewSet</a> to simplyify things:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> viewsets
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.serializers</span> <span style="color:#080;font-weight:bold">import</span> BoookSerializer
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.views.mixins.rest</span> <span style="color:#080;font-weight:bold">import</span> CreateListMixin
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> Book
+
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookViewSet</span>(CreateListMixin, viewsets<span style="color:#333">.</span>ModelViewSet):
+    queryset <span style="color:#333">=</span> Book<span style="color:#333">.</span>objects<span style="color:#333">.</span><span style="color:#007020">all</span>()
+    serializer_class <span style="color:#333">=</span> BookSerializer</code></pre></div>
+<h2 id="setting-the-url">Setting the URL</h2>
+
+<p>Lastly we need to set a URL to make the request to. We can use a Django REST router to easily set this endpoint up:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># urls.py</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">django.conf.urls</span> <span style="color:#080;font-weight:bold">import</span> url, include
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> routers
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">views</span> <span style="color:#080;font-weight:bold">import</span> BookViewSet
+
+
+router <span style="color:#333">=</span> routers<span style="color:#333">.</span>DefaultRouter()
+router<span style="color:#333">.</span>register(<span style="background-color:#fff0f0">r</span><span style="background-color:#fff0f0">&#39;books&#39;</span>, BookViewSet)</code></pre></div>
+<p>And that&rsquo;s pretty much it!</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

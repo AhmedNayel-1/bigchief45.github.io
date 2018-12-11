@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aptitude on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/aptitude/</link>
+    <description>Recent content in Aptitude on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 13 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/aptitude/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Debian Package Versioning</title>
+      <link>http://aalvarez.me/posts/debian-package-versioning/</link>
+      <pubDate>Thu, 13 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/debian-package-versioning/</guid>
+      <description>&lt;p&gt;In a previous post I talked about &lt;a href=&#34;http://aalvarez.me/posts/managing-debian-package-dependencies.html&#34;&gt;managing Debian package dependencies&lt;/a&gt;. However I did not go into detail about the structure the versioning of packages must have.&lt;/p&gt;
+
+&lt;p&gt;To recap, let&amp;rsquo;s see how we can specify a specific package version of a dependency that our package needs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Depends: erlang (&amp;gt;= 1.2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the example above, the required version for erlang is simply &lt;code&gt;1.2&lt;/code&gt; or greater. A package&amp;rsquo;s version format however, can be a bit more complex than this.&lt;/p&gt;
+
+&lt;h2 id=&#34;version-format-and-components&#34;&gt;Version Format and Components&lt;/h2&gt;
+
+&lt;p&gt;The official format of a Debian package&amp;rsquo;s version is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[epoch:]upstream_version[-debian_revision]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go into detail about each of the components in that format.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Configuring a local apt repository</title>
+      <link>http://aalvarez.me/posts/configuring-a-local-apt-repository/</link>
+      <pubDate>Mon, 17 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/configuring-a-local-apt-repository/</guid>
+      <description>&lt;p&gt;Setting up a local apt repository can allow you to use &lt;code&gt;apt-get install&lt;/code&gt; command to install your own packages. This is a better approach than using &lt;code&gt;dpkg -i&lt;/code&gt; because apt will fetch and install the required dependencies (which should also be located in your local repository) in an &lt;strong&gt;offline&lt;/strong&gt; fashion.&lt;/p&gt;
+
+&lt;h2 id=&#34;add-local-repository-to-sources&#34;&gt;Add Local Repository to Sources&lt;/h2&gt;
+
+&lt;p&gt;First we need to add our local repository to &lt;code&gt;apt&lt;/code&gt;&amp;rsquo;s list of source repositories, this can be found in &lt;code&gt;/etc/apt/sources.list&lt;/code&gt;. To add our local repository, we add the following line at the top of the file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/path/to/local-deb-repo/ ./
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where &lt;em&gt;local-deb-repo&lt;/em&gt; is the name of our local repository directory.&lt;/p&gt;
+
+&lt;h2 id=&#34;add-debian-packages&#34;&gt;Add Debian Packages&lt;/h2&gt;
+
+&lt;p&gt;Now we create local repository&amp;rsquo;s directory just like we specified it in the previous step:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir /path/to/local-deb-repo/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once we&amp;rsquo;ve done that, we can proceed to put the Debian package files (&lt;code&gt;.deb&lt;/code&gt;) and their dependencies inside the directory.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

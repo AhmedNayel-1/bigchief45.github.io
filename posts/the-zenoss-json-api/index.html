@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>The Zenoss JSON API &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>The Zenoss JSON API</h1>
+  <time datetime=2016-11-24T00:00:00Z class="post-date">Thu, Nov 24, 2016</time>
+
+  <p>The <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using <a href="https://curl.haxx.se/">cURL</a> or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.</p>
+
+<p>The API documentation can be downloaded <a href="https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip">here</a>. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.</p>
+
+<p>In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&rsquo;s front-end (made using <a href="https://www.sencha.com/products/extjs/">ExtJS</a>) interacts with it.</p>
+
+<p>~&gt; Even though Zenoss calls its API a <em>JSON API</em> (Simply because it returns data in JSON format), the API <strong>is not</strong> <a href="http://jsonapi.org/">JSON API specification</a> compliant.</p>
+
+<h2 id="querying-the-api">Querying the API</h2>
+
+<p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let&rsquo;s say we want to obtain all the available information of a specific device:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="background-color:#fff0f0">&#34;admin:zenoss&#34;</span> -X POST -H <span style="background-color:#fff0f0">&#34;Content-Type: application/json&#34;</span> -d <span style="background-color:#fff0f0">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#963">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
+<p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
+
+<p>This is all fine if all we need is querying the API and nothing else. But what if we really want to know <strong><em>how</em></strong> the API back-end works? How the endpoints are created? What are routers?</p>
+
+<p>This is what we are gonna learn next.</p>
+
+<h2 id="the-api-back-end-routers-facades">The API Back-End: Routers &amp; Facades</h2>
+
+<p>If you take a look at the previous curl command you will notice that we specify something like <code>{&quot;action&quot;: &quot;DeviceRouter&quot;, &quot;method&quot;: &quot;getInfo&quot;}</code>. This sounds pretty intuitive, but what does it exactly mean?</p>
+
+<h3 id="routers">Routers</h3>
+
+<p>Zenoss Core 4 comes with many different built-in routers. These routers act as the API endpoints for specific things within Zenoss, such as devices, events, templates, etc. In total, Zenoss comes with the following routers:</p>
+
+<ul>
+<li>MessagingRouter</li>
+<li>EventsRouter</li>
+<li>ProcessRouter</li>
+<li>ServiceRouter</li>
+<li>DeviceRouter</li>
+<li>NetworkRouter</li>
+<li>TemplateRouter</li>
+<li>DetailNavRouter</li>
+<li>ReportRouter</li>
+<li>MibRouter</li>
+<li>ZenPackRouter</li>
+</ul>
+
+<p>Naturally, each router will offer many &ldquo;methods&rdquo; that we can query by passing the necessary parameters. Just like the <code>getInfo</code> method from the <code>DeviceRouter</code> we used previously.</p>
+
+<p>In the Zenoss Core 4 source code, these routers are defined and written in Python, and can be found in <code>$ZENHOME/Products/Zuul/routers/</code>.</p>
+
+<p>A quick glance at the Device Router (<code>$ZENHOME/Products/Zuul/routers/device.py</code>) reveals the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># ...</span>
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">DeviceRouter</span>(TreeRouter):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">    A JSON/ExtDirect interface to operations on devices
+</span><span style="background-color:#fff0f0">    &#34;&#34;&#34;</span>
+
+    <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">getInfo</span>(self, uid, keys<span style="color:#333">=</span>None):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">        Get the properties of a device or device organizer
+</span><span style="background-color:#fff0f0">
+</span><span style="background-color:#fff0f0">        @type  uid: string
+</span><span style="background-color:#fff0f0">        @param uid: Unique identifier of an object
+</span><span style="background-color:#fff0f0">        @type  keys: list
+</span><span style="background-color:#fff0f0">        @param keys: (optional) List of keys to include in the returned
+</span><span style="background-color:#fff0f0">                     dictionary. If None then all keys will be returned
+</span><span style="background-color:#fff0f0">                     (default: None)
+</span><span style="background-color:#fff0f0">        @rtype:   DirectResponse
+</span><span style="background-color:#fff0f0">        @return:  B{Properties}
+</span><span style="background-color:#fff0f0">            - data: (dictionary) Object properties
+</span><span style="background-color:#fff0f0">            - disabled: (bool) If current user doesn&#39;t have permission to use setInfo
+</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
+        facade <span style="color:#333">=</span> self<span style="color:#333">.</span>_getFacade()
+        process <span style="color:#333">=</span> facade<span style="color:#333">.</span>getInfo(uid)
+        data <span style="color:#333">=</span> Zuul<span style="color:#333">.</span>marshal(process, keys)
+        disabled <span style="color:#333">=</span> <span style="color:#000;font-weight:bold">not</span> Zuul<span style="color:#333">.</span>checkPermission(<span style="background-color:#fff0f0">&#39;Manage DMD&#39;</span>, self<span style="color:#333">.</span>context)
+        <span style="color:#080;font-weight:bold">return</span> DirectResponse(data<span style="color:#333">=</span>data, disabled<span style="color:#333">=</span>disabled)</code></pre></div>
+<p>Perfect. We can see the explanation of the method and its parameters written as comments, this is probably how the documentation is generated.</p>
+
+<p>Although it seems that it&rsquo;s pretty obvious what is happening in the method, there are a few things that aren&rsquo;t very clear:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">facade <span style="color:#333">=</span> self<span style="color:#333">.</span>_getFacade()
+process <span style="color:#333">=</span> facade<span style="color:#333">.</span>getInfo(uid)
+data <span style="color:#333">=</span> Zuul<span style="color:#333">.</span>marshal(process, keys)</code></pre></div>
+<p><em>Facade</em>? <em>getFacade()</em>? It seems that the router method is actually not the method doing the work. Instead, it is calling a method with the same name, but from a different object, a <strong>Facade</strong> object.</p>
+
+<h3 id="facades">Facades</h3>
+
+<p>Zuul facades are also a part of the Python API. They have two main functions:</p>
+
+<ol>
+<li>Given a unique indentified (UID), retrieve a ZenModel object and return info objects representing objects related to the retrieved object.</li>
+<li>Given an info object, bind its properties to a ZenModel and save it.</li>
+</ol>
+
+<p>So at this point it seems that when we query the API, we are querying a specific router, which then calls the method from a facade. The router then returns the data as a response.</p>
+
+<p>We can find facades under <code>$ZENHOME/Products/Zuul/facades</code>. And just like the device router, there is also a device facade (<code>$ZENHOME/Products/Zuul/facades/devicefacade.py</code>).</p>
+
+<p>-&gt; <strong>Routers</strong> and <strong>facades</strong> provide a mean to handle objects. A facade is code that actually modifies objects; a router provides access to the facade, supplying the correct parameters. The router can be considered as a translation layer between the browser and the facade; thus, provided the name and parameters are mantained by the router, the underlying facade code may be changed.</p>
+
+<p>~&gt; Router names, their functions and their parameters must all match up between the <em>routers.py</em> and <em>facades.py</em> entries and the JavaScript that calls the router.</p>
+
+<h2 id="the-front-end-extjs">The Front-End: ExtJS</h2>
+
+<p>With Zenoss Core 4 having the default routers and facades in place so that the API can correctly serve data, the front-end then queries this API using JavaScript and displays it accordingly in the graphic user interface.</p>
+
+<p>To understand how this works, we need to understand some ExtJS components that are designed for this purpose.</p>
+
+<h3 id="ext-direct">Ext.Direct</h3>
+
+<p><a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.direct.Manager">Ext.Direct</a> aims to streamline communication between the client and server by providing a single interface that reduces the amount of common code typically required to validate data and handle returned data packets (reading data, error conditions, etc).</p>
+
+<p>Remember that the Zenoss routers inherit from The <code>DirectRouter</code> class. This base class parses an <code>Ext.Direct</code> request, which contains the name of the method and any data that should be passed, and routes the data to the appropriate method. It then receives the output of that call and puts it into the data structure expected by <strong>Ext.Direct</strong>. This <code>DirectRouter</code> class definition can be found in <code>$ZENHOME/Products/ZenUtils/extdirect/router.py</code>.</p>
+
+<p>From the Ext.Direct documentation:</p>
+
+<blockquote>
+<p><em>Ext.Direct utilizes a &ldquo;router&rdquo; on the server to direct requests from the client to the appropriate server-side method. Because the Ext.Direct API is completely platform-agnostic, you could completely swap out a Java based server solution and replace it with one that uses C# without changing the client side JavaScript at all.</em></p>
+</blockquote>
+
+<h3 id="zenoss-remotes">Zenoss Remotes</h3>
+
+<p>Zenoss remotes are the front-end representations of the Zenoss back-end routers. We can easily interact with them in the Developer Console of our browser:</p>
+
+<p><img src="/posts/the-zenoss-json-api/zenoss_remotes.jpg" alt="Zenoss Remotes" /></p>
+
+<p>These default remotes are defined in <code>$ZENHOME/Products/Zuul/routers/configure.zcml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#888">&lt;!-- ... --&gt;</span>
+<span style="color:#070">&lt;browser:directRouter</span>
+  <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;device_router&#34;</span>
+  <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
+  <span style="color:#00c">class=</span><span style="background-color:#fff0f0">&#34;.device.DeviceRouter&#34;</span>
+  <span style="color:#00c">namespace=</span><span style="background-color:#fff0f0">&#34;Zenoss.remote&#34;</span>
+  <span style="color:#00c">timeout=</span><span style="background-color:#fff0f0">&#34;180000&#34;</span>
+  <span style="color:#070">/&gt;</span>
+<span style="color:#888">&lt;!-- ... --&gt;</span></code></pre></div>
+<h3 id="querying-the-api-1">Querying the API</h3>
+
+<p>We can query the API in JavaScript using the Zenoss remotes. For example, we can do the same cURL query we did at the beginning of this post, but using JavaScript to interact with ExtJS and the Zenoss back-end.</p>
+
+<p>In the browser console:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Zenoss.remote.DeviceRouter.getDevices({uid<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/&#39;</span>}, <span style="color:#080;font-weight:bold">function</span>(result) {
+  console.log(result.devices);
+});
+</code></pre></div>
+<p>The above will output an object to the console for each existing device in the device class speficied for the <code>uid</code>.</p>
+
+<h2 id="final-thoughts">Final Thoughts</h2>
+
+<p>The way the back-end and API works in Zenoss is a bit complicated. With so many components working together both in Zenoss <em>and</em> in ExtJS, it takes some time to digest and understand what does what and how. However I believe this post should give a good primer before going in to more specific and complex scenarios.</p>
+
+<p>It is also possible to create new routers, facades, and remotes from our ZenPacks so that we can add new custom API endpoints to serve custom data. Everything configured from a ZenPack, without having to alter the Zenoss Core source code. I hope I can cover this topic soon.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/json" class="label label-default">json</a></li>
+  
+    <a href="http://aalvarez.me/tags/api" class="label label-default">api</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/curl" class="label label-default">curl</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

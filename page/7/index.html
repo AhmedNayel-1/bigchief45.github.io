@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/">Extending Device Python Classes From Other ZenPacks</a>
+  </h1>
+  <time datetime="2017-06-27T00:00:00Z" class="post-date">Tue, Jun 27, 2017</time>
+  <p>Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from <code>Device</code>. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a <a href="/posts/working-with-zenoss-python-data-sources.html">Python data source</a>.</p>
+
+<p>The <code>zenpack.yaml</code> file for the first and main ZenPack would look something like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># ZenPack1</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>classes:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>SpecialServer:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Device]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Special<span style="color:#bbb"> </span>Server<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>SpecialComponent:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Component]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Special<span style="color:#bbb"> </span>Component<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>properties:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#888"># ...</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>AmazingComponent:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Component]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Amazing<span style="color:#bbb"> </span>Component<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>properties:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#888"># ...</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>class_relationships:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>SpecialServer<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">1</span>:MC<span style="color:#bbb"> </span>SpecialComponent<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>SpecialServer<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">1</span>:MC<span style="color:#bbb"> </span>AmazingComponent</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/extending-device-python-classes-from-other-zenpacks/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/">Using Lambdas in Case Statements in Ruby</a>
+  </h1>
+  <time datetime="2017-06-12T00:00:00Z" class="post-date">Mon, Jun 12, 2017</time>
+  <p>In a <a href="http://aalvarez.me/blog/posts/using-objects-and-ranges-with-cases-in-ruby.html">previous post</a> I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.</p>
+
+<p>The other day I was trying to solve the <a href="http://exercism.io/submissions/03c3c93f23b8420faff3107e2ad18286">Bob Ruby exercise in Exercism</a>, and I came up with another very cool way to use case statements: with Lambdas.</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem&rsquo;s README file:</p>
+
+<pre><code>Bob is a lackadaisical teenager. In conversation, his responses are very limited.
+
+Bob answers 'Sure.' if you ask him a question.
+
+He answers 'Whoa, chill out!' if you yell at him.
+
+He says 'Fine. Be that way!' if you address him without actually saying anything.
+
+He answers 'Whatever.' to anything else.
+</code></pre>
+
+<h2 id="solutions">Solutions</h2>
+
+<p>The test provided by Exercism indicates that we should create a <code>Bob</code> class with a <code>hey</code> class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="http://aalvarez.me/tags/exercism" class="label label-default">exercism</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/using-lambdas-in-case-statements-in-ruby/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/">Zenoss Custom Notification Actions Using Subscribers</a>
+  </h1>
+  <time datetime="2017-06-07T00:00:00Z" class="post-date">Wed, Jun 7, 2017</time>
+  <p>In a <a href="/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification&rsquo;s content pane, as shown below:</p>
+
+<p><img src="/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content" /></p>
+
+<p>In this post I want to change and improve this by using <em><strong>subscribers</strong></em> functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the <em>Pager</em> field instead.</p>
+
+<h2 id="the-pager-action">The Pager Action</h2>
+
+<p>Using Zenoss Core 4&rsquo;s pager action&rsquo;s <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
+
+<p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/zenoss-custom-notification-actions-using-subscribers/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/python-functional-http-testing-with-gabbi/">Python Functional HTTP Testing With Gabbi</a>
+  </h1>
+  <time datetime="2017-06-06T00:00:00Z" class="post-date">Tue, Jun 6, 2017</time>
+  <p>Continuing with my journey in contributing to <a href="http://gnocchi.xyz/index.html">Gnocchi</a>, I have learned of an excellent tool which Gnocchi uses to test its API from a HTTP request approach. The tool is called <a href="https://github.com/cdent/gabbi"><strong>Gabbi</strong></a>.</p>
+
+<p>Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&rsquo;s DSL when making <a href="https://github.com/rspec/rspec-rails#request-specs">request specs</a>.</p>
+
+<p>For my latest contribution to Gnocchi, I was working on an <a href="https://github.com/gnocchixyz/gnocchi/issues/12">issue</a> where newly created metrics were not being returned in the response from <code>/v1/resource/generic/:id/metric</code>. After applying the fixes and submitting the patch, it was also necessary to update some of the functional Gabbi tests that belong to this specific use case.</p>
+
+<p>One of these original tests is shown below:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/gabbi" class="label label-default">gabbi</a></li>
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/tdd" class="label label-default">tdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/bdd" class="label label-default">bdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/backend" class="label label-default">backend</a></li>
+  
+    <a href="http://aalvarez.me/tags/yaml" class="label label-default">yaml</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/python-functional-http-testing-with-gabbi/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/">Testing JSON API Strong Parameters in Rails</a>
+  </h1>
+  <time datetime="2017-05-25T00:00:00Z" class="post-date">Thu, May 25, 2017</time>
+  <p>Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&rsquo;s factory, and then add the corresponding model and request specs.</p>
+
+<p>The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.</p>
+
+<p>In an API following the <a href="http://jsonapi.org/">JSON API</a> specification, here is an example of how the strong parameters method would look like:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">thing_params</span>
+  params<span style="color:#333">.</span>require(<span style="color:#a60;background-color:#fff0f0">:data</span>)<span style="color:#333">.</span>require(<span style="color:#a60;background-color:#fff0f0">:attributes</span>)<span style="color:#333">.</span>permit(<span style="color:#a60;background-color:#fff0f0">:color</span>, <span style="color:#a60;background-color:#fff0f0">:size</span>, <span style="color:#a60;background-color:#fff0f0">:age</span>, <span style="color:#a60;background-color:#fff0f0">:name</span>,
+      <span style="color:#a60;background-color:#fff0f0">:owner</span>, <span style="color:#a60;background-color:#fff0f0">:origin</span>, <span style="color:#a60;background-color:#fff0f0">:location</span>, <span style="color:#a60;background-color:#fff0f0">:purpose</span>, <span style="color:#a60;background-color:#fff0f0">:price</span>, <span style="color:#a60;background-color:#fff0f0">:alive</span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>As you can see, the list of attributes is getting pretty long. And we <strong>do not</strong> want to explicitly keep adding more attributes to the test.</p>
+
+<h2 id="testing-strong-parameters-in-controller-specs">Testing Strong Parameters in Controller Specs</h2>
+
+<p>After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that <strong>all</strong> attributes of importance are whitelisted in the controller.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rspec" class="label label-default">rspec</a></li>
+  
+    <a href="http://aalvarez.me/tags/json" class="label label-default">json</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/tdd" class="label label-default">tdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/bdd" class="label label-default">bdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/backend" class="label label-default">backend</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/testing-json-api-strong-parameters-in-rails/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/6/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/8/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

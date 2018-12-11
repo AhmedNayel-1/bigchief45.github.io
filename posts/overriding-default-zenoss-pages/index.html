@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Overriding Default Zenoss Pages &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Overriding Default Zenoss Pages</h1>
+  <time datetime=2017-03-17T00:00:00Z class="post-date">Fri, Mar 17, 2017</time>
+
+  <p>While testing the <a href="https://github.com/zenoss/ZenPacks.zenoss.Layer2">Layer 2 ZenPack</a>, I noticed that the network map provided by the ZenPack was placed in the same page of the old default Zenoss&rsquo;s network map, replacing the latter which was made using Flash. After the ZenPack is installed, when you click on the <em>Network Map</em> secondary link in the Infrastructure page, you will get the new map instead.</p>
+
+<p><img src="/posts/overriding-default-zenoss-pages/map_link.jpg" alt="Network Map link" /></p>
+
+<p>This seemed pretty nice, and I was curious how they achieved this, so I started browsing around the source code. It turns out that this overriding is done in a file called <code>overrides.zcml</code>, which is placed in the ZenPack&rsquo;s top directory.</p>
+
+<p><strong>overrides.zcml</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version = &#34;1.0&#34; encoding = &#34;utf-8&#34;?&gt;</span>
+<span style="color:#070">&lt;configure</span>
+    <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
+    <span style="color:#00c">xmlns:browser =</span> <span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/browser&#34;</span>
+    <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span>
+    <span style="color:#070">&gt;</span>
+
+    <span style="color:#888">&lt;!-- Network map page --&gt;</span>
+    <span style="color:#070">&lt;browser:page</span>
+        <span style="color:#00c">template=</span><span style="background-color:#fff0f0">&#34;./networkMap.pt&#34;</span>
+        <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;networkMap&#34;</span>
+        <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
+        <span style="color:#00c">permission=</span><span style="background-color:#fff0f0">&#34;zenoss.View&#34;</span>
+        <span style="color:#070">/&gt;</span>
+<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+<p>In this file, they are overriding the network map page (named <code>networkMap</code>, which is a <code>browser:page</code>) to use a different template instead. This is a custom template that also resides in the ZenPack. In the case of the Layer 2 ZenPack, it is also located in the ZenPack&rsquo;s top directory, but you can specify a different location such as <code>./browser/templates/</code> which is very common template location in other ZenPacks.</p>
+
+<p>Layer 2 ZenPack Network Map:</p>
+
+<p><img src="https://github.com/zenoss/ZenPacks.zenoss.Layer2/blob/master/screenshots/layer2_network_map.png?raw=true" alt="Layer 2 ZenPack Network Map" /></p>
+
+<p>The template is a <code>.pt</code> file that defines certain blocks in the document using TAL and METAL expressions to be filled with content, usually using JavaScript. Here is the <code>networkMap.pt</code> template used in the ZenPack:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#579">&lt;!DOCTYPE html&gt;</span>
+
+&lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:use-macro</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;context/page_macros/base-new&#34;</span>&gt;
+    &lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:fill-slot</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;title&#34;</span>&gt;Network Map&lt;/<span style="color:#070">tal:block</span>&gt;
+
+    &lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:fill-slot</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;head-local&#34;</span>&gt;
+        &lt;<span style="color:#070">meta</span> <span style="color:#00c">http-equiv</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;X-UA-Compatible&#34;</span> <span style="color:#00c">content</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;IE=edge&#34;</span> /&gt;
+    &lt;/<span style="color:#070">tal:block</span>&gt;
+
+    &lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:fill-slot</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;script_afterLayout&#34;</span>&gt;
+        &lt;<span style="color:#070">script</span> <span style="color:#00c">type</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;text/javascript&#34;</span>&gt;
+            Ext.onReady(<span style="color:#080;font-weight:bold">function</span>(){
+                <span style="color:#007020">window</span>.form_panel.render(Ext.getCmp(<span style="background-color:#fff0f0">&#39;center_panel&#39;</span>));
+            });
+        &lt;/<span style="color:#070">script</span>&gt;
+    &lt;/<span style="color:#070">tal:block</span>&gt;
+&lt;/<span style="color:#070">tal:block</span>&gt;</code></pre></div>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

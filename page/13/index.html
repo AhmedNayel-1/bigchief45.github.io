@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/getting-started-with-juju-locally/">Getting Started With Juju Locally</a>
+  </h1>
+  <time datetime="2017-02-10T00:00:00Z" class="post-date">Fri, Feb 10, 2017</time>
+  <p><a href="https://jujucharms.com/">Juju</a> is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.</p>
+
+<p>In this post I will explain how easy it is to get started with Juju in a <strong>local</strong> environment.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>To start we will need to add the necessary repository from where we will retrieve the Juju packages:</p>
+
+<pre><code>sudo add-apt-repository ppa:juju/stable
+sudo apt-get update
+</code></pre>
+
+<p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
+
+<pre><code>sudo apt-get install juju-core
+sudo apt-get install juju-local
+</code></pre>
+
+<h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
+
+<p>Before we set up the local environment, let&rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
+
+<pre><code>juju generate-config
+juju switch local
+</code></pre>
+
+<p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
+
+<pre><code>juju bootstrap
+</code></pre>
+
+<p>After the process is complete, we are now ready to start using Juju.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/juju" class="label label-default">juju</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/iptables" class="label label-default">iptables</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/getting-started-with-juju-locally/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/c-gotchas-for-beginners/">C Gotchas For Beginners</a>
+  </h1>
+  <time datetime="2017-02-07T00:00:00Z" class="post-date">Tue, Feb 7, 2017</time>
+  <p>Similar to <a href="/posts/javascript-gotchas-for-beginners.html">my post</a> on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you <strong>must</strong> know if you are to become a good C programmer.</p>
+
+<h2 id="boolean-types">Boolean Types</h2>
+
+<p>C actually does not have a boolean type. They are usually defined like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#define BOOL char
+</span><span style="color:#579">#define FALSE 0
+</span><span style="color:#579">#define TRUE 1</span></code></pre></div>
+<p>However it is argued that it is a better practice to simply use integers instead (<code>0</code> and <code>1</code>).</p>
+
+<h2 id="memory-address-of-array-elements">Memory Address of Array Elements</h2>
+
+<p>In C, arrays have a contiguous memory allocation. We can verify this by printing the memory addresses of each element of an array. We can do so using <code>&amp;</code> to access the memory location of the array element:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">main</span>() {
+  <span style="color:#339;font-weight:bold">char</span> vowels[] <span style="color:#333">=</span> {<span style="color:#04d;background-color:#fff0f0">&#39;a&#39;</span>, <span style="color:#04d;background-color:#fff0f0">&#39;e&#39;</span>, <span style="color:#04d;background-color:#fff0f0">&#39;i&#39;</span>, <span style="color:#04d;background-color:#fff0f0">&#39;o&#39;</span>, <span style="color:#04d;background-color:#fff0f0">&#39;u&#39;</span>};
+
+  <span style="color:#080;font-weight:bold">for</span> (<span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>; i <span style="color:#333">&lt;</span> <span style="color:#00d;font-weight:bold">5</span>; i<span style="color:#333">++</span>) {
+    printf(<span style="background-color:#fff0f0">&#34;Address of vowel [%d]: %u</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, i, <span style="color:#333">&amp;</span>vowels[i]);
+  }
+
+  <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>;
+}</code></pre></div>
+<p>The above code will produces the following output for me:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/c" class="label label-default">c</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/c-gotchas-for-beginners/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Processing Nova Live Migration Events in Zenoss</a>
+  </h1>
+  <time datetime="2017-01-23T00:00:00Z" class="post-date">Mon, Jan 23, 2017</time>
+  <p>When monitoring OpenStack using the OpenStack Infrastructure ZenPack integrated with Ceilometer, it is possible to get fast virtual machine state changes (on/off powering, etc.) by receiving events sent from Ceilometer to Zenoss.</p>
+
+<p>However I discovered that when trying to get the same effect for <strong>live migration</strong> (live migrating a virtual machine from one compute node to another) scenarios, this would not work. I proceeded to investigate why.</p>
+
+<h2 id="ceilometer-dispatcher-live-migration-events">Ceilometer Dispatcher Live Migration Events</h2>
+
+<p>I decided that the first thing to check was if the <a href="https://github.com/zenoss/ceilometer_zenoss">Zenoss Ceilometer dispatcher</a> was <strong>capturing</strong> and <strong>sending</strong> the live migration events to Zenoss. Indeed, the logs can be found in Ceilometer under <code>/var/log/ceilometer/ceilometer-collector.log</code>:</p>
+
+<pre><code>2017-01-23 14:22:02.593 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 3538a01c-ab8d-4e64-b0ff-6e8fe270e06a, compute.instance.live_migration.post.dest.start, 2017-01-23 06:22:02.584049, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
+
+2017-01-23 14:22:02.771 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 8db64329-606c-4184-9b5b-eb815166cb17, compute.instance.live_migration.post.dest.end, 2017-01-23 06:22:02.761138, &lt;Trait: state_description 1 &gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
+
+2017-01-23 14:22:02.782 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: d0dc4f4a-454a-42c5-b767-386dc3e0d1f3, compute.instance.live_migration._post.end, 2017-01-23 06:22:02.776665, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3205&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
+</code></pre>
+
+<p>Notice the <code>live_migration.post.dest.start</code> and <code>live_migration.post.dest.end</code> logs.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/nova" class="label label-default">nova</a></li>
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/rabbitmq" class="label label-default">rabbitmq</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/processing-nova-live-migration-events-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/">Appending Modeler Plugins in ZenPacks</a>
+  </h1>
+  <time datetime="2017-01-20T00:00:00Z" class="post-date">Fri, Jan 20, 2017</time>
+  <p>When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class&rsquo;s modeler plugins to be <strong>replaced</strong> by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply <em>added</em> to the device class&rsquo;s list of modeler plugins.</p>
+
+<p>In a previous post I explained how we can <a href="/posts/customizing-the-zenpack-installation-process.html">customize the ZenPacks installation process</a> to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.</p>
+
+<p>Let&rsquo;s assume that we have the <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a> installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the <code>/Server/SSH/Linux/NovaHost</code> device class. We want our custom ZenPack to add <em>new</em> modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.</p>
+
+<p>This will be done upon installation (like in the previous post) inside the <code>__init__.py</code> file in the ZenPack top directory. This is how the code looks like:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/appending-modeler-plugins-in-zenpacks/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Customizing the ZenPack Installation Process</a>
+  </h1>
+  <time datetime="2017-01-17T00:00:00Z" class="post-date">Tue, Jan 17, 2017</time>
+  <p>There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&rsquo;s top directory&rsquo;s <code>__init__.py</code> file. When creating a fresh ZenPack using <strong>zenpacklib</strong>, this <code>__init__.py</code> file will contain the following contents:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.</span> <span style="color:#080;font-weight:bold">import</span> zenpacklib
+
+CFG <span style="color:#333">=</span> zenpacklib<span style="color:#333">.</span>load_yaml()</code></pre></div>
+<p>To add custom functionality that gets executed when the ZenPack is installed, we need to extend the <code>install</code> method of the <code>ZenPack</code> class. Below the original code, we can proceed to do so:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenPack</span>(schema<span style="color:#333">.</span>ZenPack):
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">install</span>(self, app):
+        <span style="color:#888"># Our custom logic here</span>
+
+        <span style="color:#007020">super</span>(ZenPack, self)<span style="color:#333">.</span>install(app)</code></pre></div>
+<p>No other imports are necessary. Notice the last line of the <code>install</code> method, this is where the ZenPack gets installed.</p>
+
+<p>For the purpuse of giving an example, Let&rsquo;s say that our ZenPack creates two new <a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html">zProperties</a>, one property to store an API key, and the other one to store a URL. Moreover let&rsquo;s say that we obtain these values from somewhere and we want to assign them <strong>automatically</strong> to the properties upon the installation of the ZenPack.</p>
+
+<p>These two new properties are defined in <code>zenpack.yaml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name:<span style="color:#bbb"> </span>ZenPacks.aalvarez.MyZenPack<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>zProperties:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>zMyApiUrl:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>category:<span style="color:#bbb"> </span>MyApi<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>type:<span style="color:#bbb"> </span>string<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>zMyApiKey:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>category:<span style="color:#bbb"> </span>MyApi<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>type:<span style="color:#bbb"> </span>string</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/customizing-the-zenpack-installation-process/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/12/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/14/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Creating Zenoss ZenPack Daemons &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Creating Zenoss ZenPack Daemons</h1>
+  <time datetime=2016-11-07T00:00:00Z class="post-date">Mon, Nov 7, 2016</time>
+
+  <p>ZenPacks are powerful custom add-ons that can help us extend Zenoss&rsquo;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using <a href="http://zenpacklib.zenoss.com/en/latest/index.html"><strong>zenpacklib</strong></a>, but it is also possible to create it from the Zenoss user interface.</p>
+
+<h2 id="about-zenpacklib">About zenpacklib</h2>
+
+<p><strong>zenpacklib</strong> is a Python library developed by the Zenoss team to facilitate the process of creating ZenPacks, specially ZenPacks that deal with modeling and monitoring devices and components. Most of the newer ZenPacks that are being released are now being built with zenpacklib.</p>
+
+<p>We can obtain zenpacklib by running the following commands:</p>
+
+<pre><code>wget http://zenpacklib.zenoss.com/zenpacklib.py
+chmod 755 zenpacklib.py
+</code></pre>
+
+<p>This will download the zenpacklib Python library and give it executable permissions.</p>
+
+<h2 id="creating-the-zenpack">Creating the ZenPack</h2>
+
+<p>Using the zenpacklib file we just downloaded, we proceed to create a new fresh ZenPack:</p>
+
+<pre><code>./zenpacklib.py create ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;
+</code></pre>
+
+<p>This will create the ZenPack base directory with the necessary base files.</p>
+
+<p>Now we go into this directory to begin.</p>
+
+<pre><code>cd ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;
+</code></pre>
+
+<h2 id="creating-the-zenpack-daemon">Creating the ZenPack Daemon</h2>
+
+<p>Our custom daemon declaration will be located in a directory named <code>daemons</code>, inside our ZenPack directory:</p>
+
+<pre><code>mkdir ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;/&lt;your_namespace&gt;/&lt;zenpack_name&gt;/daemons
+</code></pre>
+
+<p>Here we will create a new Bashscript file with the name of our daemon. In this case we will name it <code>mydaemon</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#579">#! /usr/bin/env bash
+</span><span style="color:#579"></span>
+<span style="color:#963">DAEMON_NAME</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;mydaemon&#34;</span>
+
+. <span style="color:#963">$ZENHOME</span>/bin/zenfunctions
+
+<span style="color:#963">MYPATH</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>python -c <span style="background-color:#fff0f0">&#34;import os.path; print os.path.realpath(&#39;</span><span style="color:#963">$0</span><span style="background-color:#fff0f0">&#39;)&#34;</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">THISDIR</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>dirname <span style="color:#963">$MYPATH</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">PRGHOME</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>dirname <span style="color:#963">$THISDIR</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">PRGNAME</span><span style="color:#333">=</span><span style="color:#963">$DAEMON_NAME</span>.py <span style="color:#963">CFGFILE</span><span style="color:#333">=</span><span style="color:#963">$CFGDIR</span>/<span style="color:#963">$DAEMON_NAME</span>.conf
+
+generic <span style="background-color:#fff0f0">&#34;</span><span style="color:#963">$@</span><span style="background-color:#fff0f0">&#34;</span></code></pre></div>
+<p>Once the ZenPack is installed, files under this <code>daemons</code> directory will become executable (<code>chmod 0755</code>), a symlink to the file will be created in <code>$ZENHOME/bin</code>, and a configuration file will be generated in <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code></p>
+
+<p><strong>NOTE:</strong> If you created your ZenPack using the Zenoss user interface, the <code>daemons</code> directory will also be automatically created, and will contain an example daemon file named <code>zenexample</code> with code similar to the one above. In this case you should simply replace the necessary values.</p>
+
+<h2 id="programming-the-daemon-s-logic">Programming the Daemon&rsquo;s Logic</h2>
+
+<p>We will program our daemon using Python, by creating a Python file within the ZenPack Directory using the daemon&rsquo;s name, in this case <code>mydaemon.py</code>. This python code will be executed when the daemon is started or during a scheduled execution.</p>
+
+<p><strong>NOTE:</strong> If you created your ZenPack using the Zenoss user interface, a <code>zenexample.py</code> file will be automatically created. This file contains the boiler plate code which implements the necessary interfaces to begin building the daemon.</p>
+
+<h3 id="daemon-interfaces">Daemon Interfaces</h3>
+
+<p>The daemon code will need to implement the following interfaces:</p>
+
+<p><strong>ICollectorPreferences</strong>:</p>
+
+<ul>
+<li>The daemon&rsquo;s preferences will be defined here.</li>
+<li>Configuration Service is specified here (more on this in a bit).</li>
+<li>Here we can set <code>cycleInterval</code> and <code>configCycleInterval</code> values.</li>
+<li>We can also declare and assign global variables that the daemon tasks can use.</li>
+</ul>
+
+<p><strong>IScheduledTask</strong>:</p>
+
+<ul>
+<li>Represents each task associated to one device.</li>
+<li>The scheduler will schedule each task accordingly.</li>
+<li>Implements <code>doTask()</code> method. This is where we put all the collector daemon logic.</li>
+<li>Other custom methods can be called inside the <code>doTask()</code> method.</li>
+</ul>
+
+<p>Here is an example of a daemon code:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># This is an example of a custom collector daemon.</span>
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
+log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.Example&#39;</span>)
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">Globals</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">zope.component</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span>
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">twisted.internet</span> <span style="color:#080;font-weight:bold">import</span> defer
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.daemon</span> <span style="color:#080;font-weight:bold">import</span> CollectorDaemon
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.interfaces</span> \
+    <span style="color:#080;font-weight:bold">import</span> ICollectorPreferences, IScheduledTask, IEventService, IDataService
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.tasks</span> \
+    <span style="color:#080;font-weight:bold">import</span> SimpleTaskFactory, SimpleTaskSplitter, TaskStates
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.observable</span> <span style="color:#080;font-weight:bold">import</span> ObservableMixin
+
+<span style="color:#888"># unused is way to keep Python linters from complaining about imports that we</span>
+<span style="color:#888"># don&#39;t explicitely use. Occasionally there is a valid reason to do this.</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> unused
+
+<span style="color:#888"># We must import our ConfigService here so zenhub will allow it to be</span>
+<span style="color:#888"># serialized and deserialized. We&#39;ll declare it unused to satisfy linters.</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.NAMESPACE.PACKNAME.services.ExampleConfigService</span> \
+    <span style="color:#080;font-weight:bold">import</span> ExampleConfigService
+
+unused(Globals)
+unused(ExampleConfigService)
+
+
+<span style="color:#888"># Your implementation of ICollectorPreferences is where you can handle custom</span>
+<span style="color:#888"># command line (or config file) options and do global configuration of the</span>
+<span style="color:#888"># daemon.</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenExamplePreferences</span>(<span style="color:#007020">object</span>):
+    zope<span style="color:#333">.</span>interface<span style="color:#333">.</span>implements(ICollectorPreferences)
+
+    <span style="color:#080;font-weight:bold">def</span> __init__(self):
+        self<span style="color:#333">.</span>collectorName <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;zenexample&#39;</span>
+        self<span style="color:#333">.</span>configurationService <span style="color:#333">=</span> \
+            <span style="background-color:#fff0f0">&#34;ZenPacks.NAMESPACE.PACKNAME.services.ExampleConfigService&#34;</span>
+
+        <span style="color:#888"># How often the daemon will collect each device. Specified in seconds.</span>
+        self<span style="color:#333">.</span>cycleInterval <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">5</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">60</span>
+
+        <span style="color:#888"># How often the daemon will reload configuration. In seconds.</span>
+        self<span style="color:#333">.</span>configCycleInterval <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">5</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">60</span>
+
+        self<span style="color:#333">.</span>options <span style="color:#333">=</span> None
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">buildOptions</span>(self, parser):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">        Required to implement the ICollectorPreferences interface.
+</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
+        <span style="color:#080;font-weight:bold">pass</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">postStartup</span>(self):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">        Required to implement the ICollectorPreferences interface.
+</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
+        <span style="color:#080;font-weight:bold">pass</span>
+
+
+<span style="color:#888"># The implementation of IScheduledTask for your daemon is usually where most</span>
+<span style="color:#888"># of the work is done. This is where you implement the specific logic required</span>
+<span style="color:#888"># to collect data.</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenExampleTask</span>(ObservableMixin):
+    zope<span style="color:#333">.</span>interface<span style="color:#333">.</span>implements(IScheduledTask)
+
+    <span style="color:#080;font-weight:bold">def</span> __init__(self, taskName, deviceId, interval, taskConfig):
+        <span style="color:#007020">super</span>(ZenExampleTask, self)<span style="color:#333">.</span>__init__()
+        self<span style="color:#333">.</span>_taskConfig <span style="color:#333">=</span> taskConfig
+
+        self<span style="color:#333">.</span>_eventService <span style="color:#333">=</span> zope<span style="color:#333">.</span>component<span style="color:#333">.</span>queryUtility(IEventService)
+        self<span style="color:#333">.</span>_dataService <span style="color:#333">=</span> zope<span style="color:#333">.</span>component<span style="color:#333">.</span>queryUtility(IDataService)
+        self<span style="color:#333">.</span>_preferences <span style="color:#333">=</span> zope<span style="color:#333">.</span>component<span style="color:#333">.</span>queryUtility(
+            ICollectorPreferences, <span style="background-color:#fff0f0">&#39;zenexample&#39;</span>)
+
+        <span style="color:#888"># All of these properties are required to implement the IScheduledTask</span>
+        <span style="color:#888"># interface.</span>
+        self<span style="color:#333">.</span>name <span style="color:#333">=</span> taskName
+        self<span style="color:#333">.</span>configId <span style="color:#333">=</span> deviceId
+        self<span style="color:#333">.</span>interval <span style="color:#333">=</span> interval
+        self<span style="color:#333">.</span>state <span style="color:#333">=</span> TaskStates<span style="color:#333">.</span>STATE_IDLE
+
+    <span style="color:#888"># doTask is where the collector logic should go. It is also required to</span>
+    <span style="color:#888"># implement the IScheduledTask interface. It will be called directly by the</span>
+    <span style="color:#888"># framework when it&#39;s this task&#39;s turn to run.</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">doTask</span>(self):
+        <span style="color:#888"># This method must return a deferred because the collector framework</span>
+        <span style="color:#888"># is asynchronous.</span>
+        d <span style="color:#333">=</span> defer<span style="color:#333">.</span>Deferred()
+        <span style="color:#080;font-weight:bold">return</span> d
+
+    <span style="color:#888"># cleanup is required to implement the IScheduledTask interface.</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">cleanup</span>(self):
+        <span style="color:#080;font-weight:bold">pass</span>
+
+
+<span style="color:#080;font-weight:bold">if</span> __name__ <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;__main__&#39;</span>:
+    myPreferences <span style="color:#333">=</span> ZenExamplePreferences()
+    myTaskFactory <span style="color:#333">=</span> SimpleTaskFactory(ZenExampleTask)
+    myTaskSplitter <span style="color:#333">=</span> SimpleTaskSplitter(myTaskFactory)
+
+    daemon <span style="color:#333">=</span> CollectorDaemon(myPreferences, myTaskSplitter)
+    daemon<span style="color:#333">.</span>run()</code></pre></div>
+<p>Note that the <code>doTask()</code> method is the logic that will be executed on each of the daemon&rsquo;s cycle. It is on that method where you should write any necessary collection or monitoring logic.</p>
+
+<h3 id="configuration-services">Configuration Services</h3>
+
+<p>Configuration Services are Zenhub services that run inside the Zenhub daemon and are responsible for all the interaction with collector daemons. Configuration services for our daemon are Python programs that are placed in <code>$ZP_DIR/services</code>.</p>
+
+<p>If you created your ZenPack using the user interface, you will find an example configuration service in this directory.</p>
+
+<p>The configuration service is loaded by our daemon in the <code>Preferences</code> class. This service will basically fetch all the devices we want to work with, along with their data sources, and will provide them to the daemon.</p>
+
+<p>A configuration service has two important methods:</p>
+
+<p><code>_filterDevice()</code>: In this method we can filter the devices we want to work with. Example: We only want to work with devices that have the <code>Power</code> data source.</p>
+
+<p><code>_createDeviceProxy()</code>: A proxy represents the list of devices that will be sent to the daemon. Calls to other custom methods can be made inside this method. <code>proxy.datapoints</code> is the list that contains all the data points for a device. We can append dictionaries of data into this list.</p>
+
+<p>Here is an complete example of a configuration service:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">ExampleConfigService
+</span><span style="background-color:#fff0f0">ZenHub service for providing configuration to the zenexample collector daemon.
+</span><span style="background-color:#fff0f0">
+</span><span style="background-color:#fff0f0">    This provides the daemon with a dictionary of datapoints for every device.
+</span><span style="background-color:#fff0f0">&#34;&#34;&#34;</span>
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
+log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.mydaemon&#39;</span>)
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">Globals</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> unused
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.services.config</span> <span style="color:#080;font-weight:bold">import</span> CollectorConfigService
+
+unused(Globals)
+
+<span style="color:#888"># Your daemon configuration service should almost certainly subclass</span>
+<span style="color:#888"># CollectorConfigService to make it as easy as possible for you to implement.</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PowerMonConfigService</span>(CollectorConfigService):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">    ZenHub service for the zenexample collector daemon.
+</span><span style="background-color:#fff0f0">    &#34;&#34;&#34;</span>
+
+    <span style="color:#888"># When the collector daemon requests a list of devices to poll from ZenHub</span>
+    <span style="color:#888"># your service can filter the devices that are returned by implementing</span>
+    <span style="color:#888"># this _filterDevice method. If _filterDevice returns True for a device,</span>
+    <span style="color:#888"># it will be returned to the collector. If _filterDevice returns False, the</span>
+    <span style="color:#888"># collector daemon won&#39;t collect from it.</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_filterDevice</span>(self, device):
+        <span style="color:#888"># First use standard filtering.</span>
+        <span style="color:#007020">filter</span> <span style="color:#333">=</span> CollectorConfigService<span style="color:#333">.</span>_filterDevice(self, device)
+
+        <span style="color:#888"># If the standard filtering logic said the device shouldn&#39;t be filtered</span>
+        <span style="color:#888"># we can setup some other contraint.</span>
+
+        has_flag <span style="color:#333">=</span> False			<span style="color:#888"># Flag to determine if should filter devise</span>
+        <span style="color:#080;font-weight:bold">if</span> <span style="color:#007020">filter</span>:
+           <span style="color:#888"># Return only devices that have a valid value for Power Data Point (Assigned by ServerMonitor ZenPack)</span>
+           <span style="color:#080;font-weight:bold">try</span>:
+              <span style="color:#080;font-weight:bold">if</span> device<span style="color:#333">.</span>getRRDValue(<span style="background-color:#fff0f0">&#39;Power&#39;</span>) <span style="color:#333">!=</span> None:
+                 has_flag <span style="color:#333">=</span> True
+           <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
+              <span style="color:#080;font-weight:bold">print</span> e
+
+        <span style="color:#080;font-weight:bold">return</span> CollectorConfigService<span style="color:#333">.</span>_filterDevice(self, device) <span style="color:#000;font-weight:bold">and</span> has_flag
+
+    <span style="color:#888"># The _createDeviceProxy method allows you to build up the DeviceProxy</span>
+    <span style="color:#888"># object that will be sent to the collector daemon. Whatever is returned</span>
+    <span style="color:#888"># from this method will be sent as the device&#39;s representation to the</span>
+    <span style="color:#888"># collector daemon. Use serializable types. DeviceProxy works, as do any</span>
+    <span style="color:#888"># simple Python types.</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_createDeviceProxy</span>(self, device):
+        proxy <span style="color:#333">=</span> CollectorConfigService<span style="color:#333">.</span>_createDeviceProxy(self, device)
+
+        proxy<span style="color:#333">.</span>configCycleInterval <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">5</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">60</span> 					<span style="color:#888"># 5 minutes</span>
+        proxy<span style="color:#333">.</span>datapoints <span style="color:#333">=</span> []
+
+        perfServer <span style="color:#333">=</span> device<span style="color:#333">.</span>getPerformanceServer()
+
+        self<span style="color:#333">.</span>_getPowerDp(proxy, device, device<span style="color:#333">.</span><span style="color:#007020">id</span>, None, perfServer)
+
+
+        <span style="color:#080;font-weight:bold">return</span> proxy
+
+    <span style="color:#888"># This is not a method we must implement. It is used by the custom</span>
+    <span style="color:#888"># _createDeviceProxy method above.</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_getPowerDp</span>(
+            self, proxy, deviceOrComponent, deviceId, componentId, perfServer
+            ):
+
+        <span style="color:#080;font-weight:bold">try</span>:
+           <span style="color:#888"># Get the ServerDevice RRD Template. Specified by the ServerMonitor ZenPack</span>
+           template <span style="color:#333">=</span> deviceOrComponent<span style="color:#333">.</span>getRRDTemplateByName(<span style="background-color:#fff0f0">&#39;ServerDevice&#39;</span>)
+
+
+           <span style="color:#888"># Get the Power data point for the device. Specified by the ServerMonitor ZenPack</span>
+           dp <span style="color:#333">=</span> template<span style="color:#333">.</span>getRRDDataPoint(<span style="background-color:#fff0f0">&#39;Power&#39;</span>)
+
+           <span style="color:#888"># Get the value</span>
+           dp_value <span style="color:#333">=</span> deviceOrComponent<span style="color:#333">.</span>getRRDValue(<span style="background-color:#fff0f0">&#39;Power&#39;</span>)
+
+           dpInfo <span style="color:#333">=</span> <span style="color:#007020">dict</span>(
+              devId <span style="color:#333">=</span> deviceId,
+              dpId <span style="color:#333">=</span> dp<span style="color:#333">.</span>getId(),
+              rrdCmd <span style="color:#333">=</span> perfServer<span style="color:#333">.</span>getDefaultRRDCreateCommand(),
+              dpValue <span style="color:#333">=</span> dp_value
+              )
+
+           proxy<span style="color:#333">.</span>datapoints<span style="color:#333">.</span>append(dpInfo)
+
+        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
+           <span style="color:#080;font-weight:bold">print</span> e
+
+
+<span style="color:#888"># For diagnostic purposes, allow the user to show the results of the</span>
+<span style="color:#888"># proxy creation.</span>
+<span style="color:#888"># Run this service as a script to see which devices will be sent to the daemon.</span>
+<span style="color:#888"># Add the --device=name flag to see the detailed contents of the proxy that</span>
+<span style="color:#888"># will be sent to the daemon</span>
+<span style="color:#888">#</span>
+<span style="color:#080;font-weight:bold">if</span> __name__ <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;__main__&#39;</span>:
+    <span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenHub.ServiceTester</span> <span style="color:#080;font-weight:bold">import</span> ServiceTester
+    tester <span style="color:#333">=</span> ServiceTester(PowerMonConfigService)
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">printer</span>(config):
+        <span style="color:#888"># Fill this out</span>
+        <span style="color:#080;font-weight:bold">print</span> config<span style="color:#333">.</span>datapoints
+
+
+    tester<span style="color:#333">.</span>printDeviceProxy <span style="color:#333">=</span> printer
+    tester<span style="color:#333">.</span>showDeviceInfo()</code></pre></div>
+<h2 id="daemon-logs">Daemon Logs</h2>
+
+<p>Log files generated by the daemon will be placed in a file in <code>$ZENHOME/log/&lt;daemon_name&gt;.log</code>. It is possible that the <code>INFO</code> and <code>DEBUG</code> logs will not show in the file, if this is the case then we can add the following code to the daemon file, after setting the logger:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
+log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.DAEMON_NAME&#39;</span>)
+logging<span style="color:#333">.</span>basicConfig() <span style="color:#888"># Add this new line</span></code></pre></div>
+<p>Alternatively you can set the <code>logseverity 10</code> (default is 20) configuration in the daemon configuration. This will make the daemon show DEBUG level logs.</p>
+
+<h2 id="daemon-configuration">Daemon Configuration</h2>
+
+<p>You can find your daemon&rsquo;s configuration file under <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code>. It is also possible to view and edit this configuration from the Zenoss user interface by navigating to <em>Advanced &gt; Daemons</em>, where you will see the list of all the daemons, including your ZenPack&rsquo;s new daemon.</p>
+
+<p>-&gt; <strong>If no configuration file is generated</strong>: Manually create a <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code> file. You can copy the contents of other daemon&rsquo;s configuration file and modify accordingly. Alternatively you can run the following command: <code>&lt;daemon_name&gt; genconf</code>.</p>
+
+<h2 id="manipulating-the-daemon">Manipulating the Daemon</h2>
+
+<p>The daemon will run and collect depending on the cycle interval values configured in the code, however we can still manipulate the daemon just like the other Zenoss daemons:</p>
+
+<pre><code>Usage: /usr/local/zenoss/bin/servermond {run|start|stop|restart|status|help|genconf|genxmlconfigs|debug|stats} [options]
+
+  where the commands are:
+
+    run     - start the program but don't put it in the background.
+              NB: This mode is good for debugging.
+
+    start   - start the program in daemon mode -- running in the background,
+              detached from the shell
+
+    stop    - stop the program
+
+    restart - stop and then start the program
+              NB: Sometimes the start command will run before the daemon
+                  has terminated.  If this happens just re-run the command.
+
+    status  - Check the status of a daemon.  This will print the current
+              process nuber if it is running.
+
+    help    - display the options available for the daemon
+
+    genconf - create an example configuration file with default settings
+
+    genxmlconfigs - create an XML file with default settings
+
+    debug   - toggle the logging of daemons between Debug level and the default
+
+    stats   - display detailed statistics of the deamon
+
+</code></pre>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/daemons" class="label label-default">daemons</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

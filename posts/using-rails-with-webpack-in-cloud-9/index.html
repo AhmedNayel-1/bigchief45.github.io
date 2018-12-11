@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Using Rails With Webpack in Cloud 9 &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Using Rails With Webpack in Cloud 9</h1>
+  <time datetime=2017-04-03T00:00:00Z class="post-date">Mon, Apr 3, 2017</time>
+
+  <p>The <a href="https://github.com/rails/webpacker">rails/webpacker</a> project allows integration of <a href="https://webpack.github.io/">Webpack</a> with a Rails application. However, setting this up in a <a href="https://c9.io">Cloud 9</a> development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.</p>
+
+<h2 id="creating-the-application">Creating the Application</h2>
+
+<p>We will first create a regular Rails application and then use the webpacker gem to install Webpack.</p>
+
+<pre><code>rails new webpack-app
+</code></pre>
+
+<p>Add the gem to <code>Gemfile</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># Gemfile</span>
+
+gem <span style="background-color:#fff0f0">&#39;webpacker&#39;</span>, <span style="color:#a60;background-color:#fff0f0">github</span>: <span style="background-color:#fff0f0">&#39;rails/webpacker&#39;</span></code></pre></div>
+<p>Install Webpacker</p>
+
+<pre><code>rails webpacker:install
+</code></pre>
+
+<p>The above command will proceed to install webpack, as well as update some dependencies using some package managers such as <a href="https://yarnpkg.com/">Yarn</a>.</p>
+
+<p>Once the installation has finished, your application will contain a new directory for JavaScript modules under <code>app/javascript</code>. Modules such as ReactJS or VueJS modules will be placed here and will be fetched from the application in a similar way to using the Rails asset pipeline.</p>
+
+<p>Additionally, Webpack configuration will be created under <code>app/config/webpack</code>. In this directory there will be man y configuration files that include configuration for the Webpack dev server, which is what we are interested in for our development environment.</p>
+
+<pre><code>config/webpack/
+├── configuration.js
+├── development.js
+├── development.server.js
+├── development.server.yml
+├── loaders
+│   ├── assets.js
+│   ├── babel.js
+│   ├── coffee.js
+│   ├── erb.js
+│   ├── sass.js
+│   └── vue.js
+├── paths.yml
+├── production.js
+├── shared.js
+└── test.js
+</code></pre>
+
+<h2 id="adding-vuejs">Adding VueJS</h2>
+
+<p>Webpacker greatly facilitates the integration of Rails with other front-end JavaScript frameworks such as ReactJS and VueJS. Let&rsquo;s proceed to install VueJS:</p>
+
+<pre><code>rails webpacker:install:vue
+</code></pre>
+
+<p>The command above will also create some example Vue components that can be loaded right away from the appliation once the Webpack dev server and the Rails server are running and communicating.</p>
+
+<h2 id="making-it-work-in-cloud-9">Making It Work in Cloud 9</h2>
+
+<p>Cloud 9 has some restrictions when it comes to security, ports, and interfaces when running services. To go around this, we first need to add a mapping from the hostname used in previewing our application, to <code>0.0.0.0</code>, which is the interface used when running services.</p>
+
+<p>This is done by running the following command:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;0.0.0.0 </span><span style="color:#963">$C9_HOSTNAME</span><span style="background-color:#fff0f0">&#34;</span> | sudo tee -a /etc/hosts</code></pre></div>
+<p>Where <code>$C9_HOSTNAME</code> is a variable already defined by Cloud 9 and it will contain the hostname used to preview the application in the browser.</p>
+
+<p>Next we must modify <code>app/config/webpack/configuration.js</code> to allow Webpack&rsquo;s output to be served using HTTPS, which is required by Cloud 9:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">const</span> publicPath <span style="color:#333">=</span> env.NODE_ENV <span style="color:#333">!==</span> <span style="background-color:#fff0f0">&#39;production&#39;</span> <span style="color:#333">&amp;&amp;</span> devServer.enabled <span style="color:#333">?</span>
+  <span style="background-color:#fff0f0">`https://</span><span style="background-color:#eee">${</span>devServer.host<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">:</span><span style="background-color:#eee">${</span>devServer.port<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">/`</span> <span style="color:#333">:</span> <span style="background-color:#fff0f0">`/</span><span style="background-color:#eee">${</span>paths.entry<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">/`</span>
+</code></pre></div>
+<p>Lastly, configure the webpack dev server to run using the <code>$C9_HOSTNAME</code> address. To get the value of this address you can first run:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">echo</span> <span style="color:#963">$C9_HOSTNAME</span></code></pre></div>
+<p>Then copy the value an set it in the <code>host</code> field in <code>app/config/webpack/development.server.yml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># Restart webpack-dev-server if you make changes here</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>default:<span style="color:#bbb"> </span><span style="color:#579">&amp;default</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>enabled:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>host:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#39;$C9_HOSTNAME value here&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>port:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">8081</span></code></pre></div>
+<p>Make sure that <code>port</code> is set to <code>8081</code>.</p>
+
+<p>Now try running the webpack dev server:</p>
+
+<pre><code>./bin/webpack-dev-server
+</code></pre>
+
+<h2 id="fetching-assets-in-rails">Fetching Assets in Rails</h2>
+
+<p>To make Rails use the Vue components located in <code>app/javascript</code>, we can use the following tags in our views:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-erb" data-lang="erb">&lt;%= javascript_pack_tag &#39;application&#39; %&gt;
+&lt;%= javascript_pack_tag &#39;hello_vue&#39; %&gt;</code></pre></div>
+<p>Now run the Rails server using <code>$PORT</code> and <code>$IP</code> as port and binding. When you open your application, it should load <code>hello_vue</code>.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/cloud9" class="label label-default">cloud9</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/webpack" class="label label-default">webpack</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Working With Zenoss Python Data Source Plugins &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Working With Zenoss Python Data Source Plugins</h1>
+  <time datetime=2017-02-23T00:00:00Z class="post-date">Thu, Feb 23, 2017</time>
+
+  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
+
+<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
+
+<p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
+
+<h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
+
+<p>For this post, I will be using an example where we will be executing an <a href="/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
+
+<p>If I run the following command from my shell:</p>
+
+<pre><code>ipmitool -H $BMC_IP -I lanplus -U admin -P admin power status
+</code></pre>
+
+<p>I get the following output:</p>
+
+<pre><code>Chassis Power is on
+</code></pre>
+
+<p>What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:</p>
+
+<ol>
+<li>Map the value into a boolean property of a custon zenpacklib class.</li>
+<li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
+<li>Update the device model with the new property value.</li>
+<li><a href="/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
+</ol>
+
+<h3 id="zenpack-yaml">zenpack.yaml</h3>
+
+<p>To achieve the above, we will add some initial definitions to <code>zenpack.yaml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name:<span style="color:#bbb"> </span>ZenPacks.aalvarez.MyZenPack<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>zProperties:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>zBmcAddress:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>category:<span style="color:#bbb"> </span>BMC<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>type:<span style="color:#bbb"> </span>string<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>zIpmiUsername:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>category:<span style="color:#bbb"> </span>IPMI<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>type:<span style="color:#bbb"> </span>string<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>default:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;admin&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>zIpmiPassword:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>category:<span style="color:#bbb"> </span>IPMI<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>type:<span style="color:#bbb"> </span>password<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>default:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;admin&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>classes:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>MyServer:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>base:<span style="color:#bbb"> </span>[zenpacklib.Device]<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>properties:<span style="color:#bbb">
+</span><span style="color:#bbb">         </span>power_status:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>type:<span style="color:#bbb"> </span>boolean<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>label:<span style="color:#bbb"> </span>Power<span style="color:#bbb"> </span>Status</code></pre></div>
+<p>The new zProperties will be used by the plugin when running the ipmitool command. We will add more definitions to this file later in this post.</p>
+
+<h2 id="creating-the-plugin">Creating the Plugin</h2>
+
+<p>When using zenpacklib, Python data source plugins are usually defined within a file called <code>dsplugins.py</code> in the ZenPack&rsquo;s top directory.</p>
+
+<p>First, we will include the necessary imports:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># Logging</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
+log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.MyZenPack&#39;</span>)
+
+<span style="color:#888"># Twisted Imports</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">twisted.internet.defer</span> <span style="color:#080;font-weight:bold">import</span> inlineCallbacks, returnValue
+
+<span style="color:#888"># PythonCollector Imports</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.DataCollector.plugins.DataMaps</span> <span style="color:#080;font-weight:bold">import</span> ObjectMap
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.zenoss.PythonCollector.datasources.PythonDataSource</span> <span style="color:#080;font-weight:bold">import</span> (
+     PythonDataSourcePlugin,
+     )
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">subprocess</span></code></pre></div>
+<p>The <a href="https://twistedmatrix.com/trac/">Twisted library</a> is imported so that the plugin can asynchronous requests. The <code>subprocess</code> module is imported so that we can run shell commands within Python.</p>
+
+<p>Next, we will proceed to create our data source plugin class which will extend <code>PythonDataSourcePlugin</code>. Each type of datasource is defined as an object class and each class is associated with a DataSourcePlugin class. The DataSourcePlugin code includes methods for zenhub to determine what data needs passing to which collectors.</p>
+
+<p>The basic skeleton is as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BmcPowerStatus</span>(PythonDataSourcePlugin):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34;BMC power status data source plugin.&#34;&#34;&#34;</span>
+
+    <span style="color:#888"># List of device attributes needed for collection</span>
+    proxy_attribures <span style="color:#333">=</span> (
+        <span style="background-color:#fff0f0">&#39;zBmcAddress&#39;</span>,
+        <span style="background-color:#fff0f0">&#39;zIpmiUsername&#39;</span>,
+        <span style="background-color:#fff0f0">&#39;zIpmiPassword&#39;</span>,
+    )
+
+    <span style="color:#555;font-weight:bold">@classmethod</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">config_key</span>(cls, datasource, context):
+        <span style="color:#888"># ...</span>
+
+    <span style="color:#555;font-weight:bold">@classmethod</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">params</span>(cls, datasource, context):
+        <span style="color:#888"># ...</span>
+
+    <span style="color:#555;font-weight:bold">@inlineCallbacks</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">collect</span>(self, config):
+        <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">onSuccess</span>(self, result, config):
+        <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">onError</span>(self, result, config):
+        <span style="color:#888"># ...</span></code></pre></div>
+<h3 id="proxy-attributes">Proxy Attributes</h3>
+
+<p>If the requirements of the data collector are simply just attributes of a device then they can be specified in a <code>proxy_attributes</code> statement of the <code>DataSourcePlugin</code> class. They are then accessed by zenhub and passed as part of the datasource configuration, to the collector.</p>
+
+<p>In our case we are using the zProperties defined in <code>zenpack.yaml</code>.</p>
+
+<h3 id="the-config-key-method">The config_key Method</h3>
+
+<p>The purpose of the <code>config_key</code> method is to split monitoring configuration into tasks that will be executed by the zenpython daemon. The zenpython daemon will create one task for each unique value returned from <code>config_key</code>. It should be used to optimize the way data is collected.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#555;font-weight:bold">@classmethod</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">config_key</span>(cls, datasource, context):
+    <span style="color:#080;font-weight:bold">return</span> (
+        context<span style="color:#333">.</span>device()<span style="color:#333">.</span><span style="color:#007020">id</span>,
+        datasource<span style="color:#333">.</span>getCycleTime(context),
+        context<span style="color:#333">.</span><span style="color:#007020">id</span>,
+        <span style="background-color:#fff0f0">&#39;myzenpack-powerstatus&#39;</span>,
+    )</code></pre></div>
+<p>The value returned by <code>config_key</code> will be used when zenpython logs. So adding something like &ldquo;myzenpack-powerstatus&rdquo; to the end makes it easy to see logs related to collecting alerts in the log file.</p>
+
+<p>~&gt; The <code>config_key</code> method will only be executed by zenhub. So you must restart zenhub if you make changes to the <code>config_key</code> method. This also means that if there’s an exception in the <code>config_key</code> method it will appear in the zenhub log, not zenpython.</p>
+
+<h3 id="the-params-method">The params Method</h3>
+
+<p>Data collection may be in a remote collector which does not have direct access to the ZoDB database. If the collection daemon needs access to ZoDB data, then it has to be fetched by zenhub and included in the configuration that is passed to the collection daemon.</p>
+
+<p>The purpose of the params method is to copy information from the Zenoss database into the config.datasources[*] that will be passed as an argument to the collect method. Since the collect method is run by zenpython it won’t have direct access to the database, so it relies on the params method to provide it with any information it will need to collect.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#555;font-weight:bold">@classmethod</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">params</span>(cls, datasource, context):
+    <span style="color:#080;font-weight:bold">return</span> {
+        <span style="background-color:#fff0f0">&#39;zBmcAddress&#39;</span>: context<span style="color:#333">.</span>zBmcAddress,
+        <span style="background-color:#fff0f0">&#39;zIpmiUsername&#39;</span>: context<span style="color:#333">.</span>zIpmiUsername,
+        <span style="background-color:#fff0f0">&#39;zIpmiPassword&#39;</span>: context<span style="color:#333">.</span>zIpmiPassword,
+        }</code></pre></div>
+<p>In our case we are also using and assigning the zProperties. These will be used by the <em>collect</em> method.</p>
+
+<p>If you receive an error such as:</p>
+
+<pre><code>2017-02-24 09:50:03,818 ERROR zen.collector.config: Configuration for [DEVICE_NAME] unavailable -- is that the correct name?
+</code></pre>
+
+<p>This probably indicates that there is an issue with the <code>config_key</code> or <code>params</code> methods of the performance DataSourcePlugin. When making changes to the plugin, it is best to restart zenhub and zenpython and re-check the logs.</p>
+
+<h3 id="the-collect-method">The collect Method</h3>
+
+<p>This is where all the data collection logic is placed. It gets passed a config argument which for the most part has two useful properties: config.id and config.datasources. config.id will be the device’s id, and config.datasources is a list of the datasources that need to be collected.</p>
+
+<p>You’ll see in the collect method that each datasource in config.datasources has some useful properties. datasource.component will be the id of the component against which the datasource is run, or blank in the case of a device-level monitoring template. datasource.params contains whatever the params method returned.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#555;font-weight:bold">@inlineCallbacks</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">collect</span>(self, config):
+    log<span style="color:#333">.</span>debug(<span style="background-color:#fff0f0">&#34;Collect for BMC Power Status ({0})&#34;</span><span style="color:#333">.</span>format(config<span style="color:#333">.</span><span style="color:#007020">id</span>))
+
+    ds0 <span style="color:#333">=</span> config<span style="color:#333">.</span>datasources[<span style="color:#00d;font-weight:bold">0</span>]
+    results <span style="color:#333">=</span> {}
+
+    <span style="color:#888"># Collect using ipmitool</span>
+    power_status <span style="color:#333">=</span> False
+    cmd_result <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;&#39;</span>
+    <span style="color:#080;font-weight:bold">try</span>:
+        cmd <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;ipmitool -H {0} -I lanplus -U {1} -P {2} power status&#39;</span><span style="color:#333">.</span>format(ds0<span style="color:#333">.</span>zBmcAddress, ds0<span style="color:#333">.</span>zIpmiUsername, ds0<span style="color:#333">.</span>zIpmiPassword)
+        cmd_result <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">yield</span> subprocess<span style="color:#333">.</span>check_output(cmd, shell<span style="color:#333">=</span>True)<span style="color:#333">.</span>rstrip()
+        log<span style="color:#333">.</span>info(<span style="background-color:#fff0f0">&#39;Power Status for Device {0}: {1}&#39;</span><span style="color:#333">.</span>format(ds0<span style="color:#333">.</span>zBmcAddress, cmd_result))
+    <span style="color:#080;font-weight:bold">except</span>:
+        log<span style="color:#333">.</span>error(<span style="background-color:#fff0f0">&#39;Error when running ipmitool when collecting Power Status on BMC Address {0}&#39;</span><span style="color:#333">.</span>format(ds0<span style="color:#333">.</span>zBmcAddress))
+
+    <span style="color:#080;font-weight:bold">if</span> cmd_result <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;Chassis Power is on&#39;</span>:
+        power_status <span style="color:#333">=</span> True
+
+    results[<span style="background-color:#fff0f0">&#39;power_status&#39;</span>] <span style="color:#333">=</span> power_status
+
+    returnValue(results)</code></pre></div>
+<p>Note how the method returns a Twisted deferred. The deferred results will be sent to <em>onResult</em> (not necessary to implement), then to either <em>onSuccess</em> or <em>onError</em> callbacks.</p>
+
+<h3 id="the-onsuccess-and-onerror-methods">The onSuccess and onError Methods</h3>
+
+<p>Called only on success or on error. This is where we tell the plugin what to do depending on the callback. They should return a data structure with zero or more events, values and maps. Note that <code>values</code> is a dictionary and <code>events</code> and <code>maps</code> are lists. Implementation of these methods is optional if <em>collect</em> already returns this data structure.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">onSuccess</span>(self, result, config):
+    data <span style="color:#333">=</span> self<span style="color:#333">.</span>new_data()
+
+    power_status <span style="color:#333">=</span> result[<span style="background-color:#fff0f0">&#39;power_status&#39;</span>]
+
+    data[<span style="background-color:#fff0f0">&#39;maps&#39;</span>]<span style="color:#333">.</span>append(
+        ObjectMap({
+            <span style="background-color:#fff0f0">&#39;modname&#39;</span>: <span style="background-color:#fff0f0">&#39;ZenPacks.itri.BmcMonitor.BmcServer&#39;</span>,
+            <span style="background-color:#fff0f0">&#39;power_status&#39;</span>: power_status,
+            }))
+
+    <span style="color:#080;font-weight:bold">if</span> power_status:
+        data[<span style="background-color:#fff0f0">&#39;events&#39;</span>]<span style="color:#333">.</span>append({
+            <span style="background-color:#fff0f0">&#39;device&#39;</span>: config<span style="color:#333">.</span><span style="color:#007020">id</span>,
+            <span style="background-color:#fff0f0">&#39;summary&#39;</span>: <span style="background-color:#fff0f0">&#39;{0} BMC power status is now UP&#39;</span><span style="color:#333">.</span>format(config<span style="color:#333">.</span><span style="color:#007020">id</span>),
+            <span style="background-color:#fff0f0">&#39;severity&#39;</span>: ZenEventClasses<span style="color:#333">.</span>Clear,
+            <span style="background-color:#fff0f0">&#39;eventClassKey&#39;</span>: <span style="background-color:#fff0f0">&#39;bmcPowerStatus&#39;</span>,
+            })
+    <span style="color:#080;font-weight:bold">else</span>:
+        data[<span style="background-color:#fff0f0">&#39;events&#39;</span>]<span style="color:#333">.</span>append({
+            <span style="background-color:#fff0f0">&#39;device&#39;</span>: config<span style="color:#333">.</span><span style="color:#007020">id</span>,
+            <span style="background-color:#fff0f0">&#39;summary&#39;</span>: <span style="background-color:#fff0f0">&#39;{0} BMC power status is DOWN!&#39;</span><span style="color:#333">.</span>format(config<span style="color:#333">.</span><span style="color:#007020">id</span>),
+            <span style="background-color:#fff0f0">&#39;severity&#39;</span>: ZenEventClasses<span style="color:#333">.</span>Critical,
+            <span style="background-color:#fff0f0">&#39;eventClassKey&#39;</span>: <span style="background-color:#fff0f0">&#39;bmcPowerStatus&#39;</span>,
+            })
+
+    data[<span style="background-color:#fff0f0">&#39;events&#39;</span>]<span style="color:#333">.</span>append({
+        <span style="background-color:#fff0f0">&#39;device&#39;</span>: config<span style="color:#333">.</span><span style="color:#007020">id</span>,
+        <span style="background-color:#fff0f0">&#39;summary&#39;</span>: <span style="background-color:#fff0f0">&#39;BMC Power Status Collector: successful collection&#39;</span>,
+        <span style="background-color:#fff0f0">&#39;severity&#39;</span>: ZenEventClasses<span style="color:#333">.</span>Clear,
+        <span style="background-color:#fff0f0">&#39;eventKey&#39;</span>: <span style="background-color:#fff0f0">&#39;bmcPowerStatusCollectionError&#39;</span>,
+        <span style="background-color:#fff0f0">&#39;eventClassKey&#39;</span>: <span style="background-color:#fff0f0">&#39;bmcMonitorFailure&#39;</span>,
+        })
+
+    <span style="color:#080;font-weight:bold">return</span> data
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">onError</span>(self, result, config):
+    errmsg <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;BMC Power Status Collector: Error trying to collect.&#39;</span>
+    log<span style="color:#333">.</span>error(<span style="background-color:#fff0f0">&#39;{0}: {1}&#39;</span><span style="color:#333">.</span>format(config<span style="color:#333">.</span><span style="color:#007020">id</span>, errmsg))
+
+    data <span style="color:#333">=</span> self<span style="color:#333">.</span>new_data()
+
+    data[<span style="background-color:#fff0f0">&#39;events&#39;</span>]<span style="color:#333">.</span>append({
+        <span style="background-color:#fff0f0">&#39;device&#39;</span>: config<span style="color:#333">.</span><span style="color:#007020">id</span>,
+        <span style="background-color:#fff0f0">&#39;summary&#39;</span>: errmsg,
+        <span style="background-color:#fff0f0">&#39;severity&#39;</span>: ZenEventClasses<span style="color:#333">.</span>Critical,
+        <span style="background-color:#fff0f0">&#39;eventKey&#39;</span>: <span style="background-color:#fff0f0">&#39;bmcPowerStatusCollectionError&#39;</span>,
+        <span style="background-color:#fff0f0">&#39;eventClassKey&#39;</span>: <span style="background-color:#fff0f0">&#39;bmcMonitorFailure&#39;</span>,
+        })
+
+    <span style="color:#080;font-weight:bold">return</span> data</code></pre></div>
+<p>Within the body of the success method we create a new data variable using <code>data = self.new_data()</code>. data is a place where we stick all of the collected events, values and maps. data looks like the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data <span style="color:#333">=</span> {
+    <span style="background-color:#fff0f0">&#39;events&#39;</span>: [],
+    <span style="background-color:#fff0f0">&#39;values&#39;</span>: defaultdict(<span style="color:#333">&lt;</span><span style="color:#007020">type</span> <span style="background-color:#fff0f0">&#39;dict&#39;</span><span style="color:#333">&gt;</span>, {}),
+    <span style="background-color:#fff0f0">&#39;maps&#39;</span>: [],
+}</code></pre></div>
+<p>Basically, it is within these methods that we can tell that plugin what to do depending on what we want to achieve. As a rule of thumb:</p>
+
+<ul>
+<li><p>When we want the plugin to generate events, we should append to <code>data['events']</code>.</p></li>
+
+<li><p>When we want the plugin to make changes to the Zenoss model (in a similar way to how a modeler plugin works), we append object maps or relationship maps to <code>data['maps']</code>.</p></li>
+
+<li><p>When we want the plugin to collect data points, we should append to <code>data['values']</code>.</p></li>
+</ul>
+
+<p>~&gt; When making changes to data source plugins, make sure to restart <em>zopectl</em>, <em>zenhub</em>, <strong>and</strong> <em>zenpython</em> so that Zenoss can recognize the changes.</p>
+
+<h2 id="creating-the-monitoring-template">Creating the Monitoring Template</h2>
+
+<p>Now that the plugin is complete. We need to create a monitoring template that will contain the datasource that will use this data source plugin. We can easily define this new monitoring template in <code>zenpack.yaml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">device_classes:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>/BMC:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>remove:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>zProperties:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>zPythonClass:<span style="color:#bbb"> </span>ZenPacks.aalvarez.MyZenPack.MyServer<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>zIpmiUsername:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>zIpmiPassword:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>zDeviceTemplates:<span style="color:#bbb"> </span>[Device,<span style="color:#bbb"> </span>BMC]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>templates:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>BMC:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>description:<span style="color:#bbb"> </span>Monitoring<span style="color:#bbb"> </span>BMC<span style="color:#bbb"> </span>Devices<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>targetPythonClass:<span style="color:#bbb"> </span>ZenPacks.aalvarez.MyZenPack.MyServer<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>datasources:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>powerStatus:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>type:<span style="color:#bbb"> </span>Python<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>plugin_classname:<span style="color:#bbb"> </span>ZenPacks.aalvarez.MyZenPack.dsplugins.BmcPowerStatus<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>cycletime:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">30</span></code></pre></div>
+<p>With the code above we are creating a new monitoring template called BMC under a new <code>/BMC</code> device class. This template has a <code>powerStatus</code> data source with a cycle time of 30 seconds, and uses the plugin we just created which is <code>ZenPacks.aalvarez.MyZenPack.dsplugins.BmcPowerStatus</code>.</p>
+
+<p>-&gt; <strong>What&rsquo;s the difference between a datasource and a datasource plugin?</strong>
+    <br /></br />
+    A datasource is an instance of RRDDataSource. It’s the object that’s part of a monitoring template and stored in ZODB. A datasource plugin is not a persistent ZODB object. It’s a class that is used to perform collection of a specific subclass of RRDDataSource instance: PythonDataSource.
+    <br /><br />
+    Additionally, datasource plugins are a zenpython concept. So all PythonDataSources have PythonDataSourcePlugins, but other kinds of RRDDataSources do not</p>
+
+<h2 id="modifying-the-gui">Modifying the GUI</h2>
+
+<p>To add this new power status property to the device detail bar, you can simply refer to my <a href="/posts/modifying-the-zenoss-device-detail-bar.html">previous post</a> on this very topic.</p>
+
+<p>Lastly, install the ZenPack and restart Zenoss.</p>
+
+<p>Now you can add a new device to the <code>/BMC</code> device class, configure the zProperties with real working values and see the data source plugin work its magic. Since the cycle time is 30 seconds, you will be able to see the power status light change very soon.</p>
+
+<p><img src="/posts/working-with-zenoss-python-data-sources/power_status.jpg" alt="Power status light using Python data source plugin" /></p>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><em>Zenoss Data Sources through the eyes of the Python Collector ZenPack</em> by Jane Curry</li>
+<li><a href="https://zenpack-sdk.zenoss.com/en/latest/tutorial-http-api/index.html">ZenPack SDK - Monitoring an HTTP API</a></li>
+<li><a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-reference.html">Zenpacklib YAML Reference</a></li>
+<li><a href="http://zenpackers.readthedocs.io/en/latest/datasources.html#general-questions-and-answers">ZenPackers Documentation - Datasources in Detail</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

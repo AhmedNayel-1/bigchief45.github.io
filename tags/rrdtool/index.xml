@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rrdtool on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/rrdtool/</link>
+    <description>Recent content in Rrdtool on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/rrdtool/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Working With RRDTool</title>
+      <link>http://aalvarez.me/posts/working-with-rrdtool/</link>
+      <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/working-with-rrdtool/</guid>
+      <description>&lt;p&gt;Zenoss makes a lot of use of &lt;a href=&#34;http://oss.oetiker.ch/rrdtool/&#34;&gt;RRDTool&lt;/a&gt; for &lt;a href=&#34;http://aalvarez.me/posts/using-rrdtool-in-zenoss.html&#34;&gt;storing monitored performance data and generating graphs&lt;/a&gt;. In this post I want to go into more detail on the components of RRDTool and how works.&lt;/p&gt;
+
+&lt;h2 id=&#34;round-robin-databases&#34;&gt;Round Robin Databases&lt;/h2&gt;
+
+&lt;p&gt;RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing &lt;strong&gt;time series&lt;/strong&gt; data.&lt;/p&gt;
+
+&lt;p&gt;Moreover, rrdtool also &lt;strong&gt;doesn&amp;rsquo;t&lt;/strong&gt; store the data handed to it. Instead, it first &lt;strong&gt;re-samples&lt;/strong&gt; the data and &lt;em&gt;then&lt;/em&gt; stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.&lt;/p&gt;
+
+&lt;p&gt;This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the &lt;code&gt;03&lt;/code&gt; minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.&lt;/p&gt;
+
+&lt;p&gt;In rrdtool, each database table is stored in a separate &lt;code&gt;.rrd&lt;/code&gt; file. This means that one file represents one table.&lt;/p&gt;
+
+&lt;p&gt;We can create a database using the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;data-re-sampling-step&#34;&gt;Data Re-sampling: Step&lt;/h3&gt;
+
+&lt;p&gt;One important parameter here is the &lt;code&gt;step&lt;/code&gt; parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. &lt;strong&gt;This means that it only stores data every 300 seconds&lt;/strong&gt;. Because of this re-sampling, rrdtool will not accept data from the past.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Fixing Zenoss Device Network Interface Graphs</title>
+      <link>http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</link>
+      <pubDate>Fri, 13 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</guid>
+      <description>&lt;p&gt;When testing the monitoring of the OpenStack compute node devices in Zenoss (using &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)&#34;&gt;OpenStack Infrastructure ZenPack&lt;/a&gt;), I noticed that I could not get any graphs for the &lt;strong&gt;network interfaces&lt;/strong&gt; of the device, although we could still get and model all the available interfaces:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png&#34; alt=&#34;Network Interfaces&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using RRDTool in Zenoss</title>
+      <link>http://aalvarez.me/posts/using-rrdtool-in-zenoss/</link>
+      <pubDate>Tue, 22 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/using-rrdtool-in-zenoss/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://oss.oetiker.ch/rrdtool/&#34;&gt;rrdtool&lt;/a&gt; is an awesome high performance data logging and graphing tool for time series data. Zenoss Core uses RRDTool to collect, monitor, and graph peformance data for devices.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://oss.oetiker.ch/rrdtool/stream-pop.png&#34; alt=&#34;RRD Tool&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However Zenoss Core comes with built-in helper wrappers around RRDTool that makes using it within Zenoss much easier. These source code files can be found in &lt;code&gt;$ZENHOME/Products/ZenRRD/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;rrdutil&#34;&gt;RRDUtil&lt;/h2&gt;
+
+&lt;p&gt;Located in &lt;code&gt;$ZENHOME/Products/ZenRRD/RRDUtil.py&lt;/code&gt;, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read &lt;code&gt;.rrd&lt;/code&gt; files using Python.&lt;/p&gt;
+
+&lt;p&gt;We can easily import this module into our code, using the following import statement:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; RRDUtil&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Monitoring CPU Utilization in Zenoss</title>
+      <link>http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</link>
+      <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</guid>
+      <description>&lt;p&gt;While taking a look at the CPU Utilization graphs offered Zenoss Core&amp;rsquo;s &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;Linux Monitor ZenPack&lt;/a&gt; (v1.2.1), I noticed that the percentage values for &lt;em&gt;Idle&lt;/em&gt; were ridiculously high:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg&#34; alt=&#34;High Idle CPU Utilization&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&amp;rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Zenoss Monitoring Template Data Points</title>
+      <link>http://aalvarez.me/posts/zenoss-monitoring-template-data-points/</link>
+      <pubDate>Thu, 03 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/zenoss-monitoring-template-data-points/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Content from this post is mostly obtained from &lt;strong&gt;Zenoss Core Administration guide&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In Zenoss Core &lt;strong&gt;monitoring templates&lt;/strong&gt;, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented
+by a &lt;strong&gt;data point&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;When creating a data point, there are some important fields that we can define for our data point:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; Displays the name you entered in the &lt;em&gt;Add a New DataPoint&lt;/em&gt; dialog.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Type:&lt;/strong&gt; Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;COUNTER:&lt;/strong&gt; Saves the rate of change of the value over a step period. This assumes that the value is always
+increasing (the difference between the current and the previous value is greater than 0). Traffic counters on a
+router are an ideal candidate for using COUNTER.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;GAUGE:&lt;/strong&gt; Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
+To see memory consumption in a server, for example, you might want to select this value.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;DERIVE:&lt;/strong&gt; Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
+in free disk space on your server, for example, then you might want to select this value.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;ABSOLUTE:&lt;/strong&gt; Saves the rate of change, but assumes that the previous value is set to 0. The difference between
+the current and the previous value is always equal to the current value. Thus, ABSOLUTE stores the current
+value, divided by the step interval.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create Command:&lt;/strong&gt; Enter an RRD expression used to create the database for this data point. If you do not enter
+a value, then the system uses a default applicable to most situations. For details about the &lt;kbd&gt;rrdcreate&lt;/kbd&gt; command, go &lt;a href=&#34;http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Minimum:&lt;/strong&gt; Enter a value. Any value received that is less than this number is ignored.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Maximum:&lt;/strong&gt; Enter a value. Any value received that is greater than this number is ignored.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;data-point-aliases&#34;&gt;Data Point Aliases&lt;/h2&gt;
+
+&lt;p&gt;Performance reports pull information from various data points that represent a metric. The report itself knows which
+data points it requires, and which modifications are needed, if any, to put the data in its proper units and format.&lt;/p&gt;
+
+&lt;p&gt;The addition of a data point requires changing the report.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg&#34; alt=&#34;CPU Utilization Report&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To allow for more flexibility in changes, some reports use &lt;em&gt;data point aliases&lt;/em&gt;. Data point aliases group data points so
+they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
+can normalize that data into a common unit.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

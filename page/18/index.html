@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/">Monitoring CPU Utilization in Zenoss</a>
+  </h1>
+  <time datetime="2016-11-04T00:00:00Z" class="post-date">Fri, Nov 4, 2016</time>
+  <p>While taking a look at the CPU Utilization graphs offered Zenoss Core&rsquo;s <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
+
+<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
+
+<p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="http://aalvarez.me/tags/cpu" class="label label-default">cpu</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/rpn" class="label label-default">rpn</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/monitoring-cpu-utilization-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/zenoss-monitoring-template-data-points/">Zenoss Monitoring Template Data Points</a>
+  </h1>
+  <time datetime="2016-11-03T00:00:00Z" class="post-date">Thu, Nov 3, 2016</time>
+  <p><em>Content from this post is mostly obtained from <strong>Zenoss Core Administration guide</strong>.</em></p>
+
+<p>In Zenoss Core <strong>monitoring templates</strong>, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented
+by a <strong>data point</strong>.</p>
+
+<p>When creating a data point, there are some important fields that we can define for our data point:</p>
+
+<ul>
+<li><p><strong>Name:</strong> Displays the name you entered in the <em>Add a New DataPoint</em> dialog.</p></li>
+
+<li><p><strong>RRD Type:</strong> Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:</p>
+
+<ul>
+<li><strong>COUNTER:</strong> Saves the rate of change of the value over a step period. This assumes that the value is always
+increasing (the difference between the current and the previous value is greater than 0). Traffic counters on a
+router are an ideal candidate for using COUNTER.</li>
+
+<li><p><strong>GAUGE:</strong> Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
+To see memory consumption in a server, for example, you might want to select this value.</p></li>
+
+<li><p><strong>DERIVE:</strong> Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
+in free disk space on your server, for example, then you might want to select this value.</p></li>
+
+<li><p><strong>ABSOLUTE:</strong> Saves the rate of change, but assumes that the previous value is set to 0. The difference between
+the current and the previous value is always equal to the current value. Thus, ABSOLUTE stores the current
+value, divided by the step interval.</p></li>
+</ul></li>
+
+<li><p><strong>Create Command:</strong> Enter an RRD expression used to create the database for this data point. If you do not enter
+a value, then the system uses a default applicable to most situations. For details about the <kbd>rrdcreate</kbd> command, go <a href="http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html">here</a>.</p></li>
+
+<li><p><strong>RRD Minimum:</strong> Enter a value. Any value received that is less than this number is ignored.</p></li>
+
+<li><p><strong>RRD Maximum:</strong> Enter a value. Any value received that is greater than this number is ignored.</p></li>
+</ul>
+
+<h2 id="data-point-aliases">Data Point Aliases</h2>
+
+<p>Performance reports pull information from various data points that represent a metric. The report itself knows which
+data points it requires, and which modifications are needed, if any, to put the data in its proper units and format.</p>
+
+<p>The addition of a data point requires changing the report.</p>
+
+<p><img src="/posts/zenoss-monitoring-template-data-points/cpu_report.jpg" alt="CPU Utilization Report" /></p>
+
+<p>To allow for more flexibility in changes, some reports use <em>data point aliases</em>. Data point aliases group data points so
+they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
+can normalize that data into a common unit.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/snmp" class="label label-default">snmp</a></li>
+  
+    <a href="http://aalvarez.me/tags/data" class="label label-default">data</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/cpu" class="label label-default">cpu</a></li>
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/rpn" class="label label-default">rpn</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/zenoss-monitoring-template-data-points/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/">Triggering Commands From Events in Zenoss</a>
+  </h1>
+  <time datetime="2016-10-31T00:00:00Z" class="post-date">Mon, Oct 31, 2016</time>
+  <p>In Zenoss Core 4, we can configure some <strong><em>email</em></strong> notifications that produce and send emails based on conditions defined in a trigger, when an event is created.</p>
+
+<p>Additionally, Zenoss Core 4 also provides <strong><em>command</em></strong> type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.</p>
+
+<p>For example, let&rsquo;s say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:</p>
+
+<ol>
+<li>The device is suddenly down.</li>
+<li>Zenoss pings the device and gets no response.</li>
+<li>The device status is then changed to <em>DOWN</em>.</li>
+<li>An Event with an event class of <code>/Status/Ping</code> and a severity of <em>Critical</em> is created.</li>
+</ol>
+
+<p>With this information, we can create a trigger that will represent this exact scenario. Moreover, we can configure a command notification to be executed when this trigger is fired.</p>
+
+<h2 id="configuring-a-trigger">Configuring a Trigger</h2>
+
+<ol>
+<li>Navigate to Events &gt; Triggers</li>
+<li>Create a new trigger.</li>
+<li>Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:</li>
+</ol>
+
+<p><img src="/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
+
+<p>=&gt; Because we want to make sure the device is truly <em>DOWN</em>, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/triggering-commands-from-events-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/keystone-interface-in-juju-charms/">Keystone Interface in Juju Charms</a>
+  </h1>
+  <time datetime="2016-10-28T00:00:00Z" class="post-date">Fri, Oct 28, 2016</time>
+  <p><a href="https://jujucharms.com/docs/1.18/authors-interfaces">Juju Charms interfaces</a> make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.</p>
+
+<p>In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:</p>
+
+<p><code>juju add-relation keystone myservice</code></p>
+
+<h2 id="juju-relations">Juju Relations</h2>
+
+<p>Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an <strong>interface</strong>. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the <em>keystone Identity data</em>. For this, we use the <strong><a href="https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin">keystone-admin interface</a></strong>.</p>
+
+<p>With this in mind, we configure our charm to require this relation and interface in <code>metadata.yaml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># ...</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>requires:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>identity-admin:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>interface:<span style="color:#bbb"> </span>keystone-admin</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/juju" class="label label-default">juju</a></li>
+  
+    <a href="http://aalvarez.me/tags/keystone" class="label label-default">keystone</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="http://aalvarez.me/tags/bash" class="label label-default">bash</a></li>
+  
+    <a href="http://aalvarez.me/tags/keystone" class="label label-default">keystone</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/keystone-interface-in-juju-charms/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/zenoss-renderers/">Zenoss Renderers</a>
+  </h1>
+  <time datetime="2016-10-27T00:00:00Z" class="post-date">Thu, Oct 27, 2016</time>
+  <p>Zenoss makes use of some very interesting graphical components called renderers. These are used to manipulate the way data is shown in the Zenoss user interface.</p>
+
+<p>For example, a value of <em>total bytes used</em> could be 6080626688 in bytes, which is a very high number and doesn&rsquo;t really convey much meaning. However, we can use a built-in Zenoss renderer called <code>bytesString</code> which will convert this value in bytes to the closest representation:</p>
+
+<p><img src="/posts/zenoss-renderers/zenoss_renderers.png" alt="Zenoss Renderers" /></p>
+
+<p>As we can see, this is a much better and meaningful way of displaying the data.</p>
+
+<p>The built-in Zenoss renderers and source code can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss/Renderers.js</code></p>
+
+<p>They are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the <code>renderer</code> property. For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">HardDisk:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>base:<span style="color:#bbb"> </span>[zenpacklib.Component]<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>label:<span style="color:#bbb"> </span>Hard<span style="color:#bbb"> </span>Disk<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>properties:<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>location:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Location<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">     </span>capacity:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Capacity<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">     </span>raid_name:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Raid<span style="color:#bbb"> </span>Name<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">     </span>raid_level:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Raid<span style="color:#bbb"> </span>Level<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">     </span>status:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Status<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>renderer:<span style="color:#bbb"> </span>Zenoss.render.pingStatus</code></pre></div>
+<p><code>Zenoss.render.pingStatus</code> is one of the default renderers that come built-in within Zenoss Core 4, similar to <code>Zenoss.render.bytesString</code>.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/zenoss-renderers/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/17/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/19/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

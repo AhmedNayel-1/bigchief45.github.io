@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/extending-zenoss-navigations/">Extending Zenoss Navigation Bars</a>
+  </h1>
+  <time datetime="2016-12-21T00:00:00Z" class="post-date">Wed, Dec 21, 2016</time>
+  <p>It is possible to extend the functionality of Zenoss&rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.</p>
+
+<h2 id="configure-zcml">configure.zcml</h2>
+
+<p>Zenoss ZenPacks can contain a file in the ZenPack top directory called <code>configure.zcml</code>. I&rsquo;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.</p>
+
+<p>It is in this file where we will declare and create new navigational links from our ZenPack.</p>
+
+<p>~&gt; In this post we assume that the ZenPack is created using <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.</p>
+
+<p>Usually this file begins with some required boilerplate code:</p>
+
+<p><strong>configure.zcml</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#070">&lt;configure</span>
+  <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
+  <span style="color:#00c">xmlns:browser=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/browser&#34;</span>
+  <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#070">&gt;</span>
+
+  <span style="color:#888">&lt;!-- Our custom code here --&gt;</span>
+  <span style="color:#070">&lt;include</span> <span style="color:#00c">package=</span><span style="background-color:#fff0f0">&#34;.browser&#34;</span> <span style="color:#070">/&gt;</span>
+<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/xml" class="label label-default">xml</a></li>
+  
+    <a href="http://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/extending-zenoss-navigations/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/custom-zenoss-api-endpoints/">Custom Zenoss API Endpoints</a>
+  </h1>
+  <time datetime="2016-12-20T00:00:00Z" class="post-date">Tue, Dec 20, 2016</time>
+  <p>In a <a href="/posts/the-zenoss-json-api.html">previous post</a> I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, <em>curl</em>, API clients, etc. All this new functionality added from a basic ZenPack.</p>
+
+<h2 id="creating-an-endpoint">Creating an Endpoint</h2>
+
+<p>Assuming that we are starting with a new and fresh ZenPack created with <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, we will proceed to create a simple endpoint.</p>
+
+<p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
+
+<p>First, let&rsquo;s take a quick look at the imports:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os.path</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">urlparse</span> <span style="color:#080;font-weight:bold">import</span> urlparse
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">subprocess</span>
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.event</span> <span style="color:#080;font-weight:bold">import</span> notify
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> implements
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZODB.transact</span> <span style="color:#080;font-weight:bold">import</span> transact
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Ext</span> <span style="color:#080;font-weight:bold">import</span> DirectRouter, DirectResponse
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products</span> <span style="color:#080;font-weight:bold">import</span> Zuul
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.catalog.events</span> <span style="color:#080;font-weight:bold">import</span> IndexingEvent
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.facades</span> <span style="color:#080;font-weight:bold">import</span> ZuulFacade
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.interfaces</span> <span style="color:#080;font-weight:bold">import</span> IFacade
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.utils</span> <span style="color:#080;font-weight:bold">import</span> ZuulMessageFactory <span style="color:#080;font-weight:bold">as</span> _t
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> zenPath</code></pre></div>
+<p>Some imports are probably not needed, but the ones that are of our interest are imports such as <code>DirectRouter</code> and <code>DirectResponse</code>, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/api" class="label label-default">api</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/custom-zenoss-api-endpoints/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/ssh-monitoring-in-zenpacks/">SSH Monitoring in ZenPacks</a>
+  </h1>
+  <time datetime="2016-12-14T00:00:00Z" class="post-date">Wed, Dec 14, 2016</time>
+  <p>Zenoss usually monitors and collects information using <strong>SNMP</strong> and <strong>SSH</strong> methods. A good example of is the <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">linux monitor ZenPack</a> which can collect information such as hard disks, interfaces, and file systems using <strong>both</strong> methods.</p>
+
+<p>SNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using <strong><a href="http://www.net-snmp.org/">net-snmp</a></strong>.</p>
+
+<p>On the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.</p>
+
+<p>When developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on <a href="https://zenpacklib.zenoss.com/en/latest/tutorial-snmp-device/index.html">SNMP monitoring using zenpacklib</a>. When using SNMP, the modeler plugins are <code>SnmpPlugin</code> plugins that typically work using a set of <a href="http://www.dpstele.com/snmp/what-does-oid-network-elements.php">OIDs</a> to determine exactly which data is to be modeled.</p>
+
+<h2 id="ssh-in-modeler-plugins">SSH in Modeler Plugins</h2>
+
+<p>In order to make a modeler plugin utilize SSH as it&rsquo;s polling method we need to use a different type of plugin, the <code>CommandPlugin</code> plugin. The structure of this type of plugin is very similar to the <code>SnmpPlugin</code>, however there is one critical variable that must be implemented.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ssh" class="label label-default">ssh</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/bash" class="label label-default">bash</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/ssh-monitoring-in-zenpacks/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/ip-addresses-a-review/">IP Addresses - A Review</a>
+  </h1>
+  <time datetime="2016-12-02T00:00:00Z" class="post-date">Fri, Dec 2, 2016</time>
+  <p><em>A review of IP addresses, as part of my Computer Networking Fundamentals series.</em></p>
+
+<p>A lot of people know what IP addresses are, and a lot of people also probably know that each device that is connected to the Internet must have a <strong><em>unique</em></strong> IP Address, like <em>108.161.228.70</em></p>
+
+<p>However, in this article I want to do a more in-depth review about IP addresses and how the work.</p>
+
+<p>From a technical point of view and for reviewing purposes, it is worth remembering that IP Addresses (at least IPv4) are <strong>32-bit</strong> addresses, because each number separated by each dot (called <em>octet</em>) is an 8-bit number. Since IP Addresses have 4 octets, these together make a sum of 32-bits.</p>
+
+<p class="lead">Another very important detail of IP Addresses is that the <strong>first two</strong> octets represent a <strong>destination network</strong>, while the <strong>last two</strong> octets represent a <strong>destination host</strong> within that destination network.</p>
+
+<p>Since the first two octets make a sum of 16 bits, 2^16 yields a total of 65,536 networks. At the same time, the remaining 16 bits also yield a total of 65,536 different hosts. <strong><em>But</em></strong> these are 65,536 different hosts <strong><em>per each</em></strong> network.</p>
+
+<p>This raises a big issue because it makes it hard to decide how many bits in the IP address should be allocated to the network and how many bits should be allocated for the hosts, without wasting IP addresses. This is where <strong>subnet masks</strong> come in.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/networking" class="label label-default">networking</a></li>
+  
+    <a href="http://aalvarez.me/tags/ip" class="label label-default">ip</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/ip-addresses-a-review/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/working-with-zenoss-events/">Working With Zenoss Events</a>
+  </h1>
+  <time datetime="2016-11-25T00:00:00Z" class="post-date">Fri, Nov 25, 2016</time>
+  <p>Zenoss Events are among the most powerful and useful monitoring features that Zenoss Core provides. Many different types of events are <strong>automatically</strong> generated by Zenoss when important scenarios occur for the devices being monitored.</p>
+
+<h2 id="zenoss-event-architecture">Zenoss Event Architecture</h2>
+
+<p>When an event arrives at Zenoss, it is parsed, associated with an event classification and then typically (but not always), it is inserted into the status table of the events database. Events can then be viewed by users using the Event Console of the Zenoss Graphical User Interface (GUI).</p>
+
+<p>The events system has the concept of active status events and historical events (two different database tables in the MySQL events database).</p>
+
+<p><img src="/posts/working-with-zenoss-events/event_console.jpg" alt="!Zenoss Core 4 Event Console" /></p>
+
+<h3 id="understanding-event-classes">Understanding Event Classes</h3>
+
+<p>Zenoss event classes are a simple organizational structure for the different types of events that Zenoss generates and receives. This organization is useful for driving alerting and reporting. You can, for example, create an alerting rule that sends you an email or pages you when the availability of a Web site or page is affected by filtering on the <code>/Status/Web</code> event class<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">1</a></sup>.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/events" class="label label-default">events</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/cli" class="label label-default">cli</a></li>
+  
+    <a href="http://aalvarez.me/tags/zendmd" class="label label-default">zendmd</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/working-with-zenoss-events/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/14/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/16/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

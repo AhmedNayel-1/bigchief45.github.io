@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Understanding Gnocchi Measures &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Understanding Gnocchi Measures</h1>
+  <time datetime=2017-05-24T00:00:00Z class="post-date">Wed, May 24, 2017</time>
+
+  <p>Measures are simple objects that represent the timeseries data. They simply contain a <strong>timestamp</strong> and a <strong>value</strong>, and they belong to <a href="/posts/understanding-gnocchi-metrics.html">metrics</a>. You could say that a measure <em>has many</em> metrics.</p>
+
+<h2 id="adding-measures-to-a-metric">Adding Measures to a Metric</h2>
+
+<p>Using the REST API, we can easily add measures to a metric:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#06b;font-weight:bold">POST</span> <span style="color:#0e84b5;font-weight:bold">/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures</span> <span style="color:#080;font-weight:bold">HTTP</span><span style="color:#333">/</span><span style="color:#60e;font-weight:bold">1.1</span>
+Content-Type<span style="color:#333">:</span> application/json
+Content-Length<span style="color:#333">:</span> 198
+
+[
+  {
+    <span style="color:#070">&#34;timestamp&#34;</span>: <span style="background-color:#fff0f0">&#34;2014-10-06T14:33:57&#34;</span>,
+    <span style="color:#070">&#34;value&#34;</span>: <span style="color:#60e;font-weight:bold">43.1</span>
+  },
+  {
+    <span style="color:#070">&#34;timestamp&#34;</span>: <span style="background-color:#fff0f0">&#34;2014-10-06T14:34:12&#34;</span>,
+    <span style="color:#070">&#34;value&#34;</span>: <span style="color:#00d;font-weight:bold">12</span>
+  },
+  {
+    <span style="color:#070">&#34;timestamp&#34;</span>: <span style="background-color:#fff0f0">&#34;2014-10-06T14:34:20&#34;</span>,
+    <span style="color:#070">&#34;value&#34;</span>: <span style="color:#00d;font-weight:bold">2</span>
+  }
+]</code></pre></div>
+<p>The following example shows how it can be done with the Gnocchi client. This example uses the <a href="https://pypi.python.org/pypi/psutil/">psutil</a> library to obtain CPU percentage data every minute. This is percentage will be the value for the metric&rsquo;s <code>value</code> field.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">uuid</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">datetime</span> <span style="color:#080;font-weight:bold">import</span> datetime
+
+<span style="color:#888"># Let&#39;s create a metric first</span>
+metric <span style="color:#333">=</span> gnocchi<span style="color:#333">.</span>metric<span style="color:#333">.</span>create({
+        <span style="background-color:#fff0f0">&#39;name&#39;</span>: <span style="background-color:#fff0f0">&#39;my_metric&#39;</span>,
+        <span style="background-color:#fff0f0">&#39;archive_policy_name&#39;</span>: <span style="background-color:#fff0f0">&#39;high&#39;</span>
+        })
+
+<span style="color:#888"># Now let&#39;s use psutil library</span>
+psutil<span style="color:#333">.</span>cpu_times()
+
+<span style="color:#888"># Every minute, we will get a CPU percentage, and we will calculate a timestamp</span>
+<span style="color:#080;font-weight:bold">for</span> x <span style="color:#000;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#00d;font-weight:bold">60</span>):
+    timestamp <span style="color:#333">=</span> <span style="color:#007020">str</span>(datetime<span style="color:#333">.</span>now())<span style="color:#333">.</span>split(<span style="background-color:#fff0f0">&#39;.&#39;</span>)[<span style="color:#00d;font-weight:bold">0</span>]
+    cpu <span style="color:#333">=</span> psutil<span style="color:#333">.</span>cpu_percent(interval<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">60</span>)
+
+    gnocchi<span style="color:#333">.</span>metric<span style="color:#333">.</span>add_measures(metric[<span style="background-color:#fff0f0">&#39;id&#39;</span>], [{
+            <span style="background-color:#fff0f0">&#39;timestamp&#39;</span>: timestamp,
+            <span style="background-color:#fff0f0">&#39;value&#39;</span>: cpu,
+            }])</code></pre></div>
+<p>The code above will create a new measure for the metric, every minute.</p>
+
+<p>If you keep querying the API after the measures are created, you will notice that they do not appear in the response. This delay will depend on the driver, there may be some lag after POSTing measures before they are processed and queryable. To ensure your query returns all measures that have been POSTed, you can force any unprocessed measures to be handled:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#06b;font-weight:bold">GET</span> <span style="color:#0e84b5;font-weight:bold">/v1/metric/:id/measures?refresh=true</span> <span style="color:#080;font-weight:bold">HTTP</span><span style="color:#333">/</span><span style="color:#60e;font-weight:bold">1.1</span></code></pre></div>
+<p>We should then be able to see the measures that have been posted so far:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  [
+    <span style="background-color:#fff0f0">&#34;2017-05-24T08:00:00+00:00&#34;</span>,
+    <span style="color:#00d;font-weight:bold">3600</span>,
+    <span style="color:#60e;font-weight:bold">47.86666666666667</span>
+  ],
+  [
+    <span style="background-color:#fff0f0">&#34;2017-05-24T09:00:00+00:00&#34;</span>,
+    <span style="color:#00d;font-weight:bold">3600</span>,
+    <span style="color:#60e;font-weight:bold">46.5</span>
+  ],
+  [
+    <span style="background-color:#fff0f0">&#34;2017-05-24T08:57:00+00:00&#34;</span>,
+    <span style="color:#00d;font-weight:bold">60</span>,
+    <span style="color:#60e;font-weight:bold">43.4</span>
+  ],</code></pre></div>
+<h2 id="metric-storage">Metric Storage</h2>
+
+<p>Storage of metrics is defined by the selected storage driver. If <em>file</em> is used as storage, we can find the stored metrics in the directory configured in the <code>[storage]</code> section of <code>gnocchi.conf</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#080;font-weight:bold">[storage]</span>
+<span style="color:#00c">driver</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">file</span>
+<span style="color:#00c">file_basepath</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">/home/ubuntu/gn</span></code></pre></div>
+<p>Inside this directory you will find more directories with the IDs of the created metrics as their names:</p>
+
+<pre><code>gn/
+├── 26f0c89a-0a90-405c-a51a-a12220bd3d82
+│   ├── agg_count
+│   │   ├── 1490400000.0_3600.0_v3
+│   │   ├── 1495584000.0_60.0_v3
+│   │   ├── 1495612800.0_1.0_v3
+│   │   └── 1495616400.0_1.0_v3
+│   ├── agg_max
+│   │   ├── 1490400000.0_3600.0_v3
+│   │   ├── 1495584000.0_60.0_v3
+│   │   ├── 1495612800.0_1.0_v3
+│   │   └── 1495616400.0_1.0_v3
+│   ├── agg_mean
+│   │   ├── 1490400000.0_3600.0_v3
+│   │   ├── 1495584000.0_60.0_v3
+│   │   ├── 1495612800.0_1.0_v3
+│   │   └── 1495616400.0_1.0_v3
+│   ├── agg_min
+│   │   ├── 1490400000.0_3600.0_v3
+│   │   ├── 1495584000.0_60.0_v3
+│   │   ├── 1495612800.0_1.0_v3
+│   │   └── 1495616400.0_1.0_v3
+│   ├── agg_std
+│   │   └── 1490400000.0_3600.0_v3
+│   ├── agg_sum
+│   │   ├── 1490400000.0_3600.0_v3
+│   │   ├── 1495584000.0_60.0_v3
+│   │   ├── 1495612800.0_1.0_v3
+│   │   └── 1495616400.0_1.0_v3
+</code></pre>
+
+<p>Inside these metric directories we will find more directories representing the available aggreation methods (count, max, mean, min, sum, etc.) by the metric&rsquo;s <strong>archive policies</strong>, as shown above.</p>
+
+<h2 id="source-code">Source Code</h2>
+
+<p>The source code where measures are stored will depend on the driver. Again, using the <em>file</em> driver as an example, we can find the source code in <a href="https://github.com/gnocchixyz/gnocchi/blob/master/gnocchi/storage/file.py#L121"><code>/gnocchi/storage/file.py</code></a>:</p>
+
+<p><strong>/gnocchi/storage/file.py</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FileStorage</span>(_carbonara<span style="color:#333">.</span>CarbonaraBasedStorage):
+    WRITE_FULL <span style="color:#333">=</span> True
+
+    <span style="color:#080;font-weight:bold">def</span> __init__(self, conf, incoming):
+        <span style="color:#007020">super</span>(FileStorage, self)<span style="color:#333">.</span>__init__(conf, incoming)
+        self<span style="color:#333">.</span>basepath <span style="color:#333">=</span> conf<span style="color:#333">.</span>file_basepath
+        self<span style="color:#333">.</span>basepath_tmp <span style="color:#333">=</span> os<span style="color:#333">.</span>path<span style="color:#333">.</span>join(self<span style="color:#333">.</span>basepath, <span style="background-color:#fff0f0">&#39;tmp&#39;</span>)
+        utils<span style="color:#333">.</span>ensure_paths([self<span style="color:#333">.</span>basepath_tmp])
+
+    <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_atomic_file_store</span>(self, dest, data):
+        tmpfile <span style="color:#333">=</span> tempfile<span style="color:#333">.</span>NamedTemporaryFile(
+            prefix<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi&#39;</span>, <span style="color:#007020">dir</span><span style="color:#333">=</span>self<span style="color:#333">.</span>basepath_tmp,
+            delete<span style="color:#333">=</span>False)
+        tmpfile<span style="color:#333">.</span>write(data)
+        tmpfile<span style="color:#333">.</span>close()
+        os<span style="color:#333">.</span>rename(tmpfile<span style="color:#333">.</span>name, dest)
+
+    <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_store_metric_measures</span>(self, metric, timestamp_key, aggregation,
+                               granularity, data, offset<span style="color:#333">=</span>None, version<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">3</span>):
+        self<span style="color:#333">.</span>_atomic_file_store(
+            self<span style="color:#333">.</span>_build_metric_path_for_split(metric, aggregation,
+                                              timestamp_key, granularity,
+                                              version),
+        data)</code></pre></div>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

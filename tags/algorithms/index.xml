@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithms on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/algorithms/</link>
+    <description>Recent content in Algorithms on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 16 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/algorithms/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Big O Notation - Omega &amp; Theta</title>
+      <link>http://aalvarez.me/posts/big-o-notation-omega-theta/</link>
+      <pubDate>Wed, 16 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/big-o-notation-omega-theta/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation.html&#34;&gt;previous post&lt;/a&gt; I went over the basic and most common Big O notations along with respective common algorithms, and finally adding some Ruby benchmarks for each.&lt;/p&gt;
+
+&lt;p&gt;However I did not cover some other very important concepts in Big O notation: &lt;strong&gt;Omega&lt;/strong&gt; and &lt;strong&gt;Theta&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;understanding-omega&#34;&gt;Understanding Omega&lt;/h2&gt;
+
+&lt;p&gt;The Omega symbol (Ω) represents a certain algorithm&amp;rsquo;s &lt;em&gt;best-case&lt;/em&gt; asymptotic complexity. For example, let&amp;rsquo;s take again a look at the &lt;a href=&#34;https://en.wikipedia.org/wiki/Binary_search_algorithm&#34;&gt;binary search algorithm&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif&#34; alt=&#34;Binary Search vs Linear Search&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Previously we determined that the Big O notation for this algorithm is &lt;em&gt;O(log n)&lt;/em&gt;. This represent the &lt;strong&gt;worst&lt;/strong&gt; asymptotic complexity that the algorithm can possibly have.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ruby Benchmarking &amp; Big O Notation</title>
+      <link>http://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/</link>
+      <pubDate>Tue, 15 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/</guid>
+      <description>&lt;p&gt;The Ruby &lt;a href=&#34;http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html&#34;&gt;Benchmark&lt;/a&gt; library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.&lt;/p&gt;
+
+&lt;p&gt;I was doing some &lt;a href=&#34;https://en.wikipedia.org/wiki/Big_O_notation&#34;&gt;Big O Notation&lt;/a&gt; reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.&lt;/p&gt;
+
+&lt;h2 id=&#34;using-benchmark&#34;&gt;Using Benchmark&lt;/h2&gt;
+
+&lt;p&gt;To start benchmarking our code, we simply need to require &lt;code&gt;benchmark&lt;/code&gt; and use the methods provided by the &lt;code&gt;Benchmark&lt;/code&gt; module. For me, the most practical way is to use &lt;code&gt;Benchmark#bm&lt;/code&gt; method, where we pass a block of code we want to measure:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
+
+&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bm &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;x&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
+  x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;report &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# our code here&lt;/span&gt;
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Inside the block we are using the &lt;code&gt;report&lt;/code&gt; method of the block&amp;rsquo;s variable, which will basically do a separate benchmark for each report.&lt;/p&gt;
+
+&lt;p&gt;However, we can improve this even more by adding a label to &lt;code&gt;report&lt;/code&gt; and a label width to &lt;code&gt;bm&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
+
+&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bm(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;x&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
+  x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;report(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;my_algorithm&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# our code here&lt;/span&gt;
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let&amp;rsquo;s see it in action with some common algorithms.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Infinite Sequences in Ruby Using Enumerator</title>
+      <link>http://aalvarez.me/posts/infinite-sequences-in-ruby-using-enumerator/</link>
+      <pubDate>Mon, 14 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/infinite-sequences-in-ruby-using-enumerator/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;http://ruby-doc.org/core-2.3.1/Enumerator.html&#34;&gt;Enumerator&lt;/a&gt; class in Ruby allows us to generate some very smooth and useful infinite sequences. For example, in some &lt;a href=&#34;https://projecteuler.net/&#34;&gt;Project Euler&lt;/a&gt; problems it is required to generate sequences without a specific limit. A good example of this is the &lt;em&gt;Highly Divisible Triangular Number&lt;/em&gt; problem:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;The sequence of triangle numbers is generated by adding the natural numbers. So the 7th triangle number would be 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28. The first ten terms would be:
+
+1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
+
+Let us list the factors of the first seven triangle numbers:
+
+     1: 1
+     3: 1,3
+     6: 1,2,3,6
+    10: 1,2,5,10
+    15: 1,3,5,15
+    21: 1,3,7,21
+    28: 1,2,4,7,14,28
+
+We can see that 28 is the first triangle number to have over five divisors.
+
+What is the value of the first triangle number to have over five hundred divisors?
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So first we would want to be able to generate a (infinite) sequence of &lt;a href=&#34;https://en.wikipedia.org/wiki/Triangular_number&#34;&gt;triangular numbers&lt;/a&gt; that we can use to do many programming operations, such as iterating over the sequence.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

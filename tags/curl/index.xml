@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Curl on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/curl/</link>
+    <description>Recent content in Curl on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/curl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Zenoss JSON API</title>
+      <link>http://aalvarez.me/posts/the-zenoss-json-api/</link>
+      <pubDate>Thu, 24 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/the-zenoss-json-api/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using &lt;a href=&#34;https://curl.haxx.se/&#34;&gt;cURL&lt;/a&gt; or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.&lt;/p&gt;
+
+&lt;p&gt;The API documentation can be downloaded &lt;a href=&#34;https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip&#34;&gt;here&lt;/a&gt;. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.&lt;/p&gt;
+
+&lt;p&gt;In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&amp;rsquo;s front-end (made using &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;ExtJS&lt;/a&gt;) interacts with it.&lt;/p&gt;
+
+&lt;p&gt;~&amp;gt; Even though Zenoss calls its API a &lt;em&gt;JSON API&lt;/em&gt; (Simply because it returns data in JSON format), the API &lt;strong&gt;is not&lt;/strong&gt; &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API specification&lt;/a&gt; compliant.&lt;/p&gt;
+
+&lt;h2 id=&#34;querying-the-api&#34;&gt;Querying the API&lt;/h2&gt;
+
+&lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&amp;rsquo;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#963&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
+
+&lt;p&gt;This is all fine if all we need is querying the API and nothing else. But what if we really want to know &lt;strong&gt;&lt;em&gt;how&lt;/em&gt;&lt;/strong&gt; the API back-end works? How the endpoints are created? What are routers?&lt;/p&gt;
+
+&lt;p&gt;This is what we are gonna learn next.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

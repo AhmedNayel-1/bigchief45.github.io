@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Using RRDTool in Zenoss &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Using RRDTool in Zenoss</h1>
+  <time datetime=2016-11-22T00:00:00Z class="post-date">Tue, Nov 22, 2016</time>
+
+  <p><a href="http://oss.oetiker.ch/rrdtool/">rrdtool</a> is an awesome high performance data logging and graphing tool for time series data. Zenoss Core uses RRDTool to collect, monitor, and graph peformance data for devices.</p>
+
+<p><img src="http://oss.oetiker.ch/rrdtool/stream-pop.png" alt="RRD Tool" /></p>
+
+<p>However Zenoss Core comes with built-in helper wrappers around RRDTool that makes using it within Zenoss much easier. These source code files can be found in <code>$ZENHOME/Products/ZenRRD/</code>.</p>
+
+<h2 id="rrdutil">RRDUtil</h2>
+
+<p>Located in <code>$ZENHOME/Products/ZenRRD/RRDUtil.py</code>, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read <code>.rrd</code> files using Python.</p>
+
+<p>We can easily import this module into our code, using the following import statement:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenRRD.RRDUtil</span> <span style="color:#080;font-weight:bold">import</span> RRDUtil</code></pre></div>
+<h3 id="writing-to-a-device-s-rrd-file">Writing to a Device&rsquo;s RRD File</h3>
+
+<p>Performance <code>.rrd</code> files for each device are located in <code>$ZENHOME/perf/Devices/$DEVICE_IP/</code>. All the RRD files for each graph in our <strong>custom monitoring templates</strong> will be located here. The values contained within each file is what the graph actually represents in the Zenoss graphic user interface.</p>
+
+<p>Let&rsquo;s assume that we have a custom monitoring template that adds, monitors, and graphs a <em>power usage</em> data point. And that the value for this data point is collected periodically through a <a href="/posts/creating-zenoss-zenpack-daemons.html">ZenPack daemon</a>. This value is then written to the data point&rsquo;s <code>.rrd</code> file, called <code>Power_Power.rrd</code> for this example.</p>
+
+<p>We can then use RRDUtil in our daemon&rsquo;s code to write to the RRD file:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_writeRRD</span>(self, device, rrd_file_name, value):
+    <span style="color:#080;font-weight:bold">try</span>:
+        <span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenRRD.RRDUtil</span> <span style="color:#080;font-weight:bold">import</span> RRDUtil
+
+        path <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;Devices/{0}/{1}&#39;</span><span style="color:#333">.</span>format(device<span style="color:#333">.</span><span style="color:#007020">id</span>, rrd_file_name)
+        rrd <span style="color:#333">=</span> RRDUtil(<span style="background-color:#fff0f0">&#39;&#39;</span>, <span style="color:#00d;font-weight:bold">300</span>)
+
+        rrd_save_val <span style="color:#333">=</span> rrd<span style="color:#333">.</span>save(path, value, <span style="background-color:#fff0f0">&#34;GAUGE&#34;</span>, <span style="color:#007020">min</span><span style="color:#333">=</span><span style="color:#00d;font-weight:bold">0</span>, <span style="color:#007020">max</span><span style="color:#333">=</span>None)
+
+        log<span style="color:#333">.</span>info(<span style="background-color:#fff0f0">&#39;Wrote to {0} with value {1}&#39;</span><span style="color:#333">.</span>format(rrd<span style="color:#333">.</span>performancePath(path <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;.rrd&#39;</span>), rrd_save_val))
+
+    <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
+        summary <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;Unable to save data value into RRD file {0} - Exception: {1}&#34;</span><span style="color:#333">.</span>format(rrd<span style="color:#333">.</span>performancePath(path <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;.rrd&#39;</span>), e<span style="color:#333">.</span>message)
+        log<span style="color:#333">.</span>error(summary)</code></pre></div>
+<p>First we need to build a correct path string that points to the dev&rsquo;ces RRD file we want to modify (Example: <code>$ZENHOME/perf/Devices/$DEVICE_IP/Power_Power.rrd</code>). So naturally we would pass the RRD file name (<code>Power_Power</code>) as the <code>rrd_file_name</code> parameter. We <strong>do not</strong> need to append the extension because the <code>save</code> method will do so when it&rsquo;s called.</p>
+
+<p>-&gt; RRD file names for devices are named according to the <code>dataSource_dataPoint</code> format. As shown in the monitoring template.</p>
+
+<p>Since we are not creating a new file, we do not need to pass a create command to RRDUtil, hence why we pass a blank string as the first parameter.</p>
+
+<p>Finally, the magic then happens in the <code>save</code> method, where we tell RRDUtil to save the value into the file, specified by the performance path. This performance path is generated using the path string we constructed before, inside the <code>put</code> (The <code>save</code> method actually makes a call to <code>put</code> in order to save the value) method&rsquo;s code:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># $ZENHOME/Products/ZenRRD/RRDUtil.py</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">put</span>(self, path, value, rrdType, rrdCommand<span style="color:#333">=</span>None, cycleTime<span style="color:#333">=</span>None,
+           <span style="color:#007020">min</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;U&#39;</span>, <span style="color:#007020">max</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;U&#39;</span>, useRRDDaemon<span style="color:#333">=</span>True, timestamp<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;N&#39;</span>, start<span style="color:#333">=</span>None,
+           allowStaleDatapoint<span style="color:#333">=</span>True):
+
+    <span style="color:#888"># ...</span>
+    filename <span style="color:#333">=</span> self<span style="color:#333">.</span>performancePath(path) <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;.rrd&#39;</span></code></pre></div>
+<p>=&gt; After saving the value into the RRD file, the <code>save</code> method will fetch the latest value for the data point and return it. We can then use this value in our logs to confirm that the <code>save</code> method indeed saved the correct value.</p>
+
+<h2 id="useful-links">Useful Links</h2>
+
+<ul>
+<li><a href="https://nettikconsulting.wordpress.com/2010/09/25/modifying-the-code-where-rrd-files-are-saved/">https://nettikconsulting.wordpress.com/2010/09/25/modifying-the-code-where-rrd-files-are-saved/</a></li>
+</ul>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

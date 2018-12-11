@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Api on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/api/</link>
+    <description>Recent content in Api on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 08 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/api/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Rails API With Nested Resources</title>
+      <link>http://aalvarez.me/posts/rails-api-with-nested-resources/</link>
+      <pubDate>Mon, 08 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/rails-api-with-nested-resources/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&amp;rsquo;s form and create all objects at once when the form is saved.&lt;/p&gt;
+
+&lt;p&gt;I was recently finding myself trying to implement a similar functionality using only Rails 5 API and &lt;a href=&#34;http://jsonapi.org&#34;&gt;JSON API specification&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&amp;rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;accepts-nested-attributes-for&#34;&gt;accepts_nested_attributes_for&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html&#34;&gt;&lt;code&gt;accepts_nested_attributes_for&lt;/code&gt; &lt;/a&gt; allows us to save attributes on &lt;strong&gt;associated&lt;/strong&gt; records (work experience, educational background) through a parent record (user). By default nested attribute updating is turned off and you can enable it using the &lt;code&gt;#accepts_nested_attributes_for&lt;/code&gt; class method.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Custom Zenoss API Endpoints</title>
+      <link>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</link>
+      <pubDate>Tue, 20 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-an-endpoint&#34;&gt;Creating an Endpoint&lt;/h2&gt;
+
+&lt;p&gt;Assuming that we are starting with a new and fresh ZenPack created with &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, we will proceed to create a simple endpoint.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;os.path&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; urlparse
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;subprocess&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.event&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; notify
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.interface&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; implements
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;ZODB.transact&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; transact
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Ext&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; DirectRouter, DirectResponse
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; Zuul
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.catalog.events&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IndexingEvent
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulFacade
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IFacade
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulMessageFactory &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; _t
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; zenPath&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The Zenoss JSON API</title>
+      <link>http://aalvarez.me/posts/the-zenoss-json-api/</link>
+      <pubDate>Thu, 24 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/the-zenoss-json-api/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using &lt;a href=&#34;https://curl.haxx.se/&#34;&gt;cURL&lt;/a&gt; or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.&lt;/p&gt;
+
+&lt;p&gt;The API documentation can be downloaded &lt;a href=&#34;https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip&#34;&gt;here&lt;/a&gt;. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.&lt;/p&gt;
+
+&lt;p&gt;In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&amp;rsquo;s front-end (made using &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;ExtJS&lt;/a&gt;) interacts with it.&lt;/p&gt;
+
+&lt;p&gt;~&amp;gt; Even though Zenoss calls its API a &lt;em&gt;JSON API&lt;/em&gt; (Simply because it returns data in JSON format), the API &lt;strong&gt;is not&lt;/strong&gt; &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API specification&lt;/a&gt; compliant.&lt;/p&gt;
+
+&lt;h2 id=&#34;querying-the-api&#34;&gt;Querying the API&lt;/h2&gt;
+
+&lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&amp;rsquo;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#963&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
+
+&lt;p&gt;This is all fine if all we need is querying the API and nothing else. But what if we really want to know &lt;strong&gt;&lt;em&gt;how&lt;/em&gt;&lt;/strong&gt; the API back-end works? How the endpoints are created? What are routers?&lt;/p&gt;
+
+&lt;p&gt;This is what we are gonna learn next.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

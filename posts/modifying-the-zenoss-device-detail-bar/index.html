@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Modifying the Zenoss Device Detail Bar &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Modifying the Zenoss Device Detail Bar</h1>
+  <time datetime=2016-11-08T00:00:00Z class="post-date">Tue, Nov 8, 2016</time>
+
+  <p>The Zenoss Core <a href="https://www.sencha.com/products/extjs/"><strong>ExtJS</strong></a> graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.</p>
+
+<p>Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss</code>, and as you would expect, the device detail bar component is also located there.</p>
+
+<h2 id="the-device-detail-bar">The Device Detail Bar</h2>
+
+<p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
+
+<p><img src="/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
+
+<p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
+
+<h2 id="extending-the-component-through-zenpacks">Extending The Component, Through ZenPacks</h2>
+
+<p>Let&rsquo;s assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># ...</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>classes:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>CustomDevice:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Device]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Custom<span style="color:#bbb"> </span>Device<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>properties:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>power_status:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>type:<span style="color:#bbb"> </span>boolean</code></pre></div>
+<p>What we want is to display this value in the device&rsquo;s detail bar, similar to the device&rsquo;s ping status display.</p>
+
+<p>We will proceed to create a new directory inside the ZenPack, where UI modifications will be placed, and create a new <code>resources/device.js</code> (in this case, the <code>device</code> file name specifies that the JavaScript will be loaded for a custom device type) JavaScript file that will use ExtJS to extend the user interface:</p>
+
+<p>-&gt; If you want to have your JavaScript loaded for all Zenoss pages, put it in <code>resources/global.js</code>, and if you want it to only apply to your custom device type(s), put it in <code>resources/device.js</code>. If zenpacklib detects the presence of either of these files it will wire up the ZCML stuff for you automatically. See <a href="https://github.com/zenoss/ZenPacks.zenoss.ZenPackLib/issues/56">this issue</a> on Github for more information.</p>
+
+<p><strong>device.js</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.onReady(<span style="color:#080;font-weight:bold">function</span>() {
+  <span style="color:#080;font-weight:bold">var</span> DEVICE_DETAIL_BAR_ID <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;devdetailbar&#39;</span>;
+
+  Ext.ComponentMgr.onAvailable(DEVICE_DETAIL_BAR_ID, <span style="color:#080;font-weight:bold">function</span>() {
+    <span style="color:#080;font-weight:bold">var</span> detailBar <span style="color:#333">=</span> Ext.getCmp(DEVICE_DETAIL_BAR_ID);
+
+    <span style="color:#888">// First, we create the new Power Status item
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> powerStatusItem <span style="color:#333">=</span> Zenoss.DeviceDetailItem.create({
+        ref<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;pstatusitem&#39;</span>,
+        width<span style="color:#333">:</span> <span style="color:#00d;font-weight:bold">98</span>,
+        label<span style="color:#333">:</span> _t(<span style="background-color:#fff0f0">&#39;Power Status&#39;</span>),
+        id<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;pstatusitem&#39;</span>
+    });
+
+    detailBar.addDeviceDetailBarItem(powerStatusItem, <span style="color:#080;font-weight:bold">function</span>(bar, data) {
+        detailBar.pstatusitem.setText(Zenoss.render.pingStatusLarge(data.power_status));
+    },
+    [<span style="background-color:#fff0f0">&#39;power_status&#39;</span>]);
+
+  });
+});
+</code></pre></div>
+<p>Very simple. After installing the ZenPack, restarting <em>zenhub</em> and <em>zopectl</em> services, you should be able to see the changes.</p>
+
+<p>Now let&rsquo;s go over the code and understand what&rsquo;s going on.</p>
+
+<h2 id="the-devicedetailitem">The DeviceDetailItem</h2>
+
+<p>Basically every item in the bar separated by the &ldquo;|&rdquo; character is actually an instance of the <code>Zenoss.DeviceDetailItem</code> class, which is also defined in <code>DeviceDetailBar.js</code>. In the code above, we are defining a new instance of this class and adding it to the detail bar. In particular, we are interested in these fields:</p>
+
+<p><strong>ref:</strong> The reference string for this <code>DeviceDetailItem</code>. Once set, it is possible to get this item using JavaScript in this way:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">var</span> detailBar <span style="color:#333">=</span> Ext.getCmp(<span style="background-color:#fff0f0">&#39;devdetailbar&#39;</span>);
+<span style="color:#080;font-weight:bold">var</span> item <span style="color:#333">=</span> detailBar.<span style="color:#333">&lt;</span>ref<span style="color:#333">&gt;</span>;
+
+<span style="color:#888">// Other existing items can also by obtained by their reference string,
+</span><span style="color:#888">// Available in the DeviceDetailBar.js source code:
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> status <span style="color:#333">=</span> detailBar.statusitem;
+</code></pre></div>
+<p><strong>id:</strong> The id of this <code>DeviceDetailItem</code> instance.</p>
+
+<h2 id="adding-the-item">Adding The Item</h2>
+
+<p>Next, we call the detail bar&rsquo;s <code>addDeviceDetailBarItem</code> method to add our freshly instanced item. This method will receive 3 arguments:</p>
+
+<ol>
+<li><strong>item</strong>: A <code>DeviceDetailItem</code> object to add to the detail bar.</li>
+<li><strong>fn</strong>: A function that will be called when the item is added.</li>
+<li><strong>added_keys</strong>: And array of <em>string</em> keys, to be added to the detail bar&rsquo;s <code>contextKeys</code> array.</li>
+</ol>
+
+<p>In our case, we should simply add a new key resembling the device attribute in <code>zenpack.yaml</code>, hence why we pass an array with only one key (<code>power_status</code>) to <em>added_keys</em>.</p>
+
+<p>The function parameter is where things get interesting, and what took my a bit of time and effort to understand everything that goes behind it. As you can see, I passed in a function <code>function(bar, data)</code>. I named the 1st parameter this way after extensive inspection and playing with the web console, however we don&rsquo;t really this parameter. The 2nd one (<code>data</code>) however, is what we will use to obtain the value of our <code>power_status</code> attribute.</p>
+
+<p>Once we have this value, we are then setting it as the <code>DeviceDetailItem</code>&rsquo;s text, but we are first passing it through a <a href="/posts/zenoss-monitoring-template-data-points.html">Zenoss renderer</a>. This what will change the display from a simple <code>True</code> or <code>False</code> value, to the UP or DOWN status with icon that you can already see with the ping status.</p>
+
+<h2 id="testing-the-item">Testing the Item</h2>
+
+<p>For quick testing, we can quickly open up a <em>zendmd</em> console as the <code>zenoss</code> user, and assign a boolean value to a device&rsquo;s <code>power_status</code> attribute.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">device <span style="color:#333">=</span> find(<span style="background-color:#fff0f0">&#34;&lt;hostname&gt;&#34;</span>)
+device<span style="color:#333">.</span>power_status <span style="color:#333">=</span> False
+commit()</code></pre></div>
+<p>The result should appear immediately after refreshing:</p>
+
+<p><img src="/posts/modifying-the-zenoss-device-detail-bar/detail_bar_power_down.jpg" alt="Power Status" /></p>
+
+<p>Don&rsquo;t mind the white background on the detail bar shown above, I am using a different skin in my Zenoss UI.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

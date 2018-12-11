@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/netbeans-platform-status-bars/">Netbeans Platform Status Bars</a>
+  </h1>
+  <time datetime="2018-07-19T00:00:00Z" class="post-date">Thu, Jul 19, 2018</time>
+  <p>In desktop applications, status bars are a great way to convey information to the user about the current status of certain items in the application, such as connection status, total amount of items, current mode, current row and column number in an editor, etc.</p>
+
+<p>Implementing custom status bars to a Netbeans Platform application is extremely easy. In this article I will go over how we can achieve really cool things with status bars and lookups.</p>
+
+<h2 id="creating-and-registering-a-new-status-bar">Creating and Registering a New Status Bar</h2>
+
+<p>To create a new status bar, create a new Java class that implements the <code>StatusLineElementProvider</code> interface. To register it as a status bar, we use the <code>@ServiceProvider</code> annotation:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#555;font-weight:bold">@ServiceProvider</span><span style="color:#333">(</span>service <span style="color:#333">=</span> StatusLineElementProvider<span style="color:#333">.</span><span style="color:#00c">class</span><span style="color:#333">,</span> position <span style="color:#333">=</span> 1<span style="color:#333">)</span>
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyStatusBar</span> <span style="color:#080;font-weight:bold">implements</span> StatusLineElementProvider <span style="color:#333">{</span>
+
+<span style="color:#333">}</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/netbeans-platform-status-bars/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/">Implementing Auto Updates for a Netbeans Platform Maven Application Using Github Pages</a>
+  </h1>
+  <time datetime="2018-07-17T00:00:00Z" class="post-date">Tue, Jul 17, 2018</time>
+  <p>Being able to update an application when a new version is released is something of critical importance for desktop applications. Otherwise, the process of updating the application is extremely tedious since you have to download more installers all the time.</p>
+
+<p>Luckily, Netbeans Platform comes with integrated support for enabling your custom applications to be able to be updated when a new version is released.</p>
+
+<p>In this post I will go over how to implement this on a <strong>Maven</strong> based Netbeans Platform application.</p>
+
+<h2 id="how-netbeans-update-center-works">How Netbeans Update Center Works</h2>
+
+<p>The <strong>Update Center</strong> is how we can achieve this functionality. The way it works is that you publish your module&rsquo;s NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.</p>
+
+<p>When you configure an update center in your application, you will configure this web server&rsquo;s URL so that the update center client knows where to poll and where to download the new module files to install.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+    <a href="http://aalvarez.me/tags/maven" class="label label-default">maven</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/bytesio-file-uploads-to-django-using-requests/">BytesIO File Uploads to Django Using Requests</a>
+  </h1>
+  <time datetime="2018-06-26T00:00:00Z" class="post-date">Tue, Jun 26, 2018</time>
+  <p>It&rsquo;s very easy to post file data to Django using requests:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">requests</span>
+
+
+requests<span style="color:#333">.</span>post(url, files<span style="color:#333">=</span>{<span style="background-color:#fff0f0">&#39;cover&#39;</span>: <span style="color:#007020">open</span>(<span style="background-color:#fff0f0">&#39;imgpath.jpg&#39;</span>, <span style="background-color:#fff0f0">&#39;rb&#39;</span>)})</code></pre></div>
+<p>However I was having a hard time getting that to work using <a href="https://wiki.python.org/moin/BytesIO">BytesIO</a>. The reason I wanted to use BytesIO was because I was reading the file binary data located in S3, from AWS Lambda. I didn&rsquo;t want to write the file to disk first and then do something like the code shown above.</p>
+
+<p>Here&rsquo;s how to achieve that:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/bytesio-file-uploads-to-django-using-requests/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/using-listeners-in-custom-netbeans-platform-wizards/">Using Listeners in Custom Netbeans Platform Wizards</a>
+  </h1>
+  <time datetime="2018-05-22T00:00:00Z" class="post-date">Tue, May 22, 2018</time>
+  <p><a href="https://platform.netbeans.org/tutorials/nbm-wizard.html#validate">This tutorial</a> explains how you can add validation to your custom wizards in the Netbeans Platform. This works by setting a boolean variable to <code>false</code> and then throwing a <code>WizardValidationException</code> which will show an error message in the wizard, disabling the ability to click the <em>Next</em> or <em>Finish</em> buttons.</p>
+
+<p>The problem with this is that after the above happens, there is no way to enable these buttons again. And the way to achieve this is not covered in that tutorial.</p>
+
+<p>Therefore, in this blog post I will explain just how to do that.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/using-listeners-in-custom-netbeans-platform-wizards/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/netbeans-platform-node-icon-badges/">Netbeans Platform Node Icon Badges</a>
+  </h1>
+  <time datetime="2018-05-03T00:00:00Z" class="post-date">Thu, May 3, 2018</time>
+  <p>The Netbeans IDE has some very cool way of letting users know when a certain file contains errors. For example, if you are editing a Java file and the file contains syntax errors, Netbeans will change the file icons with a new icon indicating errors:</p>
+
+<p><img src="/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png" alt="Netbeans Error Icons" /></p>
+
+<p>You can see that the error icons propagate all the way up to the top-most parent, the project itself.</p>
+
+<h2 id="netbeans-platform-icon-badges">Netbeans Platform Icon Badges</h2>
+
+<p>As a user of the Netbeans IDE and before even knowing what the Netbeans Platform was, I always assumed that the normal state of the icon and the error state of the icon were two completely different icons handled by Netbeans. A few days ago I learned that this is not the case.</p>
+
+<p>Netbeans uses the concept of <strong>icon badges</strong> to display these kind of error icons. Icon badges are basically multiple images merged together <em>at runtime</em> into a single <code>Image</code> object.</p>
+
+<p>In this article I want to quickly go over how you can apply this concept in your Netbeans Platform application when using the Nodes API.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/netbeans-platform-node-icon-badges/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/3/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

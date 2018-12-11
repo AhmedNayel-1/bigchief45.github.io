@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/">Changing Zenoss Dashboard Portlets Using CLI</a>
+  </h1>
+  <time datetime="2016-10-26T00:00:00Z" class="post-date">Wed, Oct 26, 2016</time>
+  <p>The Zenoss <a href="http://wiki.zenoss.org/ZenPack:Dashboard">ZenPacks.zenoss.Dashboard</a> ZenPack adds a very nice and new dashboard to our Zenoss Core 4 deployment, replacing the old default dashboard that comes with the installation.</p>
+
+<p><img src="http://wiki.zenoss.org/images/0/01/Separate_dashboard.png" alt="ZenPack Dashboard" /></p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/changing-zenoss-dashboard-portlets-using-cli/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/configuring-a-local-apt-repository/">Configuring a local apt repository</a>
+  </h1>
+  <time datetime="2016-10-17T00:00:00Z" class="post-date">Mon, Oct 17, 2016</time>
+  <p>Setting up a local apt repository can allow you to use <code>apt-get install</code> command to install your own packages. This is a better approach than using <code>dpkg -i</code> because apt will fetch and install the required dependencies (which should also be located in your local repository) in an <strong>offline</strong> fashion.</p>
+
+<h2 id="add-local-repository-to-sources">Add Local Repository to Sources</h2>
+
+<p>First we need to add our local repository to <code>apt</code>&rsquo;s list of source repositories, this can be found in <code>/etc/apt/sources.list</code>. To add our local repository, we add the following line at the top of the file:</p>
+
+<pre><code>/path/to/local-deb-repo/ ./
+</code></pre>
+
+<p>Where <em>local-deb-repo</em> is the name of our local repository directory.</p>
+
+<h2 id="add-debian-packages">Add Debian Packages</h2>
+
+<p>Now we create local repository&rsquo;s directory just like we specified it in the previous step:</p>
+
+<pre><code>mkdir /path/to/local-deb-repo/
+</code></pre>
+
+<p>Once we&rsquo;ve done that, we can proceed to put the Debian package files (<code>.deb</code>) and their dependencies inside the directory.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/apt" class="label label-default">apt</a></li>
+  
+    <a href="http://aalvarez.me/tags/aptitude" class="label label-default">aptitude</a></li>
+  
+    <a href="http://aalvarez.me/tags/repository" class="label label-default">repository</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/configuring-a-local-apt-repository/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/managing-debian-package-dependencies/">Managing Debian Package Dependencies</a>
+  </h1>
+  <time datetime="2016-10-14T00:00:00Z" class="post-date">Fri, Oct 14, 2016</time>
+  <p>In a previous post, I talked about <a href="2016-10-11-debian-packaging-in-ubuntu.html">building a simple Debian package in Ubuntu</a>, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.</p>
+
+<h2 id="dpkg-and-dependencies">dpkg and Dependencies</h2>
+
+<p>Previously we installed our package using the <kbd>dpkg -i</kbd> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
+
+<blockquote>
+<p>dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.</p>
+</blockquote>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="http://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="http://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/managing-debian-package-dependencies/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/creating-python-packages/">Creating Python Packages</a>
+  </h1>
+  <time datetime="2016-10-13T00:00:00Z" class="post-date">Thu, Oct 13, 2016</time>
+  <p>For a project involving Zenoss Core 4 and a HaaS solution maintained by another team, we needed a module to interact with the <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> to get the list of events for specific devices. Browsing around I found this <a href="https://github.com/iamseth/python-zenoss">python-zenoss</a> module to work with the Zenoss JSON API. However I was experiencing some issues when installing it, so I decided to create my own Python package to provide a different way to interact with the Zenoss JSON API according to our specific needs.</p>
+
+<p>The package would be installed locally using <code>pip</code>, and all its functionality should be easily accessible using <code>from</code> and <code>import</code> commands in Python.</p>
+
+<p>To start working in our package we will create a base directory. The directory&rsquo;s name will resemble our package&rsquo;s name. For naming, we should following these guidelines:</p>
+
+<ul>
+<li>All lowercase</li>
+<li>Underscore-separated or no word separators at all (don’t use hyphens)</li>
+</ul>
+
+<p>The package contents are the following:</p>
+
+<pre><code>my_api/
+├── __init__.py
+├── api.py
+└── setup.py
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/creating-python-packages/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/debian-packaging-in-ubuntu/">Debian Packaging in Ubuntu</a>
+  </h1>
+  <time datetime="2016-10-11T00:00:00Z" class="post-date">Tue, Oct 11, 2016</time>
+  <p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
+
+<h2 id="package-source-structure">Package Source &amp; Structure</h2>
+
+<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
+
+<pre><code>mkdir mypackage-1.0.0
+</code></pre>
+
+<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
+
+<pre><code>cd mypackage-1.0.0
+mkdir DEBIAN
+touch DEBIAN/control
+</code></pre>
+
+<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
+
+<pre><code>Package: mypackage
+Version: 1.0-0
+Section: base
+Priority: optional
+Architecture: all
+Depends: python2.7
+Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
+Description: A new and improved C++ Compiler
+</code></pre>
+
+<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="http://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="http://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/debian-packaging-in-ubuntu/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/18/" style="float: left;">← Newer Posts</a>
+    
+
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

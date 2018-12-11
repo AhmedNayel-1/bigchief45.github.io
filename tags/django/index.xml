@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Django on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/django/</link>
+    <description>Recent content in Django on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 26 Jun 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/django/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>BytesIO File Uploads to Django Using Requests</title>
+      <link>http://aalvarez.me/posts/bytesio-file-uploads-to-django-using-requests/</link>
+      <pubDate>Tue, 26 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/bytesio-file-uploads-to-django-using-requests/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s very easy to post file data to Django using requests:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+
+
+requests&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;post(url, files&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;cover&amp;#39;&lt;/span&gt;: &lt;span style=&#34;color:#007020&#34;&gt;open&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;imgpath.jpg&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;)})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;However I was having a hard time getting that to work using &lt;a href=&#34;https://wiki.python.org/moin/BytesIO&#34;&gt;BytesIO&lt;/a&gt;. The reason I wanted to use BytesIO was because I was reading the file binary data located in S3, from AWS Lambda. I didn&amp;rsquo;t want to write the file to disk first and then do something like the code shown above.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s how to achieve that:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Django Formsets with Generic FormViews</title>
+      <link>http://aalvarez.me/posts/django-formsets-with-generic-formviews/</link>
+      <pubDate>Thu, 19 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/django-formsets-with-generic-formviews/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.djangoproject.com/en/2.0/topics/forms/formsets/&#34;&gt;Django Formsets&lt;/a&gt; is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django&amp;rsquo;s built-in generic class based views, the &lt;a href=&#34;https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView&#34;&gt;FormView&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-scenario&#34;&gt;The Scenario&lt;/h2&gt;
+
+&lt;p&gt;To add some context to this tutorial, let&amp;rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png&#34; alt=&#34;Nested Search Example&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For this tutorial, we will use the following model as an example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Book&lt;/span&gt;(models&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Model):
+    title &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; models&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;CharField()
+    author &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; models&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ForeignKey(Author)
+    isbn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; models&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;CharField()
+    editorial &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; models&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ForeignKey(Editorial)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;creating-the-form&#34;&gt;Creating the Form&lt;/h2&gt;
+
+&lt;p&gt;We will begin by creating the form that will be cloned. That is, the form that will represent &lt;strong&gt;one&lt;/strong&gt; search query out of the many that will/could be nested together.&lt;/p&gt;
+
+&lt;p&gt;For our case, the form will only contain 3 fields:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The query field: Indicates which field of the model we will query.&lt;/li&gt;
+&lt;li&gt;The lookup type: Indicates which &lt;a href=&#34;https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups&#34;&gt;lookup&lt;/a&gt; is going to be used to make the query.&lt;/li&gt;
+&lt;li&gt;The query value: Indicates what we want to actually search for (i.e &lt;em&gt;Harry Potter&lt;/em&gt; for the book title.)&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testing Django and DRF With Pytest</title>
+      <link>http://aalvarez.me/posts/testing-django-and-drf-with-pytest/</link>
+      <pubDate>Fri, 09 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/testing-django-and-drf-with-pytest/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt; has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and &lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We will be using the following tools:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt;: Python testing framework&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://pytest-django.readthedocs.io/&#34;&gt;pytest-django&lt;/a&gt;: Pytest extensions for Django&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://factoryboy.readthedocs.io/&#34;&gt;factoryboy&lt;/a&gt;: Factories for easy test data generation.&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Building a Django Continuous Integration and Delivery Pipeline to AWS</title>
+      <link>http://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/</link>
+      <pubDate>Tue, 30 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/</guid>
+      <description>&lt;p&gt;Building a CI/CD (Continuous Integration / Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.&lt;/p&gt;
+
+&lt;p&gt;In this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to &lt;a href=&#34;https://www.heroku.com/&#34;&gt;Heroku&lt;/a&gt;. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.&lt;/p&gt;
+
+&lt;p&gt;The pipeline will work as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Code will be pushed to source control repository. For this article, I will use Github.&lt;/li&gt;
+&lt;li&gt;Project will be built and tested in a CI job at &lt;a href=&#34;https://travis-ci.com/&#34;&gt;TravisCI&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;TravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We will be using both the &lt;strong&gt;&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html&#34;&gt;ElasticBeanstalk CLI (ebcli)&lt;/a&gt;&lt;/strong&gt; and the &lt;strong&gt;AWS ElasticBeanstalk Console&lt;/strong&gt; to achieve this.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Django Dynamic Queryset Filtering With Pagination</title>
+      <link>http://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/</link>
+      <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html&#34;&gt;This blog article&lt;/a&gt; does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn&amp;rsquo;t go into paginating the filtered queryset results.&lt;/p&gt;
+
+&lt;p&gt;I had a very hard time trying to implement this pagination feature using &lt;strong&gt;class based views&lt;/strong&gt;. More specifically, using the &lt;code&gt;FilterView&lt;/code&gt; that comes with the &lt;a href=&#34;https://github.com/carltongibson/django-filter&#34;&gt;django-filter&lt;/a&gt; package.&lt;/p&gt;
+
+&lt;p&gt;In the end it turned out to be very simple. The &lt;a href=&#34;https://django-filter.readthedocs.io/en/master/guide/usage.html#generic-view-configuration&#34;&gt;documentation&lt;/a&gt; was a bit misleading on this so it took a while to understand and find the solution.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Django AJAX Search With Elasticsearch</title>
+      <link>http://aalvarez.me/posts/django-ajax-search-with-elasticsearch/</link>
+      <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/django-ajax-search-with-elasticsearch/</guid>
+      <description>&lt;p&gt;In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&amp;rsquo;s get started!&lt;/p&gt;
+
+&lt;h2 id=&#34;the-search-template&#34;&gt;The Search Template&lt;/h2&gt;
+
+&lt;p&gt;The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.&lt;/p&gt;
+
+&lt;p&gt;This template is extremely simple and does not need a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; tag. I will create it as a partial under &lt;code&gt;templates/search.html&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
+&amp;lt;input id=&amp;#34;search&amp;#34; name=&amp;#34;q&amp;#34; placeholder=&amp;#34;Search...&amp;#34;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notice how we have given the input a &lt;code&gt;name&lt;/code&gt; with the value of &lt;code&gt;q&lt;/code&gt;. This will be important when our view receives the query from this input field.&lt;/p&gt;
+
+&lt;p&gt;I can then render this partial in the main template like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &amp;#39;search.html&amp;#39; %}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

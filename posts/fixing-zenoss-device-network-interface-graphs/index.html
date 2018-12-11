@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Fixing Zenoss Device Network Interface Graphs &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Fixing Zenoss Device Network Interface Graphs</h1>
+  <time datetime=2017-01-13T00:00:00Z class="post-date">Fri, Jan 13, 2017</time>
+
+  <p>When testing the monitoring of the OpenStack compute node devices in Zenoss (using <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a>), I noticed that I could not get any graphs for the <strong>network interfaces</strong> of the device, although we could still get and model all the available interfaces:</p>
+
+<p><img src="/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces" /></p>
+
+<p>This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.</p>
+
+<h2 id="interface-monitoring-templates">Interface Monitoring Templates</h2>
+
+<p>Zenoss comes with two monitoring templates for the network interfaces, <code>ethernetCsmacd</code> and <code>ethernetCsmacd_64</code>. The first one is a standard ethernet network interface monitoring template, the second one is a smilar template but for 64-bit interface counters.</p>
+
+<p>Both of the monitoring templates provide the graphs we need. But there is a slight &ldquo;problem&rdquo; between them and the <code>/Server/SSH/Linux/NovaHost</code> device class, which is where all the OpenStack devices are placed for monitoring.</p>
+
+<p>If we take a look, ethernetCsmacd template is available in the following device classes:</p>
+
+<ul>
+<li>/Devices</li>
+<li>/Server/Cmd</li>
+<li>/Server/Microsoft</li>
+<li><strong>/Server/SSH/Linux</strong></li>
+<li>/Server/Windows/WMI</li>
+</ul>
+
+<p>This monitoring template is different in each device class. This is why some of the device classes have different datasources and provide different graphs than others. From the list above, the device class of our interest is <strong>/Server/SSH/Linux</strong> because it is the closest one in the hierarchy to our NovaHost class.</p>
+
+<p>However, when inspecting the available graphs and datasources for <strong>ethernetCsmacd</strong> in /Server/SSH/Linux, I discovered that it is completely blank! Upon further inspection I find a tooltip showing the template&rsquo;s description, which says <em>&ldquo;The SSH Ethernet interface template is available in the Enterprise version&rdquo;</em>.</p>
+
+<p>This is conflicting because we do not want to collect this data through SSH, but through SNMP like it is done in the other device classes for this same monitoring template.</p>
+
+<p>Now, if we take a look at ethernetCsmacd_64 template, we see that there is only one device class associated with it:</p>
+
+<ul>
+<li>/Devices</li>
+</ul>
+
+<p>This device class will basically apply to <strong>all</strong> the devices in Zenoss. Additionally and more importantly, this template in this device class offers all the graphs we need.</p>
+
+<h3 id="how-zenoss-assigns-the-interface-monitoring-template">How Zenoss Assigns the Interface Monitoring Template</h3>
+
+<p>The way Zenoss assigns the monitoring template for the network interfaces is very different from the assignment of other monitoring templates to other type of components. The assignment is based on the value of the <strong>interface type</strong>, obtained by Zenoss.</p>
+
+<p>The source code for how this is done can be found in <code>/Products/ZenModel/IpInterface.py</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">getRRDTemplates</span>(self):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">    Return a list containing the appropriate RRDTemplate for this
+</span><span style="background-color:#fff0f0">    IpInterface. If none is found then the list will be empty.
+</span><span style="background-color:#fff0f0">
+</span><span style="background-color:#fff0f0">    Order of preference if the interface supports 64bit counters:
+</span><span style="background-color:#fff0f0">      1. &lt;type&gt;_64
+</span><span style="background-color:#fff0f0">      2. ethernetCsmacd_64
+</span><span style="background-color:#fff0f0">      3. &lt;type&gt;
+</span><span style="background-color:#fff0f0">      4. ethernetCsmacd
+</span><span style="background-color:#fff0f0">
+</span><span style="background-color:#fff0f0">    Order of preference if the interface doesn&#39;t support 64bit counters:
+</span><span style="background-color:#fff0f0">      1. type
+</span><span style="background-color:#fff0f0">      2. ethernetCsmacd
+</span><span style="background-color:#fff0f0">    &#34;&#34;&#34;</span>
+    templateName <span style="color:#333">=</span> self<span style="color:#333">.</span>getRRDTemplateName()
+
+    order <span style="color:#333">=</span> [<span style="background-color:#fff0f0">&#39;ethernetCsmacd&#39;</span>]
+    <span style="color:#080;font-weight:bold">if</span> templateName<span style="color:#333">.</span>endswith(<span style="background-color:#fff0f0">&#39;_64&#39;</span>):
+        order<span style="color:#333">.</span>insert(<span style="color:#00d;font-weight:bold">0</span>, <span style="background-color:#fff0f0">&#39;ethernetCsmacd_64&#39;</span>)
+        <span style="color:#080;font-weight:bold">if</span> templateName <span style="color:#000;font-weight:bold">not</span> <span style="color:#000;font-weight:bold">in</span> order:
+            order<span style="color:#333">.</span>insert(<span style="color:#00d;font-weight:bold">0</span>, templateName)
+            order<span style="color:#333">.</span>insert(<span style="color:#00d;font-weight:bold">2</span>, templateName[:<span style="color:#333">-</span><span style="color:#00d;font-weight:bold">3</span>])
+    <span style="color:#080;font-weight:bold">else</span>:
+        <span style="color:#080;font-weight:bold">if</span> templateName <span style="color:#000;font-weight:bold">not</span> <span style="color:#000;font-weight:bold">in</span> order:
+            order<span style="color:#333">.</span>insert(<span style="color:#00d;font-weight:bold">0</span>, templateName)
+
+    <span style="color:#080;font-weight:bold">for</span> name <span style="color:#000;font-weight:bold">in</span> order:
+        template <span style="color:#333">=</span> self<span style="color:#333">.</span>getRRDTemplateByName(name)
+        <span style="color:#080;font-weight:bold">if</span> template:
+            <span style="color:#080;font-weight:bold">return</span> [template]
+
+    <span style="color:#080;font-weight:bold">return</span> []</code></pre></div>
+<p>Basically, Zenoss will check if the ethernet interface is of 64-bit type, if it is then it will assign the ethernetCsmacd_64 template, otherwise it will use the ethernetCsmacd template as a default fallback.</p>
+
+<p>After discovering this, I proceeded to inspect the assigned template for the OpenStack compute node devices and the other devices where the graphs would display correctly. Sure enough, the interface type detected and assigned by Zenoss for the OpenStack compute node devices was ethernetCsmacd.</p>
+
+<p>And this is what explains everything. Since the OpenStack devices (located in <code>/Server/SSH/Linux/NovaHost</code>) are assigned the ethernetCsmacd template located in <code>/Server/SSH/Linux</code>, we cannot see any graphs because this template is <strong>BLANK</strong>. However, since for the other devices, the ethernetCsmacd_64 template is assigned, and this template is located in <code>/Devices</code> (which applies to all devices) and it has all the graphs we need, then this is why these devices were displaying these graphs.</p>
+
+<h2 id="implementing-a-solution">Implementing a Solution</h2>
+
+<p>A possible solution to this is to create a new custom ZenPack that applies all the datasources, datapoints, thresholds, and graphs from ethernetCsmacd in <code>/Devices</code> into ethernetCsmacd in <code>/Server/SSH/Linux/NovaHost</code>.</p>
+
+<p>So I proceeded to create a new ZenPack using zenpacklib and define everything that is already defined in <code>/Devices</code>&rsquo;s ethernetCsmacd, but now into <code>/Server/SSH/Linux/NovaHost</code>. These definitions are constructed inside the ZenPack&rsquo;s <code>zenpack.yaml</code> file.</p>
+
+<p>-&gt; I have uploaded this ZenPack to my <a href="https://github.com/BigChief45/ZenPacks.itri.EthernetCsmacd">GitHub</a> and you can browse the source code or just install it in your Zenoss Core to fix the issue. I am sure there are identical or similar ZenPacks out there to address this particular issue.</p>
+
+<p>After finishing the ZenPack and installing it, we can check that ethernetCsmacd has a new location <code>/Server/SSH/Linux/NovaHost</code> with all the elements needed. Our devices will now surely use this template since they both possess the same device class.</p>
+
+<p>If re-model our devices and check the Interfaces components, we can see that indeed we now have network interface graphs (Throughput, Packets, Errors) for our the OpenStack devices:</p>
+
+<p><img src="/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces_graphs.png" alt="Network Interfaces Graphs" /></p>
+
+<p>~&gt; <strong>UPDATE:</strong> It seems that the current latest version (2.1.2) of the LinuxMonitor ZenPack fixes this issue and adds the interface monitoring templates to the <code>/Server/Linux</code> device class, which consequently will also provide the template for the NovaHost class.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

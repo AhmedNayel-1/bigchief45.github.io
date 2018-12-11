@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Select2 With Simple Form in Rails &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Select2 With Simple Form in Rails</h1>
+  <time datetime=2017-08-14T00:00:00Z class="post-date">Mon, Aug 14, 2017</time>
+
+  <p><a href="https://select2.github.io/">Select2</a> is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.</p>
+
+<p>Recently while working on a Rails project, I was experiencing some problems when using Select2 and <a href="https://github.com/plataformatec/simple_form">Simple Form</a> in my view.</p>
+
+<p>In the view, I want to use Select2 to search for people in a <code>Person</code> table in the application&rsquo;s database. Select2 should use AJAX to hit a controller&rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).</p>
+
+<p>The controller action looks something like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">search</span>
+  <span style="color:#33b">@people</span> <span style="color:#333">=</span> <span style="color:#036;font-weight:bold">Person</span><span style="color:#333">.</span>all<span style="color:#333">.</span>where(<span style="background-color:#fff0f0">&#39;name LIKE ? OR last_name LIKE ?&#39;</span>,
+    <span style="background-color:#fff0f0">&#34;%</span><span style="background-color:#eee">#{</span>params<span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:q</span><span style="color:#333">]</span><span style="background-color:#eee">}</span><span style="background-color:#fff0f0">%&#34;</span>, <span style="background-color:#fff0f0">&#34;%</span><span style="background-color:#eee">#{</span>params<span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:q</span><span style="color:#333">]</span><span style="background-color:#eee">}</span><span style="background-color:#fff0f0">%&#34;</span>)
+
+  respond_to <span style="color:#080;font-weight:bold">do</span> <span style="color:#333">|</span><span style="color:#007020">format</span><span style="color:#333">|</span>
+    <span style="color:#007020">format</span><span style="color:#333">.</span>json { render <span style="color:#a60;background-color:#fff0f0">json</span>: <span style="color:#33b">@people</span><span style="color:#333">.</span>map { <span style="color:#333">|</span><span style="color:#007020">p</span><span style="color:#333">|</span> { <span style="color:#007020">id</span>: <span style="color:#007020">p</span><span style="color:#333">.</span>id, <span style="color:#a60;background-color:#fff0f0">full_name</span>: <span style="color:#007020">p</span><span style="color:#333">.</span>full_name } } }
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>As you can see, we are returning <code>full_name</code>, which is a model instance method that combines both name fields and returns it into a single string.</p>
+
+<p>Let&rsquo;s assume that the endpoint can return the following data:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  { <span style="color:#f00;background-color:#faa">id:</span> <span style="color:#f00;background-color:#faa">1,</span> <span style="color:#f00;background-color:#faa">full_name:</span> <span style="color:#070">&#34;Pablo Escobar&#34;</span> },
+  { <span style="color:#f00;background-color:#faa">id:</span> <span style="color:#f00;background-color:#faa">2,</span> <span style="color:#f00;background-color:#faa">full_name:</span> <span style="color:#070">&#34;Enrique Iglesias&#34;</span> }
+]</code></pre></div>
+<p>In my view, I use Simple Form association helper to create the field.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= f.association :plaintiffs, input_html: { &#39;data-endpoint&#39;: people_search_path, class: &#39;select2-field&#39; }</code></pre></div>
+<p>I then implement Select2 using CoffeScript like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-coffeescript" data-lang="coffeescript">$ <span style="color:#06b;font-weight:bold">-&gt;</span>
+  $(<span style="background-color:#fff0f0">&#39;.select2-field&#39;</span>).select2
+    <span style="color:#963">theme: </span><span style="background-color:#fff0f0">&#39;bootstrap&#39;</span>
+    <span style="color:#963">minimumInputLength: </span><span style="color:#00d;font-weight:bold">1</span>
+    <span style="color:#963">maximumInputLength: </span><span style="color:#00d;font-weight:bold">20</span>
+    <span style="color:#963">ajax:
+</span><span style="color:#963"></span>      <span style="color:#963">url: </span>$(<span style="background-color:#fff0f0">&#39;.select2-field&#39;</span>).data(<span style="background-color:#fff0f0">&#39;endpoint&#39;</span>)
+      <span style="color:#963">dataType: </span><span style="background-color:#fff0f0">&#39;json&#39;</span>
+      <span style="color:#963">delay: </span><span style="color:#00d;font-weight:bold">250</span>
+      <span style="color:#963">data: </span><span style="color:#06b;font-weight:bold">(params) -&gt;</span>
+        {
+          <span style="color:#963">q: </span>params.term
+          <span style="color:#963">page: </span>params.page
+        }
+
+      <span style="color:#963">processResults: </span><span style="color:#06b;font-weight:bold">(data) -&gt;</span>
+        {
+          <span style="color:#963">results: </span>$.map(data, <span style="color:#06b;font-weight:bold">(item) -&gt;</span>
+            {
+              <span style="color:#963">text: </span>item.full_name
+              <span style="color:#963">id: </span>item.id
+            }
+        )}</code></pre></div>
+<p>The problem was that after selecting the result, <strong>only the first name</strong> would appear in the field. In other words, only the part before the space in the full name.</p>
+
+<p><img src="/posts/select2-with-simple-form-in-rails/sf_issue.png" alt="Simple Form Token Issue" /></p>
+
+<p>Initially I thought this was a Select2 issue, but then I realized that it was actually a Simple Form issue. So I made this post specifically for future reference.</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>This solution is super simple. We need to add the <code>label_method</code> attribute to the Simple Form select field. Like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= f.association :plaintiffs, label_method: :full_name, value_method: :id, input_html: { &#39;data-endpoint&#39;: people_search_path, class: &#39;select2-field&#39; }</code></pre></div>
+<p>Note how I specify the <code>full_name</code> field of the returned JSON data. I also added <code>value_method</code> in the example above, but it is not necessary.</p>
+
+<p>The tokens should now look the way they were supposed to:</p>
+
+<p><img src="/posts/select2-with-simple-form-in-rails/correct_tokens.png" alt="Correct tokens" /></p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

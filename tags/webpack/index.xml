@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Webpack on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/webpack/</link>
+    <description>Recent content in Webpack on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/webpack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using Rails With Webpack in Cloud 9</title>
+      <link>http://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/</link>
+      <pubDate>Mon, 03 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/rails/webpacker&#34;&gt;rails/webpacker&lt;/a&gt; project allows integration of &lt;a href=&#34;https://webpack.github.io/&#34;&gt;Webpack&lt;/a&gt; with a Rails application. However, setting this up in a &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9&lt;/a&gt; development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-application&#34;&gt;Creating the Application&lt;/h2&gt;
+
+&lt;p&gt;We will first create a regular Rails application and then use the webpacker gem to install Webpack.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rails new webpack-app
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add the gem to &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Gemfile&lt;/span&gt;
+
+gem &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;github&lt;/span&gt;: &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Install Webpacker&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rails webpacker:install
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/debian-package-versioning/">Debian Package Versioning</a>
+  </h1>
+  <time datetime="2017-04-13T00:00:00Z" class="post-date">Thu, Apr 13, 2017</time>
+  <p>In a previous post I talked about <a href="/posts/managing-debian-package-dependencies.html">managing Debian package dependencies</a>. However I did not go into detail about the structure the versioning of packages must have.</p>
+
+<p>To recap, let&rsquo;s see how we can specify a specific package version of a dependency that our package needs:</p>
+
+<pre><code>Depends: erlang (&gt;= 1.2)
+</code></pre>
+
+<p>In the example above, the required version for erlang is simply <code>1.2</code> or greater. A package&rsquo;s version format however, can be a bit more complex than this.</p>
+
+<h2 id="version-format-and-components">Version Format and Components</h2>
+
+<p>The official format of a Debian package&rsquo;s version is:</p>
+
+<pre><code>[epoch:]upstream_version[-debian_revision]
+</code></pre>
+
+<p>Let&rsquo;s go into detail about each of the components in that format.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="http://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="http://aalvarez.me/tags/aptitude" class="label label-default">aptitude</a></li>
+  
+    <a href="http://aalvarez.me/tags/apt" class="label label-default">apt</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/debian-package-versioning/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/understanding-ceilometer-publishers/">Understanding Ceilometer Publishers</a>
+  </h1>
+  <time datetime="2017-04-11T00:00:00Z" class="post-date">Tue, Apr 11, 2017</time>
+  <p>Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer <strong>publishers</strong>. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.</p>
+
+<p>Publishers are specified in the <code>publishers</code> section for each pipeline that is defined in the <code>pipeline.yaml</code> and the <code>event_pipeline.yaml</code> files.</p>
+
+<p>Many different publishers are available. The following are the most common and important publishers:</p>
+
+<h3 id="gnocchi">Gnocchi</h3>
+
+<p><img src="http://gnocchi.xyz/_images/gnocchi-logo.jpg" alt="Gnocchi Logo" /></p>
+
+<p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/panko" class="label label-default">panko</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/understanding-ceilometer-publishers/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/">Reworking Ace&#39;s HAML Syntax Highlighting</a>
+  </h1>
+  <time datetime="2017-04-10T00:00:00Z" class="post-date">Mon, Apr 10, 2017</time>
+  <p><a href="https://github.com/ajaxorg/ace">Ace</a> is a great web text editor and the default editor for <a href="https://c9.io">Cloud 9 IDE</a>. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn&rsquo;t support correct highlighting of some HAML stuff such as HAML comments (which begin with <code>-#</code>) or block comments.</p>
+
+<p>This is how Ace&rsquo;s HAML syntax highlighting issues look like:</p>
+
+<p><img src="/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg" alt="HAML Highlighting Issues" /></p>
+
+<p>I proceeded to study Ace&rsquo;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state machine</a>. The source where this happens is found in <a href="https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js"><code>lib/ace/mode/haml_highlight_rules.js</code></a></p>
+
+<h2 id="defining-states">Defining States</h2>
+
+<p>A few states have to be defined to represent where the lexer currently &ldquo;stands&rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.</p>
+
+<p>In Ace, all syntax highlighting lexers must begin with a <code>start</code> state. From this state we can switch to other defined states. The example below shows how we begin from the <code>start</code> state and can jump to a comment block state when the code matches a regular expression that represents this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">this</span>.$rules <span style="color:#333">=</span> {
+    <span style="background-color:#fff0f0">&#34;start&#34;</span><span style="color:#333">:</span> [
+        {
+            token<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;comment.block&#34;</span>, <span style="color:#888">// multiline HTML comment
+</span><span style="color:#888"></span>            regex<span style="color:#333">:</span> <span style="color:#000;background-color:#fff0ff">/^\/$/</span>,
+            next<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;comment&#34;</span>
+        },
+        {
+            token<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;comment.block&#34;</span>, <span style="color:#888">// multiline HAML comment
+</span><span style="color:#888"></span>            regex<span style="color:#333">:</span> <span style="color:#000;background-color:#fff0ff">/^\-#$/</span>,
+            next<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;comment&#34;</span>
+},
+
+<span style="color:#888">/* ... */</span>
+</code></pre></div>
+<p>Notice that we define 2 different comment types, since HAML <a href="http://haml.info/docs/yardoc/file.REFERENCE.html">supports</a> HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as <code>comment.block</code> <strong>tokens</strong>, and will also make the lexer jump to a <code>comment</code> state, denoted by the <code>next</code> keyword.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/haml" class="label label-default">haml</a></li>
+  
+    <a href="http://aalvarez.me/tags/ace" class="label label-default">ace</a></li>
+  
+    <a href="http://aalvarez.me/tags/open-source" class="label label-default">open source</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/cloud9" class="label label-default">cloud9</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/reworking-ace-s-haml-syntax-highlighting/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/understanding-ceilometer-transformers/">Understanding Ceilometer Transformers</a>
+  </h1>
+  <time datetime="2017-04-07T00:00:00Z" class="post-date">Fri, Apr 7, 2017</time>
+  <p>Ceilometer <strong>transformers</strong> are part of the Ceilometer <strong>pipeline</strong>, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for <strong>samples</strong> and a pipeline for <strong>events</strong>.</p>
+
+<p>Configurations for these pipelines can be found in <code>/etc/ceilometer/pipeline.yaml</code> and <code>/etc/ceilometer/event_pipeline.yaml</code>.</p>
+
+<p>Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.</p>
+
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline" /></p>
+
+<p>Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Name of transformer</th>
+<th align="center">Reference name for configuration</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Accumulator</td>
+<td align="center">accumulator</td>
+</tr>
+
+<tr>
+<td align="left">Aggregator</td>
+<td align="center">aggregator</td>
+</tr>
+
+<tr>
+<td align="left">Arithmetic</td>
+<td align="center">arithmetic</td>
+</tr>
+
+<tr>
+<td align="left">Rate of change</td>
+<td align="center">rate_of_change</td>
+</tr>
+
+<tr>
+<td align="left">Unit conversion</td>
+<td align="center">unit_conversion</td>
+</tr>
+
+<tr>
+<td align="left">Delta</td>
+<td align="center">delta</td>
+</tr>
+</tbody>
+</table>
+
+<p>Let&rsquo;s take a more detailed look into the accumulator transformer.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/cloudcomputing" class="label label-default">cloudcomputing</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/understanding-ceilometer-transformers/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/ceilometer-and-openstack-notifications/">Ceilometer and OpenStack Notifications</a>
+  </h1>
+  <time datetime="2017-04-06T00:00:00Z" class="post-date">Thu, Apr 6, 2017</time>
+  <p>Ceilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are <strong>notifications</strong>, which will be explained in this post.</p>
+
+<h2 id="openstack-notifications">OpenStack Notifications</h2>
+
+<p>All OpenStack services (such as Nova Compute, Neutron, etc.) send notifications about executed operations or the state of the system. Many of these notifications carry information that can be metered such as <strong>CPU time</strong> of a virtual machine instance created by the compute service.</p>
+
+<p>OpenStack services send these notifications through an AMQP message queue. However, not all these notifications are consumed by the Telemetry service, as the intention is only to capture the billable events and notifications that can be used for monitoring or profiling purposes. The notification agent filters by the <strong>event type</strong>. Each notification message contains the event type.</p>
+
+<p>Here is a table with a few examples:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">OpenStack Service</th>
+<th align="center">Event types</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">OpenStack Compute</td>
+<td align="center"><code>scheduler.run_instance.scheduled</code>, <code>scheduler.select_destinations</code>, <code>compute.instance.*</code></td>
+</tr>
+
+<tr>
+<td align="center">OpenStack Image</td>
+<td align="center"><code>image.update</code>, <code>image.upload</code>,  <code>image.delete</code>, <code>image.send</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>In Ceilometer, the <strong>notification agent</strong> is reponsible for consuming these notifications from the AMQP message bus, and then transforming them into <strong>events</strong> and <strong>samples</strong>.</p>
+
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/2-1-collection-notification.png" alt="Notifications Collection" /></p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/cloudcomputing" class="label label-default">cloudcomputing</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/ceilometer-and-openstack-notifications/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/9/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/11/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

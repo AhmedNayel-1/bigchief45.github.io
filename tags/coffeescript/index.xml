@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Coffeescript on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/coffeescript/</link>
+    <description>Recent content in Coffeescript on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 12 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/coffeescript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Easy Notification System in Rails Part 3</title>
+      <link>http://aalvarez.me/posts/easy-notification-system-in-rails-part-3/</link>
+      <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/easy-notification-system-in-rails-part-3/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;http://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;part 1&lt;/a&gt; and &lt;a href=&#34;http://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In this post, we will be sending automatic e-emails every time notifications are created.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-mailer&#34;&gt;Creating the Mailer&lt;/h2&gt;
+
+&lt;p&gt;We will work with one &lt;a href=&#34;http://guides.rubyonrails.org/action_mailer_basics.html&#34;&gt;mailer&lt;/a&gt; that will send e-mails for every notification that is created. We can generate our mailer with this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rails g mailer NotificationsMailer
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&amp;rsquo;ve been using &lt;strong&gt;comments&lt;/strong&gt; and &lt;strong&gt;posts&lt;/strong&gt; as examples.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Easy Notification System in Rails Part 2</title>
+      <link>http://aalvarez.me/posts/easy-notification-system-in-rails-part-2/</link>
+      <pubDate>Tue, 05 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/easy-notification-system-in-rails-part-2/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Read Part 1 of this series &lt;a href=&#34;http://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.&lt;/p&gt;
+
+&lt;p&gt;In this post we will be adding more functionality to our notification system.s&lt;/p&gt;
+
+&lt;h2 id=&#34;mark-as-read-feature&#34;&gt;Mark as Read Feature&lt;/h2&gt;
+
+&lt;p&gt;We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For a single notification, it should be marked &lt;em&gt;as read&lt;/em&gt; when it is clicked from the list of notifications.&lt;/li&gt;
+&lt;li&gt;For all notifications, they should be marked as read when a specific button is pressed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;setting-up-the-routes&#34;&gt;Setting up the Routes&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# config/routes.rb&lt;/span&gt;
+&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;application&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;routes&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;draw &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
+  &lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;
+
+  resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:notifications&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;only&lt;/span&gt;: &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
+    post &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:mark_as_read&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;on&lt;/span&gt;: &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:collection&lt;/span&gt;
+    post &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:mark_as_read&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;on&lt;/span&gt;: &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:member&lt;/span&gt;
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Easy Notification System in Rails</title>
+      <link>http://aalvarez.me/posts/easy-notification-system-in-rails/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/easy-notification-system-in-rails/</guid>
+      <description>&lt;p&gt;Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.&lt;/p&gt;
+
+&lt;p&gt;This post is heavily inspired by &lt;a href=&#34;https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1&#34;&gt;Chris Oliver&amp;rsquo;s In-App Navbar Notifications tutorial&lt;/a&gt;, with a few personal changes and additions.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;http://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;models-and-routes&#34;&gt;Models and Routes&lt;/h2&gt;
+
+&lt;p&gt;Before starting with the models, lets quickly define the application resources in our routes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# config/routes.rb&lt;/span&gt;
+&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;application&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;routes&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;draw &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
+
+  devise_for &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:users&lt;/span&gt;
+
+  resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:posts&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
+    resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:comments&lt;/span&gt;
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+
+  resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:notifications&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;only&lt;/span&gt;: &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
+
+&lt;p&gt;We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here is an explanation for some of the fields for the above model:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;recipient_id&lt;/code&gt;: Represents the user in your application which will receive the notification.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;actor_id&lt;/code&gt;: Represents the user in your application which &lt;em&gt;triggered&lt;/em&gt; the notification.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;read_at&lt;/code&gt;: The time when the notification was read. A value of &lt;code&gt;nil&lt;/code&gt; is used for unread notifications.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;notifiable_id&lt;/code&gt;: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;notifiable_type&lt;/code&gt;: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&amp;rsquo;s class.&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Select2 With Simple Form in Rails</title>
+      <link>http://aalvarez.me/posts/select2-with-simple-form-in-rails/</link>
+      <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/select2-with-simple-form-in-rails/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://select2.github.io/&#34;&gt;Select2&lt;/a&gt; is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.&lt;/p&gt;
+
+&lt;p&gt;Recently while working on a Rails project, I was experiencing some problems when using Select2 and &lt;a href=&#34;https://github.com/plataformatec/simple_form&#34;&gt;Simple Form&lt;/a&gt; in my view.&lt;/p&gt;
+
+&lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&amp;rsquo;s database. Select2 should use AJAX to hit a controller&amp;rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
+
+&lt;p&gt;The controller action looks something like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;search&lt;/span&gt;
+  &lt;span style=&#34;color:#33b&#34;&gt;@people&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;all&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;name LIKE ? OR last_name LIKE ?&amp;#39;&lt;/span&gt;,
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;#{&lt;/span&gt;params&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;%&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;#{&lt;/span&gt;params&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;%&amp;#34;&lt;/span&gt;)
+
+  respond_to &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
+    &lt;span style=&#34;color:#007020&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;json { render &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;json&lt;/span&gt;: &lt;span style=&#34;color:#33b&#34;&gt;@people&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;map { &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt; { &lt;span style=&#34;color:#007020&#34;&gt;id&lt;/span&gt;: &lt;span style=&#34;color:#007020&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;id, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;full_name&lt;/span&gt;: &lt;span style=&#34;color:#007020&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;full_name } } }
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

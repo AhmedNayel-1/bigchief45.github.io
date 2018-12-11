@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ci/Cd on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/ci-cd/</link>
+    <description>Recent content in Ci/Cd on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 30 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/ci-cd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building a Django Continuous Integration and Delivery Pipeline to AWS</title>
+      <link>http://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/</link>
+      <pubDate>Tue, 30 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/</guid>
+      <description>&lt;p&gt;Building a CI/CD (Continuous Integration / Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.&lt;/p&gt;
+
+&lt;p&gt;In this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to &lt;a href=&#34;https://www.heroku.com/&#34;&gt;Heroku&lt;/a&gt;. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.&lt;/p&gt;
+
+&lt;p&gt;The pipeline will work as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Code will be pushed to source control repository. For this article, I will use Github.&lt;/li&gt;
+&lt;li&gt;Project will be built and tested in a CI job at &lt;a href=&#34;https://travis-ci.com/&#34;&gt;TravisCI&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;TravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We will be using both the &lt;strong&gt;&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html&#34;&gt;ElasticBeanstalk CLI (ebcli)&lt;/a&gt;&lt;/strong&gt; and the &lt;strong&gt;AWS ElasticBeanstalk Console&lt;/strong&gt; to achieve this.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

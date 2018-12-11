@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Understanding oslo_config in OpenStack &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Understanding oslo_config in OpenStack</h1>
+  <time datetime=2017-04-18T00:00:00Z class="post-date">Tue, Apr 18, 2017</time>
+
+  <p>The OpenStack <a href="https://wiki.openstack.org/wiki/Oslo">Oslo</a> library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.</p>
+
+<p>In this post I want to go over <a href="https://wiki.openstack.org/wiki/Oslo/Config">oslo_config</a>. This library helps with parsing of <strong>options</strong> found in configuration files or command line arguments.</p>
+
+<h2 id="understanding-options">Understanding Options</h2>
+
+<p>An option is defined using the <code>Opt</code> class or one of its sub-classes, from the <code>cfg</code> module:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">oslo_config</span> <span style="color:#080;font-weight:bold">import</span> cfg
+
+common_opts <span style="color:#333">=</span> [
+    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;bind_host&#39;</span>,
+               default<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;0.0.0.0&#39;</span>,
+               help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;IP address to listen on.&#39;</span>),
+    cfg<span style="color:#333">.</span>Opt(<span style="background-color:#fff0f0">&#39;bind_port&#39;</span>,
+            <span style="color:#007020">type</span><span style="color:#333">=</span>PortType,
+            default<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">9292</span>,
+            help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Port number to listen on.&#39;</span>)
+]</code></pre></div>
+<p>In the example above we can see that we are using <code>Opt</code> and <code>StrOpt</code>, one of its sub-classes. You might notice that the second option&rsquo;s constructor has a <code>type=PortType</code> argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises <code>ValueError</code> if the value cannot be converted. The different types available can be found in the <code>types</code> module:</p>
+
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">oslo_config</span> <span style="color:#080;font-weight:bold">import</span> types
+
+PortType <span style="color:#333">=</span> types<span style="color:#333">.</span>Integer(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">65535</span>)</code></pre></div>
+<p>However, the predefined option sub-classes already set the option <code>type</code>. For example, the <code>StrOpt</code> option class above already sets the type to <code>oslo_config.types.String</code>. This table shows some relations between types and options:</p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Option</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>oslo_config.types.String</code></td>
+<td><code>oslo_config.cfg.StrOpt</code></td>
+</tr>
+
+<tr>
+<td><code>oslo_config.types.String</code></td>
+<td><code>oslo_config.cfg.SubCommandOpt</code></td>
+</tr>
+
+<tr>
+<td><code>oslo_config.types.Boolean</code></td>
+<td><code>oslo_config.cfg.BoolOpt</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="example-gnocchi-dispatcher-options">Example: Gnocchi Dispatcher Options</h3>
+
+<p>A series of options for Gnocchi using <code>oslo_config</code> can be found in the Ceilometer source code at <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/dispatcher/gnocchi_opts.py"><code>ceilometer/dispatcher/gnocchi_opts.py</code></a>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">oslo_config</span> <span style="color:#080;font-weight:bold">import</span> cfg
+
+dispatcher_opts <span style="color:#333">=</span> [
+    cfg<span style="color:#333">.</span>BoolOpt(<span style="background-color:#fff0f0">&#39;filter_service_activity&#39;</span>,
+                default<span style="color:#333">=</span>True,
+                help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Filter out samples generated by Gnocchi &#39;</span>
+                <span style="background-color:#fff0f0">&#39;service activity&#39;</span>),
+    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;filter_project&#39;</span>,
+               default<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi&#39;</span>,
+               help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Gnocchi project used to filter out samples &#39;</span>
+               <span style="background-color:#fff0f0">&#39;generated by Gnocchi service activity&#39;</span>),
+    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;archive_policy&#39;</span>,
+               deprecated_for_removal<span style="color:#333">=</span>True,
+               deprecated_reason<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Archive Policy Rule must be &#39;</span>
+               <span style="background-color:#fff0f0">&#39;setup on Gnocchi side instead&#39;</span>,
+               help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;The archive policy to use when the dispatcher &#39;</span>
+               <span style="background-color:#fff0f0">&#39;create a new metric.&#39;</span>),
+    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;resources_definition_file&#39;</span>,
+               default<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi_resources.yaml&#39;</span>,
+               help<span style="color:#333">=</span>(<span style="background-color:#fff0f0">&#39;The Yaml file that defines mapping between samples &#39;</span>
+                     <span style="background-color:#fff0f0">&#39;and gnocchi resources/metrics&#39;</span>)),
+    cfg<span style="color:#333">.</span>FloatOpt(<span style="background-color:#fff0f0">&#39;request_timeout&#39;</span>, default<span style="color:#333">=</span><span style="color:#60e;font-weight:bold">6.05</span>, <span style="color:#007020">min</span><span style="color:#333">=</span><span style="color:#60e;font-weight:bold">0.0</span>,
+                 help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Number of seconds before request to gnocchi times out&#39;</span>),
+]</code></pre></div>
+<p>We can see that options can be given a default value (must match its type), help messages, minimum values, etc.</p>
+
+<p>The example above shows another interesting concept: <a href="https://docs.openstack.org/developer/oslo.config/cfg.html#option-deprecation"><strong>option deprecation</strong></a>. We can specify the reason <em>why</em> an option is being deprecated, and if it will be removed after deprecation.</p>
+
+<h2 id="option-definitions">Option Definitions</h2>
+
+<p>As we learned before, the base class for all configuration options is the <code>Opts</code> class. The only required parameter for this class is the option&rsquo;s <code>name</code>. However, the following is a list of all parameters that can be passed, some of then already seen in the example above:</p>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>the option’s name</td>
+</tr>
+
+<tr>
+<td><code>type</code></td>
+<td>the option’s type. Must be a callable object that takes string and returns converted and validated value</td>
+</tr>
+
+<tr>
+<td><code>dest</code></td>
+<td>the name of the corresponding ConfigOpts property</td>
+</tr>
+
+<tr>
+<td><code>short</code></td>
+<td>a single character CLI option name</td>
+</tr>
+
+<tr>
+<td><code>default</code></td>
+<td>the default value of the option</td>
+</tr>
+
+<tr>
+<td><code>positional</code></td>
+<td><code>True</code> if the option is a positional CLI argument</td>
+</tr>
+
+<tr>
+<td><code>metavar</code></td>
+<td>the option argument to show in <code>–help</code></td>
+</tr>
+
+<tr>
+<td><code>help</code></td>
+<td>an explanation of how the option is used</td>
+</tr>
+
+<tr>
+<td><code>secret</code></td>
+<td>true if the value should be obfuscated in log output</td>
+</tr>
+
+<tr>
+<td><code>required</code></td>
+<td><code>True</code> if a value must be supplied for this option</td>
+</tr>
+
+<tr>
+<td><code>deprecated_name</code></td>
+<td>deprecated name option. Acts like an alias</td>
+</tr>
+
+<tr>
+<td><code>deprecated_group</code></td>
+<td>the group containing a deprecated alias</td>
+</tr>
+
+<tr>
+<td><code>deprecated_opts</code></td>
+<td>list of <code>DeprecatedOpt</code></td>
+</tr>
+
+<tr>
+<td><code>sample_default</code></td>
+<td>a default string for sample config files</td>
+</tr>
+
+<tr>
+<td><code>deprecated_for_removal</code></td>
+<td>indicates whether this opt is planned for removal in a future release</td>
+</tr>
+
+<tr>
+<td><code>deprecated_reason</code></td>
+<td>indicates why this opt is planned for removal in a future release. Silently ignored if <code>deprecated_for_removal</code> is <code>False</code></td>
+</tr>
+
+<tr>
+<td><code>deprecated_since</code></td>
+<td>indicates which release this opt was deprecated in. Accepts any string, though valid version strings are encouraged. Silently ignored if <code>deprecated_for_removal</code> is <code>False</code></td>
+</tr>
+
+<tr>
+<td><code>mutable</code></td>
+<td><code>True</code> if this option may be reloaded</td>
+</tr>
+
+<tr>
+<td><code>advanced</code></td>
+<td>bool True/False value if this option has advanced usage and is not normally used by the majority of users</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://docs.openstack.org/developer/oslo.config/">oslo_config documentation</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Custom Notification Action Types in Zenoss &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Custom Notification Action Types in Zenoss</h1>
+  <time datetime=2017-05-09T00:00:00Z class="post-date">Tue, May 9, 2017</time>
+
+  <p>In a <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how we could create <em>command</em> type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a <a href="/posts/custom-triggers-and-notifications-in-a-zenpack.html">more recent post</a> I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.</p>
+
+<p>In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.</p>
+
+<h2 id="zenoss-default-notification-actions">Zenoss Default Notification Actions</h2>
+
+<p>By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:</p>
+
+<p><img src="/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg" alt="Zenoss Default Actions" /></p>
+
+<p>These action types are:</p>
+
+<ul>
+<li><strong>Command</strong>: Runs an executable script. Discussed in one of my <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous posts</a>.</li>
+<li><strong>Email</strong>: Sends an e-mail to a user.</li>
+<li><strong>Page</strong>: Sends a message to a user&rsquo;s <a href="https://en.wikipedia.org/wiki/Pager">pager</a>, also known as <em>beeper</em>. Probably safe to say that this is not used by anyone anymore.</li>
+<li><strong>Syslog</strong>: Logs a message to <a href="https://en.wikipedia.org/wiki/Syslog">syslog</a></li>
+<li><strong>SNMP Trap</strong>: Sends an SNMP trap.</li>
+</ul>
+
+<p>All these notifications are sent when an event matches a trigger rule.</p>
+
+<h2 id="creating-the-new-action">Creating the New Action</h2>
+
+<p>Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!</p>
+
+<h3 id="creating-the-interface">Creating the Interface</h3>
+
+<p>In our ZenPack&rsquo;s top directory, we create a file called <code>interfaces.py</code>. In this file we will define the contents (fields in the content pane) of the action:</p>
+
+<p><strong>interfaces.py</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> Interface
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.interfaces.actions</span> <span style="color:#080;font-weight:bold">import</span> IActionContentInfo
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.interfaces</span> <span style="color:#080;font-weight:bold">import</span> IFacade
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.form</span> <span style="color:#080;font-weight:bold">import</span> schema
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.utils</span> <span style="color:#080;font-weight:bold">import</span> ZuulMessageFactory <span style="color:#080;font-weight:bold">as</span> _t
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">textwrap</span>
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ISmsActionContentInfo</span>(IActionContentInfo):
+    cellNumber <span style="color:#333">=</span> schema<span style="color:#333">.</span>TextLine(
+        title <span style="color:#333">=</span> _t(<span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;Cellphone Number&#39;</span>),
+        order<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">90</span>,
+    )
+
+    message_body <span style="color:#333">=</span> schema<span style="color:#333">.</span>Text(
+        title <span style="color:#333">=</span> _t(<span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;Message Body&#39;</span>),
+        description <span style="color:#333">=</span> _t(<span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;The content of the SMS message&#39;</span>),
+        order <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">100</span>,
+        default <span style="color:#333">=</span> textwrap<span style="color:#333">.</span>dedent(text <span style="color:#333">=</span> <span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;&#39;&#39;
+</span><span style="background-color:#fff0f0">            Device: ${evt/device}
+</span><span style="background-color:#fff0f0">            Component: ${evt/component}
+</span><span style="background-color:#fff0f0">            Severity: ${evt/severity}
+</span><span style="background-color:#fff0f0">            Time: ${evt/lastTime}
+</span><span style="background-color:#fff0f0">            Message:
+</span><span style="background-color:#fff0f0">            ${evt/message}
+</span><span style="background-color:#fff0f0">            &#39;&#39;&#39;</span>)
+    )</code></pre></div>
+<p>Very simple. We are only requiring two fields, the mobile number and the message&rsquo;s body, which I actually copied from the e-mail action. You can see that the message body makes use of TALES expression to obtain the data from the event (<code>evt</code>).</p>
+
+<h3 id="information-adapter">Information Adapter</h3>
+
+<p>Next we will create the information adapter that will import the interface we just created. The adapter will then be registered using a <code>configure.zcml</code> file. In the ZenPack&rsquo;s top directory, we create a file called <code>info.py</code>:</p>
+
+<p><strong>info.py</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> implements
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.infos.actions</span> <span style="color:#080;font-weight:bold">import</span> ActionContentInfo
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.infos.actions</span> <span style="color:#080;font-weight:bold">import</span> ActionFieldProperty
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.andres.Sms.interfaces</span> <span style="color:#080;font-weight:bold">import</span> ISmsActionContentInfo
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">SmsActionContentInfo</span>(ActionContentInfo):
+    implements(ISmsActionContentInfo)
+
+    cellNumber <span style="color:#333">=</span> ActionFieldProperty(ISmsActionContentInfo, <span style="background-color:#fff0f0">&#39;cellNumber&#39;</span>)
+    message_body <span style="color:#333">=</span> ActionFieldProperty(ISmsActionContentInfo, <span style="background-color:#fff0f0">&#39;message_body&#39;</span>)</code></pre></div>
+<p>Notice that we are using the ZenPack&rsquo;s (the ZenPack we are actually working with) full namespace to import the interface we created previously. The adapter will implement this interface and define the fields as <code>ActionFieldProperty</code> fields.</p>
+
+<h3 id="action-logic">Action Logic</h3>
+
+<p>Now we need to code the action&rsquo;s logic, that is, what the notification will actually <em>do</em> once it&rsquo;s triggered. Since we are creating a SMS action, then this would be the part where we actually send the SMS message somehow. For this example we will not actually send any SMS message. Intead, we will go through how we can code this action&rsquo;s logic.</p>
+
+<p>Let&rsquo;s create a directory called <code>actions</code> in our ZenPack&rsquo;s top directory. Inside this new directory, create a blank <code>__init__.py</code> file and then create a Python file for the action&rsquo;s logic. For this example, I am creating a file called <code>sms.py</code>.</p>
+
+<p>Let&rsquo;s first go over the imports:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
+log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.useraction.actions&#39;</span>)
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> implements
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.interfaces</span> <span style="color:#080;font-weight:bold">import</span> IAction, IProvidesEmailAddresses
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.actions</span> <span style="color:#080;font-weight:bold">import</span> IActionBase, TargetableAction
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.actions</span> <span style="color:#080;font-weight:bold">import</span> processTalSource, _signalToContextDict
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.guid.guid</span> <span style="color:#080;font-weight:bold">import</span> GUIDManager
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.andres.Sms.interfaces</span> <span style="color:#080;font-weight:bold">import</span> ISmsActionContentInfo</code></pre></div>
+<p>Nothing new. Notice that we are again importing the interface we previously defined.</p>
+
+<p>Now let&rsquo;s go over the custom action class that will inherit from <code>IActionBase</code> and <code>TargetableAction</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># ...</span>
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">SmsAction</span>(IActionBase, TargetableAction):
+    implements(IAction)
+
+    <span style="color:#007020">id</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;sms&#39;</span>
+    name <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;SMS&#39;</span>
+    actionContentInfo <span style="color:#333">=</span> ISmsActionContentInfo
+
+    <span style="color:#888"># ...</span></code></pre></div>
+<p>The <code>name</code> field is the actual string that will be shown in the dropdown menu in the user interface. The <code>actionContentInfo</code> represents the content shown in the <em>content</em> tab. Here we are simply assigning the content we defined in <code>interface.py</code>.</p>
+
+<p>Now let&rsquo;s see what methods we should add to this class:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">SmsAction</span>(IActionBase, TargetableAction):
+    <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> __init__(self):
+        <span style="color:#007020">super</span>(SmsAction, self)<span style="color:#333">.</span>__init__()
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">setupAction</span>(self, dmd):
+        self<span style="color:#333">.</span>guidManager <span style="color:#333">=</span> GUIDManager(dmd)
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">execute</span>(self, notification, signal):
+        log<span style="color:#333">.</span>debug(<span style="background-color:#fff0f0">&#39;Executing {0} action&#39;</span><span style="color:#333">.</span>format(self<span style="color:#333">.</span>name))
+        self<span style="color:#333">.</span>setupAction(notification<span style="color:#333">.</span>dmd)
+
+        data <span style="color:#333">=</span> _signalToContextDict(
+            signal,
+            self<span style="color:#333">.</span>options<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;zopeurl&#39;</span>),
+            notification,
+            self<span style="color:#333">.</span>guidManager
+        )
+
+        <span style="color:#888"># Process the message body first</span>
+        message_body <span style="color:#333">=</span> processTalSource(notification<span style="color:#333">.</span>content[<span style="background-color:#fff0f0">&#39;message_body&#39;</span>], <span style="color:#333">**</span>data)
+
+        <span style="color:#888"># Call the actual SMS method here</span>
+        sendSms(message_body, notification<span style="color:#333">.</span>content[<span style="background-color:#fff0f0">&#39;cellNumber&#39;</span>])
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">updateContent</span>(self, content<span style="color:#333">=</span>None, data<span style="color:#333">=</span>None):
+        updates <span style="color:#333">=</span> <span style="color:#007020">dict</span>()
+
+        properties <span style="color:#333">=</span> [
+            <span style="background-color:#fff0f0">&#39;cellNumber&#39;</span>,
+            <span style="background-color:#fff0f0">&#39;message_body&#39;</span>,
+        ]
+
+        <span style="color:#080;font-weight:bold">for</span> k <span style="color:#000;font-weight:bold">in</span> properties:
+            updates[k] <span style="color:#333">=</span> data<span style="color:#333">.</span>get(k)
+
+        content<span style="color:#333">.</span>update(updates)</code></pre></div>
+<p>So the method above that peaks our interest is <code>execute()</code>. It is here where we process the message body (because it contains TALES expressions), and send the SMS message with a magic method, passing the message body and the cellphone number. Notice how these fields are accessed using <code>notification.content['key']</code>.</p>
+
+<p>=&gt; Once everything is finished and the ZenPack is installed. Check the <code>zenactiond.log</code> log file for logs related to this action to make sure that the notification is being triggered.</p>
+
+<p>Obviously the above <code>sendSms()</code> method doesn&rsquo;t really exist. But suppose we were using this method provided by a Python client that sends SMS messages using a special service (like <a href="https://www.twilio.com/">Twilio</a>), then we could place this client under the <code>/lib</code> directory in the ZenPack&rsquo;s top directory. We can then add another import to <code>sms.py</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.andres.Sms.lib.twiliosms</span> <span style="color:#080;font-weight:bold">import</span> sendSms</code></pre></div>
+<p>You get the idea.</p>
+
+<h3 id="registering-the-action">Registering the Action</h3>
+
+<p>In other posts I&rsquo;ve talked about how browser resources and templates are registered through the <code>configure.zcml</code> file. In this case we will also register the adapter and the action&rsquo;s logic file so that the front-end (ExtJS) knows how to interact with it.</p>
+
+<p><strong>configure.zcml</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#070">&lt;configure</span>
+    <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
+    <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#070">&gt;</span>
+
+    <span style="color:#888">&lt;!-- Includes: Browser Configuration --&gt;</span>
+    <span style="color:#070">&lt;utility</span>
+      <span style="color:#00c">factory=</span><span style="background-color:#fff0f0">&#34;.actions.sms.SmsAction&#34;</span>
+      <span style="color:#00c">provides=</span><span style="background-color:#fff0f0">&#34;Products.ZenModel.interfaces.IAction&#34;</span>
+      <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;sms&#34;</span>
+      <span style="color:#070">/&gt;</span>
+
+    <span style="color:#070">&lt;adapter</span>
+      <span style="color:#00c">provides=</span><span style="background-color:#fff0f0">&#34;.interfaces.ISmsActionContentInfo&#34;</span>
+      <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;Products.ZenModel.NotificationSubscription.NotificationSubscription&#34;</span>
+      <span style="color:#00c">factory=</span><span style="background-color:#fff0f0">&#34;.info.SmsActionContentInfo&#34;</span>
+      <span style="color:#070">/&gt;</span>
+
+<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+<p>At this point you can proceed to install the ZenPack and restart Zenoss. Afterwards you can navigate to <em>Events &gt; Triggers &gt; Notifications</em>, create a new notification of SMS type and fill in or change the default contents:</p>
+
+<p><img src="/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="SMS Action" /></p>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://github.com/ssplatt/slack-zenoss">Zenoss Slack ZenPack</a></li>
+<li><a href="https://github.com/jregovic/ZenPacks.community.HipChat">ZenPacks.community.HipChat</a></li>
+<li><a href="/posts/triggering-commands-from-events-in-zenoss.html"><em>Triggering Commands From Events in Zenoss</em></a></li>
+<li><a href="/posts/custom-triggers-and-notifications-in-a-zenpack.html"><em>Custom Triggers and Notifications in a ZenPack</em></a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpack" class="label label-default">zenpack</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

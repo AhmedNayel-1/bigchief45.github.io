@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Monitoring CPU Utilization in Zenoss &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Monitoring CPU Utilization in Zenoss</h1>
+  <time datetime=2016-11-04T00:00:00Z class="post-date">Fri, Nov 4, 2016</time>
+
+  <p>While taking a look at the CPU Utilization graphs offered Zenoss Core&rsquo;s <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
+
+<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
+
+<p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.</p>
+
+<p>Browsing at the <em>Device (/Server/SSH/Linux)</em> monitoring template quickly reveals the data point responsible for this value, <code>ssCpuIdle.ssCpuIdle</code>. This data point has a <a href="2016-11-03-zenoss-monitoring-template-data-points.html">Python alias</a> responsible for rendering the CPU percentage:</p>
+
+<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_idle_dp.jpg" alt="ssCpuIdle Data Point alias" /></p>
+
+<p>The formula for this alias is:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">__EVAL:<span style="color:#007020">str</span>(<span style="color:#007020">len</span>(here<span style="color:#333">.</span>hw<span style="color:#333">.</span>cpus())) <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;,/,100,EXC,-&#39;</span></code></pre></div>
+<p>The above formula uses a combination of Python to generate a string in <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation (RPN)</a> format, which is the format that <a href="http://oss.oetiker.ch/rrdtool/">rrdtool</a> (the tool responsible for generating the graphs) uses.</p>
+
+<p>Strangely the <code>RPN</code> field in the graph point appears to be blank:</p>
+
+<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_idle_gp.jpg" alt="ssCpuIdle Graph Point RPN" /></p>
+
+<p>We could easily fix the issue by adding a value to this <code>RPN</code> field, for example:</p>
+
+<pre><code>16, /
+</code></pre>
+
+<p>Which means to divide the data point&rsquo;s value by 16 (# of cores). This would reduce the <code>1500%</code> value to something around <code>99%</code>. However this solution is not optimal because you are hardcoding the number of cores in the field.</p>
+
+<h2 id="linux-monitor-v2-0-6">Linux Monitor v2.0.6</h2>
+
+<p>Interestingly, v2.0.6 of Linux Monitor ZenPack was released just <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor"><strong>3 days ago</strong></a>. And you might be wondering why I am still even talking about v1.2.1 ? The reason is because this is the default Linux Monitor ZenPack that the Zenoss Core autodeploy script for Ubuntu uses.</p>
+
+<p>Anyways, I decided to give this new version a try and see if it solves the issue. After installing the ZenPack and browsing the device&rsquo;s CPU Utilization graph, I find this:</p>
+
+<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_linux_monitor_2.jpg" alt="CPU Utilization with Linux Monitor 2" /></p>
+
+<p>The values have indeed been reduced. However, it seems that <em><strong>Idle</strong></em> has been replaced by <em><strong>Busy</strong></em>? Also, the value doesn&rsquo;t really match to the expected one (~<code>99%</code>).</p>
+
+<p>A glance of the same monitoring template for this version reveals a change of data points: <code>ssCpuIdle</code> being replaced by <code>ssCpuIdlePerCpu</code>. The <code>cpu___pct</code> alias <em><strong>and</strong></em> the graph point RPN now use the following formula:</p>
+
+<pre><code>100,EXC,-,0,MAX
+</code></pre>
+
+<p>At this point I felt that this new ZenPack version wasn&rsquo;t making things more clear as I thought it would. After some research, I found that apparently CPU Utilization measuring is not a simple subject.</p>
+
+<p>According to a user in <a href="http://monitoringartist.github.io/community.zenoss.org/message/63115.html">Zenoss forum discussion</a>:</p>
+
+<blockquote>
+<p><em>CPU utilization is very very tricky. It starts with the fact that I&rsquo;ve yet to see a consensus as to how you should even calculate it (just at the OS level). There are at least 2 sets of OIDs you could use, and you have to take number of cores into account. Doesn&rsquo;t help that different OSs do it differently. I personally mostly ignor CPU utilization because of the issues - search the forums for some really long threads on all the factors here. I use load average on Linux instead, and on Windows I take the CPU use with a grain of salt. Now, this lack of care is probably local to my environment, but consider - what are you using the CPU utilization for? Alerts? Planning? It&rsquo;s probably important to understand what the numbers Zenoss is getting mean, and then we can customize that data to make more sense - you&rsquo;ve already seen event transforms for munging it to human readibility - you can also alter RPNs and graph definitions (though you&rsquo;ll lose historical data doing this) to change what the graphs are showing.</em></p>
+</blockquote>
+
+<h2 id="a-possible-solution">A Possible Solution</h2>
+
+<p>Going back to Linux Monitor version 1.2.1&rsquo;s, I decided to try to <strong>dynamically</strong> specify the number of cores into the RPN formula of the graph point. I managed to do this using a <a href="2016-11-03-zenoss-monitoring-template-data-points.html">TALES expression</a>:</p>
+
+<pre><code>${here/hw/cpus/countObjects},/
+</code></pre>
+
+<p>And voila! My graph is now looking just the way I want it to:</p>
+
+<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_fixed.jpg" alt="CPU Utilization Fixed" /></p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="http://aalvarez.me/tags/cpu" class="label label-default">cpu</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/rpn" class="label label-default">rpn</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

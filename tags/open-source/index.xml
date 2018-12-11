@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Open Source on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/open-source/</link>
+    <description>Recent content in Open Source on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 17 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/open-source/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tech and Open Source Chinese Vocabulary</title>
+      <link>http://aalvarez.me/posts/tech-and-open-source-chinese-vocabulary/</link>
+      <pubDate>Mon, 17 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/tech-and-open-source-chinese-vocabulary/</guid>
+      <description>The following is my personal curated list of Chinese terms (in Traditional Chinese) and vocabulary used in web development, programming, technology and open source.
+   Chinese Word Pinyin Definition     修復 xiū fù Repair, fix (bug)   發版 fā bǎn To release a version   報錯 baò cuò Error report/message   組件 zǔ jiàn Component   版本 bǎn běn Version   更新 gèng xīn To update/upgrade   顯示 xiǎn shì Show, display   表格 biaǒ gé Form, table   按鈕 àn niú Button, to press a button   重新 chóng xīn Retry (verb)   項目 xiàng mù Project   需求 xū qiú Request   代碼 dài mǎ Code   源碼 yuán mǎ Source code   固定 gù dìng Fixed, regular   內容 nèi róng Content   輸入 shū rù Input, to input   屬性 shǔ xìng attribute, property   路由 lù yóu routing   參考 cān kǎo Consult, refer to, reference   標題 biaō tí title, heading   一致 yī zhì consistent, identical   默認 mò rèn default   里程碑 lǐ chéng bēi milestone   圖標 tú biaō icon   接口 jiē koǔ interface, port   操作系統 Cāozuò xìtǒng operating system   支持 zhī chí support   佈局 bù jú layout    </description>
+    </item>
+    
+    <item>
+      <title>Reworking Ace&#39;s HAML Syntax Highlighting</title>
+      <link>http://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/</link>
+      <pubDate>Mon, 10 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ajaxorg/ace&#34;&gt;Ace&lt;/a&gt; is a great web text editor and the default editor for &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9 IDE&lt;/a&gt;. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn&amp;rsquo;t support correct highlighting of some HAML stuff such as HAML comments (which begin with &lt;code&gt;-#&lt;/code&gt;) or block comments.&lt;/p&gt;
+
+&lt;p&gt;This is how Ace&amp;rsquo;s HAML syntax highlighting issues look like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg&#34; alt=&#34;HAML Highlighting Issues&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I proceeded to study Ace&amp;rsquo;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a &lt;a href=&#34;https://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;state machine&lt;/a&gt;. The source where this happens is found in &lt;a href=&#34;https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js&#34;&gt;&lt;code&gt;lib/ace/mode/haml_highlight_rules.js&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;defining-states&#34;&gt;Defining States&lt;/h2&gt;
+
+&lt;p&gt;A few states have to be defined to represent where the lexer currently &amp;ldquo;stands&amp;rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.&lt;/p&gt;
+
+&lt;p&gt;In Ace, all syntax highlighting lexers must begin with a &lt;code&gt;start&lt;/code&gt; state. From this state we can switch to other defined states. The example below shows how we begin from the &lt;code&gt;start&lt;/code&gt; state and can jump to a comment block state when the code matches a regular expression that represents this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;.$rules &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;start&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; [
+        {
+            token&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#888&#34;&gt;// multiline HTML comment
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            regex&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;background-color:#fff0ff&#34;&gt;/^\/$/&lt;/span&gt;,
+            next&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
+        },
+        {
+            token&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#888&#34;&gt;// multiline HAML comment
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            regex&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;background-color:#fff0ff&#34;&gt;/^\-#$/&lt;/span&gt;,
+            next&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
+},
+
+&lt;span style=&#34;color:#888&#34;&gt;/* ... */&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notice that we define 2 different comment types, since HAML &lt;a href=&#34;http://haml.info/docs/yardoc/file.REFERENCE.html&#34;&gt;supports&lt;/a&gt; HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as &lt;code&gt;comment.block&lt;/code&gt; &lt;strong&gt;tokens&lt;/strong&gt;, and will also make the lexer jump to a &lt;code&gt;comment&lt;/code&gt; state, denoted by the &lt;code&gt;next&lt;/code&gt; keyword.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Getting Started on Contributing to OpenStack</title>
+      <link>http://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</link>
+      <pubDate>Tue, 14 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png&#34; alt=&#34;OpenStack&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I have started to become interested in contributing to the &lt;a href=&#34;https://www.openstack.org/&#34;&gt;OpenStack&lt;/a&gt; project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.&lt;/p&gt;
+
+&lt;h2 id=&#34;picking-a-project&#34;&gt;Picking a Project&lt;/h2&gt;
+
+&lt;p&gt;OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the &lt;a href=&#34;https://wiki.openstack.org/wiki/Telemetry&#34;&gt;Telemetry&lt;/a&gt; part, more specifically on &lt;strong&gt;Ceilometer&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The &lt;a href=&#34;https://docs.openstack.org/developer/ceilometer/&#34;&gt;Ceilometer developer documentation&lt;/a&gt; offers good explanations and diagrams of its architecture and components.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://wiki.openstack.org/wiki/Ceilometer/Contributing&#34;&gt;Here&lt;/a&gt; is another nice guide on contributing to Ceilometer.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

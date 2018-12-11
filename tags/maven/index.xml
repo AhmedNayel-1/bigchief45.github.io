@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Maven on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/maven/</link>
+    <description>Recent content in Maven on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/maven/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Implementing Auto Updates for a Netbeans Platform Maven Application Using Github Pages</title>
+      <link>http://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/</link>
+      <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/</guid>
+      <description>&lt;p&gt;Being able to update an application when a new version is released is something of critical importance for desktop applications. Otherwise, the process of updating the application is extremely tedious since you have to download more installers all the time.&lt;/p&gt;
+
+&lt;p&gt;Luckily, Netbeans Platform comes with integrated support for enabling your custom applications to be able to be updated when a new version is released.&lt;/p&gt;
+
+&lt;p&gt;In this post I will go over how to implement this on a &lt;strong&gt;Maven&lt;/strong&gt; based Netbeans Platform application.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-netbeans-update-center-works&#34;&gt;How Netbeans Update Center Works&lt;/h2&gt;
+
+&lt;p&gt;The &lt;strong&gt;Update Center&lt;/strong&gt; is how we can achieve this functionality. The way it works is that you publish your module&amp;rsquo;s NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.&lt;/p&gt;
+
+&lt;p&gt;When you configure an update center in your application, you will configure this web server&amp;rsquo;s URL so that the update center client knows where to poll and where to download the new module files to install.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

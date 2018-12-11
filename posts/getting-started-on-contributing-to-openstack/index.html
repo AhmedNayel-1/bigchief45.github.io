@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Getting Started on Contributing to OpenStack &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Getting Started on Contributing to OpenStack</h1>
+  <time datetime=2017-03-14T00:00:00Z class="post-date">Tue, Mar 14, 2017</time>
+
+  <p><img src="http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png" alt="OpenStack" /></p>
+
+<p>I have started to become interested in contributing to the <a href="https://www.openstack.org/">OpenStack</a> project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.</p>
+
+<h2 id="picking-a-project">Picking a Project</h2>
+
+<p>OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the <a href="https://wiki.openstack.org/wiki/Telemetry">Telemetry</a> part, more specifically on <strong>Ceilometer</strong>.</p>
+
+<p>After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The <a href="https://docs.openstack.org/developer/ceilometer/">Ceilometer developer documentation</a> offers good explanations and diagrams of its architecture and components.</p>
+
+<p><a href="https://wiki.openstack.org/wiki/Ceilometer/Contributing">Here</a> is another nice guide on contributing to Ceilometer.</p>
+
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/ceilo-arch.png" alt="Ceilometer Architecture" /></p>
+
+<h2 id="understanding-the-development-workflow">Understanding the Development Workflow</h2>
+
+<p>Development of OpenStack follows a <a href="https://docs.openstack.org/infra/manual/developers.html">strict workflow</a>. It is imperative that you understand and become familiar on how this process works. Before you even begin coding, there are some &ldquo;paperwork&rdquo; that you must do first:</p>
+
+<ol>
+<li>Setup a <a href="https://launchpad.net/">Launchpad</a> account. Launchpad is Canonical&rsquo;s software collaboration platform.</li>
+<li>Join the <a href="https://www.openstack.org/join/">OpenStack Foundation</a> as a Foundation Member.</li>
+<li>Sign the <a href="https://review.openstack.org/#/settings/agreements">Individual Contributor License Agreement</a>
+
+<ul>
+<li><strong>If you are contributing on behalf of a company, you (or someone at your company) needs to additionally sign a <a href="https://secure.echosign.com/public/hostedForm?formid=56JUVGT95E78X5">Corporate Contributor License Agreement</a> providing a list of people authorized to commit to code to OpenStack.</strong></li>
+</ul></li>
+</ol>
+
+<h3 id="understanding-gerrit">Understanding Gerrit</h3>
+
+<p>From <em><a href="https://julien.danjou.info/blog/2013/rant-about-github-pull-request-workflow-implementation">Rant about Github pull-request workflow implementation</a></em>:</p>
+
+<blockquote>
+<p>To send a contribution to any OpenStack project, you need to pass via Gerrit. This is way simpler than doing a pull-request on Github actually, all you have to do is do your commit(s), and type git review. That&rsquo;s it. Your patch will be pushed to Gerrit and available for review.</p>
+
+<p>Gerrit allows other developers to review your patch, add comments anywhere on it, and score your patch up or down. You can build any rule you want for the score needed for a patch to be merged; OpenStack requires one positive scoring from two core developers before the patch is merged.</p>
+
+<p>Until a patch is validated, it can be reworked and amended locally using Git, and then resent using git review again. That simple. The historic and the different version of the patches are available, with the whole comments. Gerrit doesn&rsquo;t lose any historic information on your workflow.</p>
+</blockquote>
+
+<h3 id="following-rules-for-proper-commits">Following Rules for Proper Commits</h3>
+
+<p>In order for your contributions to be accepted into OpenStack, your commits must follow certain rules. For example:</p>
+
+<ul>
+<li>Use smaller and more commits instead of a single big commit.</li>
+<li>Make a separate commit for whitespace fixes.</li>
+<li>Do not mix unrelated functional changes.</li>
+<li>Provide a brief description of the change in the 1st line.</li>
+<li>Insert a single blank line after the first line.</li>
+<li>Provide a detailed description of the change in the following lines, breaking paragraphs where needed.</li>
+<li>First line should be limited to 50 characters and not end with a period.</li>
+</ul>
+
+<p>You can read the complete document <a href="https://wiki.openstack.org/wiki/GitCommitMessages">here</a>. If your commits do not follow these rules, your patches will be rejected.</p>
+
+<h3 id="providing-appropriate-tests">Providing Appropriate Tests</h3>
+
+<p>You must test your changes first before submitting them. Project repositories generally have several categories of tests:</p>
+
+<ul>
+<li>Style Checks – Check source code for style issues</li>
+<li>Unit Tests – Self contained in each repository</li>
+<li>Integration Tests – Require a running OpenStack environment</li>
+</ul>
+
+<p>Tests are run through <a href="http://tox.testrun.org/latest/">tox</a>. You can see how to run Ceilometer tests <a href="https://docs.openstack.org/developer/ceilometer/testing.html">here</a>.</p>
+
+<h3 id="coding-style-guidelines">Coding Style Guidelines</h3>
+
+<p>Besides following the <a href="http://www.python.org/dev/peps/pep-0008/">Python PEP8</a> Guidelines. OpenStack also enforces some additional guidelines which you may read <a href="https://docs.openstack.org/developer/hacking/">here</a>.</p>
+
+<h2 id="openstack-upstream-training">OpenStack Upstream Training</h2>
+
+<p>OpenStack has designed a <a href="https://docs.openstack.org/upstream-training/">training program</a> to share the knowledge about the different ways you can contribute to OpenStack and getting familiar with open source. They provide a nice <a href="https://github.com/kmARC/openstack-training-virtual-environment/">Vagrant development environment</a> for this training which you can install in a virtual machine.</p>
+
+<h2 id="reaching-to-the-community">Reaching to the Community</h2>
+
+<p>Reaching to the OpenStack community in a <strong>smart</strong> way is important if you want your contributions to OpenStack to be noticed and accepted. Before you start trying to contribute to a specific project, I recommend you first spend some time <strong>observing</strong> and <strong>learning</strong> how the community interacts and how the project&rsquo;s development process occurs.</p>
+
+<p>Some ways to begin interacting with the community:</p>
+
+<ul>
+<li>Subscribing to the OpenStack <a href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-dev">mailing list</a></li>
+<li>Join the OpenStack IRC channels for a particular project and <a href="https://wiki.openstack.org/wiki/Meetings">IRC meetings</a>.</li>
+<li>Submit and review bugs in a project&rsquo;s bug tracker (Launchpad).</li>
+</ul>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+<li><a href="https://julien.danjou.info/blog/2016/foss-projects-management-bad-practice">The bad practice in FOSS projects management</a></li>
+<li><a href="https://julien.danjou.info/blog/2013/rant-about-github-pull-request-workflow-implementation">Rant about Github pull-request workflow implementation</a></li>
+<li><a href="http://superuser.openstack.org/articles/openstack-developer-beginner-setup/">How to set up your work environment to become an OpenStack developer</a></li>
+</ul>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="http://aalvarez.me/tags/open-source" class="label label-default">open source</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

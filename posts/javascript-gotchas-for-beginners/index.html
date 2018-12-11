@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>JavaScript Gotchas for Beginners &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>JavaScript Gotchas for Beginners</h1>
+  <time datetime=2017-01-06T00:00:00Z class="post-date">Fri, Jan 6, 2017</time>
+
+  <p>When starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.</p>
+
+<h2 id="the-global-object">The Global Object</h2>
+
+<p>The <strong>global scope</strong> is the space in which global variables live and it can also be approached as an object. Each global variable is present as a <strong>property</strong> of this object. In browsers, the global scope object is stored in the <code>window</code> variable:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">var</span> v <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">10</span>;
+console.log(<span style="background-color:#fff0f0">&#34;v&#34;</span> <span style="color:#080;font-weight:bold">in</span> <span style="color:#007020">window</span>);
+<span style="color:#888">// &gt; true
+</span><span style="color:#888"></span>console.log(<span style="color:#007020">window</span>.v);
+<span style="color:#888">// &gt; 10
+</span><span style="color:#888"></span></code></pre></div>
+<h2 id="objects-and-mutability">Objects and Mutability</h2>
+
+<p>With JavaScript objects there is a difference between having two references to the same object and having two different objects that contain the same properties. Consider the following code:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">var</span> object1 <span style="color:#333">=</span> {value<span style="color:#333">:</span> <span style="color:#00d;font-weight:bold">10</span>};
+<span style="color:#080;font-weight:bold">var</span> object2 <span style="color:#333">=</span> object1;
+<span style="color:#080;font-weight:bold">var</span> object3 <span style="color:#333">=</span> {value<span style="color:#333">:</span> <span style="color:#00d;font-weight:bold">10</span>};
+
+console.log(object1 <span style="color:#333">==</span> object2);
+<span style="color:#888">// &gt; true
+</span><span style="color:#888"></span>console.log(object1 <span style="color:#333">==</span> object3);
+<span style="color:#888">// &gt; false
+</span><span style="color:#888"></span>
+object1.value <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">15</span>;
+console.log(object2.value);
+<span style="color:#888">// &gt; 15
+</span><span style="color:#888"></span>console.log(object3.value);
+<span style="color:#888">// &gt; 10
+</span><span style="color:#888"></span></code></pre></div>
+<p>This is why it is important to be careful when trying to &ldquo;copy&rdquo; variables like above, it leaves a lot of room for unexpected results.</p>
+
+<h2 id="prototypes">Prototypes</h2>
+
+<p>In JavaScript, almost all objects have a <strong><em>prototype</em></strong>, in addition to their set of properties. A prototype is another object that is used as a fallback source of properties. When an object gets a request for a property that it does not have, its prototype will be searched for the property, then the prototype&rsquo;s prototype, and so on.</p>
+
+<p>The entity behind almost all objects is <code>Object.prototype</code>. The <code>Object.getPrototypeOf</code> function returns the prototype of an object.</p>
+
+<p>A prototype can be used at any time to add new properties and methods to all objects based on it.</p>
+
+<h2 id="function-arguments">Function Arguments</h2>
+
+<p>It is perfectly possible to call a function and pass more or fewer arguments than the number of parameters the function itself declares. When too many arguments are passed, the extra arguments are <strong>ignored</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">function</span> noArguments() {}
+noArguments(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">3</span>); <span style="color:#888">// all arguments are ignored
+</span><span style="color:#888"></span></code></pre></div>
+<p>When fewer arguments are passed, the missing parameters simply get assigned the value <code>undefined</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">function</span> myFunction(first, second, third) {}
+myFunction(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>); <span style="color:#888">// &#39;third&#39; would become undefined
+</span><span style="color:#888"></span></code></pre></div>
+<p>Using a variable name starting with an underscore or consisting entirely of a single underscore is a way to indicate to human readers that this argument is not going to be used.</p>
+
+<h2 id="the-arguments-object">The arguments Object</h2>
+
+<p>In JavaScript, whenever a function is called, a special variable named <code>arguments</code> is added to the environment in which the function body runs. This variable refers to an object that holds all of the arguments passed to the function.</p>
+
+<p>The <code>arguments</code> object has a <code>length</code> property that tells us the number of arguments that were really passed to the function.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">function</span> argumentCounter() {
+  console.log(<span style="background-color:#fff0f0">&#34;You gave me&#34;</span>, arguments.length, <span style="background-color:#fff0f0">&#34;arguments.&#34;</span>);
+}
+
+argumentCounter(<span style="background-color:#fff0f0">&#34;Hello&#34;</span>, <span style="background-color:#fff0f0">&#34;Hola&#34;</span>, <span style="background-color:#fff0f0">&#34;Ciao&#34;</span>);
+<span style="color:#888">// =&gt; You gave me 3 arguments.
+</span><span style="color:#888"></span></code></pre></div>
+<h2 id="the-instanceof-operator">The instanceof Operator</h2>
+
+<p>JavaScript provides a binary operator called <code>instanceof</code> which determines whether an object was derived from a specific constructor or not:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">console.log(<span style="color:#080;font-weight:bold">new</span> TextCell(<span style="background-color:#fff0f0">&#34;A&#34;</span>) <span style="color:#080;font-weight:bold">instanceof</span> RTextCell);
+<span style="color:#888">// =&gt; false
+</span><span style="color:#888"></span>console.log([<span style="color:#00d;font-weight:bold">1</span>] <span style="color:#080;font-weight:bold">instanceof</span> <span style="color:#007020">Array</span>);
+<span style="color:#888">// =&gt; true
+</span><span style="color:#888"></span></code></pre></div>
+<h2 id="strict-mode-and-debugging">Strict Mode and Debugging</h2>
+
+<p>When debugging, we can make use of a special mode in JavaScript called <strong>strict mode</strong>. To use this mode, we can put the string &ldquo;use strict&rdquo; at the top of a file or function body. For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">function</span> canYouSpotTheProblem() {
+  <span style="background-color:#fff0f0">&#34;use strict&#34;</span>;
+  <span style="color:#080;font-weight:bold">for</span> (counter <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>; counter <span style="color:#333">&lt;</span> <span style="color:#00d;font-weight:bold">10</span>; counter<span style="color:#333">++</span>)
+    console.log(<span style="background-color:#fff0f0">&#34;Happy happy&#34;</span>);
+}
+
+canYouSpotTheProblem();
+<span style="color:#888">// =&gt; ReferenceError: counter is not defined.
+</span><span style="color:#888"></span></code></pre></div>
+<p>In the example above, JavaScript would normally proceed to create a global variable and use that. In strict mode however, an error is reported instead.</p>
+
+<p>We can also use the <code>debugger</code> keyword to set a breakpoint in the program. When using a browser&rsquo;s developer tools, the program will pause whenever it reachers that statement and we can inspect the program&rsquo;s state.</p>
+
+<h2 id="selective-exception-catching">Selective Exception Catching</h2>
+
+<p>When we want to catch specific exceptions in JavaScript, we can do so by first defining a new type of error and use <code>instanceof</code> to identify it. For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">function</span> InputError(message) {
+  <span style="color:#080;font-weight:bold">this</span>.message <span style="color:#333">=</span> message;
+  <span style="color:#080;font-weight:bold">this</span>.stack <span style="color:#333">=</span> (<span style="color:#080;font-weight:bold">new</span> <span style="color:#007020">Error</span>()).stack;
+}
+InputError.prototype <span style="color:#333">=</span> <span style="color:#007020">Object</span>.create(<span style="color:#007020">Error</span>.prototype);
+InputError.prototype.name <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;InputError&#34;</span>;
+</code></pre></div>
+<p>We can throw the error inside a function:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">function</span> throwError() {
+  <span style="color:#888">/* ... */</span>
+  <span style="color:#080;font-weight:bold">throw</span> <span style="color:#080;font-weight:bold">new</span> InputError(<span style="background-color:#fff0f0">&#34;Invalid Error - InputError&#34;</span>);
+}
+</code></pre></div>
+<p>And we can catch it from another place in our code:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#888">/* ... */</span>
+<span style="color:#080;font-weight:bold">try</span> {
+  <span style="color:#080;font-weight:bold">var</span> a <span style="color:#333">=</span> throwError();
+} <span style="color:#080;font-weight:bold">catch</span>(e) {
+  <span style="color:#080;font-weight:bold">if</span> (e <span style="color:#080;font-weight:bold">instanceof</span> InputError)
+    console.log(<span style="background-color:#fff0f0">&#34;An input error ocurred&#34;</span>);
+  <span style="color:#080;font-weight:bold">else</span>
+    <span style="color:#080;font-weight:bold">throw</span> e;
+}
+</code></pre></div>
+<h2 id="references">References</h2>
+
+<ol>
+<li>Eloquent JavaScript - Marijn Haverbeke</li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

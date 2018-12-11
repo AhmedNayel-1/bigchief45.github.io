@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Python Functional HTTP Testing With Gabbi &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Python Functional HTTP Testing With Gabbi</h1>
+  <time datetime=2017-06-06T00:00:00Z class="post-date">Tue, Jun 6, 2017</time>
+
+  <p>Continuing with my journey in contributing to <a href="http://gnocchi.xyz/index.html">Gnocchi</a>, I have learned of an excellent tool which Gnocchi uses to test its API from a HTTP request approach. The tool is called <a href="https://github.com/cdent/gabbi"><strong>Gabbi</strong></a>.</p>
+
+<p>Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&rsquo;s DSL when making <a href="https://github.com/rspec/rspec-rails#request-specs">request specs</a>.</p>
+
+<p>For my latest contribution to Gnocchi, I was working on an <a href="https://github.com/gnocchixyz/gnocchi/issues/12">issue</a> where newly created metrics were not being returned in the response from <code>/v1/resource/generic/:id/metric</code>. After applying the fixes and submitting the patch, it was also necessary to update some of the functional Gabbi tests that belong to this specific use case.</p>
+
+<p>One of these original tests is shown below:</p>
+
+<p><a href="https://github.com/gnocchixyz/gnocchi/blob/master/gnocchi/tests/functional/gabbits/resource.yaml"><strong>gnocchi/tests/functional/gabbits/resource.yaml</strong></a>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>name:<span style="color:#bbb"> </span>post<span style="color:#bbb"> </span>metric<span style="color:#bbb"> </span>at<span style="color:#bbb"> </span>generic<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>POST:<span style="color:#bbb"> </span>/v1/resource/generic/85C44741-CC60-<span style="color:#60e;font-weight:bold">4033</span>-804E-2D3098C7D2E9/metric<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>request_headers:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>x-user-id:<span style="color:#bbb"> </span>0fbb231484614b1a80131fc22f6afc9c<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>x-project-id:<span style="color:#bbb"> </span>f3d41b770cc14f0bb94a1d5be9c0e3ea<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>content-type:<span style="color:#bbb"> </span>application/json<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>status:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">204</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>data:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>electron.spin:<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>archive_policy_name:<span style="color:#bbb"> </span>medium<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>response_headers:</code></pre></div>
+<p>We can see how the request is nicely defined using YAML, specifying required stuff such as the action, request headers, and data.</p>
+
+<p>For the response, we are specifying that it should return a 204 HTTP status code. For <a href="https://github.com/gnocchixyz/gnocchi/pull/55">my patch</a> I actually had to change the status code to 200.</p>
+
+<p>Additionally, during the code review someone suggested to also test for the response JSON contents of the returned metrics. This is when I learned about the <code>response_json_paths</code> expectation, which allows us to access the response&rsquo;s JSON body and assert their content.</p>
+
+<p>For my patch, I simply used this expectation to test against the metric&rsquo;s name and resource id, making the test now look like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>name:<span style="color:#bbb"> </span>post<span style="color:#bbb"> </span>metric<span style="color:#bbb"> </span>at<span style="color:#bbb"> </span>generic<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>POST:<span style="color:#bbb"> </span>/v1/resource/generic/85C44741-CC60-<span style="color:#60e;font-weight:bold">4033</span>-804E-2D3098C7D2E9/metric<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>request_headers:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>x-user-id:<span style="color:#bbb"> </span>0fbb231484614b1a80131fc22f6afc9c<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>x-project-id:<span style="color:#bbb"> </span>f3d41b770cc14f0bb94a1d5be9c0e3ea<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>content-type:<span style="color:#bbb"> </span>application/json<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>status:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">200</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>data:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>electron.spin:<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>archive_policy_name:<span style="color:#bbb"> </span>medium<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>response_headers:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>response_json_paths:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>$[/name][<span style="color:#60e;font-weight:bold">1</span>].name::<span style="color:#bbb"> </span>electron.spin<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>$[/name][<span style="color:#60e;font-weight:bold">1</span>].resource_id:<span style="color:#bbb"> </span>85C44741-CC60-<span style="color:#60e;font-weight:bold">4033</span>-804E-2D3098C7D2E9</code></pre></div>
+<p>Note how we are using <code>$</code> and an index <code>1</code> to access the response&rsquo;s <strong>first</strong> item in a similar fashion to accessing an array. The response actually return&rsquo;s a JSON array of metrics. Another important thing is that we are sorting the returned metrics by name using <code>[/name]</code>, as <a href="http://gabbi.readthedocs.io/en/latest/jsonpath.html">documented</a> in Gabbi. The reason we do this is because the order of the response&rsquo;s items in Gnocchi&rsquo;s Gabbi tests cannot be predicted.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://gabbi.readthedocs.io/en/latest/index.html">Gabbi documentation</a></li>
+<li><a href="https://github.com/cdent/gabbi">Gabbi Github repository</a></li>
+</ul>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/gabbi" class="label label-default">gabbi</a></li>
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/tdd" class="label label-default">tdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/bdd" class="label label-default">bdd</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/backend" class="label label-default">backend</a></li>
+  
+    <a href="http://aalvarez.me/tags/yaml" class="label label-default">yaml</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

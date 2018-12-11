@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/">Using Rails With Webpack in Cloud 9</a>
+  </h1>
+  <time datetime="2017-04-03T00:00:00Z" class="post-date">Mon, Apr 3, 2017</time>
+  <p>The <a href="https://github.com/rails/webpacker">rails/webpacker</a> project allows integration of <a href="https://webpack.github.io/">Webpack</a> with a Rails application. However, setting this up in a <a href="https://c9.io">Cloud 9</a> development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.</p>
+
+<h2 id="creating-the-application">Creating the Application</h2>
+
+<p>We will first create a regular Rails application and then use the webpacker gem to install Webpack.</p>
+
+<pre><code>rails new webpack-app
+</code></pre>
+
+<p>Add the gem to <code>Gemfile</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># Gemfile</span>
+
+gem <span style="background-color:#fff0f0">&#39;webpacker&#39;</span>, <span style="color:#a60;background-color:#fff0f0">github</span>: <span style="background-color:#fff0f0">&#39;rails/webpacker&#39;</span></code></pre></div>
+<p>Install Webpacker</p>
+
+<pre><code>rails webpacker:install
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/cloud9" class="label label-default">cloud9</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/webpack" class="label label-default">webpack</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/using-rails-with-webpack-in-cloud-9/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/">Using Objects and Ranges With Cases in Ruby</a>
+  </h1>
+  <time datetime="2017-03-29T00:00:00Z" class="post-date">Wed, Mar 29, 2017</time>
+  <p>Ruby&rsquo;s <a href="http://www.techotopia.com/index.php/The_Ruby_case_Statement"><code>case</code> statement</a> provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of <code>if</code> statements and I actually found a pretty neat way to implement using the Ruby <code>case</code>.</p>
+
+<p>In my application I have a Rails model called <code>Entry</code> which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3&rsquo;s nice <a href="http://getbootstrap.com/components/#progress">progress bars</a> and I want the progress bar&rsquo;s contextual class to be changed and determined by the range in which this data point sits in.</p>
+
+<p>If we take <a href="https://en.wikipedia.org/wiki/Cholesterol">total cholesterol</a> as an example, a quick Google search indicates that an ideal value would be less than 200 mg/dL, a high value (not good) would be between 200-239 mg/dL, and a very high value (definitely not good) would be above 240 mg/dL.</p>
+
+<p>To implement this, I created a <code>Recommendations</code> module under the <code>/models</code> directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:</p>
+
+<pre><code>app/models/
+├── application_record.rb
+├── concerns
+├── entry.rb
+├── recommendations
+│   ├── blood_glucose.rb
+│   ├── diastolic_pressure.rb
+│   ├── hdl.rb
+│   ├── ldl.rb
+│   ├── systolic_pressure.rb
+│   └── total_cholesterol.rb
+└── user.rb
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/bootstrap" class="label label-default">bootstrap</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/using-objects-and-ranges-with-cases-in-ruby/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/setting-up-an-openstack-dev-environment/">Setting Up an OpenStack Dev Environment</a>
+  </h1>
+  <time datetime="2017-03-22T00:00:00Z" class="post-date">Wed, Mar 22, 2017</time>
+  <p>Before beginning to <a href="/posts/getting-started-on-contributing-to-openstack.html">contribute to OpenStack</a>, it is necessary that we setup an ideal development environment for a smoother workflow.</p>
+
+<p>In this post I will cover how to setup a Devstack development environment in a <strong>Ubuntu 16.04</strong> virtual machine using <a href="http://www.vmware.com/">VMware Player</a>.</p>
+
+<h2 id="setting-up-the-ubuntu-virtual-machine">Setting Up the Ubuntu Virtual Machine</h2>
+
+<p>Make sure you have <a href="http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html">VMware Player</a> installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a <a href="http://releases.ubuntu.com/xenial/">Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)</a> for <strong>32-bit PC i836</strong>.</p>
+
+<p>In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu <code>.iso</code> image file when prompted. Proceed with the installation and select the <em>Erase Disk and Install Ubuntu</em> option when prompted.</p>
+
+<p>~&gt; I tried using <a href="https://www.virtualbox.org/">VirtualBox</a> for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend <strong>Ubuntu 16.04</strong>.</p>
+
+<p>Once the installation is finished, restart the virtual machine.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/devstack" class="label label-default">devstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/setting-up-an-openstack-dev-environment/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/overriding-default-zenoss-pages/">Overriding Default Zenoss Pages</a>
+  </h1>
+  <time datetime="2017-03-17T00:00:00Z" class="post-date">Fri, Mar 17, 2017</time>
+  <p>While testing the <a href="https://github.com/zenoss/ZenPacks.zenoss.Layer2">Layer 2 ZenPack</a>, I noticed that the network map provided by the ZenPack was placed in the same page of the old default Zenoss&rsquo;s network map, replacing the latter which was made using Flash. After the ZenPack is installed, when you click on the <em>Network Map</em> secondary link in the Infrastructure page, you will get the new map instead.</p>
+
+<p><img src="/posts/overriding-default-zenoss-pages/map_link.jpg" alt="Network Map link" /></p>
+
+<p>This seemed pretty nice, and I was curious how they achieved this, so I started browsing around the source code. It turns out that this overriding is done in a file called <code>overrides.zcml</code>, which is placed in the ZenPack&rsquo;s top directory.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/overriding-default-zenoss-pages/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/getting-started-on-contributing-to-openstack/">Getting Started on Contributing to OpenStack</a>
+  </h1>
+  <time datetime="2017-03-14T00:00:00Z" class="post-date">Tue, Mar 14, 2017</time>
+  <p><img src="http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png" alt="OpenStack" /></p>
+
+<p>I have started to become interested in contributing to the <a href="https://www.openstack.org/">OpenStack</a> project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.</p>
+
+<h2 id="picking-a-project">Picking a Project</h2>
+
+<p>OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the <a href="https://wiki.openstack.org/wiki/Telemetry">Telemetry</a> part, more specifically on <strong>Ceilometer</strong>.</p>
+
+<p>After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The <a href="https://docs.openstack.org/developer/ceilometer/">Ceilometer developer documentation</a> offers good explanations and diagrams of its architecture and components.</p>
+
+<p><a href="https://wiki.openstack.org/wiki/Ceilometer/Contributing">Here</a> is another nice guide on contributing to Ceilometer.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="http://aalvarez.me/tags/open-source" class="label label-default">open source</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/getting-started-on-contributing-to-openstack/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/10/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/12/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

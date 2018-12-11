@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/bash/</link>
+    <description>Recent content in Bash on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 14 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SSH Monitoring in ZenPacks</title>
+      <link>http://aalvarez.me/posts/ssh-monitoring-in-zenpacks/</link>
+      <pubDate>Wed, 14 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/ssh-monitoring-in-zenpacks/</guid>
+      <description>&lt;p&gt;Zenoss usually monitors and collects information using &lt;strong&gt;SNMP&lt;/strong&gt; and &lt;strong&gt;SSH&lt;/strong&gt; methods. A good example of is the &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;linux monitor ZenPack&lt;/a&gt; which can collect information such as hard disks, interfaces, and file systems using &lt;strong&gt;both&lt;/strong&gt; methods.&lt;/p&gt;
+
+&lt;p&gt;SNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using &lt;strong&gt;&lt;a href=&#34;http://www.net-snmp.org/&#34;&gt;net-snmp&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.&lt;/p&gt;
+
+&lt;p&gt;When developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/tutorial-snmp-device/index.html&#34;&gt;SNMP monitoring using zenpacklib&lt;/a&gt;. When using SNMP, the modeler plugins are &lt;code&gt;SnmpPlugin&lt;/code&gt; plugins that typically work using a set of &lt;a href=&#34;http://www.dpstele.com/snmp/what-does-oid-network-elements.php&#34;&gt;OIDs&lt;/a&gt; to determine exactly which data is to be modeled.&lt;/p&gt;
+
+&lt;h2 id=&#34;ssh-in-modeler-plugins&#34;&gt;SSH in Modeler Plugins&lt;/h2&gt;
+
+&lt;p&gt;In order to make a modeler plugin utilize SSH as it&amp;rsquo;s polling method we need to use a different type of plugin, the &lt;code&gt;CommandPlugin&lt;/code&gt; plugin. The structure of this type of plugin is very similar to the &lt;code&gt;SnmpPlugin&lt;/code&gt;, however there is one critical variable that must be implemented.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Keystone Interface in Juju Charms</title>
+      <link>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</link>
+      <pubDate>Fri, 28 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/docs/1.18/authors-interfaces&#34;&gt;Juju Charms interfaces&lt;/a&gt; make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.&lt;/p&gt;
+
+&lt;p&gt;In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;juju add-relation keystone myservice&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;juju-relations&#34;&gt;Juju Relations&lt;/h2&gt;
+
+&lt;p&gt;Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an &lt;strong&gt;interface&lt;/strong&gt;. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the &lt;em&gt;keystone Identity data&lt;/em&gt;. For this, we use the &lt;strong&gt;&lt;a href=&#34;https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin&#34;&gt;keystone-admin interface&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;With this in mind, we configure our charm to require this relation and interface in &lt;code&gt;metadata.yaml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;requires:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;identity-admin:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;interface:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;keystone-admin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

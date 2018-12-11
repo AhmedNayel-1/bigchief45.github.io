@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zope on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/zope/</link>
+    <description>Recent content in Zope on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/zope/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Extending Device Python Classes From Other ZenPacks</title>
+      <link>http://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/</link>
+      <pubDate>Tue, 27 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/</guid>
+      <description>&lt;p&gt;Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from &lt;code&gt;Device&lt;/code&gt;. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a &lt;a href=&#34;http://aalvarez.me/posts/working-with-zenoss-python-data-sources.html&#34;&gt;Python data source&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;zenpack.yaml&lt;/code&gt; file for the first and main ZenPack would look something like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ZenPack1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;classes:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;SpecialServer:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Device]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Special&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Server&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;SpecialComponent:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Component]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Special&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Component&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;AmazingComponent:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Component]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Amazing&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Component&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;class_relationships:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;SpecialServer&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;:MC&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;SpecialComponent&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;SpecialServer&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;:MC&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;AmazingComponent&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Custom Notification Action Types in Zenoss</title>
+      <link>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</link>
+      <pubDate>Tue, 09 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create &lt;em&gt;command&lt;/em&gt; type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a &lt;a href=&#34;http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html&#34;&gt;more recent post&lt;/a&gt; I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.&lt;/p&gt;
+
+&lt;p&gt;In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.&lt;/p&gt;
+
+&lt;h2 id=&#34;zenoss-default-notification-actions&#34;&gt;Zenoss Default Notification Actions&lt;/h2&gt;
+
+&lt;p&gt;By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;These action types are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Command&lt;/strong&gt;: Runs an executable script. Discussed in one of my &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous posts&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: Sends an e-mail to a user.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Page&lt;/strong&gt;: Sends a message to a user&amp;rsquo;s &lt;a href=&#34;https://en.wikipedia.org/wiki/Pager&#34;&gt;pager&lt;/a&gt;, also known as &lt;em&gt;beeper&lt;/em&gt;. Probably safe to say that this is not used by anyone anymore.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Syslog&lt;/strong&gt;: Logs a message to &lt;a href=&#34;https://en.wikipedia.org/wiki/Syslog&#34;&gt;syslog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SNMP Trap&lt;/strong&gt;: Sends an SNMP trap.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All these notifications are sent when an event matches a trigger rule.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-new-action&#34;&gt;Creating the New Action&lt;/h2&gt;
+
+&lt;p&gt;Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&amp;rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Overriding Default Zenoss Pages</title>
+      <link>http://aalvarez.me/posts/overriding-default-zenoss-pages/</link>
+      <pubDate>Fri, 17 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/overriding-default-zenoss-pages/</guid>
+      <description>&lt;p&gt;While testing the &lt;a href=&#34;https://github.com/zenoss/ZenPacks.zenoss.Layer2&#34;&gt;Layer 2 ZenPack&lt;/a&gt;, I noticed that the network map provided by the ZenPack was placed in the same page of the old default Zenoss&amp;rsquo;s network map, replacing the latter which was made using Flash. After the ZenPack is installed, when you click on the &lt;em&gt;Network Map&lt;/em&gt; secondary link in the Infrastructure page, you will get the new map instead.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/overriding-default-zenoss-pages/map_link.jpg&#34; alt=&#34;Network Map link&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This seemed pretty nice, and I was curious how they achieved this, so I started browsing around the source code. It turns out that this overriding is done in a file called &lt;code&gt;overrides.zcml&lt;/code&gt;, which is placed in the ZenPack&amp;rsquo;s top directory.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Custom Pages in Zenoss</title>
+      <link>http://aalvarez.me/posts/custom-pages-in-zenoss/</link>
+      <pubDate>Mon, 26 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/custom-pages-in-zenoss/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/extending-zenoss-navigations.html&#34;&gt;previous post&lt;/a&gt; I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&amp;rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.&lt;/p&gt;
+
+&lt;h2 id=&#34;page-viewlets&#34;&gt;Page Viewlets&lt;/h2&gt;
+
+&lt;p&gt;Previously we created navigation item viewlets, this time we will be creating &lt;strong&gt;page&lt;/strong&gt; viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to &lt;code&gt;browser/configure.zcml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;browser:page&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;secondaryPage&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;for=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;permission=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;zenoss.View&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;template=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;templates/my_template.pt&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#070&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It is important that the &lt;strong&gt;name&lt;/strong&gt; attribute matches the URL of the navigation link we created previously. Another important attribute is the &lt;strong&gt;template&lt;/strong&gt; attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and &lt;a href=&#34;http://old.zope.org/Members/tone/METAL&#34;&gt;METAL&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Also let&amp;rsquo;s not forget to create a necessary python init file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;touch browser/__init__.py
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Extending Zenoss Navigation Bars</title>
+      <link>http://aalvarez.me/posts/extending-zenoss-navigations/</link>
+      <pubDate>Wed, 21 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/extending-zenoss-navigations/</guid>
+      <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&amp;rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
+
+&lt;h2 id=&#34;configure-zcml&#34;&gt;configure.zcml&lt;/h2&gt;
+
+&lt;p&gt;Zenoss ZenPacks can contain a file in the ZenPack top directory called &lt;code&gt;configure.zcml&lt;/code&gt;. I&amp;rsquo;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.&lt;/p&gt;
+
+&lt;p&gt;It is in this file where we will declare and create new navigational links from our ZenPack.&lt;/p&gt;
+
+&lt;p&gt;~&amp;gt; In this post we assume that the ZenPack is created using &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.&lt;/p&gt;
+
+&lt;p&gt;Usually this file begins with some required boilerplate code:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;configure.zcml&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;configure&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;xmlns=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zope&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#070&#34;&gt;&amp;gt;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#888&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#070&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#00c&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#070&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Custom Zenoss API Endpoints</title>
+      <link>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</link>
+      <pubDate>Tue, 20 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-an-endpoint&#34;&gt;Creating an Endpoint&lt;/h2&gt;
+
+&lt;p&gt;Assuming that we are starting with a new and fresh ZenPack created with &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, we will proceed to create a simple endpoint.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;os.path&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; urlparse
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;subprocess&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.event&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; notify
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.interface&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; implements
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;ZODB.transact&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; transact
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Ext&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; DirectRouter, DirectResponse
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; Zuul
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.catalog.events&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IndexingEvent
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulFacade
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IFacade
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulMessageFactory &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; _t
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; zenPath&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The Zenoss JSON API</title>
+      <link>http://aalvarez.me/posts/the-zenoss-json-api/</link>
+      <pubDate>Thu, 24 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/the-zenoss-json-api/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using &lt;a href=&#34;https://curl.haxx.se/&#34;&gt;cURL&lt;/a&gt; or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.&lt;/p&gt;
+
+&lt;p&gt;The API documentation can be downloaded &lt;a href=&#34;https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip&#34;&gt;here&lt;/a&gt;. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.&lt;/p&gt;
+
+&lt;p&gt;In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&amp;rsquo;s front-end (made using &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;ExtJS&lt;/a&gt;) interacts with it.&lt;/p&gt;
+
+&lt;p&gt;~&amp;gt; Even though Zenoss calls its API a &lt;em&gt;JSON API&lt;/em&gt; (Simply because it returns data in JSON format), the API &lt;strong&gt;is not&lt;/strong&gt; &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API specification&lt;/a&gt; compliant.&lt;/p&gt;
+
+&lt;h2 id=&#34;querying-the-api&#34;&gt;Querying the API&lt;/h2&gt;
+
+&lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&amp;rsquo;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#963&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
+
+&lt;p&gt;This is all fine if all we need is querying the API and nothing else. But what if we really want to know &lt;strong&gt;&lt;em&gt;how&lt;/em&gt;&lt;/strong&gt; the API back-end works? How the endpoints are created? What are routers?&lt;/p&gt;
+
+&lt;p&gt;This is what we are gonna learn next.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

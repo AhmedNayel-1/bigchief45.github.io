@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cracking Passwords With aircrack-ng &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Cracking Passwords With aircrack-ng</h1>
+  <time datetime=2016-12-25T00:00:00Z class="post-date">Sun, Dec 25, 2016</time>
+
+  <p>aircrack-ng is a powerful suite of tools that allows to assess wireless network security. The tools in the suite allows us to perform various actions such as packet monitoring in the environment, montoring of specific access points, de-authentication attacks on access points, and cracking of WEP and WPA PSK (WPA 1 and 2) passwords.</p>
+
+<p><img src="http://www.aircrack-ng.org/resources/aircrack-ng-new-logo.jpg" alt="aircrack-ng" /></p>
+
+<p>In this post I will explain on how to perform these actions.</p>
+
+<h2 id="wireless-card-monitor-mode">Wireless Card Monitor Mode</h2>
+
+<p>Before we begin it is crucial that we change the mode of our wireless network card to <strong>monitor mode</strong>. BY default, our wireless network card&rsquo;s mode is <strong>managed mode</strong>. In managed mode, the network card generally only listens to packets addressed to the card, whereas in monitor mode it will hear <strong>every packet in the air</strong>. Additionally, monitor mode will also allows us to perform packet injection attacks (i.e. de-authentication attacks).</p>
+
+<p>To set our network card into monitor mode, we can run the following commands in a terminal:</p>
+
+e>
+
+<p>airodump-ng <interface>
+````</p>
+
+<p>The output will reveal some interesting data:</p>
+
+<ul>
+<li>PWR: The signal. The higher the number, the better the signal.</li>
+</ul>
+
+<h2 id="scanning-specific-access-points">Scanning Specific Access Points</h2>
+
+<p>We can perform a more precise and specific scan using this command:</p>
+
+<pre><code>airodump-ng -c &lt;channel&gt; --bssid &lt;bssid&gt; -w &lt;file&gt; &lt;interface&gt;
+</code></pre>
+
+<p>Where:</p>
+
+<ul>
+<li><code>-c</code> stands for the channel.</li>
+<li><code>--bssid</code> stands for the MAC address of the access point.</li>
+<li><code>-w</code> stands for the output file to write to.</li>
+</ul>
+
+<p>The command will output a scan on the access point. Additionally, it will also show devices (<code>STATION</code>) connected to this access point.</p>
+
+<p><strong>NOTE:</strong> In order to crack the key, <strong>at least 1 device must be connected to the access point</strong>.</p>
+
+<h2 id="de-authentication-attacks">De-authentication Attacks</h2>
+
+<p>We can use <code>aireplay-ng</code> to perform a de-authentication attack. For example:</p>
+
+<pre><code>aireplay-ng -0 0 -a &lt;access_point_bssid&gt; &lt;interface&gt;
+</code></pre>
+
+<p>Where:</p>
+
+<ul>
+<li><code>-0</code> represents the amount of de-authentication transmissions we wish to send. A <code>0</code> stands for an infinite loop.</li>
+<li><code>-a</code> represents the wireless access point&rsquo;s MAC address.</li>
+</ul>
+
+<p>This de-authentication attack will start injecting packets to the access point. Causing all the client&rsquo;s connected to the access point to almost immediately disconnect, until the attack is finished.</p>
+
+<p>It is also possible to target specific clients by adding the <code>-c &lt;client_mac_address&gt;</code> option.</p>
+
+<p>After some time, we will stop the attack so that the previously connected clients can re-connect to the access point and generate the <strong><a href="https://en.wikipedia.org/wiki/Handshaking">handshake</a></strong> packet data, which will be collected by the scan we will be running in another terminal. This handshake data is what we will use to crack the password.</p>
+
+<h2 id="cracking-passwords">Cracking Passwords</h2>
+
+<p>To begin cracking passwords we can use the <code>aircrack-ng</code> tool:</p>
+
+<pre><code>aircrack-ng -w [word list or file] -e &lt;essid&gt; &lt;capture file&gt;
+</code></pre>
+
+<p>Where <code>-w</code> stands for the word list or password. These can be found online for download. It is worth noting that the region&rsquo;s spoken language where the cracking is being done is important when using a word list.</p>
+
+<p>The command can further be used with <code>crunch</code>. For example:</p>
+
+<pre><code>crunch &lt;min-len&gt; &lt;max-len&gt; -t &lt;pattern&gt; | aircrack-ng -w - -e &lt;essid&gt; &lt;capture_file&gt;
+</code></pre>
+
+<p>Where:</p>
+
+<ul>
+<li><code>-t</code> stands for a certain pattern to be filled with wildcard characters.</li>
+<li><code>-</code> passed to <code>-w</code> means to read from Standard Output (in this case, output from crunch).</li>
+</ul>
+
+<h3 id="using-crunch">Using Crunch</h3>
+
+<p>Crunch is a tool that can generate wordlists from character sets. These generated wordlists is the input that will be fed to <strong>aircrack-ng</strong>. For example, assuming that the access point&rsquo;s password is <em>hello123</em>, we can specify a pattern that tries to match that password:</p>
+
+<pre><code>crunch 8 8 -t hello%%%
+</code></pre>
+
+<p>We can also specify a character set using the <code>-f</code> option:</p>
+
+<pre><code>crunch &lt;min-len&gt; &lt;max-len&gt; -t &lt;pattern&gt; -f /usr/share/crunch/charset.lst &lt;charsetname&gt;
+</code></pre>
+
+<p>Where the character&rsquo;s set name can be found inside the character set file.</p>
+
+<p>It is important to keep in mind that a prior knowledge of the password&rsquo;s structure is needed. Otherwise the cracking process is practically <strong>impossible</strong> because of the lack of processing power and time required to crack a password from the thousands of possible existing combinations.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/aircrack-ng" class="label label-default">aircrack-ng</a></li>
+  
+    <a href="http://aalvarez.me/tags/security" class="label label-default">security</a></li>
+  
+    <a href="http://aalvarez.me/tags/hacking" class="label label-default">hacking</a></li>
+  
+    <a href="http://aalvarez.me/tags/kali-linux" class="label label-default">kali linux</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

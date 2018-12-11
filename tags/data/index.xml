@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/data/</link>
+    <description>Recent content in Data on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zenoss Monitoring Template Data Points</title>
+      <link>http://aalvarez.me/posts/zenoss-monitoring-template-data-points/</link>
+      <pubDate>Thu, 03 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/zenoss-monitoring-template-data-points/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Content from this post is mostly obtained from &lt;strong&gt;Zenoss Core Administration guide&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In Zenoss Core &lt;strong&gt;monitoring templates&lt;/strong&gt;, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented
+by a &lt;strong&gt;data point&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;When creating a data point, there are some important fields that we can define for our data point:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; Displays the name you entered in the &lt;em&gt;Add a New DataPoint&lt;/em&gt; dialog.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Type:&lt;/strong&gt; Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;COUNTER:&lt;/strong&gt; Saves the rate of change of the value over a step period. This assumes that the value is always
+increasing (the difference between the current and the previous value is greater than 0). Traffic counters on a
+router are an ideal candidate for using COUNTER.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;GAUGE:&lt;/strong&gt; Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
+To see memory consumption in a server, for example, you might want to select this value.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;DERIVE:&lt;/strong&gt; Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
+in free disk space on your server, for example, then you might want to select this value.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;ABSOLUTE:&lt;/strong&gt; Saves the rate of change, but assumes that the previous value is set to 0. The difference between
+the current and the previous value is always equal to the current value. Thus, ABSOLUTE stores the current
+value, divided by the step interval.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create Command:&lt;/strong&gt; Enter an RRD expression used to create the database for this data point. If you do not enter
+a value, then the system uses a default applicable to most situations. For details about the &lt;kbd&gt;rrdcreate&lt;/kbd&gt; command, go &lt;a href=&#34;http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Minimum:&lt;/strong&gt; Enter a value. Any value received that is less than this number is ignored.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Maximum:&lt;/strong&gt; Enter a value. Any value received that is greater than this number is ignored.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;data-point-aliases&#34;&gt;Data Point Aliases&lt;/h2&gt;
+
+&lt;p&gt;Performance reports pull information from various data points that represent a metric. The report itself knows which
+data points it requires, and which modifications are needed, if any, to put the data in its proper units and format.&lt;/p&gt;
+
+&lt;p&gt;The addition of a data point requires changing the report.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg&#34; alt=&#34;CPU Utilization Report&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To allow for more flexibility in changes, some reports use &lt;em&gt;data point aliases&lt;/em&gt;. Data point aliases group data points so
+they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
+can normalize that data into a common unit.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

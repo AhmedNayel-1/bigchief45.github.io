@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloud9 on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/cloud9/</link>
+    <description>Recent content in Cloud9 on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/cloud9/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reworking Ace&#39;s HAML Syntax Highlighting</title>
+      <link>http://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/</link>
+      <pubDate>Mon, 10 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ajaxorg/ace&#34;&gt;Ace&lt;/a&gt; is a great web text editor and the default editor for &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9 IDE&lt;/a&gt;. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn&amp;rsquo;t support correct highlighting of some HAML stuff such as HAML comments (which begin with &lt;code&gt;-#&lt;/code&gt;) or block comments.&lt;/p&gt;
+
+&lt;p&gt;This is how Ace&amp;rsquo;s HAML syntax highlighting issues look like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg&#34; alt=&#34;HAML Highlighting Issues&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I proceeded to study Ace&amp;rsquo;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a &lt;a href=&#34;https://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;state machine&lt;/a&gt;. The source where this happens is found in &lt;a href=&#34;https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js&#34;&gt;&lt;code&gt;lib/ace/mode/haml_highlight_rules.js&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;defining-states&#34;&gt;Defining States&lt;/h2&gt;
+
+&lt;p&gt;A few states have to be defined to represent where the lexer currently &amp;ldquo;stands&amp;rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.&lt;/p&gt;
+
+&lt;p&gt;In Ace, all syntax highlighting lexers must begin with a &lt;code&gt;start&lt;/code&gt; state. From this state we can switch to other defined states. The example below shows how we begin from the &lt;code&gt;start&lt;/code&gt; state and can jump to a comment block state when the code matches a regular expression that represents this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;.$rules &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;start&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; [
+        {
+            token&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#888&#34;&gt;// multiline HTML comment
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            regex&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;background-color:#fff0ff&#34;&gt;/^\/$/&lt;/span&gt;,
+            next&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
+        },
+        {
+            token&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#888&#34;&gt;// multiline HAML comment
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            regex&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;background-color:#fff0ff&#34;&gt;/^\-#$/&lt;/span&gt;,
+            next&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
+},
+
+&lt;span style=&#34;color:#888&#34;&gt;/* ... */&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notice that we define 2 different comment types, since HAML &lt;a href=&#34;http://haml.info/docs/yardoc/file.REFERENCE.html&#34;&gt;supports&lt;/a&gt; HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as &lt;code&gt;comment.block&lt;/code&gt; &lt;strong&gt;tokens&lt;/strong&gt;, and will also make the lexer jump to a &lt;code&gt;comment&lt;/code&gt; state, denoted by the &lt;code&gt;next&lt;/code&gt; keyword.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using Rails With Webpack in Cloud 9</title>
+      <link>http://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/</link>
+      <pubDate>Mon, 03 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/rails/webpacker&#34;&gt;rails/webpacker&lt;/a&gt; project allows integration of &lt;a href=&#34;https://webpack.github.io/&#34;&gt;Webpack&lt;/a&gt; with a Rails application. However, setting this up in a &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9&lt;/a&gt; development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-application&#34;&gt;Creating the Application&lt;/h2&gt;
+
+&lt;p&gt;We will first create a regular Rails application and then use the webpacker gem to install Webpack.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rails new webpack-app
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add the gem to &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Gemfile&lt;/span&gt;
+
+gem &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;github&lt;/span&gt;: &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Install Webpacker&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rails webpacker:install
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

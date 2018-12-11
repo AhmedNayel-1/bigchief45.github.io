@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Building an OCR Service With TesseractJS in AWS Lambda &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Building an OCR Service With TesseractJS in AWS Lambda</h1>
+  <time datetime=2017-11-21T00:00:00Z class="post-date">Tue, Nov 21, 2017</time>
+
+  <p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
+
+<p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
+
+<p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
+
+<h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
+
+<p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
+
+<p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
+
+<pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
+</code></pre>
+
+<p>To solve this issue, we will need to download the TesseractJS <a href="https://github.com/naptha/tesseract.js">repository</a>, unzip it and place it inside our ClaudiaJS project. There are some files that are not needed, such as <code>examples</code> and <code>docs</code> directories, as well as other documentation files.</p>
+
+<p>Additionally, we will need to package the language files along with our ClaudiaJS deployment package. Simply download the necessary language files from the <a href="https://github.com/naptha/tessdata/tree/gh-pages/3.02">repository</a>, use something like <strong>gunzip</strong> to extract the contents, and then place them somewhere inside the TesseractJS repository directory we just added inside our ClaudiaJS project, such as a <code>/lang</code> directory.</p>
+
+<p>After this, you should have something like this:</p>
+
+<pre><code>├── claudia.json
+├── lambda.js
+├── node_modules
+├── package.json
+└── tesseract
+    ├── dist
+    ├── lang
+    └── src
+</code></pre>
+
+<p>Then, when requiring TesseractJS in your Lambda function, you will have to specify path parameters for the language files, worker, and core library to TesseractJS, as described in the <a href="https://github.com/naptha/tesseract.js#local-installation">local installation</a> part of the documentation.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">const</span> path <span style="color:#333">=</span> require(<span style="background-color:#fff0f0">&#39;path&#39;</span>);
+
+<span style="color:#080;font-weight:bold">const</span> Tesseract <span style="color:#333">=</span> require(<span style="background-color:#fff0f0">&#39;tesseract.js&#39;</span>).create({
+    workerPath<span style="color:#333">:</span> path.join(__dirname, <span style="background-color:#fff0f0">&#39;tesseract/src/node/worker.js&#39;</span>),
+    langPath<span style="color:#333">:</span> path.join(__dirname, <span style="background-color:#fff0f0">&#39;tesseract/lang/&#39;</span>),
+    corePath<span style="color:#333">:</span> path.join(__dirname, <span style="background-color:#fff0f0">&#39;tesseract/src/index.js&#39;</span>)
+});
+</code></pre></div>
+<p>The <code>__dirname</code> variable is what makes it all work. It will point to the package&rsquo;s absolute path inside Lambda (which is something like <code>/var/task</code>) and then will find our language files and load them for TesseractJS.</p>
+
+<p>-&gt; In Node.js, <code>__dirname</code> is always the directory in which the currently executing script resides. <a href="https://nodejs.org/api/globals.html#globals_dirname">Read more</a></p>
+
+<h2 id="integrating-with-sns-simple-notification-service">Integrating With SNS (Simple Notification Service)</h2>
+
+<p>We want our Lambda function to be triggered as soon as an image file (i.e <code>jpg</code> file) is uploaded to our S3 bucket. You can configure an S3 event to the Lambda function from the AWS console, but I find a better and more scalable way is to subscribe the function to a SNS topic instead, and make S3 send events to this topic.</p>
+
+<h3 id="creating-the-sns-topic">Creating the SNS Topic</h3>
+
+<p>Head over to the <a href="https://us-west-2.console.aws.amazon.com/sns">SNS</a> service &gt; topics, and create a new topic and enter a name for it.</p>
+
+<p>Once created, select the <em>Edit topic policy</em> option for the topic and go to <em>Advanced view</em>. Change the policy to something like the following:</p>
+
+<p><img src="https://s3.amazonaws.com/awscomputeblogmedia/fanout-topic-policy-json.png" alt="SNS Topic Policy" /></p>
+
+<p>The policy above will allow the bucket to publish S3 events to it.</p>
+
+<h3 id="configure-s3-bucket-to-publish-events">Configure S3 Bucket to Publish Events</h3>
+
+<p>Now go to S3 &gt; your bucket &gt; Properties &gt; Events and add a new notification. We are going to check the <em>ObjectCreate (All)</em> event and add a <em>jpg</em> suffix for the event. Lastly we will configure it to send it to the SNS topic we just created.</p>
+
+<h3 id="processing-the-sns-event-in-the-lambda-function">Processing the SNS Event In The Lambda Function</h3>
+
+<p>Now when the JPG file is uploaded, S3 will publish the event to the SNS topic, which will send it to the Lambda function under the <code>event</code> parameter. We need to parse the JSON data of this event, and we can do so by creating a helper function in our main <code>lambda.js</code> file:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">function</span> getSNSMessageObject(msg) {
+    <span style="color:#080;font-weight:bold">var</span> x <span style="color:#333">=</span> msg.replace(<span style="color:#000;background-color:#fff0ff">/\\/g</span>, <span style="background-color:#fff0f0">&#39;&#39;</span>);
+    <span style="color:#080;font-weight:bold">var</span> y <span style="color:#333">=</span> x.substring(<span style="color:#00d;font-weight:bold">1</span>, x.length <span style="color:#333">-</span> <span style="color:#00d;font-weight:bold">1</span>);
+    <span style="color:#080;font-weight:bold">var</span> z <span style="color:#333">=</span> JSON.parse(y);
+
+    <span style="color:#080;font-weight:bold">return</span> z;
+}
+</code></pre></div>
+<p>With this function, we can obtain the corresponding bucket and key of the file that was just uploaded:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">exports.handler <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">function</span>(event, context, callback) {
+    <span style="color:#080;font-weight:bold">let</span> snsMessage <span style="color:#333">=</span> getSNSMessageObject(
+        JSON.stringify(event.Records[<span style="color:#00d;font-weight:bold">0</span>].Sns.Message));
+    <span style="color:#080;font-weight:bold">let</span> bucket <span style="color:#333">=</span> snsMessage.Records[<span style="color:#00d;font-weight:bold">0</span>].s3.bucket.name;
+    <span style="color:#080;font-weight:bold">let</span> key <span style="color:#333">=</span> snsMessage.Records[<span style="color:#00d;font-weight:bold">0</span>].s3.object.key;
+
+    <span style="color:#888">// ...
+</span><span style="color:#888"></span>};
+</code></pre></div>
+<p>We will use this information to obtain the image from S3 within our Lamdba function and proceed to process it with TesseractJS.</p>
+
+<h2 id="processing-the-image-memory-issues">Processing the Image: Memory Issues</h2>
+
+<p>I was experiencing a strange behavior when calling <code>Tesseract.recognize()</code> on an image, the Lambda function would terminate very quickly. No logs from the <code>progress()</code> callback where being shown, yet Lambda reported a full memory use. I thought this was a not-enough memory issue, so I increased the function&rsquo;s memory to 1GB, but no luck:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Tesseract.recognize(img)
+  .progress(msg =&gt; console.log(msg))
+  .<span style="color:#080;font-weight:bold">catch</span>(err =&gt; console.log(<span style="background-color:#fff0f0">&#39;Tesseract error: &#39;</span>, err))
+  .then(<span style="color:#080;font-weight:bold">function</span>(result) {
+      Tesseract.terminate();
+      console.log(result);
+  });
+</code></pre></div>
+<pre><code>REPORT Duration: 29059.34 ms	Billed Duration: 29100 ms Memory Size: 1024 MB	Max Memory Used: 1024 MB
+</code></pre>
+
+<p>This was very strange. I could perfectly process the image in my development environment which has merely 512MB of RAM.</p>
+
+<p>Anyways, I decided to ramp up the function&rsquo;s memory to the max (1536 MB), and lo and behold, it managed to run successfully, still <em>almost</em> reaching the memory limit.</p>
+
+<p>TODO: WHY DOES THIS HAPPEN?</p>
+
+<h2 id="asynchronous-processing">Asynchronous Processing</h2>
+
+<p>This part had more to do with me being a NodeJS noob than with TesseractJS.</p>
+
+<p>Initially, I was first downloading the image file from my S3 bucket like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">var</span> imgFile <span style="color:#333">=</span> fs.createWriteStream(<span style="background-color:#fff0f0">&#39;/tmp/&#39;</span> <span style="color:#333">+</span> key);
+<span style="color:#080;font-weight:bold">var</span> params <span style="color:#333">=</span> {Bucket<span style="color:#333">:</span> bucket, Key<span style="color:#333">:</span> key};
+s3.getObject(params).createReadStream().pipe(imgFile);
+
+<span style="color:#888">// Process with Tesseract
+</span><span style="color:#888">// ...
+</span><span style="color:#888"></span></code></pre></div>
+<p>This was not working, I was getting an error like the following:</p>
+
+<pre><code>/var/task/tesseract/src/common/desaturate.js:22
+} else { throw 'Invalid ImageData' }
+
+Invalid ImageData
+</code></pre>
+
+<p>This was happeing due to NodeJS asynchronous nature and how JavaScript and NodeJS works with callbacks. The code that proceeded to process the image with TesseractJS was probably being executed and the image wasn&rsquo;t fully obtained from S3 yet. I come from a Ruby &amp; Python background so this was a bit difficult for me to grasp. I changed the above logic to implement <a href="https://javascript.info/promise-basics">JavaScript native Promises</a>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">const</span> s3 <span style="color:#333">=</span> require(<span style="background-color:#fff0f0">&#39;./s3&#39;</span>);
+<span style="color:#080;font-weight:bold">const</span> ocr <span style="color:#333">=</span> require(<span style="background-color:#fff0f0">&#39;./ocr&#39;</span>);
+
+
+exports.handler <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">function</span>(event, context, callback) {
+  s3.getImage(bucket, key)
+    .then(<span style="color:#080;font-weight:bold">function</span>(data) {
+        <span style="color:#080;font-weight:bold">return</span> ocr.recognizeImage(data.Body);
+    })
+    .then(<span style="color:#080;font-weight:bold">function</span>(result) {
+        <span style="color:#080;font-weight:bold">return</span> s3.uploadOCR(bucket, bookId, pageNum, result);
+    })
+    .then(fulfilled =&gt; callback(<span style="color:#080;font-weight:bold">null</span>))
+    .<span style="color:#080;font-weight:bold">catch</span>(error =&gt; callback(error, <span style="background-color:#fff0f0">&#39;Error&#39;</span>));
+};
+</code></pre></div>
+<p>Looks much better. The respective functions for obtaining the image and uploading the JSON to S3 are located inside the <code>s3.js</code> module in my project:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="background-color:#fff0f0">&#39;use strict&#39;</span>;
+
+<span style="color:#080;font-weight:bold">const</span> AWS <span style="color:#333">=</span> require(<span style="background-color:#fff0f0">&#39;aws-sdk&#39;</span>);
+<span style="color:#080;font-weight:bold">const</span> s3 <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> AWS.S3({region<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;us-west-1&#39;</span>});
+
+
+module.exports <span style="color:#333">=</span> {
+    getImage<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span> getImage(bucket, key) {
+        <span style="color:#080;font-weight:bold">let</span> params <span style="color:#333">=</span> {Bucket<span style="color:#333">:</span> bucket, Key<span style="color:#333">:</span> key};
+        <span style="color:#080;font-weight:bold">return</span> s3.getObject(params).promise();
+    },
+
+    uploadOCR<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span> uploadOCR(bucket, bookId, pageNum, ocr) {
+        <span style="color:#080;font-weight:bold">let</span> params <span style="color:#333">=</span> {
+            Bucket<span style="color:#333">:</span> bucket,
+            Key<span style="color:#333">:</span> (bookId <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;/&#39;</span> <span style="color:#333">+</span> pageNum <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;.json&#39;</span>),
+            Body<span style="color:#333">:</span> ocr,
+            ContentType<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;application/json&#39;</span>
+        };
+
+        <span style="color:#080;font-weight:bold">return</span> s3.putObject(params).promise();
+    }
+};
+</code></pre></div>
+<p>As you can see, the AWS SDK provides a <code>promise()</code> object for requests to Amazon services.</p>
+
+<p>Likewise, the function that calls TesseractJS is located inside the <code>ocr.js</code> module inside my project, and I wrap the process in a promise (Thanks <a href="https://stackoverflow.com/users/1048572/bergi">Bergi</a> for suggestion against <a href="https://stackoverflow.com/q/23803743/1048572?What-is-the-promise-construction-antipattern-and-how-to-avoid-it">Promise constructor antipattern</a>):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">recognizeImage<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span> recognizeImage(img) {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#007020">Promise</span>.resolve(Tesseract.recognize(img))
+        .then(<span style="color:#080;font-weight:bold">function</span>(result) {
+            Tesseract.terminate();
+
+            <span style="color:#888">// Do some extra processing on the result
+</span><span style="color:#888"></span>
+            <span style="color:#080;font-weight:bold">return</span> JSON.stringify(result);
+        });
+}
+</code></pre></div>
+<p>The <code>data</code> object from <code>s3.getObject()</code> is the de-serialized data returned from the request to S3 (docs <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property">here</a>). The <code>data.Body</code> is the raw binary image data and can be passed directly to TesseractJS.</p>
+
+<p>-&gt; The Node.js runtimes v4.3 and v6.10 support the optional <code>callback</code> parameter. You can use it to explicitly return information back to the caller. <a href="http://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html">Read more</a></p>
+
+<p>We can then proceed to do more processing on the data returned by TesseractJS, and then later store it in something like ElasticSearch or S3.</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://stackoverflow.com/questions/41063214/reading-a-packaged-file-in-aws-lambda-package">https://stackoverflow.com/questions/41063214/reading-a-packaged-file-in-aws-lambda-package</a></li>
+<li><a href="https://aws.amazon.com/blogs/compute/fanout-s3-event-notifications-to-multiple-endpoints/">https://aws.amazon.com/blogs/compute/fanout-s3-event-notifications-to-multiple-endpoints/</a></li>
+<li><a href="https://github.com/naptha/tesseract.js/issues/164#issuecomment-345984952">https://github.com/naptha/tesseract.js/issues/164#issuecomment-345984952</a></li>
+<li><a href="http://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html">http://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html</a></li>
+<li><a href="https://javascript.info/callbacks">https://javascript.info/callbacks</a></li>
+<li><a href="https://javascript.info/promise-chaining">https://javascript.info/promise-chaining</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/nodejs" class="label label-default">nodejs</a></li>
+  
+    <a href="http://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
+  
+    <a href="http://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
+  
+    <a href="http://aalvarez.me/tags/ocr" class="label label-default">ocr</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

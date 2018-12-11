@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/">Django Dynamic Queryset Filtering With Pagination</a>
+  </h1>
+  <time datetime="2018-01-17T00:00:00Z" class="post-date">Wed, Jan 17, 2018</time>
+  <p><a href="https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html">This blog article</a> does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn&rsquo;t go into paginating the filtered queryset results.</p>
+
+<p>I had a very hard time trying to implement this pagination feature using <strong>class based views</strong>. More specifically, using the <code>FilterView</code> that comes with the <a href="https://github.com/carltongibson/django-filter">django-filter</a> package.</p>
+
+<p>In the end it turned out to be very simple. The <a href="https://django-filter.readthedocs.io/en/master/guide/usage.html#generic-view-configuration">documentation</a> was a bit misleading on this so it took a while to understand and find the solution.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/django-dynamic-queryset-filtering-with-pagination/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/django-ajax-search-with-elasticsearch/">Django AJAX Search With Elasticsearch</a>
+  </h1>
+  <time datetime="2018-01-10T00:00:00Z" class="post-date">Wed, Jan 10, 2018</time>
+  <p>In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&rsquo;s get started!</p>
+
+<h2 id="the-search-template">The Search Template</h2>
+
+<p>The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.</p>
+
+<p>This template is extremely simple and does not need a <code>&lt;form&gt;</code> tag. I will create it as a partial under <code>templates/search.html</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% csrf_token %}
+&lt;input id=&#34;search&#34; name=&#34;q&#34; placeholder=&#34;Search...&#34;&gt;</code></pre></div>
+<p>Notice how we have given the input a <code>name</code> with the value of <code>q</code>. This will be important when our view receives the query from this input field.</p>
+
+<p>I can then render this partial in the main template like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% include &#39;search.html&#39; %}</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/elasticsearch" class="label label-default">elasticsearch</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/django-ajax-search-with-elasticsearch/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/java-jtable-tricks/">Java JTable Tricks</a>
+  </h1>
+  <time datetime="2017-12-20T00:00:00Z" class="post-date">Wed, Dec 20, 2017</time>
+  <p>Java&rsquo;s JTable is a GUI component that has been around for many many years. While a bit difficult to work with, it&rsquo;s almost a mandatory component in an application that displays a lot of data.</p>
+
+<p>In this post I share some nice tricks for working with JTables in Java applications.</p>
+
+<h2 id="scrolling">Scrolling</h2>
+
+<p>A JTable by itself does not provide any scrolling when handling a lot of data. To fix this, we need to place the table inside a <code>JScrollPane</code> component. Additionally, we can place this <code>JScrollPane</code> into a <code>JPanel</code> in our window:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">myPanel<span style="color:#333">.</span><span style="color:#00c">add</span><span style="color:#333">(</span><span style="color:#080;font-weight:bold">new</span> JScrollPane<span style="color:#333">(</span>myTable<span style="color:#333">,</span>
+    JScrollPane<span style="color:#333">.</span><span style="color:#00c">VERTICAL_SCROLLBAR_AS_NEEDED</span><span style="color:#333">,</span>
+    JScrollPane<span style="color:#333">.</span><span style="color:#00c">HORIZONTAL_SCROLLBAR_AS_NEEDED</span><span style="color:#333">)</span>
+    <span style="color:#333">);</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/java" class="label label-default">java</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/java-jtable-tricks/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Bulk Create With Django REST Framework</a>
+  </h1>
+  <time datetime="2017-11-27T00:00:00Z" class="post-date">Mon, Nov 27, 2017</time>
+  <p>In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
+
+<h2 id="the-serializer">The Serializer</h2>
+
+<p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># serializers.py</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> Book
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> serializers
+
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookSerializer</span>(serializers<span style="color:#333">.</span>ModelSerializer):
+    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Meta</span>:
+        model <span style="color:#333">=</span> Book
+        fields <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;__all__&#39;</span></code></pre></div>
+<p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/bulk-create-with-django-rest-framework/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Building an OCR Service With TesseractJS in AWS Lambda</a>
+  </h1>
+  <time datetime="2017-11-21T00:00:00Z" class="post-date">Tue, Nov 21, 2017</time>
+  <p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
+
+<p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
+
+<p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
+
+<h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
+
+<p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
+
+<p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
+
+<pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/nodejs" class="label label-default">nodejs</a></li>
+  
+    <a href="http://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
+  
+    <a href="http://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
+  
+    <a href="http://aalvarez.me/tags/ocr" class="label label-default">ocr</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/3/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/5/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

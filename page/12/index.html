@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/python-tricks-for-better-code/">Python Tricks for Better Code</a>
+  </h1>
+  <time datetime="2017-03-08T00:00:00Z" class="post-date">Wed, Mar 8, 2017</time>
+  <p>A compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.</p>
+
+<h2 id="enumerate">Enumerate</h2>
+
+<p>When working with items in a list and we want to print or handle each item&rsquo;s index, instead of using a counter variable:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># Bad way</span>
+i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>
+<span style="color:#080;font-weight:bold">for</span> place <span style="color:#000;font-weight:bold">in</span> places:
+    <span style="color:#080;font-weight:bold">print</span>(i, place)
+    i <span style="color:#333">+=</span> <span style="color:#00d;font-weight:bold">1</span></code></pre></div>
+<p>We can use <code>enumerate</code> to improve our code:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">for</span> i, place <span style="color:#000;font-weight:bold">in</span> <span style="color:#007020">enumerate</span>(places):
+    <span style="color:#080;font-weight:bold">print</span>(i, place)</code></pre></div>
+<p><code>enumerate</code> returns a list of indexes along with each item in the list.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/python-tricks-for-better-code/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/">Integrating TravisCI With Rails and Heroku</a>
+  </h1>
+  <time datetime="2017-03-07T00:00:00Z" class="post-date">Tue, Mar 7, 2017</time>
+  <p>Adding <a href="https://travis-ci.org/">TravisCI</a> to your application&rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.</p>
+
+<p>In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.</p>
+
+<h2 id="setting-up-travisci">Setting up TravisCI</h2>
+
+<p>Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a <code>.travis.yml</code> file to the application&rsquo;s root directory with the following contents:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language:<span style="color:#bbb"> </span>Ruby<span style="color:#bbb">
+</span><span style="color:#bbb"></span>rvm:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">2.3</span>.<span style="color:#60e;font-weight:bold">0</span></code></pre></div>
+<p>The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.</p>
+
+<h3 id="configure-postgresql">Configure Postgresql</h3>
+
+<p>Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to <code>.travis.yml</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">services:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>postgresql</code></pre></div>
+<p>Then we will add another configuration that will make Travis create a Postgresql database with username <code>postgres</code> and blank password for the build:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before_script:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#39;create database travis_ci_test;&#39;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="http://aalvarez.me/tags/rspec" class="label label-default">rspec</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/travisci" class="label label-default">travisci</a></li>
+  
+    <a href="http://aalvarez.me/tags/github" class="label label-default">github</a></li>
+  
+    <a href="http://aalvarez.me/tags/git" class="label label-default">git</a></li>
+  
+    <a href="http://aalvarez.me/tags/heroku" class="label label-default">heroku</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/integrating-travisci-with-rails-and-heroku/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/chinese-onomatopoeia-in-literature/">Chinese Onomatopoeia in Literature</a>
+  </h1>
+  <time datetime="2017-03-06T00:00:00Z" class="post-date">Mon, Mar 6, 2017</time>
+  <p>It&rsquo;s been almost a year since I started reading the Harry Potter series completely in Traditional Chinese, currently I just recently started <em>Harry Potter and the Order of the Phoenix</em> (Book #5).</p>
+
+<p>Through my Chinese reading journey I have come accross a lot of Chinese <a href="https://en.wikipedia.org/wiki/Onomatopoeia">onomatopoeia</a> that you don&rsquo;t really come across with in other types of writings such as Internet articles, conversations, and newspaper articles.</p>
+
+<p>In this post I go into detail about each of these sounds I encounter in literature.</p>
+
+<h2 id="咕嚕-gūlū">咕嚕 (gūlū)</h2>
+
+<p><img src="http://1.bp.blogspot.com/-MpohU7WZ4TU/UCldacYdETI/AAAAAAAAACc/98W-mOiWIUM/s1600/hungry+stomach.jpg" alt="Hungry" /></p>
+
+<p><strong>Definition:</strong> rumble, roll.</p>
+
+<p>Used a lot when describing the rumbling sound of the stomach when hungry.</p>
+
+<p><strong>Examples:</strong></p>
+
+<ul>
+<li>他的肚子<strong>咕嚕咕嚕</strong>直響 - His stomach kept rumbling).</li>
+<li>粗大的圓木<strong>咕嚕咕嚕</strong>地從山坡上滾下來 - Large logs came rolling down the slope</li>
+</ul>
+
+<h2 id="啪啪-pāpā">啪啪 (pāpā)</h2>
+
+<p><img src="http://www.shapingyouth.org/wp-content/uploads/2015/05/hands-clapping-clip-art.png" alt="Clapping" /></p>
+
+<p><strong>Definition:</strong>  The sound of clapping, slapping, a gunshot.</p>
+
+<p><strong>Examples:</strong></p>
+
+<ul>
+<li><strong>啪</strong>的一聲, 瓶塞飛出來了 - The cork popped and flew out of the bottle.</li>
+</ul>
+
+  
+  <div style="margin: 20px 0px;">
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/chinese-onomatopoeia-in-literature/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Working With Zenoss Python Data Source Plugins</a>
+  </h1>
+  <time datetime="2017-02-23T00:00:00Z" class="post-date">Thu, Feb 23, 2017</time>
+  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
+
+<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
+
+<p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
+
+<h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
+
+<p>For this post, I will be using an example where we will be executing an <a href="/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
+
+<p>If I run the following command from my shell:</p>
+
+<pre><code>ipmitool -H $BMC_IP -I lanplus -U admin -P admin power status
+</code></pre>
+
+<p>I get the following output:</p>
+
+<pre><code>Chassis Power is on
+</code></pre>
+
+<p>What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:</p>
+
+<ol>
+<li>Map the value into a boolean property of a custon zenpacklib class.</li>
+<li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
+<li>Update the device model with the new property value.</li>
+<li><a href="/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
+</ol>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/working-with-zenoss-python-data-sources/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/useful-zendmd-tricks/">Useful Zendmd Tricks</a>
+  </h1>
+  <time datetime="2017-02-14T00:00:00Z" class="post-date">Tue, Feb 14, 2017</time>
+  <p>The <a href="http://wiki.zenoss.org/Category:ZenDMD">Zenoss Zendmd Tips Wiki</a> page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.</p>
+
+<h2 id="removing-device-classes">Removing Device Classes</h2>
+
+<p>We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &ldquo;KVM&rdquo; device class:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>manage_deleteOrganizer(<span style="background-color:#fff0f0">&#34;/zport/dmd/Devices/KVM&#34;</span>)
+commit()</code></pre></div>
+<h2 id="change-zenoss-user-s-password">Change Zenoss User&rsquo;s Password</h2>
+
+<p>Let&rsquo;s say we want to change the default <em>admin</em> user&rsquo;s password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">app<span style="color:#333">.</span>acl_users<span style="color:#333">.</span>userManager<span style="color:#333">.</span>updateUserPassword(<span style="background-color:#fff0f0">&#39;admin&#39;</span>, <span style="background-color:#fff0f0">&#39;newpassword&#39;</span>)
+commit()</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zendmd" class="label label-default">zendmd</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/useful-zendmd-tricks/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/11/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/13/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

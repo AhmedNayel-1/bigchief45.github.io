@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/cancellable-tasks-in-netbeans-platform/">Cancellable Tasks in Netbeans Platform</a>
+  </h1>
+  <time datetime="2018-11-28T00:00:00Z" class="post-date">Wed, Nov 28, 2018</time>
+  <p>I was trying to implement cancellable tasks in Netbeans Platform using <a href="https://rubenlaguna.com/post/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform/">this blog post</a> as reference.</p>
+
+<p>However I never managed to make it work. The tasks&rsquo;s thread would never get interrupted even after the confirmation dialog, the task would just keep running.</p>
+
+<p>After some digging on the Netbeans Platform and IDE <a href="https://github.com/apache/incubator-netbeans">source code</a>, I think I managed to find a way to properly and <strong>easily</strong> implement cancellable tasks.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/cancellable-tasks-in-netbeans-platform/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/recursive-python-aws-lambda-functions/">Recursive Python AWS Lambda Functions</a>
+  </h1>
+  <time datetime="2018-09-18T00:00:00Z" class="post-date">Tue, Sep 18, 2018</time>
+  <p>There are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.</p>
+
+<p>Basically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/recursive-python-aws-lambda-functions/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/displaying-images-in-netbeans-platform-node-tooltips/">Displaying Images in Netbeans Platform Node Tooltips</a>
+  </h1>
+  <time datetime="2018-08-14T00:00:00Z" class="post-date">Tue, Aug 14, 2018</time>
+  <p>Netbeans Platform allows you to display HTML inside a node&rsquo;s tooltip text. Naturally this means you can display images. For example, project nodes in the Netbeans IDE display icons related to errors (if there are any) and version control:</p>
+
+<p><img src="/posts/displaying-images-in-netbeans-platform-node-tooltips/node_tooltip_images.png" alt="Netbeans Node Tooltip Images" /></p>
+
+<p>Achieving this is not very straight forward, since the documentation doesn&rsquo;t really say much on how to load this image. Fortunately it is very simple.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/displaying-images-in-netbeans-platform-node-tooltips/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/troubleshooting-strange-aws-issues/">Troubleshooting Strange AWS Issues</a>
+  </h1>
+  <time datetime="2018-08-07T00:00:00Z" class="post-date">Tue, Aug 7, 2018</time>
+  <p>We&rsquo;ve all been there. The same things working fine one time but failing other times without any idea why.</p>
+
+<p>This post is a list of troubleshooting strange issues I&rsquo;ve encountered when using AWS.</p>
+
+<h2 id="elasticbeanstalk-failing-to-create-rds-security-group">ElasticBeanstalk Failing to Create RDS Security Group</h2>
+
+<p>I was having an issue where I couldn&rsquo;t create and attach an RDS database to an ElasticBeanstalk environment because an RDS security group was failing at being created. All this was being done using the AWS console.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/aws" class="label label-default">aws</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/troubleshooting-strange-aws-issues/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/">Loosely Coupled Node Actions in Netbeans Platform</a>
+  </h1>
+  <time datetime="2018-07-25T00:00:00Z" class="post-date">Wed, Jul 25, 2018</time>
+  <p>Nodes in Netbeans Platform can possess actions that can be executed with the node object as context. For example, the Project, Package, and Class nodes in the Netbeans IDE have a set of actions which can be seen by right clicking on the nodes:</p>
+
+<p><img src="/posts/loosely-coupled-node-actions-in-netbeans-platform/netbeans_ide_node_actions.png" alt="Netbeans IDE Node Actions" /></p>
+
+<p>In the Netbeans Platform tutorials I found <a href="https://platform.netbeans.org/tutorials/nbm-nodesapi2.html#actions">a tutorial</a> that explains how to add these actions to nodes. The problem is that in that tutorial the action class was created as an <strong>inner class</strong> of the node class. Making the action <strong>tightly coupled</strong> with the node.</p>
+
+<p>I managed to implement a more modular and loosely coupled approach, which is what I will explain in this post.</p>
+
+<p>Our loosely coupled approach will basically allow us to:</p>
+
+<ol>
+<li>Keep the domain logic (Java Beans and POJOs) in its own domain module.</li>
+<li>Keep the view logic (nodes that represent beans) in another module.</li>
+<li>Keep the node actions logic in yet another module. This allows us to plug and unplug different action&rsquo;s that belong to separate modules. Making our application&rsquo;s node actions very modular.</li>
+</ol>
+
+<p>Let&rsquo;s begin!</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/loosely-coupled-node-actions-in-netbeans-platform/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+
+    
+      <a href="http://aalvarez.me/page/2/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nodejs on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/nodejs/</link>
+    <description>Recent content in Nodejs on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building an OCR Service With TesseractJS in AWS Lambda</title>
+      <link>http://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/</link>
+      <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/</guid>
+      <description>&lt;p&gt;The past few days I was trying to make &lt;a href=&#34;https://github.com/naptha/tesseract.js&#34;&gt;TesseractJS&lt;/a&gt; work in &lt;a href=&#34;https://aws.amazon.com/lambda/&#34;&gt;AWS Lambda&lt;/a&gt; so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.&lt;/p&gt;
+
+&lt;p&gt;TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.&lt;/p&gt;
+
+&lt;p&gt;We will be using a &lt;strong&gt;NodeJS 6.10&lt;/strong&gt; runtime in AWS Lambda. And I will be deploying the service with &lt;a href=&#34;https://claudiajs.com/&#34;&gt;ClaudiaJS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;downloading-the-tesseractjs-files&#34;&gt;Downloading the TesseractJS Files&lt;/h2&gt;
+
+&lt;p&gt;When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.&lt;/p&gt;
+
+&lt;p&gt;The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the &lt;code&gt;/tmp/&lt;/code&gt; directory, you will get an error like this in your logs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Error: EROFS: read-only file system, open &#39;eng.traineddata&#39;
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

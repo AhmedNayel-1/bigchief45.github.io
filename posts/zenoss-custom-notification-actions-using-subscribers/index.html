@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Zenoss Custom Notification Actions Using Subscribers &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Zenoss Custom Notification Actions Using Subscribers</h1>
+  <time datetime=2017-06-07T00:00:00Z class="post-date">Wed, Jun 7, 2017</time>
+
+  <p>In a <a href="/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification&rsquo;s content pane, as shown below:</p>
+
+<p><img src="/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content" /></p>
+
+<p>In this post I want to change and improve this by using <em><strong>subscribers</strong></em> functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the <em>Pager</em> field instead.</p>
+
+<h2 id="the-pager-action">The Pager Action</h2>
+
+<p>Using Zenoss Core 4&rsquo;s pager action&rsquo;s <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
+
+<p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
+
+<p>This method is very similar to <code>execute</code>, but it receives an additional <code>target</code> parameter:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PageAction</span>(IActionBase, TargetableAction):
+    <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">executeOnTarget</span>(self, notification, signal, target):
+        <span style="color:#888"># ...</span></code></pre></div>
+<p>The <code>target</code> argument is what will represent the subscriber. More specifically, it will represent the subscriber&rsquo;s <em>pager</em> value, which will be a string.</p>
+
+<p>Very simple. However, we must not overlook a method from theaction class called <code>getActionableTargets</code>. This method implements an interface that should be designed in the context of the targets. In this case, pager addresses. But it could also be in the context of e-mails or other scenarios:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">getActionableTargets</span>(self, target):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="background-color:#fff0f0">        @param target: This is an object that implements the IProvidesPagerAddresses
+</span><span style="background-color:#fff0f0">            interface.
+</span><span style="background-color:#fff0f0">        @type target: UserSettings or GroupSettings.
+</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
+        <span style="color:#080;font-weight:bold">if</span> IProvidesPagerAddresses<span style="color:#333">.</span>providedBy(target):
+            <span style="color:#080;font-weight:bold">return</span> target<span style="color:#333">.</span>getPagerAddresses()</code></pre></div>
+<p>The importing of these interfaces can be seen at the top of the file:</p>
+
+<p><strong>Products/ZenModel/actions.py</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.interfaces</span> <span style="color:#080;font-weight:bold">import</span> (
+    IAction, IProvidesEmailAddresses, IProvidesPagerAddresses,
+    IProcessSignal, INotificationContextProvider,
+)</code></pre></div>
+<h2 id="sms-action-with-subscribers">SMS Action With Subscribers</h2>
+
+<p>Now to be able to use a similar <em>subscribers</em> approach like the e-mail action, we simply need to implement the concepts mentioned above. However, since we are going to use the pager field for the mobile number, we can use the <code>IProvidesPagerAddresses</code> interface in our code.</p>
+
+<p>We will rename our <code>execute</code> method to <code>executeOnTarget</code>, and we will include the new <code>target</code> parameter it receives. Additionally, all previous references to the <code>cellphone_number</code> field should be changed to <code>target</code>.</p>
+
+<p>Then we simply include the <code>getActionableTargets</code> method in our class, and make sure we are importing the interface.</p>
+
+<p>With all this we should be good to go. If you create some users and assign a valid mobile number in their <em>pager</em> field, add the users to the notification as subscribers, then the notification should successfully pick up the mobile number.</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">Zenoss Core 4.2.5 Pager Action</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

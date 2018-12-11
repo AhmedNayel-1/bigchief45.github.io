@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ui on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/ui/</link>
+    <description>Recent content in Ui on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 21 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/ui/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Extending Zenoss Navigation Bars</title>
+      <link>http://aalvarez.me/posts/extending-zenoss-navigations/</link>
+      <pubDate>Wed, 21 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/extending-zenoss-navigations/</guid>
+      <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&amp;rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
+
+&lt;h2 id=&#34;configure-zcml&#34;&gt;configure.zcml&lt;/h2&gt;
+
+&lt;p&gt;Zenoss ZenPacks can contain a file in the ZenPack top directory called &lt;code&gt;configure.zcml&lt;/code&gt;. I&amp;rsquo;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.&lt;/p&gt;
+
+&lt;p&gt;It is in this file where we will declare and create new navigational links from our ZenPack.&lt;/p&gt;
+
+&lt;p&gt;~&amp;gt; In this post we assume that the ZenPack is created using &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.&lt;/p&gt;
+
+&lt;p&gt;Usually this file begins with some required boilerplate code:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;configure.zcml&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;configure&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;xmlns=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zope&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#070&#34;&gt;&amp;gt;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#888&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#070&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#00c&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#070&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modifying the Zenoss Infrastructure Grid</title>
+      <link>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</link>
+      <pubDate>Thu, 10 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</guid>
+      <description>&lt;p&gt;Continuing from my previous post, where I explained &lt;a href=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;how to modify the device detail bar from a ZenPack using ExtJS&lt;/a&gt;, in this post I will explain how we can modify the device list grid shown in the infrastructure page.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-infrastructure-grid&#34;&gt;The Infrastructure Grid&lt;/h2&gt;
+
+&lt;p&gt;This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include &lt;em&gt;device name&lt;/em&gt;, &lt;em&gt;device class&lt;/em&gt;, &lt;em&gt;IP address&lt;/em&gt;, &lt;em&gt;production state&lt;/em&gt;, and &lt;em&gt;events&lt;/em&gt;, as shown in the image below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&amp;rsquo;t do this by default is beyond me).&lt;/p&gt;
+
+&lt;h2 id=&#34;devicepanels-js&#34;&gt;DevicePanels.js&lt;/h2&gt;
+
+&lt;p&gt;The source code for the grid is found in &lt;code&gt;$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js&lt;/code&gt;. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called &lt;code&gt;deviceColumns&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modifying the Zenoss Device Detail Bar</title>
+      <link>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</link>
+      <pubDate>Tue, 08 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</guid>
+      <description>&lt;p&gt;The Zenoss Core &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;&lt;strong&gt;ExtJS&lt;/strong&gt;&lt;/a&gt; graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.&lt;/p&gt;
+
+&lt;p&gt;Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in &lt;code&gt;$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss&lt;/code&gt;, and as you would expect, the device detail bar component is also located there.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-device-detail-bar&#34;&gt;The Device Detail Bar&lt;/h2&gt;
+
+&lt;p&gt;This is the detail bar located on the device view page which shows the device&amp;rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in &lt;code&gt;DeviceDetailBar.js&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However since we are going to &lt;strong&gt;&lt;em&gt;extend&lt;/em&gt;&lt;/strong&gt; this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.&lt;/p&gt;
+
+&lt;h2 id=&#34;extending-the-component-through-zenpacks&#34;&gt;Extending The Component, Through ZenPacks&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s assume we are starting with a freshly created ZenPack, which adds a new &lt;code&gt;power_status&lt;/code&gt; integer field to certain devices, according to its &lt;code&gt;zenpack.yaml&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;classes:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;CustomDevice:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Device]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Custom&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Device&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;power_status:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;type:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What we want is to display this value in the device&amp;rsquo;s detail bar, similar to the device&amp;rsquo;s ping status display.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

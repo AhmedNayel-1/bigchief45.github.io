@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cancellable Tasks in Netbeans Platform &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Cancellable Tasks in Netbeans Platform</h1>
+  <time datetime=2018-11-28T00:00:00Z class="post-date">Wed, Nov 28, 2018</time>
+
+  <p>I was trying to implement cancellable tasks in Netbeans Platform using <a href="https://rubenlaguna.com/post/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform/">this blog post</a> as reference.</p>
+
+<p>However I never managed to make it work. The tasks&rsquo;s thread would never get interrupted even after the confirmation dialog, the task would just keep running.</p>
+
+<p>After some digging on the Netbeans Platform and IDE <a href="https://github.com/apache/incubator-netbeans">source code</a>, I think I managed to find a way to properly and <strong>easily</strong> implement cancellable tasks.</p>
+
+<h2 id="the-cancellable-interface">The <code>Cancellable</code> Interface</h2>
+
+<p>The trick to making your tasks cancellable is by implementing the <code>Cancellable</code> interface and using a <strong>request processor</strong> and <strong>progress handle</strong> that&rsquo;s configured to be able to cancel a given task.</p>
+
+<p>When the user cancels the task using the GUI, the <code>cancel()</code> method will be called, and this is where we will handle the logic to determine if the task was cancelled or not. Here is an example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">org.openide.util.Cancellable</span><span style="color:#333">;</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">org.netbeans.api.progress.ProgressHandle</span><span style="color:#333">;</span>
+
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyCancellableTask</span> <span style="color:#080;font-weight:bold">implements</span> Runnable<span style="color:#333">,</span> Cancellable <span style="color:#333">{</span>
+
+  <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">final</span> ProgressHandle progress<span style="color:#333">;</span>
+  <span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">boolean</span> cancelled <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">false</span><span style="color:#333">;</span>
+
+  <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">MyCancellableTask</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+    <span style="color:#888">// Notice how we pass this same task as a &#39;Cancellable&#39; object to the progress handle
+</span><span style="color:#888"></span>    progress <span style="color:#333">=</span> ProgressHandle<span style="color:#333">.</span><span style="color:#00c">createHandle</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;Executing MyCancellableTask&#34;</span><span style="color:#333">,</span> <span style="color:#080;font-weight:bold">this</span><span style="color:#333">);</span>
+  <span style="color:#333">}</span>
+
+  <span style="color:#555;font-weight:bold">@Override</span>
+  <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">run</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+    progress<span style="color:#333">.</span><span style="color:#00c">start</span><span style="color:#333">();</span>
+
+    <span style="color:#888">// Do some time consuming task
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> 0<span style="color:#333">;</span> i <span style="color:#333">&lt;</span> Integer<span style="color:#333">.</span><span style="color:#00c">MAX_VALUE</span><span style="color:#333">;</span> i<span style="color:#333">++)</span> <span style="color:#333">{</span>
+      <span style="color:#888">// We still check for interrupted thread just to be safe
+</span><span style="color:#888"></span>      <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>Thread<span style="color:#333">.</span><span style="color:#00c">interrupted</span><span style="color:#333">()</span> <span style="color:#333">||</span> cancelled<span style="color:#333">)</span> <span style="color:#333">{</span>
+        <span style="color:#888">// In this case we can use break, but if there is more logic after the loop
+</span><span style="color:#888"></span>        <span style="color:#888">// then we should finish the progress handle and return
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">break</span><span style="color:#333">;</span>
+      <span style="color:#333">}</span>
+
+      System<span style="color:#333">.</span><span style="color:#00c">out</span><span style="color:#333">.</span><span style="color:#00c">println</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;i = &#34;</span> <span style="color:#333">+</span> i<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
+
+    progress<span style="color:#333">.</span><span style="color:#00c">finish</span><span style="color:#333">();</span>
+  <span style="color:#333">}</span>
+
+  <span style="color:#555;font-weight:bold">@Override</span>
+  <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">synchronized</span> <span style="color:#339;font-weight:bold">boolean</span> <span style="color:#06b;font-weight:bold">cancel</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+    cancelled <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">true</span><span style="color:#333">;</span>
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">true</span><span style="color:#333">;</span>
+  <span style="color:#333">}</span>
+
+<span style="color:#333">}</span></code></pre></div>
+<p>Notice how we are now handling the state of the task (if it&rsquo;s cancelled or not) using a boolean, instead of just relying on <code>Thread.interrupted()</code>.</p>
+
+<p>We can now start this cancellable task like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">StartMyCancellableTaskAction</span> <span style="color:#080;font-weight:bold">implements</span> ActionListener <span style="color:#333">{</span>
+
+  <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">StartMyCancellableTaskAction</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+
+  <span style="color:#333">}</span>
+
+  <span style="color:#555;font-weight:bold">@Override</span>
+  <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">actionPerformed</span><span style="color:#333">(</span>ActionEvent evt<span style="color:#333">)</span> <span style="color:#333">{</span>
+    <span style="color:#888">// Use a custom RequestProcessor, since we need to specify support for cancellable
+</span><span style="color:#888"></span>    <span style="color:#888">// tasks
+</span><span style="color:#888"></span>    RequestProcessor rp <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> RequestProcessor<span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;MyCancellableTask&#34;</span><span style="color:#333">,</span> 1<span style="color:#333">,</span> <span style="color:#080;font-weight:bold">true</span><span style="color:#333">);</span>
+    MyCancellableTask task <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> MyCancellableTask<span style="color:#333">();</span>
+    rp<span style="color:#333">.</span><span style="color:#00c">post</span><span style="color:#333">(</span>task<span style="color:#333">);</span>
+  <span style="color:#333">}</span>
+<span style="color:#333">}</span></code></pre></div>
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://rubenlaguna.com/post/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform/">Cancellable tasks and progress indicators [Netbeans Platform]</a></li>
+<li><a href="https://www.antonioshome.net/kitchen/netbeans/nbms-threads.php">Noodle Threads (threading, progress, console)</a></li>
+<li><a href="http://wiki.netbeans.org/BookNBPlatformCookbookCH0210#Using_Progress_Bar">http://wiki.netbeans.org/BookNBPlatformCookbookCH0210#Using_Progress_Bar</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>IPMI &amp; Baseboard Management Controllers &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>IPMI &amp; Baseboard Management Controllers</h1>
+  <time datetime=2016-11-18T00:00:00Z class="post-date">Fri, Nov 18, 2016</time>
+
+  <p>An <strong>Intelligent Platform Management Interface (IPMI)</strong> is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system&rsquo;s CPU, BIOS, and operating system.</p>
+
+<p>IPMI can also help manage computers that are unresponsive or powered off, by using a network connection to the <strong>hardware</strong>, rather than to a operating system or login shell.</p>
+
+<p>More specifically, IPMI can help us monitor, obtain data, and perform tasks such as:</p>
+
+<ul>
+<li>System temperature</li>
+<li>Voltages</li>
+<li>Fans</li>
+<li>Power supplies</li>
+<li>Chassis intrusion</li>
+<li>Perform recovery procedures</li>
+<li>System rebooting</li>
+<li>System powering</li>
+</ul>
+
+<p>An IPMI sub-system consists of a main controller, called the baseboard management controller (BMC) and other management controllers distributed among different system modules that are referred to as <em>satellite controllers</em>. The satellite controllers within the same chassis connect to the BMC via another system interface (not covered in this post) called Intelligent Platform Management Bus/Bridge (IPMB)</p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/IPMI-Block-Diagram.png" alt="IPMI Sub-System" /></p>
+
+<h2 id="the-baseboard-management-controller">The Baseboard Management Controller</h2>
+
+<p>An IPMI sub-system consists of a main controller, called the <strong>baseboard management controller (BMC)</strong> and other management controllers distributed among different system modules that are referred to as satellite controllers.</p>
+
+<p>The BMC is actually a microcontroller that is embedded on the <strong>motherboard</strong> of a computer (usually a server). The BMC manages the interface between system-management software and the hardware.</p>
+
+<p><img src="http://www.servethehome.com/wp-content/uploads/2010/11/Nuvotion-BMC.jpg" alt="BMC" /></p>
+
+<h2 id="querying-the-bmc-with-ipmitool">Querying the BMC With ipmitool</h2>
+
+<p>It is possible to use a tool called <a href="http://freecode.com/projects/ipmitool">ipmitool</a> to query the BMC for some data (like the one listed above).</p>
+
+<p>For example:</p>
+
+<pre><code>ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD sdr'
+</code></pre>
+
+<p>Where <code>$BMC_IP</code> stands for the BMC server&rsquo;s IP Address, <code>$USERNAME</code> stands for the server&rsquo;s username, and <code>$PASSWORD</code> stands for the server&rsquo;s password for the entered username.</p>
+
+<p>If ipmitool can successfully connect and query to the server, it can print out a lot of information such as:</p>
+
+<pre><code>MLB Inlet TEMP   | 28 degrees C      | ok
+PCH Local TEMP   | 56 degrees C      | ok
+MLB Outlet TEMP1 | 45 degrees C      | ok
+MLB Outlet TEMP2 | 46 degrees C      | ok
+CPU 1 Temp       | 47 degrees C      | ok
+CPU 2 Temp       | 49 degrees C      | ok
+CPU1 PECI ABS    | 44 degrees C      | ok
+CPU2 PECI ABS    | 42 degrees C      | ok
+VCORE1           | 0.84 Volts        | ok
+VCORE2           | 0.83 Volts        | ok
+CPU1 AB DDR      | 1.36 Volts        | ok
+CPU1 CD DDR      | 1.37 Volts        | ok
+CPU2 AB DDR      | 1.36 Volts        | ok
+CPU2 CD DDR      | 1.36 Volts        | ok
+STBY 3.3V        | 3.39 Volts        | ok
+STBY 5V          | 5.07 Volts        | ok
+PS 12V           | 12.16 Volts       | ok
+PS 1.1V          | 1.13 Volts        | ok
+SYS FAN1         | 5643 RPM          | ok
+SYS FAN2         | 5643 RPM          | ok
+SYS FAN3         | 5643 RPM          | ok
+SYS FAN4         | 5643 RPM          | ok
+SYS Inlet TEMP   | 23 degrees C      | ok
+CPU1 Status      | 0x00              | ok
+CPU2 Status      | 0x00              | ok
+PEF Action       | 0x00              | ok
+Watchdog2        | 0x00              | ok
+PCI BUS          | 0x00              | ok
+Memory           | 0x00              | ok
+SEL Fullness     | 0x00              | ok
+ACPI Pwr State   | 0x00              | ok
+Single MLB PWR   | 39.90 Watts       | ok
+System PWR       | 42 Watts          | ok
+Chassis PWR      | 356.70 Watts      | ok
+PSU1 Status      | 0x00              | ok
+PSU2 Status      | 0x00              | ok
+PSU Redundancy   | 0x00              | ok
+PSU1_AC_STATUS   | 0x00              | ok
+PSU1_DC_STATUS   | 0x00              | ok
+PSU2_AC_STATUS   | 0x00              | ok
+PSU2_DC_STATUS   | 0x00              | ok
+PSU1_In_Power    | 185.50 Watts      | ok
+PSU2_In_Power    | 169.60 Watts      | ok
+PSU1_Out_Power   | 169.60 Watts      | ok
+PSU2_Out_Power   | 164.30 Watts      | ok
+PSU1_Out_Vol     | 12 Volts          | ok
+PSU2_Out_Vol     | 12.10 Volts       | ok
+PSU1_In_Temp     | 40 degrees C      | ok
+PSU2_In_Temp     | 41 degrees C      | ok
+PSU1_In_Vol      | 220 Volts         | ok
+PSU2_In_Vol      | 220 Volts         | ok
+</code></pre>
+
+<p>With that output, we can then individually select which fields of data we actually need by using combinations of Linux commands such as <code>grep</code> and <code>awk</code>.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/hardware" class="label label-default">hardware</a></li>
+  
+    <a href="http://aalvarez.me/tags/ipmi" class="label label-default">ipmi</a></li>
+  
+    <a href="http://aalvarez.me/tags/ipmitool" class="label label-default">ipmitool</a></li>
+  
+    <a href="http://aalvarez.me/tags/bmc" class="label label-default">bmc</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

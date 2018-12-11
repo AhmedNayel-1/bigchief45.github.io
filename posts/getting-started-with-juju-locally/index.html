@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Getting Started With Juju Locally &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Getting Started With Juju Locally</h1>
+  <time datetime=2017-02-10T00:00:00Z class="post-date">Fri, Feb 10, 2017</time>
+
+  <p><a href="https://jujucharms.com/">Juju</a> is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.</p>
+
+<p>In this post I will explain how easy it is to get started with Juju in a <strong>local</strong> environment.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>To start we will need to add the necessary repository from where we will retrieve the Juju packages:</p>
+
+<pre><code>sudo add-apt-repository ppa:juju/stable
+sudo apt-get update
+</code></pre>
+
+<p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
+
+<pre><code>sudo apt-get install juju-core
+sudo apt-get install juju-local
+</code></pre>
+
+<h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
+
+<p>Before we set up the local environment, let&rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
+
+<pre><code>juju generate-config
+juju switch local
+</code></pre>
+
+<p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
+
+<pre><code>juju bootstrap
+</code></pre>
+
+<p>After the process is complete, we are now ready to start using Juju.</p>
+
+<h2 id="deploying-services">Deploying Services</h2>
+
+<p>We can now start deploying our services. For example you can deploy the typical Wordpress service:</p>
+
+<pre><code>juju deploy wordpress
+</code></pre>
+
+<p>However, we want to focus on deploying our custom services from our custom local charms. Let&rsquo;s create a directory for our local charms:</p>
+
+<pre><code>mkdir -p /home/$USER/charms/trusty/
+</code></pre>
+
+<p>We will place the Juju charm directories inside that directory. For example, I can clone my <a href="https://github.com/BigChief45/zenoss-charm">Zenoss Core 4 charm</a> into that directory and then Zenoss Core:</p>
+
+<pre><code>cd $/home/$USER/charms/trusty/
+git clone https://github.com/BigChief45/zenoss-charm.git
+
+juju deploy --repository=/home/$USER/charms/ local:trusty/zenoss
+</code></pre>
+
+<p>Juju will fetch for the charm under that directory and begin deploying the service. I can then monitor the status of the deployment using:</p>
+
+<pre><code>watch -n 0.5 juju status zenoss --format tabular
+</code></pre>
+
+<p>As well as tracking the logs generated by Juju:</p>
+
+<pre><code>juju debug-log | grep zenoss
+</code></pre>
+
+<h2 id="enabling-ip-tables-for-local-services">Enabling IP Tables for Local Services</h2>
+
+<p>Juju will create a container for a deployed service. When the deployment is finished, we can access that service using the address shown in the <code>public-address</code> field (use <code>juju status</code>). However, when navigating to that address using a web browser, it is very possible that we will not be able to access the service due to IP tables.</p>
+
+<p>We can add a rule to enable the service:</p>
+
+<pre><code>iptables -t nat -A PREROUTING -i eth0 -p tcp -d $FORWARD_IP --dport 80 -j DNAT --to-destination $DEST_IP:8080
+</code></pre>
+
+<p>Where:</p>
+
+<ul>
+<li><code>$FORWARD_IP</code> stands for the IP address of the server where Juju is installed.</li>
+<li><code>$DEST_IP</code> stands for the service&rsquo;s public address IP.</li>
+</ul>
+
+<p>Note that I appended the port used by Zenoss (8080) to the <code>$DEST_IP</code> field.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/juju" class="label label-default">juju</a></li>
+  
+    <a href="http://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/iptables" class="label label-default">iptables</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

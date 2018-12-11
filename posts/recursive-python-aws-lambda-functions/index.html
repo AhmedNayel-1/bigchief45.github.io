@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Recursive Python AWS Lambda Functions &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Recursive Python AWS Lambda Functions</h1>
+  <time datetime=2018-09-18T00:00:00Z class="post-date">Tue, Sep 18, 2018</time>
+
+  <p>There are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.</p>
+
+<p>Basically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.</p>
+
+<h2 id="defining-our-use-case">Defining Our Use Case</h2>
+
+<p>Let&rsquo;s base our business logic on a very common use case: processing of uploaded files to S3. Obviously it is implied that we will be dealing with a processing task that will require a relatively large amount of time (i.e more than 5 minutes) to complete, for each file.</p>
+
+<p>Additionally we will also be using an SQS queue, therefore everytime a file is uploaded to S3, a message is sent to the queue, and each message will trigger our <em>initial</em> functions.</p>
+
+<h2 id="implementing-recursion">Implementing Recursion</h2>
+
+<p>Let&rsquo;s begin writing the handler for our Lambda function. The first thing we need to do is parse the event object to get the S3 key of the uploaded file:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">json</span>
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">boto3</span>
+
+
+BATCH_SIZE <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">400</span>
+
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">handler</span>(event, context):
+    sqs_record <span style="color:#333">=</span> event[<span style="background-color:#fff0f0">&#39;Records&#39;</span>][<span style="color:#00d;font-weight:bold">0</span>]  <span style="color:#888"># Assumes a Batch Size of 1 in the queue</span>
+    position <span style="color:#333">=</span> event<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;position&#39;</span>, <span style="color:#00d;font-weight:bold">0</span>)  <span style="color:#888"># Represents the starting position</span>
+    key <span style="color:#333">=</span> _get_object_key_from_s3_notification(sqs_record)
+
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_get_object_key_from_s3_notification</span>(record):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34;Returns the file&#39;s S3 key from the record object.&#34;&#34;&#34;</span>
+
+    body <span style="color:#333">=</span> json<span style="color:#333">.</span>loads(record[<span style="background-color:#fff0f0">&#39;body&#39;</span>])
+    msg <span style="color:#333">=</span> json<span style="color:#333">.</span>loads(body[<span style="background-color:#fff0f0">&#39;Message&#39;</span>])
+    <span style="color:#080;font-weight:bold">return</span> msg[<span style="background-color:#fff0f0">&#39;Records&#39;</span>][<span style="color:#00d;font-weight:bold">0</span>][<span style="background-color:#fff0f0">&#39;s3&#39;</span>][<span style="background-color:#fff0f0">&#39;object&#39;</span>][<span style="background-color:#fff0f0">&#39;key&#39;</span>]</code></pre></div>
+<p>Now we can proceed to download the file. Let&rsquo;s keep in mind that we want to make use of the optimization benefits that container re-use gives us. This means that we will first check if the file already exists before we proceed to download it:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">handler</span>(event, context):
+    <span style="color:#888"># ...</span>
+
+    file_path <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;/tmp/{}&#39;</span><span style="color:#333">.</span>format(key)
+    file_exists <span style="color:#333">=</span> os<span style="color:#333">.</span>path<span style="color:#333">.</span>exists(file_path)
+    <span style="color:#080;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> file_exists:
+        <span style="color:#080;font-weight:bold">print</span>(<span style="background-color:#fff0f0">&#39;File does not exists. Downloading...&#39;</span>)
+        <span style="color:#888"># Download the file from S3</span>
+
+    <span style="color:#888"># Processing of the batch goes here</span>
+
+    position <span style="color:#333">+=</span> BATCH_SIZE  <span style="color:#888"># Move the position pointer for next batch</span>
+    <span style="color:#080;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> _process_is_complete(position):
+         <span style="color:#888"># Some function that can determine if the process is completed or not.</span>
+         <span style="color:#888"># If it&#39;s not, a new function will be invoked.</span>
+         event[<span style="background-color:#fff0f0">&#39;position&#39;</span>] <span style="color:#333">=</span> position
+         _recurse(context, event)
+    <span style="color:#080;font-weight:bold">else</span>:
+        <span style="color:#080;font-weight:bold">print</span>(<span style="background-color:#fff0f0">&#39;Processing complete&#39;</span>)
+        os<span style="color:#333">.</span>remove(file_path)  <span style="color:#888"># Cleanup</span>
+
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_recurse</span>(context, payload):
+    lambda_client <span style="color:#333">=</span> boto3<span style="color:#333">.</span>client(<span style="background-color:#fff0f0">&#39;lambda&#39;</span>)
+    lambda_client<span style="color:#333">.</span>invoke(
+        FunctionName<span style="color:#333">=</span>context<span style="color:#333">.</span>function_name,
+        InvocationType<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Event&#39;</span>,
+        Payload<span style="color:#333">=</span>json<span style="color:#333">.</span>dumps(payload)
+    )</code></pre></div>
+<p>And there you have it! This code will spawn multiple Lambda functions depending on how many batches are needed to complete the whole process. Of course you will need to add the necessary logic for <code>_process_is_complete()</code> in order to know when to stop.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>An Introduction to Game States in Love2D &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>An Introduction to Game States in Love2D</h1>
+  <time datetime=2017-07-27T00:00:00Z class="post-date">Thu, Jul 27, 2017</time>
+
+  <p>After going through countless blog and video tutorials on getting started with Love2D, I found it sad that most people would not take the approach of implementing <strong>game states</strong> right from the start, or would try to mimick this functionality in a &ldquo;dirty&rdquo; way.</p>
+
+<p>After lots of time of reading many forum posts and library documentations. I found a way to implement game states in my games that I am very satisfied with.</p>
+
+<p>In this post I will go over how to implement game states and some of the most common game states seen in games, in such a way that your code is remains organized and neat.</p>
+
+<h2 id="game-states-with-stateful-lua">Game States With Stateful.lua</h2>
+
+<p>We will be using a simple but great Lua library called <a href="https://github.com/kikito/stateful.lua">Stateful</a>, made by <a href="https://github.com/kikito">kikito</a>. This library will allow us to easily implement and work with game states inside our game.</p>
+
+<p>This library also depends on the <a href="https://github.com/kikito/middleclass">Middleclass</a> library (also by kikito). Middleclass will allow us to construct and develop our game in a OOP (Object Oriented Programing) fashion. If you are familiar with OOP then you will love this approach.</p>
+
+<h3 id="basic-game-structure">Basic Game Structure</h3>
+
+<p>With Stateful, what we really want to achieve is that we can create different and separate (separate files) states that will contain different attributes and methods. Moreover, each and every state will have its own <code>update()</code> and <code>draw()</code> functions that will work just like <code>love.update()</code> and <code>love.draw()</code>. The key thing here though is that each state will be able to draw itself in a different way.</p>
+
+<p>With this approach, we will also want our <code>main.lua</code> to be as clean as possible. Meaning that it won&rsquo;t contain anything else other than declarations for the usual functions that are used (the ones mentioned above):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">class <span style="color:#333">=</span> require <span style="background-color:#fff0f0">&#39;lib/middleclass&#39;</span>
+Stateful <span style="color:#333">=</span> require <span style="background-color:#fff0f0">&#39;lib/stateful&#39;</span>
+
+require <span style="background-color:#fff0f0">&#39;game&#39;</span>
+
+<span style="color:#080;font-weight:bold">local</span> game
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">load</span>()
+  <span style="color:#888">-- Launch Game starting at Main Menu</span>
+  game <span style="color:#333">=</span> Game:new()
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">update</span>(dt)
+  game:update(dt)
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">draw</span>()
+  game:draw()
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
+  game:keypressed(key, code)
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">mousepressed</span>(x, y, button, istouch)
+  game:mousepressed(x, y, button, istouch)
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>As you can see, <code>main.lua</code> simply globally requires Middleclass and Stateful, creates a new instance of <code>Game</code> (Class definition of this class is found inside <code>game.lua</code>), and then proceeds to pass the same functions to <code>game</code>.</p>
+
+<p>This way, <code>main.lua</code> will be nothing but a clean entry point that quickly delegates responsibilities to <code>Game</code>. Let&rsquo;s take a look at this <code>Game</code> class:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#888">--- game.lua</span>
+
+Game <span style="color:#333">=</span> class(<span style="background-color:#fff0f0">&#39;Game&#39;</span>):include(Stateful)
+
+require <span style="background-color:#fff0f0">&#39;states/menu&#39;</span>
+require <span style="background-color:#fff0f0">&#39;states/pause&#39;</span>
+require <span style="background-color:#fff0f0">&#39;states/game_over&#39;</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">initialize</span>()
+  self:gotoState(<span style="background-color:#fff0f0">&#39;Menu&#39;</span>)
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">exit</span>()
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">update</span>(dt)
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">draw</span>()
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
+  <span style="color:#888">-- Pause game</span>
+  <span style="color:#080;font-weight:bold">if</span> key <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;p&#39;</span> <span style="color:#080;font-weight:bold">then</span>
+    self:pushState(<span style="background-color:#fff0f0">&#39;Pause&#39;</span>)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">mousepressed</span>(x, y, button, isTouch)
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p><code>Game</code> will be the  <em>real</em> starting point of the game. And will act as a parent for the other states.</p>
+
+<p>We begin by globally creating the <code>Game</code> class using Middleclass, and then declaring that it contains states, using the Stateful <code>include(Stateful)</code> mixin.</p>
+
+<p>-&gt; In Lua, all variables declared without <code>local</code> keyword are declared as global.</p>
+
+<p>After this we proceed to require the code for the states we will implement in this post. These are <em>menu</em>, <em>pause</em>, and <em>game over</em>. Very common game states in basically any game.</p>
+
+<p>The <code>initialize()</code> function is provided by Middleclass. It allows us to create a function that will act as a constructor for this class, mimicking a similar approach as to when programming in Ruby. The colon accessor <code>:</code> allows us to implicitely pass a <code>self</code> which we can use to assign instance attributes, like in Python.</p>
+
+<p>In this constructor we are immediately switching to another state called <code>Menu</code> (for the main menu) using Stateful&rsquo;s <code>gotoState()</code> function. The <code>Game</code> instance created in <code>main.lua</code> will go to this state as soon as it is created.</p>
+
+<p>The rest of the code is basically repeating the same functions we saw before. This is because <code>main.lua</code> will call <em>these</em> functions.</p>
+
+<p>In the game&rsquo;s <code>keypressed()</code> function we are also going to another state called <code>Pause</code> using Stateful&rsquo;s  <code>pushState()</code> function.</p>
+
+<h3 id="the-state-stack">The State Stack</h3>
+
+<p>When declaring that a class is stateful, Stateful.lua will proceed to manage a stack for this class. States can be pushed into the stack and popped out of the stack.</p>
+
+<p>When using <code>gotoState()</code>, all states found inside the stack of a certain class will be popped out. Lastly, the state passed to this function will be pushed in.</p>
+
+<p>When using <code>pushState()</code>, the state passed to the function is simply pushed to the stack. All the previous states will still be in the stack.</p>
+
+<p>The state in the top most position will have the highest priority, and will represent the current state the class is in.</p>
+
+<h2 id="the-menu-state">The Menu State</h2>
+
+<p>As soon as a game instance is created in <code>main.lua</code>, the class switches to the <code>Menu</code> state. Let&rsquo;s take a look at the code for this state:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#888">-- states/menu.lua</span>
+
+<span style="color:#080;font-weight:bold">local</span> Menu <span style="color:#333">=</span> Game:addState(<span style="background-color:#fff0f0">&#39;Menu&#39;</span>)
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">enteredState</span>()
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">update</span>(dt)
+  <span style="color:#888">-- You should switch to another state here,</span>
+  <span style="color:#888">-- Usually when a button is pressed.</span>
+  <span style="color:#888">-- Either with gotoState() or pushState()</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">draw</span>()
+  <span style="color:#888">-- Draw your menu stuff (buttons, etc.) here</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>You can see how all these state objects look very similar and contain <code>update()</code> and <code>draw()</code> functions.</p>
+
+<p>The <code>enteredState()</code> function allows us to do useful things when the game switches to this state.</p>
+
+<p>Notice how we are delcaring the <code>keypressed</code> function blank. This is important because in <code>Game</code>&rsquo;s <code>keypressed</code> function, the game will be paused when the <code>p</code> key is pressed. Since it makes no sense to pause the game when we are in the menu, we want to disable this functionality. We do so by delcaring this function blank.</p>
+
+<p>This means that states that belong to <code>Game</code> will <strong>inherit</strong> these functions!</p>
+
+<p>The drawing and update functions logic are pretty much left up to your implementation. For a project I am working in, I came up with this main menu state:</p>
+
+<p><img src="/posts/an-introduction-to-game-states-in-love2d/menu_state.jpg" alt="Menu State" /></p>
+
+<h2 id="the-pause-state">The Pause State</h2>
+
+<p>The pause state is entered when the <code>p</code> key is pressed in the game. This is done using the <code>pushState()</code> function which simply pushes the new state into the stack.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#888">-- states/pause.lua</span>
+
+<span style="color:#080;font-weight:bold">local</span> Pause <span style="color:#333">=</span> Game:addState(<span style="background-color:#fff0f0">&#39;Pause&#39;</span>)
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">enteredState</span>()
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">exitedState</span>()
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">draw</span>()
+  love.graphics.setBackgroundColor(BG_COLOR)
+
+  love.graphics.setColor(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">51</span>, <span style="color:#00d;font-weight:bold">100</span>)
+  love.graphics.rectangle(<span style="background-color:#fff0f0">&#39;fill&#39;</span>, <span style="color:#00d;font-weight:bold">350</span>, <span style="color:#00d;font-weight:bold">200</span>, <span style="color:#00d;font-weight:bold">200</span>, <span style="color:#00d;font-weight:bold">50</span>)
+
+  love.graphics.setColor(<span style="color:#00d;font-weight:bold">255</span>, <span style="color:#00d;font-weight:bold">223</span>, <span style="color:#00d;font-weight:bold">0</span>)
+  love.graphics.printf(<span style="background-color:#fff0f0">&#39;GAME PAUSED&#39;</span>, <span style="color:#00d;font-weight:bold">350</span>, <span style="color:#00d;font-weight:bold">220</span>, <span style="color:#00d;font-weight:bold">200</span>, <span style="background-color:#fff0f0">&#39;center&#39;</span>)
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
+  <span style="color:#080;font-weight:bold">if</span> key <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;p&#39;</span> <span style="color:#080;font-weight:bold">then</span>
+    self:popState(<span style="background-color:#fff0f0">&#39;Pause&#39;</span>)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>Again, we see the <code>enteredState()</code> callback function and the usual <code>draw()</code> and <code>update()</code> functions. Nothing important here.</p>
+
+<p>What I really want to show from this state is how we <em>unpause</em>. Naturally, by pressing the <code>p</code> key again. When this happens, the <code>keypressed</code> function is called, and then Stateful&rsquo;s <code>popState()</code> function is called as well, indicating which state we want to pop: the current state.</p>
+
+<p>This is another example of how to manipulate the state stack through all the different states available. By using <code>popState()</code> we just remove the current state and go <strong>back</strong> to the previous state, whatever state that is, usually it would be a state where we are actually playing the game.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>With this knowledge you can implement pretty much any other state. The key is to know which function you should use to switch to the state, either <code>gotoState()</code> or <code>pushState()</code>.</p>
+
+<p>It is also important to remember that the state objects will inherit the functions declared in the &ldquo;parent&rdquo; object, in this case <code>Game</code>. This means that in state objects that belong to game, the game can be paused through the <code>keypressed</code> function. If you don&rsquo;t want the game to be able to be paused in a certain state (like menu), then you should overwrite this function.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/game-dev" class="label label-default">game dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/love2d" class="label label-default">love2d</a></li>
+  
+    <a href="http://aalvarez.me/tags/lua" class="label label-default">lua</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

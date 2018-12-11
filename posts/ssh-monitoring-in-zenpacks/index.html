@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SSH Monitoring in ZenPacks &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>SSH Monitoring in ZenPacks</h1>
+  <time datetime=2016-12-14T00:00:00Z class="post-date">Wed, Dec 14, 2016</time>
+
+  <p>Zenoss usually monitors and collects information using <strong>SNMP</strong> and <strong>SSH</strong> methods. A good example of is the <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">linux monitor ZenPack</a> which can collect information such as hard disks, interfaces, and file systems using <strong>both</strong> methods.</p>
+
+<p>SNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using <strong><a href="http://www.net-snmp.org/">net-snmp</a></strong>.</p>
+
+<p>On the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.</p>
+
+<p>When developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on <a href="https://zenpacklib.zenoss.com/en/latest/tutorial-snmp-device/index.html">SNMP monitoring using zenpacklib</a>. When using SNMP, the modeler plugins are <code>SnmpPlugin</code> plugins that typically work using a set of <a href="http://www.dpstele.com/snmp/what-does-oid-network-elements.php">OIDs</a> to determine exactly which data is to be modeled.</p>
+
+<h2 id="ssh-in-modeler-plugins">SSH in Modeler Plugins</h2>
+
+<p>In order to make a modeler plugin utilize SSH as it&rsquo;s polling method we need to use a different type of plugin, the <code>CommandPlugin</code> plugin. The structure of this type of plugin is very similar to the <code>SnmpPlugin</code>, however there is one critical variable that must be implemented.</p>
+
+<p>A variable named <code>command</code> must be initialized and it must contain a string that exactly represents the command to be executed in a remote host Bash shell. The output will then be processed into a <code>results</code> variable that can be processed in the <code>process</code> method.</p>
+
+<p>Let&rsquo;s take a look at a basic skeleton of this kind of plugin:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="background-color:#fff0f0">&#34;&#34;&#34;Modeler plugin&#39;s description&#34;&#34;&#34;</span>
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.DataCollector.plugins.CollectorPlugin</span> <span style="color:#080;font-weight:bold">import</span> CommandPlugin
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.DataCollector.plugins.DataMaps</span> <span style="color:#080;font-weight:bold">import</span> ObjectMap, RelationshipMap
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> prepId
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">json</span>
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyPlugin</span>(CommandPlugin):
+    command <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;sudo ceph -s -f json&#39;</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">process</span>(self, device, results, log):
+        results <span style="color:#333">=</span> json<span style="color:#333">.</span>loads(results)
+
+        log<span style="color:#333">.</span>info(<span style="background-color:#fff0f0">&#39;Modeler {0} processing data for device {1}&#39;</span><span style="color:#333">.</span>format(self<span style="color:#333">.</span>name(), device<span style="color:#333">.</span><span style="color:#007020">id</span>))
+
+        <span style="color:#080;font-weight:bold">return</span> None</code></pre></div>
+<p>Notice where the <code>CommandPlugin</code> class is imported from. Other types of plugins can also be imported from nearby locations.</p>
+
+<p>The importing of <code>ObjectMap</code> and <code>RelationshipMap</code> is for returning the processed results. These are objects that Zenoss can understand when modeling devices. They represent the corresponding attributes of devices and components, and the corresponding relationships between them. For example, a <em>linux device</em> has many <em>network interfaces</em>.</p>
+
+<p>As mentioned before, the <code>command</code> variable is what tells the plugin which command should be executed through SSH. In this case I am using a command that returns some status data for <a href="http://ceph.com/">Ceph</a> in JSON. I can then process this JSON data inside the <code>process</code> method, and finally return an <code>ObjectMap</code> or <code>RelationshipMap</code>, instead of returning <code>None</code>.</p>
+
+<p>If the data is mapped correctly and all relationships are correctly defined (in <code>zenpack.yaml</code> if you are using zenpacklib), we should be able to see it in the user interface once we model the device:</p>
+
+<p><img src="/posts/ssh-monitoring-in-zenpacks/ceph_monitors.jpg" alt="Ceph Monitors" /></p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ssh" class="label label-default">ssh</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/bash" class="label label-default">bash</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

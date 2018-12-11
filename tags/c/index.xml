@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/c/</link>
+    <description>Recent content in C on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 07 Feb 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>C Gotchas For Beginners</title>
+      <link>http://aalvarez.me/posts/c-gotchas-for-beginners/</link>
+      <pubDate>Tue, 07 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/c-gotchas-for-beginners/</guid>
+      <description>&lt;p&gt;Similar to &lt;a href=&#34;http://aalvarez.me/posts/javascript-gotchas-for-beginners.html&#34;&gt;my post&lt;/a&gt; on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you &lt;strong&gt;must&lt;/strong&gt; know if you are to become a good C programmer.&lt;/p&gt;
+
+&lt;h2 id=&#34;boolean-types&#34;&gt;Boolean Types&lt;/h2&gt;
+
+&lt;p&gt;C actually does not have a boolean type. They are usually defined like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#define BOOL char
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define FALSE 0
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define TRUE 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;However it is argued that it is a better practice to simply use integers instead (&lt;code&gt;0&lt;/code&gt; and &lt;code&gt;1&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h2 id=&#34;memory-address-of-array-elements&#34;&gt;Memory Address of Array Elements&lt;/h2&gt;
+
+&lt;p&gt;In C, arrays have a contiguous memory allocation. We can verify this by printing the memory addresses of each element of an array. We can do so using &lt;code&gt;&amp;amp;&lt;/code&gt; to access the memory location of the array element:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() {
+  &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; vowels[] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;e&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;i&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;o&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;u&amp;#39;&lt;/span&gt;};
+
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
+    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Address of vowel [%d]: %u&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, i, &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;vowels[i]);
+  }
+
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above code will produces the following output for me:&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

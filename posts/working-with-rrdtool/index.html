@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Working With RRDTool &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Working With RRDTool</h1>
+  <time datetime=2017-05-02T00:00:00Z class="post-date">Tue, May 2, 2017</time>
+
+  <p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
+
+<h2 id="round-robin-databases">Round Robin Databases</h2>
+
+<p>RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing <strong>time series</strong> data.</p>
+
+<p>Moreover, rrdtool also <strong>doesn&rsquo;t</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
+
+<p>This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the <code>03</code> minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.</p>
+
+<p>In rrdtool, each database table is stored in a separate <code>.rrd</code> file. This means that one file represents one table.</p>
+
+<p>We can create a database using the following command:</p>
+
+<pre><code>rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
+</code></pre>
+
+<h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
+
+<p>One important parameter here is the <code>step</code> parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. <strong>This means that it only stores data every 300 seconds</strong>. Because of this re-sampling, rrdtool will not accept data from the past.</p>
+
+<h3 id="data-source">Data Source</h3>
+
+<p>The next parameter after the step is the data source definition, which is composed of different parts.</p>
+
+<p>The <code>DS:input</code> part indicates the data source, meaning <em>where</em> the data is obtained from. Data will always be time-series floating point data, but by defining the data source we can give rrdtool some information about the nature of the data. So whenever we refer to that column, we can refer to it using that name (in this case <code>input</code>).</p>
+
+<p>In the next part, we are indicating that the data is of type <code>GAUGE</code>. Gauge basically means that each data point collected in time does not depend on the other (i.e it doesn&rsquo;t matter what the value of the last data point collected was), a piece of information that stands on its own.</p>
+
+<p>Next, we can tell rrdtool how often we insist on updating this data source (known as the <strong>heartbeat</strong>), in this case <code>10</code> seconds. This means that data will <strong>only</strong> be accepted if it arrives within <strong>10 seconds</strong> of the last update. If data fails to arrive within this time, rrdtool will store an <code>Unknown</code> value for this time range.</p>
+
+<p>In the last part of the data source we define some lower and upper bounds for the data, <code>0:1000000</code>. This will make rrdtool check that the incoming data point value is between these bounds. If it&rsquo;s not, rrdtool will store <code>Unknown</code>.</p>
+
+<h3 id="data-storage-round-robin-archives">Data Storage: Round Robin Archives</h3>
+
+<p>One important feature of the Round Robin database is that it does not store sequentially, rather it sets up a file as you create the database, and that file already has enough space to store all the data you would want to store in that database. This space for storing the data is called the <strong>Round Robin Archive (RRA)</strong>, and a database can actually have several of these archives.</p>
+
+<p>Round Robin archives have a special property of jumping back to the beginning when they reach the end. This means that after returning to the beginning, all the data will be overwritten.</p>
+
+<p>In the database creation example above, we created a new RRA using <code>RRA:LAST:0.5:1:603</code>. Let&rsquo;s go over each of the parts belonging to this input:</p>
+
+<p>TODO</p>
+
+<p>The first part represents the consodilation function to use for this archive, in this case <code>AVERAGE</code>. Other available functions are <code>MIN</code>, <code>MAX</code>, and <code>LAST</code>. When data is entered into an RRD, it is first fit into time slots of the length defined with the <code>--step</code> option, thus becoming a <em>primary data point</em>. The data is also processed with the consolidation function of the archive.</p>
+
+<h4 id="rra-structure">RRA Structure</h4>
+
+<p>A RRA contains two parts of information. The first part is called the <strong>preparation area</strong>, and it stores information prior to actually updating the RRA. In the preparation area, data is fed, stored and prepared, and once ready, one item is transferred to the long term storage.</p>
+
+<p>-&gt; Round Robin archives basically live on their own, and do not depend on any data from the other RRAs. It has its own preparation area where data is being stored and prepared, and once ready, it is transferred into the long term storage area.</p>
+
+<p>This is an example of how an RRA&rsquo;s structure looks like along with the preparation area (<code>cdp_prep</code>) in XML format:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;rra&gt;</span>
+  <span style="color:#070">&lt;cf&gt;</span>AVERAGE<span style="color:#070">&lt;/cf&gt;</span>
+  <span style="color:#070">&lt;pdp_per_row&gt;</span>1<span style="color:#070">&lt;/pdp_per_row&gt;</span> <span style="color:#888">&lt;!-- 300 seconds --&gt;</span>
+
+  <span style="color:#070">&lt;params&gt;</span>
+  <span style="color:#070">&lt;xff&gt;</span>5.0000000000e-01<span style="color:#070">&lt;/xff&gt;</span>
+  <span style="color:#070">&lt;/params&gt;</span>
+  <span style="color:#070">&lt;cdp_prep&gt;</span>
+          <span style="color:#070">&lt;ds&gt;</span>
+          <span style="color:#070">&lt;primary_value&gt;</span>0.0000000000e+00<span style="color:#070">&lt;/primary_value&gt;</span>
+          <span style="color:#070">&lt;secondary_value&gt;</span>0.0000000000e+00<span style="color:#070">&lt;/secondary_value&gt;</span>
+          <span style="color:#070">&lt;value&gt;</span>NaN<span style="color:#070">&lt;/value&gt;</span>
+          <span style="color:#070">&lt;unknown_datapoints&gt;</span>0<span style="color:#070">&lt;/unknown_datapoints&gt;</span>
+          <span style="color:#070">&lt;/ds&gt;</span>
+  <span style="color:#070">&lt;/cdp_prep&gt;</span>
+<span style="color:#070">&lt;/rra&gt;</span></code></pre></div>
+<p>If we had a RRA that stores averaged data once a day, how are the averages created before they are put into the RRA? The answer is that they are actually created in the preparation area. The data in the preparation area is getting built up to the time when the archive should be updated.</p>
+
+<p>Within the <code>.rrd</code> file, the location of where all the data preparation happens is within the <strong>Live Head</strong>, shown in green in the image below.</p>
+
+<p><img src="/posts/working-with-rrdtool/rrd_structure.jpg" alt="RRD File Structure" /></p>
+
+<p>This means that as we are updating the database, only this green section of the database needs to be touched. The orange part could be holding possibly one year or even ten years of stored data. This area is not even accessed until data has to be written in the archive.</p>
+
+<p>Likewise, we can take a look at the structure in XML format of the RRA&rsquo;s orange area (long term storage):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;rra&gt;</span>
+  <span style="color:#888">&lt;!-- ... --&gt;</span>
+
+  <span style="color:#070">&lt;database&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-04-24 08:00:00 CST / 1492992000 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-04-25 08:00:00 CST / 1493078400 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-04-26 08:00:00 CST / 1493164800 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-04-27 08:00:00 CST / 1493251200 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.6000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-04-28 08:00:00 CST / 1493337600 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-04-29 08:00:00 CST / 1493424000 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-04-30 08:00:00 CST / 1493510400 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-05-01 08:00:00 CST / 1493596800 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#888">&lt;!-- 2017-05-02 08:00:00 CST / 1493683200 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
+  <span style="color:#070">&lt;/database&gt;</span>
+<span style="color:#070">&lt;/rra&gt;</span></code></pre></div>
+<h2 id="writing-data">Writing Data</h2>
+
+<p>Data can be easily written into the database with the following command:</p>
+
+<pre><code>rrdtool update &lt;file.rrd&gt; &lt;timestamp&gt;:&lt;value&gt;
+</code></pre>
+
+<p>The timestamp is a UNIX timestamp and can either be defined in seconds since 1970-01-01 or by using the letter &lsquo;N&rsquo;, in which case the update time is set to be the current time.</p>
+
+<p>~&gt; The point in time when the data acquisition was made is very important. RRDTool will use it to re-sample the data into its rigid step inverval blocks. If no information of when the data is acquired is given to rrdtool, there will be jitter, as the data is shifted a bit. This is due to processing happening between the point in time where the data is acquired and when it is actually fed to rrdtool.</p>
+
+<p>Whenever you update the RRD database rrdtool will store the point in time when you updated the database into a <code>lastupdate</code> field, so that when the database is updated again, it can use that information to calculate the time difference between the two updates</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+<li><a href="https://www.youtube.com/watch?v=JaK-IctEyWs">OUCE-2013 RRDtool Tutorial &ndash; Part One</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Understanding Ceilometer Publishers &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Understanding Ceilometer Publishers</h1>
+  <time datetime=2017-04-11T00:00:00Z class="post-date">Tue, Apr 11, 2017</time>
+
+  <p>Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer <strong>publishers</strong>. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.</p>
+
+<p>Publishers are specified in the <code>publishers</code> section for each pipeline that is defined in the <code>pipeline.yaml</code> and the <code>event_pipeline.yaml</code> files.</p>
+
+<p>Many different publishers are available. The following are the most common and important publishers:</p>
+
+<h3 id="gnocchi">Gnocchi</h3>
+
+<p><img src="http://gnocchi.xyz/_images/gnocchi-logo.jpg" alt="Gnocchi Logo" /></p>
+
+<p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
+
+<p>Gnocchi was created to fulfill the need of a time series database usable in the context of cloud computing: providing the ability to store large quantities of metrics. It has been designed to handle large amount of measures being stored, while being performant, scalable and fault-tolerant. While doing this, the goal was to be sure to not build any hard dependency on any complex storage system.</p>
+
+<p>The project was started in 2014 as a spin-off of the OpenStack Ceilometer project to address the performance issues that Ceilometer encountered while using standard databases as a storage backends for metrics.</p>
+
+<p>=&gt; The recommended workflow is to push data to Gnocchi for efficient time-series storage and resource lifecycle tracking.</p>
+
+<p>~&gt; Gnocchi must be registered in the Identity service as Ceilometer discovers the exact path via the Identity service.</p>
+
+<h3 id="panko">Panko</h3>
+
+<p>The Panko publisher is for storing <strong>event</strong> data. It provides a REST HTTP interface to query system events in OpenStack. A Panko publisher can be set with <code>panko://</code>.</p>
+
+<h3 id="notifier">Notifier</h3>
+
+<p>This publisher emits data over AMQP using <code>oslo.messaging</code> library.</p>
+
+<h3 id="http">HTTP</h3>
+
+<p>Samples can be sent using HTTP to an external target. For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">http://localhost:<span style="color:#60e;font-weight:bold">80</span>/?option1=value1<span style="color:#579">&amp;option2=value2</span></code></pre></div>
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/5-multi-publish.png" alt="Ceilometer Publishers" /></p>
+
+<h2 id="difference-between-publishers-and-dispatchers">Difference Between Publishers and Dispatchers</h2>
+
+<p>The documentation does a decent job at explaining publishers. However, it does not say much about dispatchers. When looking at the source code, it also seems that dispatchers send metering data for storage in an external location such as Gnocchi (see <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/dispatcher/gnocchi.py">Gnocchi dispatcher</a>) or a database.</p>
+
+<p>Being confused about this, I decided to <a href="http://openstack.10931.n7.nabble.com/telemetry-ceilometer-Difference-between-publishers-and-dispatchers-td133396.html">ask</a> in the <a href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-dev">OpenStack dev mailing list</a>. I managed to obtain a very quick response from Julien Danjou:</p>
+
+<blockquote>
+<p>Publishers are configured into the pipeline to indicate where to push
+samples data (e.g. to Gnocchi).
+One of the publisher is <code>notifier://</code> which sends the samples to the (now
+deprecated) ceilometer-collector process.</p>
+
+<p>Ceilometer collector stores data into other system via a dispatcher
+mechanism (e.g. to Gnocchi). It&rsquo;s now deprecated as it&rsquo;s just, with
+current architecture, a unnecessary step: publishers can do the job
+directly.</p>
+</blockquote>
+
+<p>And another one from Hanxi Liu:</p>
+
+<blockquote>
+<p>Ceilometer has deprecated collector from Pike, so dispatchers will be no longer used in the future. Data should be pushed from publisher to storage backend(e.g. Gnocchi) and/or other outer system. Some dispatchers were deprecated because there are corresponding developed publisher, for example, file dispatcher to file publisher. Of course, If you still want to use previous version, you could use dispatcher behind collector.</p>
+</blockquote>
+
+<h2 id="the-source-code">The Source Code</h2>
+
+<p>In Ceilometer&rsquo;s source code, publisher logic can be found in <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/publisher"><code>ceilometer/publisher</code></a>. A publisher base class can be found in the `<code>__init__.py</code> file:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#555;font-weight:bold">@six.add_metaclass</span>(abc<span style="color:#333">.</span>ABCMeta)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ConfigPublisherBase</span>(<span style="color:#007020">object</span>):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34;Base class for plugins that publish data.&#34;&#34;&#34;</span>
+
+    <span style="color:#080;font-weight:bold">def</span> __init__(self, conf, parsed_url):
+        self<span style="color:#333">.</span>conf <span style="color:#333">=</span> conf
+
+    <span style="color:#555;font-weight:bold">@abc.abstractmethod</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_samples</span>(self, samples):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;Publish samples into final conduit.&#34;&#34;&#34;</span>
+
+    <span style="color:#555;font-weight:bold">@abc.abstractmethod</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_events</span>(self, events):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;Publish events into final conduit.&#34;&#34;&#34;</span></code></pre></div>
+<p>We can see the abstract methods to be implemented by each publisher. The <code>publish_samples</code> method is of particular interest.</p>
+
+<p>If we take a look at the HTTP publisher source code, we can see how it implements these methods:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HttpPublisher</span>(publisher<span style="color:#333">.</span>ConfigPublisherBase):
+    <span style="color:#888"># ...</span>
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_samples</span>(self, samples):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;Send a metering message for publishing
+</span><span style="background-color:#fff0f0">        :param samples: Samples from pipeline after transformation
+</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
+        self<span style="color:#333">.</span>poster([sample<span style="color:#333">.</span>as_dict() <span style="color:#080;font-weight:bold">for</span> sample <span style="color:#000;font-weight:bold">in</span> samples])
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_events</span>(self, events):
+        <span style="background-color:#fff0f0">&#34;&#34;&#34;Send an event message for publishing
+</span><span style="background-color:#fff0f0">        :param events: events from pipeline after transformation
+</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
+        <span style="color:#080;font-weight:bold">if</span> self<span style="color:#333">.</span>raw_only:
+            data <span style="color:#333">=</span> [evt<span style="color:#333">.</span>as_dict()[<span style="background-color:#fff0f0">&#39;raw&#39;</span>][<span style="background-color:#fff0f0">&#39;payload&#39;</span>] <span style="color:#080;font-weight:bold">for</span> evt <span style="color:#000;font-weight:bold">in</span> events
+                    <span style="color:#080;font-weight:bold">if</span> evt<span style="color:#333">.</span>as_dict()<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;raw&#39;</span>, {})<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;payload&#39;</span>)]
+        <span style="color:#080;font-weight:bold">else</span>:
+            data <span style="color:#333">=</span> [event<span style="color:#333">.</span>serialize() <span style="color:#080;font-weight:bold">for</span> event <span style="color:#000;font-weight:bold">in</span> events]
+        self<span style="color:#333">.</span>poster(data)</code></pre></div>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/panko" class="label label-default">panko</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

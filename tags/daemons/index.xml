@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Daemons on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/daemons/</link>
+    <description>Recent content in Daemons on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/daemons/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Creating Zenoss ZenPack Daemons</title>
+      <link>http://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</link>
+      <pubDate>Mon, 07 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</guid>
+      <description>&lt;p&gt;ZenPacks are powerful custom add-ons that can help us extend Zenoss&amp;rsquo;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using &lt;a href=&#34;http://zenpacklib.zenoss.com/en/latest/index.html&#34;&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt;&lt;/a&gt;, but it is also possible to create it from the Zenoss user interface.&lt;/p&gt;
+
+&lt;h2 id=&#34;about-zenpacklib&#34;&gt;About zenpacklib&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt; is a Python library developed by the Zenoss team to facilitate the process of creating ZenPacks, specially ZenPacks that deal with modeling and monitoring devices and components. Most of the newer ZenPacks that are being released are now being built with zenpacklib.&lt;/p&gt;
+
+&lt;p&gt;We can obtain zenpacklib by running the following commands:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;wget http://zenpacklib.zenoss.com/zenpacklib.py
+chmod 755 zenpacklib.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will download the zenpacklib Python library and give it executable permissions.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-zenpack&#34;&gt;Creating the ZenPack&lt;/h2&gt;
+
+&lt;p&gt;Using the zenpacklib file we just downloaded, we proceed to create a new fresh ZenPack:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./zenpacklib.py create ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will create the ZenPack base directory with the necessary base files.&lt;/p&gt;
+
+&lt;p&gt;Now we go into this directory to begin.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;creating-the-zenpack-daemon&#34;&gt;Creating the ZenPack Daemon&lt;/h2&gt;
+
+&lt;p&gt;Our custom daemon declaration will be located in a directory named &lt;code&gt;daemons&lt;/code&gt;, inside our ZenPack directory:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;/&amp;lt;your_namespace&amp;gt;/&amp;lt;zenpack_name&amp;gt;/daemons
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we will create a new Bashscript file with the name of our daemon. In this case we will name it &lt;code&gt;mydaemon&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#! /usr/bin/env bash
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#963&#34;&gt;DAEMON_NAME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;mydaemon&amp;#34;&lt;/span&gt;
+
+. &lt;span style=&#34;color:#963&#34;&gt;$ZENHOME&lt;/span&gt;/bin/zenfunctions
+
+&lt;span style=&#34;color:#963&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#963&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#963&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#963&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#963&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
+
+generic &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once the ZenPack is installed, files under this &lt;code&gt;daemons&lt;/code&gt; directory will become executable (&lt;code&gt;chmod 0755&lt;/code&gt;), a symlink to the file will be created in &lt;code&gt;$ZENHOME/bin&lt;/code&gt;, and a configuration file will be generated in &lt;code&gt;$ZENHOME/etc/&amp;lt;daemon_name&amp;gt;.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; If you created your ZenPack using the Zenoss user interface, the &lt;code&gt;daemons&lt;/code&gt; directory will also be automatically created, and will contain an example daemon file named &lt;code&gt;zenexample&lt;/code&gt; with code similar to the one above. In this case you should simply replace the necessary values.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

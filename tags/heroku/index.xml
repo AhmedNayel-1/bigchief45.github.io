@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Heroku on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/heroku/</link>
+    <description>Recent content in Heroku on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 07 Mar 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/heroku/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Integrating TravisCI With Rails and Heroku</title>
+      <link>http://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/</link>
+      <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/</guid>
+      <description>&lt;p&gt;Adding &lt;a href=&#34;https://travis-ci.org/&#34;&gt;TravisCI&lt;/a&gt; to your application&amp;rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.&lt;/p&gt;
+
+&lt;p&gt;In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.&lt;/p&gt;
+
+&lt;h2 id=&#34;setting-up-travisci&#34;&gt;Setting up TravisCI&lt;/h2&gt;
+
+&lt;p&gt;Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a &lt;code&gt;.travis.yml&lt;/code&gt; file to the application&amp;rsquo;s root directory with the following contents:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;language:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Ruby&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;rvm:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2.3&lt;/span&gt;.&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.&lt;/p&gt;
+
+&lt;h3 id=&#34;configure-postgresql&#34;&gt;Configure Postgresql&lt;/h3&gt;
+
+&lt;p&gt;Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to &lt;code&gt;.travis.yml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;services:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;postgresql&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then we will add another configuration that will make Travis create a Postgresql database with username &lt;code&gt;postgres&lt;/code&gt; and blank password for the build:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;before_script:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;psql&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;-c&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;create database travis_ci_test;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;-U&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;postgres&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Debian Packaging in Ubuntu &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Debian Packaging in Ubuntu</h1>
+  <time datetime=2016-10-11T00:00:00Z class="post-date">Tue, Oct 11, 2016</time>
+
+  <p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
+
+<h2 id="package-source-structure">Package Source &amp; Structure</h2>
+
+<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
+
+<pre><code>mkdir mypackage-1.0.0
+</code></pre>
+
+<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
+
+<pre><code>cd mypackage-1.0.0
+mkdir DEBIAN
+touch DEBIAN/control
+</code></pre>
+
+<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
+
+<pre><code>Package: mypackage
+Version: 1.0-0
+Section: base
+Priority: optional
+Architecture: all
+Depends: python2.7
+Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
+Description: A new and improved C++ Compiler
+</code></pre>
+
+<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
+
+<p>Now here is where it gets interesting. The directory and file structure inside our package source will resemble the directory structure of our file system. This is how the Debian package manager knows where to depackage the files contained inside our Debian package. For example, let&rsquo;s add the following to our package:</p>
+
+<pre><code>mkdir -p home/ubuntu
+touch home/ubuntu/hello.sh
+</code></pre>
+
+<p>When our package is depackaged and installed, the package manager will depackage <code>home/ubuntu/hello.sh</code> from our package into <code>home/ubuntu/hello.sh</code> of our file system.</p>
+
+<h3 id="post-installation-script">Post-Installation Script</h3>
+
+<p>Additionally, we can create a <code>postinst</code> script with executable permissions inside the <code>DEBIAN</code> directory that will be executed after the installation (depackaging) is finished. For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#579">#!/bin/bash
+</span><span style="color:#579"></span><span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;Hello World!&#34;</span></code></pre></div>
+<p>!&gt; You <strong>cannot</strong> run <code>apt-get</code> commands inside post/pre installation scripts, since this will create lock-conflict errors with <code>dpkg</code>. See <a href="http://stackoverflow.com/questions/18599599/apt-get-commands-from-within-a-deb-postinst">here</a> and <a href="http://askubuntu.com/questions/396213/can-i-call-other-dpkg-or-apt-commands-within-my-preinst-scripts">here</a>).</p>
+
+<p>These lock-conflict errors look like the following:</p>
+
+<pre><code>E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+</code></pre>
+
+<h2 id="building-and-installing-the-package">Building and Installing the Package</h2>
+
+<p>Now that our package is ready to be shipped, we can build the source using the following command:</p>
+
+<pre><code>dpkg-deb --build ./mypackage-1.0.0
+</code></pre>
+
+<p>This will create a <code>.deb</code> extension Debian package file that we can now distribute and others can install in their systems. To install, we simply run this command:</p>
+
+<pre><code>dpkg -i mypackage-1.0.0.deb
+</code></pre>
+
+<p>And like I mentioned previously, the package manager will proceed to unpack all the contained files to our file system, according to the directory structure of the package.</p>
+
+<h2 id="other-useful-dpkg-commands">Other Useful Dpkg Commands</h2>
+
+<h3 id="inspecting-packages">Inspecting Packages</h3>
+
+<p>We can also inspect the contents of the Debian package. The following command will print all the files and their respective locations inside the package.</p>
+
+<pre><code>dpkg -c my-package.deb
+</code></pre>
+
+<p>Additionally we can also print information about the package. This is the information stored inside the <code>DEBIAN/control</code> file:</p>
+
+<pre><code>dpkg -I my-package.deb
+</code></pre>
+
+<h3 id="extracting-contents">Extracting Contents</h3>
+
+<p>It is also possible to unpack the contents of the package <strong>without</strong> installing it. This will also extract the control information files into a <code>DEBIAN</code> subdirectory:</p>
+
+<pre><code>dpkg-deb -R my-package.deb $TARGET_DIRECTORY
+</code></pre>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="http://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="http://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

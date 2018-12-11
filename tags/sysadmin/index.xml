@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sysadmin on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/sysadmin/</link>
+    <description>Recent content in Sysadmin on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 04 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/sysadmin/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Custom Triggers and Notifications in a ZenPack</title>
+      <link>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</link>
+      <pubDate>Thu, 04 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how to use &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;command notifications&lt;/strong&gt; in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.&lt;/p&gt;
+
+&lt;p&gt;In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.&lt;/p&gt;
+
+&lt;h2 id=&#34;defining-zenpack-triggers-notifications&#34;&gt;Defining ZenPack Triggers &amp;amp; Notifications&lt;/h2&gt;
+
+&lt;p&gt;Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named &lt;code&gt;actions.json&lt;/code&gt; in a directory called &lt;code&gt;zep&lt;/code&gt; (create it if it doesn&amp;rsquo;t exist), within the ZenPack&amp;rsquo;s top directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;actions.json&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
+  &amp;#34;triggers&amp;#34;: [
+    {
+      &amp;#34;name&amp;#34;: &amp;#34;Critical_death_event&amp;#34;,
+      &amp;#34;uuid&amp;#34;: &amp;#34;4c055067-98b7-483e-8f49-2820b4f2f721&amp;#34;,
+      &amp;#34;enabled&amp;#34;: false,
+      &amp;#34;rule&amp;#34;: {
+        &amp;#34;api_version&amp;#34;: 1,
+        &amp;#34;type&amp;#34;: 1,
+        &amp;#34;source&amp;#34;: &amp;#34;(evt.event_class.startswith(\&amp;#34;/Status/Ping\&amp;#34;)) and (evt.status == 0) and (evt.severity &amp;gt; 2)&amp;#34;
+      }
+    }
+  ],
+
+  &amp;#34;notifications&amp;#34;: [
+    {
+      &amp;#34;id&amp;#34;: &amp;#34;send_sms_message&amp;#34;,
+      &amp;#34;description&amp;#34;: &amp;#34;Send SMS using Twilio&amp;#34;,
+      &amp;#34;action&amp;#34;: &amp;#34;command&amp;#34;,
+      &amp;#34;guid&amp;#34;: &amp;#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&amp;#34;,
+      &amp;#34;enabled&amp;#34;: false,
+      &amp;#34;action_timeout&amp;#34;: 60,
+      &amp;#34;delay_seconds&amp;#34;: 0,
+      &amp;#34;repeat_seconds&amp;#34;: 0,
+      &amp;#34;send_initial_occurrence&amp;#34;: false,
+      &amp;#34;send_clear&amp;#34;: false,
+      &amp;#34;body_format&amp;#34;: &amp;#34;echo \&amp;#34;Hello World!\&amp;#34;&amp;#34;,
+      &amp;#34;clear_body_format&amp;#34;: &amp;#34;&amp;#34;,
+      &amp;#34;subscriptions&amp;#34;: [&amp;#34;4c055067-98b7-483e-8f49-2820b4f2f721&amp;#34;]
+    }
+  ]
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Working With RRDTool</title>
+      <link>http://aalvarez.me/posts/working-with-rrdtool/</link>
+      <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/working-with-rrdtool/</guid>
+      <description>&lt;p&gt;Zenoss makes a lot of use of &lt;a href=&#34;http://oss.oetiker.ch/rrdtool/&#34;&gt;RRDTool&lt;/a&gt; for &lt;a href=&#34;http://aalvarez.me/posts/using-rrdtool-in-zenoss.html&#34;&gt;storing monitored performance data and generating graphs&lt;/a&gt;. In this post I want to go into more detail on the components of RRDTool and how works.&lt;/p&gt;
+
+&lt;h2 id=&#34;round-robin-databases&#34;&gt;Round Robin Databases&lt;/h2&gt;
+
+&lt;p&gt;RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing &lt;strong&gt;time series&lt;/strong&gt; data.&lt;/p&gt;
+
+&lt;p&gt;Moreover, rrdtool also &lt;strong&gt;doesn&amp;rsquo;t&lt;/strong&gt; store the data handed to it. Instead, it first &lt;strong&gt;re-samples&lt;/strong&gt; the data and &lt;em&gt;then&lt;/em&gt; stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.&lt;/p&gt;
+
+&lt;p&gt;This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the &lt;code&gt;03&lt;/code&gt; minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.&lt;/p&gt;
+
+&lt;p&gt;In rrdtool, each database table is stored in a separate &lt;code&gt;.rrd&lt;/code&gt; file. This means that one file represents one table.&lt;/p&gt;
+
+&lt;p&gt;We can create a database using the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;data-re-sampling-step&#34;&gt;Data Re-sampling: Step&lt;/h3&gt;
+
+&lt;p&gt;One important parameter here is the &lt;code&gt;step&lt;/code&gt; parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. &lt;strong&gt;This means that it only stores data every 300 seconds&lt;/strong&gt;. Because of this re-sampling, rrdtool will not accept data from the past.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Understanding SNMP and Net-SNMP</title>
+      <link>http://aalvarez.me/posts/understanding-snmp-and-net-snmp/</link>
+      <pubDate>Mon, 16 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/understanding-snmp-and-net-snmp/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://net-snmp.sourceforge.net/&#34;&gt;Net-SNMP&lt;/a&gt; is a suite of tools used to implement SNMP (Simple Network Management Protocol). SNMP is a widely used protocol for monitoring the health and welfare of network equipment (eg. routers), computer equipment and even devices like UPSs. Net-SNMP includes tools with capabilities such as:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;An extensible agent&lt;/li&gt;
+&lt;li&gt;An SNMP library&lt;/li&gt;
+&lt;li&gt;Tools to request or set information from SNMP agents&lt;/li&gt;
+&lt;li&gt;Tools to generate and handle SNMP traps&lt;/li&gt;
+&lt;li&gt;A version of the unix &amp;lsquo;netstat&amp;rsquo; command using SNMP&lt;/li&gt;
+&lt;li&gt;A graphical Perl/Tk/SNMP based mib browser&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;how-snmp-works&#34;&gt;How SNMP Works&lt;/h2&gt;
+
+&lt;p&gt;SNMP allows a management station to treat its network as a distributed database of health and configuration information. SNMP contains a small set of operations:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GET: Retrieve data from a network node&lt;/li&gt;
+&lt;li&gt;GETNEXT: Retrieve the next element from a network node&lt;/li&gt;
+&lt;li&gt;SET: Send configuration or control commands to a network node&lt;/li&gt;
+&lt;li&gt;TRAP: A network node can send a notification to the management station&lt;/li&gt;
+&lt;li&gt;INFORM: An acknowledged trap (network nodes can try and send it again if no acknowledgement is received)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://computernetworkingsimplified.com/wp-content/uploads/2014/02/snmparchitecture1.jpg&#34; alt=&#34;SNMP Architecture&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Fixing Zenoss Device Network Interface Graphs</title>
+      <link>http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</link>
+      <pubDate>Fri, 13 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</guid>
+      <description>&lt;p&gt;When testing the monitoring of the OpenStack compute node devices in Zenoss (using &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)&#34;&gt;OpenStack Infrastructure ZenPack&lt;/a&gt;), I noticed that I could not get any graphs for the &lt;strong&gt;network interfaces&lt;/strong&gt; of the device, although we could still get and model all the available interfaces:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png&#34; alt=&#34;Network Interfaces&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Working With Zenoss Events</title>
+      <link>http://aalvarez.me/posts/working-with-zenoss-events/</link>
+      <pubDate>Fri, 25 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/working-with-zenoss-events/</guid>
+      <description>&lt;p&gt;Zenoss Events are among the most powerful and useful monitoring features that Zenoss Core provides. Many different types of events are &lt;strong&gt;automatically&lt;/strong&gt; generated by Zenoss when important scenarios occur for the devices being monitored.&lt;/p&gt;
+
+&lt;h2 id=&#34;zenoss-event-architecture&#34;&gt;Zenoss Event Architecture&lt;/h2&gt;
+
+&lt;p&gt;When an event arrives at Zenoss, it is parsed, associated with an event classification and then typically (but not always), it is inserted into the status table of the events database. Events can then be viewed by users using the Event Console of the Zenoss Graphical User Interface (GUI).&lt;/p&gt;
+
+&lt;p&gt;The events system has the concept of active status events and historical events (two different database tables in the MySQL events database).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/working-with-zenoss-events/event_console.jpg&#34; alt=&#34;!Zenoss Core 4 Event Console&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;understanding-event-classes&#34;&gt;Understanding Event Classes&lt;/h3&gt;
+
+&lt;p&gt;Zenoss event classes are a simple organizational structure for the different types of events that Zenoss generates and receives. This organization is useful for driving alerting and reporting. You can, for example, create an alerting rule that sends you an email or pages you when the availability of a Web site or page is affected by filtering on the &lt;code&gt;/Status/Web&lt;/code&gt; event class&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using RRDTool in Zenoss</title>
+      <link>http://aalvarez.me/posts/using-rrdtool-in-zenoss/</link>
+      <pubDate>Tue, 22 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/using-rrdtool-in-zenoss/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://oss.oetiker.ch/rrdtool/&#34;&gt;rrdtool&lt;/a&gt; is an awesome high performance data logging and graphing tool for time series data. Zenoss Core uses RRDTool to collect, monitor, and graph peformance data for devices.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://oss.oetiker.ch/rrdtool/stream-pop.png&#34; alt=&#34;RRD Tool&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However Zenoss Core comes with built-in helper wrappers around RRDTool that makes using it within Zenoss much easier. These source code files can be found in &lt;code&gt;$ZENHOME/Products/ZenRRD/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;rrdutil&#34;&gt;RRDUtil&lt;/h2&gt;
+
+&lt;p&gt;Located in &lt;code&gt;$ZENHOME/Products/ZenRRD/RRDUtil.py&lt;/code&gt;, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read &lt;code&gt;.rrd&lt;/code&gt; files using Python.&lt;/p&gt;
+
+&lt;p&gt;We can easily import this module into our code, using the following import statement:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; RRDUtil&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>IPMI &amp; Baseboard Management Controllers</title>
+      <link>http://aalvarez.me/posts/ipmi-baseboard-management-controllers/</link>
+      <pubDate>Fri, 18 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/ipmi-baseboard-management-controllers/</guid>
+      <description>&lt;p&gt;An &lt;strong&gt;Intelligent Platform Management Interface (IPMI)&lt;/strong&gt; is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system&amp;rsquo;s CPU, BIOS, and operating system.&lt;/p&gt;
+
+&lt;p&gt;IPMI can also help manage computers that are unresponsive or powered off, by using a network connection to the &lt;strong&gt;hardware&lt;/strong&gt;, rather than to a operating system or login shell.&lt;/p&gt;
+
+&lt;p&gt;More specifically, IPMI can help us monitor, obtain data, and perform tasks such as:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;System temperature&lt;/li&gt;
+&lt;li&gt;Voltages&lt;/li&gt;
+&lt;li&gt;Fans&lt;/li&gt;
+&lt;li&gt;Power supplies&lt;/li&gt;
+&lt;li&gt;Chassis intrusion&lt;/li&gt;
+&lt;li&gt;Perform recovery procedures&lt;/li&gt;
+&lt;li&gt;System rebooting&lt;/li&gt;
+&lt;li&gt;System powering&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;An IPMI sub-system consists of a main controller, called the baseboard management controller (BMC) and other management controllers distributed among different system modules that are referred to as &lt;em&gt;satellite controllers&lt;/em&gt;. The satellite controllers within the same chassis connect to the BMC via another system interface (not covered in this post) called Intelligent Platform Management Bus/Bridge (IPMB)&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modifying the Zenoss Infrastructure Grid</title>
+      <link>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</link>
+      <pubDate>Thu, 10 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</guid>
+      <description>&lt;p&gt;Continuing from my previous post, where I explained &lt;a href=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;how to modify the device detail bar from a ZenPack using ExtJS&lt;/a&gt;, in this post I will explain how we can modify the device list grid shown in the infrastructure page.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-infrastructure-grid&#34;&gt;The Infrastructure Grid&lt;/h2&gt;
+
+&lt;p&gt;This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include &lt;em&gt;device name&lt;/em&gt;, &lt;em&gt;device class&lt;/em&gt;, &lt;em&gt;IP address&lt;/em&gt;, &lt;em&gt;production state&lt;/em&gt;, and &lt;em&gt;events&lt;/em&gt;, as shown in the image below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&amp;rsquo;t do this by default is beyond me).&lt;/p&gt;
+
+&lt;h2 id=&#34;devicepanels-js&#34;&gt;DevicePanels.js&lt;/h2&gt;
+
+&lt;p&gt;The source code for the grid is found in &lt;code&gt;$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js&lt;/code&gt;. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called &lt;code&gt;deviceColumns&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modifying the Zenoss Device Detail Bar</title>
+      <link>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</link>
+      <pubDate>Tue, 08 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</guid>
+      <description>&lt;p&gt;The Zenoss Core &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;&lt;strong&gt;ExtJS&lt;/strong&gt;&lt;/a&gt; graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.&lt;/p&gt;
+
+&lt;p&gt;Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in &lt;code&gt;$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss&lt;/code&gt;, and as you would expect, the device detail bar component is also located there.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-device-detail-bar&#34;&gt;The Device Detail Bar&lt;/h2&gt;
+
+&lt;p&gt;This is the detail bar located on the device view page which shows the device&amp;rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in &lt;code&gt;DeviceDetailBar.js&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However since we are going to &lt;strong&gt;&lt;em&gt;extend&lt;/em&gt;&lt;/strong&gt; this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.&lt;/p&gt;
+
+&lt;h2 id=&#34;extending-the-component-through-zenpacks&#34;&gt;Extending The Component, Through ZenPacks&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s assume we are starting with a freshly created ZenPack, which adds a new &lt;code&gt;power_status&lt;/code&gt; integer field to certain devices, according to its &lt;code&gt;zenpack.yaml&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;classes:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;CustomDevice:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Device]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Custom&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Device&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;power_status:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;type:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What we want is to display this value in the device&amp;rsquo;s detail bar, similar to the device&amp;rsquo;s ping status display.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Monitoring CPU Utilization in Zenoss</title>
+      <link>http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</link>
+      <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</guid>
+      <description>&lt;p&gt;While taking a look at the CPU Utilization graphs offered Zenoss Core&amp;rsquo;s &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;Linux Monitor ZenPack&lt;/a&gt; (v1.2.1), I noticed that the percentage values for &lt;em&gt;Idle&lt;/em&gt; were ridiculously high:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg&#34; alt=&#34;High Idle CPU Utilization&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&amp;rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

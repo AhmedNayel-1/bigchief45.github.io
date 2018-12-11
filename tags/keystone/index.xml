@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Keystone on Andrés Álvarez</title>
+    <link>http://aalvarez.me/tags/keystone/</link>
+    <description>Recent content in Keystone on Andrés Álvarez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 28 Oct 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aalvarez.me/tags/keystone/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Keystone Interface in Juju Charms</title>
+      <link>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</link>
+      <pubDate>Fri, 28 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/docs/1.18/authors-interfaces&#34;&gt;Juju Charms interfaces&lt;/a&gt; make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.&lt;/p&gt;
+
+&lt;p&gt;In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;juju add-relation keystone myservice&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;juju-relations&#34;&gt;Juju Relations&lt;/h2&gt;
+
+&lt;p&gt;Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an &lt;strong&gt;interface&lt;/strong&gt;. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the &lt;em&gt;keystone Identity data&lt;/em&gt;. For this, we use the &lt;strong&gt;&lt;a href=&#34;https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin&#34;&gt;keystone-admin interface&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;With this in mind, we configure our charm to require this relation and interface in &lt;code&gt;metadata.yaml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;requires:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;identity-admin:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;interface:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;keystone-admin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Keystone Interface in Juju Charms</title>
+      <link>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</link>
+      <pubDate>Fri, 28 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/docs/1.18/authors-interfaces&#34;&gt;Juju Charms interfaces&lt;/a&gt; make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.&lt;/p&gt;
+
+&lt;p&gt;In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;juju add-relation keystone myservice&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;juju-relations&#34;&gt;Juju Relations&lt;/h2&gt;
+
+&lt;p&gt;Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an &lt;strong&gt;interface&lt;/strong&gt;. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the &lt;em&gt;keystone Identity data&lt;/em&gt;. For this, we use the &lt;strong&gt;&lt;a href=&#34;https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin&#34;&gt;keystone-admin interface&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;With this in mind, we configure our charm to require this relation and interface in &lt;code&gt;metadata.yaml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;requires:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;identity-admin:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;interface:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;keystone-admin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

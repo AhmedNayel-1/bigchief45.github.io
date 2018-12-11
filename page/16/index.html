@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/the-zenoss-json-api/">The Zenoss JSON API</a>
+  </h1>
+  <time datetime="2016-11-24T00:00:00Z" class="post-date">Thu, Nov 24, 2016</time>
+  <p>The <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using <a href="https://curl.haxx.se/">cURL</a> or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.</p>
+
+<p>The API documentation can be downloaded <a href="https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip">here</a>. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.</p>
+
+<p>In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&rsquo;s front-end (made using <a href="https://www.sencha.com/products/extjs/">ExtJS</a>) interacts with it.</p>
+
+<p>~&gt; Even though Zenoss calls its API a <em>JSON API</em> (Simply because it returns data in JSON format), the API <strong>is not</strong> <a href="http://jsonapi.org/">JSON API specification</a> compliant.</p>
+
+<h2 id="querying-the-api">Querying the API</h2>
+
+<p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let&rsquo;s say we want to obtain all the available information of a specific device:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="background-color:#fff0f0">&#34;admin:zenoss&#34;</span> -X POST -H <span style="background-color:#fff0f0">&#34;Content-Type: application/json&#34;</span> -d <span style="background-color:#fff0f0">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#963">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
+<p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
+
+<p>This is all fine if all we need is querying the API and nothing else. But what if we really want to know <strong><em>how</em></strong> the API back-end works? How the endpoints are created? What are routers?</p>
+
+<p>This is what we are gonna learn next.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/json" class="label label-default">json</a></li>
+  
+    <a href="http://aalvarez.me/tags/api" class="label label-default">api</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/curl" class="label label-default">curl</a></li>
+  
+    <a href="http://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/the-zenoss-json-api/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/using-rrdtool-in-zenoss/">Using RRDTool in Zenoss</a>
+  </h1>
+  <time datetime="2016-11-22T00:00:00Z" class="post-date">Tue, Nov 22, 2016</time>
+  <p><a href="http://oss.oetiker.ch/rrdtool/">rrdtool</a> is an awesome high performance data logging and graphing tool for time series data. Zenoss Core uses RRDTool to collect, monitor, and graph peformance data for devices.</p>
+
+<p><img src="http://oss.oetiker.ch/rrdtool/stream-pop.png" alt="RRD Tool" /></p>
+
+<p>However Zenoss Core comes with built-in helper wrappers around RRDTool that makes using it within Zenoss much easier. These source code files can be found in <code>$ZENHOME/Products/ZenRRD/</code>.</p>
+
+<h2 id="rrdutil">RRDUtil</h2>
+
+<p>Located in <code>$ZENHOME/Products/ZenRRD/RRDUtil.py</code>, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read <code>.rrd</code> files using Python.</p>
+
+<p>We can easily import this module into our code, using the following import statement:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenRRD.RRDUtil</span> <span style="color:#080;font-weight:bold">import</span> RRDUtil</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/using-rrdtool-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/ipmi-baseboard-management-controllers/">IPMI &amp; Baseboard Management Controllers</a>
+  </h1>
+  <time datetime="2016-11-18T00:00:00Z" class="post-date">Fri, Nov 18, 2016</time>
+  <p>An <strong>Intelligent Platform Management Interface (IPMI)</strong> is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system&rsquo;s CPU, BIOS, and operating system.</p>
+
+<p>IPMI can also help manage computers that are unresponsive or powered off, by using a network connection to the <strong>hardware</strong>, rather than to a operating system or login shell.</p>
+
+<p>More specifically, IPMI can help us monitor, obtain data, and perform tasks such as:</p>
+
+<ul>
+<li>System temperature</li>
+<li>Voltages</li>
+<li>Fans</li>
+<li>Power supplies</li>
+<li>Chassis intrusion</li>
+<li>Perform recovery procedures</li>
+<li>System rebooting</li>
+<li>System powering</li>
+</ul>
+
+<p>An IPMI sub-system consists of a main controller, called the baseboard management controller (BMC) and other management controllers distributed among different system modules that are referred to as <em>satellite controllers</em>. The satellite controllers within the same chassis connect to the BMC via another system interface (not covered in this post) called Intelligent Platform Management Bus/Bridge (IPMB)</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/hardware" class="label label-default">hardware</a></li>
+  
+    <a href="http://aalvarez.me/tags/ipmi" class="label label-default">ipmi</a></li>
+  
+    <a href="http://aalvarez.me/tags/ipmitool" class="label label-default">ipmitool</a></li>
+  
+    <a href="http://aalvarez.me/tags/bmc" class="label label-default">bmc</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/ipmi-baseboard-management-controllers/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/custom-markdown-in-middleman/">Custom Markdown in Middleman</a>
+  </h1>
+  <time datetime="2016-11-17T00:00:00Z" class="post-date">Thu, Nov 17, 2016</time>
+  <p><a href="https://middlemanapp.com/">Middleman</a> is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it&rsquo;s the framework I am currently using for this blog.</p>
+
+<p>Unfortunately Middleman&rsquo;s <a href="https://middlemanapp.com/basics/install/">documentation</a> is a bit unorganized and incomplete. I often find myself browsing through the <a href="https://github.com/middleman/middleman">source code</a> to understand how to use or implement some custom features.</p>
+
+<p>For example, using <a href="https://github.com/vmg/redcarpet">redcarpet</a> I wanted to be able to create some re-usable &ldquo;markdown components&rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.</p>
+
+<p>And this post I am going to explain how to integrate this functionality into your blog using Middleman.</p>
+
+<h2 id="creating-a-custom-renderer">Creating a Custom Renderer</h2>
+
+<p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman&rsquo;s renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
+
+<p>To begin, we will create a <code>lib</code> (if it doesn&rsquo;t exist) under our blog&rsquo;s directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">module</span> <span style="color:#0e84b5;font-weight:bold">MarkdownHelper</span>
+
+  <span style="color:#007020">require</span> <span style="background-color:#fff0f0">&#39;middleman-core/renderers/redcarpet&#39;</span>
+
+<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<p>The required file above is what will allow us to inherit from Middleman&rsquo;s renderer.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/middleman" class="label label-default">middleman</a></li>
+  
+    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="http://aalvarez.me/tags/markdown" class="label label-default">markdown</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/custom-markdown-in-middleman/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/big-o-notation-omega-theta/">Big O Notation - Omega &amp; Theta</a>
+  </h1>
+  <time datetime="2016-11-16T00:00:00Z" class="post-date">Wed, Nov 16, 2016</time>
+  <p>In a <a href="/posts/ruby-benchmarking-and-big-o-notation.html">previous post</a> I went over the basic and most common Big O notations along with respective common algorithms, and finally adding some Ruby benchmarks for each.</p>
+
+<p>However I did not cover some other very important concepts in Big O notation: <strong>Omega</strong> and <strong>Theta</strong>.</p>
+
+<h2 id="understanding-omega">Understanding Omega</h2>
+
+<p>The Omega symbol (Ω) represents a certain algorithm&rsquo;s <em>best-case</em> asymptotic complexity. For example, let&rsquo;s take again a look at the <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">binary search algorithm</a>:</p>
+
+<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search" /></p>
+
+<p>Previously we determined that the Big O notation for this algorithm is <em>O(log n)</em>. This represent the <strong>worst</strong> asymptotic complexity that the algorithm can possibly have.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/algorithms" class="label label-default">algorithms</a></li>
+  
+    <a href="http://aalvarez.me/tags/mathematics" class="label label-default">mathematics</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="http://aalvarez.me/tags/computerscience" class="label label-default">computerscience</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/big-o-notation-omega-theta/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/15/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/17/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

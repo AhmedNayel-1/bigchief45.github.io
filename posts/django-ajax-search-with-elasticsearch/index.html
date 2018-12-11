@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Django AJAX Search With Elasticsearch &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Django AJAX Search With Elasticsearch</h1>
+  <time datetime=2018-01-10T00:00:00Z class="post-date">Wed, Jan 10, 2018</time>
+
+  <p>In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&rsquo;s get started!</p>
+
+<h2 id="the-search-template">The Search Template</h2>
+
+<p>The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.</p>
+
+<p>This template is extremely simple and does not need a <code>&lt;form&gt;</code> tag. I will create it as a partial under <code>templates/search.html</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% csrf_token %}
+&lt;input id=&#34;search&#34; name=&#34;q&#34; placeholder=&#34;Search...&#34;&gt;</code></pre></div>
+<p>Notice how we have given the input a <code>name</code> with the value of <code>q</code>. This will be important when our view receives the query from this input field.</p>
+
+<p>I can then render this partial in the main template like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% include &#39;search.html&#39; %}</code></pre></div>
+<p>In my case I am using a very neat front end theme called <a href="http://pages.revox.io/">Revox Pages</a> which includes a very sweet JQuery search feature:</p>
+
+<p><img src="/posts/django-ajax-search-with-elasticsearch/revox_pages_search.png" alt="Revox Pages Search" /></p>
+
+<h2 id="creating-the-view">Creating the View</h2>
+
+<p>We can now proceed to create the view that will handle the AJAX request that contains the query, perform the query in ElasticSearch, and then return the results.</p>
+
+<p>I am a big fan of <a href="https://docs.djangoproject.com/en/2.0/topics/class-based-views/">Django Class Based Views</a>, so I will implement the view in the following way:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">django.views</span> <span style="color:#080;font-weight:bold">import</span> View
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">django.shortcuts</span> <span style="color:#080;font-weight:bold">import</span> render_to_response
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">elasticsearch</span> <span style="color:#080;font-weight:bold">import</span> Elasticsearch
+
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> MyModel
+
+
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyModelSearchView</span>(View):
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">post</span>(self, request, <span style="color:#333">*</span>args, <span style="color:#333">**</span>kwargs):
+        query <span style="color:#333">=</span> self<span style="color:#333">.</span>request<span style="color:#333">.</span>POST<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;q&#39;</span>, None)
+
+        elastic_query <span style="color:#333">=</span> {}
+        es <span style="color:#333">=</span> Elasticsearch(<span style="background-color:#fff0f0">&#39;http://myelastichost:9200&#39;</span>)
+        res <span style="color:#333">=</span> es<span style="color:#333">.</span>search(index<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;myindex&#39;</span>, body<span style="color:#333">=</span>elastic_query)
+
+        <span style="color:#888"># Let&#39;s assume that the response contains a list of IDs.</span>
+        <span style="color:#888"># These are the IDs of the objects we want to retrieve from our</span>
+        <span style="color:#888"># database.</span>
+        <span style="color:#888">#</span>
+        <span style="color:#888"># The structure of the response might vary depending on the query</span>
+        <span style="color:#888"># you are trying to do.</span>
+        result_ids <span style="color:#333">=</span> [m[<span style="background-color:#fff0f0">&#39;_id&#39;</span>] <span style="color:#080;font-weight:bold">for</span> m <span style="color:#000;font-weight:bold">in</span> res[<span style="background-color:#fff0f0">&#39;hits&#39;</span>][<span style="background-color:#fff0f0">&#39;hits&#39;</span>]]
+        result_objects <span style="color:#333">=</span> MyModel<span style="color:#333">.</span>objects<span style="color:#333">.</span><span style="color:#007020">filter</span>(id__in<span style="color:#333">=</span>result_ids)
+
+        <span style="color:#080;font-weight:bold">return</span> render_to_response(
+            <span style="background-color:#fff0f0">&#39;_partials/_search_results.html&#39;</span>,
+            {<span style="background-color:#fff0f0">&#39;models&#39;</span>: result_objects}
+        )</code></pre></div>
+<p>This is the good part. Our view will build a query following ElasticSearch&rsquo;s query DSL, and will then use the <a href="https://elasticsearch-py.readthedocs.io/en/master/">ElasticSearch Python client</a> to run it in our ElasticSearch server. The client will then contain the response of the search results.</p>
+
+<p>Afterwards, we are going to fetch from the Django application&rsquo;s database the objects that match the results returned by ElasticSearch. This way we can create a template (soon on this) that will contain all these results along with their respective model data.</p>
+
+<p>~&gt; The <code>render_to_response()</code> method has been deprecated in Django 2.0 for the <code>render()</code> method.</p>
+
+<p>Also let&rsquo;s not forget to add the appropriate URL for this view:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># urls.py</span>
+
+url(
+    <span style="background-color:#fff0f0">r</span><span style="background-color:#fff0f0">&#39;^/search&#39;</span>,
+    views<span style="color:#333">.</span>MyModelSearchView<span style="color:#333">.</span>as_view(),
+    name<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;model-search&#39;</span>
+),</code></pre></div>
+<h2 id="search-results-partial">Search Results Partial</h2>
+
+<p>We will create a handy partial in <code>templates/_partials/_search_results.html</code> that will contain the list of the search results. A very basic example would be:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% if models.count &gt; 0 %}
+  {% for object in models %}
+    &lt;div&gt;
+      &lt;h5&gt;{{ object.title }}&lt;/h5&gt;
+      &lt;p&gt;{{ object.author }}&lt;/p&gt;
+    &lt;/div&gt;
+  {% endfor %}
+{% endif %}</code></pre></div>
+<p>Obviously you should include the fields from your model that you want to show, and probably add some nice styling with Bootstrap.</p>
+
+<h2 id="making-the-ajax-call">Making the AJAX Call</h2>
+
+<p>The last step is to write the JavaScript that will fire the AJAX request to our view, obtains the response, and appends the HTML from the response (thanks to the <code>render_to_response()</code> method) to show the final results.</p>
+
+<p>The search component of the theme I am using comes with some JavaScript template that I can tweak to fit my needs. For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#888">// search.js
+</span><span style="color:#888"></span>
+$(<span style="color:#007020">document</span>).ready(<span style="color:#080;font-weight:bold">function</span>() {
+  <span style="color:#888">// Initializes search overlay plugin.
+</span><span style="color:#888"></span>  <span style="color:#888">// Replace onSearchSubmit() and onKeyEnter() with
+</span><span style="color:#888"></span>  <span style="color:#888">// your logic to perform a search and display results
+</span><span style="color:#888"></span>  $(<span style="background-color:#fff0f0">&#39;[data-pages=&#34;search&#34;]&#39;</span>).search({
+    searchField<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;#overlay-search&#39;</span>,
+    closeButton<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;.overlay-close&#39;</span>,
+    suggestions<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;#overlay-suggestions&#39;</span>,
+    brand<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;.brand&#39;</span>,
+    onSearchSubmit<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(searchString) {
+      $.ajax({
+        type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;POST&#39;</span>,
+        url<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;/search&#39;</span>,
+        data<span style="color:#333">:</span> {
+          <span style="background-color:#fff0f0">&#39;q&#39;</span><span style="color:#333">:</span> searchString,
+          <span style="background-color:#fff0f0">&#39;csrfmiddlewaretoken&#39;</span><span style="color:#333">:</span> $(<span style="background-color:#fff0f0">&#39;input[name=csrfmiddlewaretoken]&#39;</span>).val()
+        },
+        success<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(res) {
+          <span style="color:#080;font-weight:bold">let</span> searchResults <span style="color:#333">=</span> $(<span style="background-color:#fff0f0">&#39;.search-results&#39;</span>);
+          <span style="color:#080;font-weight:bold">let</span> wait <span style="color:#333">=</span> setTimeout(<span style="color:#080;font-weight:bold">function</span>() {
+            searchResults.find(<span style="background-color:#fff0f0">&#39;.result-name&#39;</span>).each(<span style="color:#080;font-weight:bold">function</span>() {
+              searchResults.fadeIn(<span style="background-color:#fff0f0">&#39;fast&#39;</span>);
+            });
+          }, <span style="color:#00d;font-weight:bold">500</span>);
+          $(<span style="color:#080;font-weight:bold">this</span>).data(<span style="background-color:#fff0f0">&#39;timer&#39;</span>, wait);
+
+          searchResults.html(res);
+        }
+      });
+    },
+  });
+});
+</code></pre></div>
+<p>The <code>onSearchSubmit</code> method will get called when the user presses the <kbd>ENTER</kbd> key after typing in the search query. This method will make an AJAX call to the URL we defined previously, passing in the the query <code>q</code> and the CSRF token to the controller. Afterwards it will append the template in the response to the <code>.search-results</code> area in the search template we created.</p>
+
+<p>Here is a GIF so you can see it all in action:</p>
+
+<p><img src="/posts/django-ajax-search-with-elasticsearch/ajax_search.gif" alt="Final AJAX Search" /></p>
+
+<h1 id="references">References</h1>
+
+<ol>
+<li><a href="https://www.youtube.com/watch?v=jKSNciGr8kY">Python Django tutorial 15 - Ajax search feature by Mike Hibbert </a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="http://aalvarez.me/tags/elasticsearch" class="label label-default">elasticsearch</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+  </body>
+</html>

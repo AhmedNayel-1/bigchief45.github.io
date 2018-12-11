@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.mecss/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Custom Triggers and Notifications in a ZenPack</a>
+  </h1>
+  <time datetime="2017-05-04T00:00:00Z" class="post-date">Thu, May 4, 2017</time>
+  <p>In a <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
+
+<p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
+
+<h2 id="defining-zenpack-triggers-notifications">Defining ZenPack Triggers &amp; Notifications</h2>
+
+<p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn&rsquo;t exist), within the ZenPack&rsquo;s top directory.</p>
+
+<p><strong>actions.json</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
+  &#34;triggers&#34;: [
+    {
+      &#34;name&#34;: &#34;Critical_death_event&#34;,
+      &#34;uuid&#34;: &#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;,
+      &#34;enabled&#34;: false,
+      &#34;rule&#34;: {
+        &#34;api_version&#34;: 1,
+        &#34;type&#34;: 1,
+        &#34;source&#34;: &#34;(evt.event_class.startswith(\&#34;/Status/Ping\&#34;)) and (evt.status == 0) and (evt.severity &gt; 2)&#34;
+      }
+    }
+  ],
+
+  &#34;notifications&#34;: [
+    {
+      &#34;id&#34;: &#34;send_sms_message&#34;,
+      &#34;description&#34;: &#34;Send SMS using Twilio&#34;,
+      &#34;action&#34;: &#34;command&#34;,
+      &#34;guid&#34;: &#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&#34;,
+      &#34;enabled&#34;: false,
+      &#34;action_timeout&#34;: 60,
+      &#34;delay_seconds&#34;: 0,
+      &#34;repeat_seconds&#34;: 0,
+      &#34;send_initial_occurrence&#34;: false,
+      &#34;send_clear&#34;: false,
+      &#34;body_format&#34;: &#34;echo \&#34;Hello World!\&#34;&#34;,
+      &#34;clear_body_format&#34;: &#34;&#34;,
+      &#34;subscriptions&#34;: [&#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;]
+    }
+  ]
+}</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpack" class="label label-default">zenpack</a></li>
+  
+    <a href="http://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/zendmd" class="label label-default">zendmd</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/custom-triggers-and-notifications-in-a-zenpack/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/working-with-rrdtool/">Working With RRDTool</a>
+  </h1>
+  <time datetime="2017-05-02T00:00:00Z" class="post-date">Tue, May 2, 2017</time>
+  <p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
+
+<h2 id="round-robin-databases">Round Robin Databases</h2>
+
+<p>RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing <strong>time series</strong> data.</p>
+
+<p>Moreover, rrdtool also <strong>doesn&rsquo;t</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
+
+<p>This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the <code>03</code> minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.</p>
+
+<p>In rrdtool, each database table is stored in a separate <code>.rrd</code> file. This means that one file represents one table.</p>
+
+<p>We can create a database using the following command:</p>
+
+<pre><code>rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
+</code></pre>
+
+<h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
+
+<p>One important parameter here is the <code>step</code> parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. <strong>This means that it only stores data every 300 seconds</strong>. Because of this re-sampling, rrdtool will not accept data from the past.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="http://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="http://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/working-with-rrdtool/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/diving-into-openstack-gnocchi/">Diving Into OpenStack Gnocchi</a>
+  </h1>
+  <time datetime="2017-04-25T00:00:00Z" class="post-date">Tue, Apr 25, 2017</time>
+  <p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
+
+<p>It is the preferred storage method for metrics in Ceilometer, as of OpenStack Ocata.</p>
+
+<p>In this post I want to dive into Gnocchi specifics such as its configuration, supported backends, APIs, daemons, and source code.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Gnocchi&rsquo;s configuration is stored in a file called <code>gnocchi.conf</code>. Ideally, this file would be in <code>~/gnocchi.conf</code> or <code>/etc/gnocchi/gnocchi.conf</code>. Let&rsquo;s take a look at a basic Gnocchi configuration:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#080;font-weight:bold">[DEFAULT]</span>
+<span style="color:#00c">debug</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">true</span>
+<span style="color:#00c">verbose</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">true</span>
+
+<span style="color:#080;font-weight:bold">[api]</span>
+<span style="color:#00c">workers</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">1</span>
+
+<span style="color:#080;font-weight:bold">[database]</span>
+<span style="color:#00c">backend</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">sqlalchemy</span>
+
+<span style="color:#080;font-weight:bold">[indexer]</span>
+<span style="color:#00c">url</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi</span>
+
+<span style="color:#080;font-weight:bold">[storage]</span>
+<span style="color:#00c">coordination_url</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">file:///home/ubuntu/gn/locks</span>
+<span style="color:#00c">driver</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">file</span>
+<span style="color:#00c">file_basepath</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">/home/ubuntu/gn</span>
+
+<span style="color:#080;font-weight:bold">[cors]</span>
+<span style="color:#00c">allowed_origin</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">*</span>
+<span style="color:#00c">allow_credentials</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">false</span></code></pre></div>
+<p>The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.</p>
+
+<h3 id="database-setup">Database Setup</h3>
+
+<p>For this example, we are going to use <a href="www.c9.io">Cloud 9</a> as our environment, and Postgresql as the database. This means that we need to first setup the database before we start using Gnocchi.</p>
+
+<p>Make sure the Postgresql service is running:</p>
+
+<pre><code>sudo service postgresql start
+</code></pre>
+
+<p>We can enter the Postgresql command line using:</p>
+
+<pre><code>sudo sudo -u postgres psql
+</code></pre>
+
+<p>Now let&rsquo;s create a new Postgresql user:</p>
+
+<pre><code>CREATE USER gnocchi SUPERUSER PASSWORD 'gnocchi';
+</code></pre>
+
+<p>Then create the database:</p>
+
+<pre><code>CREATE DATABASE gnocchi WITH TEMPLATE = template0 ENCODING = 'UNICODE';
+</code></pre>
+
+<p>When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:</p>
+
+<pre><code>gnocchi-upgrade
+</code></pre>
+
+<p>You should see the following output logs:</p>
+
+<pre><code>2017-05-17 05:28:50.917 3895 INFO gnocchi.cli [-] Upgrading indexer &lt;gnocchi.indexer.sqlalchemy.SQLAlchemyIndexer object at 0x7ff76cff6190&gt;
+2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
+2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
+2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
+2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
+2017-05-17 05:28:51.154 3895 INFO gnocchi.cli [-] Upgrading storage &lt;gnocchi.storage.file.FileStorage object at 0x7ff7688f9710&gt;
+</code></pre>
+
+<h2 id="gnocchi-rest-api">Gnocchi REST API</h2>
+
+<p>Gnocchi&rsquo;s REST API is based on <a href="http://www.pecanpy.org/index.html">Pecan</a>, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&rsquo;s <code>rest/__init__.py</code> file:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pecan</span>
+<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">pecan</span> <span style="color:#080;font-weight:bold">import</span> rest</code></pre></div>
+<h3 id="metrics">Metrics</h3>
+
+<p>Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
+
+<p>A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.</p>
+
+<p>Farther down the code in <code>rest/__init__.py</code>, we can find a metric controller which inherits from a Pecan REST controller:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MetricController</span>(rest<span style="color:#333">.</span>RestController):
+    _custom_actions <span style="color:#333">=</span> {
+        <span style="background-color:#fff0f0">&#39;measures&#39;</span>: [<span style="background-color:#fff0f0">&#39;POST&#39;</span>, <span style="background-color:#fff0f0">&#39;GET&#39;</span>]
+    }
+
+    <span style="color:#080;font-weight:bold">def</span> __init__(self, metric):
+        self<span style="color:#333">.</span>metric <span style="color:#333">=</span> metric
+        mgr <span style="color:#333">=</span> extension<span style="color:#333">.</span>ExtensionManager(namespace<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi.aggregates&#39;</span>,
+                                         invoke_on_load<span style="color:#333">=</span>True)
+        self<span style="color:#333">.</span>custom_agg <span style="color:#333">=</span> <span style="color:#007020">dict</span>((x<span style="color:#333">.</span>name, x<span style="color:#333">.</span>obj) <span style="color:#080;font-weight:bold">for</span> x <span style="color:#000;font-weight:bold">in</span> mgr)
+
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">enforce_metric</span>(self, rule):
+        enforce(rule, json<span style="color:#333">.</span>to_primitive(self<span style="color:#333">.</span>metric))
+
+    <span style="color:#555;font-weight:bold">@pecan.expose</span>(<span style="background-color:#fff0f0">&#39;json&#39;</span>)
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_all</span>(self):
+        self<span style="color:#333">.</span>enforce_metric(<span style="background-color:#fff0f0">&#34;get metric&#34;</span>)
+        <span style="color:#080;font-weight:bold">return</span> self<span style="color:#333">.</span>metric</code></pre></div>
+<p>From the <a href="http://pecan.readthedocs.io/en/latest/routing.html">Pecan documentation</a>, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.</p>
+
+<p>We can tell Pecan which methods in a class are publically-visible via <code>expose()</code>. If a method is not decorated with <code>expose()</code>, Pecan will never route a request to it. In the example above, the <code>get_all()</code> method is exposed to Pecan. Additionally, it makes use of Pecan&rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="http://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="http://aalvarez.me/tags/ceph" class="label label-default">ceph</a></li>
+  
+    <a href="http://aalvarez.me/tags/pecan" class="label label-default">pecan</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/diving-into-openstack-gnocchi/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/understanding-oslo_config-in-openstack/">Understanding oslo_config in OpenStack</a>
+  </h1>
+  <time datetime="2017-04-18T00:00:00Z" class="post-date">Tue, Apr 18, 2017</time>
+  <p>The OpenStack <a href="https://wiki.openstack.org/wiki/Oslo">Oslo</a> library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.</p>
+
+<p>In this post I want to go over <a href="https://wiki.openstack.org/wiki/Oslo/Config">oslo_config</a>. This library helps with parsing of <strong>options</strong> found in configuration files or command line arguments.</p>
+
+<h2 id="understanding-options">Understanding Options</h2>
+
+<p>An option is defined using the <code>Opt</code> class or one of its sub-classes, from the <code>cfg</code> module:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">oslo_config</span> <span style="color:#080;font-weight:bold">import</span> cfg
+
+common_opts <span style="color:#333">=</span> [
+    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;bind_host&#39;</span>,
+               default<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;0.0.0.0&#39;</span>,
+               help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;IP address to listen on.&#39;</span>),
+    cfg<span style="color:#333">.</span>Opt(<span style="background-color:#fff0f0">&#39;bind_port&#39;</span>,
+            <span style="color:#007020">type</span><span style="color:#333">=</span>PortType,
+            default<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">9292</span>,
+            help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Port number to listen on.&#39;</span>)
+]</code></pre></div>
+<p>In the example above we can see that we are using <code>Opt</code> and <code>StrOpt</code>, one of its sub-classes. You might notice that the second option&rsquo;s constructor has a <code>type=PortType</code> argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises <code>ValueError</code> if the value cannot be converted. The different types available can be found in the <code>types</code> module:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="http://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/understanding-oslo_config-in-openstack/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/tech-and-open-source-chinese-vocabulary/">Tech and Open Source Chinese Vocabulary</a>
+  </h1>
+  <time datetime="2017-04-17T00:00:00Z" class="post-date">Mon, Apr 17, 2017</time>
+  The following is my personal curated list of Chinese terms (in Traditional Chinese) and vocabulary used in web development, programming, technology and open source.
+   Chinese Word Pinyin Definition     修復 xiū fù Repair, fix (bug)   發版 fā bǎn To release a version   報錯 baò cuò Error report/message   組件 zǔ jiàn Component   版本 bǎn běn Version   更新 gèng xīn To update/upgrade   顯示 xiǎn shì Show, display   表格 biaǒ gé Form, table   按鈕 àn niú Button, to press a button   重新 chóng xīn Retry (verb)   項目 xiàng mù Project   需求 xū qiú Request   代碼 dài mǎ Code   源碼 yuán mǎ Source code   固定 gù dìng Fixed, regular   內容 nèi róng Content   輸入 shū rù Input, to input   屬性 shǔ xìng attribute, property   路由 lù yóu routing   參考 cān kǎo Consult, refer to, reference   標題 biaō tí title, heading   一致 yī zhì consistent, identical   默認 mò rèn default   里程碑 lǐ chéng bēi milestone   圖標 tú biaō icon   接口 jiē koǔ interface, port   操作系統 Cāozuò xìtǒng operating system   支持 zhī chí support   佈局 bù jú layout    
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/chinese" class="label label-default">chinese</a></li>
+  
+    <a href="http://aalvarez.me/tags/open-source" class="label label-default">open source</a></li>
+  
+    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+    <a href="http://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+</div>
+
+
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me/page/8/" style="float: left;">← Newer Posts</a>
+    
+
+    
+      <a href="http://aalvarez.me/page/10/" style="float: right;">Older Posts →</a>
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>
