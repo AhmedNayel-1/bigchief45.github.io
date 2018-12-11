@@ -1,0 +1,37 @@
+{{ define "main" -}}
+<h1>Portfolio</h1>
+
+<p>A small showcase of my public and personal projects.</p>
+
+{{ range $.Site.Data.portfolio.projects }}
+  <div class="media">
+    <a href="{{ .link }}" target="_blank">
+      <img src="/img/portfolio/{{ .image }}" title="{{ .title }}" style="float: right; margin-left: 20px;" width="300" height="300">
+    </a>
+
+    <h3><a href="{{ .link }}" target="_blank">{{ .title }}</h3></a>
+
+    <p>{{ .description }}</p>
+
+    <h5>Features</h5>
+
+    <ul>
+      {{ range .features }}
+        <li>{{ . }}</li>
+      {{ end }}
+    </ul>
+
+    <!-- Links -->
+    <ul class="list-inline">
+      <li><small><a href="{{ .link }}" target="_blank"><i class="fa fa-external-link"></i> View Application</a></small></li>
+
+      {{ if .github }}
+        <li><small><a href="{{ .github }}" target="_blank"><i class="fa fa-github"></i> Source Code</a></small></li>
+      {{ end }}
+    </ul>
+  </div>
+
+  <hr>
+{{ end }}
+
+{{- end }}

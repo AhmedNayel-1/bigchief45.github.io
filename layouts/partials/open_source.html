@@ -1,0 +1,29 @@
+<h2>Open Source Contributions</h2>
+
+{{ range $.Site.Data.open_source }}
+  <div class="media">
+    <a href="https://github.com/{{ .url }}/commits/master?author=bigchief45" target="_blank">
+      <img src="/img/oss/{{ .image }}.png" title="{{ .url }}" alt="{{ .url }}">
+    </a>
+
+    <div>
+      <h4><a href="https://github.com/{{ .url }}/commits/master?author=bigchief45" target="_blank">{{ .url }}</a></h4>
+
+      <p>
+        <small class="post-date" style="margin-top: 2px;">{{ .description }}</small>
+      </p>
+
+      <ul class="list-inline">
+        <li><small class="text-muted">{{ .commits }} Commits</small></li>
+
+        {{ if .additions -}}
+          <li><small class="text-green">{{ .additions }}++</small></li>
+        {{- end }}
+
+        {{ if .deletions -}}
+          <li><small class="text-red">{{ .deletions }}--</small></li>
+        {{- end }}
+      </ul>
+    </div>
+  </div>
+{{ end }}

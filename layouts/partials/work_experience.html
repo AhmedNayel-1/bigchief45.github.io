@@ -1,0 +1,22 @@
+<h2>Work Experience</h2>
+
+{{ range $.Site.Data.experience.jobs }}
+<div>
+  <h4>
+    💼 <a href="{{ .link }}">{{ .company }}</a> - {{ .position }}
+
+    <a href="{{ .link }}">
+      <img src="/img/work_experience/{{ .image }}" title="{{ .company }}" style="float: right;">
+    </a>
+  </h4>
+  <small class="post-date">({{ .period }}) &middot; {{ .location }}</small>
+
+  <p><small>{{ .description }}</small></p>
+
+  <ul>
+    {{ range .tasks }}
+      <li><small>{{ . }}</small></li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

@@ -1,0 +1,33 @@
+{{ define "main" }}
+<head>
+  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}/css/base.css">
+  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}/css/media.css">
+</head>
+
+<h1>About Me</h1>
+
+<img src="/img/avatar.jpg" width="230" height="230" style="display: block; margin-left: auto; margin-right: auto;">
+
+<p>I am Andrés, a web developer and software engineer from Honduras </p>
+
+<p>I focus mainly on back-end web development, using Ruby on Rails, Django and Python. I am also a Java programmer and serverless lover.</p>
+
+{{ partial "work_experience.html" .}}
+
+<hr>
+
+{{ partial "education.html" .}}
+
+<hr>
+
+{{ partial "open_source.html" .}}
+
+<hr>
+
+{{ partial "certificates.html" .}}
+
+<hr>
+
+{{ partial "languages.html" .}}
+
+{{ end }}
