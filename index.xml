@@ -6,10 +6,26 @@
     <description>Recent content on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Dec 2018 16:32:22 +0000</lastBuildDate>
     
 	<atom:link href="http://aalvarez.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cloudfront CORS Font Issues</title>
+      <link>http://aalvarez.me/posts/cloudfront-cors-font-issues/</link>
+      <pubDate>Wed, 12 Dec 2018 16:32:22 +0000</pubDate>
+      
+      <guid>http://aalvarez.me/posts/cloudfront-cors-font-issues/</guid>
+      <description>&lt;p&gt;I was experiencing an issue with Cloudfront and some static assets of a Django application deployed to ElasticBeanstalk. The issue was happening when trying to retrieve some fonts that are stored in S3 and served by CloudFront, the browser dev tools would show some errors similar to the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Access to Font at &#39;http://CLOUDFRONT_HOSTNAME.cloudfront.net/FONT_PATH&#39; from origin &#39;http://www.example.com&#39; has been blocked by CORS policy: No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS&#34;&gt;CORS&lt;/a&gt; issue. And apparently, very common when trying to load fonts.&lt;/p&gt;
+
+&lt;p&gt;To fix this, there are a few possible things that you might have to try. I will list some of the fixes I found.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Cancellable Tasks in Netbeans Platform</title>

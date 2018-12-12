@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.me/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.me/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.me/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.me/css/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.me/css/extra.css">
+  <link type="text/css" rel="stylesheet" href="http://aalvarez.me/css/overrides.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://aalvarez.me/"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://aalvarez.me/">Home</a> </li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2018. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="posts">
+
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/debian-packaging-in-ubuntu/">Debian Packaging in Ubuntu</a>
+  </h1>
+  <time datetime="2016-10-11T00:00:00Z" class="post-date">Tue, Oct 11, 2016</time>
+  <p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
+
+<h2 id="package-source-structure">Package Source &amp; Structure</h2>
+
+<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
+
+<pre><code>mkdir mypackage-1.0.0
+</code></pre>
+
+<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
+
+<pre><code>cd mypackage-1.0.0
+mkdir DEBIAN
+touch DEBIAN/control
+</code></pre>
+
+<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
+
+<pre><code>Package: mypackage
+Version: 1.0-0
+Section: base
+Priority: optional
+Architecture: all
+Depends: python2.7
+Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
+Description: A new and improved C++ Compiler
+</code></pre>
+
+<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="http://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="http://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="http://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/debian-packaging-in-ubuntu/">Read More…</a>
+    </div>
+  
+</article>
+
+
+
+
+
+
+  <div>
+    
+      <a href="http://aalvarez.me//page/19/" style="float: left;">← Newer Posts</a>
+    
+
+    
+  </div>
+
+
+
+</div>
+    </main>
+
+    
+  </body>
+</html>

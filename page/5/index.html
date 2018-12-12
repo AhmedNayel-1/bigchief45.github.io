@@ -91,6 +91,46 @@
 
 <article class="post">
   <h1 class="post-title">
+    <a href="http://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Building an OCR Service With TesseractJS in AWS Lambda</a>
+  </h1>
+  <time datetime="2017-11-21T00:00:00Z" class="post-date">Tue, Nov 21, 2017</time>
+  <p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
+
+<p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
+
+<p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
+
+<h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
+
+<p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
+
+<p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
+
+<pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="http://aalvarez.me/tags/nodejs" class="label label-default">nodejs</a></li>
+  
+    <a href="http://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
+  
+    <a href="http://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
+  
+    <a href="http://aalvarez.me/tags/ocr" class="label label-default">ocr</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="http://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Creating an Upload Progress Dialog in Java</a>
   </h1>
   <time datetime="2017-11-16T00:00:00Z" class="post-date">Thu, Nov 16, 2017</time>
@@ -256,62 +296,6 @@ umask:</p>
   
     <div class="read-more-link">
       <a href="/posts/easy-notification-system-in-rails-part-3/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="http://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Easy Notification System in Rails Part 2</a>
-  </h1>
-  <time datetime="2017-09-05T00:00:00Z" class="post-date">Tue, Sep 5, 2017</time>
-  <p><em>Read Part 1 of this series <a href="/posts/easy-notification-system-in-rails.html">here</a></em></p>
-
-<p>In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.</p>
-
-<p>In this post we will be adding more functionality to our notification system.s</p>
-
-<h2 id="mark-as-read-feature">Mark as Read Feature</h2>
-
-<p>We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:</p>
-
-<ul>
-<li>For a single notification, it should be marked <em>as read</em> when it is clicked from the list of notifications.</li>
-<li>For all notifications, they should be marked as read when a specific button is pressed.</li>
-</ul>
-
-<h3 id="setting-up-the-routes">Setting up the Routes</h3>
-
-<p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># config/routes.rb</span>
-<span style="color:#036;font-weight:bold">Rails</span><span style="color:#333">.</span>application<span style="color:#333">.</span>routes<span style="color:#333">.</span>draw <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#888"># ...</span>
-
-  resources <span style="color:#a60;background-color:#fff0f0">:notifications</span>, <span style="color:#a60;background-color:#fff0f0">only</span>: <span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:index</span><span style="color:#333">]</span> <span style="color:#080;font-weight:bold">do</span>
-    post <span style="color:#a60;background-color:#fff0f0">:mark_as_read</span>, <span style="color:#a60;background-color:#fff0f0">on</span>: <span style="color:#a60;background-color:#fff0f0">:collection</span>
-    post <span style="color:#a60;background-color:#fff0f0">:mark_as_read</span>, <span style="color:#a60;background-color:#fff0f0">on</span>: <span style="color:#a60;background-color:#fff0f0">:member</span>
-  <span style="color:#080;font-weight:bold">end</span>
-
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="http://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="http://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="http://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
-  
-    <a href="http://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="http://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="/posts/easy-notification-system-in-rails-part-2/">Read More…</a>
     </div>
   
 </article>
