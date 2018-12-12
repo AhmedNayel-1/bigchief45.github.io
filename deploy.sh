@@ -8,7 +8,7 @@ hugo -t hyde
 cd public
 git add .
 
-msg="Site deploy (`date`)"
+msg="🚀 Site deploy (`date`)"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
@@ -19,3 +19,5 @@ git push origin master
 
 # Come Back up to the Project Root
 cd ..
+
+echo "✨✨✨Deployment completed."
