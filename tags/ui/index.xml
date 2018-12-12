@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ui on Andrés Álvarez</title>
-    <link>http://aalvarez.me/tags/ui/</link>
+    <link>https://aalvarez.me/tags/ui/</link>
     <description>Recent content in Ui on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 21 Dec 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://aalvarez.me/tags/ui/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aalvarez.me/tags/ui/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Extending Zenoss Navigation Bars</title>
-      <link>http://aalvarez.me/posts/extending-zenoss-navigations/</link>
+      <link>https://aalvarez.me/posts/extending-zenoss-navigations/</link>
       <pubDate>Wed, 21 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/extending-zenoss-navigations/</guid>
+      <guid>https://aalvarez.me/posts/extending-zenoss-navigations/</guid>
       <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&amp;rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
 
 &lt;h2 id=&#34;configure-zcml&#34;&gt;configure.zcml&lt;/h2&gt;
@@ -43,17 +43,17 @@
     
     <item>
       <title>Modifying the Zenoss Infrastructure Grid</title>
-      <link>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</link>
+      <link>https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</link>
       <pubDate>Thu, 10 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</guid>
-      <description>&lt;p&gt;Continuing from my previous post, where I explained &lt;a href=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;how to modify the device detail bar from a ZenPack using ExtJS&lt;/a&gt;, in this post I will explain how we can modify the device list grid shown in the infrastructure page.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</guid>
+      <description>&lt;p&gt;Continuing from my previous post, where I explained &lt;a href=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;how to modify the device detail bar from a ZenPack using ExtJS&lt;/a&gt;, in this post I will explain how we can modify the device list grid shown in the infrastructure page.&lt;/p&gt;
 
 &lt;h2 id=&#34;the-infrastructure-grid&#34;&gt;The Infrastructure Grid&lt;/h2&gt;
 
 &lt;p&gt;This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include &lt;em&gt;device name&lt;/em&gt;, &lt;em&gt;device class&lt;/em&gt;, &lt;em&gt;IP address&lt;/em&gt;, &lt;em&gt;production state&lt;/em&gt;, and &lt;em&gt;events&lt;/em&gt;, as shown in the image below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&amp;rsquo;t do this by default is beyond me).&lt;/p&gt;
 
@@ -64,10 +64,10 @@
     
     <item>
       <title>Modifying the Zenoss Device Detail Bar</title>
-      <link>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</link>
+      <link>https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</link>
       <pubDate>Tue, 08 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</guid>
+      <guid>https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</guid>
       <description>&lt;p&gt;The Zenoss Core &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;&lt;strong&gt;ExtJS&lt;/strong&gt;&lt;/a&gt; graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.&lt;/p&gt;
 
 &lt;p&gt;Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in &lt;code&gt;$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss&lt;/code&gt;, and as you would expect, the device detail bar component is also located there.&lt;/p&gt;
@@ -76,7 +76,7 @@
 
 &lt;p&gt;This is the detail bar located on the device view page which shows the device&amp;rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in &lt;code&gt;DeviceDetailBar.js&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;However since we are going to &lt;strong&gt;&lt;em&gt;extend&lt;/em&gt;&lt;/strong&gt; this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.&lt;/p&gt;
 

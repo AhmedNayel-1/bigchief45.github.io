@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Zenpack on Andrés Álvarez</title>
-    <link>http://aalvarez.me/tags/zenpack/</link>
+    <link>https://aalvarez.me/tags/zenpack/</link>
     <description>Recent content in Zenpack on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 09 May 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://aalvarez.me/tags/zenpack/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aalvarez.me/tags/zenpack/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Custom Notification Action Types in Zenoss</title>
-      <link>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</link>
       <pubDate>Tue, 09 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create &lt;em&gt;command&lt;/em&gt; type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a &lt;a href=&#34;http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html&#34;&gt;more recent post&lt;/a&gt; I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create &lt;em&gt;command&lt;/em&gt; type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a &lt;a href=&#34;https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html&#34;&gt;more recent post&lt;/a&gt; I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.&lt;/p&gt;
 
 &lt;p&gt;In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.&lt;/p&gt;
 
@@ -25,12 +25,12 @@
 
 &lt;p&gt;By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;These action types are:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Command&lt;/strong&gt;: Runs an executable script. Discussed in one of my &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous posts&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Command&lt;/strong&gt;: Runs an executable script. Discussed in one of my &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous posts&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: Sends an e-mail to a user.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Page&lt;/strong&gt;: Sends a message to a user&amp;rsquo;s &lt;a href=&#34;https://en.wikipedia.org/wiki/Pager&#34;&gt;pager&lt;/a&gt;, also known as &lt;em&gt;beeper&lt;/em&gt;. Probably safe to say that this is not used by anyone anymore.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Syslog&lt;/strong&gt;: Logs a message to &lt;a href=&#34;https://en.wikipedia.org/wiki/Syslog&#34;&gt;syslog&lt;/a&gt;&lt;/li&gt;
@@ -46,11 +46,11 @@
     
     <item>
       <title>Custom Triggers and Notifications in a ZenPack</title>
-      <link>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</link>
+      <link>https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</link>
       <pubDate>Thu, 04 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how to use &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;command notifications&lt;/strong&gt; in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how to use &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;command notifications&lt;/strong&gt; in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.&lt;/p&gt;
 
 &lt;p&gt;In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.&lt;/p&gt;
 

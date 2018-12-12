@@ -2,28 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Api on Andrés Álvarez</title>
-    <link>http://aalvarez.me/tags/api/</link>
+    <link>https://aalvarez.me/tags/api/</link>
     <description>Recent content in Api on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 08 May 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://aalvarez.me/tags/api/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aalvarez.me/tags/api/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Rails API With Nested Resources</title>
-      <link>http://aalvarez.me/posts/rails-api-with-nested-resources/</link>
+      <link>https://aalvarez.me/posts/rails-api-with-nested-resources/</link>
       <pubDate>Mon, 08 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/rails-api-with-nested-resources/</guid>
+      <guid>https://aalvarez.me/posts/rails-api-with-nested-resources/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&amp;rsquo;s form and create all objects at once when the form is saved.&lt;/p&gt;
 
 &lt;p&gt;I was recently finding myself trying to implement a similar functionality using only Rails 5 API and &lt;a href=&#34;http://jsonapi.org&#34;&gt;JSON API specification&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&amp;rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;accepts-nested-attributes-for&#34;&gt;accepts_nested_attributes_for&lt;/h2&gt;
 
@@ -32,17 +32,17 @@
     
     <item>
       <title>Custom Zenoss API Endpoints</title>
-      <link>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</link>
+      <link>https://aalvarez.me/posts/custom-zenoss-api-endpoints/</link>
       <pubDate>Tue, 20 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
 
 &lt;h2 id=&#34;creating-an-endpoint&#34;&gt;Creating an Endpoint&lt;/h2&gt;
 
 &lt;p&gt;Assuming that we are starting with a new and fresh ZenPack created with &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, we will proceed to create a simple endpoint.&lt;/p&gt;
 
-&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
 
 &lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;os.path&lt;/span&gt;
@@ -65,10 +65,10 @@
     
     <item>
       <title>The Zenoss JSON API</title>
-      <link>http://aalvarez.me/posts/the-zenoss-json-api/</link>
+      <link>https://aalvarez.me/posts/the-zenoss-json-api/</link>
       <pubDate>Thu, 24 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/the-zenoss-json-api/</guid>
+      <guid>https://aalvarez.me/posts/the-zenoss-json-api/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using &lt;a href=&#34;https://curl.haxx.se/&#34;&gt;cURL&lt;/a&gt; or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.&lt;/p&gt;
 
 &lt;p&gt;The API documentation can be downloaded &lt;a href=&#34;https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip&#34;&gt;here&lt;/a&gt;. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.&lt;/p&gt;

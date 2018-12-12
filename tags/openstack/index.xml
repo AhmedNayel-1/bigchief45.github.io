@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Openstack on Andrés Álvarez</title>
-    <link>http://aalvarez.me/tags/openstack/</link>
+    <link>https://aalvarez.me/tags/openstack/</link>
     <description>Recent content in Openstack on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 18 May 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://aalvarez.me/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aalvarez.me/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Understanding Gnocchi Metrics</title>
-      <link>http://aalvarez.me/posts/understanding-gnocchi-metrics/</link>
+      <link>https://aalvarez.me/posts/understanding-gnocchi-metrics/</link>
       <pubDate>Thu, 18 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/understanding-gnocchi-metrics/</guid>
+      <guid>https://aalvarez.me/posts/understanding-gnocchi-metrics/</guid>
       <description>&lt;p&gt;Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store &lt;strong&gt;measures&lt;/strong&gt;, and the way they do this is defined by &lt;strong&gt;archive policies&lt;/strong&gt;. These are concepts that I will cover in future articles.&lt;/p&gt;
 
 &lt;p&gt;Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.&lt;/p&gt;
@@ -28,10 +28,10 @@
     
     <item>
       <title>Diving Into OpenStack Gnocchi</title>
-      <link>http://aalvarez.me/posts/diving-into-openstack-gnocchi/</link>
+      <link>https://aalvarez.me/posts/diving-into-openstack-gnocchi/</link>
       <pubDate>Tue, 25 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/diving-into-openstack-gnocchi/</guid>
+      <guid>https://aalvarez.me/posts/diving-into-openstack-gnocchi/</guid>
       <description>&lt;p&gt;Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.&lt;/p&gt;
 
 &lt;p&gt;It is the preferred storage method for metrics in Ceilometer, as of OpenStack Ocata.&lt;/p&gt;
@@ -140,10 +140,10 @@
     
     <item>
       <title>Understanding oslo_config in OpenStack</title>
-      <link>http://aalvarez.me/posts/understanding-oslo_config-in-openstack/</link>
+      <link>https://aalvarez.me/posts/understanding-oslo_config-in-openstack/</link>
       <pubDate>Tue, 18 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/understanding-oslo_config-in-openstack/</guid>
+      <guid>https://aalvarez.me/posts/understanding-oslo_config-in-openstack/</guid>
       <description>&lt;p&gt;The OpenStack &lt;a href=&#34;https://wiki.openstack.org/wiki/Oslo&#34;&gt;Oslo&lt;/a&gt; library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.&lt;/p&gt;
 
 &lt;p&gt;In this post I want to go over &lt;a href=&#34;https://wiki.openstack.org/wiki/Oslo/Config&#34;&gt;oslo_config&lt;/a&gt;. This library helps with parsing of &lt;strong&gt;options&lt;/strong&gt; found in configuration files or command line arguments.&lt;/p&gt;
@@ -167,10 +167,10 @@ common_opts &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [
     
     <item>
       <title>Understanding Ceilometer Publishers</title>
-      <link>http://aalvarez.me/posts/understanding-ceilometer-publishers/</link>
+      <link>https://aalvarez.me/posts/understanding-ceilometer-publishers/</link>
       <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/understanding-ceilometer-publishers/</guid>
+      <guid>https://aalvarez.me/posts/understanding-ceilometer-publishers/</guid>
       <description>&lt;p&gt;Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer &lt;strong&gt;publishers&lt;/strong&gt;. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.&lt;/p&gt;
 
 &lt;p&gt;Publishers are specified in the &lt;code&gt;publishers&lt;/code&gt; section for each pipeline that is defined in the &lt;code&gt;pipeline.yaml&lt;/code&gt; and the &lt;code&gt;event_pipeline.yaml&lt;/code&gt; files.&lt;/p&gt;
@@ -186,10 +186,10 @@ common_opts &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [
     
     <item>
       <title>Understanding Ceilometer Transformers</title>
-      <link>http://aalvarez.me/posts/understanding-ceilometer-transformers/</link>
+      <link>https://aalvarez.me/posts/understanding-ceilometer-transformers/</link>
       <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/understanding-ceilometer-transformers/</guid>
+      <guid>https://aalvarez.me/posts/understanding-ceilometer-transformers/</guid>
       <description>&lt;p&gt;Ceilometer &lt;strong&gt;transformers&lt;/strong&gt; are part of the Ceilometer &lt;strong&gt;pipeline&lt;/strong&gt;, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for &lt;strong&gt;samples&lt;/strong&gt; and a pipeline for &lt;strong&gt;events&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Configurations for these pipelines can be found in &lt;code&gt;/etc/ceilometer/pipeline.yaml&lt;/code&gt; and &lt;code&gt;/etc/ceilometer/event_pipeline.yaml&lt;/code&gt;.&lt;/p&gt;
@@ -246,10 +246,10 @@ common_opts &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [
     
     <item>
       <title>Ceilometer and OpenStack Notifications</title>
-      <link>http://aalvarez.me/posts/ceilometer-and-openstack-notifications/</link>
+      <link>https://aalvarez.me/posts/ceilometer-and-openstack-notifications/</link>
       <pubDate>Thu, 06 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/ceilometer-and-openstack-notifications/</guid>
+      <guid>https://aalvarez.me/posts/ceilometer-and-openstack-notifications/</guid>
       <description>&lt;p&gt;Ceilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are &lt;strong&gt;notifications&lt;/strong&gt;, which will be explained in this post.&lt;/p&gt;
 
 &lt;h2 id=&#34;openstack-notifications&#34;&gt;OpenStack Notifications&lt;/h2&gt;
@@ -288,11 +288,11 @@ common_opts &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [
     
     <item>
       <title>Setting Up an OpenStack Dev Environment</title>
-      <link>http://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</link>
+      <link>https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</link>
       <pubDate>Wed, 22 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</guid>
-      <description>&lt;p&gt;Before beginning to &lt;a href=&#34;http://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html&#34;&gt;contribute to OpenStack&lt;/a&gt;, it is necessary that we setup an ideal development environment for a smoother workflow.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</guid>
+      <description>&lt;p&gt;Before beginning to &lt;a href=&#34;https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html&#34;&gt;contribute to OpenStack&lt;/a&gt;, it is necessary that we setup an ideal development environment for a smoother workflow.&lt;/p&gt;
 
 &lt;p&gt;In this post I will cover how to setup a Devstack development environment in a &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt; virtual machine using &lt;a href=&#34;http://www.vmware.com/&#34;&gt;VMware Player&lt;/a&gt;.&lt;/p&gt;
 
@@ -309,10 +309,10 @@ common_opts &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [
     
     <item>
       <title>Getting Started on Contributing to OpenStack</title>
-      <link>http://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</link>
+      <link>https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</link>
       <pubDate>Tue, 14 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</guid>
+      <guid>https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png&#34; alt=&#34;OpenStack&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I have started to become interested in contributing to the &lt;a href=&#34;https://www.openstack.org/&#34;&gt;OpenStack&lt;/a&gt; project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.&lt;/p&gt;
@@ -328,10 +328,10 @@ common_opts &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [
     
     <item>
       <title>Processing Nova Live Migration Events in Zenoss</title>
-      <link>http://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</link>
       <pubDate>Mon, 23 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</guid>
+      <guid>https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</guid>
       <description>&lt;p&gt;When monitoring OpenStack using the OpenStack Infrastructure ZenPack integrated with Ceilometer, it is possible to get fast virtual machine state changes (on/off powering, etc.) by receiving events sent from Ceilometer to Zenoss.&lt;/p&gt;
 
 &lt;p&gt;However I discovered that when trying to get the same effect for &lt;strong&gt;live migration&lt;/strong&gt; (live migrating a virtual machine from one compute node to another) scenarios, this would not work. I proceeded to investigate why.&lt;/p&gt;
@@ -352,10 +352,10 @@ common_opts &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [
     
     <item>
       <title>Keystone Interface in Juju Charms</title>
-      <link>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</link>
+      <link>https://aalvarez.me/posts/keystone-interface-in-juju-charms/</link>
       <pubDate>Fri, 28 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/keystone-interface-in-juju-charms/</guid>
+      <guid>https://aalvarez.me/posts/keystone-interface-in-juju-charms/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/docs/1.18/authors-interfaces&#34;&gt;Juju Charms interfaces&lt;/a&gt; make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.&lt;/p&gt;
 
 &lt;p&gt;In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:&lt;/p&gt;

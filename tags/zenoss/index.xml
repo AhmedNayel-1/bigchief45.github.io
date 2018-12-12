@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Zenoss on Andrés Álvarez</title>
-    <link>http://aalvarez.me/tags/zenoss/</link>
+    <link>https://aalvarez.me/tags/zenoss/</link>
     <description>Recent content in Zenoss on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 27 Jun 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://aalvarez.me/tags/zenoss/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aalvarez.me/tags/zenoss/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Extending Device Python Classes From Other ZenPacks</title>
-      <link>http://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/</link>
+      <link>https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/</link>
       <pubDate>Tue, 27 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/</guid>
-      <description>&lt;p&gt;Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from &lt;code&gt;Device&lt;/code&gt;. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a &lt;a href=&#34;http://aalvarez.me/posts/working-with-zenoss-python-data-sources.html&#34;&gt;Python data source&lt;/a&gt;.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/</guid>
+      <description>&lt;p&gt;Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from &lt;code&gt;Device&lt;/code&gt;. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a &lt;a href=&#34;https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html&#34;&gt;Python data source&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;The &lt;code&gt;zenpack.yaml&lt;/code&gt; file for the first and main ZenPack would look something like this:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ZenPack1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
@@ -46,13 +46,13 @@
     
     <item>
       <title>Zenoss Custom Notification Actions Using Subscribers</title>
-      <link>http://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/</link>
+      <link>https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/</link>
       <pubDate>Wed, 07 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create custom notifications actions in Zenoss. Like a &lt;em&gt;SMS&lt;/em&gt; notification, for example. In that post we required a valid cellphone number using a text field in the notification&amp;rsquo;s content pane, as shown below:&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create custom notifications actions in Zenoss. Like a &lt;em&gt;SMS&lt;/em&gt; notification, for example. In that post we required a valid cellphone number using a text field in the notification&amp;rsquo;s content pane, as shown below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg&#34; alt=&#34;Notification Content&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg&#34; alt=&#34;Notification Content&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In this post I want to change and improve this by using &lt;em&gt;&lt;strong&gt;subscribers&lt;/strong&gt;&lt;/em&gt; functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the &lt;em&gt;Pager&lt;/em&gt; field instead.&lt;/p&gt;
 
@@ -65,11 +65,11 @@
     
     <item>
       <title>Custom Notification Action Types in Zenoss</title>
-      <link>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</link>
       <pubDate>Tue, 09 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create &lt;em&gt;command&lt;/em&gt; type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a &lt;a href=&#34;http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html&#34;&gt;more recent post&lt;/a&gt; I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create &lt;em&gt;command&lt;/em&gt; type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a &lt;a href=&#34;https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html&#34;&gt;more recent post&lt;/a&gt; I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.&lt;/p&gt;
 
 &lt;p&gt;In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.&lt;/p&gt;
 
@@ -77,12 +77,12 @@
 
 &lt;p&gt;By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;These action types are:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Command&lt;/strong&gt;: Runs an executable script. Discussed in one of my &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous posts&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Command&lt;/strong&gt;: Runs an executable script. Discussed in one of my &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous posts&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: Sends an e-mail to a user.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Page&lt;/strong&gt;: Sends a message to a user&amp;rsquo;s &lt;a href=&#34;https://en.wikipedia.org/wiki/Pager&#34;&gt;pager&lt;/a&gt;, also known as &lt;em&gt;beeper&lt;/em&gt;. Probably safe to say that this is not used by anyone anymore.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Syslog&lt;/strong&gt;: Logs a message to &lt;a href=&#34;https://en.wikipedia.org/wiki/Syslog&#34;&gt;syslog&lt;/a&gt;&lt;/li&gt;
@@ -98,11 +98,11 @@
     
     <item>
       <title>Custom Triggers and Notifications in a ZenPack</title>
-      <link>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</link>
+      <link>https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</link>
       <pubDate>Thu, 04 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how to use &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;command notifications&lt;/strong&gt; in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how to use &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;command notifications&lt;/strong&gt; in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.&lt;/p&gt;
 
 &lt;p&gt;In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.&lt;/p&gt;
 
@@ -147,32 +147,32 @@
     
     <item>
       <title>Overriding Default Zenoss Pages</title>
-      <link>http://aalvarez.me/posts/overriding-default-zenoss-pages/</link>
+      <link>https://aalvarez.me/posts/overriding-default-zenoss-pages/</link>
       <pubDate>Fri, 17 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/overriding-default-zenoss-pages/</guid>
+      <guid>https://aalvarez.me/posts/overriding-default-zenoss-pages/</guid>
       <description>&lt;p&gt;While testing the &lt;a href=&#34;https://github.com/zenoss/ZenPacks.zenoss.Layer2&#34;&gt;Layer 2 ZenPack&lt;/a&gt;, I noticed that the network map provided by the ZenPack was placed in the same page of the old default Zenoss&amp;rsquo;s network map, replacing the latter which was made using Flash. After the ZenPack is installed, when you click on the &lt;em&gt;Network Map&lt;/em&gt; secondary link in the Infrastructure page, you will get the new map instead.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/overriding-default-zenoss-pages/map_link.jpg&#34; alt=&#34;Network Map link&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/overriding-default-zenoss-pages/map_link.jpg&#34; alt=&#34;Network Map link&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This seemed pretty nice, and I was curious how they achieved this, so I started browsing around the source code. It turns out that this overriding is done in a file called &lt;code&gt;overrides.zcml&lt;/code&gt;, which is placed in the ZenPack&amp;rsquo;s top directory.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Working With Zenoss Python Data Source Plugins</title>
-      <link>http://aalvarez.me/posts/working-with-zenoss-python-data-sources/</link>
+      <link>https://aalvarez.me/posts/working-with-zenoss-python-data-sources/</link>
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/working-with-zenoss-python-data-sources/</guid>
-      <description>&lt;p&gt;Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using &lt;a href=&#34;http://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html&#34;&gt;command datasources&lt;/a&gt;. Python data sources come with the introduction of the &lt;a href=&#34;https://www.zenoss.com/product/zenpacks/pythoncollector&#34;&gt;PythonCollector ZenPack&lt;/a&gt;, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/working-with-zenoss-python-data-sources/</guid>
+      <description>&lt;p&gt;Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using &lt;a href=&#34;https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html&#34;&gt;command datasources&lt;/a&gt;. Python data sources come with the introduction of the &lt;a href=&#34;https://www.zenoss.com/product/zenpacks/pythoncollector&#34;&gt;PythonCollector ZenPack&lt;/a&gt;, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.&lt;/p&gt;
 
-&lt;p&gt;Python data source plugins work exceptionally great in replacing data collection logic in &lt;a href=&#34;http://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html&#34;&gt;custom daemons&lt;/a&gt; written in Python. This means that the ZenPacks&amp;rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.&lt;/p&gt;
+&lt;p&gt;Python data source plugins work exceptionally great in replacing data collection logic in &lt;a href=&#34;https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html&#34;&gt;custom daemons&lt;/a&gt; written in Python. This means that the ZenPacks&amp;rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.&lt;/p&gt;
 
 &lt;p&gt;Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.&lt;/p&gt;
 
 &lt;h2 id=&#34;example-scenario-bmc-power-status&#34;&gt;Example Scenario: BMC Power Status&lt;/h2&gt;
 
-&lt;p&gt;For this post, I will be using an example where we will be executing an &lt;a href=&#34;http://aalvarez.me/posts/ipmi-baseboard-management-controllers.html&#34;&gt;ipmitool command&lt;/a&gt; to check the power chassis status of a &lt;a href=&#34;http://aalvarez.me/posts/ipmi-baseboard-management-controllers.html&#34;&gt;BMC device&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For this post, I will be using an example where we will be executing an &lt;a href=&#34;https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html&#34;&gt;ipmitool command&lt;/a&gt; to check the power chassis status of a &lt;a href=&#34;https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html&#34;&gt;BMC device&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;If I run the following command from my shell:&lt;/p&gt;
 
@@ -190,16 +190,16 @@
 &lt;li&gt;Map the value into a boolean property of a custon zenpacklib class.&lt;/li&gt;
 &lt;li&gt;Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.&lt;/li&gt;
 &lt;li&gt;Update the device model with the new property value.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;Display the property&amp;rsquo;s value in the device detail bar using JavaScript&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;Display the property&amp;rsquo;s value in the device detail bar using JavaScript&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;</description>
     </item>
     
     <item>
       <title>Useful Zendmd Tricks</title>
-      <link>http://aalvarez.me/posts/useful-zendmd-tricks/</link>
+      <link>https://aalvarez.me/posts/useful-zendmd-tricks/</link>
       <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/useful-zendmd-tricks/</guid>
+      <guid>https://aalvarez.me/posts/useful-zendmd-tricks/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Category:ZenDMD&#34;&gt;Zenoss Zendmd Tips Wiki&lt;/a&gt; page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.&lt;/p&gt;
 
 &lt;h2 id=&#34;removing-device-classes&#34;&gt;Removing Device Classes&lt;/h2&gt;
@@ -216,10 +216,10 @@ commit()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     
     <item>
       <title>Getting Started With Juju Locally</title>
-      <link>http://aalvarez.me/posts/getting-started-with-juju-locally/</link>
+      <link>https://aalvarez.me/posts/getting-started-with-juju-locally/</link>
       <pubDate>Fri, 10 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/getting-started-with-juju-locally/</guid>
+      <guid>https://aalvarez.me/posts/getting-started-with-juju-locally/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/&#34;&gt;Juju&lt;/a&gt; is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.&lt;/p&gt;
 
 &lt;p&gt;In this post I will explain how easy it is to get started with Juju in a &lt;strong&gt;local&lt;/strong&gt; environment.&lt;/p&gt;
@@ -256,10 +256,10 @@ juju switch local
     
     <item>
       <title>Processing Nova Live Migration Events in Zenoss</title>
-      <link>http://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</link>
       <pubDate>Mon, 23 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</guid>
+      <guid>https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</guid>
       <description>&lt;p&gt;When monitoring OpenStack using the OpenStack Infrastructure ZenPack integrated with Ceilometer, it is possible to get fast virtual machine state changes (on/off powering, etc.) by receiving events sent from Ceilometer to Zenoss.&lt;/p&gt;
 
 &lt;p&gt;However I discovered that when trying to get the same effect for &lt;strong&gt;live migration&lt;/strong&gt; (live migrating a virtual machine from one compute node to another) scenarios, this would not work. I proceeded to investigate why.&lt;/p&gt;
@@ -280,13 +280,13 @@ juju switch local
     
     <item>
       <title>Appending Modeler Plugins in ZenPacks</title>
-      <link>http://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/</link>
+      <link>https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/</link>
       <pubDate>Fri, 20 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/</guid>
+      <guid>https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/</guid>
       <description>&lt;p&gt;When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class&amp;rsquo;s modeler plugins to be &lt;strong&gt;replaced&lt;/strong&gt; by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply &lt;em&gt;added&lt;/em&gt; to the device class&amp;rsquo;s list of modeler plugins.&lt;/p&gt;
 
-&lt;p&gt;In a previous post I explained how we can &lt;a href=&#34;http://aalvarez.me/posts/customizing-the-zenpack-installation-process.html&#34;&gt;customize the ZenPacks installation process&lt;/a&gt; to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.&lt;/p&gt;
+&lt;p&gt;In a previous post I explained how we can &lt;a href=&#34;https://aalvarez.me/posts/customizing-the-zenpack-installation-process.html&#34;&gt;customize the ZenPacks installation process&lt;/a&gt; to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.&lt;/p&gt;
 
 &lt;p&gt;Let&amp;rsquo;s assume that we have the &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)&#34;&gt;OpenStack Infrastructure ZenPack&lt;/a&gt; installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the &lt;code&gt;/Server/SSH/Linux/NovaHost&lt;/code&gt; device class. We want our custom ZenPack to add &lt;em&gt;new&lt;/em&gt; modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.&lt;/p&gt;
 
@@ -295,10 +295,10 @@ juju switch local
     
     <item>
       <title>Customizing the ZenPack Installation Process</title>
-      <link>http://aalvarez.me/posts/customizing-the-zenpack-installation-process/</link>
+      <link>https://aalvarez.me/posts/customizing-the-zenpack-installation-process/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/customizing-the-zenpack-installation-process/</guid>
+      <guid>https://aalvarez.me/posts/customizing-the-zenpack-installation-process/</guid>
       <description>&lt;p&gt;There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&amp;rsquo;s top directory&amp;rsquo;s &lt;code&gt;__init__.py&lt;/code&gt; file. When creating a fresh ZenPack using &lt;strong&gt;zenpacklib&lt;/strong&gt;, this &lt;code&gt;__init__.py&lt;/code&gt; file will contain the following contents:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; zenpacklib
 
@@ -328,24 +328,24 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Fixing Zenoss Device Network Interface Graphs</title>
-      <link>http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</link>
+      <link>https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</link>
       <pubDate>Fri, 13 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</guid>
+      <guid>https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</guid>
       <description>&lt;p&gt;When testing the monitoring of the OpenStack compute node devices in Zenoss (using &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)&#34;&gt;OpenStack Infrastructure ZenPack&lt;/a&gt;), I noticed that I could not get any graphs for the &lt;strong&gt;network interfaces&lt;/strong&gt; of the device, although we could still get and model all the available interfaces:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png&#34; alt=&#34;Network Interfaces&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png&#34; alt=&#34;Network Interfaces&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Custom Pages in Zenoss</title>
-      <link>http://aalvarez.me/posts/custom-pages-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/custom-pages-in-zenoss/</link>
       <pubDate>Mon, 26 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/custom-pages-in-zenoss/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/extending-zenoss-navigations.html&#34;&gt;previous post&lt;/a&gt; I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&amp;rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/custom-pages-in-zenoss/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/extending-zenoss-navigations.html&#34;&gt;previous post&lt;/a&gt; I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&amp;rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.&lt;/p&gt;
 
 &lt;h2 id=&#34;page-viewlets&#34;&gt;Page Viewlets&lt;/h2&gt;
 
@@ -366,10 +366,10 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Extending Zenoss Navigation Bars</title>
-      <link>http://aalvarez.me/posts/extending-zenoss-navigations/</link>
+      <link>https://aalvarez.me/posts/extending-zenoss-navigations/</link>
       <pubDate>Wed, 21 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/extending-zenoss-navigations/</guid>
+      <guid>https://aalvarez.me/posts/extending-zenoss-navigations/</guid>
       <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&amp;rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
 
 &lt;h2 id=&#34;configure-zcml&#34;&gt;configure.zcml&lt;/h2&gt;
@@ -396,17 +396,17 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Custom Zenoss API Endpoints</title>
-      <link>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</link>
+      <link>https://aalvarez.me/posts/custom-zenoss-api-endpoints/</link>
       <pubDate>Tue, 20 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
 
 &lt;h2 id=&#34;creating-an-endpoint&#34;&gt;Creating an Endpoint&lt;/h2&gt;
 
 &lt;p&gt;Assuming that we are starting with a new and fresh ZenPack created with &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, we will proceed to create a simple endpoint.&lt;/p&gt;
 
-&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;http://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
 
 &lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;os.path&lt;/span&gt;
@@ -429,10 +429,10 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>SSH Monitoring in ZenPacks</title>
-      <link>http://aalvarez.me/posts/ssh-monitoring-in-zenpacks/</link>
+      <link>https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/</link>
       <pubDate>Wed, 14 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/ssh-monitoring-in-zenpacks/</guid>
+      <guid>https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/</guid>
       <description>&lt;p&gt;Zenoss usually monitors and collects information using &lt;strong&gt;SNMP&lt;/strong&gt; and &lt;strong&gt;SSH&lt;/strong&gt; methods. A good example of is the &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;linux monitor ZenPack&lt;/a&gt; which can collect information such as hard disks, interfaces, and file systems using &lt;strong&gt;both&lt;/strong&gt; methods.&lt;/p&gt;
 
 &lt;p&gt;SNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using &lt;strong&gt;&lt;a href=&#34;http://www.net-snmp.org/&#34;&gt;net-snmp&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
@@ -448,10 +448,10 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Working With Zenoss Events</title>
-      <link>http://aalvarez.me/posts/working-with-zenoss-events/</link>
+      <link>https://aalvarez.me/posts/working-with-zenoss-events/</link>
       <pubDate>Fri, 25 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/working-with-zenoss-events/</guid>
+      <guid>https://aalvarez.me/posts/working-with-zenoss-events/</guid>
       <description>&lt;p&gt;Zenoss Events are among the most powerful and useful monitoring features that Zenoss Core provides. Many different types of events are &lt;strong&gt;automatically&lt;/strong&gt; generated by Zenoss when important scenarios occur for the devices being monitored.&lt;/p&gt;
 
 &lt;h2 id=&#34;zenoss-event-architecture&#34;&gt;Zenoss Event Architecture&lt;/h2&gt;
@@ -460,7 +460,7 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 
 &lt;p&gt;The events system has the concept of active status events and historical events (two different database tables in the MySQL events database).&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/working-with-zenoss-events/event_console.jpg&#34; alt=&#34;!Zenoss Core 4 Event Console&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/working-with-zenoss-events/event_console.jpg&#34; alt=&#34;!Zenoss Core 4 Event Console&#34; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;understanding-event-classes&#34;&gt;Understanding Event Classes&lt;/h3&gt;
 
@@ -469,10 +469,10 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>The Zenoss JSON API</title>
-      <link>http://aalvarez.me/posts/the-zenoss-json-api/</link>
+      <link>https://aalvarez.me/posts/the-zenoss-json-api/</link>
       <pubDate>Thu, 24 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/the-zenoss-json-api/</guid>
+      <guid>https://aalvarez.me/posts/the-zenoss-json-api/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using &lt;a href=&#34;https://curl.haxx.se/&#34;&gt;cURL&lt;/a&gt; or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.&lt;/p&gt;
 
 &lt;p&gt;The API documentation can be downloaded &lt;a href=&#34;https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip&#34;&gt;here&lt;/a&gt;. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.&lt;/p&gt;
@@ -494,10 +494,10 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Using RRDTool in Zenoss</title>
-      <link>http://aalvarez.me/posts/using-rrdtool-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/using-rrdtool-in-zenoss/</link>
       <pubDate>Tue, 22 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/using-rrdtool-in-zenoss/</guid>
+      <guid>https://aalvarez.me/posts/using-rrdtool-in-zenoss/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;http://oss.oetiker.ch/rrdtool/&#34;&gt;rrdtool&lt;/a&gt; is an awesome high performance data logging and graphing tool for time series data. Zenoss Core uses RRDTool to collect, monitor, and graph peformance data for devices.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://oss.oetiker.ch/rrdtool/stream-pop.png&#34; alt=&#34;RRD Tool&#34; /&gt;&lt;/p&gt;
@@ -514,17 +514,17 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Modifying the Zenoss Infrastructure Grid</title>
-      <link>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</link>
+      <link>https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</link>
       <pubDate>Thu, 10 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</guid>
-      <description>&lt;p&gt;Continuing from my previous post, where I explained &lt;a href=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;how to modify the device detail bar from a ZenPack using ExtJS&lt;/a&gt;, in this post I will explain how we can modify the device list grid shown in the infrastructure page.&lt;/p&gt;
+      <guid>https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</guid>
+      <description>&lt;p&gt;Continuing from my previous post, where I explained &lt;a href=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;how to modify the device detail bar from a ZenPack using ExtJS&lt;/a&gt;, in this post I will explain how we can modify the device list grid shown in the infrastructure page.&lt;/p&gt;
 
 &lt;h2 id=&#34;the-infrastructure-grid&#34;&gt;The Infrastructure Grid&lt;/h2&gt;
 
 &lt;p&gt;This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include &lt;em&gt;device name&lt;/em&gt;, &lt;em&gt;device class&lt;/em&gt;, &lt;em&gt;IP address&lt;/em&gt;, &lt;em&gt;production state&lt;/em&gt;, and &lt;em&gt;events&lt;/em&gt;, as shown in the image below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&amp;rsquo;t do this by default is beyond me).&lt;/p&gt;
 
@@ -535,10 +535,10 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Modifying the Zenoss Device Detail Bar</title>
-      <link>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</link>
+      <link>https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</link>
       <pubDate>Tue, 08 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</guid>
+      <guid>https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</guid>
       <description>&lt;p&gt;The Zenoss Core &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;&lt;strong&gt;ExtJS&lt;/strong&gt;&lt;/a&gt; graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.&lt;/p&gt;
 
 &lt;p&gt;Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in &lt;code&gt;$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss&lt;/code&gt;, and as you would expect, the device detail bar component is also located there.&lt;/p&gt;
@@ -547,7 +547,7 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 
 &lt;p&gt;This is the detail bar located on the device view page which shows the device&amp;rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in &lt;code&gt;DeviceDetailBar.js&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;However since we are going to &lt;strong&gt;&lt;em&gt;extend&lt;/em&gt;&lt;/strong&gt; this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.&lt;/p&gt;
 
@@ -568,10 +568,10 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
     
     <item>
       <title>Creating Zenoss ZenPack Daemons</title>
-      <link>http://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</link>
+      <link>https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</link>
       <pubDate>Mon, 07 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</guid>
+      <guid>https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</guid>
       <description>&lt;p&gt;ZenPacks are powerful custom add-ons that can help us extend Zenoss&amp;rsquo;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using &lt;a href=&#34;http://zenpacklib.zenoss.com/en/latest/index.html&#34;&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt;&lt;/a&gt;, but it is also possible to create it from the Zenoss user interface.&lt;/p&gt;
 
 &lt;h2 id=&#34;about-zenpacklib&#34;&gt;About zenpacklib&lt;/h2&gt;
@@ -624,23 +624,23 @@ generic &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&
     
     <item>
       <title>Monitoring CPU Utilization in Zenoss</title>
-      <link>http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</guid>
+      <guid>https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</guid>
       <description>&lt;p&gt;While taking a look at the CPU Utilization graphs offered Zenoss Core&amp;rsquo;s &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;Linux Monitor ZenPack&lt;/a&gt; (v1.2.1), I noticed that the percentage values for &lt;em&gt;Idle&lt;/em&gt; were ridiculously high:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg&#34; alt=&#34;High Idle CPU Utilization&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg&#34; alt=&#34;High Idle CPU Utilization&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&amp;rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Zenoss Monitoring Template Data Points</title>
-      <link>http://aalvarez.me/posts/zenoss-monitoring-template-data-points/</link>
+      <link>https://aalvarez.me/posts/zenoss-monitoring-template-data-points/</link>
       <pubDate>Thu, 03 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/zenoss-monitoring-template-data-points/</guid>
+      <guid>https://aalvarez.me/posts/zenoss-monitoring-template-data-points/</guid>
       <description>&lt;p&gt;&lt;em&gt;Content from this post is mostly obtained from &lt;strong&gt;Zenoss Core Administration guide&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;In Zenoss Core &lt;strong&gt;monitoring templates&lt;/strong&gt;, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented
@@ -684,7 +684,7 @@ data points it requires, and which modifications are needed, if any, to put the 
 
 &lt;p&gt;The addition of a data point requires changing the report.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg&#34; alt=&#34;CPU Utilization Report&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg&#34; alt=&#34;CPU Utilization Report&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;To allow for more flexibility in changes, some reports use &lt;em&gt;data point aliases&lt;/em&gt;. Data point aliases group data points so
 they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
@@ -693,10 +693,10 @@ can normalize that data into a common unit.&lt;/p&gt;</description>
     
     <item>
       <title>Triggering Commands From Events in Zenoss</title>
-      <link>http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/</link>
+      <link>https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/</link>
       <pubDate>Mon, 31 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/</guid>
+      <guid>https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/</guid>
       <description>&lt;p&gt;In Zenoss Core 4, we can configure some &lt;strong&gt;&lt;em&gt;email&lt;/em&gt;&lt;/strong&gt; notifications that produce and send emails based on conditions defined in a trigger, when an event is created.&lt;/p&gt;
 
 &lt;p&gt;Additionally, Zenoss Core 4 also provides &lt;strong&gt;&lt;em&gt;command&lt;/em&gt;&lt;/strong&gt; type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.&lt;/p&gt;
@@ -720,22 +720,22 @@ can normalize that data into a common unit.&lt;/p&gt;</description>
 &lt;li&gt;Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png&#34; alt=&#34;Edit Trigger&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png&#34; alt=&#34;Edit Trigger&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;=&amp;gt; Because we want to make sure the device is truly &lt;em&gt;DOWN&lt;/em&gt;, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Zenoss Renderers</title>
-      <link>http://aalvarez.me/posts/zenoss-renderers/</link>
+      <link>https://aalvarez.me/posts/zenoss-renderers/</link>
       <pubDate>Thu, 27 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/zenoss-renderers/</guid>
+      <guid>https://aalvarez.me/posts/zenoss-renderers/</guid>
       <description>&lt;p&gt;Zenoss makes use of some very interesting graphical components called renderers. These are used to manipulate the way data is shown in the Zenoss user interface.&lt;/p&gt;
 
 &lt;p&gt;For example, a value of &lt;em&gt;total bytes used&lt;/em&gt; could be 6080626688 in bytes, which is a very high number and doesn&amp;rsquo;t really convey much meaning. However, we can use a built-in Zenoss renderer called &lt;code&gt;bytesString&lt;/code&gt; which will convert this value in bytes to the closest representation:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://aalvarez.me/posts/zenoss-renderers/zenoss_renderers.png&#34; alt=&#34;Zenoss Renderers&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers.png&#34; alt=&#34;Zenoss Renderers&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As we can see, this is a much better and meaningful way of displaying the data.&lt;/p&gt;
 
@@ -766,10 +766,10 @@ can normalize that data into a common unit.&lt;/p&gt;</description>
     
     <item>
       <title>Changing Zenoss Dashboard Portlets Using CLI</title>
-      <link>http://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/</link>
+      <link>https://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/</link>
       <pubDate>Wed, 26 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/</guid>
+      <guid>https://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/</guid>
       <description>&lt;p&gt;The Zenoss &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Dashboard&#34;&gt;ZenPacks.zenoss.Dashboard&lt;/a&gt; ZenPack adds a very nice and new dashboard to our Zenoss Core 4 deployment, replacing the old default dashboard that comes with the installation.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://wiki.zenoss.org/images/0/01/Separate_dashboard.png&#34; alt=&#34;ZenPack Dashboard&#34; /&gt;&lt;/p&gt;</description>
@@ -777,10 +777,10 @@ can normalize that data into a common unit.&lt;/p&gt;</description>
     
     <item>
       <title>Creating Python Packages</title>
-      <link>http://aalvarez.me/posts/creating-python-packages/</link>
+      <link>https://aalvarez.me/posts/creating-python-packages/</link>
       <pubDate>Thu, 13 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://aalvarez.me/posts/creating-python-packages/</guid>
+      <guid>https://aalvarez.me/posts/creating-python-packages/</guid>
       <description>&lt;p&gt;For a project involving Zenoss Core 4 and a HaaS solution maintained by another team, we needed a module to interact with the &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; to get the list of events for specific devices. Browsing around I found this &lt;a href=&#34;https://github.com/iamseth/python-zenoss&#34;&gt;python-zenoss&lt;/a&gt; module to work with the Zenoss JSON API. However I was experiencing some issues when installing it, so I decided to create my own Python package to provide a different way to interact with the Zenoss JSON API according to our specific needs.&lt;/p&gt;
 
 &lt;p&gt;The package would be installed locally using &lt;code&gt;pip&lt;/code&gt;, and all its functionality should be easily accessible using &lt;code&gt;from&lt;/code&gt; and &lt;code&gt;import&lt;/code&gt; commands in Python.&lt;/p&gt;
