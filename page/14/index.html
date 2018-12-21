@@ -91,6 +91,41 @@
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/">Appending Modeler Plugins in ZenPacks</a>
+  </h1>
+  <time datetime="2017-01-20T00:00:00Z" class="post-date">Fri, Jan 20, 2017</time>
+  <p>When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class&rsquo;s modeler plugins to be <strong>replaced</strong> by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply <em>added</em> to the device class&rsquo;s list of modeler plugins.</p>
+
+<p>In a previous post I explained how we can <a href="/posts/customizing-the-zenpack-installation-process.html">customize the ZenPacks installation process</a> to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.</p>
+
+<p>Let&rsquo;s assume that we have the <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a> installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the <code>/Server/SSH/Linux/NovaHost</code> device class. We want our custom ZenPack to add <em>new</em> modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.</p>
+
+<p>This will be done upon installation (like in the previous post) inside the <code>__init__.py</code> file in the ZenPack top directory. This is how the code looks like:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/appending-modeler-plugins-in-zenpacks/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Customizing the ZenPack Installation Process</a>
   </h1>
   <time datetime="2017-01-17T00:00:00Z" class="post-date">Tue, Jan 17, 2017</time>
@@ -251,53 +286,6 @@ console.log(<span style="background-color:#fff0f0">&#34;v&#34;</span> <span styl
   
     <div class="read-more-link">
       <a href="/posts/javascript-gotchas-for-beginners/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Custom Pages in Zenoss</a>
-  </h1>
-  <time datetime="2016-12-26T00:00:00Z" class="post-date">Mon, Dec 26, 2016</time>
-  <p>In a <a href="/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
-
-<h2 id="page-viewlets">Page Viewlets</h2>
-
-<p>Previously we created navigation item viewlets, this time we will be creating <strong>page</strong> viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to <code>browser/configure.zcml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;browser:page</span>
-  <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;secondaryPage&#34;</span>
-  <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
-  <span style="color:#00c">permission=</span><span style="background-color:#fff0f0">&#34;zenoss.View&#34;</span>
-  <span style="color:#00c">template=</span><span style="background-color:#fff0f0">&#34;templates/my_template.pt&#34;</span>
-  <span style="color:#070">/&gt;</span></code></pre></div>
-<p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
-
-<p>Also let&rsquo;s not forget to create a necessary python init file:</p>
-
-<pre><code>touch browser/__init__.py
-</code></pre>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/d3" class="label label-default">d3</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="/posts/custom-pages-in-zenoss/">Read More…</a>
     </div>
   
 </article>

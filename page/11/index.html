@@ -91,6 +91,84 @@
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/understanding-ceilometer-transformers/">Understanding Ceilometer Transformers</a>
+  </h1>
+  <time datetime="2017-04-07T00:00:00Z" class="post-date">Fri, Apr 7, 2017</time>
+  <p>Ceilometer <strong>transformers</strong> are part of the Ceilometer <strong>pipeline</strong>, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for <strong>samples</strong> and a pipeline for <strong>events</strong>.</p>
+
+<p>Configurations for these pipelines can be found in <code>/etc/ceilometer/pipeline.yaml</code> and <code>/etc/ceilometer/event_pipeline.yaml</code>.</p>
+
+<p>Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.</p>
+
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline" /></p>
+
+<p>Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Name of transformer</th>
+<th align="center">Reference name for configuration</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Accumulator</td>
+<td align="center">accumulator</td>
+</tr>
+
+<tr>
+<td align="left">Aggregator</td>
+<td align="center">aggregator</td>
+</tr>
+
+<tr>
+<td align="left">Arithmetic</td>
+<td align="center">arithmetic</td>
+</tr>
+
+<tr>
+<td align="left">Rate of change</td>
+<td align="center">rate_of_change</td>
+</tr>
+
+<tr>
+<td align="left">Unit conversion</td>
+<td align="center">unit_conversion</td>
+</tr>
+
+<tr>
+<td align="left">Delta</td>
+<td align="center">delta</td>
+</tr>
+</tbody>
+</table>
+
+<p>Let&rsquo;s take a more detailed look into the accumulator transformer.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/cloudcomputing" class="label label-default">cloudcomputing</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/understanding-ceilometer-transformers/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/ceilometer-and-openstack-notifications/">Ceilometer and OpenStack Notifications</a>
   </h1>
   <time datetime="2017-04-06T00:00:00Z" class="post-date">Thu, Apr 6, 2017</time>
@@ -281,35 +359,6 @@ gem <span style="background-color:#fff0f0">&#39;webpacker&#39;</span>, <span sty
   
     <div class="read-more-link">
       <a href="/posts/setting-up-an-openstack-dev-environment/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/overriding-default-zenoss-pages/">Overriding Default Zenoss Pages</a>
-  </h1>
-  <time datetime="2017-03-17T00:00:00Z" class="post-date">Fri, Mar 17, 2017</time>
-  <p>While testing the <a href="https://github.com/zenoss/ZenPacks.zenoss.Layer2">Layer 2 ZenPack</a>, I noticed that the network map provided by the ZenPack was placed in the same page of the old default Zenoss&rsquo;s network map, replacing the latter which was made using Flash. After the ZenPack is installed, when you click on the <em>Network Map</em> secondary link in the Infrastructure page, you will get the new map instead.</p>
-
-<p><img src="/posts/overriding-default-zenoss-pages/map_link.jpg" alt="Network Map link" /></p>
-
-<p>This seemed pretty nice, and I was curious how they achieved this, so I started browsing around the source code. It turns out that this overriding is done in a file called <code>overrides.zcml</code>, which is placed in the ZenPack&rsquo;s top directory.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="/posts/overriding-default-zenoss-pages/">Read More…</a>
     </div>
   
 </article>

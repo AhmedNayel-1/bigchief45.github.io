@@ -91,6 +91,41 @@
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/an-introduction-to-game-states-in-love2d/">An Introduction to Game States in Love2D</a>
+  </h1>
+  <time datetime="2017-07-27T00:00:00Z" class="post-date">Thu, Jul 27, 2017</time>
+  <p>After going through countless blog and video tutorials on getting started with Love2D, I found it sad that most people would not take the approach of implementing <strong>game states</strong> right from the start, or would try to mimick this functionality in a &ldquo;dirty&rdquo; way.</p>
+
+<p>After lots of time of reading many forum posts and library documentations. I found a way to implement game states in my games that I am very satisfied with.</p>
+
+<p>In this post I will go over how to implement game states and some of the most common game states seen in games, in such a way that your code is remains organized and neat.</p>
+
+<h2 id="game-states-with-stateful-lua">Game States With Stateful.lua</h2>
+
+<p>We will be using a simple but great Lua library called <a href="https://github.com/kikito/stateful.lua">Stateful</a>, made by <a href="https://github.com/kikito">kikito</a>. This library will allow us to easily implement and work with game states inside our game.</p>
+
+<p>This library also depends on the <a href="https://github.com/kikito/middleclass">Middleclass</a> library (also by kikito). Middleclass will allow us to construct and develop our game in a OOP (Object Oriented Programing) fashion. If you are familiar with OOP then you will love this approach.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/game-dev" class="label label-default">game dev</a></li>
+  
+    <a href="https://aalvarez.me/tags/love2d" class="label label-default">love2d</a></li>
+  
+    <a href="https://aalvarez.me/tags/lua" class="label label-default">lua</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/an-introduction-to-game-states-in-love2d/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/getting-started-with-love2d-basics/">Getting Started With Love2D Basics</a>
   </h1>
   <time datetime="2017-07-19T00:00:00Z" class="post-date">Wed, Jul 19, 2017</time>
@@ -295,47 +330,6 @@ He answers 'Whatever.' to anything else.
   
     <div class="read-more-link">
       <a href="/posts/zenoss-custom-notification-actions-using-subscribers/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/python-functional-http-testing-with-gabbi/">Python Functional HTTP Testing With Gabbi</a>
-  </h1>
-  <time datetime="2017-06-06T00:00:00Z" class="post-date">Tue, Jun 6, 2017</time>
-  <p>Continuing with my journey in contributing to <a href="http://gnocchi.xyz/index.html">Gnocchi</a>, I have learned of an excellent tool which Gnocchi uses to test its API from a HTTP request approach. The tool is called <a href="https://github.com/cdent/gabbi"><strong>Gabbi</strong></a>.</p>
-
-<p>Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&rsquo;s DSL when making <a href="https://github.com/rspec/rspec-rails#request-specs">request specs</a>.</p>
-
-<p>For my latest contribution to Gnocchi, I was working on an <a href="https://github.com/gnocchixyz/gnocchi/issues/12">issue</a> where newly created metrics were not being returned in the response from <code>/v1/resource/generic/:id/metric</code>. After applying the fixes and submitting the patch, it was also necessary to update some of the functional Gabbi tests that belong to this specific use case.</p>
-
-<p>One of these original tests is shown below:</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/gabbi" class="label label-default">gabbi</a></li>
-  
-    <a href="https://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
-  
-    <a href="https://aalvarez.me/tags/tdd" class="label label-default">tdd</a></li>
-  
-    <a href="https://aalvarez.me/tags/bdd" class="label label-default">bdd</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
-  
-    <a href="https://aalvarez.me/tags/backend" class="label label-default">backend</a></li>
-  
-    <a href="https://aalvarez.me/tags/yaml" class="label label-default">yaml</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="/posts/python-functional-http-testing-with-gabbi/">Read More…</a>
     </div>
   
 </article>

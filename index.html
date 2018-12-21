@@ -91,6 +91,47 @@
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/">Pytest Tricks for Better Python Tests</a>
+  </h1>
+  <time datetime="2018-12-21T21:03:28Z" class="post-date">Fri, Dec 21, 2018</time>
+  <p><a href="https://pytest.org/">Pytest</a> is my Python testing framework of choice. Very easy to use, and makes tests look much better.</p>
+
+<p>In this article I&rsquo;ll show you some cool tricks I have incorporated into my test suites using Pytest.</p>
+
+<h2 id="environment-variables">Environment Variables</h2>
+
+<p>When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.</p>
+
+<p>With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in <code>conftest.py</code> that will be loaded automatically:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># conftest.py</span>
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pytest</span>
+
+
+<span style="color:#555;font-weight:bold">@pytest.fixture</span>(autouse<span style="color:#333">=</span>True)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">env_setup</span>(monkeypatch):
+    monkeypatch<span style="color:#333">.</span>setenv(<span style="background-color:#fff0f0">&#39;MY_SETTING&#39;</span>, <span style="background-color:#fff0f0">&#39;some-value&#39;</span>)
+    monkeypatch<span style="color:#333">.</span>setenv(<span style="background-color:#fff0f0">&#39;ANOTHER_SETTING&#39;</span>, <span style="background-color:#fff0f0">&#39;some-value&#39;</span>)</code></pre></div>
+<p><a href="https://docs.pytest.org/en/latest/monkeypatch.html"><code>monkeypatch</code></a> is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the <code>autouse</code> option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/pytest" class="label label-default">pytest</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/pytest-tricks-for-better-python-tests/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/cloudfront-cors-font-issues/">CloudFront CORS Font Issues</a>
   </h1>
   <time datetime="2018-12-12T16:32:22Z" class="post-date">Wed, Dec 12, 2018</time>
@@ -193,33 +234,6 @@
   
     <div class="read-more-link">
       <a href="/posts/displaying-images-in-netbeans-platform-node-tooltips/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/troubleshooting-strange-aws-issues/">Troubleshooting Strange AWS Issues</a>
-  </h1>
-  <time datetime="2018-08-07T00:00:00Z" class="post-date">Tue, Aug 7, 2018</time>
-  <p>We&rsquo;ve all been there. The same things working fine one time but failing other times without any idea why.</p>
-
-<p>This post is a list of troubleshooting strange issues I&rsquo;ve encountered when using AWS.</p>
-
-<h2 id="elasticbeanstalk-failing-to-create-rds-security-group">ElasticBeanstalk Failing to Create RDS Security Group</h2>
-
-<p>I was having an issue where I couldn&rsquo;t create and attach an RDS database to an ElasticBeanstalk environment because an RDS security group was failing at being created. All this was being done using the AWS console.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/aws" class="label label-default">aws</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="/posts/troubleshooting-strange-aws-issues/">Read More…</a>
     </div>
   
 </article>

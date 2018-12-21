@@ -91,6 +91,39 @@
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/testing-django-and-drf-with-pytest/">Testing Django and DRF With Pytest</a>
+  </h1>
+  <time datetime="2018-02-09T00:00:00Z" class="post-date">Fri, Feb 9, 2018</time>
+  <p><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a> has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
+
+<p>We will be using the following tools:</p>
+
+<ul>
+<li><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a>: Python testing framework</li>
+<li><a href="https://pytest-django.readthedocs.io/">pytest-django</a>: Pytest extensions for Django</li>
+<li><a href="https://factoryboy.readthedocs.io/">factoryboy</a>: Factories for easy test data generation.</li>
+</ul>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+    <a href="https://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/testing-django-and-drf-with-pytest/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/">Building a Django Continuous Integration and Delivery Pipeline to AWS</a>
   </h1>
   <time datetime="2018-01-30T00:00:00Z" class="post-date">Tue, Jan 30, 2018</time>
@@ -220,43 +253,6 @@
   
     <div class="read-more-link">
       <a href="/posts/java-jtable-tricks/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Bulk Create With Django REST Framework</a>
-  </h1>
-  <time datetime="2017-11-27T00:00:00Z" class="post-date">Mon, Nov 27, 2017</time>
-  <p>In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
-
-<h2 id="the-serializer">The Serializer</h2>
-
-<p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># serializers.py</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> Book
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> serializers
-
-
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookSerializer</span>(serializers<span style="color:#333">.</span>ModelSerializer):
-    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Meta</span>:
-        model <span style="color:#333">=</span> Book
-        fields <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;__all__&#39;</span></code></pre></div>
-<p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="/posts/bulk-create-with-django-rest-framework/">Read More…</a>
     </div>
   
 </article>

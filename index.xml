@@ -6,10 +6,37 @@
     <description>Recent content on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Dec 2018 16:32:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Dec 2018 21:03:28 +0000</lastBuildDate>
     
 	<atom:link href="https://aalvarez.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pytest Tricks for Better Python Tests</title>
+      <link>https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/</link>
+      <pubDate>Fri, 21 Dec 2018 21:03:28 +0000</pubDate>
+      
+      <guid>https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://pytest.org/&#34;&gt;Pytest&lt;/a&gt; is my Python testing framework of choice. Very easy to use, and makes tests look much better.&lt;/p&gt;
+
+&lt;p&gt;In this article I&amp;rsquo;ll show you some cool tricks I have incorporated into my test suites using Pytest.&lt;/p&gt;
+
+&lt;h2 id=&#34;environment-variables&#34;&gt;Environment Variables&lt;/h2&gt;
+
+&lt;p&gt;When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.&lt;/p&gt;
+
+&lt;p&gt;With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in &lt;code&gt;conftest.py&lt;/code&gt; that will be loaded automatically:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# conftest.py&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pytest&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#555;font-weight:bold&#34;&gt;@pytest.fixture&lt;/span&gt;(autouse&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;True)
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;env_setup&lt;/span&gt;(monkeypatch):
+    monkeypatch&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;setenv(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;MY_SETTING&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;some-value&amp;#39;&lt;/span&gt;)
+    monkeypatch&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;setenv(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;ANOTHER_SETTING&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;some-value&amp;#39;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/monkeypatch.html&#34;&gt;&lt;code&gt;monkeypatch&lt;/code&gt;&lt;/a&gt; is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the &lt;code&gt;autouse&lt;/code&gt; option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>CloudFront CORS Font Issues</title>

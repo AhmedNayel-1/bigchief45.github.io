@@ -91,6 +91,46 @@
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/">Easy Notification System in Rails Part 3</a>
+  </h1>
+  <time datetime="2017-09-12T00:00:00Z" class="post-date">Tue, Sep 12, 2017</time>
+  <p><em>Read <a href="/posts/easy-notification-system-in-rails.html">part 1</a> and <a href="/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series</em></p>
+
+<p>In this post, we will be sending automatic e-emails every time notifications are created.</p>
+
+<h2 id="creating-the-mailer">Creating the Mailer</h2>
+
+<p>We will work with one <a href="http://guides.rubyonrails.org/action_mailer_basics.html">mailer</a> that will send e-mails for every notification that is created. We can generate our mailer with this command:</p>
+
+<pre><code>rails g mailer NotificationsMailer
+</code></pre>
+
+<p>Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&rsquo;ve been using <strong>comments</strong> and <strong>posts</strong> as examples.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="https://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="/posts/easy-notification-system-in-rails-part-3/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Easy Notification System in Rails Part 2</a>
   </h1>
   <time datetime="2017-09-05T00:00:00Z" class="post-date">Tue, Sep 5, 2017</time>
@@ -289,41 +329,6 @@ user<span style="color:#333">.</span>add_role <span style="color:#a60;background
   
     <div class="read-more-link">
       <a href="/posts/select2-with-simple-form-in-rails/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/an-introduction-to-game-states-in-love2d/">An Introduction to Game States in Love2D</a>
-  </h1>
-  <time datetime="2017-07-27T00:00:00Z" class="post-date">Thu, Jul 27, 2017</time>
-  <p>After going through countless blog and video tutorials on getting started with Love2D, I found it sad that most people would not take the approach of implementing <strong>game states</strong> right from the start, or would try to mimick this functionality in a &ldquo;dirty&rdquo; way.</p>
-
-<p>After lots of time of reading many forum posts and library documentations. I found a way to implement game states in my games that I am very satisfied with.</p>
-
-<p>In this post I will go over how to implement game states and some of the most common game states seen in games, in such a way that your code is remains organized and neat.</p>
-
-<h2 id="game-states-with-stateful-lua">Game States With Stateful.lua</h2>
-
-<p>We will be using a simple but great Lua library called <a href="https://github.com/kikito/stateful.lua">Stateful</a>, made by <a href="https://github.com/kikito">kikito</a>. This library will allow us to easily implement and work with game states inside our game.</p>
-
-<p>This library also depends on the <a href="https://github.com/kikito/middleclass">Middleclass</a> library (also by kikito). Middleclass will allow us to construct and develop our game in a OOP (Object Oriented Programing) fashion. If you are familiar with OOP then you will love this approach.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/game-dev" class="label label-default">game dev</a></li>
-  
-    <a href="https://aalvarez.me/tags/love2d" class="label label-default">love2d</a></li>
-  
-    <a href="https://aalvarez.me/tags/lua" class="label label-default">lua</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="/posts/an-introduction-to-game-states-in-love2d/">Read More…</a>
     </div>
   
 </article>
