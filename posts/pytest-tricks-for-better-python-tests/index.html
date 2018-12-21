@@ -151,17 +151,22 @@ TEST_DYNAMO_TABLE_NAME <span style="color:#333">=</span> <span style="background
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span>:
     <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">test_upload</span>(self, s3_bucket):
         <span style="color:#888"># Call some function that uploads some files</span>
-        <span style="color:#888"># to S3 under a &#39;directory&#39;</span>
+        <span style="color:#888"># to S3 under a &#39;directory&#39; denoted by an id</span>
         my_func()
 
         <span style="color:#888"># Assert that the file is in the bucket</span>
-        <span style="color:#080;font-weight:bold">assert</span> <span style="color:#007020">len</span>(<span style="color:#007020">list</span>(s3_bucket<span style="color:#333">.</span>objects<span style="color:#333">.</span><span style="color:#007020">filter</span>(Prefix<span style="color:#333">=</span>f<span style="background-color:#fff0f0">&#39;{SOME_ID}/&#39;</span>))) <span style="color:#333">==</span> <span style="color:#00d;font-weight:bold">3</span></code></pre></div>
+        files_in_bucket <span style="color:#333">=</span> s3_bucket<span style="color:#333">.</span>objects<span style="color:#333">.</span><span style="color:#007020">filter</span>(Prefix<span style="color:#333">=</span>f<span style="background-color:#fff0f0">&#39;{SOME_ID}/&#39;</span>)
+        <span style="color:#080;font-weight:bold">assert</span> <span style="color:#007020">len</span>(<span style="color:#007020">list</span>(files_in_bucket)) <span style="color:#333">==</span> <span style="color:#00d;font-weight:bold">3</span></code></pre></div>
 <h2 id="fixtures-that-accept-arguments">Fixtures That Accept Arguments</h2>
 
 <p>There are times when I want to write some sort of fixture factory that can produce fixtures with different properties depending on parameters passed to it.</p>
 
-<p>For example, let&rsquo;s say we want a fixture that represents some JSON payload, but some values should be generated according to some identifier that is passed to the fixture. A real example of this would be a JSON payload of an <a href="https://aws.amazon.com/sqs/">Amazon SQS</a> event that gets triggered when some file is uploaded to a S3 bucket:</p>
+<p>For example, let&rsquo;s say we want a fixture that represents some JSON payload, but some values should be generated according to some identifier that is passed to the fixture.</p>
+
+<p>A real example of this would be a JSON payload of an <a href="https://aws.amazon.com/sqs/">Amazon SQS</a> event that gets triggered when some file is uploaded to a S3 bucket:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># conftest.py</span>
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">json</span>
 
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pytest</span>
 
@@ -190,8 +195,9 @@ TEST_DYNAMO_TABLE_NAME <span style="color:#333">=</span> <span style="background
     <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">test_something</span>(self, sqs_event_payload):
         payload <span style="color:#333">=</span> sqs_event_payload(<span style="background-color:#fff0f0">&#39;1093450983456&#39;</span>)
 
-        <span style="color:#888"># Send the payload to what we want to test</span>
-        r <span style="color:#333">=</span> some_function(payload)
+        <span style="color:#888"># Send the payload to a function we want to test.</span>
+        <span style="color:#888"># For example, a Lambda handler function</span>
+        r <span style="color:#333">=</span> handler(event<span style="color:#333">=</span>payload, context<span style="color:#333">=</span>None)
 
         <span style="color:#888"># Assert something here...</span></code></pre></div>
 <p>This allows us to be able to specify a dynamic ID to the fixture. This way we don&rsquo;t have to worry about using the same ID in every test.</p>
