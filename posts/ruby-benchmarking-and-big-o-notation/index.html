@@ -8,6 +8,60 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Ruby Benchmarking &amp; Big O Notation",
+    "headline" : "Ruby Benchmarking &amp; Big O Notation",
+    "description" : "<p>The Ruby <a href="http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html">Benchmark</a> library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.</p>
+
+<p>I was doing some <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O Notation</a> reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.</p>
+
+<h2 id="using-benchmark">Using Benchmark</h2>
+
+<p>To start benchmarking our code, we simply need to require <code>benchmark</code> and use the methods provided by the <code>Benchmark</code> module. For me, the most practical way is to use <code>Benchmark#bm</code> method, where we pass a block of code we want to measure:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
+
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#75715e"># our code here</span>
+  <span style="color:#00a8c8">end</span>
+
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>Inside the block we are using the <code>report</code> method of the block&rsquo;s variable, which will basically do a separate benchmark for each report.</p>
+
+<p>However, we can improve this even more by adding a label to <code>report</code> and a label width to <code>bm</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
+
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;my_algorithm&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#75715e"># our code here</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>Let&rsquo;s see it in action with some common algorithms.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-11-15 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-15 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/",
+    "wordCount" : "1243",
+    "keywords" : [ "ruby","algorithms","programming","benchmarking","mathematics","computerscience","Blog" ]
+}
+</script>
+
+
   <title>Ruby Benchmarking &amp; Big O Notation &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +76,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +98,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +131,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

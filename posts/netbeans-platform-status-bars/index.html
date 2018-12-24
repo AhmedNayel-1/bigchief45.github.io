@@ -8,6 +8,45 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Netbeans Platform Status Bars",
+    "headline" : "Netbeans Platform Status Bars",
+    "description" : "<p>In desktop applications, status bars are a great way to convey information to the user about the current status of certain items in the application, such as connection status, total amount of items, current mode, current row and column number in an editor, etc.</p>
+
+<p>Implementing custom status bars to a Netbeans Platform application is extremely easy. In this article I will go over how we can achieve really cool things with status bars and lookups.</p>
+
+<h2 id="creating-and-registering-a-new-status-bar">Creating and Registering a New Status Bar</h2>
+
+<p>To create a new status bar, create a new Java class that implements the <code>StatusLineElementProvider</code> interface. To register it as a status bar, we use the <code>@ServiceProvider</code> annotation:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@ServiceProvider</span><span style="color:#f92672">(</span><span style="color:#111">service</span> <span style="color:#f92672">=</span> <span style="color:#111">StatusLineElementProvider</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStatusBar</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">StatusLineElementProvider</span> <span style="color:#f92672">{</span>
+
+<span style="color:#f92672">}</span></code></pre></div>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2018",
+    "datePublished": "2018-07-19 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-07-19 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/netbeans-platform-status-bars/",
+    "wordCount" : "558",
+    "keywords" : [ "netbeans platform","Blog" ]
+}
+</script>
+
+
   <title>Netbeans Platform Status Bars &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +61,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +83,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +116,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

@@ -8,6 +8,59 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Django Formsets with Generic FormViews",
+    "headline" : "Django Formsets with Generic FormViews",
+    "description" : "<p><a href="https://docs.djangoproject.com/en/2.0/topics/forms/formsets/">Django Formsets</a> is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django&rsquo;s built-in generic class based views, the <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView">FormView</a>.</p>
+
+<h2 id="the-scenario">The Scenario</h2>
+
+<p>To add some context to this tutorial, let&rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:</p>
+
+<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example" /></p>
+
+<p>For this tutorial, we will use the following model as an example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">):</span>
+    <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
+    <span style="color:#111">author</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Author</span><span style="color:#111">)</span>
+    <span style="color:#111">isbn</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
+    <span style="color:#111">editorial</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Editorial</span><span style="color:#111">)</span></code></pre></div>
+<h2 id="creating-the-form">Creating the Form</h2>
+
+<p>We will begin by creating the form that will be cloned. That is, the form that will represent <strong>one</strong> search query out of the many that will/could be nested together.</p>
+
+<p>For our case, the form will only contain 3 fields:</p>
+
+<ol>
+<li>The query field: Indicates which field of the model we will query.</li>
+<li>The lookup type: Indicates which <a href="https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups">lookup</a> is going to be used to make the query.</li>
+<li>The query value: Indicates what we want to actually search for (i.e <em>Harry Potter</em> for the book title.)</li>
+</ol>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2018",
+    "datePublished": "2018-04-19 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-04-19 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/django-formsets-with-generic-formviews/",
+    "wordCount" : "936",
+    "keywords" : [ "django","Blog" ]
+}
+</script>
+
+
   <title>Django Formsets with Generic FormViews &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +75,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +97,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +130,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -97,7 +150,7 @@
 
 <p>To add some context to this tutorial, let&rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:</p>
 
-<p><img src="/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example" /></p>
+<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example" /></p>
 
 <p>For this tutorial, we will use the following model as an example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">):</span>
@@ -246,7 +299,7 @@
 <span style="color:#111">&lt;/</span><span style="color:#f92672">div</span><span style="color:#111">&gt;</span></code></pre></div>
 <p>And that&rsquo;s it. Here is an example of a personal implementation of this tutorial:</p>
 
-<p><img src="/posts/django-formsets-with-generic-formviews/nested_search_result.gif" alt="Nested Search Implementation" /></p>
+<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_result.gif" alt="Nested Search Implementation" /></p>
 </div>
 
 

@@ -8,6 +8,53 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Custom Markdown in Middleman",
+    "headline" : "Custom Markdown in Middleman",
+    "description" : "<p><a href="https://middlemanapp.com/">Middleman</a> is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it&rsquo;s the framework I am currently using for this blog.</p>
+
+<p>Unfortunately Middleman&rsquo;s <a href="https://middlemanapp.com/basics/install/">documentation</a> is a bit unorganized and incomplete. I often find myself browsing through the <a href="https://github.com/middleman/middleman">source code</a> to understand how to use or implement some custom features.</p>
+
+<p>For example, using <a href="https://github.com/vmg/redcarpet">redcarpet</a> I wanted to be able to create some re-usable &ldquo;markdown components&rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.</p>
+
+<p>And this post I am going to explain how to integrate this functionality into your blog using Middleman.</p>
+
+<h2 id="creating-a-custom-renderer">Creating a Custom Renderer</h2>
+
+<p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman&rsquo;s renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
+
+<p>To begin, we will create a <code>lib</code> (if it doesn&rsquo;t exist) under our blog&rsquo;s directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
+
+  <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
+
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>The required file above is what will allow us to inherit from Middleman&rsquo;s renderer.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-11-17 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-17 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/custom-markdown-in-middleman/",
+    "wordCount" : "1047",
+    "keywords" : [ "middleman","ruby","markdown","Blog" ]
+}
+</script>
+
+
   <title>Custom Markdown in Middleman &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +69,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +91,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +124,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

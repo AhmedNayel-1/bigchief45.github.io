@@ -8,6 +8,35 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "",
+    "name" : "Andrés Álvarez",
+    "headline" : "Andrés Álvarez",
+    "description" : "",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-12-26 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-12-26 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/",
+    "wordCount" : "0",
+    "keywords" : [ "Blog" ]
+}
+</script>
+
+
   <title>Andrés Álvarez</title>
 
   
@@ -22,8 +51,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="https://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +73,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +106,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -94,7 +123,7 @@
     <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Custom Pages in Zenoss</a>
   </h1>
   <time datetime="2016-12-26T00:00:00Z" class="post-date">Mon, Dec 26, 2016</time>
-  <p>In a <a href="/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
+  <p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
 
 <h2 id="page-viewlets">Page Viewlets</h2>
 
@@ -132,7 +161,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/custom-pages-in-zenoss/">Read More…</a>
+      <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Read More…</a>
     </div>
   
 </article>
@@ -169,7 +198,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/cracking-passwords-with-aircrack-ng/">Read More…</a>
+      <a href="https://aalvarez.me/posts/cracking-passwords-with-aircrack-ng/">Read More…</a>
     </div>
   
 </article>
@@ -221,7 +250,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/extending-zenoss-navigations/">Read More…</a>
+      <a href="https://aalvarez.me/posts/extending-zenoss-navigations/">Read More…</a>
     </div>
   
 </article>
@@ -230,13 +259,13 @@
     <a href="https://aalvarez.me/posts/custom-zenoss-api-endpoints/">Custom Zenoss API Endpoints</a>
   </h1>
   <time datetime="2016-12-20T00:00:00Z" class="post-date">Tue, Dec 20, 2016</time>
-  <p>In a <a href="/posts/the-zenoss-json-api.html">previous post</a> I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, <em>curl</em>, API clients, etc. All this new functionality added from a basic ZenPack.</p>
+  <p>In a <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">previous post</a> I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, <em>curl</em>, API clients, etc. All this new functionality added from a basic ZenPack.</p>
 
 <h2 id="creating-an-endpoint">Creating an Endpoint</h2>
 
 <p>Assuming that we are starting with a new and fresh ZenPack created with <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, we will proceed to create a simple endpoint.</p>
 
-<p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
+<p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
 
 <p>First, let&rsquo;s take a quick look at the imports:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os.path</span>
@@ -276,7 +305,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/custom-zenoss-api-endpoints/">Read More…</a>
+      <a href="https://aalvarez.me/posts/custom-zenoss-api-endpoints/">Read More…</a>
     </div>
   
 </article>
@@ -317,7 +346,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/ssh-monitoring-in-zenpacks/">Read More…</a>
+      <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/">Read More…</a>
     </div>
   
 </article>

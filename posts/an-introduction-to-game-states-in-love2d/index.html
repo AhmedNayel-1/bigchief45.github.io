@@ -8,6 +8,45 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "An Introduction to Game States in Love2D",
+    "headline" : "An Introduction to Game States in Love2D",
+    "description" : "<p>After going through countless blog and video tutorials on getting started with Love2D, I found it sad that most people would not take the approach of implementing <strong>game states</strong> right from the start, or would try to mimick this functionality in a &ldquo;dirty&rdquo; way.</p>
+
+<p>After lots of time of reading many forum posts and library documentations. I found a way to implement game states in my games that I am very satisfied with.</p>
+
+<p>In this post I will go over how to implement game states and some of the most common game states seen in games, in such a way that your code is remains organized and neat.</p>
+
+<h2 id="game-states-with-stateful-lua">Game States With Stateful.lua</h2>
+
+<p>We will be using a simple but great Lua library called <a href="https://github.com/kikito/stateful.lua">Stateful</a>, made by <a href="https://github.com/kikito">kikito</a>. This library will allow us to easily implement and work with game states inside our game.</p>
+
+<p>This library also depends on the <a href="https://github.com/kikito/middleclass">Middleclass</a> library (also by kikito). Middleclass will allow us to construct and develop our game in a OOP (Object Oriented Programing) fashion. If you are familiar with OOP then you will love this approach.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-07-27 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-07-27 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/an-introduction-to-game-states-in-love2d/",
+    "wordCount" : "1267",
+    "keywords" : [ "game dev","love2d","lua","Blog" ]
+}
+</script>
+
+
   <title>An Introduction to Game States in Love2D &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +61,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +83,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +116,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -226,7 +265,7 @@
 
 <p>The drawing and update functions logic are pretty much left up to your implementation. For a project I am working in, I came up with this main menu state:</p>
 
-<p><img src="/posts/an-introduction-to-game-states-in-love2d/menu_state.jpg" alt="Menu State" /></p>
+<p><img src="https://aalvarez.me/posts/an-introduction-to-game-states-in-love2d/menu_state.jpg" alt="Menu State" /></p>
 
 <h2 id="the-pause-state">The Pause State</h2>
 

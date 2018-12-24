@@ -8,6 +8,35 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "",
+    "name" : "Andrés Álvarez",
+    "headline" : "Andrés Álvarez",
+    "description" : "",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-02-23 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-02-23 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/",
+    "wordCount" : "0",
+    "keywords" : [ "Blog" ]
+}
+</script>
+
+
   <title>Andrés Álvarez</title>
 
   
@@ -22,8 +51,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="https://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +73,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +106,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -94,15 +123,15 @@
     <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Working With Zenoss Python Data Source Plugins</a>
   </h1>
   <time datetime="2017-02-23T00:00:00Z" class="post-date">Thu, Feb 23, 2017</time>
-  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
+  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
 
-<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
+<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
 
 <p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
 
 <h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
 
-<p>For this post, I will be using an example where we will be executing an <a href="/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
+<p>For this post, I will be using an example where we will be executing an <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
 
 <p>If I run the following command from my shell:</p>
 
@@ -120,7 +149,7 @@
 <li>Map the value into a boolean property of a custon zenpacklib class.</li>
 <li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
 <li>Update the device model with the new property value.</li>
-<li><a href="/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
+<li><a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
 </ol>
 
   
@@ -141,7 +170,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/working-with-zenoss-python-data-sources/">Read More…</a>
+      <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Read More…</a>
     </div>
   
 </article>
@@ -181,7 +210,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/useful-zendmd-tricks/">Read More…</a>
+      <a href="https://aalvarez.me/posts/useful-zendmd-tricks/">Read More…</a>
     </div>
   
 </article>
@@ -241,7 +270,7 @@ juju switch local
 
   
     <div class="read-more-link">
-      <a href="/posts/getting-started-with-juju-locally/">Read More…</a>
+      <a href="https://aalvarez.me/posts/getting-started-with-juju-locally/">Read More…</a>
     </div>
   
 </article>
@@ -250,7 +279,7 @@ juju switch local
     <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">C Gotchas For Beginners</a>
   </h1>
   <time datetime="2017-02-07T00:00:00Z" class="post-date">Tue, Feb 7, 2017</time>
-  <p>Similar to <a href="/posts/javascript-gotchas-for-beginners.html">my post</a> on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you <strong>must</strong> know if you are to become a good C programmer.</p>
+  <p>Similar to <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners.html">my post</a> on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you <strong>must</strong> know if you are to become a good C programmer.</p>
 
 <h2 id="boolean-types">Boolean Types</h2>
 
@@ -286,7 +315,7 @@ juju switch local
 
   
     <div class="read-more-link">
-      <a href="/posts/c-gotchas-for-beginners/">Read More…</a>
+      <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">Read More…</a>
     </div>
   
 </article>
@@ -334,7 +363,7 @@ juju switch local
 
   
     <div class="read-more-link">
-      <a href="/posts/processing-nova-live-migration-events-in-zenoss/">Read More…</a>
+      <a href="https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Read More…</a>
     </div>
   
 </article>

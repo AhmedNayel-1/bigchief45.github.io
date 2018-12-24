@@ -8,6 +8,48 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Building an OCR Service With TesseractJS in AWS Lambda",
+    "headline" : "Building an OCR Service With TesseractJS in AWS Lambda",
+    "description" : "<p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
+
+<p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
+
+<p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
+
+<h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
+
+<p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
+
+<p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
+
+<pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
+</code></pre>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-11-21 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-11-21 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/",
+    "wordCount" : "1327",
+    "keywords" : [ "nodejs","aws lambda","serverless","ocr","Blog" ]
+}
+</script>
+
+
   <title>Building an OCR Service With TesseractJS in AWS Lambda &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +64,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +86,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +119,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

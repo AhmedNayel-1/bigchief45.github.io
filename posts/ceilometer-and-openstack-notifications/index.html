@@ -8,6 +8,68 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Ceilometer and OpenStack Notifications",
+    "headline" : "Ceilometer and OpenStack Notifications",
+    "description" : "<p>Ceilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are <strong>notifications</strong>, which will be explained in this post.</p>
+
+<h2 id="openstack-notifications">OpenStack Notifications</h2>
+
+<p>All OpenStack services (such as Nova Compute, Neutron, etc.) send notifications about executed operations or the state of the system. Many of these notifications carry information that can be metered such as <strong>CPU time</strong> of a virtual machine instance created by the compute service.</p>
+
+<p>OpenStack services send these notifications through an AMQP message queue. However, not all these notifications are consumed by the Telemetry service, as the intention is only to capture the billable events and notifications that can be used for monitoring or profiling purposes. The notification agent filters by the <strong>event type</strong>. Each notification message contains the event type.</p>
+
+<p>Here is a table with a few examples:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">OpenStack Service</th>
+<th align="center">Event types</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">OpenStack Compute</td>
+<td align="center"><code>scheduler.run_instance.scheduled</code>, <code>scheduler.select_destinations</code>, <code>compute.instance.*</code></td>
+</tr>
+
+<tr>
+<td align="center">OpenStack Image</td>
+<td align="center"><code>image.update</code>, <code>image.upload</code>,  <code>image.delete</code>, <code>image.send</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>In Ceilometer, the <strong>notification agent</strong> is reponsible for consuming these notifications from the AMQP message bus, and then transforming them into <strong>events</strong> and <strong>samples</strong>.</p>
+
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/2-1-collection-notification.png" alt="Notifications Collection" /></p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-04-06 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-04-06 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/ceilometer-and-openstack-notifications/",
+    "wordCount" : "616",
+    "keywords" : [ "ceilometer","openstack","cloudcomputing","Blog" ]
+}
+</script>
+
+
   <title>Ceilometer and OpenStack Notifications &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +84,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +106,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +139,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

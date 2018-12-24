@@ -8,6 +8,59 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Testing a Rails API With RSpec",
+    "headline" : "Testing a Rails API With RSpec",
+    "description" : "<p>As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.</p>
+
+<h2 id="setting-up-the-necessary-tools">Setting Up the Necessary Tools</h2>
+
+<p>In addition to RSpec, there are a few tools that make my testing experience much easier. These are:</p>
+
+<ul>
+<li><a href="https://github.com/thoughtbot/factory_girl_rails">Factory Girl</a></li>
+<li><a href="https://github.com/stympy/faker">Faker</a></li>
+<li><a href="https://github.com/thoughtbot/shoulda-matchers">Shoulda Matchers</a></li>
+<li><a href="https://github.com/DatabaseCleaner/database_cleaner">Database Cleaner</a></li>
+</ul>
+
+<p>After Adding these gems to the Gemfile. I proceed to create a <code>/support</code> directory under the <code>/spec</code> directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.</p>
+
+<p><strong>/spec/support/shoulda.rb</strong>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">Shoulda</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Matchers</span><span style="color:#f92672">.</span><span style="color:#111">configure</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">config</span><span style="color:#f92672">|</span>
+  <span style="color:#111">config</span><span style="color:#f92672">.</span><span style="color:#111">integrate</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">with</span><span style="color:#f92672">|</span>
+    <span style="color:#75715e"># Choose a test framework:</span>
+    <span style="color:#111">with</span><span style="color:#f92672">.</span><span style="color:#111">test_framework</span> <span style="color:#d88200">:rspec</span>
+
+    <span style="color:#75715e"># Or, choose the following (which implies all of the above):</span>
+    <span style="color:#111">with</span><span style="color:#f92672">.</span><span style="color:#111">library</span> <span style="color:#d88200">:rails</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-05-15 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-05-15 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/testing-a-rails-api-with-rspec/",
+    "wordCount" : "1002",
+    "keywords" : [ "rails","ruby","tdd","bdd","rspec","json","Blog" ]
+}
+</script>
+
+
   <title>Testing a Rails API With RSpec &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +75,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +97,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +130,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

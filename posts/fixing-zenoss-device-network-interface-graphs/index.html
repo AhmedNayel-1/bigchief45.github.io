@@ -8,6 +8,39 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Fixing Zenoss Device Network Interface Graphs",
+    "headline" : "Fixing Zenoss Device Network Interface Graphs",
+    "description" : "<p>When testing the monitoring of the OpenStack compute node devices in Zenoss (using <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a>), I noticed that I could not get any graphs for the <strong>network interfaces</strong> of the device, although we could still get and model all the available interfaces:</p>
+
+<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces" /></p>
+
+<p>This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-01-13 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-01-13 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/",
+    "wordCount" : "864",
+    "keywords" : [ "zenoss","rrdtool","sysadmin","monitoring","python","Blog" ]
+}
+</script>
+
+
   <title>Fixing Zenoss Device Network Interface Graphs &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +55,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +77,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +110,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -93,7 +126,7 @@
 
   <p>When testing the monitoring of the OpenStack compute node devices in Zenoss (using <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a>), I noticed that I could not get any graphs for the <strong>network interfaces</strong> of the device, although we could still get and model all the available interfaces:</p>
 
-<p><img src="/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces" /></p>
+<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces" /></p>
 
 <p>This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.</p>
 
@@ -183,7 +216,7 @@
 
 <p>If re-model our devices and check the Interfaces components, we can see that indeed we now have network interface graphs (Throughput, Packets, Errors) for our the OpenStack devices:</p>
 
-<p><img src="/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces_graphs.png" alt="Network Interfaces Graphs" /></p>
+<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces_graphs.png" alt="Network Interfaces Graphs" /></p>
 
 <p>~&gt; <strong>UPDATE:</strong> It seems that the current latest version (2.1.2) of the LinuxMonitor ZenPack fixes this issue and adds the interface monitoring templates to the <code>/Server/Linux</code> device class, which consequently will also provide the template for the NovaHost class.</p>
 </div>

@@ -8,6 +8,39 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Monitoring CPU Utilization in Zenoss",
+    "headline" : "Monitoring CPU Utilization in Zenoss",
+    "description" : "<p>While taking a look at the CPU Utilization graphs offered Zenoss Core&rsquo;s <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
+
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
+
+<p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-11-04 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-04 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/",
+    "wordCount" : "627",
+    "keywords" : [ "monitoring","zenoss","linux","devops","cpu","sysadmin","rrdtool","rpn","Blog" ]
+}
+</script>
+
+
   <title>Monitoring CPU Utilization in Zenoss &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +55,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +77,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +110,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -93,13 +126,13 @@
 
   <p>While taking a look at the CPU Utilization graphs offered Zenoss Core&rsquo;s <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
 
-<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
 
 <p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.</p>
 
 <p>Browsing at the <em>Device (/Server/SSH/Linux)</em> monitoring template quickly reveals the data point responsible for this value, <code>ssCpuIdle.ssCpuIdle</code>. This data point has a <a href="2016-11-03-zenoss-monitoring-template-data-points.html">Python alias</a> responsible for rendering the CPU percentage:</p>
 
-<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_idle_dp.jpg" alt="ssCpuIdle Data Point alias" /></p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_idle_dp.jpg" alt="ssCpuIdle Data Point alias" /></p>
 
 <p>The formula for this alias is:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">__EVAL</span><span style="color:#111">:</span><span style="color:#111">str</span><span style="color:#111">(</span><span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">here</span><span style="color:#f92672">.</span><span style="color:#111">hw</span><span style="color:#f92672">.</span><span style="color:#111">cpus</span><span style="color:#111">()))</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;,/,100,EXC,-&#39;</span></code></pre></div>
@@ -107,7 +140,7 @@
 
 <p>Strangely the <code>RPN</code> field in the graph point appears to be blank:</p>
 
-<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_idle_gp.jpg" alt="ssCpuIdle Graph Point RPN" /></p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_idle_gp.jpg" alt="ssCpuIdle Graph Point RPN" /></p>
 
 <p>We could easily fix the issue by adding a value to this <code>RPN</code> field, for example:</p>
 
@@ -122,7 +155,7 @@
 
 <p>Anyways, I decided to give this new version a try and see if it solves the issue. After installing the ZenPack and browsing the device&rsquo;s CPU Utilization graph, I find this:</p>
 
-<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_linux_monitor_2.jpg" alt="CPU Utilization with Linux Monitor 2" /></p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_linux_monitor_2.jpg" alt="CPU Utilization with Linux Monitor 2" /></p>
 
 <p>The values have indeed been reduced. However, it seems that <em><strong>Idle</strong></em> has been replaced by <em><strong>Busy</strong></em>? Also, the value doesn&rsquo;t really match to the expected one (~<code>99%</code>).</p>
 
@@ -148,7 +181,7 @@
 
 <p>And voila! My graph is now looking just the way I want it to:</p>
 
-<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_fixed.jpg" alt="CPU Utilization Fixed" /></p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_fixed.jpg" alt="CPU Utilization Fixed" /></p>
 </div>
 
 

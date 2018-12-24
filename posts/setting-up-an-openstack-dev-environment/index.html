@@ -8,6 +8,47 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Setting Up an OpenStack Dev Environment",
+    "headline" : "Setting Up an OpenStack Dev Environment",
+    "description" : "<p>Before beginning to <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html">contribute to OpenStack</a>, it is necessary that we setup an ideal development environment for a smoother workflow.</p>
+
+<p>In this post I will cover how to setup a Devstack development environment in a <strong>Ubuntu 16.04</strong> virtual machine using <a href="http://www.vmware.com/">VMware Player</a>.</p>
+
+<h2 id="setting-up-the-ubuntu-virtual-machine">Setting Up the Ubuntu Virtual Machine</h2>
+
+<p>Make sure you have <a href="http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html">VMware Player</a> installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a <a href="http://releases.ubuntu.com/xenial/">Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)</a> for <strong>32-bit PC i836</strong>.</p>
+
+<p>In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu <code>.iso</code> image file when prompted. Proceed with the installation and select the <em>Erase Disk and Install Ubuntu</em> option when prompted.</p>
+
+<p>~&gt; I tried using <a href="https://www.virtualbox.org/">VirtualBox</a> for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend <strong>Ubuntu 16.04</strong>.</p>
+
+<p>Once the installation is finished, restart the virtual machine.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-03-22 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-03-22 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/",
+    "wordCount" : "1304",
+    "keywords" : [ "openstack","devstack","ceilometer","python","ubuntu","linux","Blog" ]
+}
+</script>
+
+
   <title>Setting Up an OpenStack Dev Environment &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +63,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +85,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +118,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -91,7 +132,7 @@
   <h1>Setting Up an OpenStack Dev Environment</h1>
   <time datetime=2017-03-22T00:00:00Z class="post-date">Wed, Mar 22, 2017</time>
 
-  <p>Before beginning to <a href="/posts/getting-started-on-contributing-to-openstack.html">contribute to OpenStack</a>, it is necessary that we setup an ideal development environment for a smoother workflow.</p>
+  <p>Before beginning to <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html">contribute to OpenStack</a>, it is necessary that we setup an ideal development environment for a smoother workflow.</p>
 
 <p>In this post I will cover how to setup a Devstack development environment in a <strong>Ubuntu 16.04</strong> virtual machine using <a href="http://www.vmware.com/">VMware Player</a>.</p>
 
@@ -213,7 +254,7 @@ sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub
 
 <p><a href="https://www.gerritcodereview.com/">Gerrit</a> is the code review system used in OpenStack development.</p>
 
-<p>Before setting up Gerrit, make sure that you have followed the <a href="/posts/getting-started-on-contributing-to-openstack.html">preliminary steps</a> for preparing to contribute to OpenStack.</p>
+<p>Before setting up Gerrit, make sure that you have followed the <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html">preliminary steps</a> for preparing to contribute to OpenStack.</p>
 
 <p>Let&rsquo;s copy our SSH again using xclip:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub</code></pre></div>

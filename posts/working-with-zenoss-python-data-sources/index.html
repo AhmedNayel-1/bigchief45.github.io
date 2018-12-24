@@ -8,6 +8,62 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Working With Zenoss Python Data Source Plugins",
+    "headline" : "Working With Zenoss Python Data Source Plugins",
+    "description" : "<p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
+
+<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
+
+<p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
+
+<h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
+
+<p>For this post, I will be using an example where we will be executing an <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
+
+<p>If I run the following command from my shell:</p>
+
+<pre><code>ipmitool -H $BMC_IP -I lanplus -U admin -P admin power status
+</code></pre>
+
+<p>I get the following output:</p>
+
+<pre><code>Chassis Power is on
+</code></pre>
+
+<p>What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:</p>
+
+<ol>
+<li>Map the value into a boolean property of a custon zenpacklib class.</li>
+<li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
+<li>Update the device model with the new property value.</li>
+<li><a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
+</ol>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-02-23 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-02-23 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/working-with-zenoss-python-data-sources/",
+    "wordCount" : "1748",
+    "keywords" : [ "zenoss","python","monitoring","zenpacks","zenpacklib","Blog" ]
+}
+</script>
+
+
   <title>Working With Zenoss Python Data Source Plugins &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +78,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +100,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +133,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -91,15 +147,15 @@
   <h1>Working With Zenoss Python Data Source Plugins</h1>
   <time datetime=2017-02-23T00:00:00Z class="post-date">Thu, Feb 23, 2017</time>
 
-  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
+  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
 
-<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
+<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
 
 <p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
 
 <h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
 
-<p>For this post, I will be using an example where we will be executing an <a href="/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
+<p>For this post, I will be using an example where we will be executing an <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
 
 <p>If I run the following command from my shell:</p>
 
@@ -117,7 +173,7 @@
 <li>Map the value into a boolean property of a custon zenpacklib class.</li>
 <li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
 <li>Update the device model with the new property value.</li>
-<li><a href="/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
+<li><a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
 </ol>
 
 <h3 id="zenpack-yaml">zenpack.yaml</h3>
@@ -374,13 +430,13 @@ classes<span style="color:#111">:</span>
 
 <h2 id="modifying-the-gui">Modifying the GUI</h2>
 
-<p>To add this new power status property to the device detail bar, you can simply refer to my <a href="/posts/modifying-the-zenoss-device-detail-bar.html">previous post</a> on this very topic.</p>
+<p>To add this new power status property to the device detail bar, you can simply refer to my <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">previous post</a> on this very topic.</p>
 
 <p>Lastly, install the ZenPack and restart Zenoss.</p>
 
 <p>Now you can add a new device to the <code>/BMC</code> device class, configure the zProperties with real working values and see the data source plugin work its magic. Since the cycle time is 30 seconds, you will be able to see the power status light change very soon.</p>
 
-<p><img src="/posts/working-with-zenoss-python-data-sources/power_status.jpg" alt="Power status light using Python data source plugin" /></p>
+<p><img src="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/power_status.jpg" alt="Power status light using Python data source plugin" /></p>
 
 <h2 id="references">References</h2>
 

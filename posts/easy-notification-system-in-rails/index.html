@@ -8,6 +8,71 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Easy Notification System in Rails",
+    "headline" : "Easy Notification System in Rails",
+    "description" : "<p>Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.</p>
+
+<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver&rsquo;s In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
+
+<p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
+
+<h2 id="models-and-routes">Models and Routes</h2>
+
+<p>Before starting with the models, lets quickly define the application resources in our routes:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
+<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
+
+  <span style="color:#111">devise_for</span> <span style="color:#d88200">:users</span>
+
+  <span style="color:#111">resources</span> <span style="color:#d88200">:posts</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#111">resources</span> <span style="color:#d88200">:comments</span>
+  <span style="color:#00a8c8">end</span>
+
+  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span>
+
+<span style="color:#00a8c8">end</span></code></pre></div>
+<h3 id="the-notification-model">The Notification Model</h3>
+
+<p>We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:</p>
+
+<pre><code>rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
+</code></pre>
+
+<p>Here is an explanation for some of the fields for the above model:</p>
+
+<ul>
+<li><code>recipient_id</code>: Represents the user in your application which will receive the notification.</li>
+<li><code>actor_id</code>: Represents the user in your application which <em>triggered</em> the notification.</li>
+<li><code>read_at</code>: The time when the notification was read. A value of <code>nil</code> is used for unread notifications.</li>
+<li><code>notifiable_id</code>: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.</li>
+<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&rsquo;s class.</li>
+</ul>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-09-04 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-09-04 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/easy-notification-system-in-rails/",
+    "wordCount" : "1303",
+    "keywords" : [ "ruby","rails","coffeescript","javascript","web dev","Blog" ]
+}
+</script>
+
+
   <title>Easy Notification System in Rails &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +87,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +109,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +142,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -95,7 +160,7 @@
 
 <p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver&rsquo;s In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
 
-<p><em>Read <a href="/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
+<p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
 
 <h2 id="models-and-routes">Models and Routes</h2>
 
@@ -320,7 +385,7 @@
 
 <p>Here is an example of how this would look like, from a personal project of mine:</p>
 
-<p><img src="/posts/easy-notification-system-in-rails/navbar_notifications.png" alt="Navbar Notifications" /></p>
+<p><img src="https://aalvarez.me/posts/easy-notification-system-in-rails/navbar_notifications.png" alt="Navbar Notifications" /></p>
 
 <p>Notice the notification partials in action. You can create different partials for different notifiable models <strong><em>and</em></strong> different actions as well.</p>
 

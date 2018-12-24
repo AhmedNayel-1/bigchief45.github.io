@@ -8,6 +8,45 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Java JTable Tricks",
+    "headline" : "Java JTable Tricks",
+    "description" : "<p>Java&rsquo;s JTable is a GUI component that has been around for many many years. While a bit difficult to work with, it&rsquo;s almost a mandatory component in an application that displays a lot of data.</p>
+
+<p>In this post I share some nice tricks for working with JTables in Java applications.</p>
+
+<h2 id="scrolling">Scrolling</h2>
+
+<p>A JTable by itself does not provide any scrolling when handling a lot of data. To fix this, we need to place the table inside a <code>JScrollPane</code> component. Additionally, we can place this <code>JScrollPane</code> into a <code>JPanel</code> in our window:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#111">myPanel</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">JScrollPane</span><span style="color:#f92672">(</span><span style="color:#111">myTable</span><span style="color:#f92672">,</span>
+    <span style="color:#111">JScrollPane</span><span style="color:#f92672">.</span><span style="color:#75af00">VERTICAL_SCROLLBAR_AS_NEEDED</span><span style="color:#f92672">,</span>
+    <span style="color:#111">JScrollPane</span><span style="color:#f92672">.</span><span style="color:#75af00">HORIZONTAL_SCROLLBAR_AS_NEEDED</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">);</span></code></pre></div>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-12-20 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-12-20 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/java-jtable-tricks/",
+    "wordCount" : "305",
+    "keywords" : [ "java","Blog" ]
+}
+</script>
+
+
   <title>Java JTable Tricks &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +61,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +83,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +116,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

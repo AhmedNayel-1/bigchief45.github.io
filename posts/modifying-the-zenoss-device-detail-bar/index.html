@@ -8,6 +8,59 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Modifying the Zenoss Device Detail Bar",
+    "headline" : "Modifying the Zenoss Device Detail Bar",
+    "description" : "<p>The Zenoss Core <a href="https://www.sencha.com/products/extjs/"><strong>ExtJS</strong></a> graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.</p>
+
+<p>Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss</code>, and as you would expect, the device detail bar component is also located there.</p>
+
+<h2 id="the-device-detail-bar">The Device Detail Bar</h2>
+
+<p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
+
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
+
+<p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
+
+<h2 id="extending-the-component-through-zenpacks">Extending The Component, Through ZenPacks</h2>
+
+<p>Let&rsquo;s assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
+
+classes<span style="color:#111">:</span>
+  CustomDevice<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Custom Device
+    properties<span style="color:#111">:</span>
+      power_status<span style="color:#111">:</span>
+        type<span style="color:#111">:</span> boolean</code></pre></div>
+<p>What we want is to display this value in the device&rsquo;s detail bar, similar to the device&rsquo;s ping status display.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-11-08 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-08 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/",
+    "wordCount" : "798",
+    "keywords" : [ "zenoss","extjs","monitoring","javascript","ui","zenpacks","sysadmin","Blog" ]
+}
+</script>
+
+
   <title>Modifying the Zenoss Device Detail Bar &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +75,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +97,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +130,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -99,7 +152,7 @@
 
 <p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
 
-<p><img src="/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
 
 <p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
 
@@ -176,7 +229,7 @@ classes<span style="color:#111">:</span>
 
 <p>The function parameter is where things get interesting, and what took my a bit of time and effort to understand everything that goes behind it. As you can see, I passed in a function <code>function(bar, data)</code>. I named the 1st parameter this way after extensive inspection and playing with the web console, however we don&rsquo;t really this parameter. The 2nd one (<code>data</code>) however, is what we will use to obtain the value of our <code>power_status</code> attribute.</p>
 
-<p>Once we have this value, we are then setting it as the <code>DeviceDetailItem</code>&rsquo;s text, but we are first passing it through a <a href="/posts/zenoss-monitoring-template-data-points.html">Zenoss renderer</a>. This what will change the display from a simple <code>True</code> or <code>False</code> value, to the UP or DOWN status with icon that you can already see with the ping status.</p>
+<p>Once we have this value, we are then setting it as the <code>DeviceDetailItem</code>&rsquo;s text, but we are first passing it through a <a href="https://aalvarez.me/posts/zenoss-monitoring-template-data-points.html">Zenoss renderer</a>. This what will change the display from a simple <code>True</code> or <code>False</code> value, to the UP or DOWN status with icon that you can already see with the ping status.</p>
 
 <h2 id="testing-the-item">Testing the Item</h2>
 
@@ -186,7 +239,7 @@ classes<span style="color:#111">:</span>
 <span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
 <p>The result should appear immediately after refreshing:</p>
 
-<p><img src="/posts/modifying-the-zenoss-device-detail-bar/detail_bar_power_down.jpg" alt="Power Status" /></p>
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/detail_bar_power_down.jpg" alt="Power Status" /></p>
 
 <p>Don&rsquo;t mind the white background on the detail bar shown above, I am using a different skin in my Zenoss UI.</p>
 </div>

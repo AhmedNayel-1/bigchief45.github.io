@@ -8,6 +8,47 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Django AJAX Search With Elasticsearch",
+    "headline" : "Django AJAX Search With Elasticsearch",
+    "description" : "<p>In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&rsquo;s get started!</p>
+
+<h2 id="the-search-template">The Search Template</h2>
+
+<p>The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.</p>
+
+<p>This template is extremely simple and does not need a <code>&lt;form&gt;</code> tag. I will create it as a partial under <code>templates/search.html</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% csrf_token %}
+&lt;input id=&#34;search&#34; name=&#34;q&#34; placeholder=&#34;Search...&#34;&gt;</code></pre></div>
+<p>Notice how we have given the input a <code>name</code> with the value of <code>q</code>. This will be important when our view receives the query from this input field.</p>
+
+<p>I can then render this partial in the main template like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% include &#39;search.html&#39; %}</code></pre></div>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2018",
+    "datePublished": "2018-01-10 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-01-10 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/",
+    "wordCount" : "719",
+    "keywords" : [ "django","python","javascript","elasticsearch","Blog" ]
+}
+</script>
+
+
   <title>Django AJAX Search With Elasticsearch &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +63,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +85,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +118,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -106,7 +147,7 @@
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% include &#39;search.html&#39; %}</code></pre></div>
 <p>In my case I am using a very neat front end theme called <a href="http://pages.revox.io/">Revox Pages</a> which includes a very sweet JQuery search feature:</p>
 
-<p><img src="/posts/django-ajax-search-with-elasticsearch/revox_pages_search.png" alt="Revox Pages Search" /></p>
+<p><img src="https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/revox_pages_search.png" alt="Revox Pages Search" /></p>
 
 <h2 id="creating-the-view">Creating the View</h2>
 
@@ -213,7 +254,7 @@
 
 <p>Here is a GIF so you can see it all in action:</p>
 
-<p><img src="/posts/django-ajax-search-with-elasticsearch/ajax_search.gif" alt="Final AJAX Search" /></p>
+<p><img src="https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/ajax_search.gif" alt="Final AJAX Search" /></p>
 
 <h1 id="references">References</h1>
 

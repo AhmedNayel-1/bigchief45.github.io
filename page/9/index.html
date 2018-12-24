@@ -8,6 +8,35 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "",
+    "name" : "Andrés Álvarez",
+    "headline" : "Andrés Álvarez",
+    "description" : "",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-05-09 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-05-09 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/",
+    "wordCount" : "0",
+    "keywords" : [ "Blog" ]
+}
+</script>
+
+
   <title>Andrés Álvarez</title>
 
   
@@ -22,8 +51,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="https://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +73,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +106,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -94,7 +123,7 @@
     <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/">Custom Notification Action Types in Zenoss</a>
   </h1>
   <time datetime="2017-05-09T00:00:00Z" class="post-date">Tue, May 9, 2017</time>
-  <p>In a <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how we could create <em>command</em> type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a <a href="/posts/custom-triggers-and-notifications-in-a-zenpack.html">more recent post</a> I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.</p>
+  <p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how we could create <em>command</em> type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html">more recent post</a> I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.</p>
 
 <p>In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.</p>
 
@@ -102,12 +131,12 @@
 
 <p>By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:</p>
 
-<p><img src="/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg" alt="Zenoss Default Actions" /></p>
+<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg" alt="Zenoss Default Actions" /></p>
 
 <p>These action types are:</p>
 
 <ul>
-<li><strong>Command</strong>: Runs an executable script. Discussed in one of my <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous posts</a>.</li>
+<li><strong>Command</strong>: Runs an executable script. Discussed in one of my <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous posts</a>.</li>
 <li><strong>Email</strong>: Sends an e-mail to a user.</li>
 <li><strong>Page</strong>: Sends a message to a user&rsquo;s <a href="https://en.wikipedia.org/wiki/Pager">pager</a>, also known as <em>beeper</em>. Probably safe to say that this is not used by anyone anymore.</li>
 <li><strong>Syslog</strong>: Logs a message to <a href="https://en.wikipedia.org/wiki/Syslog">syslog</a></li>
@@ -136,7 +165,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/custom-notification-action-types-in-zenoss/">Read More…</a>
+      <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/">Read More…</a>
     </div>
   
 </article>
@@ -151,7 +180,7 @@
 
 <p>As an example, we will try to implement the commonly seen <em>Work Experience</em> and <em>Educational Background</em> features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.</p>
 
-<p><img src="/posts/rails-api-with-nested-resources/education.jpg" alt="Education" /></p>
+<p><img src="https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg" alt="Education" /></p>
 
 <h2 id="accepts-nested-attributes-for">accepts_nested_attributes_for</h2>
 
@@ -175,7 +204,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/rails-api-with-nested-resources/">Read More…</a>
+      <a href="https://aalvarez.me/posts/rails-api-with-nested-resources/">Read More…</a>
     </div>
   
 </article>
@@ -184,7 +213,7 @@
     <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Custom Triggers and Notifications in a ZenPack</a>
   </h1>
   <time datetime="2017-05-04T00:00:00Z" class="post-date">Thu, May 4, 2017</time>
-  <p>In a <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
+  <p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
 
 <p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
 
@@ -248,7 +277,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/custom-triggers-and-notifications-in-a-zenpack/">Read More…</a>
+      <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Read More…</a>
     </div>
   
 </article>
@@ -257,7 +286,7 @@
     <a href="https://aalvarez.me/posts/working-with-rrdtool/">Working With RRDTool</a>
   </h1>
   <time datetime="2017-05-02T00:00:00Z" class="post-date">Tue, May 2, 2017</time>
-  <p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
+  <p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="https://aalvarez.me/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
 
 <h2 id="round-robin-databases">Round Robin Databases</h2>
 
@@ -292,7 +321,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/working-with-rrdtool/">Read More…</a>
+      <a href="https://aalvarez.me/posts/working-with-rrdtool/">Read More…</a>
     </div>
   
 </article>
@@ -426,7 +455,7 @@
 
   
     <div class="read-more-link">
-      <a href="/posts/diving-into-openstack-gnocchi/">Read More…</a>
+      <a href="https://aalvarez.me/posts/diving-into-openstack-gnocchi/">Read More…</a>
     </div>
   
 </article>

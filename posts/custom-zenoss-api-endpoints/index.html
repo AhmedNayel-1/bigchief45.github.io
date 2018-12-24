@@ -8,6 +8,59 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Custom Zenoss API Endpoints",
+    "headline" : "Custom Zenoss API Endpoints",
+    "description" : "<p>In a <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">previous post</a> I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, <em>curl</em>, API clients, etc. All this new functionality added from a basic ZenPack.</p>
+
+<h2 id="creating-an-endpoint">Creating an Endpoint</h2>
+
+<p>Assuming that we are starting with a new and fresh ZenPack created with <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, we will proceed to create a simple endpoint.</p>
+
+<p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
+
+<p>First, let&rsquo;s take a quick look at the imports:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os.path</span>
+<span style="color:#f92672">from</span> <span style="color:#111">urlparse</span> <span style="color:#f92672">import</span> <span style="color:#111">urlparse</span>
+<span style="color:#f92672">import</span> <span style="color:#111">subprocess</span>
+
+<span style="color:#f92672">from</span> <span style="color:#111">zope.event</span> <span style="color:#f92672">import</span> <span style="color:#111">notify</span>
+<span style="color:#f92672">from</span> <span style="color:#111">zope.interface</span> <span style="color:#f92672">import</span> <span style="color:#111">implements</span>
+<span style="color:#f92672">from</span> <span style="color:#111">ZODB.transact</span> <span style="color:#f92672">import</span> <span style="color:#111">transact</span>
+
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Ext</span> <span style="color:#f92672">import</span> <span style="color:#111">DirectRouter</span><span style="color:#111">,</span> <span style="color:#111">DirectResponse</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products</span> <span style="color:#f92672">import</span> <span style="color:#111">Zuul</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.catalog.events</span> <span style="color:#f92672">import</span> <span style="color:#111">IndexingEvent</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.facades</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulFacade</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">IFacade</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.utils</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulMessageFactory</span> <span style="color:#00a8c8">as</span> <span style="color:#111">_t</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Utils</span> <span style="color:#f92672">import</span> <span style="color:#111">zenPath</span></code></pre></div>
+<p>Some imports are probably not needed, but the ones that are of our interest are imports such as <code>DirectRouter</code> and <code>DirectResponse</code>, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-12-20 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-12-20 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/custom-zenoss-api-endpoints/",
+    "wordCount" : "695",
+    "keywords" : [ "api","zenoss","zenpacks","zope","python","javascript","Blog" ]
+}
+</script>
+
+
   <title>Custom Zenoss API Endpoints &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +75,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +97,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +130,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -91,13 +144,13 @@
   <h1>Custom Zenoss API Endpoints</h1>
   <time datetime=2016-12-20T00:00:00Z class="post-date">Tue, Dec 20, 2016</time>
 
-  <p>In a <a href="/posts/the-zenoss-json-api.html">previous post</a> I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, <em>curl</em>, API clients, etc. All this new functionality added from a basic ZenPack.</p>
+  <p>In a <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">previous post</a> I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, <em>curl</em>, API clients, etc. All this new functionality added from a basic ZenPack.</p>
 
 <h2 id="creating-an-endpoint">Creating an Endpoint</h2>
 
 <p>Assuming that we are starting with a new and fresh ZenPack created with <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, we will proceed to create a simple endpoint.</p>
 
-<p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
+<p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
 
 <p>First, let&rsquo;s take a quick look at the imports:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os.path</span>

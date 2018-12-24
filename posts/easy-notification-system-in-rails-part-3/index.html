@@ -8,6 +8,46 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Easy Notification System in Rails Part 3",
+    "headline" : "Easy Notification System in Rails Part 3",
+    "description" : "<p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">part 1</a> and <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series</em></p>
+
+<p>In this post, we will be sending automatic e-emails every time notifications are created.</p>
+
+<h2 id="creating-the-mailer">Creating the Mailer</h2>
+
+<p>We will work with one <a href="http://guides.rubyonrails.org/action_mailer_basics.html">mailer</a> that will send e-mails for every notification that is created. We can generate our mailer with this command:</p>
+
+<pre><code>rails g mailer NotificationsMailer
+</code></pre>
+
+<p>Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&rsquo;ve been using <strong>comments</strong> and <strong>posts</strong> as examples.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-09-12 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-09-12 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/",
+    "wordCount" : "504",
+    "keywords" : [ "ruby","rails","coffeescript","javascript","web dev","Blog" ]
+}
+</script>
+
+
   <title>Easy Notification System in Rails Part 3 &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +62,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +84,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +117,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -91,7 +131,7 @@
   <h1>Easy Notification System in Rails Part 3</h1>
   <time datetime=2017-09-12T00:00:00Z class="post-date">Tue, Sep 12, 2017</time>
 
-  <p><em>Read <a href="/posts/easy-notification-system-in-rails.html">part 1</a> and <a href="/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series</em></p>
+  <p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">part 1</a> and <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series</em></p>
 
 <p>In this post, we will be sending automatic e-emails every time notifications are created.</p>
 

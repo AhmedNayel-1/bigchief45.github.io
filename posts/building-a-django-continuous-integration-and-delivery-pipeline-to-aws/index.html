@@ -8,6 +8,47 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Building a Django Continuous Integration and Delivery Pipeline to AWS",
+    "headline" : "Building a Django Continuous Integration and Delivery Pipeline to AWS",
+    "description" : "<p>Building a CI/CD (Continuous Integration / Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.</p>
+
+<p>In this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to <a href="https://www.heroku.com/">Heroku</a>. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.</p>
+
+<p>The pipeline will work as follows:</p>
+
+<ol>
+<li>Code will be pushed to source control repository. For this article, I will use Github.</li>
+<li>Project will be built and tested in a CI job at <a href="https://travis-ci.com/">TravisCI</a>.</li>
+<li>TravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.</li>
+</ol>
+
+<p>We will be using both the <strong><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html">ElasticBeanstalk CLI (ebcli)</a></strong> and the <strong>AWS ElasticBeanstalk Console</strong> to achieve this.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2018",
+    "datePublished": "2018-01-30 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-01-30 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/",
+    "wordCount" : "1733",
+    "keywords" : [ "aws","elasticbeanstalk","ci/cd","django","Blog" ]
+}
+</script>
+
+
   <title>Building a Django Continuous Integration and Delivery Pipeline to AWS &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +63,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +85,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +118,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -111,13 +152,13 @@
 
 <p>Head over the the Elasticbeanstalk service in the AWS Console and create a new application. After that, create a new environment and select <em>Web server environment</em> as the environment type, and select a <em>Python</em> platform:</p>
 
-<p><img src="/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_environment_config.png" alt="Environment Basic Configuration" /></p>
+<p><img src="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_environment_config.png" alt="Environment Basic Configuration" /></p>
 
 <h3 id="wsgi-path">WSGI Path</h3>
 
 <p>After the environment process is finished, we will proceed to change the preconfigured path to the WSGI file that ElasticBeanstalk uses (<code>application.py</code> by default). Head over to <em>Configuration &gt; Software</em> and you will see a field where we can specify a custom path. This path will depend on the location of the <code>wsgi.py</code> file in your Django application:</p>
 
-<p><img src="/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_wsgi_path.png" alt="WSGI Configuration" /></p>
+<p><img src="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_wsgi_path.png" alt="WSGI Configuration" /></p>
 
 <p>If the WSGI path configuration is not correctly set. You will get a log error in your dashboard saying <code>ERROR   Your WSGIPath refers to a file that does not exist.</code>, and when you try accessing your application with the generated URL, you will get a <em>404 not found</em> error page.</p>
 
@@ -185,7 +226,7 @@
 
 <p>Now in the AWS ElasticBeanstalk console head over to <em>Configuration &gt; Software &gt; Static files</em> and set the following configuration:</p>
 
-<p><img src="/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_staticfiles_config.png" alt="ElasticBeanstalk Static Files Configuration" /></p>
+<p><img src="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/eb_staticfiles_config.png" alt="ElasticBeanstalk Static Files Configuration" /></p>
 
 <p>That configuration will work properly along with the <code>STATIC_ROOT</code> and <code>STATIC_URL</code> settings we added in Django.</p>
 

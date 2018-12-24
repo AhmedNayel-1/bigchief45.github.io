@@ -8,6 +8,60 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Triggering Commands From Events in Zenoss",
+    "headline" : "Triggering Commands From Events in Zenoss",
+    "description" : "<p>In Zenoss Core 4, we can configure some <strong><em>email</em></strong> notifications that produce and send emails based on conditions defined in a trigger, when an event is created.</p>
+
+<p>Additionally, Zenoss Core 4 also provides <strong><em>command</em></strong> type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.</p>
+
+<p>For example, let&rsquo;s say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:</p>
+
+<ol>
+<li>The device is suddenly down.</li>
+<li>Zenoss pings the device and gets no response.</li>
+<li>The device status is then changed to <em>DOWN</em>.</li>
+<li>An Event with an event class of <code>/Status/Ping</code> and a severity of <em>Critical</em> is created.</li>
+</ol>
+
+<p>With this information, we can create a trigger that will represent this exact scenario. Moreover, we can configure a command notification to be executed when this trigger is fired.</p>
+
+<h2 id="configuring-a-trigger">Configuring a Trigger</h2>
+
+<ol>
+<li>Navigate to Events &gt; Triggers</li>
+<li>Create a new trigger.</li>
+<li>Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:</li>
+</ol>
+
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
+
+<p>=&gt; Because we want to make sure the device is truly <em>DOWN</em>, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-10-31 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-10-31 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/",
+    "wordCount" : "436",
+    "keywords" : [ "zenoss","monitoring","devops","Blog" ]
+}
+</script>
+
+
   <title>Triggering Commands From Events in Zenoss &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +76,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +98,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +131,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -114,7 +168,7 @@
 <li>Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:</li>
 </ol>
 
-<p><img src="/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
 
 <p>=&gt; Because we want to make sure the device is truly <em>DOWN</em>, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.</p>
 
@@ -127,7 +181,7 @@
 <li>In the Content pane, in the Command text field, type in the command as it would be run in a terminal. (Example: <code>./home/zenoss/revive_device.sh</code>)</li>
 </ol>
 
-<p><img src="/posts/triggering-commands-from-events-in-zenoss/edit_notification.png" alt="Edit Notification" /></p>
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_notification.png" alt="Edit Notification" /></p>
 
 <p><strong>NOTE:</strong> For testing purposes (covered next), we are going to use a <kbd>touch</kbd> command, which simply creates a blank file in the specified path:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">touch /home/zenoss/revive_device.sh</code></pre></div>
@@ -135,15 +189,15 @@
 
 <p>To test, we are going to add a new device that we know it&rsquo;s already down. Once we add the device, Zenoss will immediately ping it and get no response, the scenario discussed before will then be reproduced, and the event will be created:</p>
 
-<p><img src="/posts/triggering-commands-from-events-in-zenoss/event_fired.png" alt="Event Created" /></p>
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/event_fired.png" alt="Event Created" /></p>
 
 <p>We can see that the count value is still below our defined rule (9). If we check the specified path of our touch command, we should see that no file has been created.</p>
 
-<p><img src="/posts/triggering-commands-from-events-in-zenoss/event_count.png" alt="Event Count" /></p>
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/event_count.png" alt="Event Count" /></p>
 
 <p>The default Zenoss ping cycle time is 60 seconds, so every time Zenoss pings the device and gets no response, the count value for this event will increase. Once it reaches the value specified in our trigger rule, the command notification should be fired and the file should be created in the path specified for the <kbd>touch</kbd> command:</p>
 
-<p><img src="/posts/triggering-commands-from-events-in-zenoss/trigger_result.jpg" alt="Trigger Result" /></p>
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/trigger_result.jpg" alt="Trigger Result" /></p>
 </div>
 
 

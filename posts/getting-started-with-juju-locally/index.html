@@ -8,6 +8,66 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Getting Started With Juju Locally",
+    "headline" : "Getting Started With Juju Locally",
+    "description" : "<p><a href="https://jujucharms.com/">Juju</a> is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.</p>
+
+<p>In this post I will explain how easy it is to get started with Juju in a <strong>local</strong> environment.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>To start we will need to add the necessary repository from where we will retrieve the Juju packages:</p>
+
+<pre><code>sudo add-apt-repository ppa:juju/stable
+sudo apt-get update
+</code></pre>
+
+<p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
+
+<pre><code>sudo apt-get install juju-core
+sudo apt-get install juju-local
+</code></pre>
+
+<h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
+
+<p>Before we set up the local environment, let&rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
+
+<pre><code>juju generate-config
+juju switch local
+</code></pre>
+
+<p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
+
+<pre><code>juju bootstrap
+</code></pre>
+
+<p>After the process is complete, we are now ready to start using Juju.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-02-10 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-02-10 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/getting-started-with-juju-locally/",
+    "wordCount" : "462",
+    "keywords" : [ "juju","devops","linux","zenoss","iptables","Blog" ]
+}
+</script>
+
+
   <title>Getting Started With Juju Locally &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +82,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +104,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +137,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

@@ -8,6 +8,46 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Using RRDTool in Zenoss",
+    "headline" : "Using RRDTool in Zenoss",
+    "description" : "<p><a href="http://oss.oetiker.ch/rrdtool/">rrdtool</a> is an awesome high performance data logging and graphing tool for time series data. Zenoss Core uses RRDTool to collect, monitor, and graph peformance data for devices.</p>
+
+<p><img src="http://oss.oetiker.ch/rrdtool/stream-pop.png" alt="RRD Tool" /></p>
+
+<p>However Zenoss Core comes with built-in helper wrappers around RRDTool that makes using it within Zenoss much easier. These source code files can be found in <code>$ZENHOME/Products/ZenRRD/</code>.</p>
+
+<h2 id="rrdutil">RRDUtil</h2>
+
+<p>Located in <code>$ZENHOME/Products/ZenRRD/RRDUtil.py</code>, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read <code>.rrd</code> files using Python.</p>
+
+<p>We can easily import this module into our code, using the following import statement:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">Products.ZenRRD.RRDUtil</span> <span style="color:#f92672">import</span> <span style="color:#111">RRDUtil</span></code></pre></div>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-11-22 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-22 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/using-rrdtool-in-zenoss/",
+    "wordCount" : "503",
+    "keywords" : [ "rrdtool","zenoss","python","monitoring","sysadmin","linux","Blog" ]
+}
+</script>
+
+
   <title>Using RRDTool in Zenoss &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +62,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +84,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +117,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -107,7 +147,7 @@
 
 <p>Performance <code>.rrd</code> files for each device are located in <code>$ZENHOME/perf/Devices/$DEVICE_IP/</code>. All the RRD files for each graph in our <strong>custom monitoring templates</strong> will be located here. The values contained within each file is what the graph actually represents in the Zenoss graphic user interface.</p>
 
-<p>Let&rsquo;s assume that we have a custom monitoring template that adds, monitors, and graphs a <em>power usage</em> data point. And that the value for this data point is collected periodically through a <a href="/posts/creating-zenoss-zenpack-daemons.html">ZenPack daemon</a>. This value is then written to the data point&rsquo;s <code>.rrd</code> file, called <code>Power_Power.rrd</code> for this example.</p>
+<p>Let&rsquo;s assume that we have a custom monitoring template that adds, monitors, and graphs a <em>power usage</em> data point. And that the value for this data point is collected periodically through a <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html">ZenPack daemon</a>. This value is then written to the data point&rsquo;s <code>.rrd</code> file, called <code>Power_Power.rrd</code> for this example.</p>
 
 <p>We can then use RRDUtil in our daemon&rsquo;s code to write to the RRD file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">_writeRRD</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">,</span> <span style="color:#111">rrd_file_name</span><span style="color:#111">,</span> <span style="color:#111">value</span><span style="color:#111">):</span>

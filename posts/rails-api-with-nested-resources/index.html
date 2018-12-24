@@ -8,6 +8,45 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Rails API With Nested Resources",
+    "headline" : "Rails API With Nested Resources",
+    "description" : "<p><a href="https://github.com/nathanvda/cocoon">Cocoon</a> is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &ldquo;mini forms&rdquo; of another model into a main model&rsquo;s form and create all objects at once when the form is saved.</p>
+
+<p>I was recently finding myself trying to implement a similar functionality using only Rails 5 API and <a href="http://jsonapi.org">JSON API specification</a>.</p>
+
+<p>As an example, we will try to implement the commonly seen <em>Work Experience</em> and <em>Educational Background</em> features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.</p>
+
+<p><img src="https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg" alt="Education" /></p>
+
+<h2 id="accepts-nested-attributes-for">accepts_nested_attributes_for</h2>
+
+<p><a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html"><code>accepts_nested_attributes_for</code> </a> allows us to save attributes on <strong>associated</strong> records (work experience, educational background) through a parent record (user). By default nested attribute updating is turned off and you can enable it using the <code>#accepts_nested_attributes_for</code> class method.</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-05-08 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-05-08 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/rails-api-with-nested-resources/",
+    "wordCount" : "405",
+    "keywords" : [ "rails","ruby","api","back-end","web-dev","Blog" ]
+}
+</script>
+
+
   <title>Rails API With Nested Resources &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +61,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +83,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +116,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -97,7 +136,7 @@
 
 <p>As an example, we will try to implement the commonly seen <em>Work Experience</em> and <em>Educational Background</em> features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.</p>
 
-<p><img src="/posts/rails-api-with-nested-resources/education.jpg" alt="Education" /></p>
+<p><img src="https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg" alt="Education" /></p>
 
 <h2 id="accepts-nested-attributes-for">accepts_nested_attributes_for</h2>
 

@@ -8,6 +8,59 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Umask Permissions in a Puma Production Environment",
+    "headline" : "Umask Permissions in a Puma Production Environment",
+    "description" : "<p>Recently I was having an issue with a Sinatra application deployed in a staging
+server. The application was deployed with Puma and Nginx in the following location:</p>
+
+<pre><code>/var/www/
+</code></pre>
+
+<p>This web service would then try to access some files in another directory on the server,
+mounted as an SFTP directory. The Sinatra app would open these files and generate some
+new files from them, depending on the HTTP request received.</p>
+
+<p>The problem was that the operation would fail due to a permissions issue. I was baffled
+since I had set <strong>read</strong> and <strong>write</strong> permissions to the directory and the files in it.</p>
+
+<h2 id="umask-the-problem-and-solution">Umask: The Problem and Solution</h2>
+
+<p>It took around two days to find the culprit: <strong>umask</strong>. In Linux, <a href="https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work">umask</a>
+acts as another set of permissions for <strong>processes</strong> and cannot be set for directories,
+basically speaking.</p>
+
+<p>I realized that this probably meant that the process running the Puma application server had
+a umask configuration that was not allowing the generation of new files.</p>
+
+<p>I decided to test this if this was the case. In the <a href="https://github.com/puma/puma">Puma</a>
+documentation, I found an option to change the permissions of the UNIX socket using
+umask:</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-10-18 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-10-18 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/",
+    "wordCount" : "263",
+    "keywords" : [ "ruby","sinatra","web dev","Blog" ]
+}
+</script>
+
+
   <title>Umask Permissions in a Puma Production Environment &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +75,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +97,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +130,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>

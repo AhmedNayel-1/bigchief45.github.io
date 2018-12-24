@@ -8,6 +8,35 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "",
+    "name" : "Andrés Álvarez",
+    "headline" : "Andrés Álvarez",
+    "description" : "",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-11-08 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-08 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/",
+    "wordCount" : "0",
+    "keywords" : [ "Blog" ]
+}
+</script>
+
+
   <title>Andrés Álvarez</title>
 
   
@@ -22,8 +51,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="https://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +73,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +106,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -102,7 +131,7 @@
 
 <p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
 
-<p><img src="/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
 
 <p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
 
@@ -142,7 +171,7 @@ classes<span style="color:#111">:</span>
 
   
     <div class="read-more-link">
-      <a href="/posts/modifying-the-zenoss-device-detail-bar/">Read More…</a>
+      <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/">Read More…</a>
     </div>
   
 </article>
@@ -224,7 +253,7 @@ generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</spa
 
   
     <div class="read-more-link">
-      <a href="/posts/creating-zenoss-zenpack-daemons/">Read More…</a>
+      <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/">Read More…</a>
     </div>
   
 </article>
@@ -235,7 +264,7 @@ generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</spa
   <time datetime="2016-11-04T00:00:00Z" class="post-date">Fri, Nov 4, 2016</time>
   <p>While taking a look at the CPU Utilization graphs offered Zenoss Core&rsquo;s <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
 
-<p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
 
 <p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.</p>
 
@@ -263,7 +292,7 @@ generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</spa
 
   
     <div class="read-more-link">
-      <a href="/posts/monitoring-cpu-utilization-in-zenoss/">Read More…</a>
+      <a href="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/">Read More…</a>
     </div>
   
 </article>
@@ -315,7 +344,7 @@ data points it requires, and which modifications are needed, if any, to put the 
 
 <p>The addition of a data point requires changing the report.</p>
 
-<p><img src="/posts/zenoss-monitoring-template-data-points/cpu_report.jpg" alt="CPU Utilization Report" /></p>
+<p><img src="https://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg" alt="CPU Utilization Report" /></p>
 
 <p>To allow for more flexibility in changes, some reports use <em>data point aliases</em>. Data point aliases group data points so
 they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
@@ -347,7 +376,7 @@ can normalize that data into a common unit.</p>
 
   
     <div class="read-more-link">
-      <a href="/posts/zenoss-monitoring-template-data-points/">Read More…</a>
+      <a href="https://aalvarez.me/posts/zenoss-monitoring-template-data-points/">Read More…</a>
     </div>
   
 </article>
@@ -379,7 +408,7 @@ can normalize that data into a common unit.</p>
 <li>Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:</li>
 </ol>
 
-<p><img src="/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
 
 <p>=&gt; Because we want to make sure the device is truly <em>DOWN</em>, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.</p>
 
@@ -397,7 +426,7 @@ can normalize that data into a common unit.</p>
 
   
     <div class="read-more-link">
-      <a href="/posts/triggering-commands-from-events-in-zenoss/">Read More…</a>
+      <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/">Read More…</a>
     </div>
   
 </article>

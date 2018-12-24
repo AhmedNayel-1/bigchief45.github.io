@@ -8,6 +8,51 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Custom Pages in Zenoss",
+    "headline" : "Custom Pages in Zenoss",
+    "description" : "<p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
+
+<h2 id="page-viewlets">Page Viewlets</h2>
+
+<p>Previously we created navigation item viewlets, this time we will be creating <strong>page</strong> viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to <code>browser/configure.zcml</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:page</span>
+  <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;secondaryPage&#34;</span>
+  <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
+  <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
+  <span style="color:#75af00">template=</span><span style="color:#d88200">&#34;templates/my_template.pt&#34;</span>
+  <span style="color:#f92672">/&gt;</span></code></pre></div>
+<p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
+
+<p>Also let&rsquo;s not forget to create a necessary python init file:</p>
+
+<pre><code>touch browser/__init__.py
+</code></pre>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-12-26 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-12-26 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/custom-pages-in-zenoss/",
+    "wordCount" : "756",
+    "keywords" : [ "zenoss","extjs","javascript","zope","zenpacks","d3","Blog" ]
+}
+</script>
+
+
   <title>Custom Pages in Zenoss &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +67,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +89,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +122,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -91,7 +136,7 @@
   <h1>Custom Pages in Zenoss</h1>
   <time datetime=2016-12-26T00:00:00Z class="post-date">Mon, Dec 26, 2016</time>
 
-  <p>In a <a href="/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
+  <p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
 
 <h2 id="page-viewlets">Page Viewlets</h2>
 
@@ -206,7 +251,7 @@ mkdir browser/resouces/js
 
 <p>If we restart <em>zopectl</em> we should see the visualization in our new custom page:</p>
 
-<p><img src="/posts/custom-pages-in-zenoss/d3_visualization.jpg" alt="D3 Visualization" /></p>
+<p><img src="https://aalvarez.me/posts/custom-pages-in-zenoss/d3_visualization.jpg" alt="D3 Visualization" /></p>
 
 <p>In the screenshot above I actually just added a <em>Network Topology</em> secondary navigation link to INFRASTRUCTURE, and render the visualization on the new page for that link.</p>
 </div>

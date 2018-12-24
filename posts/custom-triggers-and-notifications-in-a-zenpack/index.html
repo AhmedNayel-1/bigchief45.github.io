@@ -8,6 +8,75 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Custom Triggers and Notifications in a ZenPack",
+    "headline" : "Custom Triggers and Notifications in a ZenPack",
+    "description" : "<p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
+
+<p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
+
+<h2 id="defining-zenpack-triggers-notifications">Defining ZenPack Triggers &amp; Notifications</h2>
+
+<p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn&rsquo;t exist), within the ZenPack&rsquo;s top directory.</p>
+
+<p><strong>actions.json</strong>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
+  &#34;triggers&#34;: [
+    {
+      &#34;name&#34;: &#34;Critical_death_event&#34;,
+      &#34;uuid&#34;: &#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;,
+      &#34;enabled&#34;: false,
+      &#34;rule&#34;: {
+        &#34;api_version&#34;: 1,
+        &#34;type&#34;: 1,
+        &#34;source&#34;: &#34;(evt.event_class.startswith(\&#34;/Status/Ping\&#34;)) and (evt.status == 0) and (evt.severity &gt; 2)&#34;
+      }
+    }
+  ],
+
+  &#34;notifications&#34;: [
+    {
+      &#34;id&#34;: &#34;send_sms_message&#34;,
+      &#34;description&#34;: &#34;Send SMS using Twilio&#34;,
+      &#34;action&#34;: &#34;command&#34;,
+      &#34;guid&#34;: &#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&#34;,
+      &#34;enabled&#34;: false,
+      &#34;action_timeout&#34;: 60,
+      &#34;delay_seconds&#34;: 0,
+      &#34;repeat_seconds&#34;: 0,
+      &#34;send_initial_occurrence&#34;: false,
+      &#34;send_clear&#34;: false,
+      &#34;body_format&#34;: &#34;echo \&#34;Hello World!\&#34;&#34;,
+      &#34;clear_body_format&#34;: &#34;&#34;,
+      &#34;subscriptions&#34;: [&#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;]
+    }
+  ]
+}</code></pre></div>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2017",
+    "datePublished": "2017-05-04 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-05-04 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/",
+    "wordCount" : "547",
+    "keywords" : [ "zenoss","zenpack","zenpacklib","python","zendmd","sysadmin","monitoring","Blog" ]
+}
+</script>
+
+
   <title>Custom Triggers and Notifications in a ZenPack &middot; Andrés Álvarez</title>
 
   
@@ -22,8 +91,8 @@
 
   
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
@@ -44,8 +113,8 @@
     <nav>
       <ul class="sidebar-nav">
         <li><a href="https://aalvarez.me/">Home</a> </li>
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/"> About Me </a></li><li><a href="/portfolio/"> Portfolio </a></li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
       </ul>
     </nav>
 
@@ -77,7 +146,7 @@
 
       
         <li>
-          <a href="/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
         </li>
       
     </ul>
@@ -91,7 +160,7 @@
   <h1>Custom Triggers and Notifications in a ZenPack</h1>
   <time datetime=2017-05-04T00:00:00Z class="post-date">Thu, May 4, 2017</time>
 
-  <p>In a <a href="/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
+  <p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
 
 <p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
 
@@ -282,13 +351,13 @@
 
 <p>Let&rsquo;s compare the trigger JSON data with the result shown in the user interface:</p>
 
-<p><img src="/posts/custom-triggers-and-notifications-in-a-zenpack/custom_trigger.jpg" alt="Custom Trigger" /></p>
+<p><img src="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/custom_trigger.jpg" alt="Custom Trigger" /></p>
 
 <p>Let&rsquo;s also take a look at the result for the custom notification:</p>
 
-<p><img src="/posts/custom-triggers-and-notifications-in-a-zenpack/custom_notification.jpg" alt="Custom Notification" /></p>
+<p><img src="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/custom_notification.jpg" alt="Custom Notification" /></p>
 
-<p><img src="/posts/custom-triggers-and-notifications-in-a-zenpack/custom_notification2.jpg" alt="Custom Notification 2" /></p>
+<p><img src="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/custom_notification2.jpg" alt="Custom Notification 2" /></p>
 
 <p>Excellent! Everything looks good.</p>
 
