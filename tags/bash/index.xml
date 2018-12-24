@@ -47,10 +47,10 @@
 &lt;p&gt;Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an &lt;strong&gt;interface&lt;/strong&gt;. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the &lt;em&gt;keystone Identity data&lt;/em&gt;. For this, we use the &lt;strong&gt;&lt;a href=&#34;https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin&#34;&gt;keystone-admin interface&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;With this in mind, we configure our charm to require this relation and interface in &lt;code&gt;metadata.yaml&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;requires:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;identity-admin:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;interface:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;keystone-admin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
+requires&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  identity-admin&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    interface&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; keystone-admin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

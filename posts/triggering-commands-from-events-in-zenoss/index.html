@@ -130,7 +130,7 @@
 <p><img src="/posts/triggering-commands-from-events-in-zenoss/edit_notification.png" alt="Edit Notification" /></p>
 
 <p><strong>NOTE:</strong> For testing purposes (covered next), we are going to use a <kbd>touch</kbd> command, which simply creates a blank file in the specified path:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">touch /home/zenoss/revive_device.sh</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">touch /home/zenoss/revive_device.sh</code></pre></div>
 <h2 id="testing-it-out">Testing it Out</h2>
 
 <p>To test, we are going to add a new device that we know it&rsquo;s already down. Once we add the device, Zenoss will immediately ping it and get no response, the scenario discussed before will then be reproduced, and the event will be created:</p>

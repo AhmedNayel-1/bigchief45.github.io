@@ -114,31 +114,31 @@ He answers 'Whatever.' to anything else.
 
 <p>The test provided by Exercism indicates that we should create a <code>Bob</code> class with a <code>hey</code> class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:</p>
 
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Bob</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">hey</span>(remark)
-    <span style="color:#080;font-weight:bold">case</span> remark
-    <span style="color:#080;font-weight:bold">when</span> nothing?(remark)
-      <span style="background-color:#fff0f0">&#39;Fine. Be that way!&#39;</span>
-    <span style="color:#080;font-weight:bold">when</span> yell?(remark)
-      <span style="background-color:#fff0f0">&#39;Whoa, chill out!&#39;</span>
-    <span style="color:#080;font-weight:bold">when</span> question?(remark)
-      <span style="background-color:#fff0f0">&#39;Sure.&#39;</span>
-    <span style="color:#080;font-weight:bold">else</span>
-       <span style="background-color:#fff0f0">&#39;Whatever.&#39;</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Bob</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">hey</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">case</span> <span style="color:#111">remark</span>
+    <span style="color:#00a8c8">when</span> <span style="color:#111">nothing?</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+      <span style="color:#d88200">&#39;Fine. Be that way!&#39;</span>
+    <span style="color:#00a8c8">when</span> <span style="color:#111">yell?</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+      <span style="color:#d88200">&#39;Whoa, chill out!&#39;</span>
+    <span style="color:#00a8c8">when</span> <span style="color:#111">question?</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+      <span style="color:#d88200">&#39;Sure.&#39;</span>
+    <span style="color:#00a8c8">else</span>
+       <span style="color:#d88200">&#39;Whatever.&#39;</span>
+    <span style="color:#00a8c8">end</span>
+  <span style="color:#00a8c8">end</span>
 
-  <span style="color:#038;font-weight:bold">private</span>
+  <span style="color:#00a8c8">private</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">question?</span>(remark)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">question?</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">end</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">yell?</span>(remark)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">yell?</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">end</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">nothing?</span>(remark)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">nothing?</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>A very typical case statement. However, notice the <strong>redundancy</strong> in using <code>remark</code> for the case statement, while also passing it to the helper methods we created. In my opinion, the <code>case</code> statement should allow the <code>when</code> statements to be able to work with what was assigned to <code>case</code>. But in the example above, that would not work.</p>
 
 <h3 id="enter-lambdas">Enter Lambdas</h3>
@@ -146,24 +146,24 @@ He answers 'Whatever.' to anything else.
 <p>So what we want to achieve is to remove the <code>remark</code> parameter from the methods, while also calling the methods without needing to pass the remark, because it&rsquo;s already being referenced in the <code>case</code> statement. Ruby <strong>Lambdas</strong> allows us to achieve this.</p>
 
 <p>Because <code>when</code> statements can take Lambdas and call them automatically, we can redefine the helper methods to return a lambda. Each lambda will perform the necessary logic to determine if the remark is a question, a yell, or nothing.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#038;font-weight:bold">private</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">private</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">question?</span>
-  <span style="color:#333">-&gt;</span> (r) { r<span style="color:#333">[-</span><span style="color:#00d;font-weight:bold">1</span><span style="color:#333">]</span> <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;?&#39;</span> }
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">question?</span>
+  <span style="color:#f92672">-&gt;</span> <span style="color:#111">(</span><span style="color:#111">r</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">r</span><span style="color:#f92672">[-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;?&#39;</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">yell?</span>
-  <span style="color:#007020">lambda</span> <span style="color:#080;font-weight:bold">do</span> <span style="color:#333">|</span>r<span style="color:#333">|</span>
-    r <span style="color:#333">=</span> r<span style="color:#333">.</span>delete(<span style="background-color:#fff0f0">&#39;^A-Za-z&#39;</span>)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#038;font-weight:bold">false</span> <span style="color:#080;font-weight:bold">if</span> r<span style="color:#333">.</span>empty?
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">yell?</span>
+  <span style="color:#111">lambda</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">r</span><span style="color:#f92672">|</span>
+    <span style="color:#111">r</span> <span style="color:#f92672">=</span> <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">delete</span><span style="color:#111">(</span><span style="color:#d88200">&#39;^A-Za-z&#39;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span> <span style="color:#00a8c8">if</span> <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">empty?</span>
 
-    r<span style="color:#333">.</span>split(<span style="background-color:#fff0f0">&#39;&#39;</span>)<span style="color:#333">.</span>all? { <span style="color:#333">|</span>c<span style="color:#333">|</span> <span style="color:#000;background-color:#fff0ff">/[[:upper:]]/</span><span style="color:#333">.</span>match(c) }
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">all?</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">c</span><span style="color:#f92672">|</span> <span style="color:#d88200">/[[:upper:]]/</span><span style="color:#f92672">.</span><span style="color:#111">match</span><span style="color:#111">(</span><span style="color:#111">c</span><span style="color:#111">)</span> <span style="color:#111">}</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">nothing?</span>
-  <span style="color:#333">-&gt;</span> (r) { r<span style="color:#333">.</span>strip<span style="color:#333">.</span>size<span style="color:#333">.</span>zero? }
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">nothing?</span>
+  <span style="color:#f92672">-&gt;</span> <span style="color:#111">(</span><span style="color:#111">r</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">strip</span><span style="color:#f92672">.</span><span style="color:#111">size</span><span style="color:#f92672">.</span><span style="color:#111">zero?</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>=&gt; Use the new lambda literal syntax for single line body blocks. Use the lambda method for multi-line blocks. Source: <a href="https://github.com/bbatsov/ruby-style-guide#lambda-multi-line">Rubocop Ruby style guide</a></p>
 
 <p>Notice that we have removed the <code>remark</code> parameter from the methods. The methods no longer take any arguments, this gives the methods more sense and meaning when defining them as &ldquo;boolean&rdquo; methods by appending the <code>?</code> prefix to the method name.</p>
@@ -171,18 +171,18 @@ He answers 'Whatever.' to anything else.
 <p>By making the methods return a lambda, the <code>when</code> statement will receive this lambda when calling the method, and will proceed to call the lambda by passing the object used in the <code>case</code> statement automatically. Pretty neat!</p>
 
 <p>We can then re-write our case statement like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">hey</span>(remark)
-    <span style="color:#080;font-weight:bold">case</span> remark
-    <span style="color:#080;font-weight:bold">when</span> nothing?
-      <span style="background-color:#fff0f0">&#39;Fine. Be that way!&#39;</span>
-    <span style="color:#080;font-weight:bold">when</span> yell?
-      <span style="background-color:#fff0f0">&#39;Whoa, chill out!&#39;</span>
-    <span style="color:#080;font-weight:bold">when</span> question?
-      <span style="background-color:#fff0f0">&#39;Sure.&#39;</span>
-    <span style="color:#080;font-weight:bold">else</span>
-      <span style="background-color:#fff0f0">&#39;Whatever.&#39;</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">hey</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">case</span> <span style="color:#111">remark</span>
+    <span style="color:#00a8c8">when</span> <span style="color:#111">nothing?</span>
+      <span style="color:#d88200">&#39;Fine. Be that way!&#39;</span>
+    <span style="color:#00a8c8">when</span> <span style="color:#111">yell?</span>
+      <span style="color:#d88200">&#39;Whoa, chill out!&#39;</span>
+    <span style="color:#00a8c8">when</span> <span style="color:#111">question?</span>
+      <span style="color:#d88200">&#39;Sure.&#39;</span>
+    <span style="color:#00a8c8">else</span>
+      <span style="color:#d88200">&#39;Whatever.&#39;</span>
+    <span style="color:#00a8c8">end</span>
+  <span style="color:#00a8c8">end</span></code></pre></div>
 <p>Much better!</p>
 
 <h2 id="references">References</h2>

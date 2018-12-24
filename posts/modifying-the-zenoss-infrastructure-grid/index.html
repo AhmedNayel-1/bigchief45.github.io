@@ -108,45 +108,45 @@
 <h3 id="device-grid-panel">Device Grid Panel</h3>
 
 <p>The grid panel object itself is an instance of a <code>Zenoss.DeviceGridPanel</code> class. Its ExtJS definition in the source code looks like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#888">/**
-</span><span style="color:#888"> * @class Zenoss.DeviceGridPanel
-</span><span style="color:#888"> * @extends Zenoss.FilterGridPanel
-</span><span style="color:#888"> * Main grid panel for displaying a device. Used on the It Infrastructure page.
-</span><span style="color:#888"> **/</span>
-Ext.define(<span style="background-color:#fff0f0">&#34;Zenoss.DeviceGridPanel&#34;</span>, {
-  extend<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;Zenoss.FilterGridPanel&#34;</span>,
-  alias<span style="color:#333">:</span> [<span style="background-color:#fff0f0">&#39;widget.DeviceGridPanel&#39;</span>, <span style="background-color:#fff0f0">&#39;widget.SimpleDeviceGridPanel&#39;</span>],
-  lastHash<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">null</span>,
-  constructor<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(config) {
-    <span style="color:#080;font-weight:bold">var</span> storeConfig <span style="color:#333">=</span> config.storeCfg <span style="color:#333">||</span> {};
-    <span style="color:#080;font-weight:bold">var</span> store <span style="color:#333">=</span> Ext.create(<span style="background-color:#fff0f0">&#39;Zenoss.DeviceStore&#39;</span>, storeConfig);
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * @class Zenoss.DeviceGridPanel
+</span><span style="color:#75715e"> * @extends Zenoss.FilterGridPanel
+</span><span style="color:#75715e"> * Main grid panel for displaying a device. Used on the It Infrastructure page.
+</span><span style="color:#75715e"> **/</span>
+<span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">define</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Zenoss.DeviceGridPanel&#34;</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">extend</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;Zenoss.FilterGridPanel&#34;</span><span style="color:#111">,</span>
+  <span style="color:#75af00">alias</span><span style="color:#f92672">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;widget.DeviceGridPanel&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;widget.SimpleDeviceGridPanel&#39;</span><span style="color:#111">],</span>
+  <span style="color:#75af00">lastHash</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+  <span style="color:#75af00">constructor</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">config</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">storeConfig</span> <span style="color:#f92672">=</span> <span style="color:#75af00">config</span><span style="color:#111">.</span><span style="color:#75af00">storeCfg</span> <span style="color:#f92672">||</span> <span style="color:#111">{};</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">store</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Zenoss.DeviceStore&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">storeConfig</span><span style="color:#111">);</span>
 
-    Ext.applyIf(config, {
-        store<span style="color:#333">:</span> store,
-        columns<span style="color:#333">:</span> deviceColumns
-    });
+    <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">applyIf</span><span style="color:#111">(</span><span style="color:#75af00">config</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+        <span style="color:#75af00">store</span><span style="color:#f92672">:</span> <span style="color:#75af00">store</span><span style="color:#111">,</span>
+        <span style="color:#75af00">columns</span><span style="color:#f92672">:</span> <span style="color:#75af00">deviceColumns</span>
+    <span style="color:#111">});</span>
 
-    <span style="color:#080;font-weight:bold">this</span>.callParent(arguments);
-    <span style="color:#080;font-weight:bold">this</span>.on(<span style="background-color:#fff0f0">&#39;itemdblclick&#39;</span>, <span style="color:#080;font-weight:bold">this</span>.onItemDblClick, <span style="color:#080;font-weight:bold">this</span>);
-  },
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callParent</span><span style="color:#111">(</span><span style="color:#75af00">arguments</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">on</span><span style="color:#111">(</span><span style="color:#d88200">&#39;itemdblclick&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">onItemDblClick</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">);</span>
+  <span style="color:#111">},</span>
 
-  onItemDblClick<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(view, record) {
-    <span style="color:#007020">window</span>.location <span style="color:#333">=</span> record.get(<span style="background-color:#fff0f0">&#34;uid&#34;</span>);
-  },
-  applyOptions<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(options){
-    <span style="color:#888">// only request the visible columns
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> visibleColumns <span style="color:#333">=</span> Zenoss.util.filter(<span style="color:#080;font-weight:bold">this</span>.columns, <span style="color:#080;font-weight:bold">function</span>(c){
-            <span style="color:#080;font-weight:bold">return</span> <span style="color:#333">!</span>c.hidden;
-        }),
-        keys <span style="color:#333">=</span> Ext.<span style="color:#007020">Array</span>.pluck(visibleColumns, <span style="background-color:#fff0f0">&#39;dataIndex&#39;</span>);
+  <span style="color:#75af00">onItemDblClick</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">view</span><span style="color:#111">,</span> <span style="color:#75af00">record</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">location</span> <span style="color:#f92672">=</span> <span style="color:#75af00">record</span><span style="color:#111">.</span><span style="color:#75af00">get</span><span style="color:#111">(</span><span style="color:#d88200">&#34;uid&#34;</span><span style="color:#111">);</span>
+  <span style="color:#111">},</span>
+  <span style="color:#75af00">applyOptions</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">options</span><span style="color:#111">){</span>
+    <span style="color:#75715e">// only request the visible columns
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">var</span> <span style="color:#75af00">visibleColumns</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">util</span><span style="color:#111">.</span><span style="color:#75af00">filter</span><span style="color:#111">(</span><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">columns</span><span style="color:#111">,</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">){</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#f92672">!</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">hidden</span><span style="color:#111">;</span>
+        <span style="color:#111">}),</span>
+        <span style="color:#75af00">keys</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#111">Array</span><span style="color:#111">.</span><span style="color:#75af00">pluck</span><span style="color:#111">(</span><span style="color:#75af00">visibleColumns</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;dataIndex&#39;</span><span style="color:#111">);</span>
 
-    keys.push(<span style="background-color:#fff0f0">&#39;ipAddressString&#39;</span>);
-    keys.push(<span style="background-color:#fff0f0">&#39;pythonClass&#39;</span>);
-    Ext.apply(options.params, {
-        keys<span style="color:#333">:</span> keys
-    });
-  }
-});
+    <span style="color:#75af00">keys</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ipAddressString&#39;</span><span style="color:#111">);</span>
+    <span style="color:#75af00">keys</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">(</span><span style="color:#d88200">&#39;pythonClass&#39;</span><span style="color:#111">);</span>
+    <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">apply</span><span style="color:#111">(</span><span style="color:#75af00">options</span><span style="color:#111">.</span><span style="color:#75af00">params</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+        <span style="color:#75af00">keys</span><span style="color:#f92672">:</span> <span style="color:#75af00">keys</span>
+    <span style="color:#111">});</span>
+  <span style="color:#111">}</span>
+<span style="color:#111">});</span>
 </code></pre></div>
 <p>The inheritance hierarchy for this class is quite a long one. Nevertheless, it is worth mentioning that the topmost parent is a <code>Ext.grid.Panel</code> class. The <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.grid.Panel">documentation</a> for this class is highly recommended.</p>
 
@@ -159,53 +159,53 @@ Ext.define(<span style="background-color:#fff0f0">&#34;Zenoss.DeviceGridPanel&#3
 <p>A <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.data.Model"><strong>model</strong></a> basically represents some object that your application manages. For example, one might define a Model for Users, Products, Cars, or any other real-world object that we want to model in the system. They are registered via the model manager, and are used by <strong>stores</strong>, which are in turn used by many of the data-bound components in Ext.</p>
 
 <p>We can see the definition of the Zenoss device model:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.define(<span style="background-color:#fff0f0">&#39;Zenoss.device.DeviceModel&#39;</span>,{
-  extend<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;Ext.data.Model&#39;</span>,
-  fields<span style="color:#333">:</span> [
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;uid&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;name&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;ipAddress&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;int&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;ipAddressString&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;productionState&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;serialNumber&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;tagNumber&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;hwManufacturer&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;hwModel&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;osManufacturer&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;osModel&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;collector&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;priority&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;systems&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;groups&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;location&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;events&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;object&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;availability&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;float&#39;</span>},
-    {name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;pythonClass&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;string&#39;</span>}
-  ],
-  idProperty<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;uid&#39;</span>
-});
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">define</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Zenoss.device.DeviceModel&#39;</span><span style="color:#111">,{</span>
+  <span style="color:#75af00">extend</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;Ext.data.Model&#39;</span><span style="color:#111">,</span>
+  <span style="color:#75af00">fields</span><span style="color:#f92672">:</span> <span style="color:#111">[</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;uid&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;ipAddress&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;int&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;ipAddressString&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;productionState&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;serialNumber&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;tagNumber&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;hwManufacturer&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;hwModel&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;osManufacturer&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;osModel&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;collector&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;priority&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;systems&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;groups&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;location&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;events&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;availability&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;float&#39;</span><span style="color:#111">},</span>
+    <span style="color:#111">{</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;pythonClass&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;string&#39;</span><span style="color:#111">}</span>
+  <span style="color:#111">],</span>
+  <span style="color:#75af00">idProperty</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;uid&#39;</span>
+<span style="color:#111">});</span>
 </code></pre></div>
 <p>On the other hand, the <a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.data.Store"><strong>Store</strong></a> class encapsulates a client side cache of Model objects. Stores load data via a Proxy, and also provide functions for sorting, filtering and querying the model instances contained within it.</p>
 
 <p>A Store is just a collection of Model instances - usually loaded from a server somewhere. Store can also maintain a set of added, updated and removed Model instances to be synchronized with the server via the Proxy.</p>
 
 <p>We can also see the device store defined by Zenoss:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.define(<span style="background-color:#fff0f0">&#34;Zenoss.DeviceStore&#34;</span>, {
-  alias<span style="color:#333">:</span> [<span style="background-color:#fff0f0">&#39;widget.DeviceStore&#39;</span>],
-  extend<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;Zenoss.DirectStore&#34;</span>,
-  constructor<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(config) {
-    config <span style="color:#333">=</span> config <span style="color:#333">||</span> {};
-    Ext.applyIf(config, {
-      autoLoad<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">false</span>,
-      pageSize<span style="color:#333">:</span> Zenoss.settings.deviceGridBufferSize,
-      model<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;Zenoss.device.DeviceModel&#39;</span>,
-      initialSortColumn<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#34;name&#34;</span>,
-      directFn<span style="color:#333">:</span> Zenoss.remote.DeviceRouter.getDevices,
-      root<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;devices&#39;</span>
-    });
-    <span style="color:#080;font-weight:bold">this</span>.callParent(arguments);
-  }
-});
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">define</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Zenoss.DeviceStore&#34;</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">alias</span><span style="color:#f92672">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;widget.DeviceStore&#39;</span><span style="color:#111">],</span>
+  <span style="color:#75af00">extend</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;Zenoss.DirectStore&#34;</span><span style="color:#111">,</span>
+  <span style="color:#75af00">constructor</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">config</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#75af00">config</span> <span style="color:#f92672">=</span> <span style="color:#75af00">config</span> <span style="color:#f92672">||</span> <span style="color:#111">{};</span>
+    <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">applyIf</span><span style="color:#111">(</span><span style="color:#75af00">config</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+      <span style="color:#75af00">autoLoad</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">false</span><span style="color:#111">,</span>
+      <span style="color:#75af00">pageSize</span><span style="color:#f92672">:</span> <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">settings</span><span style="color:#111">.</span><span style="color:#75af00">deviceGridBufferSize</span><span style="color:#111">,</span>
+      <span style="color:#75af00">model</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;Zenoss.device.DeviceModel&#39;</span><span style="color:#111">,</span>
+      <span style="color:#75af00">initialSortColumn</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;name&#34;</span><span style="color:#111">,</span>
+      <span style="color:#75af00">directFn</span><span style="color:#f92672">:</span> <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">remote</span><span style="color:#111">.</span><span style="color:#75af00">DeviceRouter</span><span style="color:#111">.</span><span style="color:#75af00">getDevices</span><span style="color:#111">,</span>
+      <span style="color:#75af00">root</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;devices&#39;</span>
+    <span style="color:#111">});</span>
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callParent</span><span style="color:#111">(</span><span style="color:#75af00">arguments</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+<span style="color:#111">});</span>
 </code></pre></div>
 <p>If you look closely, you will notice that the store extends <code>Zenoss.DirectStore</code>. This is store acts as a base store parent class that Zenoss stores inherit from, somewhere up the hierarchy tree there will be a parent Zenoss store class that will end up extending <code>Ext.data.Store</code>.</p>
 
@@ -232,52 +232,52 @@ Ext.define(<span style="background-color:#fff0f0">&#34;Zenoss.DeviceGridPanel&#3
 </ol>
 
 <p>The code that accomplishes the above is the following:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.onReady(<span style="color:#080;font-weight:bold">function</span>() {
-  <span style="color:#080;font-weight:bold">var</span> DEVICE_GRID_ID <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;device_grid&#39;</span>;
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">onReady</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">var</span> <span style="color:#75af00">DEVICE_GRID_ID</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;device_grid&#39;</span><span style="color:#111">;</span>
 
-  Ext.ComponentMgr.onAvailable(DEVICE_GRID_ID, <span style="color:#080;font-weight:bold">function</span>() {
-    <span style="color:#080;font-weight:bold">var</span> grid <span style="color:#333">=</span> Ext.getCmp(DEVICE_GRID_ID);
-    <span style="color:#080;font-weight:bold">var</span> store <span style="color:#333">=</span> grid.getStore();
+  <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">ComponentMgr</span><span style="color:#111">.</span><span style="color:#75af00">onAvailable</span><span style="color:#111">(</span><span style="color:#75af00">DEVICE_GRID_ID</span><span style="color:#111">,</span> <span style="color:#00a8c8">function</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">grid</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#75af00">DEVICE_GRID_ID</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">store</span> <span style="color:#f92672">=</span> <span style="color:#75af00">grid</span><span style="color:#111">.</span><span style="color:#75af00">getStore</span><span style="color:#111">();</span>
 
-    <span style="color:#888">// Add &#39;status&#39; and &#39;power_status&#39; fields to the Zenoss.device.DeviceModel model
-</span><span style="color:#888"></span>    Zenoss.device.DeviceModel.prototype.fields.add(<span style="color:#080;font-weight:bold">new</span> Ext.data.Field({name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;status&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;boolean&#39;</span>}));
-    Zenoss.device.DeviceModel.prototype.fields.add(<span style="color:#080;font-weight:bold">new</span> Ext.data.Field({name<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;power_status&#39;</span>, type<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;boolean&#39;</span>}));
+    <span style="color:#75715e">// Add &#39;status&#39; and &#39;power_status&#39; fields to the Zenoss.device.DeviceModel model
+</span><span style="color:#75715e"></span>    <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">device</span><span style="color:#111">.</span><span style="color:#75af00">DeviceModel</span><span style="color:#111">.</span><span style="color:#75af00">prototype</span><span style="color:#111">.</span><span style="color:#75af00">fields</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">Field</span><span style="color:#111">({</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;status&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;boolean&#39;</span><span style="color:#111">}));</span>
+    <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">device</span><span style="color:#111">.</span><span style="color:#75af00">DeviceModel</span><span style="color:#111">.</span><span style="color:#75af00">prototype</span><span style="color:#111">.</span><span style="color:#75af00">fields</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">Field</span><span style="color:#111">({</span><span style="color:#75af00">name</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;power_status&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;boolean&#39;</span><span style="color:#111">}));</span>
 
-    <span style="color:#888">// Create the &#39;status&#39; column
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> status_column <span style="color:#333">=</span> Ext.create(<span style="background-color:#fff0f0">&#39;Ext.grid.column.Column&#39;</span>, {
-      id<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;status&#39;</span>,
-      width<span style="color:#333">:</span> <span style="color:#00d;font-weight:bold">70</span>,
-      dataIndex<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;status&#39;</span>,
-      header<span style="color:#333">:</span> _t(<span style="background-color:#fff0f0">&#39;Status&#39;</span>),
-      renderer<span style="color:#333">:</span> Zenoss.render.pingStatus
-    });
+    <span style="color:#75715e">// Create the &#39;status&#39; column
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">var</span> <span style="color:#75af00">status_column</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Ext.grid.column.Column&#39;</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+      <span style="color:#75af00">id</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;status&#39;</span><span style="color:#111">,</span>
+      <span style="color:#75af00">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">70</span><span style="color:#111">,</span>
+      <span style="color:#75af00">dataIndex</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;status&#39;</span><span style="color:#111">,</span>
+      <span style="color:#75af00">header</span><span style="color:#f92672">:</span> <span style="color:#75af00">_t</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Status&#39;</span><span style="color:#111">),</span>
+      <span style="color:#75af00">renderer</span><span style="color:#f92672">:</span> <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">.</span><span style="color:#75af00">pingStatus</span>
+    <span style="color:#111">});</span>
 
-    <span style="color:#080;font-weight:bold">var</span> power_status_column <span style="color:#333">=</span> Ext.create(<span style="background-color:#fff0f0">&#39;Ext.grid.column.Column&#39;</span>, {
-      id<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;power_status&#39;</span>,
-      width<span style="color:#333">:</span> <span style="color:#00d;font-weight:bold">70</span>,
-      dataIndex<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;power_status&#39;</span>,
-      header<span style="color:#333">:</span> _t(<span style="background-color:#fff0f0">&#39;Power Status&#39;</span>),
-      renderer<span style="color:#333">:</span> Zenoss.render.pingStatus
-    });
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">power_status_column</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Ext.grid.column.Column&#39;</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+      <span style="color:#75af00">id</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;power_status&#39;</span><span style="color:#111">,</span>
+      <span style="color:#75af00">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">70</span><span style="color:#111">,</span>
+      <span style="color:#75af00">dataIndex</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;power_status&#39;</span><span style="color:#111">,</span>
+      <span style="color:#75af00">header</span><span style="color:#f92672">:</span> <span style="color:#75af00">_t</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Power Status&#39;</span><span style="color:#111">),</span>
+      <span style="color:#75af00">renderer</span><span style="color:#f92672">:</span> <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">.</span><span style="color:#75af00">pingStatus</span>
+    <span style="color:#111">});</span>
 
-    <span style="color:#888">// Obtain the Ping Status for each record in the store and assign it to the model
-</span><span style="color:#888"></span>    store.each(<span style="color:#080;font-weight:bold">function</span>(record){
-      Zenoss.remote.DeviceRouter.getInfo({uid<span style="color:#333">:</span> record.data.uid}, <span style="color:#080;font-weight:bold">function</span>(result){
-        record.data.status <span style="color:#333">=</span> result.data.status;
-        record.data.power_status <span style="color:#333">=</span> result.data.power_status;
+    <span style="color:#75715e">// Obtain the Ping Status for each record in the store and assign it to the model
+</span><span style="color:#75715e"></span>    <span style="color:#75af00">store</span><span style="color:#111">.</span><span style="color:#75af00">each</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">record</span><span style="color:#111">){</span>
+      <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">remote</span><span style="color:#111">.</span><span style="color:#75af00">DeviceRouter</span><span style="color:#111">.</span><span style="color:#75af00">getInfo</span><span style="color:#111">({</span><span style="color:#75af00">uid</span><span style="color:#f92672">:</span> <span style="color:#75af00">record</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">uid</span><span style="color:#111">},</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">){</span>
+        <span style="color:#75af00">record</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">status</span> <span style="color:#f92672">=</span> <span style="color:#75af00">result</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">status</span><span style="color:#111">;</span>
+        <span style="color:#75af00">record</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">power_status</span> <span style="color:#f92672">=</span> <span style="color:#75af00">result</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">power_status</span><span style="color:#111">;</span>
 
-        grid.getView().refresh();
-      });
-    });
+        <span style="color:#75af00">grid</span><span style="color:#111">.</span><span style="color:#75af00">getView</span><span style="color:#111">().</span><span style="color:#75af00">refresh</span><span style="color:#111">();</span>
+      <span style="color:#111">});</span>
+    <span style="color:#111">});</span>
 
-    <span style="color:#888">// Insert the status column into the device grid
-</span><span style="color:#888"></span>    grid.headerCt.insert(<span style="color:#00d;font-weight:bold">1</span>, status_column);
-    grid.headerCt.insert(<span style="color:#00d;font-weight:bold">2</span>, power_status_column);
+    <span style="color:#75715e">// Insert the status column into the device grid
+</span><span style="color:#75715e"></span>    <span style="color:#75af00">grid</span><span style="color:#111">.</span><span style="color:#75af00">headerCt</span><span style="color:#111">.</span><span style="color:#75af00">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#75af00">status_column</span><span style="color:#111">);</span>
+    <span style="color:#75af00">grid</span><span style="color:#111">.</span><span style="color:#75af00">headerCt</span><span style="color:#111">.</span><span style="color:#75af00">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#75af00">power_status_column</span><span style="color:#111">);</span>
 
-    grid.getView().refresh();
+    <span style="color:#75af00">grid</span><span style="color:#111">.</span><span style="color:#75af00">getView</span><span style="color:#111">().</span><span style="color:#75af00">refresh</span><span style="color:#111">();</span>
 
-  });
-});
+  <span style="color:#111">});</span>
+<span style="color:#111">});</span>
 </code></pre></div>
 <p>I want to mention that this is <strong>NOT</strong> the approach I wanted to implement initially. In fact, I am not a fan of even iterating through the store&rsquo;s records, but I could not make other approaches work at all. If I find a better solution to this, I will make a new post about it.</p>
 

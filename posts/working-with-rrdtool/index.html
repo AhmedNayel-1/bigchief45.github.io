@@ -143,22 +143,22 @@
 <p>-&gt; Round Robin archives basically live on their own, and do not depend on any data from the other RRAs. It has its own preparation area where data is being stored and prepared, and once ready, it is transferred into the long term storage area.</p>
 
 <p>This is an example of how an RRA&rsquo;s structure looks like along with the preparation area (<code>cdp_prep</code>) in XML format:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;rra&gt;</span>
-  <span style="color:#070">&lt;cf&gt;</span>AVERAGE<span style="color:#070">&lt;/cf&gt;</span>
-  <span style="color:#070">&lt;pdp_per_row&gt;</span>1<span style="color:#070">&lt;/pdp_per_row&gt;</span> <span style="color:#888">&lt;!-- 300 seconds --&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;rra&gt;</span>
+  <span style="color:#f92672">&lt;cf&gt;</span>AVERAGE<span style="color:#f92672">&lt;/cf&gt;</span>
+  <span style="color:#f92672">&lt;pdp_per_row&gt;</span>1<span style="color:#f92672">&lt;/pdp_per_row&gt;</span> <span style="color:#75715e">&lt;!-- 300 seconds --&gt;</span>
 
-  <span style="color:#070">&lt;params&gt;</span>
-  <span style="color:#070">&lt;xff&gt;</span>5.0000000000e-01<span style="color:#070">&lt;/xff&gt;</span>
-  <span style="color:#070">&lt;/params&gt;</span>
-  <span style="color:#070">&lt;cdp_prep&gt;</span>
-          <span style="color:#070">&lt;ds&gt;</span>
-          <span style="color:#070">&lt;primary_value&gt;</span>0.0000000000e+00<span style="color:#070">&lt;/primary_value&gt;</span>
-          <span style="color:#070">&lt;secondary_value&gt;</span>0.0000000000e+00<span style="color:#070">&lt;/secondary_value&gt;</span>
-          <span style="color:#070">&lt;value&gt;</span>NaN<span style="color:#070">&lt;/value&gt;</span>
-          <span style="color:#070">&lt;unknown_datapoints&gt;</span>0<span style="color:#070">&lt;/unknown_datapoints&gt;</span>
-          <span style="color:#070">&lt;/ds&gt;</span>
-  <span style="color:#070">&lt;/cdp_prep&gt;</span>
-<span style="color:#070">&lt;/rra&gt;</span></code></pre></div>
+  <span style="color:#f92672">&lt;params&gt;</span>
+  <span style="color:#f92672">&lt;xff&gt;</span>5.0000000000e-01<span style="color:#f92672">&lt;/xff&gt;</span>
+  <span style="color:#f92672">&lt;/params&gt;</span>
+  <span style="color:#f92672">&lt;cdp_prep&gt;</span>
+          <span style="color:#f92672">&lt;ds&gt;</span>
+          <span style="color:#f92672">&lt;primary_value&gt;</span>0.0000000000e+00<span style="color:#f92672">&lt;/primary_value&gt;</span>
+          <span style="color:#f92672">&lt;secondary_value&gt;</span>0.0000000000e+00<span style="color:#f92672">&lt;/secondary_value&gt;</span>
+          <span style="color:#f92672">&lt;value&gt;</span>NaN<span style="color:#f92672">&lt;/value&gt;</span>
+          <span style="color:#f92672">&lt;unknown_datapoints&gt;</span>0<span style="color:#f92672">&lt;/unknown_datapoints&gt;</span>
+          <span style="color:#f92672">&lt;/ds&gt;</span>
+  <span style="color:#f92672">&lt;/cdp_prep&gt;</span>
+<span style="color:#f92672">&lt;/rra&gt;</span></code></pre></div>
 <p>If we had a RRA that stores averaged data once a day, how are the averages created before they are put into the RRA? The answer is that they are actually created in the preparation area. The data in the preparation area is getting built up to the time when the archive should be updated.</p>
 
 <p>Within the <code>.rrd</code> file, the location of where all the data preparation happens is within the <strong>Live Head</strong>, shown in green in the image below.</p>
@@ -168,21 +168,21 @@
 <p>This means that as we are updating the database, only this green section of the database needs to be touched. The orange part could be holding possibly one year or even ten years of stored data. This area is not even accessed until data has to be written in the archive.</p>
 
 <p>Likewise, we can take a look at the structure in XML format of the RRA&rsquo;s orange area (long term storage):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;rra&gt;</span>
-  <span style="color:#888">&lt;!-- ... --&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;rra&gt;</span>
+  <span style="color:#75715e">&lt;!-- ... --&gt;</span>
 
-  <span style="color:#070">&lt;database&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-04-24 08:00:00 CST / 1492992000 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-04-25 08:00:00 CST / 1493078400 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-04-26 08:00:00 CST / 1493164800 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-04-27 08:00:00 CST / 1493251200 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.6000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-04-28 08:00:00 CST / 1493337600 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-04-29 08:00:00 CST / 1493424000 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-04-30 08:00:00 CST / 1493510400 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-05-01 08:00:00 CST / 1493596800 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#888">&lt;!-- 2017-05-02 08:00:00 CST / 1493683200 --&gt;</span> <span style="color:#070">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#070">&lt;/v&gt;&lt;/row&gt;</span>
-  <span style="color:#070">&lt;/database&gt;</span>
-<span style="color:#070">&lt;/rra&gt;</span></code></pre></div>
+  <span style="color:#f92672">&lt;database&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-04-24 08:00:00 CST / 1492992000 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-04-25 08:00:00 CST / 1493078400 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-04-26 08:00:00 CST / 1493164800 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-04-27 08:00:00 CST / 1493251200 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.6000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-04-28 08:00:00 CST / 1493337600 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-04-29 08:00:00 CST / 1493424000 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-04-30 08:00:00 CST / 1493510400 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-05-01 08:00:00 CST / 1493596800 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!-- 2017-05-02 08:00:00 CST / 1493683200 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+  <span style="color:#f92672">&lt;/database&gt;</span>
+<span style="color:#f92672">&lt;/rra&gt;</span></code></pre></div>
 <h2 id="writing-data">Writing Data</h2>
 
 <p>Data can be easily written into the database with the following command:</p>

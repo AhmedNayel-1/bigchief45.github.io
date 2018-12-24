@@ -102,7 +102,7 @@
 <p><img src="/posts/monitoring-cpu-utilization-in-zenoss/cpu_idle_dp.jpg" alt="ssCpuIdle Data Point alias" /></p>
 
 <p>The formula for this alias is:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">__EVAL:<span style="color:#007020">str</span>(<span style="color:#007020">len</span>(here<span style="color:#333">.</span>hw<span style="color:#333">.</span>cpus())) <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;,/,100,EXC,-&#39;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">__EVAL</span><span style="color:#111">:</span><span style="color:#111">str</span><span style="color:#111">(</span><span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">here</span><span style="color:#f92672">.</span><span style="color:#111">hw</span><span style="color:#f92672">.</span><span style="color:#111">cpus</span><span style="color:#111">()))</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;,/,100,EXC,-&#39;</span></code></pre></div>
 <p>The above formula uses a combination of Python to generate a string in <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation (RPN)</a> format, which is the format that <a href="http://oss.oetiker.ch/rrdtool/">rrdtool</a> (the tool responsible for generating the graphs) uses.</p>
 
 <p>Strangely the <code>RPN</code> field in the graph point appears to be blank:</p>

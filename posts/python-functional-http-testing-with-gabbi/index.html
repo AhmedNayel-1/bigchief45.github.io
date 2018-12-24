@@ -100,17 +100,17 @@
 <p>One of these original tests is shown below:</p>
 
 <p><a href="https://github.com/gnocchixyz/gnocchi/blob/master/gnocchi/tests/functional/gabbits/resource.yaml"><strong>gnocchi/tests/functional/gabbits/resource.yaml</strong></a>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>name:<span style="color:#bbb"> </span>post<span style="color:#bbb"> </span>metric<span style="color:#bbb"> </span>at<span style="color:#bbb"> </span>generic<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>POST:<span style="color:#bbb"> </span>/v1/resource/generic/85C44741-CC60-<span style="color:#60e;font-weight:bold">4033</span>-804E-2D3098C7D2E9/metric<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>request_headers:<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>x-user-id:<span style="color:#bbb"> </span>0fbb231484614b1a80131fc22f6afc9c<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>x-project-id:<span style="color:#bbb"> </span>f3d41b770cc14f0bb94a1d5be9c0e3ea<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>content-type:<span style="color:#bbb"> </span>application/json<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>status:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">204</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span>data:<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>electron.spin:<span style="color:#bbb">
-</span><span style="color:#bbb">              </span>archive_policy_name:<span style="color:#bbb"> </span>medium<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>response_headers:</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">    - name<span style="color:#111">:</span> post metric at generic
+      POST<span style="color:#111">:</span> /v1/resource/generic/85C44741-CC60-<span style="color:#ae81ff">4033</span>-804E-2D3098C7D2E9/metric
+      request_headers<span style="color:#111">:</span>
+          x-user-id<span style="color:#111">:</span> 0fbb231484614b1a80131fc22f6afc9c
+          x-project-id<span style="color:#111">:</span> f3d41b770cc14f0bb94a1d5be9c0e3ea
+          content-type<span style="color:#111">:</span> application/json
+      status<span style="color:#111">:</span> <span style="color:#ae81ff">204</span>
+      data<span style="color:#111">:</span>
+          electron.spin<span style="color:#111">:</span>
+              archive_policy_name<span style="color:#111">:</span> medium
+      response_headers<span style="color:#111">:</span></code></pre></div>
 <p>We can see how the request is nicely defined using YAML, specifying required stuff such as the action, request headers, and data.</p>
 
 <p>For the response, we are specifying that it should return a 204 HTTP status code. For <a href="https://github.com/gnocchixyz/gnocchi/pull/55">my patch</a> I actually had to change the status code to 200.</p>
@@ -118,20 +118,20 @@
 <p>Additionally, during the code review someone suggested to also test for the response JSON contents of the returned metrics. This is when I learned about the <code>response_json_paths</code> expectation, which allows us to access the response&rsquo;s JSON body and assert their content.</p>
 
 <p>For my patch, I simply used this expectation to test against the metric&rsquo;s name and resource id, making the test now look like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>name:<span style="color:#bbb"> </span>post<span style="color:#bbb"> </span>metric<span style="color:#bbb"> </span>at<span style="color:#bbb"> </span>generic<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>POST:<span style="color:#bbb"> </span>/v1/resource/generic/85C44741-CC60-<span style="color:#60e;font-weight:bold">4033</span>-804E-2D3098C7D2E9/metric<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>request_headers:<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>x-user-id:<span style="color:#bbb"> </span>0fbb231484614b1a80131fc22f6afc9c<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>x-project-id:<span style="color:#bbb"> </span>f3d41b770cc14f0bb94a1d5be9c0e3ea<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>content-type:<span style="color:#bbb"> </span>application/json<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>status:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">200</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span>data:<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>electron.spin:<span style="color:#bbb">
-</span><span style="color:#bbb">              </span>archive_policy_name:<span style="color:#bbb"> </span>medium<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>response_headers:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>response_json_paths:<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>$[/name][<span style="color:#60e;font-weight:bold">1</span>].name::<span style="color:#bbb"> </span>electron.spin<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>$[/name][<span style="color:#60e;font-weight:bold">1</span>].resource_id:<span style="color:#bbb"> </span>85C44741-CC60-<span style="color:#60e;font-weight:bold">4033</span>-804E-2D3098C7D2E9</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">    - name<span style="color:#111">:</span> post metric at generic
+      POST<span style="color:#111">:</span> /v1/resource/generic/85C44741-CC60-<span style="color:#ae81ff">4033</span>-804E-2D3098C7D2E9/metric
+      request_headers<span style="color:#111">:</span>
+          x-user-id<span style="color:#111">:</span> 0fbb231484614b1a80131fc22f6afc9c
+          x-project-id<span style="color:#111">:</span> f3d41b770cc14f0bb94a1d5be9c0e3ea
+          content-type<span style="color:#111">:</span> application/json
+      status<span style="color:#111">:</span> <span style="color:#ae81ff">200</span>
+      data<span style="color:#111">:</span>
+          electron.spin<span style="color:#111">:</span>
+              archive_policy_name<span style="color:#111">:</span> medium
+      response_headers<span style="color:#111">:</span>
+      response_json_paths<span style="color:#111">:</span>
+          $<span style="color:#111">[</span>/name<span style="color:#111">][</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span>.name<span style="color:#111">::</span> electron.spin
+          $<span style="color:#111">[</span>/name<span style="color:#111">][</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span>.resource_id<span style="color:#111">:</span> 85C44741-CC60-<span style="color:#ae81ff">4033</span>-804E-2D3098C7D2E9</code></pre></div>
 <p>Note how we are using <code>$</code> and an index <code>1</code> to access the response&rsquo;s <strong>first</strong> item in a similar fashion to accessing an array. The response actually return&rsquo;s a JSON array of metrics. Another important thing is that we are sorting the returned metrics by name using <code>[/name]</code>, as <a href="http://gabbi.readthedocs.io/en/latest/jsonpath.html">documented</a> in Gabbi. The reason we do this is because the order of the response&rsquo;s items in Gnocchi&rsquo;s Gabbi tests cannot be predicted.</p>
 
 <h2 id="references">References</h2>

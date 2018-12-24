@@ -37,24 +37,24 @@
 &lt;h2 id=&#34;adding-measures-to-a-metric&#34;&gt;Adding Measures to a Metric&lt;/h2&gt;
 
 &lt;p&gt;Using the REST API, we can easily add measures to a metric:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;POST&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.1&lt;/span&gt;
-Content-Type&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; application/json
-Content-Length&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; 198
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;POST&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.1&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Content-Type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;application/json&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Content-Length&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;198&lt;/span&gt;
 
-[
-  {
-    &lt;span style=&#34;color:#070&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;2014-10-06T14:33:57&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#070&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;43.1&lt;/span&gt;
-  },
-  {
-    &lt;span style=&#34;color:#070&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;2014-10-06T14:34:12&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#070&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;
-  },
-  {
-    &lt;span style=&#34;color:#070&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;2014-10-06T14:34:20&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#070&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;
-  }
-]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;2014-10-06T14:33:57&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;43.1&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;2014-10-06T14:34:12&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;2014-10-06T14:34:20&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -87,27 +87,27 @@ Content-Length&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; 198
 &lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
 
 &lt;p&gt;Gnocchi&amp;rsquo;s configuration is stored in a file called &lt;code&gt;gnocchi.conf&lt;/code&gt;. Ideally, this file would be in &lt;code&gt;~/gnocchi.conf&lt;/code&gt; or &lt;code&gt;/etc/gnocchi/gnocchi.conf&lt;/code&gt;. Let&amp;rsquo;s take a look at a basic Gnocchi configuration:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;[DEFAULT]&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;debug&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;true&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;verbose&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;true&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;[DEFAULT]&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;debug&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;true&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;verbose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;true&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;[api]&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;workers&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;1&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;[api]&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;workers&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;1&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;[database]&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;backend&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;sqlalchemy&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;[database]&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;backend&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;sqlalchemy&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;[indexer]&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;url&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;[indexer]&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;url&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;[storage]&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;coordination_url&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;file:///home/ubuntu/gn/locks&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;driver&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;file&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;file_basepath&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;/home/ubuntu/gn&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;[storage]&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;coordination_url&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;file:///home/ubuntu/gn/locks&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;driver&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;file&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;file_basepath&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;/home/ubuntu/gn&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;[cors]&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;allowed_origin&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;*&lt;/span&gt;
-&lt;span style=&#34;color:#00c&#34;&gt;allow_credentials&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;[cors]&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;allowed_origin&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;*&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;allow_credentials&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.&lt;/p&gt;
 
 &lt;h3 id=&#34;database-setup&#34;&gt;Database Setup&lt;/h3&gt;
@@ -152,8 +152,8 @@ Content-Length&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; 198
 &lt;h2 id=&#34;gnocchi-rest-api&#34;&gt;Gnocchi REST API&lt;/h2&gt;
 
 &lt;p&gt;Gnocchi&amp;rsquo;s REST API is based on &lt;a href=&#34;http://www.pecanpy.org/index.html&#34;&gt;Pecan&lt;/a&gt;, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&amp;rsquo;s &lt;code&gt;rest/__init__.py&lt;/code&gt; file:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pecan&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pecan&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; rest&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&#34;metrics&#34;&gt;Metrics&lt;/h3&gt;
 
 &lt;p&gt;Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.&lt;/p&gt;
@@ -161,24 +161,24 @@ Content-Length&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; 198
 &lt;p&gt;A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.&lt;/p&gt;
 
 &lt;p&gt;Farther down the code in &lt;code&gt;rest/__init__.py&lt;/code&gt;, we can find a metric controller which inherits from a Pecan REST controller:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MetricController&lt;/span&gt;(rest&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;RestController):
-    _custom_actions &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {
-        &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;measures&amp;#39;&lt;/span&gt;: [&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;]
-    }
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MetricController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RestController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;_custom_actions&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;measures&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self, metric):
-        self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;metric &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; metric
-        mgr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; extension&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ExtensionManager(namespace&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;gnocchi.aggregates&amp;#39;&lt;/span&gt;,
-                                         invoke_on_load&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;True)
-        self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;custom_agg &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;dict&lt;/span&gt;((x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name, x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;obj) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; mgr)
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;extension&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ExtensionManager&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;gnocchi.aggregates&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+                                         &lt;span style=&#34;color:#111&#34;&gt;invoke_on_load&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;True&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;custom_agg&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;dict&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;obj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;enforce_metric&lt;/span&gt;(self, rule):
-        enforce(rule, json&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;to_primitive(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;metric))
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;enforce&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;to_primitive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
 
-    &lt;span style=&#34;color:#555;font-weight:bold&#34;&gt;@pecan.expose&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;json&amp;#39;&lt;/span&gt;)
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;get_all&lt;/span&gt;(self):
-        self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;enforce_metric(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;get metric&amp;#34;&lt;/span&gt;)
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;metric&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;@pecan.expose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;json&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;get_all&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get metric&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;From the &lt;a href=&#34;http://pecan.readthedocs.io/en/latest/routing.html&#34;&gt;Pecan documentation&lt;/a&gt;, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.&lt;/p&gt;
 
 &lt;p&gt;We can tell Pecan which methods in a class are publically-visible via &lt;code&gt;expose()&lt;/code&gt;. If a method is not decorated with &lt;code&gt;expose()&lt;/code&gt;, Pecan will never route a request to it. In the example above, the &lt;code&gt;get_all()&lt;/code&gt; method is exposed to Pecan. Additionally, it makes use of Pecan&amp;rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.&lt;/p&gt;</description>

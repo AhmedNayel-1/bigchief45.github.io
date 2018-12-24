@@ -150,9 +150,9 @@
 <h2 id="working-with-keyboard-keys">Working With Keyboard Keys</h2>
 
 <p>We can interact with user input through the keyboard by determining if a certain key has been pressed. This is done like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#080;font-weight:bold">if</span> love.keyboard.isDown(<span style="background-color:#fff0f0">&#34;right&#34;</span>) <span style="color:#080;font-weight:bold">then</span>
-  <span style="color:#888">-- ...</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#00a8c8">if</span> <span style="color:#111">love.keyboard</span><span style="color:#111">.</span><span style="color:#111">isDown</span><span style="color:#111">(</span><span style="color:#d88200">&#34;right&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">then</span>
+  <span style="color:#75715e">-- ...</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>The <a href="https://love2d.org/wiki/love.keyboard.isDown"><code>love.keyboard.isDown</code></a> function receives a <code>KeyConstant</code> string argument to indicate which key we want to test for. The complete list can be found <a href="https://love2d.org/wiki/KeyConstant">here</a>. Here are some examples:</p>
 
 <table>
@@ -207,28 +207,28 @@
   <p>Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from <code>Device</code>. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a <a href="/posts/working-with-zenoss-python-data-sources.html">Python data source</a>.</p>
 
 <p>The <code>zenpack.yaml</code> file for the first and main ZenPack would look something like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># ZenPack1</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>classes:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>SpecialServer:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Device]<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Special<span style="color:#bbb"> </span>Server<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>SpecialComponent:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Component]<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Special<span style="color:#bbb"> </span>Component<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>properties:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#888"># ...</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>AmazingComponent:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Component]<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Amazing<span style="color:#bbb"> </span>Component<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>properties:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#888"># ...</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>class_relationships:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>SpecialServer<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">1</span>:MC<span style="color:#bbb"> </span>SpecialComponent<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>SpecialServer<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">1</span>:MC<span style="color:#bbb"> </span>AmazingComponent</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ZenPack1</span>
+
+classes<span style="color:#111">:</span>
+  SpecialServer<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Special Server
+
+  SpecialComponent<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Special Component
+    properties<span style="color:#111">:</span>
+      <span style="color:#75715e"># ...</span>
+
+  AmazingComponent<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Amazing Component
+    properties<span style="color:#111">:</span>
+      <span style="color:#75715e"># ...</span>
+
+class_relationships<span style="color:#111">:</span>
+  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC SpecialComponent
+  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent</code></pre></div>
 
   
   <div style="margin: 20px 0px;">

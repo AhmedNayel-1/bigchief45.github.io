@@ -30,11 +30,11 @@
 &lt;p&gt;Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&amp;rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from &lt;code&gt;Redcarpet::Render::HTML&lt;/code&gt;. However, the &lt;strong&gt;key&lt;/strong&gt; thing here is to actually inherit directly from &lt;a href=&#34;https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65&#34;&gt;Middleman&amp;rsquo;s renderer&lt;/a&gt; (which of course, inherits from &lt;code&gt;Redcarpet::Render::HTML&lt;/code&gt;).&lt;/p&gt;
 
 &lt;p&gt;To begin, we will create a &lt;code&gt;lib&lt;/code&gt; (if it doesn&amp;rsquo;t exist) under our blog&amp;rsquo;s directory and create a file named &lt;code&gt;markdown_helper.rb&lt;/code&gt; inside it. The initial contents of this helper will be:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;MarkdownHelper&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MarkdownHelper&lt;/span&gt;
 
-  &lt;span style=&#34;color:#007020&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;middleman-core/renderers/redcarpet&amp;#39;&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;middleman-core/renderers/redcarpet&amp;#39;&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The required file above is what will allow us to inherit from Middleman&amp;rsquo;s renderer.&lt;/p&gt;</description>
     </item>
     

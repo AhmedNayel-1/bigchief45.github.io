@@ -99,12 +99,12 @@
 <h2 id="page-viewlets">Page Viewlets</h2>
 
 <p>Previously we created navigation item viewlets, this time we will be creating <strong>page</strong> viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to <code>browser/configure.zcml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;browser:page</span>
-  <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;secondaryPage&#34;</span>
-  <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
-  <span style="color:#00c">permission=</span><span style="background-color:#fff0f0">&#34;zenoss.View&#34;</span>
-  <span style="color:#00c">template=</span><span style="background-color:#fff0f0">&#34;templates/my_template.pt&#34;</span>
-  <span style="color:#070">/&gt;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:page</span>
+  <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;secondaryPage&#34;</span>
+  <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
+  <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
+  <span style="color:#75af00">template=</span><span style="color:#d88200">&#34;templates/my_template.pt&#34;</span>
+  <span style="color:#f92672">/&gt;</span></code></pre></div>
 <p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
 
 <p>Also let&rsquo;s not forget to create a necessary python init file:</p>
@@ -191,15 +191,15 @@
 <p>Usually this file begins with some required boilerplate code:</p>
 
 <p><strong>configure.zcml</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
-<span style="color:#070">&lt;configure</span>
-  <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
-  <span style="color:#00c">xmlns:browser=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/browser&#34;</span>
-  <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#070">&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configure</span>
+  <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
+  <span style="color:#75af00">xmlns:browser=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/browser&#34;</span>
+  <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#f92672">&gt;</span>
 
-  <span style="color:#888">&lt;!-- Our custom code here --&gt;</span>
-  <span style="color:#070">&lt;include</span> <span style="color:#00c">package=</span><span style="background-color:#fff0f0">&#34;.browser&#34;</span> <span style="color:#070">/&gt;</span>
-<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+  <span style="color:#75715e">&lt;!-- Our custom code here --&gt;</span>
+  <span style="color:#f92672">&lt;include</span> <span style="color:#75af00">package=</span><span style="color:#d88200">&#34;.browser&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/configure&gt;</span></code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -239,21 +239,21 @@
 <p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
 
 <p>First, let&rsquo;s take a quick look at the imports:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os.path</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">urlparse</span> <span style="color:#080;font-weight:bold">import</span> urlparse
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">subprocess</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os.path</span>
+<span style="color:#f92672">from</span> <span style="color:#111">urlparse</span> <span style="color:#f92672">import</span> <span style="color:#111">urlparse</span>
+<span style="color:#f92672">import</span> <span style="color:#111">subprocess</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.event</span> <span style="color:#080;font-weight:bold">import</span> notify
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> implements
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZODB.transact</span> <span style="color:#080;font-weight:bold">import</span> transact
+<span style="color:#f92672">from</span> <span style="color:#111">zope.event</span> <span style="color:#f92672">import</span> <span style="color:#111">notify</span>
+<span style="color:#f92672">from</span> <span style="color:#111">zope.interface</span> <span style="color:#f92672">import</span> <span style="color:#111">implements</span>
+<span style="color:#f92672">from</span> <span style="color:#111">ZODB.transact</span> <span style="color:#f92672">import</span> <span style="color:#111">transact</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Ext</span> <span style="color:#080;font-weight:bold">import</span> DirectRouter, DirectResponse
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products</span> <span style="color:#080;font-weight:bold">import</span> Zuul
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.catalog.events</span> <span style="color:#080;font-weight:bold">import</span> IndexingEvent
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.facades</span> <span style="color:#080;font-weight:bold">import</span> ZuulFacade
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.interfaces</span> <span style="color:#080;font-weight:bold">import</span> IFacade
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.utils</span> <span style="color:#080;font-weight:bold">import</span> ZuulMessageFactory <span style="color:#080;font-weight:bold">as</span> _t
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> zenPath</code></pre></div>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Ext</span> <span style="color:#f92672">import</span> <span style="color:#111">DirectRouter</span><span style="color:#111">,</span> <span style="color:#111">DirectResponse</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products</span> <span style="color:#f92672">import</span> <span style="color:#111">Zuul</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.catalog.events</span> <span style="color:#f92672">import</span> <span style="color:#111">IndexingEvent</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.facades</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulFacade</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">IFacade</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.utils</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulMessageFactory</span> <span style="color:#00a8c8">as</span> <span style="color:#111">_t</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Utils</span> <span style="color:#f92672">import</span> <span style="color:#111">zenPath</span></code></pre></div>
 <p>Some imports are probably not needed, but the ones that are of our interest are imports such as <code>DirectRouter</code> and <code>DirectResponse</code>, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.</p>
 
   

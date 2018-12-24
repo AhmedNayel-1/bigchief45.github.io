@@ -122,7 +122,7 @@
 <h3 id="http">HTTP</h3>
 
 <p>Samples can be sent using HTTP to an external target. For example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">http://localhost:<span style="color:#60e;font-weight:bold">80</span>/?option1=value1<span style="color:#579">&amp;option2=value2</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">http<span style="color:#111">:</span>//localhost<span style="color:#111">:</span><span style="color:#ae81ff">80</span>/<span style="color:#111">?</span>option1=value1<span style="color:#75715e">&amp;option2=value2</span></code></pre></div>
 <p><img src="https://docs.openstack.org/developer/ceilometer/_images/5-multi-publish.png" alt="Ceilometer Publishers" /></p>
 
 <h2 id="difference-between-publishers-and-dispatchers">Difference Between Publishers and Dispatchers</h2>
@@ -152,42 +152,42 @@ directly.</p>
 <h2 id="the-source-code">The Source Code</h2>
 
 <p>In Ceilometer&rsquo;s source code, publisher logic can be found in <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/publisher"><code>ceilometer/publisher</code></a>. A publisher base class can be found in the `<code>__init__.py</code> file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#555;font-weight:bold">@six.add_metaclass</span>(abc<span style="color:#333">.</span>ABCMeta)
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ConfigPublisherBase</span>(<span style="color:#007020">object</span>):
-    <span style="background-color:#fff0f0">&#34;&#34;&#34;Base class for plugins that publish data.&#34;&#34;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75af00">@six.add_metaclass</span><span style="color:#111">(</span><span style="color:#111">abc</span><span style="color:#f92672">.</span><span style="color:#111">ABCMeta</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">ConfigPublisherBase</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;Base class for plugins that publish data.&#34;&#34;&#34;</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, conf, parsed_url):
-        self<span style="color:#333">.</span>conf <span style="color:#333">=</span> conf
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">parsed_url</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">conf</span> <span style="color:#f92672">=</span> <span style="color:#111">conf</span>
 
-    <span style="color:#555;font-weight:bold">@abc.abstractmethod</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_samples</span>(self, samples):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Publish samples into final conduit.&#34;&#34;&#34;</span>
+    <span style="color:#75af00">@abc.abstractmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_samples</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">samples</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Publish samples into final conduit.&#34;&#34;&#34;</span>
 
-    <span style="color:#555;font-weight:bold">@abc.abstractmethod</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_events</span>(self, events):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Publish events into final conduit.&#34;&#34;&#34;</span></code></pre></div>
+    <span style="color:#75af00">@abc.abstractmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_events</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">events</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Publish events into final conduit.&#34;&#34;&#34;</span></code></pre></div>
 <p>We can see the abstract methods to be implemented by each publisher. The <code>publish_samples</code> method is of particular interest.</p>
 
 <p>If we take a look at the HTTP publisher source code, we can see how it implements these methods:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HttpPublisher</span>(publisher<span style="color:#333">.</span>ConfigPublisherBase):
-    <span style="color:#888"># ...</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">HttpPublisher</span><span style="color:#111">(</span><span style="color:#111">publisher</span><span style="color:#f92672">.</span><span style="color:#111">ConfigPublisherBase</span><span style="color:#111">):</span>
+    <span style="color:#75715e"># ...</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_samples</span>(self, samples):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Send a metering message for publishing
-</span><span style="background-color:#fff0f0">        :param samples: Samples from pipeline after transformation
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
-        self<span style="color:#333">.</span>poster([sample<span style="color:#333">.</span>as_dict() <span style="color:#080;font-weight:bold">for</span> sample <span style="color:#000;font-weight:bold">in</span> samples])
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_samples</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">samples</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Send a metering message for publishing
+</span><span style="color:#d88200">        :param samples: Samples from pipeline after transformation
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">poster</span><span style="color:#111">([</span><span style="color:#111">sample</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">()</span> <span style="color:#00a8c8">for</span> <span style="color:#111">sample</span> <span style="color:#f92672">in</span> <span style="color:#111">samples</span><span style="color:#111">])</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">publish_events</span>(self, events):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Send an event message for publishing
-</span><span style="background-color:#fff0f0">        :param events: events from pipeline after transformation
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
-        <span style="color:#080;font-weight:bold">if</span> self<span style="color:#333">.</span>raw_only:
-            data <span style="color:#333">=</span> [evt<span style="color:#333">.</span>as_dict()[<span style="background-color:#fff0f0">&#39;raw&#39;</span>][<span style="background-color:#fff0f0">&#39;payload&#39;</span>] <span style="color:#080;font-weight:bold">for</span> evt <span style="color:#000;font-weight:bold">in</span> events
-                    <span style="color:#080;font-weight:bold">if</span> evt<span style="color:#333">.</span>as_dict()<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;raw&#39;</span>, {})<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;payload&#39;</span>)]
-        <span style="color:#080;font-weight:bold">else</span>:
-            data <span style="color:#333">=</span> [event<span style="color:#333">.</span>serialize() <span style="color:#080;font-weight:bold">for</span> event <span style="color:#000;font-weight:bold">in</span> events]
-        self<span style="color:#333">.</span>poster(data)</code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_events</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">events</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Send an event message for publishing
+</span><span style="color:#d88200">        :param events: events from pipeline after transformation
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">raw_only</span><span style="color:#111">:</span>
+            <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">()[</span><span style="color:#d88200">&#39;raw&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;payload&#39;</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">evt</span> <span style="color:#f92672">in</span> <span style="color:#111">events</span>
+                    <span style="color:#00a8c8">if</span> <span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;raw&#39;</span><span style="color:#111">,</span> <span style="color:#111">{})</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;payload&#39;</span><span style="color:#111">)]</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#111">serialize</span><span style="color:#111">()</span> <span style="color:#00a8c8">for</span> <span style="color:#111">event</span> <span style="color:#f92672">in</span> <span style="color:#111">events</span><span style="color:#111">]</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">poster</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#111">)</span></code></pre></div>
 </div>
 
 

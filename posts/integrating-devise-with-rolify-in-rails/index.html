@@ -96,16 +96,16 @@
 <h2 id="preparing-the-roles">Preparing the Roles</h2>
 
 <p>Assuming you already have initialized a Devise <code>User</code> model along with a Rolify <code>Role</code> model, a very common question I see is how should the roles be prepared so that the <em>new</em> users can have a list of already created roles to choose from when registering? In the <a href="https://github.com/RolifyCommunity/rolify">Rolify documentation</a>, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">user <span style="color:#333">=</span> <span style="color:#036;font-weight:bold">User</span><span style="color:#333">.</span>find(<span style="color:#00d;font-weight:bold">1</span>)
-user<span style="color:#333">.</span>add_role <span style="color:#a60;background-color:#fff0f0">:admin</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">User</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span>
+<span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span> <span style="color:#d88200">:admin</span></code></pre></div>
 <p>A new <code>admin</code> role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.</p>
 
 <p>Answers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># db/seeds.rb</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># db/seeds.rb</span>
 
-<span style="color:#036;font-weight:bold">Role</span><span style="color:#333">.</span>create!(<span style="color:#007020">name</span>: <span style="background-color:#fff0f0">&#39;admin&#39;</span>)
-<span style="color:#036;font-weight:bold">Role</span><span style="color:#333">.</span>create!(<span style="color:#007020">name</span>: <span style="background-color:#fff0f0">&#39;doctor&#39;</span>)
-<span style="color:#036;font-weight:bold">Role</span><span style="color:#333">.</span>create!(<span style="color:#007020">name</span>: <span style="background-color:#fff0f0">&#39;nurse&#39;</span>)</code></pre></div>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;doctor&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;nurse&#39;</span><span style="color:#111">)</span></code></pre></div>
 <p>Obviously any other dummy data you have in your seeds file should be removed for production.</p>
 
 <h2 id="adding-roles-to-the-registration-form">Adding Roles to the Registration Form</h2>
@@ -113,7 +113,7 @@ user<span style="color:#333">.</span>add_role <span style="color:#a60;background
 <p>Now let&rsquo;s proceed to add the available roles to the registration form that the users will use to sign up. Depending on your application, you will have to decide whether you need check boxes (multiple roles) or radio buttons (single role). In this example I will go with radio buttons, limiting the user to a single role only.</p>
 
 <p>Using <a href="https://github.com/plataformatec/simple_form">Simple Form</a>, we can render our radio buttons like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = devise_error_messages!
 
   .form-inputs
@@ -125,7 +125,7 @@ user<span style="color:#333">.</span>add_role <span style="color:#a60;background
   .form-actions
     = f.button :submit, t(&#39;.sign_up&#39;), class: &#39;btn btn-success&#39;</code></pre></div>
 <p>Notice that we are pulling and displaying <em>all</em> the available roles. This will include the <code>admin</code> role, which you might not want. This can easily be solved using the handy <a href="https://robots.thoughtbot.com/activerecords-wherenot">where.not</a>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= f.input :roles, as: :radio_buttons, collection: Role.where.not(name: &#39;admin&#39;), value_method: :name, required: true</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= f.input :roles, as: :radio_buttons, collection: Role.where.not(name: &#39;admin&#39;), value_method: :name, required: true</code></pre></div>
 <p>Additionally, the <code>value_method</code> is very important. We will use the role&rsquo;s name to pass as a parameter value to the Devise controller. This will allow for easier adding of the role to the user.</p>
 
 <h2 id="customizing-the-devise-controller">Customizing the Devise Controller</h2>
@@ -133,25 +133,25 @@ user<span style="color:#333">.</span>add_role <span style="color:#a60;background
 <p>When the form is submitted by the user, it will go through Devise&rsquo;s registration controller, which will proceed to do all the registration magic. However, after the user is successfully registered, we want this controller to add the role we passed in the form.</p>
 
 <p>We can begin by explicitely creating this controller and &ldquo;overwriting&rdquo; its <code>create</code> method:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># app/controllers/registrations_controller.rb</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/controllers/registrations_controller.rb</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RegistrationsController</span> <span style="color:#333">&lt;</span> <span style="color:#036;font-weight:bold">Devise</span><span style="color:#333">::</span><span style="color:#036;font-weight:bold">RegistrationsController</span>
-  before_action <span style="color:#a60;background-color:#fff0f0">:configure_sign_up_params</span>, <span style="color:#a60;background-color:#fff0f0">only</span>: <span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:create</span><span style="color:#333">]</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">RegistrationsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">Devise</span><span style="color:#f92672">::</span><span style="color:#00a8c8">RegistrationsController</span>
+  <span style="color:#111">before_action</span> <span style="color:#d88200">:configure_sign_up_params</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:create</span><span style="color:#f92672">]</span>
 
-  <span style="color:#888"># POST /resource</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">create</span>
-    <span style="color:#080;font-weight:bold">super</span>
-    resource<span style="color:#333">.</span>add_role(params<span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:user</span><span style="color:#333">][</span><span style="color:#a60;background-color:#fff0f0">:roles</span><span style="color:#333">]</span>)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#75715e"># POST /resource</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">create</span>
+    <span style="color:#00a8c8">super</span>
+    <span style="color:#111">resource</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span><span style="color:#111">(</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:user</span><span style="color:#f92672">][</span><span style="color:#d88200">:roles</span><span style="color:#f92672">]</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">end</span>
 
-  <span style="color:#038;font-weight:bold">protected</span>
+  <span style="color:#00a8c8">protected</span>
 
-  <span style="color:#888"># If you have extra params to permit, append them to the sanitizer.</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">configure_sign_up_params</span>
-    devise_parameter_sanitizer<span style="color:#333">.</span>permit(<span style="color:#a60;background-color:#fff0f0">:sign_up</span>, <span style="color:#a60;background-color:#fff0f0">keys</span>: <span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">roles</span>: <span style="color:#333">[]]</span>)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#75715e"># If you have extra params to permit, append them to the sanitizer.</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">configure_sign_up_params</span>
+    <span style="color:#111">devise_parameter_sanitizer</span><span style="color:#f92672">.</span><span style="color:#111">permit</span><span style="color:#111">(</span><span style="color:#d88200">:sign_up</span><span style="color:#111">,</span> <span style="color:#d88200">keys</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">roles</span><span style="color:#111">:</span> <span style="color:#f92672">[]]</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>Technically we aren&rsquo;t really <em>overwriting</em> the controller, since the controller&rsquo;s original create method is still being called by using the <code>super</code> keyword. After this is done, we proceed to add the role.</p>
 
 <p>If you are passing many roles (checkboxes) to the controller as parameters, you will need to adjust this part accordingly.</p>
@@ -161,13 +161,13 @@ user<span style="color:#333">.</span>add_role <span style="color:#a60;background
 <h3 id="don-t-forget-the-routes">Don&rsquo;t Forget the Routes</h3>
 
 <p>We will need to edit the devise route to point to this new registrations controller we created:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># routes.rb</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># routes.rb</span>
 
-<span style="color:#036;font-weight:bold">Rails</span><span style="color:#333">.</span>application<span style="color:#333">.</span>routes<span style="color:#333">.</span>draw <span style="color:#080;font-weight:bold">do</span>
+<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
 
-  devise_for <span style="color:#a60;background-color:#fff0f0">:users</span>, <span style="color:#a60;background-color:#fff0f0">controllers</span>: { <span style="color:#a60;background-color:#fff0f0">registrations</span>: <span style="background-color:#fff0f0">&#39;registrations&#39;</span> }
+  <span style="color:#111">devise_for</span> <span style="color:#d88200">:users</span><span style="color:#111">,</span> <span style="color:#d88200">controllers</span><span style="color:#111">:</span> <span style="color:#111">{</span> <span style="color:#d88200">registrations</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;registrations&#39;</span> <span style="color:#111">}</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>And that&rsquo;s it! The selected role in the form should now be properly added to the newly registered user upon successful registration. The best part of all is that we do not need to re-write the registration controller&rsquo;s create logic thanks to the handy <code>super</code>.</p>
 </div>
 

@@ -98,23 +98,23 @@
 <h2 id="creating-and-registering-a-new-status-bar">Creating and Registering a New Status Bar</h2>
 
 <p>To create a new status bar, create a new Java class that implements the <code>StatusLineElementProvider</code> interface. To register it as a status bar, we use the <code>@ServiceProvider</code> annotation:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#555;font-weight:bold">@ServiceProvider</span><span style="color:#333">(</span>service <span style="color:#333">=</span> StatusLineElementProvider<span style="color:#333">.</span><span style="color:#00c">class</span><span style="color:#333">,</span> position <span style="color:#333">=</span> 1<span style="color:#333">)</span>
-<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyStatusBar</span> <span style="color:#080;font-weight:bold">implements</span> StatusLineElementProvider <span style="color:#333">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@ServiceProvider</span><span style="color:#f92672">(</span><span style="color:#111">service</span> <span style="color:#f92672">=</span> <span style="color:#111">StatusLineElementProvider</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStatusBar</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">StatusLineElementProvider</span> <span style="color:#f92672">{</span>
 
-<span style="color:#333">}</span></code></pre></div>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>There is only one method we need to implement: <code>getStatusLineElement()</code>. This method returns a Java Swing <code>Component</code> object, which is what the user will see in the status bar section of the application.</p>
 
 <p>Depending on how much you want to display in your custom status bar, you can either just return a simple <code>JLabel</code> component that includes text (JLabels can also include icon, among other things), or you can create a <code>JPanel</code> and put everything you want to display there and return it.</p>
 
 <p>If you choose the <code>JPanel</code> approach, you can  then create a new class that extends <code>JPanel</code>, using the Netbeans IDE. Then in the <code>getStatusLineElement()</code> method we will simply return a new instance of this panel:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#555;font-weight:bold">@ServiceProvider</span><span style="color:#333">(</span>service <span style="color:#333">=</span> StatusLineElementProvider<span style="color:#333">.</span><span style="color:#00c">class</span><span style="color:#333">,</span> position <span style="color:#333">=</span> 1<span style="color:#333">)</span>
-<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyStatusBar</span> <span style="color:#080;font-weight:bold">implements</span> StatusLineElementProvider <span style="color:#333">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@ServiceProvider</span><span style="color:#f92672">(</span><span style="color:#111">service</span> <span style="color:#f92672">=</span> <span style="color:#111">StatusLineElementProvider</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStatusBar</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">StatusLineElementProvider</span> <span style="color:#f92672">{</span>
 
-    <span style="color:#555;font-weight:bold">@Override</span>
-    <span style="color:#080;font-weight:bold">public</span> Component <span style="color:#06b;font-weight:bold">getStatusLineElement</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">new</span> MyStatusBarPanel<span style="color:#333">();</span>
-    <span style="color:#333">}</span>
-<span style="color:#333">}</span></code></pre></div>
+    <span style="color:#75af00">@Override</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#111">Component</span> <span style="color:#75af00">getStatusLineElement</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyStatusBarPanel</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>In the design view (Matisse view) of Netbeans IDE you can drag and drop multiple components into your JPanel.</p>
 
 <h2 id="making-status-bars-dynamic-using-lookups">Making Status Bars Dynamic Using Lookups</h2>
@@ -129,32 +129,32 @@
 </ol>
 
 <p>Here is an example of that:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">org.openide.util.Lookup.Result</span><span style="color:#333">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">org.openide.util.Lookup.Result</span><span style="color:#f92672">;</span>
 
-<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyStatusBarPanel</span> <span style="color:#080;font-weight:bold">extends</span> javax<span style="color:#333">.</span><span style="color:#00c">swing</span><span style="color:#333">.</span><span style="color:#00c">JPanel</span> <span style="color:#080;font-weight:bold">implements</span> LookupListener <span style="color:#333">{</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStatusBarPanel</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">javax</span><span style="color:#f92672">.</span><span style="color:#75af00">swing</span><span style="color:#f92672">.</span><span style="color:#75af00">JPanel</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">LookupListener</span> <span style="color:#f92672">{</span>
 
-    <span style="color:#080;font-weight:bold">private</span> Result<span style="color:#333">&lt;</span>MyClass<span style="color:#333">&gt;</span> result<span style="color:#333">;</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#111">Result</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyClass</span><span style="color:#f92672">&gt;</span> <span style="color:#111">result</span><span style="color:#f92672">;</span>
 
-    <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">MyStatusBarPanel</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-        initComponents<span style="color:#333">();</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyStatusBarPanel</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">initComponents</span><span style="color:#f92672">();</span>
 
-        <span style="color:#888">// In this example we are using a custom lookup. But you can also
-</span><span style="color:#888"></span>        <span style="color:#888">// use the Netbeans Platform default lookup as well.
-</span><span style="color:#888"></span>        result <span style="color:#333">=</span> MyLookup<span style="color:#333">.</span><span style="color:#00c">getDefault</span><span style="color:#333">().</span><span style="color:#00c">lookupResult</span><span style="color:#333">(</span>MyClass<span style="color:#333">.</span><span style="color:#00c">class</span><span style="color:#333">);</span>
-        result<span style="color:#333">.</span><span style="color:#00c">addLookupListener</span><span style="color:#333">(</span><span style="color:#080;font-weight:bold">this</span><span style="color:#333">);</span>
-    <span style="color:#333">}</span>
+        <span style="color:#75715e">// In this example we are using a custom lookup. But you can also
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// use the Netbeans Platform default lookup as well.
+</span><span style="color:#75715e"></span>        <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">MyLookup</span><span style="color:#f92672">.</span><span style="color:#75af00">getDefault</span><span style="color:#f92672">().</span><span style="color:#75af00">lookupResult</span><span style="color:#f92672">(</span><span style="color:#111">MyClass</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">);</span>
+        <span style="color:#111">result</span><span style="color:#f92672">.</span><span style="color:#75af00">addLookupListener</span><span style="color:#f92672">(</span><span style="color:#00a8c8">this</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
 
-    <span style="color:#555;font-weight:bold">@Override</span>
-    <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">resultChanged</span><span style="color:#333">(</span>LookupEvent evt<span style="color:#333">)</span> <span style="color:#333">{</span>
-        <span style="color:#888">// For our example we simply get the result count
-</span><span style="color:#888"></span>        <span style="color:#339;font-weight:bold">int</span> count <span style="color:#333">=</span> result<span style="color:#333">.</span><span style="color:#00c">allInstances</span><span style="color:#333">().</span><span style="color:#00c">size</span><span style="color:#333">();</span>
+    <span style="color:#75af00">@Override</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">resultChanged</span><span style="color:#f92672">(</span><span style="color:#111">LookupEvent</span> <span style="color:#111">evt</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// For our example we simply get the result count
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">int</span> <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">result</span><span style="color:#f92672">.</span><span style="color:#75af00">allInstances</span><span style="color:#f92672">().</span><span style="color:#75af00">size</span><span style="color:#f92672">();</span>
 
-        <span style="color:#888">// Assuming you have already dragged and dropped swing components
-</span><span style="color:#888"></span>        <span style="color:#888">// into the JPanel, we will set the count in a JLabel to display
-</span><span style="color:#888"></span>        <span style="color:#888">// it.
-</span><span style="color:#888"></span>        labelCounter<span style="color:#333">.</span><span style="color:#00c">setText</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;Total items: &#34;</span> <span style="color:#333">+</span> count<span style="color:#333">);</span>
-    <span style="color:#333">}</span>
-<span style="color:#333">}</span></code></pre></div>
+        <span style="color:#75715e">// Assuming you have already dragged and dropped swing components
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// into the JPanel, we will set the count in a JLabel to display
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// it.
+</span><span style="color:#75715e"></span>        <span style="color:#111">labelCounter</span><span style="color:#f92672">.</span><span style="color:#75af00">setText</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Total items: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">count</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>With this implementation the status bar&rsquo;s displayed counter will always be up to date with changes in the item count of the lookup.</p>
 </div>
 

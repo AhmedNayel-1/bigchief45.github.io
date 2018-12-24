@@ -20,28 +20,28 @@
       <description>&lt;p&gt;Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from &lt;code&gt;Device&lt;/code&gt;. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a &lt;a href=&#34;https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html&#34;&gt;Python data source&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;The &lt;code&gt;zenpack.yaml&lt;/code&gt; file for the first and main ZenPack would look something like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ZenPack1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;classes:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;SpecialServer:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Device]&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Special&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Server&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;SpecialComponent:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Component]&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Special&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Component&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;AmazingComponent:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Component]&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Amazing&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Component&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;class_relationships:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;SpecialServer&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;:MC&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;SpecialComponent&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;-&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;SpecialServer&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;:MC&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;AmazingComponent&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ZenPack1&lt;/span&gt;
+
+classes&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  SpecialServer&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    base&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;zenpacklib.Device&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+    label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Special Server
+
+  SpecialComponent&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    base&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;zenpacklib.Component&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+    label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Special Component
+    properties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      &lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
+
+  AmazingComponent&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    base&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;zenpacklib.Component&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+    label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Amazing Component
+    properties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      &lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
+
+class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  - SpecialServer &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;MC SpecialComponent
+  - SpecialServer &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;MC AmazingComponent&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -111,7 +111,7 @@
 &lt;p&gt;Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named &lt;code&gt;actions.json&lt;/code&gt; in a directory called &lt;code&gt;zep&lt;/code&gt; (create it if it doesn&amp;rsquo;t exist), within the ZenPack&amp;rsquo;s top directory.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;actions.json&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
   &amp;#34;triggers&amp;#34;: [
     {
       &amp;#34;name&amp;#34;: &amp;#34;Critical_death_event&amp;#34;,
@@ -205,13 +205,13 @@
 &lt;h2 id=&#34;removing-device-classes&#34;&gt;Removing Device Classes&lt;/h2&gt;
 
 &lt;p&gt;We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &amp;ldquo;KVM&amp;rdquo; device class:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;dmd&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Devices&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;manage_deleteOrganizer(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;/zport/dmd/Devices/KVM&amp;#34;&lt;/span&gt;)
-commit()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;dmd&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Devices&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;manage_deleteOrganizer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;/zport/dmd/Devices/KVM&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&#34;change-zenoss-user-s-password&#34;&gt;Change Zenoss User&amp;rsquo;s Password&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s say we want to change the default &lt;em&gt;admin&lt;/em&gt; user&amp;rsquo;s password (&lt;code&gt;zenoss&lt;/code&gt;) in the Ubuntu auto deploy:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;app&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;acl_users&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;userManager&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;updateUserPassword(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;newpassword&amp;#39;&lt;/span&gt;)
-commit()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;acl_users&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;userManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;updateUserPassword&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;newpassword&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -300,30 +300,30 @@ juju switch local
       
       <guid>https://aalvarez.me/posts/customizing-the-zenpack-installation-process/</guid>
       <description>&lt;p&gt;There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&amp;rsquo;s top directory&amp;rsquo;s &lt;code&gt;__init__.py&lt;/code&gt; file. When creating a fresh ZenPack using &lt;strong&gt;zenpacklib&lt;/strong&gt;, this &lt;code&gt;__init__.py&lt;/code&gt; file will contain the following contents:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; zenpacklib
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenpacklib&lt;/span&gt;
 
-CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;load_yaml()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#111&#34;&gt;CFG&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenpacklib&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;load_yaml&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;To add custom functionality that gets executed when the ZenPack is installed, we need to extend the &lt;code&gt;install&lt;/code&gt; method of the &lt;code&gt;ZenPack&lt;/code&gt; class. Below the original code, we can proceed to do so:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ZenPack&lt;/span&gt;(schema&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ZenPack):
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;install&lt;/span&gt;(self, app):
-        &lt;span style=&#34;color:#888&#34;&gt;# Our custom logic here&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;install&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#75715e&#34;&gt;# Our custom logic here&lt;/span&gt;
 
-        &lt;span style=&#34;color:#007020&#34;&gt;super&lt;/span&gt;(ZenPack, self)&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;install(app)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;install&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;No other imports are necessary. Notice the last line of the &lt;code&gt;install&lt;/code&gt; method, this is where the ZenPack gets installed.&lt;/p&gt;
 
 &lt;p&gt;For the purpuse of giving an example, Let&amp;rsquo;s say that our ZenPack creates two new &lt;a href=&#34;https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html&#34;&gt;zProperties&lt;/a&gt;, one property to store an API key, and the other one to store a URL. Moreover let&amp;rsquo;s say that we obtain these values from somewhere and we want to assign them &lt;strong&gt;automatically&lt;/strong&gt; to the properties upon the installation of the ZenPack.&lt;/p&gt;
 
 &lt;p&gt;These two new properties are defined in &lt;code&gt;zenpack.yaml&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;name:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ZenPacks.aalvarez.MyZenPack&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;zProperties:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;zMyApiUrl:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;category:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;MyApi&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;type:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;string&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;zMyApiKey:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;category:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;MyApi&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;type:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;string&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;name&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; ZenPacks.aalvarez.MyZenPack
+
+zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  zMyApiUrl&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    category&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; MyApi
+    type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; string
+
+  zMyApiKey&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    category&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; MyApi
+    type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; string&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -350,12 +350,12 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 &lt;h2 id=&#34;page-viewlets&#34;&gt;Page Viewlets&lt;/h2&gt;
 
 &lt;p&gt;Previously we created navigation item viewlets, this time we will be creating &lt;strong&gt;page&lt;/strong&gt; viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to &lt;code&gt;browser/configure.zcml&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;browser:page&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;secondaryPage&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;for=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;permission=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;zenoss.View&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;template=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;templates/my_template.pt&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#070&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;browser:page&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;secondaryPage&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;for=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;permission=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;zenoss.View&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;template=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;templates/my_template.pt&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;It is important that the &lt;strong&gt;name&lt;/strong&gt; attribute matches the URL of the navigation link we created previously. Another important attribute is the &lt;strong&gt;template&lt;/strong&gt; attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and &lt;a href=&#34;http://old.zope.org/Members/tone/METAL&#34;&gt;METAL&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Also let&amp;rsquo;s not forget to create a necessary python init file:&lt;/p&gt;
@@ -383,15 +383,15 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 &lt;p&gt;Usually this file begins with some required boilerplate code:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;configure.zcml&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;configure&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;xmlns=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zope&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#070&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;configure&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;xmlns=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/zope&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
 
-  &lt;span style=&#34;color:#888&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#070&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#00c&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#070&#34;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+  &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -409,21 +409,21 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 &lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
 
 &lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;os.path&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; urlparse
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;subprocess&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;os.path&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;subprocess&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.event&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; notify
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.interface&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; implements
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;ZODB.transact&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; transact
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zope.event&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;notify&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zope.interface&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;implements&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZODB.transact&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;transact&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Ext&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; DirectRouter, DirectResponse
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; Zuul
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.catalog.events&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IndexingEvent
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulFacade
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IFacade
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulMessageFactory &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; _t
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; zenPath&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Ext&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;DirectRouter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;DirectResponse&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Zuul&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.catalog.events&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IndexingEvent&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulFacade&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IFacade&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulMessageFactory&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_t&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenPath&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
     </item>
     
@@ -484,7 +484,7 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 &lt;h2 id=&#34;querying-the-api&#34;&gt;Querying the API&lt;/h2&gt;
 
 &lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&amp;rsquo;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#963&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#111&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
 
 &lt;p&gt;This is all fine if all we need is querying the API and nothing else. But what if we really want to know &lt;strong&gt;&lt;em&gt;how&lt;/em&gt;&lt;/strong&gt; the API back-end works? How the endpoints are created? What are routers?&lt;/p&gt;
@@ -509,7 +509,7 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 &lt;p&gt;Located in &lt;code&gt;$ZENHOME/Products/ZenRRD/RRDUtil.py&lt;/code&gt;, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read &lt;code&gt;.rrd&lt;/code&gt; files using Python.&lt;/p&gt;
 
 &lt;p&gt;We can easily import this module into our code, using the following import statement:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; RRDUtil&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RRDUtil&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -554,15 +554,15 @@ CFG &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; zenpacklib&lt;span sty
 &lt;h2 id=&#34;extending-the-component-through-zenpacks&#34;&gt;Extending The Component, Through ZenPacks&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s assume we are starting with a freshly created ZenPack, which adds a new &lt;code&gt;power_status&lt;/code&gt; integer field to certain devices, according to its &lt;code&gt;zenpack.yaml&lt;/code&gt; file:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;classes:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;CustomDevice:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Device]&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Custom&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Device&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;power_status:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;type:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
+
+classes&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  CustomDevice&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    base&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;zenpacklib.Device&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+    label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Custom Device
+    properties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      power_status&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;What we want is to display this value in the device&amp;rsquo;s detail bar, similar to the device&amp;rsquo;s ping status display.&lt;/p&gt;</description>
     </item>
     
@@ -608,15 +608,15 @@ chmod 755 zenpacklib.py
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Here we will create a new Bashscript file with the name of our daemon. In this case we will name it &lt;code&gt;mydaemon&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#! /usr/bin/env bash
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#963&#34;&gt;DAEMON_NAME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;mydaemon&amp;#34;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#! /usr/bin/env bash
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;DAEMON_NAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mydaemon&amp;#34;&lt;/span&gt;
 
-. &lt;span style=&#34;color:#963&#34;&gt;$ZENHOME&lt;/span&gt;/bin/zenfunctions
+. &lt;span style=&#34;color:#111&#34;&gt;$ZENHOME&lt;/span&gt;/bin/zenfunctions
 
-&lt;span style=&#34;color:#963&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#963&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#963&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#963&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#963&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
+&lt;span style=&#34;color:#111&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#111&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
 
-generic &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Once the ZenPack is installed, files under this &lt;code&gt;daemons&lt;/code&gt; directory will become executable (&lt;code&gt;chmod 0755&lt;/code&gt;), a symlink to the file will be created in &lt;code&gt;$ZENHOME/bin&lt;/code&gt;, and a configuration file will be generated in &lt;code&gt;$ZENHOME/etc/&amp;lt;daemon_name&amp;gt;.conf&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; If you created your ZenPack using the Zenoss user interface, the &lt;code&gt;daemons&lt;/code&gt; directory will also be automatically created, and will contain an example daemon file named &lt;code&gt;zenexample&lt;/code&gt; with code similar to the one above. In this case you should simply replace the necessary values.&lt;/p&gt;</description>
@@ -742,25 +742,25 @@ can normalize that data into a common unit.&lt;/p&gt;</description>
 &lt;p&gt;The built-in Zenoss renderers and source code can be found in &lt;code&gt;$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss/Renderers.js&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;They are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the &lt;code&gt;renderer&lt;/code&gt; property. For example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;HardDisk:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Component]&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Hard&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Disk&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;     &lt;/span&gt;location:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Location&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;     &lt;/span&gt;capacity:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Capacity&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;     &lt;/span&gt;raid_name:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Raid&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Name&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;     &lt;/span&gt;raid_level:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Raid&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Level&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;     &lt;/span&gt;status:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Status&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;renderer:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Zenoss.render.pingStatus&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;HardDisk&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  base&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;zenpacklib.Component&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+  label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Hard Disk
+  properties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+     location&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Location
+
+     capacity&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Capacity
+
+     raid_name&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Raid Name
+
+     raid_level&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Raid Level
+
+     status&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Status
+        renderer&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Zenoss.render.pingStatus&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;Zenoss.render.pingStatus&lt;/code&gt; is one of the default renderers that come built-in within Zenoss Core 4, similar to &lt;code&gt;Zenoss.render.bytesString&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
     

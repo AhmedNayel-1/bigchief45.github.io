@@ -113,7 +113,7 @@
 <h3 id="searching-for-live-migration-logs-in-zenoss">Searching for Live Migration Logs in Zenoss</h3>
 
 <p>Next I had to check if the ZenPack was actually able to recognize these events. Clearly events for instance state change were being recognized since I could see the instance&rsquo;s state change on the Zenoss user interface. The ZenPack&rsquo;s datasource responsible for processing these events is found in <code>datasources/EventsAMQPDataSource.py</code>, here we can see some debug logging for each incoming event received:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python?line_numbers=false" data-lang="python?line_numbers=false">def processMessage(self, amqp, device_id, message):
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python?line_numbers=false" data-lang="python?line_numbers=false">def processMessage(self, amqp, device_id, message):
     try:
         value = json.loads(message.content.body)
         log.debug(value)
@@ -147,49 +147,49 @@
 <h3 id="openstack-infrastructure-event-mappings">OpenStack Infrastructure Event Mappings</h3>
 
 <p>The OpenStack Infrastructure ZenPack defines some event mappings in <code>events.py</code>. If we do a <code>live_migration</code> search in this file we will find some mapping definitions:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># Note: I do not currently have good test data for what a real</span>
-<span style="color:#888"># live migration looks like.  I am assuming that the new host will be</span>
-<span style="color:#888"># carried in the last event, and only processing that one.</span>
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.pre.start&#39;</span>: (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.pre.end&#39;</span>: (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.post.dest.start&#39;</span>: (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.post.dest.end&#39;</span>:  (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration._post.start&#39;</span>:  (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration._post.end&#39;</span>: (instance_id, instance_update),</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Note: I do not currently have good test data for what a real</span>
+<span style="color:#75715e"># live migration looks like.  I am assuming that the new host will be</span>
+<span style="color:#75715e"># carried in the last event, and only processing that one.</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration.pre.start&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration.pre.end&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration.post.dest.start&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration.post.dest.end&#39;</span><span style="color:#111">:</span>  <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration._post.start&#39;</span><span style="color:#111">:</span>  <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration._post.end&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">instance_update</span><span style="color:#111">),</span></code></pre></div>
 <p>It seems that the author is not sure exactly how to work with these live migration events. We can see that only the last definition (<code>_post.end</code>) has a function called <code>instance_update</code> assigned. This is the function that will update the instance&rsquo;s information, such as the instance state.</p>
 
 <p>However the problem here is that this is not the definition that should be used. The <code>openstack|compute.instance.live_migration.post.dest.end</code> definition is the one that should be used instead. I arrived at these conclusions from all the log researching I discussed before.</p>
 
 <p>If remove the function from <code>_post.end</code> and assign it to <code>post.dest.end</code>, then this should fix all these issues:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.pre.start&#39;</span>: (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.pre.end&#39;</span>: (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.post.dest.start&#39;</span>: (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration.post.dest.end&#39;</span>:  (instance_id, instance_update),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration._post.start&#39;</span>:  (instance_id, None),
-<span style="background-color:#fff0f0">&#39;openstack|compute.instance.live_migration._post.end&#39;</span>: (instance_id, None),</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#d88200">&#39;openstack|compute.instance.live_migration.pre.start&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration.pre.end&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration.post.dest.start&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration.post.dest.end&#39;</span><span style="color:#111">:</span>  <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">instance_update</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration._post.start&#39;</span><span style="color:#111">:</span>  <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span>
+<span style="color:#d88200">&#39;openstack|compute.instance.live_migration._post.end&#39;</span><span style="color:#111">:</span> <span style="color:#111">(</span><span style="color:#111">instance_id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">),</span></code></pre></div>
 <p>Re-install the ZenPack, restart <em>zenhub</em> and <em>zopectl</em>, and then finally perform an instance live migration from the Horizon dashboard and you should quickly see the instance&rsquo;s host change in the Zenoss interface.</p>
 
 <h2 id="further-investigation">Further Investigation</h2>
 
 <p>While following the instructions above solves the issue, there is still some very interesting stuff that I learned about this ZenPack. If we go to the <code>instance_update</code> function definition we arrive upon the following code:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">instance_update</span>(device, dmd, evt):
-    evt<span style="color:#333">.</span>summary <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;Instance </span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0"> updated&#34;</span> <span style="color:#333">%</span> (evt<span style="color:#333">.</span>trait_display_name)
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">instance_update</span><span style="color:#111">(</span><span style="color:#111">device</span><span style="color:#111">,</span> <span style="color:#111">dmd</span><span style="color:#111">,</span> <span style="color:#111">evt</span><span style="color:#111">):</span>
+    <span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">summary</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;Instance </span><span style="color:#d88200">%s</span><span style="color:#d88200"> updated&#34;</span> <span style="color:#f92672">%</span> <span style="color:#111">(</span><span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">trait_display_name</span><span style="color:#111">)</span>
 
-    objmap <span style="color:#333">=</span> instance_objmap(evt)
-    _apply_instance_traits(evt, objmap)
-    <span style="color:#080;font-weight:bold">return</span> [objmap]</code></pre></div>
+    <span style="color:#111">objmap</span> <span style="color:#f92672">=</span> <span style="color:#111">instance_objmap</span><span style="color:#111">(</span><span style="color:#111">evt</span><span style="color:#111">)</span>
+    <span style="color:#111">_apply_instance_traits</span><span style="color:#111">(</span><span style="color:#111">evt</span><span style="color:#111">,</span> <span style="color:#111">objmap</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">[</span><span style="color:#111">objmap</span><span style="color:#111">]</span></code></pre></div>
 <p>This function takes us to another function:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_apply_instance_traits</span>(evt, objmap):
-    traitmap <span style="color:#333">=</span> {
-                <span style="background-color:#fff0f0">&#39;display_name&#39;</span>: [<span style="background-color:#fff0f0">&#39;title&#39;</span>, <span style="background-color:#fff0f0">&#39;hostName&#39;</span>],
-                <span style="background-color:#fff0f0">&#39;instance_id&#39;</span>:  [<span style="background-color:#fff0f0">&#39;resourceId&#39;</span>, <span style="background-color:#fff0f0">&#39;serverId&#39;</span>],
-                <span style="background-color:#fff0f0">&#39;state&#39;</span>:        [<span style="background-color:#fff0f0">&#39;serverStatus&#39;</span>],
-                <span style="background-color:#fff0f0">&#39;flavor_name&#39;</span>:  [<span style="background-color:#fff0f0">&#39;set_flavor_name&#39;</span>],
-                <span style="background-color:#fff0f0">&#39;host_name&#39;</span>:    [<span style="background-color:#fff0f0">&#39;set_host_name&#39;</span>],
-                <span style="background-color:#fff0f0">&#39;image_name&#39;</span>:   [<span style="background-color:#fff0f0">&#39;set_image_name&#39;</span>],
-                <span style="background-color:#fff0f0">&#39;tenant_id&#39;</span>:    [<span style="background-color:#fff0f0">&#39;set_tenant_id&#39;</span>]
-               }
-    <span style="color:#888"># ...</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">_apply_instance_traits</span><span style="color:#111">(</span><span style="color:#111">evt</span><span style="color:#111">,</span> <span style="color:#111">objmap</span><span style="color:#111">):</span>
+    <span style="color:#111">traitmap</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+                <span style="color:#d88200">&#39;display_name&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;title&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;hostName&#39;</span><span style="color:#111">],</span>
+                <span style="color:#d88200">&#39;instance_id&#39;</span><span style="color:#111">:</span>  <span style="color:#111">[</span><span style="color:#d88200">&#39;resourceId&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;serverId&#39;</span><span style="color:#111">],</span>
+                <span style="color:#d88200">&#39;state&#39;</span><span style="color:#111">:</span>        <span style="color:#111">[</span><span style="color:#d88200">&#39;serverStatus&#39;</span><span style="color:#111">],</span>
+                <span style="color:#d88200">&#39;flavor_name&#39;</span><span style="color:#111">:</span>  <span style="color:#111">[</span><span style="color:#d88200">&#39;set_flavor_name&#39;</span><span style="color:#111">],</span>
+                <span style="color:#d88200">&#39;host_name&#39;</span><span style="color:#111">:</span>    <span style="color:#111">[</span><span style="color:#d88200">&#39;set_host_name&#39;</span><span style="color:#111">],</span>
+                <span style="color:#d88200">&#39;image_name&#39;</span><span style="color:#111">:</span>   <span style="color:#111">[</span><span style="color:#d88200">&#39;set_image_name&#39;</span><span style="color:#111">],</span>
+                <span style="color:#d88200">&#39;tenant_id&#39;</span><span style="color:#111">:</span>    <span style="color:#111">[</span><span style="color:#d88200">&#39;set_tenant_id&#39;</span><span style="color:#111">]</span>
+               <span style="color:#111">}</span>
+    <span style="color:#75715e"># ...</span></code></pre></div>
 <p>You could say that the above traits are the instance&rsquo;s fields that can be updated for the Instance object. We can clearly see that <code>state</code> and <code>host_name</code> are present. By discovering this I realized that no additional code would be needed inside the ZenPack&rsquo;s datasource in order to fix this live migration issue.</p>
 </div>
 

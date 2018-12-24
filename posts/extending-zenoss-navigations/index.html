@@ -104,15 +104,15 @@
 <p>Usually this file begins with some required boilerplate code:</p>
 
 <p><strong>configure.zcml</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
-<span style="color:#070">&lt;configure</span>
-  <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
-  <span style="color:#00c">xmlns:browser=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/browser&#34;</span>
-  <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#070">&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configure</span>
+  <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
+  <span style="color:#75af00">xmlns:browser=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/browser&#34;</span>
+  <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#f92672">&gt;</span>
 
-  <span style="color:#888">&lt;!-- Our custom code here --&gt;</span>
-  <span style="color:#070">&lt;include</span> <span style="color:#00c">package=</span><span style="background-color:#fff0f0">&#34;.browser&#34;</span> <span style="color:#070">/&gt;</span>
-<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+  <span style="color:#75715e">&lt;!-- Our custom code here --&gt;</span>
+  <span style="color:#f92672">&lt;include</span> <span style="color:#75af00">package=</span><span style="color:#d88200">&#34;.browser&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/configure&gt;</span></code></pre></div>
 <p>In the code above we are simply including a new directory (which will also contain a different <code>configure.zcml</code> file) in the configuration. It is in this new <code>configure.zcml</code> file that we will be creating the new navigation links, therefore we proceed and create the directory and the file:</p>
 
 <pre><code>mkdir browser
@@ -126,14 +126,14 @@ touch browser/configure.zcml
 <p>The primary navigation bar in Zenoss is the navigation bar that allows us to access Zenoss&rsquo;s most important pages. These are the dashboard, events, infrastructure, reports, and advanced settings.</p>
 
 <p>We can easily add a new link to this navigation bar by adding the following code to <code>browser/configure.zcml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;browser:viewlet</span>
-  <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;New Page&#34;</span>
-  <span style="color:#00c">url=</span><span style="background-color:#fff0f0">&#34;/zport/dmd/newpage&#34;</span>
-  <span style="color:#00c">weight=</span><span style="background-color:#fff0f0">&#34;15&#34;</span>
-  <span style="color:#00c">manager=</span><span style="background-color:#fff0f0">&#34;Products.ZenUI3.navigation.interfaces.IPrimaryNavigationMenu&#34;</span>
-  <span style="color:#00c">class=</span><span style="background-color:#fff0f0">&#34;Products.ZenUI3.navigation.menuitem.PrimaryNavigationMenuItem&#34;</span>
-  <span style="color:#00c">permission=</span><span style="background-color:#fff0f0">&#34;zope2.Public&#34;</span>
-<span style="color:#070">/&gt;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:viewlet</span>
+  <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;New Page&#34;</span>
+  <span style="color:#75af00">url=</span><span style="color:#d88200">&#34;/zport/dmd/newpage&#34;</span>
+  <span style="color:#75af00">weight=</span><span style="color:#d88200">&#34;15&#34;</span>
+  <span style="color:#75af00">manager=</span><span style="color:#d88200">&#34;Products.ZenUI3.navigation.interfaces.IPrimaryNavigationMenu&#34;</span>
+  <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;Products.ZenUI3.navigation.menuitem.PrimaryNavigationMenuItem&#34;</span>
+  <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zope2.Public&#34;</span>
+<span style="color:#f92672">/&gt;</span></code></pre></div>
 <p>The <em>weight</em> attribute here specifies the index that this new item will have in regards to the items already contained in the navbar.</p>
 
 <p>After installing the ZenPack and restarting Zenoss. We can see our new <strong>NEW PAGE</strong> navigation link:</p>
@@ -145,16 +145,16 @@ touch browser/configure.zcml
 <p>Besides the primary navigation bar, Zenoss also has a secondary navigation bar that appears below the primary navigation bar. However, <strong>each</strong> item (link) from the primary navigation bar will have a secondary navigation bar of its own. We can see this easily because <em>EVENTS</em> will have secondary links such as <em>Event Console</em> and <em>Event Classes</em> while <em>INFRASTRUCTURE</em> will have its own links such as <em>Devices</em>, <em>Network Map</em> and <em>Processes</em>.</p>
 
 <p>Let&rsquo;s say we want to add a new item to the secondary navigation bar in INFRASTRUCTURE. We can easily do this by adding the following to <code>browser/configure.zcml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;browser:viewlet</span>
-  <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;Secondary Link&#34;</span>
-  <span style="color:#00c">url=</span><span style="background-color:#fff0f0">&#34;/zport/dmd/secondaryPage&#34;</span>
-  <span style="color:#00c">weight=</span><span style="background-color:#fff0f0">&#34;8&#34;</span>
-  <span style="color:#00c">parentItem=</span><span style="background-color:#fff0f0">&#34;Infrastructure&#34;</span>
-  <span style="color:#00c">manager=</span><span style="background-color:#fff0f0">&#34;Products.ZenUI3.navigation.interfaces.ISecondaryNavigationMenu&#34;</span>
-  <span style="color:#00c">class=</span><span style="background-color:#fff0f0">&#34;Products.ZenUI3.navigation.menuitem.SecondaryNavigationMenuItem&#34;</span>
-  <span style="color:#00c">permission=</span><span style="background-color:#fff0f0">&#34;zenoss.View&#34;</span>
-  <span style="color:#00c">layer=</span><span style="background-color:#fff0f0">&#34;Products.ZenUI3.navigation.interfaces.IZenossNav&#34;</span>
-  <span style="color:#070">/&gt;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:viewlet</span>
+  <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;Secondary Link&#34;</span>
+  <span style="color:#75af00">url=</span><span style="color:#d88200">&#34;/zport/dmd/secondaryPage&#34;</span>
+  <span style="color:#75af00">weight=</span><span style="color:#d88200">&#34;8&#34;</span>
+  <span style="color:#75af00">parentItem=</span><span style="color:#d88200">&#34;Infrastructure&#34;</span>
+  <span style="color:#75af00">manager=</span><span style="color:#d88200">&#34;Products.ZenUI3.navigation.interfaces.ISecondaryNavigationMenu&#34;</span>
+  <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;Products.ZenUI3.navigation.menuitem.SecondaryNavigationMenuItem&#34;</span>
+  <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
+  <span style="color:#75af00">layer=</span><span style="color:#d88200">&#34;Products.ZenUI3.navigation.interfaces.IZenossNav&#34;</span>
+  <span style="color:#f92672">/&gt;</span></code></pre></div>
 <p><strong>url</strong> represents the URL where this link leads to. Primary navigation links also have this field. <strong>parentItem</strong> specifies <em>which</em> link from the <strong>primary</strong> navigation bar will this secondary navigation link will belong to.</p>
 
 <p>If we restart <em>zopectl</em>, we can immediately see the changes:</p>

@@ -100,7 +100,7 @@
 <p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn&rsquo;t exist), within the ZenPack&rsquo;s top directory.</p>
 
 <p><strong>actions.json</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
   &#34;triggers&#34;: [
     {
       &#34;name&#34;: &#34;Critical_death_event&#34;,
@@ -296,15 +296,15 @@
 When a ZenPack is removed, event fields are removed; however notifications and triggers are <strong>NOT</strong> removed.<br><br>Additionally, if a trigger or notification already exists when a ZenPack is installed, it will be overriden by the definition in the ZenPack.</p>
 
 <p>A possible solution to the problem above would be to programatically remove the notifications and triggers in the ZenPack&rsquo;s <code>remove</code> method in the <code>__init__.py</code> file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">remove</span>(self, app, leaveObjects<span style="color:#333">=</span>False):
-    <span style="color:#080;font-weight:bold">try</span>:
-        ZenPack<span style="color:#333">.</span>UNINSTALLING <span style="color:#333">=</span> True
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">remove</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">,</span> <span style="color:#111">leaveObjects</span><span style="color:#f92672">=</span><span style="color:#111">False</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+        <span style="color:#111">ZenPack</span><span style="color:#f92672">.</span><span style="color:#111">UNINSTALLING</span> <span style="color:#f92672">=</span> <span style="color:#111">True</span>
 
-        <span style="color:#888"># Remove triggers &amp; notifications here...</span>
+        <span style="color:#75715e"># Remove triggers &amp; notifications here...</span>
 
-        <span style="color:#007020">super</span>(ZenPack, self)<span style="color:#333">.</span>remove(app, leaveObjects<span style="color:#333">=</span>leaveObjects)
-    <span style="color:#080;font-weight:bold">finally</span>:
-        ZenPack<span style="color:#333">.</span>UNINSTALLING <span style="color:#333">=</span> False</code></pre></div>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">,</span> <span style="color:#111">leaveObjects</span><span style="color:#f92672">=</span><span style="color:#111">leaveObjects</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">finally</span><span style="color:#111">:</span>
+        <span style="color:#111">ZenPack</span><span style="color:#f92672">.</span><span style="color:#111">UNINSTALLING</span> <span style="color:#f92672">=</span> <span style="color:#111">False</span></code></pre></div>
 <h2 id="references">References</h2>
 
 <ol>

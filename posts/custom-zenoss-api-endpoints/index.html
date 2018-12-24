@@ -100,21 +100,21 @@
 <p>Let&rsquo;s go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack&rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don&rsquo;t know what routers and facades are and what they do, I suggest you first take a look at <a href="/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
 
 <p>First, let&rsquo;s take a quick look at the imports:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os.path</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">urlparse</span> <span style="color:#080;font-weight:bold">import</span> urlparse
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">subprocess</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os.path</span>
+<span style="color:#f92672">from</span> <span style="color:#111">urlparse</span> <span style="color:#f92672">import</span> <span style="color:#111">urlparse</span>
+<span style="color:#f92672">import</span> <span style="color:#111">subprocess</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.event</span> <span style="color:#080;font-weight:bold">import</span> notify
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> implements
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZODB.transact</span> <span style="color:#080;font-weight:bold">import</span> transact
+<span style="color:#f92672">from</span> <span style="color:#111">zope.event</span> <span style="color:#f92672">import</span> <span style="color:#111">notify</span>
+<span style="color:#f92672">from</span> <span style="color:#111">zope.interface</span> <span style="color:#f92672">import</span> <span style="color:#111">implements</span>
+<span style="color:#f92672">from</span> <span style="color:#111">ZODB.transact</span> <span style="color:#f92672">import</span> <span style="color:#111">transact</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Ext</span> <span style="color:#080;font-weight:bold">import</span> DirectRouter, DirectResponse
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products</span> <span style="color:#080;font-weight:bold">import</span> Zuul
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.catalog.events</span> <span style="color:#080;font-weight:bold">import</span> IndexingEvent
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.facades</span> <span style="color:#080;font-weight:bold">import</span> ZuulFacade
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.interfaces</span> <span style="color:#080;font-weight:bold">import</span> IFacade
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.utils</span> <span style="color:#080;font-weight:bold">import</span> ZuulMessageFactory <span style="color:#080;font-weight:bold">as</span> _t
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> zenPath</code></pre></div>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Ext</span> <span style="color:#f92672">import</span> <span style="color:#111">DirectRouter</span><span style="color:#111">,</span> <span style="color:#111">DirectResponse</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products</span> <span style="color:#f92672">import</span> <span style="color:#111">Zuul</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.catalog.events</span> <span style="color:#f92672">import</span> <span style="color:#111">IndexingEvent</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.facades</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulFacade</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">IFacade</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.utils</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulMessageFactory</span> <span style="color:#00a8c8">as</span> <span style="color:#111">_t</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Utils</span> <span style="color:#f92672">import</span> <span style="color:#111">zenPath</span></code></pre></div>
 <p>Some imports are probably not needed, but the ones that are of our interest are imports such as <code>DirectRouter</code> and <code>DirectResponse</code>, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.</p>
 
 <h3 id="defining-routers-and-facades">Defining Routers and Facades</h3>
@@ -122,39 +122,39 @@
 <p>The router and the facade is what will make the endpoint do something once it&rsquo;s reached. Basically, the router will receive a request, it will then call the corresponding facade and obtain its results and result status, and then finally the router will pass this information as a response.</p>
 
 <p>Before defining any router or facade we need to first define an interface for our facade:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">IMyApiFacade</span>(IFacade):
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">myAction</span>(self, device_ip):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;A test endpoint.&#34;&#34;&#34;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">IMyApiFacade</span><span style="color:#111">(</span><span style="color:#111">IFacade</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">myAction</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device_ip</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;A test endpoint.&#34;&#34;&#34;</span></code></pre></div>
 <p>Simple. The interface will inherit from <code>IFacade</code>, and its naming should follow this convention: <code>I&lt;name&gt;Facade</code>.</p>
 
 <p>Now we proceed to define the facade that will implement this interface:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyApiFacade</span>(ZuulFacade):
-    implements(IMyApiFacade)
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyApiFacade</span><span style="color:#111">(</span><span style="color:#111">ZuulFacade</span><span style="color:#111">):</span>
+    <span style="color:#111">implements</span><span style="color:#111">(</span><span style="color:#111">IMyApiFacade</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">myAction</span>(self, device_ip):
-        log<span style="color:#333">.</span>info(<span style="background-color:#fff0f0">&#39;Performing MY ACTION on device {0}&#39;</span><span style="color:#333">.</span>format(device_ip))
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">myAction</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device_ip</span><span style="color:#111">):</span>
+        <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Performing MY ACTION on device {0}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">device_ip</span><span style="color:#111">))</span>
 
-        <span style="color:#080;font-weight:bold">try</span>:
-            <span style="color:#080;font-weight:bold">pass</span>
-        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
-            <span style="color:#080;font-weight:bold">pass</span>
+        <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">pass</span>
+        <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">e</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">pass</span>
 
-        <span style="color:#080;font-weight:bold">return</span> True, <span style="background-color:#fff0f0">&#39;Device {0} was processed&#39;</span><span style="color:#333">.</span>format(device_ip)</code></pre></div>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">True</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Device {0} was processed&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">device_ip</span><span style="color:#111">)</span></code></pre></div>
 <p>Notice that we are implementing the interface, and we are now defining what the method declared in the interface will actually do. In this case we are just logging a log message and then returning the necessary values to the Router. The returned values must be a <em>boolean</em> result status and a <em>string</em> result message.</p>
 
 <p>Finally we can define the router that will call this facade:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyApiRouter</span>(DirectRouter):
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_getFacade</span>(self):
-        <span style="color:#080;font-weight:bold">return</span> Zuul<span style="color:#333">.</span>getFacade(<span style="background-color:#fff0f0">&#39;myapi&#39;</span>, self<span style="color:#333">.</span>context)
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyApiRouter</span><span style="color:#111">(</span><span style="color:#111">DirectRouter</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_getFacade</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">getFacade</span><span style="color:#111">(</span><span style="color:#d88200">&#39;myapi&#39;</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">context</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">myAction</span>(self, device_ip):
-        facade <span style="color:#333">=</span> self<span style="color:#333">.</span>_getFacade()
-        success, message <span style="color:#333">=</span> facade<span style="color:#333">.</span>myAction(device_ip)
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">myAction</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device_ip</span><span style="color:#111">):</span>
+        <span style="color:#111">facade</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getFacade</span><span style="color:#111">()</span>
+        <span style="color:#111">success</span><span style="color:#111">,</span> <span style="color:#111">message</span> <span style="color:#f92672">=</span> <span style="color:#111">facade</span><span style="color:#f92672">.</span><span style="color:#111">myAction</span><span style="color:#111">(</span><span style="color:#111">device_ip</span><span style="color:#111">)</span>
 
-        <span style="color:#080;font-weight:bold">if</span> success:
-            <span style="color:#080;font-weight:bold">return</span> DirectResponse<span style="color:#333">.</span>succeed(jobId<span style="color:#333">=</span>message)
-        <span style="color:#080;font-weight:bold">else</span>:
-            <span style="color:#080;font-weight:bold">return</span> DirectResponse<span style="color:#333">.</span>fail(message)</code></pre></div>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">success</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">DirectResponse</span><span style="color:#f92672">.</span><span style="color:#111">succeed</span><span style="color:#111">(</span><span style="color:#111">jobId</span><span style="color:#f92672">=</span><span style="color:#111">message</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">DirectResponse</span><span style="color:#f92672">.</span><span style="color:#111">fail</span><span style="color:#111">(</span><span style="color:#111">message</span><span style="color:#111">)</span></code></pre></div>
 <p>Pretty straight forward.</p>
 
 <p>-&gt; It is also common to see some ZenPacks define their routers inside a <code>routers.py</code> file and their facades in a <code>facades.py</code> file in the ZenPack&rsquo;s top directory.</p>
@@ -162,32 +162,32 @@
 <h3 id="gluing-the-endpoint-into-zenoss">Gluing the Endpoint into Zenoss</h3>
 
 <p>Once the necessary classes and methods have been implemented, we now need to configure this implemenation into Zenoss. We do this by specifying some configurations inside the <code>configure.zcml</code> file in the ZenPack&rsquo;s top directory.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
-<span style="color:#070">&lt;configure</span>
-  <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
-  <span style="color:#00c">xmlns:browser=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/browser&#34;</span>
-  <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span>
-  <span style="color:#070">&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configure</span>
+  <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
+  <span style="color:#75af00">xmlns:browser=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/browser&#34;</span>
+  <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span>
+  <span style="color:#f92672">&gt;</span>
 
-  <span style="color:#888">&lt;!-- API Routers --&gt;</span>
-  <span style="color:#070">&lt;include</span> <span style="color:#00c">package=</span><span style="background-color:#fff0f0">&#34;Products.ZenUtils.extdirect.zope&#34;</span> <span style="color:#00c">file=</span><span style="background-color:#fff0f0">&#34;meta.zcml&#34;</span> <span style="color:#070">/&gt;</span>
+  <span style="color:#75715e">&lt;!-- API Routers --&gt;</span>
+  <span style="color:#f92672">&lt;include</span> <span style="color:#75af00">package=</span><span style="color:#d88200">&#34;Products.ZenUtils.extdirect.zope&#34;</span> <span style="color:#75af00">file=</span><span style="color:#d88200">&#34;meta.zcml&#34;</span> <span style="color:#f92672">/&gt;</span>
 
-  <span style="color:#070">&lt;browser:directRouter</span>
-    <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;myapi_router&#34;</span>
-    <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
-    <span style="color:#00c">class=</span><span style="background-color:#fff0f0">&#34;.api.MyApiRouter&#34;</span>
-    <span style="color:#00c">namespace=</span><span style="background-color:#fff0f0">&#34;Zenoss.remote&#34;</span>
-    <span style="color:#00c">permission=</span><span style="background-color:#fff0f0">&#34;zenoss.View&#34;</span>
-    <span style="color:#070">/&gt;</span>
+  <span style="color:#f92672">&lt;browser:directRouter</span>
+    <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;myapi_router&#34;</span>
+    <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
+    <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;.api.MyApiRouter&#34;</span>
+    <span style="color:#75af00">namespace=</span><span style="color:#d88200">&#34;Zenoss.remote&#34;</span>
+    <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
+    <span style="color:#f92672">/&gt;</span>
 
-  <span style="color:#888">&lt;!-- API Facades --&gt;</span>
-  <span style="color:#070">&lt;adapter</span>
-    <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;myapi&#34;</span>
-    <span style="color:#00c">provides=</span><span style="background-color:#fff0f0">&#34;.api.IMyApiFacade&#34;</span>
-    <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
-    <span style="color:#00c">factory=</span><span style="background-color:#fff0f0">&#34;.api.MyApiFacade&#34;</span>
-    <span style="color:#070">/&gt;</span>
-<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+  <span style="color:#75715e">&lt;!-- API Facades --&gt;</span>
+  <span style="color:#f92672">&lt;adapter</span>
+    <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;myapi&#34;</span>
+    <span style="color:#75af00">provides=</span><span style="color:#d88200">&#34;.api.IMyApiFacade&#34;</span>
+    <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
+    <span style="color:#75af00">factory=</span><span style="color:#d88200">&#34;.api.MyApiFacade&#34;</span>
+    <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/configure&gt;</span></code></pre></div>
 <p>If you take a look at the values for fields such as <code>class</code>, <code>provides</code>, and <code>factory</code> you will notice that these names and namespaces correspond to the implemenation we did previously. If these values do not match correctly, the endpoint won&rsquo;t be successfully attached to Zenoss.</p>
 
 <p>Finally, install the ZenPack and restart Zenoss.</p>
@@ -195,12 +195,12 @@
 <h2 id="testing-it-out">Testing it Out</h2>
 
 <p>We can easily test this new endpoint by opening up a JavaScript developer console in Chrome or Firefox. We can reach the newly created endpoint like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Zenoss.remote.MyApi.myAction({device_ip<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;&#39;</span>}, <span style="color:#080;font-weight:bold">function</span>(result){
-  console.log(result);
-});
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">remote</span><span style="color:#111">.</span><span style="color:#75af00">MyApi</span><span style="color:#111">.</span><span style="color:#75af00">myAction</span><span style="color:#111">({</span><span style="color:#75af00">device_ip</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;&#39;</span><span style="color:#111">},</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">){</span>
+  <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">);</span>
+<span style="color:#111">});</span>
 </code></pre></div>
 <p>Other methods such as <em>curl</em> and POSTMAN can also be used. Here is an example using curl:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="background-color:#fff0f0">&#34;admin:zenoss&#34;</span> -X POST -H <span style="background-color:#fff0f0">&#34;Content-Type: application/json&#34;</span> -d <span style="background-color:#fff0f0">&#39;{&#34;action&#34;: &#34;MyApiRouter&#34;, &#34;method&#34;: &#34;myAction&#34;, &#34;data&#34;: [{&#34;device_ip&#34;: &#34;$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#963">$ZENOSS_IP</span>:8080/zport/dmd/myapi_router</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="color:#d88200">&#34;admin:zenoss&#34;</span> -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#39;{&#34;action&#34;: &#34;MyApiRouter&#34;, &#34;method&#34;: &#34;myAction&#34;, &#34;data&#34;: [{&#34;device_ip&#34;: &#34;$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#111">$ZENOSS_IP</span>:8080/zport/dmd/myapi_router</code></pre></div>
 </div>
 
 

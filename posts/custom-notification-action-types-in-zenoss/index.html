@@ -122,32 +122,32 @@
 <p>In our ZenPack&rsquo;s top directory, we create a file called <code>interfaces.py</code>. In this file we will define the contents (fields in the content pane) of the action:</p>
 
 <p><strong>interfaces.py</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> Interface
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.interfaces.actions</span> <span style="color:#080;font-weight:bold">import</span> IActionContentInfo
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.interfaces</span> <span style="color:#080;font-weight:bold">import</span> IFacade
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.form</span> <span style="color:#080;font-weight:bold">import</span> schema
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.utils</span> <span style="color:#080;font-weight:bold">import</span> ZuulMessageFactory <span style="color:#080;font-weight:bold">as</span> _t
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">textwrap</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">zope.interface</span> <span style="color:#f92672">import</span> <span style="color:#111">Interface</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.interfaces.actions</span> <span style="color:#f92672">import</span> <span style="color:#111">IActionContentInfo</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">IFacade</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.form</span> <span style="color:#f92672">import</span> <span style="color:#111">schema</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.utils</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulMessageFactory</span> <span style="color:#00a8c8">as</span> <span style="color:#111">_t</span>
+<span style="color:#f92672">import</span> <span style="color:#111">textwrap</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ISmsActionContentInfo</span>(IActionContentInfo):
-    cellNumber <span style="color:#333">=</span> schema<span style="color:#333">.</span>TextLine(
-        title <span style="color:#333">=</span> _t(<span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;Cellphone Number&#39;</span>),
-        order<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">90</span>,
-    )
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">ISmsActionContentInfo</span><span style="color:#111">(</span><span style="color:#111">IActionContentInfo</span><span style="color:#111">):</span>
+    <span style="color:#111">cellNumber</span> <span style="color:#f92672">=</span> <span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">TextLine</span><span style="color:#111">(</span>
+        <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">_t</span><span style="color:#111">(</span><span style="color:#d88200">u</span><span style="color:#d88200">&#39;Cellphone Number&#39;</span><span style="color:#111">),</span>
+        <span style="color:#111">order</span><span style="color:#f92672">=</span><span style="color:#ae81ff">90</span><span style="color:#111">,</span>
+    <span style="color:#111">)</span>
 
-    message_body <span style="color:#333">=</span> schema<span style="color:#333">.</span>Text(
-        title <span style="color:#333">=</span> _t(<span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;Message Body&#39;</span>),
-        description <span style="color:#333">=</span> _t(<span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;The content of the SMS message&#39;</span>),
-        order <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">100</span>,
-        default <span style="color:#333">=</span> textwrap<span style="color:#333">.</span>dedent(text <span style="color:#333">=</span> <span style="background-color:#fff0f0">u</span><span style="background-color:#fff0f0">&#39;&#39;&#39;
-</span><span style="background-color:#fff0f0">            Device: ${evt/device}
-</span><span style="background-color:#fff0f0">            Component: ${evt/component}
-</span><span style="background-color:#fff0f0">            Severity: ${evt/severity}
-</span><span style="background-color:#fff0f0">            Time: ${evt/lastTime}
-</span><span style="background-color:#fff0f0">            Message:
-</span><span style="background-color:#fff0f0">            ${evt/message}
-</span><span style="background-color:#fff0f0">            &#39;&#39;&#39;</span>)
-    )</code></pre></div>
+    <span style="color:#111">message_body</span> <span style="color:#f92672">=</span> <span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">Text</span><span style="color:#111">(</span>
+        <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">_t</span><span style="color:#111">(</span><span style="color:#d88200">u</span><span style="color:#d88200">&#39;Message Body&#39;</span><span style="color:#111">),</span>
+        <span style="color:#111">description</span> <span style="color:#f92672">=</span> <span style="color:#111">_t</span><span style="color:#111">(</span><span style="color:#d88200">u</span><span style="color:#d88200">&#39;The content of the SMS message&#39;</span><span style="color:#111">),</span>
+        <span style="color:#111">order</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span>
+        <span style="color:#111">default</span> <span style="color:#f92672">=</span> <span style="color:#111">textwrap</span><span style="color:#f92672">.</span><span style="color:#111">dedent</span><span style="color:#111">(</span><span style="color:#111">text</span> <span style="color:#f92672">=</span> <span style="color:#d88200">u</span><span style="color:#d88200">&#39;&#39;&#39;
+</span><span style="color:#d88200">            Device: ${evt/device}
+</span><span style="color:#d88200">            Component: ${evt/component}
+</span><span style="color:#d88200">            Severity: ${evt/severity}
+</span><span style="color:#d88200">            Time: ${evt/lastTime}
+</span><span style="color:#d88200">            Message:
+</span><span style="color:#d88200">            ${evt/message}
+</span><span style="color:#d88200">            &#39;&#39;&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">)</span></code></pre></div>
 <p>Very simple. We are only requiring two fields, the mobile number and the message&rsquo;s body, which I actually copied from the e-mail action. You can see that the message body makes use of TALES expression to obtain the data from the event (<code>evt</code>).</p>
 
 <h3 id="information-adapter">Information Adapter</h3>
@@ -155,18 +155,18 @@
 <p>Next we will create the information adapter that will import the interface we just created. The adapter will then be registered using a <code>configure.zcml</code> file. In the ZenPack&rsquo;s top directory, we create a file called <code>info.py</code>:</p>
 
 <p><strong>info.py</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> implements
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">zope.interface</span> <span style="color:#f92672">import</span> <span style="color:#111">implements</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.infos.actions</span> <span style="color:#080;font-weight:bold">import</span> ActionContentInfo
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.Zuul.infos.actions</span> <span style="color:#080;font-weight:bold">import</span> ActionFieldProperty
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.infos.actions</span> <span style="color:#f92672">import</span> <span style="color:#111">ActionContentInfo</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.infos.actions</span> <span style="color:#f92672">import</span> <span style="color:#111">ActionFieldProperty</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.andres.Sms.interfaces</span> <span style="color:#080;font-weight:bold">import</span> ISmsActionContentInfo
+<span style="color:#f92672">from</span> <span style="color:#111">ZenPacks.andres.Sms.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">ISmsActionContentInfo</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">SmsActionContentInfo</span>(ActionContentInfo):
-    implements(ISmsActionContentInfo)
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">SmsActionContentInfo</span><span style="color:#111">(</span><span style="color:#111">ActionContentInfo</span><span style="color:#111">):</span>
+    <span style="color:#111">implements</span><span style="color:#111">(</span><span style="color:#111">ISmsActionContentInfo</span><span style="color:#111">)</span>
 
-    cellNumber <span style="color:#333">=</span> ActionFieldProperty(ISmsActionContentInfo, <span style="background-color:#fff0f0">&#39;cellNumber&#39;</span>)
-    message_body <span style="color:#333">=</span> ActionFieldProperty(ISmsActionContentInfo, <span style="background-color:#fff0f0">&#39;message_body&#39;</span>)</code></pre></div>
+    <span style="color:#111">cellNumber</span> <span style="color:#f92672">=</span> <span style="color:#111">ActionFieldProperty</span><span style="color:#111">(</span><span style="color:#111">ISmsActionContentInfo</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;cellNumber&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">message_body</span> <span style="color:#f92672">=</span> <span style="color:#111">ActionFieldProperty</span><span style="color:#111">(</span><span style="color:#111">ISmsActionContentInfo</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;message_body&#39;</span><span style="color:#111">)</span></code></pre></div>
 <p>Notice that we are using the ZenPack&rsquo;s (the ZenPack we are actually working with) full namespace to import the interface we created previously. The adapter will implement this interface and define the fields as <code>ActionFieldProperty</code> fields.</p>
 
 <h3 id="action-logic">Action Logic</h3>
@@ -176,77 +176,77 @@
 <p>Let&rsquo;s create a directory called <code>actions</code> in our ZenPack&rsquo;s top directory. Inside this new directory, create a blank <code>__init__.py</code> file and then create a Python file for the action&rsquo;s logic. For this example, I am creating a file called <code>sms.py</code>.</p>
 
 <p>Let&rsquo;s first go over the imports:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
-log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.useraction.actions&#39;</span>)
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zen.useraction.actions&#39;</span><span style="color:#111">)</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span> <span style="color:#080;font-weight:bold">import</span> implements
+<span style="color:#f92672">from</span> <span style="color:#111">zope.interface</span> <span style="color:#f92672">import</span> <span style="color:#111">implements</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.interfaces</span> <span style="color:#080;font-weight:bold">import</span> IAction, IProvidesEmailAddresses
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.actions</span> <span style="color:#080;font-weight:bold">import</span> IActionBase, TargetableAction
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.actions</span> <span style="color:#080;font-weight:bold">import</span> processTalSource, _signalToContextDict
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.guid.guid</span> <span style="color:#080;font-weight:bold">import</span> GUIDManager
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenModel.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">IAction</span><span style="color:#111">,</span> <span style="color:#111">IProvidesEmailAddresses</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenModel.actions</span> <span style="color:#f92672">import</span> <span style="color:#111">IActionBase</span><span style="color:#111">,</span> <span style="color:#111">TargetableAction</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenModel.actions</span> <span style="color:#f92672">import</span> <span style="color:#111">processTalSource</span><span style="color:#111">,</span> <span style="color:#111">_signalToContextDict</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.guid.guid</span> <span style="color:#f92672">import</span> <span style="color:#111">GUIDManager</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.andres.Sms.interfaces</span> <span style="color:#080;font-weight:bold">import</span> ISmsActionContentInfo</code></pre></div>
+<span style="color:#f92672">from</span> <span style="color:#111">ZenPacks.andres.Sms.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">ISmsActionContentInfo</span></code></pre></div>
 <p>Nothing new. Notice that we are again importing the interface we previously defined.</p>
 
 <p>Now let&rsquo;s go over the custom action class that will inherit from <code>IActionBase</code> and <code>TargetableAction</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># ...</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ...</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">SmsAction</span>(IActionBase, TargetableAction):
-    implements(IAction)
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">SmsAction</span><span style="color:#111">(</span><span style="color:#111">IActionBase</span><span style="color:#111">,</span> <span style="color:#111">TargetableAction</span><span style="color:#111">):</span>
+    <span style="color:#111">implements</span><span style="color:#111">(</span><span style="color:#111">IAction</span><span style="color:#111">)</span>
 
-    <span style="color:#007020">id</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;sms&#39;</span>
-    name <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;SMS&#39;</span>
-    actionContentInfo <span style="color:#333">=</span> ISmsActionContentInfo
+    <span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;sms&#39;</span>
+    <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;SMS&#39;</span>
+    <span style="color:#111">actionContentInfo</span> <span style="color:#f92672">=</span> <span style="color:#111">ISmsActionContentInfo</span>
 
-    <span style="color:#888"># ...</span></code></pre></div>
+    <span style="color:#75715e"># ...</span></code></pre></div>
 <p>The <code>name</code> field is the actual string that will be shown in the dropdown menu in the user interface. The <code>actionContentInfo</code> represents the content shown in the <em>content</em> tab. Here we are simply assigning the content we defined in <code>interface.py</code>.</p>
 
 <p>Now let&rsquo;s see what methods we should add to this class:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">SmsAction</span>(IActionBase, TargetableAction):
-    <span style="color:#888"># ...</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">SmsAction</span><span style="color:#111">(</span><span style="color:#111">IActionBase</span><span style="color:#111">,</span> <span style="color:#111">TargetableAction</span><span style="color:#111">):</span>
+    <span style="color:#75715e"># ...</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self):
-        <span style="color:#007020">super</span>(SmsAction, self)<span style="color:#333">.</span>__init__()
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">SmsAction</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">()</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">setupAction</span>(self, dmd):
-        self<span style="color:#333">.</span>guidManager <span style="color:#333">=</span> GUIDManager(dmd)
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">setupAction</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">dmd</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">guidManager</span> <span style="color:#f92672">=</span> <span style="color:#111">GUIDManager</span><span style="color:#111">(</span><span style="color:#111">dmd</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">execute</span>(self, notification, signal):
-        log<span style="color:#333">.</span>debug(<span style="background-color:#fff0f0">&#39;Executing {0} action&#39;</span><span style="color:#333">.</span>format(self<span style="color:#333">.</span>name))
-        self<span style="color:#333">.</span>setupAction(notification<span style="color:#333">.</span>dmd)
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">execute</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">notification</span><span style="color:#111">,</span> <span style="color:#111">signal</span><span style="color:#111">):</span>
+        <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">debug</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Executing {0} action&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">setupAction</span><span style="color:#111">(</span><span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">dmd</span><span style="color:#111">)</span>
 
-        data <span style="color:#333">=</span> _signalToContextDict(
-            signal,
-            self<span style="color:#333">.</span>options<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;zopeurl&#39;</span>),
-            notification,
-            self<span style="color:#333">.</span>guidManager
-        )
+        <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">_signalToContextDict</span><span style="color:#111">(</span>
+            <span style="color:#111">signal</span><span style="color:#111">,</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">options</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zopeurl&#39;</span><span style="color:#111">),</span>
+            <span style="color:#111">notification</span><span style="color:#111">,</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">guidManager</span>
+        <span style="color:#111">)</span>
 
-        <span style="color:#888"># Process the message body first</span>
-        message_body <span style="color:#333">=</span> processTalSource(notification<span style="color:#333">.</span>content[<span style="background-color:#fff0f0">&#39;message_body&#39;</span>], <span style="color:#333">**</span>data)
+        <span style="color:#75715e"># Process the message body first</span>
+        <span style="color:#111">message_body</span> <span style="color:#f92672">=</span> <span style="color:#111">processTalSource</span><span style="color:#111">(</span><span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">content</span><span style="color:#111">[</span><span style="color:#d88200">&#39;message_body&#39;</span><span style="color:#111">],</span> <span style="color:#f92672">**</span><span style="color:#111">data</span><span style="color:#111">)</span>
 
-        <span style="color:#888"># Call the actual SMS method here</span>
-        sendSms(message_body, notification<span style="color:#333">.</span>content[<span style="background-color:#fff0f0">&#39;cellNumber&#39;</span>])
+        <span style="color:#75715e"># Call the actual SMS method here</span>
+        <span style="color:#111">sendSms</span><span style="color:#111">(</span><span style="color:#111">message_body</span><span style="color:#111">,</span> <span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">content</span><span style="color:#111">[</span><span style="color:#d88200">&#39;cellNumber&#39;</span><span style="color:#111">])</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">updateContent</span>(self, content<span style="color:#333">=</span>None, data<span style="color:#333">=</span>None):
-        updates <span style="color:#333">=</span> <span style="color:#007020">dict</span>()
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">updateContent</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">content</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">):</span>
+        <span style="color:#111">updates</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">()</span>
 
-        properties <span style="color:#333">=</span> [
-            <span style="background-color:#fff0f0">&#39;cellNumber&#39;</span>,
-            <span style="background-color:#fff0f0">&#39;message_body&#39;</span>,
-        ]
+        <span style="color:#111">properties</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
+            <span style="color:#d88200">&#39;cellNumber&#39;</span><span style="color:#111">,</span>
+            <span style="color:#d88200">&#39;message_body&#39;</span><span style="color:#111">,</span>
+        <span style="color:#111">]</span>
 
-        <span style="color:#080;font-weight:bold">for</span> k <span style="color:#000;font-weight:bold">in</span> properties:
-            updates[k] <span style="color:#333">=</span> data<span style="color:#333">.</span>get(k)
+        <span style="color:#00a8c8">for</span> <span style="color:#111">k</span> <span style="color:#f92672">in</span> <span style="color:#111">properties</span><span style="color:#111">:</span>
+            <span style="color:#111">updates</span><span style="color:#111">[</span><span style="color:#111">k</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">data</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">k</span><span style="color:#111">)</span>
 
-        content<span style="color:#333">.</span>update(updates)</code></pre></div>
+        <span style="color:#111">content</span><span style="color:#f92672">.</span><span style="color:#111">update</span><span style="color:#111">(</span><span style="color:#111">updates</span><span style="color:#111">)</span></code></pre></div>
 <p>So the method above that peaks our interest is <code>execute()</code>. It is here where we process the message body (because it contains TALES expressions), and send the SMS message with a magic method, passing the message body and the cellphone number. Notice how these fields are accessed using <code>notification.content['key']</code>.</p>
 
 <p>=&gt; Once everything is finished and the ZenPack is installed. Check the <code>zenactiond.log</code> log file for logs related to this action to make sure that the notification is being triggered.</p>
 
 <p>Obviously the above <code>sendSms()</code> method doesn&rsquo;t really exist. But suppose we were using this method provided by a Python client that sends SMS messages using a special service (like <a href="https://www.twilio.com/">Twilio</a>), then we could place this client under the <code>/lib</code> directory in the ZenPack&rsquo;s top directory. We can then add another import to <code>sms.py</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.andres.Sms.lib.twiliosms</span> <span style="color:#080;font-weight:bold">import</span> sendSms</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">ZenPacks.andres.Sms.lib.twiliosms</span> <span style="color:#f92672">import</span> <span style="color:#111">sendSms</span></code></pre></div>
 <p>You get the idea.</p>
 
 <h3 id="registering-the-action">Registering the Action</h3>
@@ -254,25 +254,25 @@ log <span style="color:#333">=</span> logging<span style="color:#333">.</span>ge
 <p>In other posts I&rsquo;ve talked about how browser resources and templates are registered through the <code>configure.zcml</code> file. In this case we will also register the adapter and the action&rsquo;s logic file so that the front-end (ExtJS) knows how to interact with it.</p>
 
 <p><strong>configure.zcml</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
-<span style="color:#070">&lt;configure</span>
-    <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
-    <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#070">&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configure</span>
+    <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
+    <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#f92672">&gt;</span>
 
-    <span style="color:#888">&lt;!-- Includes: Browser Configuration --&gt;</span>
-    <span style="color:#070">&lt;utility</span>
-      <span style="color:#00c">factory=</span><span style="background-color:#fff0f0">&#34;.actions.sms.SmsAction&#34;</span>
-      <span style="color:#00c">provides=</span><span style="background-color:#fff0f0">&#34;Products.ZenModel.interfaces.IAction&#34;</span>
-      <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;sms&#34;</span>
-      <span style="color:#070">/&gt;</span>
+    <span style="color:#75715e">&lt;!-- Includes: Browser Configuration --&gt;</span>
+    <span style="color:#f92672">&lt;utility</span>
+      <span style="color:#75af00">factory=</span><span style="color:#d88200">&#34;.actions.sms.SmsAction&#34;</span>
+      <span style="color:#75af00">provides=</span><span style="color:#d88200">&#34;Products.ZenModel.interfaces.IAction&#34;</span>
+      <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;sms&#34;</span>
+      <span style="color:#f92672">/&gt;</span>
 
-    <span style="color:#070">&lt;adapter</span>
-      <span style="color:#00c">provides=</span><span style="background-color:#fff0f0">&#34;.interfaces.ISmsActionContentInfo&#34;</span>
-      <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;Products.ZenModel.NotificationSubscription.NotificationSubscription&#34;</span>
-      <span style="color:#00c">factory=</span><span style="background-color:#fff0f0">&#34;.info.SmsActionContentInfo&#34;</span>
-      <span style="color:#070">/&gt;</span>
+    <span style="color:#f92672">&lt;adapter</span>
+      <span style="color:#75af00">provides=</span><span style="color:#d88200">&#34;.interfaces.ISmsActionContentInfo&#34;</span>
+      <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;Products.ZenModel.NotificationSubscription.NotificationSubscription&#34;</span>
+      <span style="color:#75af00">factory=</span><span style="color:#d88200">&#34;.info.SmsActionContentInfo&#34;</span>
+      <span style="color:#f92672">/&gt;</span>
 
-<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+<span style="color:#f92672">&lt;/configure&gt;</span></code></pre></div>
 <p>At this point you can proceed to install the ZenPack and restart Zenoss. Afterwards you can navigate to <em>Events &gt; Triggers &gt; Notifications</em>, create a new notification of SMS type and fill in or change the default contents:</p>
 
 <p><img src="/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="SMS Action" /></p>

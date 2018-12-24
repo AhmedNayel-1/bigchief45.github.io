@@ -175,24 +175,24 @@ Options:
 <h3 id="using-an-event-service">Using an Event Service</h3>
 
 <p>Inside <em>zendmd</em> or in our Python code we can use an Event Service to send events. For example, we could make a custom daemon send an event from within the <code>doTask</code> method:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># Other imports here...</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenEvents.ZenEventClasses</span> <span style="color:#080;font-weight:bold">import</span> Error, Critical, Clear
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Other imports here...</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenEvents.ZenEventClasses</span> <span style="color:#f92672">import</span> <span style="color:#111">Error</span><span style="color:#111">,</span> <span style="color:#111">Critical</span><span style="color:#111">,</span> <span style="color:#111">Clear</span>
 
-<span style="color:#888"># ...</span>
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyDaemonTask</span>(ObservableMixin):
-    <span style="color:#888"># ...</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">dotask</span>(self):
-        <span style="color:#888"># Use the daemon&#39;s Event Service</span>
-        self<span style="color:#333">.</span>_eventService<span style="color:#333">.</span>sendEvent(<span style="color:#007020">dict</span>(
-            summary<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Event Test...&#39;</span>,
-            message<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Event Test...&#39;</span>,
-            component<span style="color:#333">=</span>self<span style="color:#333">.</span>_preferences<span style="color:#333">.</span>collectorName,
-            eventClass<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;/Status/Ping&#39;</span>,
-            ipAddress<span style="color:#333">=</span>self<span style="color:#333">.</span>configId,
-            device<span style="color:#333">=</span>self<span style="color:#333">.</span>configId,
-            severity<span style="color:#333">=</span>Critical,
-            agent<span style="color:#333">=</span>self<span style="color:#333">.</span>_preferences<span style="color:#333">.</span>collectorName
-            ))</code></pre></div>
+<span style="color:#75715e"># ...</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyDaemonTask</span><span style="color:#111">(</span><span style="color:#111">ObservableMixin</span><span style="color:#111">):</span>
+    <span style="color:#75715e"># ...</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">dotask</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># Use the daemon&#39;s Event Service</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_eventService</span><span style="color:#f92672">.</span><span style="color:#111">sendEvent</span><span style="color:#111">(</span><span style="color:#111">dict</span><span style="color:#111">(</span>
+            <span style="color:#111">summary</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Event Test...&#39;</span><span style="color:#111">,</span>
+            <span style="color:#111">message</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Event Test...&#39;</span><span style="color:#111">,</span>
+            <span style="color:#111">component</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_preferences</span><span style="color:#f92672">.</span><span style="color:#111">collectorName</span><span style="color:#111">,</span>
+            <span style="color:#111">eventClass</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;/Status/Ping&#39;</span><span style="color:#111">,</span>
+            <span style="color:#111">ipAddress</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">configId</span><span style="color:#111">,</span>
+            <span style="color:#111">device</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">configId</span><span style="color:#111">,</span>
+            <span style="color:#111">severity</span><span style="color:#f92672">=</span><span style="color:#111">Critical</span><span style="color:#111">,</span>
+            <span style="color:#111">agent</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_preferences</span><span style="color:#f92672">.</span><span style="color:#111">collectorName</span>
+            <span style="color:#111">))</span></code></pre></div>
 <p>Notice that we are first importing the available event severities so that we can later pass one as the <code>severity</code> parameter. You can take a look at the Python file where these severities are defined in <code>$ZENHOME/Products/ZenEvents/ZenEventClasses.py</code>.</p>
 
 <h3 id="using-the-json-api">Using the JSON API</h3>
@@ -200,8 +200,8 @@ Options:
 <p>It is also possible to manipulate events using the <a href="/posts/the-zenoss-json-api.html">Zenoss JSON API</a>. This can be done using <em>cURL</em> or other language wrappers around the API.</p>
 
 <p>For example, we can use the <a href="http://wiki.zenoss.org/json_api.sh">Zenoss Shellscript wrapper</a> to create an event:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">source</span> json_api.sh
-zenoss_api evconsole_router EventsRouter add_event <span style="background-color:#fff0f0">&#39;{&#34;summary&#34;:&#34;Testing event...&#34;,&#34;device&#34;:&#34;$device&#34;,&#34;component&#34;:&#34;$component&#34;,&#34;severity&#34;:$severity,&#34;evclasskey&#34;:&#34;$evkey&#34;,&#34;evclass&#34;:&#34;$evclass&#34;}&#39;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">source</span> json_api.sh
+zenoss_api evconsole_router EventsRouter add_event <span style="color:#d88200">&#39;{&#34;summary&#34;:&#34;Testing event...&#34;,&#34;device&#34;:&#34;$device&#34;,&#34;component&#34;:&#34;$component&#34;,&#34;severity&#34;:$severity,&#34;evclasskey&#34;:&#34;$evkey&#34;,&#34;evclass&#34;:&#34;$evclass&#34;}&#39;</span></code></pre></div>
 <p>Replace the variables with the necessary input.</p>
 
 <h2 id="clearing-events">Clearing Events</h2>

@@ -114,53 +114,53 @@
 </code></pre>
 
 <p>If we pick one of those PORO (Plain Old Ruby Object) classes, it looks something like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">module</span> <span style="color:#0e84b5;font-weight:bold">Recommendations</span>
-  <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TotalCholesterol</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">info</span>
-    <span style="color:#080;font-weight:bold">end</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">Recommendations</span>
+  <span style="color:#00a8c8">class</span> <span style="color:#75af00">TotalCholesterol</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">info</span>
+    <span style="color:#00a8c8">end</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">ideal</span>
-      (<span style="color:#00d;font-weight:bold">0</span><span style="color:#333">..</span><span style="color:#00d;font-weight:bold">200</span>)
-    <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">ideal</span>
+      <span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">200</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">end</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">warning</span>
-      (<span style="color:#00d;font-weight:bold">200</span><span style="color:#333">..</span><span style="color:#00d;font-weight:bold">239</span>)
-    <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">warning</span>
+      <span style="color:#111">(</span><span style="color:#ae81ff">200</span><span style="color:#f92672">..</span><span style="color:#ae81ff">239</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">end</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">danger</span>
-      (<span style="color:#00d;font-weight:bold">240</span><span style="color:#333">..</span><span style="color:#00d;font-weight:bold">300</span>)
-    <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">danger</span>
+      <span style="color:#111">(</span><span style="color:#ae81ff">240</span><span style="color:#f92672">..</span><span style="color:#ae81ff">300</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">end</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#b06;font-weight:bold">self</span><span style="color:#333">.</span><span style="color:#06b;font-weight:bold">top</span>
-      <span style="color:#00d;font-weight:bold">300</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">top</span>
+      <span style="color:#ae81ff">300</span>
+    <span style="color:#00a8c8">end</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>Notice that the class simply consists of <strong>class methods</strong> that return a range. We will now use these methods along with the <code>case</code> statement in some helpers that we will define to be used on the view. We can define this in <code>EntriesHelper</code> module (<code>app/helpers/entries_helper.rb</code>):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">module</span> <span style="color:#0e84b5;font-weight:bold">EntriesHelper</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">EntriesHelper</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">progress_bar_color</span>(item, current_value)
-    <span style="color:#888"># &#39;item&#39; is a class of the Recommendations module which represents</span>
-    <span style="color:#888"># a test result item (i.e Systolic Blood Pressure)</span>
-    <span style="color:#080;font-weight:bold">case</span> current_value
-      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>ideal <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-success&#39;</span>
-      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>info <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-info&#39;</span>
-      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>warning <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-warning&#39;</span>
-      <span style="color:#080;font-weight:bold">when</span> item<span style="color:#333">.</span>danger <span style="color:#080;font-weight:bold">then</span> <span style="background-color:#fff0f0">&#39;progress-bar-danger&#39;</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">progress_bar_color</span><span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">,</span> <span style="color:#111">current_value</span><span style="color:#111">)</span>
+    <span style="color:#75715e"># &#39;item&#39; is a class of the Recommendations module which represents</span>
+    <span style="color:#75715e"># a test result item (i.e Systolic Blood Pressure)</span>
+    <span style="color:#00a8c8">case</span> <span style="color:#111">current_value</span>
+      <span style="color:#00a8c8">when</span> <span style="color:#111">item</span><span style="color:#f92672">.</span><span style="color:#111">ideal</span> <span style="color:#00a8c8">then</span> <span style="color:#d88200">&#39;progress-bar-success&#39;</span>
+      <span style="color:#00a8c8">when</span> <span style="color:#111">item</span><span style="color:#f92672">.</span><span style="color:#111">info</span> <span style="color:#00a8c8">then</span> <span style="color:#d88200">&#39;progress-bar-info&#39;</span>
+      <span style="color:#00a8c8">when</span> <span style="color:#111">item</span><span style="color:#f92672">.</span><span style="color:#111">warning</span> <span style="color:#00a8c8">then</span> <span style="color:#d88200">&#39;progress-bar-warning&#39;</span>
+      <span style="color:#00a8c8">when</span> <span style="color:#111">item</span><span style="color:#f92672">.</span><span style="color:#111">danger</span> <span style="color:#00a8c8">then</span> <span style="color:#d88200">&#39;progress-bar-danger&#39;</span>
+    <span style="color:#00a8c8">end</span>
+  <span style="color:#00a8c8">end</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">progress_bar_width</span>(item, current_value)
-    (current_value <span style="color:#000;background-color:#fff0ff">/ item.top ) * 100
-</span><span style="color:#000;background-color:#fff0ff">  end
-</span><span style="color:#000;background-color:#fff0ff">
-</span><span style="color:#000;background-color:#fff0ff">end</span></code></pre></div>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">progress_bar_width</span><span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">,</span> <span style="color:#111">current_value</span><span style="color:#111">)</span>
+    <span style="color:#111">(</span><span style="color:#111">current_value</span> <span style="color:#d88200">/ item.top ) * 100
+</span><span style="color:#d88200">  end
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">end</span></code></pre></div>
 <p>In the code above, the <code>progress_bar_color</code> method shows the magic of using the <code>case</code> statement with a current value to determine if it is inside a range, by simply using the <code>when</code> statement with a class method. By comparing to different ranges we simply return a different contextual CSS class for the progress bar.</p>
 
 <p>The second method is simply for setting an appropriate width for the progress bar. This one uses an additional class method called <code>top</code>, which simply returns an integer that should represent the end of the bar. A percentage between this integer and the current data point is calculated.</p>
 
 <p>We can then use these helper methods when setting the progress bar&rsquo;s class and width like this (using <a href="http://haml.info/">HAML</a>):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">.progress-bar{class: &#34;#{progress_bar_color(Recommendations::DiastolicPressure, @entry.diastolic_blood_pressure)}&#34;, &#39;aria-valuenow&#39;: @entry.diastolic_blood_pressure, &#39;aria-valuemin&#39;: &#39;0&#39;, &#39;aria-valuemax&#39;: &#39;100&#39;, style: &#34;width: #{progress_bar_width(Recommendations::DiastolicPressure, @entry.diastolic_blood_pressure)}%;&#34; }</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">.progress-bar{class: &#34;#{progress_bar_color(Recommendations::DiastolicPressure, @entry.diastolic_blood_pressure)}&#34;, &#39;aria-valuenow&#39;: @entry.diastolic_blood_pressure, &#39;aria-valuemin&#39;: &#39;0&#39;, &#39;aria-valuemax&#39;: &#39;100&#39;, style: &#34;width: #{progress_bar_width(Recommendations::DiastolicPressure, @entry.diastolic_blood_pressure)}%;&#34; }</code></pre></div>
 <p>Using this implementation in the view with the rest of the data points, we obtain some nice progress bars that will automatically have a good contextual class to represent the severity (or lack thereof) of a blood test item:</p>
 
 <p><img src="/posts/using-objects-and-ranges-with-cases-in-ruby/progress_bars.jpg" alt="Progress Bars" /></p>

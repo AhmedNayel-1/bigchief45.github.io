@@ -147,71 +147,71 @@
 <h3 id="accumulator-transformer">Accumulator Transformer</h3>
 
 <p>This transformer simply caches the samples until enough samples have arrived and then flushes them all down the pipeline at once:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">transformers:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>name:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;accumulator&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span>parameters:<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>size:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">15</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">transformers<span style="color:#111">:</span>
+    - name<span style="color:#111">:</span> <span style="color:#d88200">&#34;accumulator&#34;</span>
+      parameters<span style="color:#111">:</span>
+          size<span style="color:#111">:</span> <span style="color:#ae81ff">15</span></code></pre></div>
 <h2 id="the-source-code">The Source Code</h2>
 
 <p>Source code for transfomers is found in <a href="https://github.com/openstack/ceilometer/tree/master/ceilometer/transformer"><code>ceilometer/transformers</code></a>. Base classes are found in the <code>__init__.py</code> file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TransformerBase</span>(<span style="color:#007020">object</span>):
-    <span style="background-color:#fff0f0">&#34;&#34;&#34;Base class for plugins that transform the sample.&#34;&#34;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">TransformerBase</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;Base class for plugins that transform the sample.&#34;&#34;&#34;</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, <span style="color:#333">**</span>kwargs):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Setup transformer.
-</span><span style="background-color:#fff0f0">        Each time a transformed is involved in a pipeline, a new transformer
-</span><span style="background-color:#fff0f0">        instance is created and chained into the pipeline. i.e. transformer
-</span><span style="background-color:#fff0f0">        instance is per pipeline. This helps if transformer need keep some
-</span><span style="background-color:#fff0f0">        cache and per-pipeline information.
-</span><span style="background-color:#fff0f0">        :param kwargs: The parameters that are defined in pipeline config file.
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
-        <span style="color:#007020">super</span>(TransformerBase, self)<span style="color:#333">.</span>__init__()
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Setup transformer.
+</span><span style="color:#d88200">        Each time a transformed is involved in a pipeline, a new transformer
+</span><span style="color:#d88200">        instance is created and chained into the pipeline. i.e. transformer
+</span><span style="color:#d88200">        instance is per pipeline. This helps if transformer need keep some
+</span><span style="color:#d88200">        cache and per-pipeline information.
+</span><span style="color:#d88200">        :param kwargs: The parameters that are defined in pipeline config file.
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">TransformerBase</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">()</span>
 
-    <span style="color:#555;font-weight:bold">@abc.abstractmethod</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">handle_sample</span>(self, sample):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Transform a sample.
-</span><span style="background-color:#fff0f0">        :param sample: A sample.
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
+    <span style="color:#75af00">@abc.abstractmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">handle_sample</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">sample</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Transform a sample.
+</span><span style="color:#d88200">        :param sample: A sample.
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
 
-    <span style="color:#555;font-weight:bold">@abc.abstractproperty</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">grouping_keys</span>(self):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Keys used to group transformer.&#34;&#34;&#34;</span>
+    <span style="color:#75af00">@abc.abstractproperty</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">grouping_keys</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Keys used to group transformer.&#34;&#34;&#34;</span>
 
-    <span style="color:#555;font-weight:bold">@staticmethod</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">flush</span>():
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;Flush samples cached previously.&#34;&#34;&#34;</span>
-<span style="color:#080;font-weight:bold">return</span> []</code></pre></div>
+    <span style="color:#75af00">@staticmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">flush</span><span style="color:#111">():</span>
+        <span style="color:#d88200">&#34;&#34;&#34;Flush samples cached previously.&#34;&#34;&#34;</span>
+<span style="color:#00a8c8">return</span> <span style="color:#111">[]</span></code></pre></div>
 <p>All the methods above are abstract methods (with the exception of <code>flush()</code>) that specific transformer classes must implement. For example, note the abstract method <code>handle_sample</code>. This is where the transformation of the sample will take place. It&rsquo;s implementation will differ depending on the transformer type.</p>
 
 <p>For example, the class defintion of the accumulator transformer can be found in <code>accumulator.py</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ceilometer</span> <span style="color:#080;font-weight:bold">import</span> transformer
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">ceilometer</span> <span style="color:#f92672">import</span> <span style="color:#111">transformer</span>
 
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TransformerAccumulator</span>(transformer<span style="color:#333">.</span>TransformerBase):
-    <span style="background-color:#fff0f0">&#34;&#34;&#34;Transformer that accumulates samples until a threshold.
-</span><span style="background-color:#fff0f0">    And then flushes them out into the wild.
-</span><span style="background-color:#fff0f0">    &#34;&#34;&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">TransformerAccumulator</span><span style="color:#111">(</span><span style="color:#111">transformer</span><span style="color:#f92672">.</span><span style="color:#111">TransformerBase</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;Transformer that accumulates samples until a threshold.
+</span><span style="color:#d88200">    And then flushes them out into the wild.
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
 
-    grouping_keys <span style="color:#333">=</span> [<span style="background-color:#fff0f0">&#39;resource_id&#39;</span>]
+    <span style="color:#111">grouping_keys</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;resource_id&#39;</span><span style="color:#111">]</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, size<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>, <span style="color:#333">**</span>kwargs):
-        <span style="color:#080;font-weight:bold">if</span> size <span style="color:#333">&gt;=</span> <span style="color:#00d;font-weight:bold">1</span>:
-            self<span style="color:#333">.</span>samples <span style="color:#333">=</span> []
-        self<span style="color:#333">.</span>size <span style="color:#333">=</span> size
-        <span style="color:#007020">super</span>(TransformerAccumulator, self)<span style="color:#333">.</span>__init__(<span style="color:#333">**</span>kwargs)
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">size</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">size</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span> <span style="color:#f92672">=</span> <span style="color:#111">size</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">TransformerAccumulator</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">handle_sample</span>(self, sample):
-        <span style="color:#080;font-weight:bold">if</span> self<span style="color:#333">.</span>size <span style="color:#333">&gt;=</span> <span style="color:#00d;font-weight:bold">1</span>:
-            self<span style="color:#333">.</span>samples<span style="color:#333">.</span>append(sample)
-        <span style="color:#080;font-weight:bold">else</span>:
-            <span style="color:#080;font-weight:bold">return</span> sample
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">handle_sample</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">sample</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">sample</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">sample</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">flush</span>(self):
-        <span style="color:#080;font-weight:bold">if</span> <span style="color:#007020">len</span>(self<span style="color:#333">.</span>samples) <span style="color:#333">&gt;=</span> self<span style="color:#333">.</span>size:
-            x <span style="color:#333">=</span> self<span style="color:#333">.</span>samples
-            self<span style="color:#333">.</span>samples <span style="color:#333">=</span> []
-            <span style="color:#080;font-weight:bold">return</span> x
-<span style="color:#080;font-weight:bold">return</span> []</code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">flush</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span><span style="color:#111">)</span> <span style="color:#f92672">&gt;=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span><span style="color:#111">:</span>
+            <span style="color:#111">x</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">x</span>
+<span style="color:#00a8c8">return</span> <span style="color:#111">[]</span></code></pre></div>
 <p>Notice how it implements <code>handle_sample</code>. It is a very simple transformer which keeps appending samples into an array. Once a threshold condition is met (in this case <code>self.size &gt;= 1</code>), it will simply return all the samples in the array.</p>
 
 <p>Remember that this <code>size</code> variable&rsquo;s value is defined and obtained from the <code>pipeline.yaml</code> configuration file in the transformer&rsquo;s definition.</p>

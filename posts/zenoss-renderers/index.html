@@ -102,25 +102,25 @@
 <p>The built-in Zenoss renderers and source code can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss/Renderers.js</code></p>
 
 <p>They are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the <code>renderer</code> property. For example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">HardDisk:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>base:<span style="color:#bbb"> </span>[zenpacklib.Component]<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>label:<span style="color:#bbb"> </span>Hard<span style="color:#bbb"> </span>Disk<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>properties:<span style="color:#bbb">
-</span><span style="color:#bbb">     </span>location:<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Location<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">     </span>capacity:<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Capacity<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">     </span>raid_name:<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Raid<span style="color:#bbb"> </span>Name<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">     </span>raid_level:<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Raid<span style="color:#bbb"> </span>Level<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">     </span>status:<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>label:<span style="color:#bbb"> </span>Status<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>renderer:<span style="color:#bbb"> </span>Zenoss.render.pingStatus</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">HardDisk<span style="color:#111">:</span>
+  base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
+  label<span style="color:#111">:</span> Hard Disk
+  properties<span style="color:#111">:</span>
+     location<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Location
+
+     capacity<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Capacity
+
+     raid_name<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Raid Name
+
+     raid_level<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Raid Level
+
+     status<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Status
+        renderer<span style="color:#111">:</span> Zenoss.render.pingStatus</code></pre></div>
 <p><code>Zenoss.render.pingStatus</code> is one of the default renderers that come built-in within Zenoss Core 4, similar to <code>Zenoss.render.bytesString</code>.</p>
 
 <h2 id="creating-custom-renderers">Creating Custom Renderers</h2>
@@ -140,33 +140,33 @@ INIT: 3
 <p>In our <code>resources</code> directory, we create a new Javascript file called <code>Service.js</code> (can be any name)</p>
 
 <p>Here we create and register our new renderer as follows:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Ext.apply(Zenoss.render, {
-  api_ServiceStatus<span style="color:#333">:</span> <span style="color:#080;font-weight:bold">function</span>(n) {
-      <span style="color:#080;font-weight:bold">var</span> status <span style="color:#333">=</span> <span style="color:#007020">parseInt</span>(n)
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">apply</span><span style="color:#111">(</span><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">,</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">api_ServiceStatus</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">n</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#00a8c8">var</span> <span style="color:#75af00">status</span> <span style="color:#f92672">=</span> <span style="color:#111">parseInt</span><span style="color:#111">(</span><span style="color:#75af00">n</span><span style="color:#111">)</span>
 
-      <span style="color:#080;font-weight:bold">switch</span> (status) {
-          <span style="color:#080;font-weight:bold">case</span> <span style="color:#00d;font-weight:bold">0</span><span style="color:#333">:</span>
-              <span style="color:#080;font-weight:bold">return</span> <span style="background-color:#fff0f0">&#34;UP&#34;</span>
-          <span style="color:#080;font-weight:bold">case</span> <span style="color:#00d;font-weight:bold">1</span><span style="color:#333">:</span>
-              <span style="color:#080;font-weight:bold">return</span> <span style="background-color:#fff0f0">&#34;DEGRADED&#34;</span>
-          <span style="color:#080;font-weight:bold">case</span> <span style="color:#00d;font-weight:bold">2</span><span style="color:#333">:</span>
-              <span style="color:#080;font-weight:bold">return</span> <span style="background-color:#fff0f0">&#34;DOWN&#34;</span>
-          <span style="color:#080;font-weight:bold">case</span> <span style="color:#00d;font-weight:bold">3</span><span style="color:#333">:</span>
-              <span style="color:#080;font-weight:bold">return</span> <span style="background-color:#fff0f0">&#34;INIT&#34;</span>
-          <span style="color:#080;font-weight:bold">default</span><span style="color:#333">:</span>
-              <span style="color:#080;font-weight:bold">return</span> <span style="background-color:#fff0f0">&#34;UNKNOWN&#34;</span>
-      }
-  }
-});
+      <span style="color:#00a8c8">switch</span> <span style="color:#111">(</span><span style="color:#75af00">status</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+          <span style="color:#00a8c8">case</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>
+              <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;UP&#34;</span>
+          <span style="color:#00a8c8">case</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>
+              <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;DEGRADED&#34;</span>
+          <span style="color:#00a8c8">case</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">:</span>
+              <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;DOWN&#34;</span>
+          <span style="color:#00a8c8">case</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">:</span>
+              <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;INIT&#34;</span>
+          <span style="color:#00a8c8">default</span><span style="color:#f92672">:</span>
+              <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;UNKNOWN&#34;</span>
+      <span style="color:#111">}</span>
+  <span style="color:#111">}</span>
+<span style="color:#111">});</span>
 </code></pre></div>
 <p>Now we can assign this new renderer in our YAML file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ApiService:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>base:<span style="color:#bbb"> </span>[zenpacklib.Component]<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>label:<span style="color:#bbb"> </span>API<span style="color:#bbb"> </span>Service<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>properties:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>status:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>label:<span style="color:#bbb"> </span>Service<span style="color:#bbb"> </span>Status<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>renderer:<span style="color:#bbb"> </span>Zenoss.render.api_ServiceStatus</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ApiService<span style="color:#111">:</span>
+  base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
+  label<span style="color:#111">:</span> API Service
+  properties<span style="color:#111">:</span>
+    status<span style="color:#111">:</span>
+      label<span style="color:#111">:</span> Service Status
+      renderer<span style="color:#111">:</span> Zenoss.render.api_ServiceStatus</code></pre></div>
 <p>We re-install the ZenPack, restart <em>zopectl</em> and <em>zenhub</em> services, and check our interface for the new results:</p>
 
 <p><img src="/posts/zenoss-renderers/zenoss_renderers2.png" alt="Custom Renderer" /></p>

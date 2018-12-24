@@ -132,8 +132,8 @@ touch home/ubuntu/hello.sh
 <h3 id="post-installation-script">Post-Installation Script</h3>
 
 <p>Additionally, we can create a <code>postinst</code> script with executable permissions inside the <code>DEBIAN</code> directory that will be executed after the installation (depackaging) is finished. For example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#579">#!/bin/bash
-</span><span style="color:#579"></span><span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;Hello World!&#34;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span><span style="color:#111">echo</span> <span style="color:#d88200">&#34;Hello World!&#34;</span></code></pre></div>
 <p>!&gt; You <strong>cannot</strong> run <code>apt-get</code> commands inside post/pre installation scripts, since this will create lock-conflict errors with <code>dpkg</code>. See <a href="http://stackoverflow.com/questions/18599599/apt-get-commands-from-within-a-deb-postinst">here</a> and <a href="http://askubuntu.com/questions/396213/can-i-call-other-dpkg-or-apt-commands-within-my-preinst-scripts">here</a>).</p>
 
 <p>These lock-conflict errors look like the following:</p>

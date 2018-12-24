@@ -179,9 +179,9 @@ to the device as context (labeled as &ldquo;here&rdquo;). The result of the TALE
 
 <p>You also can embed full Python code in an alias formula for execution. The code must construct a string that results
 in a valid RRD formula. To signal the system to evaluate the formula correctly, it must begin with:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">__EVAL:</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">__EVAL</span><span style="color:#111">:</span></code></pre></div>
 <p>Using the same example as in the previous section (division by total memory), the formula is:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">__EVAL:here<span style="color:#333">.</span>hw<span style="color:#333">.</span>totalMemory <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#34;,/&#34;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">__EVAL</span><span style="color:#111">:</span><span style="color:#111">here</span><span style="color:#f92672">.</span><span style="color:#111">hw</span><span style="color:#f92672">.</span><span style="color:#111">totalMemory</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;,/&#34;</span></code></pre></div>
 </div>
 
 

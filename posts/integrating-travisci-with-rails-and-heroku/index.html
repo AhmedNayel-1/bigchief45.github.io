@@ -98,23 +98,23 @@
 <h2 id="setting-up-travisci">Setting up TravisCI</h2>
 
 <p>Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a <code>.travis.yml</code> file to the application&rsquo;s root directory with the following contents:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language:<span style="color:#bbb"> </span>Ruby<span style="color:#bbb">
-</span><span style="color:#bbb"></span>rvm:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">2.3</span>.<span style="color:#60e;font-weight:bold">0</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language<span style="color:#111">:</span> Ruby
+rvm<span style="color:#111">:</span>
+  - <span style="color:#ae81ff">2.3</span>.<span style="color:#ae81ff">0</span></code></pre></div>
 <p>The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.</p>
 
 <h3 id="configure-postgresql">Configure Postgresql</h3>
 
 <p>Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to <code>.travis.yml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">services:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>postgresql</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">services<span style="color:#111">:</span>
+  - postgresql</code></pre></div>
 <p>Then we will add another configuration that will make Travis create a Postgresql database with username <code>postgres</code> and blank password for the build:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before_script:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#39;create database travis_ci_test;&#39;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before_script<span style="color:#111">:</span>
+  - psql -c <span style="color:#d88200">&#39;create database travis_ci_test;&#39;</span> -U postgres</code></pre></div>
 <p>Now in our Rails application&rsquo;s <code>config/database.yml</code> we configure our test environment database to use this database:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">test:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>adapter:<span style="color:#bbb"> </span>postgresql<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>database:<span style="color:#bbb"> </span>travis_ci_test</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">test<span style="color:#111">:</span>
+  adapter<span style="color:#111">:</span> postgresql
+  database<span style="color:#111">:</span> travis_ci_test</code></pre></div>
 <p>Lastly make sure to tell Travis the version of Postgres we are using (Travis uses version 9.1 by default). To find out, first run the following command in your development environment&rsquo;s terminal:</p>
 
 <pre><code>psql --version
@@ -126,8 +126,8 @@
 </code></pre>
 
 <p>I add it to <code>.travis.yml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">addons:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>postgresql:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;9.3&#34;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">addons<span style="color:#111">:</span>
+  postgresql<span style="color:#111">:</span> <span style="color:#d88200">&#34;9.3&#34;</span></code></pre></div>
 <p>Commit all the changes above and push it to the repository so that Travis can start running a new build. You should see the build pass.</p>
 
 <h2 id="rspec">RSpec</h2>
@@ -180,7 +180,7 @@ Done. Your build exited with 0.
 <p><img src="/posts/integrating-travisci-with-rails-and-heroku/build_status.jpg" alt="Build status" /></p>
 
 <p>If we click on it we can get some generated code in different formats. To add to our README file we will choose the Markdown format. We can then copy the snippet and paste it in the repository&rsquo;s <code>README.md</code> file, next to the file&rsquo;s title:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"># Hourglass [<span style="color:#070">![Build Status</span>](<span style="color:#00c">https://travis-ci.org/BigChief45/Hourglass.svg?branch=master</span>)](https://travis-ci.org/BigChief45/Hourglass)</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"># Hourglass [<span style="color:#f92672">![Build Status</span>](<span style="color:#75af00">https://travis-ci.org/BigChief45/Hourglass.svg?branch=master</span>)](https://travis-ci.org/BigChief45/Hourglass)</code></pre></div>
 </div>
 
 

@@ -96,54 +96,54 @@
 <h2 id="the-serializer">The Serializer</h2>
 
 <p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># serializers.py</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> Book
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> serializers
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># serializers.py</span>
+<span style="color:#f92672">from</span> <span style="color:#111">myapp.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Book</span>
+<span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">serializers</span>
 
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookSerializer</span>(serializers<span style="color:#333">.</span>ModelSerializer):
-    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Meta</span>:
-        model <span style="color:#333">=</span> Book
-        fields <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;__all__&#39;</span></code></pre></div>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookSerializer</span><span style="color:#111">(</span><span style="color:#111">serializers</span><span style="color:#f92672">.</span><span style="color:#111">ModelSerializer</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">class</span> <span style="color:#75af00">Meta</span><span style="color:#111">:</span>
+        <span style="color:#111">model</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span>
+        <span style="color:#111">fields</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;__all__&#39;</span></code></pre></div>
 <p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>
 
 <h2 id="the-view">The View</h2>
 
 <p>Before creating the view, we will first need to create a mixin that will allow the view to handle an array of JSON objects in the request so that the actual view can process and create new objects in a bulk fashion:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CreateListMixin</span>:
-    <span style="background-color:#fff0f0">&#34;&#34;&#34;Allows bulk creation of a resource.&#34;&#34;&#34;</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_serializer</span>(self, <span style="color:#333">*</span>args, <span style="color:#333">**</span>kwargs):
-        <span style="color:#080;font-weight:bold">if</span> <span style="color:#007020">isinstance</span>(kwargs<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;data&#39;</span>, {}), <span style="color:#007020">list</span>):
-            kwargs[<span style="background-color:#fff0f0">&#39;many&#39;</span>] <span style="color:#333">=</span> True
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">CreateListMixin</span><span style="color:#111">:</span>
+    <span style="color:#d88200">&#34;&#34;&#34;Allows bulk creation of a resource.&#34;&#34;&#34;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_serializer</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#111">args</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">isinstance</span><span style="color:#111">(</span><span style="color:#111">kwargs</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;data&#39;</span><span style="color:#111">,</span> <span style="color:#111">{}),</span> <span style="color:#111">list</span><span style="color:#111">):</span>
+            <span style="color:#111">kwargs</span><span style="color:#111">[</span><span style="color:#d88200">&#39;many&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">True</span>
 
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#007020">super</span>()<span style="color:#333">.</span>get_serializer(<span style="color:#333">*</span>args, <span style="color:#333">**</span>kwargs)</code></pre></div>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">super</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">get_serializer</span><span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#111">args</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">)</span></code></pre></div>
 <p>This mixin overwrites the <code>get_serializer</code> method and makes it check if the incoming body is a list. If it is, it proceeds to assign a boolean value for the <code>many</code> key in the kwargs.</p>
 
 <p>=&gt; Adding the <code>CreateList</code> prefix to the mixin class name is a good naming practice that quickly allows us to know that this is a mixin for bulk creation. Additionally, you will probably want to place this mixin in its own module (i.e <code>views/mixins/rest.py</code>)</p>
 
 <p>We can now create this view and make it use the mixin. We will make use of Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/viewsets/#modelviewset">ModelViewSet</a> to simplyify things:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> viewsets
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">viewsets</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.serializers</span> <span style="color:#080;font-weight:bold">import</span> BoookSerializer
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.views.mixins.rest</span> <span style="color:#080;font-weight:bold">import</span> CreateListMixin
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> Book
+<span style="color:#f92672">from</span> <span style="color:#111">myapp.serializers</span> <span style="color:#f92672">import</span> <span style="color:#111">BoookSerializer</span>
+<span style="color:#f92672">from</span> <span style="color:#111">myapp.views.mixins.rest</span> <span style="color:#f92672">import</span> <span style="color:#111">CreateListMixin</span>
+<span style="color:#f92672">from</span> <span style="color:#111">myapp.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Book</span>
 
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookViewSet</span>(CreateListMixin, viewsets<span style="color:#333">.</span>ModelViewSet):
-    queryset <span style="color:#333">=</span> Book<span style="color:#333">.</span>objects<span style="color:#333">.</span><span style="color:#007020">all</span>()
-    serializer_class <span style="color:#333">=</span> BookSerializer</code></pre></div>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookViewSet</span><span style="color:#111">(</span><span style="color:#111">CreateListMixin</span><span style="color:#111">,</span> <span style="color:#111">viewsets</span><span style="color:#f92672">.</span><span style="color:#111">ModelViewSet</span><span style="color:#111">):</span>
+    <span style="color:#111">queryset</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">()</span>
+    <span style="color:#111">serializer_class</span> <span style="color:#f92672">=</span> <span style="color:#111">BookSerializer</span></code></pre></div>
 <h2 id="setting-the-url">Setting the URL</h2>
 
 <p>Lastly we need to set a URL to make the request to. We can use a Django REST router to easily set this endpoint up:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># urls.py</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">django.conf.urls</span> <span style="color:#080;font-weight:bold">import</span> url, include
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> routers
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># urls.py</span>
+<span style="color:#f92672">from</span> <span style="color:#111">django.conf.urls</span> <span style="color:#f92672">import</span> <span style="color:#111">url</span><span style="color:#111">,</span> <span style="color:#111">include</span>
+<span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">routers</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">views</span> <span style="color:#080;font-weight:bold">import</span> BookViewSet
+<span style="color:#f92672">from</span> <span style="color:#111">views</span> <span style="color:#f92672">import</span> <span style="color:#111">BookViewSet</span>
 
 
-router <span style="color:#333">=</span> routers<span style="color:#333">.</span>DefaultRouter()
-router<span style="color:#333">.</span>register(<span style="background-color:#fff0f0">r</span><span style="background-color:#fff0f0">&#39;books&#39;</span>, BookViewSet)</code></pre></div>
+<span style="color:#111">router</span> <span style="color:#f92672">=</span> <span style="color:#111">routers</span><span style="color:#f92672">.</span><span style="color:#111">DefaultRouter</span><span style="color:#111">()</span>
+<span style="color:#111">router</span><span style="color:#f92672">.</span><span style="color:#111">register</span><span style="color:#111">(</span><span style="color:#d88200">r</span><span style="color:#d88200">&#39;books&#39;</span><span style="color:#111">,</span> <span style="color:#111">BookViewSet</span><span style="color:#111">)</span></code></pre></div>
 <p>And that&rsquo;s pretty much it!</p>
 </div>
 

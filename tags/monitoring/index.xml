@@ -45,7 +45,7 @@
 &lt;p&gt;Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named &lt;code&gt;actions.json&lt;/code&gt; in a directory called &lt;code&gt;zep&lt;/code&gt; (create it if it doesn&amp;rsquo;t exist), within the ZenPack&amp;rsquo;s top directory.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;actions.json&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
   &amp;#34;triggers&amp;#34;: [
     {
       &amp;#34;name&amp;#34;: &amp;#34;Critical_death_event&amp;#34;,
@@ -284,7 +284,7 @@
 &lt;p&gt;Located in &lt;code&gt;$ZENHOME/Products/ZenRRD/RRDUtil.py&lt;/code&gt;, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read &lt;code&gt;.rrd&lt;/code&gt; files using Python.&lt;/p&gt;
 
 &lt;p&gt;We can easily import this module into our code, using the following import statement:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; RRDUtil&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RRDUtil&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -355,15 +355,15 @@
 &lt;h2 id=&#34;extending-the-component-through-zenpacks&#34;&gt;Extending The Component, Through ZenPacks&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s assume we are starting with a freshly created ZenPack, which adds a new &lt;code&gt;power_status&lt;/code&gt; integer field to certain devices, according to its &lt;code&gt;zenpack.yaml&lt;/code&gt; file:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;classes:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;CustomDevice:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Device]&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Custom&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Device&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;power_status:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;type:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
+
+classes&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  CustomDevice&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    base&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;zenpacklib.Device&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+    label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Custom Device
+    properties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      power_status&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;What we want is to display this value in the device&amp;rsquo;s detail bar, similar to the device&amp;rsquo;s ping status display.&lt;/p&gt;</description>
     </item>
     
@@ -409,15 +409,15 @@ chmod 755 zenpacklib.py
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Here we will create a new Bashscript file with the name of our daemon. In this case we will name it &lt;code&gt;mydaemon&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#! /usr/bin/env bash
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#963&#34;&gt;DAEMON_NAME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;mydaemon&amp;#34;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#! /usr/bin/env bash
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;DAEMON_NAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mydaemon&amp;#34;&lt;/span&gt;
 
-. &lt;span style=&#34;color:#963&#34;&gt;$ZENHOME&lt;/span&gt;/bin/zenfunctions
+. &lt;span style=&#34;color:#111&#34;&gt;$ZENHOME&lt;/span&gt;/bin/zenfunctions
 
-&lt;span style=&#34;color:#963&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#963&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#963&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#963&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#963&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#963&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
+&lt;span style=&#34;color:#111&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#111&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
 
-generic &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Once the ZenPack is installed, files under this &lt;code&gt;daemons&lt;/code&gt; directory will become executable (&lt;code&gt;chmod 0755&lt;/code&gt;), a symlink to the file will be created in &lt;code&gt;$ZENHOME/bin&lt;/code&gt;, and a configuration file will be generated in &lt;code&gt;$ZENHOME/etc/&amp;lt;daemon_name&amp;gt;.conf&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; If you created your ZenPack using the Zenoss user interface, the &lt;code&gt;daemons&lt;/code&gt; directory will also be automatically created, and will contain an example daemon file named &lt;code&gt;zenexample&lt;/code&gt; with code similar to the one above. In this case you should simply replace the necessary values.&lt;/p&gt;</description>

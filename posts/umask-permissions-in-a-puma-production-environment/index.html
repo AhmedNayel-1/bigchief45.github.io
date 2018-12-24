@@ -122,7 +122,7 @@ umask:</p>
 
 <p>Since I am using <a href="https://github.com/capistrano/capistrano">Capistrano</a> for
 deployment, I added it to the Capistrano Puma configuration in <code>deploy.rb</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">set <span style="color:#a60;background-color:#fff0f0">:puma_bind</span>,       <span style="background-color:#fff0f0">&#34;unix://</span><span style="background-color:#eee">#{</span>shared_path<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">/tmp/sockets/</span><span style="background-color:#eee">#{</span>fetch(<span style="color:#a60;background-color:#fff0f0">:application</span>)<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">-puma.sock?umask=0664&#34;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">set</span> <span style="color:#d88200">:puma_bind</span><span style="color:#111">,</span>       <span style="color:#d88200">&#34;unix://</span><span style="color:#d88200">#{</span><span style="color:#111">shared_path</span><span style="color:#d88200">}</span><span style="color:#d88200">/tmp/sockets/</span><span style="color:#d88200">#{</span><span style="color:#111">fetch</span><span style="color:#111">(</span><span style="color:#d88200">:application</span><span style="color:#111">)</span><span style="color:#d88200">}</span><span style="color:#d88200">-puma.sock?umask=0664&#34;</span></code></pre></div>
 <p>Using <code>0664</code> permissions does the following:</p>
 
 <ul>

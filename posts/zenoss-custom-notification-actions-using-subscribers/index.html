@@ -104,29 +104,29 @@
 <p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
 
 <p>This method is very similar to <code>execute</code>, but it receives an additional <code>target</code> parameter:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PageAction</span>(IActionBase, TargetableAction):
-    <span style="color:#888"># ...</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">PageAction</span><span style="color:#111">(</span><span style="color:#111">IActionBase</span><span style="color:#111">,</span> <span style="color:#111">TargetableAction</span><span style="color:#111">):</span>
+    <span style="color:#75715e"># ...</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">executeOnTarget</span>(self, notification, signal, target):
-        <span style="color:#888"># ...</span></code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">executeOnTarget</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">notification</span><span style="color:#111">,</span> <span style="color:#111">signal</span><span style="color:#111">,</span> <span style="color:#111">target</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># ...</span></code></pre></div>
 <p>The <code>target</code> argument is what will represent the subscriber. More specifically, it will represent the subscriber&rsquo;s <em>pager</em> value, which will be a string.</p>
 
 <p>Very simple. However, we must not overlook a method from theaction class called <code>getActionableTargets</code>. This method implements an interface that should be designed in the context of the targets. In this case, pager addresses. But it could also be in the context of e-mails or other scenarios:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">getActionableTargets</span>(self, target):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;
-</span><span style="background-color:#fff0f0">        @param target: This is an object that implements the IProvidesPagerAddresses
-</span><span style="background-color:#fff0f0">            interface.
-</span><span style="background-color:#fff0f0">        @type target: UserSettings or GroupSettings.
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
-        <span style="color:#080;font-weight:bold">if</span> IProvidesPagerAddresses<span style="color:#333">.</span>providedBy(target):
-            <span style="color:#080;font-weight:bold">return</span> target<span style="color:#333">.</span>getPagerAddresses()</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#00a8c8">def</span> <span style="color:#75af00">getActionableTargets</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">target</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">        @param target: This is an object that implements the IProvidesPagerAddresses
+</span><span style="color:#d88200">            interface.
+</span><span style="color:#d88200">        @type target: UserSettings or GroupSettings.
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">IProvidesPagerAddresses</span><span style="color:#f92672">.</span><span style="color:#111">providedBy</span><span style="color:#111">(</span><span style="color:#111">target</span><span style="color:#111">):</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">target</span><span style="color:#f92672">.</span><span style="color:#111">getPagerAddresses</span><span style="color:#111">()</span></code></pre></div>
 <p>The importing of these interfaces can be seen at the top of the file:</p>
 
 <p><strong>Products/ZenModel/actions.py</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenModel.interfaces</span> <span style="color:#080;font-weight:bold">import</span> (
-    IAction, IProvidesEmailAddresses, IProvidesPagerAddresses,
-    IProcessSignal, INotificationContextProvider,
-)</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">Products.ZenModel.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">(</span>
+    <span style="color:#111">IAction</span><span style="color:#111">,</span> <span style="color:#111">IProvidesEmailAddresses</span><span style="color:#111">,</span> <span style="color:#111">IProvidesPagerAddresses</span><span style="color:#111">,</span>
+    <span style="color:#111">IProcessSignal</span><span style="color:#111">,</span> <span style="color:#111">INotificationContextProvider</span><span style="color:#111">,</span>
+<span style="color:#111">)</span></code></pre></div>
 <h2 id="sms-action-with-subscribers">SMS Action With Subscribers</h2>
 
 <p>Now to be able to use a similar <em>subscribers</em> approach like the e-mail action, we simply need to implement the concepts mentioned above. However, since we are going to use the pager field for the mobile number, we can use the <code>IProvidesPagerAddresses</code> interface in our code.</p>

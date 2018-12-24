@@ -110,18 +110,18 @@
 <p>I found <a href="https://blogs.oracle.com/geertjan/updatesxml,-etc,-for-mavenized-netbeans-rcp-application">a solution</a> that will generate this XML catalog file and all the NBM files all in a single location.</p>
 
 <p>Basically you need to add the following configuration in your application&rsquo;s POM file, inside <code>nbm-maven-plugin</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#070">&lt;executions&gt;</span>
-  <span style="color:#070">&lt;execution&gt;</span>
-      <span style="color:#070">&lt;id&gt;</span>updatesite<span style="color:#070">&lt;/id&gt;</span>
-      <span style="color:#070">&lt;phase&gt;</span>package<span style="color:#070">&lt;/phase&gt;</span>
-      <span style="color:#070">&lt;goals&gt;</span>
-          <span style="color:#070">&lt;goal&gt;</span>autoupdate<span style="color:#070">&lt;/goal&gt;</span>
-      <span style="color:#070">&lt;/goals&gt;</span>
-      <span style="color:#070">&lt;configuration&gt;</span>
-          <span style="color:#070">&lt;fileName&gt;</span>updates.xml<span style="color:#070">&lt;/fileName&gt;</span>
-      <span style="color:#070">&lt;/configuration&gt;</span>
-  <span style="color:#070">&lt;/execution&gt;</span>
-<span style="color:#070">&lt;/executions&gt;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;executions&gt;</span>
+  <span style="color:#f92672">&lt;execution&gt;</span>
+      <span style="color:#f92672">&lt;id&gt;</span>updatesite<span style="color:#f92672">&lt;/id&gt;</span>
+      <span style="color:#f92672">&lt;phase&gt;</span>package<span style="color:#f92672">&lt;/phase&gt;</span>
+      <span style="color:#f92672">&lt;goals&gt;</span>
+          <span style="color:#f92672">&lt;goal&gt;</span>autoupdate<span style="color:#f92672">&lt;/goal&gt;</span>
+      <span style="color:#f92672">&lt;/goals&gt;</span>
+      <span style="color:#f92672">&lt;configuration&gt;</span>
+          <span style="color:#f92672">&lt;fileName&gt;</span>updates.xml<span style="color:#f92672">&lt;/fileName&gt;</span>
+      <span style="color:#f92672">&lt;/configuration&gt;</span>
+  <span style="color:#f92672">&lt;/execution&gt;</span>
+<span style="color:#f92672">&lt;/executions&gt;</span></code></pre></div>
 <p>Then you can right click on your application and run the <em>Build with Dependencies</em> command. After this is done, go to the following location on your project&rsquo;s source tree: <code>&lt;ProjectName&gt;/application/target/netbeans_site/</code>.</p>
 
 <p>In this directory you will see a bunch of generated NBM files along with the catalog file called <code>updates.xml</code>. These are the files that you need to upload to your web server everytime a new version is released.</p>
@@ -169,70 +169,70 @@
 <p>We will need to <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">create an access token</a> on Github so that the build is able to push to the repository.</p>
 
 <p>Once you have created the token, we will proceed to <a href="https://docs.travis-ci.com/user/encryption-keys/">encrypt it</a> and add it to the <code>.travis.yml</code> configuration. Our Travis file should look something like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language:<span style="color:#bbb"> </span>java<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>jdk:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>oraclejdk8<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>env:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>global:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>REPO=<span style="background-color:#fff0f0">&#34;my-update-center&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>secure:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;slk9090askllkkkdf...&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>branches:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>only:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>master<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>-<span style="color:#bbb"> </span>develop</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language<span style="color:#111">:</span> java
+
+jdk<span style="color:#111">:</span>
+  - oraclejdk8
+
+env<span style="color:#111">:</span>
+  global<span style="color:#111">:</span>
+    - REPO=<span style="color:#d88200">&#34;my-update-center&#34;</span>
+    - secure<span style="color:#111">:</span> <span style="color:#d88200">&#34;slk9090askllkkkdf...&#34;</span>
+
+branches<span style="color:#111">:</span>
+  only<span style="color:#111">:</span>
+    - master
+    - develop</code></pre></div>
 <h3 id="commiting-and-pushing-the-files">Commiting and Pushing the Files</h3>
 
 <p>Now we need to create a script that will initialize the update center repository inside the build, move the files generated by Maven into the repository, add the files to source control, commit them and finally push them to the remote.</p>
 
 <p>We can tell the build to execute this script as a custom deployment script, in the <code>master</code> branch only:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">deploy:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>provider:<span style="color:#bbb"> </span>script<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>script:<span style="color:#bbb"> </span>bash<span style="color:#bbb"> </span>./deploy_to_update_center.sh<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>on:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>branch:<span style="color:#bbb"> </span>master</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">deploy<span style="color:#111">:</span>
+  provider<span style="color:#111">:</span> script
+  script<span style="color:#111">:</span> bash ./deploy_to_update_center.sh
+  on<span style="color:#111">:</span>
+    branch<span style="color:#111">:</span> master</code></pre></div>
 <p>=&gt; Executing the script with <code>bash</code> allows us not to worry about the file&rsquo;s execution permissions inside the Travis machine. Read more <a href="https://stackoverflow.com/questions/42154912/permission-denied-for-build-sh-file">here</a></p>
 
 <p>The <code>deploy_to_update_center.sh</code> script is as follows:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#579">#!/bin/bash
-</span><span style="color:#579"></span>
-setup_git<span style="color:#333">()</span> <span style="color:#333">{</span>
-  <span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;Setting up git...&#34;</span>
-  git config --global user.email <span style="background-color:#fff0f0">&#34;&lt;your_email&gt;&#34;</span>
-  git config --global user.name <span style="background-color:#fff0f0">&#34;&lt;your_name&gt;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+setup_git<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Setting up git...&#34;</span>
+  git config --global user.email <span style="color:#d88200">&#34;&lt;your_email&gt;&#34;</span>
+  git config --global user.name <span style="color:#d88200">&#34;&lt;your_name&gt;&#34;</span>
 
-  <span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;Cloning repository </span><span style="background-color:#eee">${</span><span style="color:#963">REPO</span><span style="background-color:#eee">}</span><span style="background-color:#fff0f0">&#34;</span>
-  git clone https://<span style="background-color:#eee">${</span><span style="color:#963">GH_TOKEN</span><span style="background-color:#eee">}</span>@github.com/&lt;user&gt;/<span style="background-color:#eee">${</span><span style="color:#963">REPO</span><span style="background-color:#eee">}</span>.git
-<span style="color:#333">}</span>
+  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Cloning repository </span><span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
+  git clone https://<span style="color:#d88200">${</span><span style="color:#111">GH_TOKEN</span><span style="color:#d88200">}</span>@github.com/&lt;user&gt;/<span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span>.git
+<span style="color:#f92672">}</span>
 
-commit_build_files<span style="color:#333">()</span> <span style="color:#333">{</span>
-  <span style="color:#007020">cd</span> <span style="background-color:#eee">${</span><span style="color:#963">REPO</span><span style="background-color:#eee">}</span>
+commit_build_files<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#111">cd</span> <span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span>
   rm *
 
-  <span style="color:#888"># You should replace $GH_USER and $REPO_NAME (these are NOT env variables)</span>
-  <span style="color:#888"># with the correct values inside your Travis build. You can find this path in</span>
-  <span style="color:#888"># the build logs</span>
-  <span style="color:#007020">local</span> <span style="color:#963">BUILD_PATH</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;/home/travis/build/</span><span style="color:#963">$GH_USER</span><span style="background-color:#fff0f0">/</span><span style="color:#963">$REPO_NAME</span><span style="background-color:#fff0f0">/application/target/netbeans_site&#34;</span>
+  <span style="color:#75715e"># You should replace $GH_USER and $REPO_NAME (these are NOT env variables)</span>
+  <span style="color:#75715e"># with the correct values inside your Travis build. You can find this path in</span>
+  <span style="color:#75715e"># the build logs</span>
+  <span style="color:#111">local</span> <span style="color:#111">BUILD_PATH</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;/home/travis/build/</span><span style="color:#111">$GH_USER</span><span style="color:#d88200">/</span><span style="color:#111">$REPO_NAME</span><span style="color:#d88200">/application/target/netbeans_site&#34;</span>
 
-  <span style="color:#888"># Move the generated files. You should include here all the module NBM files</span>
-  <span style="color:#888"># you want to publish to the update center. We use a wildcard * so that we</span>
-  <span style="color:#888"># don&#39;t have to specify the version.</span>
-  <span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;Copying files from </span><span style="background-color:#eee">${</span><span style="color:#963">BUILD_PATH</span><span style="background-color:#eee">}</span><span style="background-color:#fff0f0">&#34;</span>
-  cp <span style="color:#963">$BUILD_PATH</span>/updates.xml .
-  cp <span style="color:#963">$BUILD_PATH</span>/MyCustomModule-*.nbm .
+  <span style="color:#75715e"># Move the generated files. You should include here all the module NBM files</span>
+  <span style="color:#75715e"># you want to publish to the update center. We use a wildcard * so that we</span>
+  <span style="color:#75715e"># don&#39;t have to specify the version.</span>
+  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Copying files from </span><span style="color:#d88200">${</span><span style="color:#111">BUILD_PATH</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
+  cp <span style="color:#111">$BUILD_PATH</span>/updates.xml .
+  cp <span style="color:#111">$BUILD_PATH</span>/MyCustomModule-*.nbm .
 
   git add .
-  git commit --message <span style="background-color:#fff0f0">&#34;Travis build: </span><span style="color:#963">$TRAVIS_BUILD_NUMBER</span><span style="background-color:#fff0f0">&#34;</span>
-<span style="color:#333">}</span>
+  git commit --message <span style="color:#d88200">&#34;Travis build: </span><span style="color:#111">$TRAVIS_BUILD_NUMBER</span><span style="color:#d88200">&#34;</span>
+<span style="color:#f92672">}</span>
 
-upload_files<span style="color:#333">()</span> <span style="color:#333">{</span>
-  <span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;Pushing files to </span><span style="background-color:#eee">${</span><span style="color:#963">REPO</span><span style="background-color:#eee">}</span><span style="background-color:#fff0f0">&#34;</span>
+upload_files<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Pushing files to </span><span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
 
-  git remote add origin-update-center https://<span style="background-color:#eee">${</span><span style="color:#963">GH_TOKEN</span><span style="background-color:#eee">}</span>@github.com/&lt;user&gt;/<span style="background-color:#eee">${</span><span style="color:#963">REPO</span><span style="background-color:#eee">}</span>.git &gt; /dev/null <span style="color:#60e;font-weight:bold">2</span>&gt;&amp;<span style="color:#60e;font-weight:bold">1</span>
+  git remote add origin-update-center https://<span style="color:#d88200">${</span><span style="color:#111">GH_TOKEN</span><span style="color:#d88200">}</span>@github.com/&lt;user&gt;/<span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span>.git &gt; /dev/null <span style="color:#ae81ff">2</span>&gt;<span style="color:#111">&amp;</span><span style="color:#ae81ff">1</span>
   git push --quiet origin-update-center master
-<span style="color:#333">}</span>
+<span style="color:#f92672">}</span>
 
 setup_git
 commit_build_files

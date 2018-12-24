@@ -130,30 +130,30 @@
   </h1>
   <time datetime="2017-01-17T00:00:00Z" class="post-date">Tue, Jan 17, 2017</time>
   <p>There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&rsquo;s top directory&rsquo;s <code>__init__.py</code> file. When creating a fresh ZenPack using <strong>zenpacklib</strong>, this <code>__init__.py</code> file will contain the following contents:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.</span> <span style="color:#080;font-weight:bold">import</span> zenpacklib
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">zenpacklib</span>
 
-CFG <span style="color:#333">=</span> zenpacklib<span style="color:#333">.</span>load_yaml()</code></pre></div>
+<span style="color:#111">CFG</span> <span style="color:#f92672">=</span> <span style="color:#111">zenpacklib</span><span style="color:#f92672">.</span><span style="color:#111">load_yaml</span><span style="color:#111">()</span></code></pre></div>
 <p>To add custom functionality that gets executed when the ZenPack is installed, we need to extend the <code>install</code> method of the <code>ZenPack</code> class. Below the original code, we can proceed to do so:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenPack</span>(schema<span style="color:#333">.</span>ZenPack):
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">install</span>(self, app):
-        <span style="color:#888"># Our custom logic here</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># Our custom logic here</span>
 
-        <span style="color:#007020">super</span>(ZenPack, self)<span style="color:#333">.</span>install(app)</code></pre></div>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span></code></pre></div>
 <p>No other imports are necessary. Notice the last line of the <code>install</code> method, this is where the ZenPack gets installed.</p>
 
 <p>For the purpuse of giving an example, Let&rsquo;s say that our ZenPack creates two new <a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html">zProperties</a>, one property to store an API key, and the other one to store a URL. Moreover let&rsquo;s say that we obtain these values from somewhere and we want to assign them <strong>automatically</strong> to the properties upon the installation of the ZenPack.</p>
 
 <p>These two new properties are defined in <code>zenpack.yaml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name:<span style="color:#bbb"> </span>ZenPacks.aalvarez.MyZenPack<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>zProperties:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>zMyApiUrl:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>category:<span style="color:#bbb"> </span>MyApi<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>type:<span style="color:#bbb"> </span>string<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>zMyApiKey:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>category:<span style="color:#bbb"> </span>MyApi<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>type:<span style="color:#bbb"> </span>string</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name<span style="color:#111">:</span> ZenPacks.aalvarez.MyZenPack
+
+zProperties<span style="color:#111">:</span>
+  zMyApiUrl<span style="color:#111">:</span>
+    category<span style="color:#111">:</span> MyApi
+    type<span style="color:#111">:</span> string
+
+  zMyApiKey<span style="color:#111">:</span>
+    category<span style="color:#111">:</span> MyApi
+    type<span style="color:#111">:</span> string</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -266,12 +266,12 @@ CFG <span style="color:#333">=</span> zenpacklib<span style="color:#333">.</span
 <h2 id="the-global-object">The Global Object</h2>
 
 <p>The <strong>global scope</strong> is the space in which global variables live and it can also be approached as an object. Each global variable is present as a <strong>property</strong> of this object. In browsers, the global scope object is stored in the <code>window</code> variable:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">var</span> v <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">10</span>;
-console.log(<span style="background-color:#fff0f0">&#34;v&#34;</span> <span style="color:#080;font-weight:bold">in</span> <span style="color:#007020">window</span>);
-<span style="color:#888">// &gt; true
-</span><span style="color:#888"></span>console.log(<span style="color:#007020">window</span>.v);
-<span style="color:#888">// &gt; 10
-</span><span style="color:#888"></span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">v</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v&#34;</span> <span style="color:#00a8c8">in</span> <span style="color:#111">window</span><span style="color:#111">);</span>
+<span style="color:#75715e">// &gt; true
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">v</span><span style="color:#111">);</span>
+<span style="color:#75715e">// &gt; 10
+</span><span style="color:#75715e"></span></code></pre></div>
 
   
   <div style="margin: 20px 0px;">

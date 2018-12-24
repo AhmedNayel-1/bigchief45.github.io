@@ -185,7 +185,7 @@
 <h2 id="querying-the-api">Querying the API</h2>
 
 <p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let&rsquo;s say we want to obtain all the available information of a specific device:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="background-color:#fff0f0">&#34;admin:zenoss&#34;</span> -X POST -H <span style="background-color:#fff0f0">&#34;Content-Type: application/json&#34;</span> -d <span style="background-color:#fff0f0">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#963">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="color:#d88200">&#34;admin:zenoss&#34;</span> -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#111">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
 <p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
 
 <p>This is all fine if all we need is querying the API and nothing else. But what if we really want to know <strong><em>how</em></strong> the API back-end works? How the endpoints are created? What are routers?</p>
@@ -236,7 +236,7 @@
 <p>Located in <code>$ZENHOME/Products/ZenRRD/RRDUtil.py</code>, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read <code>.rrd</code> files using Python.</p>
 
 <p>We can easily import this module into our code, using the following import statement:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenRRD.RRDUtil</span> <span style="color:#080;font-weight:bold">import</span> RRDUtil</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">Products.ZenRRD.RRDUtil</span> <span style="color:#f92672">import</span> <span style="color:#111">RRDUtil</span></code></pre></div>
 
   
   <div style="margin: 20px 0px;">

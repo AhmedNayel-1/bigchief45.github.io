@@ -24,12 +24,12 @@
 &lt;p&gt;The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.&lt;/p&gt;
 
 &lt;p&gt;This template is extremely simple and does not need a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; tag. I will create it as a partial under &lt;code&gt;templates/search.html&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
 &amp;lt;input id=&amp;#34;search&amp;#34; name=&amp;#34;q&amp;#34; placeholder=&amp;#34;Search...&amp;#34;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Notice how we have given the input a &lt;code&gt;name&lt;/code&gt; with the value of &lt;code&gt;q&lt;/code&gt;. This will be important when our view receives the query from this input field.&lt;/p&gt;
 
 &lt;p&gt;I can then render this partial in the main template like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &amp;#39;search.html&amp;#39; %}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &amp;#39;search.html&amp;#39; %}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -76,16 +76,16 @@
 &lt;h3 id=&#34;setting-up-the-routes&#34;&gt;Setting up the Routes&lt;/h3&gt;
 
 &lt;p&gt;Let&amp;rsquo;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# config/routes.rb&lt;/span&gt;
-&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;application&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;routes&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;draw &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
-  &lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
+  &lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
 
-  resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:notifications&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;only&lt;/span&gt;: &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
-    post &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:mark_as_read&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;on&lt;/span&gt;: &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:collection&lt;/span&gt;
-    post &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:mark_as_read&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;on&lt;/span&gt;: &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:member&lt;/span&gt;
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;resources&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:notifications&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;only&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;post&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:mark_as_read&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:collection&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;post&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:mark_as_read&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:member&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -103,18 +103,18 @@
 &lt;h2 id=&#34;models-and-routes&#34;&gt;Models and Routes&lt;/h2&gt;
 
 &lt;p&gt;Before starting with the models, lets quickly define the application resources in our routes:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# config/routes.rb&lt;/span&gt;
-&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;application&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;routes&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;draw &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
 
-  devise_for &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:users&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;devise_for&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:users&lt;/span&gt;
 
-  resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:posts&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
-    resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:comments&lt;/span&gt;
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;resources&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:posts&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;resources&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:comments&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-  resources &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:notifications&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;only&lt;/span&gt;: &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;resources&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:notifications&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;only&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
 
 &lt;p&gt;We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:&lt;/p&gt;
@@ -146,14 +146,14 @@
 &lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&amp;rsquo;s database. Select2 should use AJAX to hit a controller&amp;rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
 
 &lt;p&gt;The controller action looks something like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;search&lt;/span&gt;
-  &lt;span style=&#34;color:#33b&#34;&gt;@people&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;all&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;name LIKE ? OR last_name LIKE ?&amp;#39;&lt;/span&gt;,
-    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;#{&lt;/span&gt;params&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;%&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;#{&lt;/span&gt;params&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;%&amp;#34;&lt;/span&gt;)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;where&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;name LIKE ? OR last_name LIKE ?&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
-  respond_to &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
-    &lt;span style=&#34;color:#007020&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;json { render &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;json&lt;/span&gt;: &lt;span style=&#34;color:#33b&#34;&gt;@people&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;map { &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt; { &lt;span style=&#34;color:#007020&#34;&gt;id&lt;/span&gt;: &lt;span style=&#34;color:#007020&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;id, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;full_name&lt;/span&gt;: &lt;span style=&#34;color:#007020&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;full_name } } }
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+  &lt;span style=&#34;color:#111&#34;&gt;respond_to&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;render&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;map&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;full_name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;full_name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -175,20 +175,20 @@
 &lt;p&gt;A few states have to be defined to represent where the lexer currently &amp;ldquo;stands&amp;rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.&lt;/p&gt;
 
 &lt;p&gt;In Ace, all syntax highlighting lexers must begin with a &lt;code&gt;start&lt;/code&gt; state. From this state we can switch to other defined states. The example below shows how we begin from the &lt;code&gt;start&lt;/code&gt; state and can jump to a comment block state when the code matches a regular expression that represents this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;.$rules &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {
-    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;start&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; [
-        {
-            token&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#888&#34;&gt;// multiline HTML comment
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            regex&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;background-color:#fff0ff&#34;&gt;/^\/$/&lt;/span&gt;,
-            next&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
-        },
-        {
-            token&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#888&#34;&gt;// multiline HAML comment
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            regex&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;background-color:#fff0ff&#34;&gt;/^\-#$/&lt;/span&gt;,
-            next&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
-},
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;$rules&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;start&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#75af00&#34;&gt;token&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// multiline HTML comment
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#75af00&#34;&gt;regex&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;/^\/$/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#75af00&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#75af00&#34;&gt;token&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// multiline HAML comment
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#75af00&#34;&gt;regex&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;/^\-#$/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#75af00&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
 
-&lt;span style=&#34;color:#888&#34;&gt;/* ... */&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;/* ... */&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Notice that we define 2 different comment types, since HAML &lt;a href=&#34;http://haml.info/docs/yardoc/file.REFERENCE.html&#34;&gt;supports&lt;/a&gt; HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as &lt;code&gt;comment.block&lt;/code&gt; &lt;strong&gt;tokens&lt;/strong&gt;, and will also make the lexer jump to a &lt;code&gt;comment&lt;/code&gt; state, denoted by the &lt;code&gt;next&lt;/code&gt; keyword.&lt;/p&gt;</description>
     </item>
@@ -209,9 +209,9 @@
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Add the gem to &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Gemfile&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Gemfile&lt;/span&gt;
 
-gem &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a60;background-color:#fff0f0&#34;&gt;github&lt;/span&gt;: &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#111&#34;&gt;gem&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;github&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Install Webpacker&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;rails webpacker:install
@@ -229,12 +229,12 @@ gem &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;webpacker&amp;
 &lt;h2 id=&#34;the-global-object&#34;&gt;The Global Object&lt;/h2&gt;
 
 &lt;p&gt;The &lt;strong&gt;global scope&lt;/strong&gt; is the space in which global variables live and it can also be approached as an object. Each global variable is present as a &lt;strong&gt;property&lt;/strong&gt; of this object. In browsers, the global scope object is stored in the &lt;code&gt;window&lt;/code&gt; variable:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;var&lt;/span&gt; v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;;
-console.log(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;v&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;window&lt;/span&gt;);
-&lt;span style=&#34;color:#888&#34;&gt;// &amp;gt; true
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;console.log(&lt;span style=&#34;color:#007020&#34;&gt;window&lt;/span&gt;.v);
-&lt;span style=&#34;color:#888&#34;&gt;// &amp;gt; 10
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;v&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;// &amp;gt; true
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;v&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;// &amp;gt; 10
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -248,12 +248,12 @@ console.log(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;v&amp;
 &lt;h2 id=&#34;page-viewlets&#34;&gt;Page Viewlets&lt;/h2&gt;
 
 &lt;p&gt;Previously we created navigation item viewlets, this time we will be creating &lt;strong&gt;page&lt;/strong&gt; viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to &lt;code&gt;browser/configure.zcml&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;browser:page&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;secondaryPage&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;for=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;permission=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;zenoss.View&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;template=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;templates/my_template.pt&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#070&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;browser:page&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;secondaryPage&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;for=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;permission=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;zenoss.View&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;template=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;templates/my_template.pt&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;It is important that the &lt;strong&gt;name&lt;/strong&gt; attribute matches the URL of the navigation link we created previously. Another important attribute is the &lt;strong&gt;template&lt;/strong&gt; attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and &lt;a href=&#34;http://old.zope.org/Members/tone/METAL&#34;&gt;METAL&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Also let&amp;rsquo;s not forget to create a necessary python init file:&lt;/p&gt;
@@ -281,15 +281,15 @@ console.log(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;v&amp;
 &lt;p&gt;Usually this file begins with some required boilerplate code:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;configure.zcml&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;configure&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;xmlns=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zope&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#00c&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#070&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;configure&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;xmlns=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/zope&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
 
-  &lt;span style=&#34;color:#888&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#070&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#00c&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#070&#34;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#070&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+  &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -307,21 +307,21 @@ console.log(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;v&amp;
 &lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
 
 &lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;os.path&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; urlparse
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;subprocess&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;os.path&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;subprocess&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.event&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; notify
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;zope.interface&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; implements
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;ZODB.transact&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; transact
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zope.event&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;notify&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zope.interface&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;implements&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZODB.transact&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;transact&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Ext&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; DirectRouter, DirectResponse
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; Zuul
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.catalog.events&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IndexingEvent
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulFacade
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; IFacade
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; ZuulMessageFactory &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; _t
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; zenPath&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Ext&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;DirectRouter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;DirectResponse&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Zuul&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.catalog.events&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IndexingEvent&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulFacade&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IFacade&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulMessageFactory&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_t&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenPath&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
     </item>
     
@@ -342,7 +342,7 @@ console.log(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;v&amp;
 &lt;h2 id=&#34;querying-the-api&#34;&gt;Querying the API&lt;/h2&gt;
 
 &lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&amp;rsquo;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#963&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#111&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
 
 &lt;p&gt;This is all fine if all we need is querying the API and nothing else. But what if we really want to know &lt;strong&gt;&lt;em&gt;how&lt;/em&gt;&lt;/strong&gt; the API back-end works? How the endpoints are created? What are routers?&lt;/p&gt;
@@ -392,15 +392,15 @@ console.log(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;v&amp;
 &lt;h2 id=&#34;extending-the-component-through-zenpacks&#34;&gt;Extending The Component, Through ZenPacks&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s assume we are starting with a freshly created ZenPack, which adds a new &lt;code&gt;power_status&lt;/code&gt; integer field to certain devices, according to its &lt;code&gt;zenpack.yaml&lt;/code&gt; file:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# ...&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;classes:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;CustomDevice:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;base:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[zenpacklib.Device]&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;label:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Custom&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Device&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;properties:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;power_status:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;type:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
+
+classes&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  CustomDevice&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    base&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;zenpacklib.Device&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+    label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Custom Device
+    properties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      power_status&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;What we want is to display this value in the device&amp;rsquo;s detail bar, similar to the device&amp;rsquo;s ping status display.&lt;/p&gt;</description>
     </item>
     

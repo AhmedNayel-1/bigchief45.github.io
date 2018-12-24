@@ -98,22 +98,22 @@
 <h2 id="understanding-options">Understanding Options</h2>
 
 <p>An option is defined using the <code>Opt</code> class or one of its sub-classes, from the <code>cfg</code> module:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">oslo_config</span> <span style="color:#080;font-weight:bold">import</span> cfg
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">oslo_config</span> <span style="color:#f92672">import</span> <span style="color:#111">cfg</span>
 
-common_opts <span style="color:#333">=</span> [
-    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;bind_host&#39;</span>,
-               default<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;0.0.0.0&#39;</span>,
-               help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;IP address to listen on.&#39;</span>),
-    cfg<span style="color:#333">.</span>Opt(<span style="background-color:#fff0f0">&#39;bind_port&#39;</span>,
-            <span style="color:#007020">type</span><span style="color:#333">=</span>PortType,
-            default<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">9292</span>,
-            help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Port number to listen on.&#39;</span>)
-]</code></pre></div>
+<span style="color:#111">common_opts</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_host&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;0.0.0.0&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;IP address to listen on.&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">Opt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_port&#39;</span><span style="color:#111">,</span>
+            <span style="color:#111">type</span><span style="color:#f92672">=</span><span style="color:#111">PortType</span><span style="color:#111">,</span>
+            <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#ae81ff">9292</span><span style="color:#111">,</span>
+            <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Port number to listen on.&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">]</span></code></pre></div>
 <p>In the example above we can see that we are using <code>Opt</code> and <code>StrOpt</code>, one of its sub-classes. You might notice that the second option&rsquo;s constructor has a <code>type=PortType</code> argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises <code>ValueError</code> if the value cannot be converted. The different types available can be found in the <code>types</code> module:</p>
 
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">oslo_config</span> <span style="color:#080;font-weight:bold">import</span> types
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">oslo_config</span> <span style="color:#f92672">import</span> <span style="color:#111">types</span>
 
-PortType <span style="color:#333">=</span> types<span style="color:#333">.</span>Integer(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">65535</span>)</code></pre></div>
+<span style="color:#111">PortType</span> <span style="color:#f92672">=</span> <span style="color:#111">types</span><span style="color:#f92672">.</span><span style="color:#111">Integer</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">65535</span><span style="color:#111">)</span></code></pre></div>
 <p>However, the predefined option sub-classes already set the option <code>type</code>. For example, the <code>StrOpt</code> option class above already sets the type to <code>oslo_config.types.String</code>. This table shows some relations between types and options:</p>
 
 <table>
@@ -145,30 +145,30 @@ PortType <span style="color:#333">=</span> types<span style="color:#333">.</span
 <h3 id="example-gnocchi-dispatcher-options">Example: Gnocchi Dispatcher Options</h3>
 
 <p>A series of options for Gnocchi using <code>oslo_config</code> can be found in the Ceilometer source code at <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/dispatcher/gnocchi_opts.py"><code>ceilometer/dispatcher/gnocchi_opts.py</code></a>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">oslo_config</span> <span style="color:#080;font-weight:bold">import</span> cfg
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">oslo_config</span> <span style="color:#f92672">import</span> <span style="color:#111">cfg</span>
 
-dispatcher_opts <span style="color:#333">=</span> [
-    cfg<span style="color:#333">.</span>BoolOpt(<span style="background-color:#fff0f0">&#39;filter_service_activity&#39;</span>,
-                default<span style="color:#333">=</span>True,
-                help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Filter out samples generated by Gnocchi &#39;</span>
-                <span style="background-color:#fff0f0">&#39;service activity&#39;</span>),
-    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;filter_project&#39;</span>,
-               default<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi&#39;</span>,
-               help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Gnocchi project used to filter out samples &#39;</span>
-               <span style="background-color:#fff0f0">&#39;generated by Gnocchi service activity&#39;</span>),
-    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;archive_policy&#39;</span>,
-               deprecated_for_removal<span style="color:#333">=</span>True,
-               deprecated_reason<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Archive Policy Rule must be &#39;</span>
-               <span style="background-color:#fff0f0">&#39;setup on Gnocchi side instead&#39;</span>,
-               help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;The archive policy to use when the dispatcher &#39;</span>
-               <span style="background-color:#fff0f0">&#39;create a new metric.&#39;</span>),
-    cfg<span style="color:#333">.</span>StrOpt(<span style="background-color:#fff0f0">&#39;resources_definition_file&#39;</span>,
-               default<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi_resources.yaml&#39;</span>,
-               help<span style="color:#333">=</span>(<span style="background-color:#fff0f0">&#39;The Yaml file that defines mapping between samples &#39;</span>
-                     <span style="background-color:#fff0f0">&#39;and gnocchi resources/metrics&#39;</span>)),
-    cfg<span style="color:#333">.</span>FloatOpt(<span style="background-color:#fff0f0">&#39;request_timeout&#39;</span>, default<span style="color:#333">=</span><span style="color:#60e;font-weight:bold">6.05</span>, <span style="color:#007020">min</span><span style="color:#333">=</span><span style="color:#60e;font-weight:bold">0.0</span>,
-                 help<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Number of seconds before request to gnocchi times out&#39;</span>),
-]</code></pre></div>
+<span style="color:#111">dispatcher_opts</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">BoolOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;filter_service_activity&#39;</span><span style="color:#111">,</span>
+                <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">,</span>
+                <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Filter out samples generated by Gnocchi &#39;</span>
+                <span style="color:#d88200">&#39;service activity&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;filter_project&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;gnocchi&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Gnocchi project used to filter out samples &#39;</span>
+               <span style="color:#d88200">&#39;generated by Gnocchi service activity&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;archive_policy&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">deprecated_for_removal</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">,</span>
+               <span style="color:#111">deprecated_reason</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Archive Policy Rule must be &#39;</span>
+               <span style="color:#d88200">&#39;setup on Gnocchi side instead&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;The archive policy to use when the dispatcher &#39;</span>
+               <span style="color:#d88200">&#39;create a new metric.&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;resources_definition_file&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;gnocchi_resources.yaml&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#111">(</span><span style="color:#d88200">&#39;The Yaml file that defines mapping between samples &#39;</span>
+                     <span style="color:#d88200">&#39;and gnocchi resources/metrics&#39;</span><span style="color:#111">)),</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">FloatOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;request_timeout&#39;</span><span style="color:#111">,</span> <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#ae81ff">6.05</span><span style="color:#111">,</span> <span style="color:#111">min</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span><span style="color:#111">,</span>
+                 <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Number of seconds before request to gnocchi times out&#39;</span><span style="color:#111">),</span>
+<span style="color:#111">]</span></code></pre></div>
 <p>We can see that options can be given a default value (must match its type), help messages, minimum values, etc.</p>
 
 <p>The example above shows another interesting concept: <a href="https://docs.openstack.org/developer/oslo.config/cfg.html#option-deprecation"><strong>option deprecation</strong></a>. We can specify the reason <em>why</em> an option is being deprecated, and if it will be removed after deprecation.</p>

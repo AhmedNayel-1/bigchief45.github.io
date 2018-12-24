@@ -100,63 +100,63 @@
 <p>When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.</p>
 
 <p>With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in <code>conftest.py</code> that will be loaded automatically:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># conftest.py</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># conftest.py</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pytest</span>
+<span style="color:#f92672">import</span> <span style="color:#111">pytest</span>
 
 
-<span style="color:#555;font-weight:bold">@pytest.fixture</span>(autouse<span style="color:#333">=</span>True)
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">env_setup</span>(monkeypatch):
-    monkeypatch<span style="color:#333">.</span>setenv(<span style="background-color:#fff0f0">&#39;MY_SETTING&#39;</span>, <span style="background-color:#fff0f0">&#39;some-value&#39;</span>)
-    monkeypatch<span style="color:#333">.</span>setenv(<span style="background-color:#fff0f0">&#39;ANOTHER_SETTING&#39;</span>, <span style="background-color:#fff0f0">&#39;some-value&#39;</span>)</code></pre></div>
+<span style="color:#75af00">@pytest.fixture</span><span style="color:#111">(</span><span style="color:#111">autouse</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">env_setup</span><span style="color:#111">(</span><span style="color:#111">monkeypatch</span><span style="color:#111">):</span>
+    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;MY_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ANOTHER_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span></code></pre></div>
 <p><a href="https://docs.pytest.org/en/latest/monkeypatch.html"><code>monkeypatch</code></a> is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the <code>autouse</code> option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.</p>
 
 <h2 id="aws-mock-fixtures">AWS Mock Fixtures</h2>
 
 <p>We can create reusable fixtures that mock AWS services, using the awesome <a href="https://github.com/spulec/moto">moto</a> library:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># conftest.py</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># conftest.py</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pytest</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">moto</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">boto3</span>
-
-
-TEST_BUCKET_NAME <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;test-bucket&#39;</span>
-TEST_DYNAMO_TABLE_NAME <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;test-dynamodb-table&#39;</span>
+<span style="color:#f92672">import</span> <span style="color:#111">pytest</span>
+<span style="color:#f92672">import</span> <span style="color:#111">moto</span>
+<span style="color:#f92672">import</span> <span style="color:#111">boto3</span>
 
 
-<span style="color:#555;font-weight:bold">@pytest.fixture</span>
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">s3_bucket</span>():
-    <span style="color:#080;font-weight:bold">with</span> moto<span style="color:#333">.</span>mock_s3():
-        boto3<span style="color:#333">.</span>client(<span style="background-color:#fff0f0">&#39;s3&#39;</span>)<span style="color:#333">.</span>create_bucket(Bucket<span style="color:#333">=</span>TEST_BUCKET_NAME)
-        <span style="color:#080;font-weight:bold">yield</span> boto3<span style="color:#333">.</span>resource(<span style="background-color:#fff0f0">&#39;s3&#39;</span>)<span style="color:#333">.</span>Bucket(TEST_BUCKET_NAME)
+<span style="color:#111">TEST_BUCKET_NAME</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;test-bucket&#39;</span>
+<span style="color:#111">TEST_DYNAMO_TABLE_NAME</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;test-dynamodb-table&#39;</span>
 
 
-<span style="color:#555;font-weight:bold">@pytest.fixture</span>
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">dynamodb_table</span>():
-    <span style="color:#080;font-weight:bold">with</span> moto<span style="color:#333">.</span>mock_dynamodb2():
-        boto3<span style="color:#333">.</span>client(<span style="background-color:#fff0f0">&#39;dynamodb&#39;</span>)<span style="color:#333">.</span>create_table(
-            AttributeDefinitions<span style="color:#333">=</span>[
-                {<span style="background-color:#fff0f0">&#39;AttributeName&#39;</span>: <span style="background-color:#fff0f0">&#39;id&#39;</span>, <span style="background-color:#fff0f0">&#39;AttributeType&#39;</span>: <span style="background-color:#fff0f0">&#39;S&#39;</span>}
-            ],
-            TableName<span style="color:#333">=</span>TEST_DYNAMO_TABLE_NAME,
-            KeySchema<span style="color:#333">=</span>[{<span style="background-color:#fff0f0">&#39;AttributeName&#39;</span>: <span style="background-color:#fff0f0">&#39;id&#39;</span>, <span style="background-color:#fff0f0">&#39;KeyType&#39;</span>: <span style="background-color:#fff0f0">&#39;HASH&#39;</span>}],
-            ProvisionedThroughput<span style="color:#333">=</span>{
-                <span style="background-color:#fff0f0">&#39;ReadCapacityUnits&#39;</span>: <span style="color:#00d;font-weight:bold">123</span>,
-                <span style="background-color:#fff0f0">&#39;WriteCapacityUnits&#39;</span>: <span style="color:#00d;font-weight:bold">123</span>,
-            },
-        )
-        <span style="color:#080;font-weight:bold">yield</span> boto3<span style="color:#333">.</span>resource(<span style="background-color:#fff0f0">&#39;dynamodb&#39;</span>)<span style="color:#333">.</span>Table(TEST_DYNAMO_TABLE_NAME)</code></pre></div>
+<span style="color:#75af00">@pytest.fixture</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">s3_bucket</span><span style="color:#111">():</span>
+    <span style="color:#00a8c8">with</span> <span style="color:#111">moto</span><span style="color:#f92672">.</span><span style="color:#111">mock_s3</span><span style="color:#111">():</span>
+        <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">client</span><span style="color:#111">(</span><span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">create_bucket</span><span style="color:#111">(</span><span style="color:#111">Bucket</span><span style="color:#f92672">=</span><span style="color:#111">TEST_BUCKET_NAME</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">yield</span> <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">resource</span><span style="color:#111">(</span><span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">Bucket</span><span style="color:#111">(</span><span style="color:#111">TEST_BUCKET_NAME</span><span style="color:#111">)</span>
+
+
+<span style="color:#75af00">@pytest.fixture</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">dynamodb_table</span><span style="color:#111">():</span>
+    <span style="color:#00a8c8">with</span> <span style="color:#111">moto</span><span style="color:#f92672">.</span><span style="color:#111">mock_dynamodb2</span><span style="color:#111">():</span>
+        <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">client</span><span style="color:#111">(</span><span style="color:#d88200">&#39;dynamodb&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">create_table</span><span style="color:#111">(</span>
+            <span style="color:#111">AttributeDefinitions</span><span style="color:#f92672">=</span><span style="color:#111">[</span>
+                <span style="color:#111">{</span><span style="color:#d88200">&#39;AttributeName&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;AttributeType&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;S&#39;</span><span style="color:#111">}</span>
+            <span style="color:#111">],</span>
+            <span style="color:#111">TableName</span><span style="color:#f92672">=</span><span style="color:#111">TEST_DYNAMO_TABLE_NAME</span><span style="color:#111">,</span>
+            <span style="color:#111">KeySchema</span><span style="color:#f92672">=</span><span style="color:#111">[{</span><span style="color:#d88200">&#39;AttributeName&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;KeyType&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;HASH&#39;</span><span style="color:#111">}],</span>
+            <span style="color:#111">ProvisionedThroughput</span><span style="color:#f92672">=</span><span style="color:#111">{</span>
+                <span style="color:#d88200">&#39;ReadCapacityUnits&#39;</span><span style="color:#111">:</span> <span style="color:#ae81ff">123</span><span style="color:#111">,</span>
+                <span style="color:#d88200">&#39;WriteCapacityUnits&#39;</span><span style="color:#111">:</span> <span style="color:#ae81ff">123</span><span style="color:#111">,</span>
+            <span style="color:#111">},</span>
+        <span style="color:#111">)</span>
+        <span style="color:#00a8c8">yield</span> <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">resource</span><span style="color:#111">(</span><span style="color:#d88200">&#39;dynamodb&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">Table</span><span style="color:#111">(</span><span style="color:#111">TEST_DYNAMO_TABLE_NAME</span><span style="color:#111">)</span></code></pre></div>
 <p>The <code>yield</code> keyword in the fixture will allow this fixture to be kept alive during the whole execution of a test that uses it. Using these fixtures in tests is very straight-forward:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span>:
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">test_upload</span>(self, s3_bucket):
-        <span style="color:#888"># Call some function that uploads some files</span>
-        <span style="color:#888"># to S3 under a &#39;directory&#39; denoted by an id</span>
-        my_func()
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyTest</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_upload</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">s3_bucket</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># Call some function that uploads some files</span>
+        <span style="color:#75715e"># to S3 under a &#39;directory&#39; denoted by an id</span>
+        <span style="color:#111">my_func</span><span style="color:#111">()</span>
 
-        <span style="color:#888"># Assert that the file is in the bucket</span>
-        files_in_bucket <span style="color:#333">=</span> s3_bucket<span style="color:#333">.</span>objects<span style="color:#333">.</span><span style="color:#007020">filter</span>(Prefix<span style="color:#333">=</span>f<span style="background-color:#fff0f0">&#39;{SOME_ID}/&#39;</span>)
-        <span style="color:#080;font-weight:bold">assert</span> <span style="color:#007020">len</span>(<span style="color:#007020">list</span>(files_in_bucket)) <span style="color:#333">==</span> <span style="color:#00d;font-weight:bold">3</span></code></pre></div>
+        <span style="color:#75715e"># Assert that the file is in the bucket</span>
+        <span style="color:#111">files_in_bucket</span> <span style="color:#f92672">=</span> <span style="color:#111">s3_bucket</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">filter</span><span style="color:#111">(</span><span style="color:#111">Prefix</span><span style="color:#f92672">=</span><span style="color:#111">f</span><span style="color:#d88200">&#39;{SOME_ID}/&#39;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">assert</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">list</span><span style="color:#111">(</span><span style="color:#111">files_in_bucket</span><span style="color:#111">))</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span></code></pre></div>
 <h2 id="fixtures-that-accept-arguments">Fixtures That Accept Arguments</h2>
 
 <p>There are times when I want to write some sort of fixture factory that can produce fixtures with different properties depending on parameters passed to it.</p>
@@ -164,42 +164,42 @@ TEST_DYNAMO_TABLE_NAME <span style="color:#333">=</span> <span style="background
 <p>For example, let&rsquo;s say we want a fixture that represents some JSON payload, but some values should be generated according to some identifier that is passed to the fixture.</p>
 
 <p>A real example of this would be a JSON payload of an <a href="https://aws.amazon.com/sqs/">Amazon SQS</a> event that gets triggered when some file is uploaded to a S3 bucket:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># conftest.py</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># conftest.py</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">json</span>
+<span style="color:#f92672">import</span> <span style="color:#111">json</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pytest</span>
+<span style="color:#f92672">import</span> <span style="color:#111">pytest</span>
 
 
-<span style="color:#555;font-weight:bold">@pytest.fixture</span>
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">sqs_event_payload</span>():
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_payload</span>(<span style="color:#007020">id</span>):
-        s3_key <span style="color:#333">=</span> f<span style="background-color:#fff0f0">&#39;{id}/{id}.pdf&#39;</span>
+<span style="color:#75af00">@pytest.fixture</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">sqs_event_payload</span><span style="color:#111">():</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_payload</span><span style="color:#111">(</span><span style="color:#111">id</span><span style="color:#111">):</span>
+        <span style="color:#111">s3_key</span> <span style="color:#f92672">=</span> <span style="color:#111">f</span><span style="color:#d88200">&#39;{id}/{id}.pdf&#39;</span>
 
-         msg <span style="color:#333">=</span> {
-            <span style="background-color:#fff0f0">&#39;Records&#39;</span>: [
-                {
-                    <span style="background-color:#fff0f0">&#39;s3&#39;</span>: {
-                        <span style="background-color:#fff0f0">&#39;bucket&#39;</span>: {<span style="background-color:#fff0f0">&#39;name&#39;</span>: TEST_BUCKET_NAME},
-                        <span style="background-color:#fff0f0">&#39;object&#39;</span>: {<span style="background-color:#fff0f0">&#39;key&#39;</span>: s3_key},
-                    }
-                }
-            ]
-        }
-        body <span style="color:#333">=</span> {<span style="background-color:#fff0f0">&#39;Message&#39;</span>: json<span style="color:#333">.</span>dumps(msg)}
-        <span style="color:#080;font-weight:bold">return</span> {<span style="background-color:#fff0f0">&#39;Records&#39;</span>: [{<span style="background-color:#fff0f0">&#39;body&#39;</span>: json<span style="color:#333">.</span>dumps(body)}]}
+         <span style="color:#111">msg</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+            <span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+                        <span style="color:#d88200">&#39;bucket&#39;</span><span style="color:#111">:</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">:</span> <span style="color:#111">TEST_BUCKET_NAME</span><span style="color:#111">},</span>
+                        <span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">:</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;key&#39;</span><span style="color:#111">:</span> <span style="color:#111">s3_key</span><span style="color:#111">},</span>
+                    <span style="color:#111">}</span>
+                <span style="color:#111">}</span>
+            <span style="color:#111">]</span>
+        <span style="color:#111">}</span>
+        <span style="color:#111">body</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;Message&#39;</span><span style="color:#111">:</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">dumps</span><span style="color:#111">(</span><span style="color:#111">msg</span><span style="color:#111">)}</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">:</span> <span style="color:#111">[{</span><span style="color:#d88200">&#39;body&#39;</span><span style="color:#111">:</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">dumps</span><span style="color:#111">(</span><span style="color:#111">body</span><span style="color:#111">)}]}</span>
 
-    <span style="color:#080;font-weight:bold">return</span> _payload</code></pre></div>
-<p>The trick here is using an inner function to enabling the &ldquo;parameterization&rdquo; of the fixture. We can then use it in a test like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span>:
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">test_something</span>(self, sqs_event_payload):
-        payload <span style="color:#333">=</span> sqs_event_payload(<span style="background-color:#fff0f0">&#39;1093450983456&#39;</span>)
+    <span style="color:#00a8c8">return</span> <span style="color:#111">_payload</span></code></pre></div>
+<p>The trick here is using an inner function to enable the &ldquo;parameterization&rdquo; of the fixture. We can then use it in a test like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyTest</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_something</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">sqs_event_payload</span><span style="color:#111">):</span>
+        <span style="color:#111">payload</span> <span style="color:#f92672">=</span> <span style="color:#111">sqs_event_payload</span><span style="color:#111">(</span><span style="color:#d88200">&#39;1093450983456&#39;</span><span style="color:#111">)</span>
 
-        <span style="color:#888"># Send the payload to a function we want to test.</span>
-        <span style="color:#888"># For example, a Lambda handler function</span>
-        r <span style="color:#333">=</span> handler(event<span style="color:#333">=</span>payload, context<span style="color:#333">=</span>None)
+        <span style="color:#75715e"># Send the payload to a function we want to test.</span>
+        <span style="color:#75715e"># For example, a Lambda handler function</span>
+        <span style="color:#111">r</span> <span style="color:#f92672">=</span> <span style="color:#111">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#f92672">=</span><span style="color:#111">payload</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">)</span>
 
-        <span style="color:#888"># Assert something here...</span></code></pre></div>
+        <span style="color:#75715e"># Assert something here...</span></code></pre></div>
 <p>This allows us to be able to specify a dynamic ID to the fixture. This way we don&rsquo;t have to worry about using the same ID in every test.</p>
 
 <p>One drawback of this trick though, is that we have to call the fixture as a function first to be able to use it, as opposed to the normal way of using fixtures by just referring to them.</p>

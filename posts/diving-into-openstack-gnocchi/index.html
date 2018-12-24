@@ -100,27 +100,27 @@
 <h2 id="configuration">Configuration</h2>
 
 <p>Gnocchi&rsquo;s configuration is stored in a file called <code>gnocchi.conf</code>. Ideally, this file would be in <code>~/gnocchi.conf</code> or <code>/etc/gnocchi/gnocchi.conf</code>. Let&rsquo;s take a look at a basic Gnocchi configuration:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#080;font-weight:bold">[DEFAULT]</span>
-<span style="color:#00c">debug</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">true</span>
-<span style="color:#00c">verbose</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">true</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[DEFAULT]</span>
+<span style="color:#75af00">debug</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
+<span style="color:#75af00">verbose</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
 
-<span style="color:#080;font-weight:bold">[api]</span>
-<span style="color:#00c">workers</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">1</span>
+<span style="color:#00a8c8">[api]</span>
+<span style="color:#75af00">workers</span> <span style="color:#f92672">=</span> <span style="color:#d88200">1</span>
 
-<span style="color:#080;font-weight:bold">[database]</span>
-<span style="color:#00c">backend</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">sqlalchemy</span>
+<span style="color:#00a8c8">[database]</span>
+<span style="color:#75af00">backend</span> <span style="color:#f92672">=</span> <span style="color:#d88200">sqlalchemy</span>
 
-<span style="color:#080;font-weight:bold">[indexer]</span>
-<span style="color:#00c">url</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi</span>
+<span style="color:#00a8c8">[indexer]</span>
+<span style="color:#75af00">url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi</span>
 
-<span style="color:#080;font-weight:bold">[storage]</span>
-<span style="color:#00c">coordination_url</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">file:///home/ubuntu/gn/locks</span>
-<span style="color:#00c">driver</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">file</span>
-<span style="color:#00c">file_basepath</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">/home/ubuntu/gn</span>
+<span style="color:#00a8c8">[storage]</span>
+<span style="color:#75af00">coordination_url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">file:///home/ubuntu/gn/locks</span>
+<span style="color:#75af00">driver</span> <span style="color:#f92672">=</span> <span style="color:#d88200">file</span>
+<span style="color:#75af00">file_basepath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">/home/ubuntu/gn</span>
 
-<span style="color:#080;font-weight:bold">[cors]</span>
-<span style="color:#00c">allowed_origin</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">*</span>
-<span style="color:#00c">allow_credentials</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">false</span></code></pre></div>
+<span style="color:#00a8c8">[cors]</span>
+<span style="color:#75af00">allowed_origin</span> <span style="color:#f92672">=</span> <span style="color:#d88200">*</span>
+<span style="color:#75af00">allow_credentials</span> <span style="color:#f92672">=</span> <span style="color:#d88200">false</span></code></pre></div>
 <p>The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.</p>
 
 <h3 id="database-setup">Database Setup</h3>
@@ -165,8 +165,8 @@
 <h2 id="gnocchi-rest-api">Gnocchi REST API</h2>
 
 <p>Gnocchi&rsquo;s REST API is based on <a href="http://www.pecanpy.org/index.html">Pecan</a>, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&rsquo;s <code>rest/__init__.py</code> file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pecan</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">pecan</span> <span style="color:#080;font-weight:bold">import</span> rest</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">pecan</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pecan</span> <span style="color:#f92672">import</span> <span style="color:#111">rest</span></code></pre></div>
 <h3 id="metrics">Metrics</h3>
 
 <p>Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
@@ -174,24 +174,24 @@
 <p>A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.</p>
 
 <p>Farther down the code in <code>rest/__init__.py</code>, we can find a metric controller which inherits from a Pecan REST controller:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MetricController</span>(rest<span style="color:#333">.</span>RestController):
-    _custom_actions <span style="color:#333">=</span> {
-        <span style="background-color:#fff0f0">&#39;measures&#39;</span>: [<span style="background-color:#fff0f0">&#39;POST&#39;</span>, <span style="background-color:#fff0f0">&#39;GET&#39;</span>]
-    }
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MetricController</span><span style="color:#111">(</span><span style="color:#111">rest</span><span style="color:#f92672">.</span><span style="color:#111">RestController</span><span style="color:#111">):</span>
+    <span style="color:#111">_custom_actions</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+        <span style="color:#d88200">&#39;measures&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;POST&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;GET&#39;</span><span style="color:#111">]</span>
+    <span style="color:#111">}</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, metric):
-        self<span style="color:#333">.</span>metric <span style="color:#333">=</span> metric
-        mgr <span style="color:#333">=</span> extension<span style="color:#333">.</span>ExtensionManager(namespace<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi.aggregates&#39;</span>,
-                                         invoke_on_load<span style="color:#333">=</span>True)
-        self<span style="color:#333">.</span>custom_agg <span style="color:#333">=</span> <span style="color:#007020">dict</span>((x<span style="color:#333">.</span>name, x<span style="color:#333">.</span>obj) <span style="color:#080;font-weight:bold">for</span> x <span style="color:#000;font-weight:bold">in</span> mgr)
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">metric</span>
+        <span style="color:#111">mgr</span> <span style="color:#f92672">=</span> <span style="color:#111">extension</span><span style="color:#f92672">.</span><span style="color:#111">ExtensionManager</span><span style="color:#111">(</span><span style="color:#111">namespace</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;gnocchi.aggregates&#39;</span><span style="color:#111">,</span>
+                                         <span style="color:#111">invoke_on_load</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">custom_agg</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">obj</span><span style="color:#111">)</span> <span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">mgr</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">enforce_metric</span>(self, rule):
-        enforce(rule, json<span style="color:#333">.</span>to_primitive(self<span style="color:#333">.</span>metric))
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">enforce_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">rule</span><span style="color:#111">):</span>
+        <span style="color:#111">enforce</span><span style="color:#111">(</span><span style="color:#111">rule</span><span style="color:#111">,</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">to_primitive</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#111">))</span>
 
-    <span style="color:#555;font-weight:bold">@pecan.expose</span>(<span style="background-color:#fff0f0">&#39;json&#39;</span>)
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_all</span>(self):
-        self<span style="color:#333">.</span>enforce_metric(<span style="background-color:#fff0f0">&#34;get metric&#34;</span>)
-        <span style="color:#080;font-weight:bold">return</span> self<span style="color:#333">.</span>metric</code></pre></div>
+    <span style="color:#75af00">@pecan.expose</span><span style="color:#111">(</span><span style="color:#d88200">&#39;json&#39;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_all</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">enforce_metric</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get metric&#34;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span></code></pre></div>
 <p>From the <a href="http://pecan.readthedocs.io/en/latest/routing.html">Pecan documentation</a>, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.</p>
 
 <p>We can tell Pecan which methods in a class are publically-visible via <code>expose()</code>. If a method is not decorated with <code>expose()</code>, Pecan will never route a request to it. In the example above, the <code>get_all()</code> method is exposed to Pecan. Additionally, it makes use of Pecan&rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.</p>
@@ -271,28 +271,28 @@
 <p>Other modes of authentication are: no authentication, and Keystone authentication.</p>
 
 <p>Gnocchi handles authentication using a helper for each type of authentication. These helpers can be found in <code>rest/auth_helper.py</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BasicAuthHelper</span>(<span style="color:#007020">object</span>):
-    <span style="color:#555;font-weight:bold">@staticmethod</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_current_user</span>(headers):
-        auth <span style="color:#333">=</span> werkzeug<span style="color:#333">.</span>http<span style="color:#333">.</span>parse_authorization_header(
-            headers<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#34;Authorization&#34;</span>))
-        <span style="color:#080;font-weight:bold">if</span> auth <span style="color:#000;font-weight:bold">is</span> None:
-            rest<span style="color:#333">.</span>abort(<span style="color:#00d;font-weight:bold">401</span>)
-        <span style="color:#080;font-weight:bold">return</span> auth<span style="color:#333">.</span>username
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BasicAuthHelper</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
+    <span style="color:#75af00">@staticmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_current_user</span><span style="color:#111">(</span><span style="color:#111">headers</span><span style="color:#111">):</span>
+        <span style="color:#111">auth</span> <span style="color:#f92672">=</span> <span style="color:#111">werkzeug</span><span style="color:#f92672">.</span><span style="color:#111">http</span><span style="color:#f92672">.</span><span style="color:#111">parse_authorization_header</span><span style="color:#111">(</span>
+            <span style="color:#111">headers</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Authorization&#34;</span><span style="color:#111">))</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">auth</span> <span style="color:#f92672">is</span> <span style="color:#111">None</span><span style="color:#111">:</span>
+            <span style="color:#111">rest</span><span style="color:#f92672">.</span><span style="color:#111">abort</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">username</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_auth_info</span>(self, headers):
-        user <span style="color:#333">=</span> self<span style="color:#333">.</span>get_current_user(headers)
-        roles <span style="color:#333">=</span> []
-        <span style="color:#080;font-weight:bold">if</span> user <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#34;admin&#34;</span>:
-            roles<span style="color:#333">.</span>append(<span style="background-color:#fff0f0">&#34;admin&#34;</span>)
-        <span style="color:#080;font-weight:bold">return</span> {
-            <span style="background-color:#fff0f0">&#34;user&#34;</span>: user,
-            <span style="background-color:#fff0f0">&#34;roles&#34;</span>: roles
-        }
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_auth_info</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">headers</span><span style="color:#111">):</span>
+        <span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">get_current_user</span><span style="color:#111">(</span><span style="color:#111">headers</span><span style="color:#111">)</span>
+        <span style="color:#111">roles</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">user</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">:</span>
+            <span style="color:#111">roles</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">{</span>
+            <span style="color:#d88200">&#34;user&#34;</span><span style="color:#111">:</span> <span style="color:#111">user</span><span style="color:#111">,</span>
+            <span style="color:#d88200">&#34;roles&#34;</span><span style="color:#111">:</span> <span style="color:#111">roles</span>
+        <span style="color:#111">}</span>
 
-    <span style="color:#555;font-weight:bold">@staticmethod</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_resource_policy_filter</span>(headers, rule, resource_type):
-        <span style="color:#080;font-weight:bold">return</span> None</code></pre></div>
+    <span style="color:#75af00">@staticmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_resource_policy_filter</span><span style="color:#111">(</span><span style="color:#111">headers</span><span style="color:#111">,</span> <span style="color:#111">rule</span><span style="color:#111">,</span> <span style="color:#111">resource_type</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">None</span></code></pre></div>
 <p>It is important to mention that basic authentication is made possible because of <a href="http://werkzeug.pocoo.org/">Werkzeug</a>, Werkzeug is a <a href="https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface">WSGI</a> utility library for Python. In the basic auth helper, Werkzeug helps parsing the HTTP headers.</p>
 
 <h2 id="storage">Storage</h2>
@@ -302,73 +302,73 @@
 <p>Additionally, an intermediary library inside Gnocchi called Carbonara is in charge of the time series manipulation.</p>
 
 <p>Storage logic can be found in <a href="https://github.com/openstack/gnocchi/blob/master/gnocchi/storage/"><code>gnocchi/storage</code></a>. Some basic classes defining drivers, measures, and metrics can be found in the <code>__init__.py</code> file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Metric</span>(<span style="color:#007020">object</span>):
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, <span style="color:#007020">id</span>, archive_policy,
-                 creator<span style="color:#333">=</span>None,
-                 name<span style="color:#333">=</span>None,
-                 resource_id<span style="color:#333">=</span>None):
-        self<span style="color:#333">.</span><span style="color:#007020">id</span> <span style="color:#333">=</span> <span style="color:#007020">id</span>
-        self<span style="color:#333">.</span>archive_policy <span style="color:#333">=</span> archive_policy
-        self<span style="color:#333">.</span>creator <span style="color:#333">=</span> creator
-        self<span style="color:#333">.</span>name <span style="color:#333">=</span> name
-        self<span style="color:#333">.</span>resource_id <span style="color:#333">=</span> resource_id
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Metric</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#111">archive_policy</span><span style="color:#111">,</span>
+                 <span style="color:#111">creator</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span>
+                 <span style="color:#111">name</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span>
+                 <span style="color:#111">resource_id</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">id</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">archive_policy</span> <span style="color:#f92672">=</span> <span style="color:#111">archive_policy</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">creator</span> <span style="color:#f92672">=</span> <span style="color:#111">creator</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">resource_id</span> <span style="color:#f92672">=</span> <span style="color:#111">resource_id</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __repr__(self):
-        <span style="color:#080;font-weight:bold">return</span> <span style="background-color:#fff0f0">&#39;&lt;</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0"> </span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">&gt;&#39;</span> <span style="color:#333">%</span> (self<span style="color:#333">.</span>__class__<span style="color:#333">.</span>__name__, self<span style="color:#333">.</span><span style="color:#007020">id</span>)</code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__repr__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#39;&lt;</span><span style="color:#d88200">%s</span><span style="color:#d88200"> </span><span style="color:#d88200">%s</span><span style="color:#d88200">&gt;&#39;</span> <span style="color:#f92672">%</span> <span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__class__</span><span style="color:#f92672">.</span><span style="color:#111">__name__</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">)</span></code></pre></div>
 <p>We can find the storage logic for Ceph in <code>ceph.py</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CephStorage</span>(_carbonara<span style="color:#333">.</span>CarbonaraBasedStorage):
-    WRITE_FULL <span style="color:#333">=</span> False
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">CephStorage</span><span style="color:#111">(</span><span style="color:#111">_carbonara</span><span style="color:#f92672">.</span><span style="color:#111">CarbonaraBasedStorage</span><span style="color:#111">):</span>
+    <span style="color:#111">WRITE_FULL</span> <span style="color:#f92672">=</span> <span style="color:#111">False</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, conf, incoming):
-        <span style="color:#007020">super</span>(CephStorage, self)<span style="color:#333">.</span>__init__(conf, incoming)
-        self<span style="color:#333">.</span>rados, self<span style="color:#333">.</span>ioctx <span style="color:#333">=</span> ceph<span style="color:#333">.</span>create_rados_connection(conf)
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">incoming</span><span style="color:#111">):</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">CephStorage</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">incoming</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">rados</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">ioctx</span> <span style="color:#f92672">=</span> <span style="color:#111">ceph</span><span style="color:#f92672">.</span><span style="color:#111">create_rados_connection</span><span style="color:#111">(</span><span style="color:#111">conf</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">stop</span>(self):
-        ceph<span style="color:#333">.</span>close_rados_connection(self<span style="color:#333">.</span>rados, self<span style="color:#333">.</span>ioctx)
-        <span style="color:#007020">super</span>(CephStorage, self)<span style="color:#333">.</span>stop()
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">stop</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#111">ceph</span><span style="color:#f92672">.</span><span style="color:#111">close_rados_connection</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">rados</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">ioctx</span><span style="color:#111">)</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">CephStorage</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">stop</span><span style="color:#111">()</span>
 
-    <span style="color:#555;font-weight:bold">@staticmethod</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_get_object_name</span>(metric, timestamp_key, aggregation, granularity,
-                         version<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">3</span>):
-        name <span style="color:#333">=</span> <span style="color:#007020">str</span>(<span style="background-color:#fff0f0">&#34;gnocchi_</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">_</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">_</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">_</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">&#34;</span> <span style="color:#333">%</span> (
-            metric<span style="color:#333">.</span><span style="color:#007020">id</span>, timestamp_key, aggregation, granularity))
-        <span style="color:#080;font-weight:bold">return</span> name <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;_v</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">&#39;</span> <span style="color:#333">%</span> version <span style="color:#080;font-weight:bold">if</span> version <span style="color:#080;font-weight:bold">else</span> name
+    <span style="color:#75af00">@staticmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_get_object_name</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">,</span> <span style="color:#111">timestamp_key</span><span style="color:#111">,</span> <span style="color:#111">aggregation</span><span style="color:#111">,</span> <span style="color:#111">granularity</span><span style="color:#111">,</span>
+                         <span style="color:#111">version</span><span style="color:#f92672">=</span><span style="color:#ae81ff">3</span><span style="color:#111">):</span>
+        <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">str</span><span style="color:#111">(</span><span style="color:#d88200">&#34;gnocchi_</span><span style="color:#d88200">%s</span><span style="color:#d88200">_</span><span style="color:#d88200">%s</span><span style="color:#d88200">_</span><span style="color:#d88200">%s</span><span style="color:#d88200">_</span><span style="color:#d88200">%s</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">%</span> <span style="color:#111">(</span>
+            <span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#111">timestamp_key</span><span style="color:#111">,</span> <span style="color:#111">aggregation</span><span style="color:#111">,</span> <span style="color:#111">granularity</span><span style="color:#111">))</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">name</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;_v</span><span style="color:#d88200">%s</span><span style="color:#d88200">&#39;</span> <span style="color:#f92672">%</span> <span style="color:#111">version</span> <span style="color:#00a8c8">if</span> <span style="color:#111">version</span> <span style="color:#00a8c8">else</span> <span style="color:#111">name</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_object_exists</span>(self, name):
-        <span style="color:#080;font-weight:bold">try</span>:
-            self<span style="color:#333">.</span>ioctx<span style="color:#333">.</span>stat(name)
-            <span style="color:#080;font-weight:bold">return</span> True
-        <span style="color:#080;font-weight:bold">except</span> rados<span style="color:#333">.</span>ObjectNotFound:
-            <span style="color:#080;font-weight:bold">return</span> False
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_object_exists</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">ioctx</span><span style="color:#f92672">.</span><span style="color:#111">stat</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">True</span>
+        <span style="color:#00a8c8">except</span> <span style="color:#111">rados</span><span style="color:#f92672">.</span><span style="color:#111">ObjectNotFound</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">False</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_create_metric</span>(self, metric):
-        name <span style="color:#333">=</span> self<span style="color:#333">.</span>_build_unaggregated_timeserie_path(metric, <span style="color:#00d;font-weight:bold">3</span>)
-        <span style="color:#080;font-weight:bold">if</span> self<span style="color:#333">.</span>_object_exists(name):
-            <span style="color:#080;font-weight:bold">raise</span> storage<span style="color:#333">.</span>MetricAlreadyExists(metric)
-        <span style="color:#080;font-weight:bold">else</span>:
-            self<span style="color:#333">.</span>ioctx<span style="color:#333">.</span>write_full(name, <span style="background-color:#fff0f0">b</span><span style="background-color:#fff0f0">&#34;&#34;</span>)</code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_create_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
+        <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_unaggregated_timeserie_path</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_object_exists</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">):</span>
+            <span style="color:#00a8c8">raise</span> <span style="color:#111">storage</span><span style="color:#f92672">.</span><span style="color:#111">MetricAlreadyExists</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">ioctx</span><span style="color:#f92672">.</span><span style="color:#111">write_full</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#d88200">b</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span></code></pre></div>
 <h2 id="gnocchi-tests">Gnocchi Tests</h2>
 
 <p>Running the tests in Gnocchi took me a while. Mainly because I am not very familiar with testing in Python and how testing with OpenStack libraries work.</p>
 
 <p>Tests are run using <strong>tox</strong> and <a href="https://wiki.openstack.org/wiki/Testr"><strong>testr</strong></a>. Therefore we first install tox using pip inside the virtual environment. In Gnocchi (and each OpenStack project) there will be a <code>tox.ini</code> file in the root directory. This is a set of test configurations for the project. For example, we can see a list of available environments to test against:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#080;font-weight:bold">[tox]</span>
-<span style="color:#00c">minversion</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">2.4</span>
-<span style="color:#00c">envlist</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">py{35,27}-{postgresql,mysql}{,-file,-swift,-ceph,-s3},pep8,bashate</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[tox]</span>
+<span style="color:#75af00">minversion</span> <span style="color:#f92672">=</span> <span style="color:#d88200">2.4</span>
+<span style="color:#75af00">envlist</span> <span style="color:#f92672">=</span> <span style="color:#d88200">py{35,27}-{postgresql,mysql}{,-file,-swift,-ceph,-s3},pep8,bashate</span></code></pre></div>
 <p>The complete list can be shown by using the <code>tox -l</code> command.</p>
 
 <p>The default settings that applies to all environments are located underneath the <code>[testenv]</code> directive:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#080;font-weight:bold">[testenv]</span>
-<span style="color:#00c">usedevelop</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">True</span>
-<span style="color:#00c">sitepackages</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">False</span>
-<span style="color:#00c">passenv</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">LANG OS_DEBUG OS_TEST_TIMEOUT OS_STDOUT_CAPTURE OS_STDERR_CAPTURE OS_LOG_CAPTURE GNOCCHI_TEST_* AWS_*</span>
-<span style="color:#00c">setenv</span> <span style="color:#333">=</span><span style="background-color:#fff0f0">
-</span><span style="background-color:#fff0f0">    GNOCCHI_TEST_STORAGE_DRIVER=file
-</span><span style="background-color:#fff0f0">    GNOCCHI_TEST_INDEXER_DRIVER=postgresql</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[testenv]</span>
+<span style="color:#75af00">usedevelop</span> <span style="color:#f92672">=</span> <span style="color:#d88200">True</span>
+<span style="color:#75af00">sitepackages</span> <span style="color:#f92672">=</span> <span style="color:#d88200">False</span>
+<span style="color:#75af00">passenv</span> <span style="color:#f92672">=</span> <span style="color:#d88200">LANG OS_DEBUG OS_TEST_TIMEOUT OS_STDOUT_CAPTURE OS_STDERR_CAPTURE OS_LOG_CAPTURE GNOCCHI_TEST_* AWS_*</span>
+<span style="color:#75af00">setenv</span> <span style="color:#f92672">=</span><span style="color:#d88200">
+</span><span style="color:#d88200">    GNOCCHI_TEST_STORAGE_DRIVER=file
+</span><span style="color:#d88200">    GNOCCHI_TEST_INDEXER_DRIVER=postgresql</span>
 
-<span style="color:#888"># ...</span></code></pre></div>
+<span style="color:#75715e"># ...</span></code></pre></div>
 <p>Specific environment configurations are specified by adding a a directive with the environment name after the colon:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#080;font-weight:bold">[testenv:py35-postgresql-file-upgrade-from-3.1]</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[testenv:py35-postgresql-file-upgrade-from-3.1]</span></code></pre></div>
 <p>So to summarize all this, it all basically means that we can run tests with tox using one of these environments, like this:</p>
 
 <pre><code>tox -e py27-postgresql-file

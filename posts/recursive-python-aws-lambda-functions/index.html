@@ -104,57 +104,57 @@
 <h2 id="implementing-recursion">Implementing Recursion</h2>
 
 <p>Let&rsquo;s begin writing the handler for our Lambda function. The first thing we need to do is parse the event object to get the S3 key of the uploaded file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">json</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os</span>
+<span style="color:#f92672">import</span> <span style="color:#111">json</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">boto3</span>
-
-
-BATCH_SIZE <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">400</span>
+<span style="color:#f92672">import</span> <span style="color:#111">boto3</span>
 
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">handler</span>(event, context):
-    sqs_record <span style="color:#333">=</span> event[<span style="background-color:#fff0f0">&#39;Records&#39;</span>][<span style="color:#00d;font-weight:bold">0</span>]  <span style="color:#888"># Assumes a Batch Size of 1 in the queue</span>
-    position <span style="color:#333">=</span> event<span style="color:#333">.</span>get(<span style="background-color:#fff0f0">&#39;position&#39;</span>, <span style="color:#00d;font-weight:bold">0</span>)  <span style="color:#888"># Represents the starting position</span>
-    key <span style="color:#333">=</span> _get_object_key_from_s3_notification(sqs_record)
+<span style="color:#111">BATCH_SIZE</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span>
 
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_get_object_key_from_s3_notification</span>(record):
-    <span style="background-color:#fff0f0">&#34;&#34;&#34;Returns the file&#39;s S3 key from the record object.&#34;&#34;&#34;</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">):</span>
+    <span style="color:#111">sqs_record</span> <span style="color:#f92672">=</span> <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span>  <span style="color:#75715e"># Assumes a Batch Size of 1 in the queue</span>
+    <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;position&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>  <span style="color:#75715e"># Represents the starting position</span>
+    <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">_get_object_key_from_s3_notification</span><span style="color:#111">(</span><span style="color:#111">sqs_record</span><span style="color:#111">)</span>
 
-    body <span style="color:#333">=</span> json<span style="color:#333">.</span>loads(record[<span style="background-color:#fff0f0">&#39;body&#39;</span>])
-    msg <span style="color:#333">=</span> json<span style="color:#333">.</span>loads(body[<span style="background-color:#fff0f0">&#39;Message&#39;</span>])
-    <span style="color:#080;font-weight:bold">return</span> msg[<span style="background-color:#fff0f0">&#39;Records&#39;</span>][<span style="color:#00d;font-weight:bold">0</span>][<span style="background-color:#fff0f0">&#39;s3&#39;</span>][<span style="background-color:#fff0f0">&#39;object&#39;</span>][<span style="background-color:#fff0f0">&#39;key&#39;</span>]</code></pre></div>
+
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">_get_object_key_from_s3_notification</span><span style="color:#111">(</span><span style="color:#111">record</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;Returns the file&#39;s S3 key from the record object.&#34;&#34;&#34;</span>
+
+    <span style="color:#111">body</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">record</span><span style="color:#111">[</span><span style="color:#d88200">&#39;body&#39;</span><span style="color:#111">])</span>
+    <span style="color:#111">msg</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">body</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Message&#39;</span><span style="color:#111">])</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">msg</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;key&#39;</span><span style="color:#111">]</span></code></pre></div>
 <p>Now we can proceed to download the file. Let&rsquo;s keep in mind that we want to make use of the optimization benefits that container re-use gives us. This means that we will first check if the file already exists before we proceed to download it:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">handler</span>(event, context):
-    <span style="color:#888"># ...</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">):</span>
+    <span style="color:#75715e"># ...</span>
 
-    file_path <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;/tmp/{}&#39;</span><span style="color:#333">.</span>format(key)
-    file_exists <span style="color:#333">=</span> os<span style="color:#333">.</span>path<span style="color:#333">.</span>exists(file_path)
-    <span style="color:#080;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> file_exists:
-        <span style="color:#080;font-weight:bold">print</span>(<span style="background-color:#fff0f0">&#39;File does not exists. Downloading...&#39;</span>)
-        <span style="color:#888"># Download the file from S3</span>
+    <span style="color:#111">file_path</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;/tmp/{}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">)</span>
+    <span style="color:#111">file_exists</span> <span style="color:#f92672">=</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#111">file_path</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">file_exists</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;File does not exists. Downloading...&#39;</span><span style="color:#111">)</span>
+        <span style="color:#75715e"># Download the file from S3</span>
 
-    <span style="color:#888"># Processing of the batch goes here</span>
+    <span style="color:#75715e"># Processing of the batch goes here</span>
 
-    position <span style="color:#333">+=</span> BATCH_SIZE  <span style="color:#888"># Move the position pointer for next batch</span>
-    <span style="color:#080;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> _process_is_complete(position):
-         <span style="color:#888"># Some function that can determine if the process is completed or not.</span>
-         <span style="color:#888"># If it&#39;s not, a new function will be invoked.</span>
-         event[<span style="background-color:#fff0f0">&#39;position&#39;</span>] <span style="color:#333">=</span> position
-         _recurse(context, event)
-    <span style="color:#080;font-weight:bold">else</span>:
-        <span style="color:#080;font-weight:bold">print</span>(<span style="background-color:#fff0f0">&#39;Processing complete&#39;</span>)
-        os<span style="color:#333">.</span>remove(file_path)  <span style="color:#888"># Cleanup</span>
+    <span style="color:#111">position</span> <span style="color:#f92672">+=</span> <span style="color:#111">BATCH_SIZE</span>  <span style="color:#75715e"># Move the position pointer for next batch</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">_process_is_complete</span><span style="color:#111">(</span><span style="color:#111">position</span><span style="color:#111">):</span>
+         <span style="color:#75715e"># Some function that can determine if the process is completed or not.</span>
+         <span style="color:#75715e"># If it&#39;s not, a new function will be invoked.</span>
+         <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200">&#39;position&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">position</span>
+         <span style="color:#111">_recurse</span><span style="color:#111">(</span><span style="color:#111">context</span><span style="color:#111">,</span> <span style="color:#111">event</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Processing complete&#39;</span><span style="color:#111">)</span>
+        <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#111">file_path</span><span style="color:#111">)</span>  <span style="color:#75715e"># Cleanup</span>
 
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_recurse</span>(context, payload):
-    lambda_client <span style="color:#333">=</span> boto3<span style="color:#333">.</span>client(<span style="background-color:#fff0f0">&#39;lambda&#39;</span>)
-    lambda_client<span style="color:#333">.</span>invoke(
-        FunctionName<span style="color:#333">=</span>context<span style="color:#333">.</span>function_name,
-        InvocationType<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;Event&#39;</span>,
-        Payload<span style="color:#333">=</span>json<span style="color:#333">.</span>dumps(payload)
-    )</code></pre></div>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">_recurse</span><span style="color:#111">(</span><span style="color:#111">context</span><span style="color:#111">,</span> <span style="color:#111">payload</span><span style="color:#111">):</span>
+    <span style="color:#111">lambda_client</span> <span style="color:#f92672">=</span> <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">client</span><span style="color:#111">(</span><span style="color:#d88200">&#39;lambda&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">lambda_client</span><span style="color:#f92672">.</span><span style="color:#111">invoke</span><span style="color:#111">(</span>
+        <span style="color:#111">FunctionName</span><span style="color:#f92672">=</span><span style="color:#111">context</span><span style="color:#f92672">.</span><span style="color:#111">function_name</span><span style="color:#111">,</span>
+        <span style="color:#111">InvocationType</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Event&#39;</span><span style="color:#111">,</span>
+        <span style="color:#111">Payload</span><span style="color:#f92672">=</span><span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">dumps</span><span style="color:#111">(</span><span style="color:#111">payload</span><span style="color:#111">)</span>
+    <span style="color:#111">)</span></code></pre></div>
 <p>And there you have it! This code will spawn multiple Lambda functions depending on how many batches are needed to complete the whole process. Of course you will need to add the necessary logic for <code>_process_is_complete()</code> in order to know when to stop.</p>
 </div>
 

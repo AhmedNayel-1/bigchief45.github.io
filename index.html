@@ -103,15 +103,15 @@
 <p>When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.</p>
 
 <p>With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in <code>conftest.py</code> that will be loaded automatically:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># conftest.py</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># conftest.py</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pytest</span>
+<span style="color:#f92672">import</span> <span style="color:#111">pytest</span>
 
 
-<span style="color:#555;font-weight:bold">@pytest.fixture</span>(autouse<span style="color:#333">=</span>True)
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">env_setup</span>(monkeypatch):
-    monkeypatch<span style="color:#333">.</span>setenv(<span style="background-color:#fff0f0">&#39;MY_SETTING&#39;</span>, <span style="background-color:#fff0f0">&#39;some-value&#39;</span>)
-    monkeypatch<span style="color:#333">.</span>setenv(<span style="background-color:#fff0f0">&#39;ANOTHER_SETTING&#39;</span>, <span style="background-color:#fff0f0">&#39;some-value&#39;</span>)</code></pre></div>
+<span style="color:#75af00">@pytest.fixture</span><span style="color:#111">(</span><span style="color:#111">autouse</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">env_setup</span><span style="color:#111">(</span><span style="color:#111">monkeypatch</span><span style="color:#111">):</span>
+    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;MY_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ANOTHER_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span></code></pre></div>
 <p><a href="https://docs.pytest.org/en/latest/monkeypatch.html"><code>monkeypatch</code></a> is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the <code>autouse</code> option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.</p>
 
   

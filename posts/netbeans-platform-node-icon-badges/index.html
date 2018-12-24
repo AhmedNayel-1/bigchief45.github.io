@@ -108,32 +108,32 @@
 <h2 id="icon-badges-with-nodes">Icon Badges With Nodes</h2>
 
 <p>When defining a node class in Netbeans Platform, there is a method called <code>getIcon</code> which you can define yourself so that when the nodes are rendered in the application, the default node icons will be replaced with the icon of your choosing. For example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyBeanNode</span> <span style="color:#080;font-weight:bold">extends</span> BeanNode<span style="color:#333">&lt;</span>MyBean<span style="color:#333">&gt;</span> <span style="color:#333">{</span>
-  <span style="color:#888">// Constructor and other stuff here...
-</span><span style="color:#888"></span>
-  <span style="color:#555;font-weight:bold">@Override</span>
-  <span style="color:#080;font-weight:bold">public</span> Image <span style="color:#06b;font-weight:bold">getIcon</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> type<span style="color:#333">)</span> <span style="color:#333">{</span>
-    <span style="color:#080;font-weight:bold">return</span> ImageUtilities<span style="color:#333">.</span><span style="color:#00c">loadImage</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;path/to/my/icon&#34;</span><span style="color:#333">);</span>
-  <span style="color:#333">}</span>
-<span style="color:#333">}</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyBeanNode</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">BeanNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyBean</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e">// Constructor and other stuff here...
+</span><span style="color:#75715e"></span>
+  <span style="color:#75af00">@Override</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#111">Image</span> <span style="color:#75af00">getIcon</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">type</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/my/icon&#34;</span><span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>To apply the concept of badging, we can simply use the <code>mergeImages</code> method from <code>ImageUtilities</code>. To determine whether the method needs to merge an error badge icon or not will depend on how you are handling current errors for the nodes. Here is a very basic example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyBeanNode</span> <span style="color:#080;font-weight:bold">extends</span> BeanNode<span style="color:#333">&lt;</span>MyBean<span style="color:#333">&gt;</span> <span style="color:#333">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyBeanNode</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">BeanNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyBean</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">final</span> Image ERROR_BADGE <span style="color:#333">=</span> ImageUtilities<span style="color:#333">.</span><span style="color:#00c">loadImage</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;path/to/error/badge/icon&#34;</span><span style="color:#333">);</span>
+  <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Image</span> <span style="color:#111">ERROR_BADGE</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/error/badge/icon&#34;</span><span style="color:#f92672">);</span>
 
-  <span style="color:#888">// ...
-</span><span style="color:#888"></span>
-  <span style="color:#555;font-weight:bold">@Override</span>
-  <span style="color:#080;font-weight:bold">public</span> Image <span style="color:#06b;font-weight:bold">getIcon</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> type<span style="color:#333">)</span> <span style="color:#333">{</span>
-    Image icon <span style="color:#333">=</span> ImageUtilities<span style="color:#333">.</span><span style="color:#00c">loadImage</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;path/to/my/icon&#34;</span><span style="color:#333">);</span>
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+  <span style="color:#75af00">@Override</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#111">Image</span> <span style="color:#75af00">getIcon</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">type</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">Image</span> <span style="color:#111">icon</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/my/icon&#34;</span><span style="color:#f92672">);</span>
 
-    <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>getBean<span style="color:#333">().</span><span style="color:#00c">hasErrors</span><span style="color:#333">())</span> <span style="color:#333">{</span>
-      icon <span style="color:#333">=</span> ImageUtilities<span style="color:#333">.</span><span style="color:#00c">mergeImages</span><span style="color:#333">(</span>icon<span style="color:#333">,</span> ERROR_BADGE<span style="color:#333">,</span> 7<span style="color:#333">,</span> 7<span style="color:#333">);</span>
-    <span style="color:#333">}</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">getBean</span><span style="color:#f92672">().</span><span style="color:#75af00">hasErrors</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+      <span style="color:#111">icon</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">mergeImages</span><span style="color:#f92672">(</span><span style="color:#111">icon</span><span style="color:#f92672">,</span> <span style="color:#111">ERROR_BADGE</span><span style="color:#f92672">,</span> <span style="color:#111">7</span><span style="color:#f92672">,</span> <span style="color:#111">7</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
 
-    <span style="color:#080;font-weight:bold">return</span> icon<span style="color:#333">;</span>
-  <span style="color:#333">}</span>
-<span style="color:#333">}</span></code></pre></div>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">icon</span><span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>In the above example we are relying on a <code>hasErrors</code> method in the <code>MyBean</code> object, which is obtained by calling <code>getBean()</code>. Keep in mind that this may or may not be the best way to handle these errors.</p>
 
 <p>Now when the factory object gets called again to render the nodes, nodes that contain errors will have their original icons merged with the error badge icon.</p>

@@ -99,36 +99,36 @@
 
 <p>This will be done upon installation (like in the previous post) inside the <code>__init__.py</code> file in the ZenPack top directory. This is how the code looks like:</p>
 
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.</span> <span style="color:#080;font-weight:bold">import</span> zenpacklib
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">zenpacklib</span>
 
-zenpacklib<span style="color:#333">.</span>load_yaml()
+<span style="color:#111">zenpacklib</span><span style="color:#f92672">.</span><span style="color:#111">load_yaml</span><span style="color:#111">()</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.</span> <span style="color:#080;font-weight:bold">import</span> schema
+<span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">schema</span>
 
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenPack</span>(schema<span style="color:#333">.</span>ZenPack):
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">install</span>(self, app):
-        self<span style="color:#333">.</span>_update_plugins(<span style="background-color:#fff0f0">&#39;/Server/SSH/Linux/NovaHost&#39;</span>)
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_update_plugins</span><span style="color:#111">(</span><span style="color:#d88200">&#39;/Server/SSH/Linux/NovaHost&#39;</span><span style="color:#111">)</span>
 
-        <span style="color:#888"># Call super last to perform the rest of the installation</span>
-        <span style="color:#007020">super</span>(ZenPack, self)<span style="color:#333">.</span>install(app)
+        <span style="color:#75715e"># Call super last to perform the rest of the installation</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_update_plugins</span>(self, organizer):
-        <span style="color:#080;font-weight:bold">try</span>:
-            <span style="color:#888"># NovaHost device class</span>
-            novahost_dc <span style="color:#333">=</span> self<span style="color:#333">.</span>dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>getOrganizer(organizer)
-        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span>:
-            <span style="color:#888"># Device class doesn&#39;t exist.</span>
-            <span style="color:#080;font-weight:bold">pass</span>
-        <span style="color:#080;font-weight:bold">else</span>:
-            <span style="color:#888"># Our ZenPack&#39;s Modeler Plugins</span>
-            myPlugins <span style="color:#333">=</span> [<span style="background-color:#fff0f0">&#39;aalvarez.snmp.HardDisk&#39;</span>, <span style="background-color:#fff0f0">&#39;aalvarez.snmp.RaidCard&#39;</span>]
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_update_plugins</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">organizer</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+            <span style="color:#75715e"># NovaHost device class</span>
+            <span style="color:#111">novahost_dc</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">getOrganizer</span><span style="color:#111">(</span><span style="color:#111">organizer</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span><span style="color:#111">:</span>
+            <span style="color:#75715e"># Device class doesn&#39;t exist.</span>
+            <span style="color:#00a8c8">pass</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#75715e"># Our ZenPack&#39;s Modeler Plugins</span>
+            <span style="color:#111">myPlugins</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;aalvarez.snmp.HardDisk&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;aalvarez.snmp.RaidCard&#39;</span><span style="color:#111">]</span>
 
-            <span style="color:#888"># Append Plugins to NovaHost&#39;s existing plugins</span>
-            zCollectorPlugins <span style="color:#333">=</span> <span style="color:#007020">list</span>(novahost_dc<span style="color:#333">.</span>zCollectorPlugins) <span style="color:#333">+</span> myPlugins
+            <span style="color:#75715e"># Append Plugins to NovaHost&#39;s existing plugins</span>
+            <span style="color:#111">zCollectorPlugins</span> <span style="color:#f92672">=</span> <span style="color:#111">list</span><span style="color:#111">(</span><span style="color:#111">novahost_dc</span><span style="color:#f92672">.</span><span style="color:#111">zCollectorPlugins</span><span style="color:#111">)</span> <span style="color:#f92672">+</span> <span style="color:#111">myPlugins</span>
 
-            <span style="color:#888"># Assign to the device class</span>
-            self<span style="color:#333">.</span>device_classes[<span style="background-color:#fff0f0">&#39;/Server/SSH/Linux/NovaHost&#39;</span>]<span style="color:#333">.</span>zProperties[<span style="background-color:#fff0f0">&#39;zCollectorPlugins&#39;</span>] <span style="color:#333">=</span> zCollectorPlugins</code></pre></div>
+            <span style="color:#75715e"># Assign to the device class</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">device_classes</span><span style="color:#111">[</span><span style="color:#d88200">&#39;/Server/SSH/Linux/NovaHost&#39;</span><span style="color:#111">]</span><span style="color:#f92672">.</span><span style="color:#111">zProperties</span><span style="color:#111">[</span><span style="color:#d88200">&#39;zCollectorPlugins&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">zCollectorPlugins</span></code></pre></div>
 <p>The key concepts that we can gather from this code are:</p>
 
 <ul>
@@ -142,30 +142,30 @@ zenpacklib<span style="color:#333">.</span>load_yaml()
 <h3 id="some-gotchas">Some Gotchas</h3>
 
 <p>The <code>self.device_classes[]</code> array of device classes belongs to the ZenPack instance, and if this device class is not declared in the YAML file with zProperties like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">device_classes:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>/Server/SSH/Linux/NovaHost:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>zProperties:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#888"># ...</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">device_classes<span style="color:#111">:</span>
+  /Server/SSH/Linux/NovaHost<span style="color:#111">:</span>
+    zProperties<span style="color:#111">:</span>
+      <span style="color:#75715e"># ...</span></code></pre></div>
 <p>It will raise a <code>KeyError</code>.</p>
 
 <p>Fortunately I found a workaround for this. Instead of using <code>self.device_classes[]</code>, we will directly set the plugins into the organizer object obtained using DMD:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">MY_PLUGINS <span style="color:#333">=</span> [<span style="background-color:#fff0f0">&#39;aalvarez.Interface&#39;</span>, <span style="background-color:#fff0f0">&#39;aalvarez.snmp.HardDisk&#39;</span>]
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">MY_PLUGINS</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;aalvarez.Interface&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;aalvarez.snmp.HardDisk&#39;</span><span style="color:#111">]</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenPack</span>(schema<span style="color:#333">.</span>ZenPack):
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">):</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">install</span>(self, app):
-        self<span style="color:#333">.</span>_update_plugins(<span style="background-color:#fff0f0">&#39;/Server/SSH/Linux/NovaHost&#39;</span>)
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_update_plugins</span><span style="color:#111">(</span><span style="color:#d88200">&#39;/Server/SSH/Linux/NovaHost&#39;</span><span style="color:#111">)</span>
 
-        <span style="color:#007020">super</span>(ZenPack, self)<span style="color:#333">.</span>install(app)
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_update_plugins</span>(self, organizer):
-        <span style="color:#080;font-weight:bold">try</span>:
-            dc <span style="color:#333">=</span> self<span style="color:#333">.</span>dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>getOrganizer(organizer)
-        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
-            log<span style="color:#333">.</span>error(e)
-        <span style="color:#080;font-weight:bold">else</span>:
-            dc<span style="color:#333">.</span>setZenProperty(
-                <span style="background-color:#fff0f0">&#39;zCollectorPlugins&#39;</span>, dc<span style="color:#333">.</span>zCollectorPlugins <span style="color:#333">+</span> MY_PLUGINS)</code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_update_plugins</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">organizer</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+            <span style="color:#111">dc</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">getOrganizer</span><span style="color:#111">(</span><span style="color:#111">organizer</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">e</span><span style="color:#111">:</span>
+            <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">error</span><span style="color:#111">(</span><span style="color:#111">e</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#111">dc</span><span style="color:#f92672">.</span><span style="color:#111">setZenProperty</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#39;zCollectorPlugins&#39;</span><span style="color:#111">,</span> <span style="color:#111">dc</span><span style="color:#f92672">.</span><span style="color:#111">zCollectorPlugins</span> <span style="color:#f92672">+</span> <span style="color:#111">MY_PLUGINS</span><span style="color:#111">)</span></code></pre></div>
 <p>As we can see, we use a <code>setZenProperty</code> method to do this. Since the ZenPack will be installed shortly after this, no <code>commit()</code> call is needed.</p>
 
 <p>Now When the ZenPack is installed these new modeler plugins will be appended to the list, without overriding the previous plugins.</p>
@@ -173,14 +173,14 @@ zenpacklib<span style="color:#333">.</span>load_yaml()
 <h2 id="appending-monitoring-templates">Appending Monitoring Templates</h2>
 
 <p>A similar approach can be used to append monitoring templates to a specific device class as well:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_update_templates</span>(self, organizer):
-        <span style="color:#080;font-weight:bold">try</span>:
-            dc <span style="color:#333">=</span> self<span style="color:#333">.</span>dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>getOrganizer(organizer)
-        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
-            log<span style="color:#333">.</span>error(e)
-        <span style="color:#080;font-weight:bold">else</span>:
-            dc<span style="color:#333">.</span>setZenProperty(
-                <span style="background-color:#fff0f0">&#39;zDeviceTemplates&#39;</span>, dc<span style="color:#333">.</span>zDeviceTemplates <span style="color:#333">+</span> MY_TEMPLATES)</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_update_templates</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">organizer</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+            <span style="color:#111">dc</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">getOrganizer</span><span style="color:#111">(</span><span style="color:#111">organizer</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">e</span><span style="color:#111">:</span>
+            <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">error</span><span style="color:#111">(</span><span style="color:#111">e</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#111">dc</span><span style="color:#f92672">.</span><span style="color:#111">setZenProperty</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#39;zDeviceTemplates&#39;</span><span style="color:#111">,</span> <span style="color:#111">dc</span><span style="color:#f92672">.</span><span style="color:#111">zDeviceTemplates</span> <span style="color:#f92672">+</span> <span style="color:#111">MY_TEMPLATES</span><span style="color:#111">)</span></code></pre></div>
 <h2 id="references">References</h2>
 
 <ol>

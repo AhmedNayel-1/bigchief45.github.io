@@ -144,41 +144,41 @@
 <p>I will be following a similar approach to that article, so make sure you install django-storages and boto3 and include them in your installed apps.</p>
 
 <p>Also, since I am using a multi-module settings configuration, I will add the necessary configurations in a <code>prod.py</code> settings module:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.common</span> <span style="color:#080;font-weight:bold">import</span> <span style="color:#333">*</span>
-
-
-
-<span style="color:#888"># AWS</span>
-AWS_ACCESS_KEY_ID <span style="color:#333">=</span> os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;AWS_ACCESS_KEY_ID&#39;</span>]
-AWS_SECRET_ACCESS_KEY <span style="color:#333">=</span> os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;AWS_SECRET_ACCESS_KEY&#39;</span>]
-
-<span style="color:#888"># Static Files</span>
-STATIC_ROOT <span style="color:#333">=</span> os<span style="color:#333">.</span>path<span style="color:#333">.</span>join(BASE_DIR, <span style="background-color:#fff0f0">&#39;..&#39;</span>, <span style="background-color:#fff0f0">&#39;www&#39;</span>, <span style="background-color:#fff0f0">&#39;static&#39;</span>)
-STATIC_URL <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;/static/&#39;</span>
+<span style="color:#f92672">from</span> <span style="color:#111">.common</span> <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
 
-<span style="color:#888"># MEDIA FILES</span>
-MEDIAFILES_BUCKET <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;myapp-media&#39;</span>
-AWS_S3_REGION_NAME <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;sa-east-1&#39;</span>
-AWS_S3_CUSTOM_DOMAIN <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;</span><span style="background-color:#eee">%s</span><span style="background-color:#fff0f0">.s3.amazonaws.com&#39;</span> <span style="color:#333">%</span> MEDIAFILES_BUCKET
-DEFAULT_FILE_STORAGE <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;custom_storages.MediaStorage&#39;</span>
 
-AWS_S3_OBJECT_PARAMETERS <span style="color:#333">=</span> {
-    <span style="background-color:#fff0f0">&#39;Expires&#39;</span>: <span style="background-color:#fff0f0">&#39;Thu, 31 Dec 2099 20:00:00 GMT&#39;</span>,
-    <span style="background-color:#fff0f0">&#39;CacheControl&#39;</span>: <span style="background-color:#fff0f0">&#39;max-age=94608000&#39;</span>,
-}</code></pre></div>
+<span style="color:#75715e"># AWS</span>
+<span style="color:#111">AWS_ACCESS_KEY_ID</span> <span style="color:#f92672">=</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">[</span><span style="color:#d88200">&#39;AWS_ACCESS_KEY_ID&#39;</span><span style="color:#111">]</span>
+<span style="color:#111">AWS_SECRET_ACCESS_KEY</span> <span style="color:#f92672">=</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">[</span><span style="color:#d88200">&#39;AWS_SECRET_ACCESS_KEY&#39;</span><span style="color:#111">]</span>
+
+<span style="color:#75715e"># Static Files</span>
+<span style="color:#111">STATIC_ROOT</span> <span style="color:#f92672">=</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">join</span><span style="color:#111">(</span><span style="color:#111">BASE_DIR</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;..&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;www&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;static&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">STATIC_URL</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;/static/&#39;</span>
+
+
+<span style="color:#75715e"># MEDIA FILES</span>
+<span style="color:#111">MEDIAFILES_BUCKET</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;myapp-media&#39;</span>
+<span style="color:#111">AWS_S3_REGION_NAME</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;sa-east-1&#39;</span>
+<span style="color:#111">AWS_S3_CUSTOM_DOMAIN</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;</span><span style="color:#d88200">%s</span><span style="color:#d88200">.s3.amazonaws.com&#39;</span> <span style="color:#f92672">%</span> <span style="color:#111">MEDIAFILES_BUCKET</span>
+<span style="color:#111">DEFAULT_FILE_STORAGE</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;custom_storages.MediaStorage&#39;</span>
+
+<span style="color:#111">AWS_S3_OBJECT_PARAMETERS</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+    <span style="color:#d88200">&#39;Expires&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;Thu, 31 Dec 2099 20:00:00 GMT&#39;</span><span style="color:#111">,</span>
+    <span style="color:#d88200">&#39;CacheControl&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;max-age=94608000&#39;</span><span style="color:#111">,</span>
+<span style="color:#111">}</span></code></pre></div>
 <p>Those AWS credential settings are the ones that will be picked up in the instance after the deployment. They are the exact credentials we set before as environment variables.</p>
 
 <p>Notice the <code>DEFAULT_FILE_STORAGE</code> configuration. This tells Django where to store media files. We will implement media file storage in S3 by creating a special storage class in a <code>custom_storages.py</code> module at the root of our application:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">django.conf</span> <span style="color:#080;font-weight:bold">import</span> settings
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">django.conf</span> <span style="color:#f92672">import</span> <span style="color:#111">settings</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">storages.backends.s3boto3</span> <span style="color:#080;font-weight:bold">import</span> S3Boto3Storage
+<span style="color:#f92672">from</span> <span style="color:#111">storages.backends.s3boto3</span> <span style="color:#f92672">import</span> <span style="color:#111">S3Boto3Storage</span>
 
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MediaStorage</span>(S3Boto3Storage):
-    bucket_name <span style="color:#333">=</span> settings<span style="color:#333">.</span>MEDIAFILES_BUCKET</code></pre></div>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MediaStorage</span><span style="color:#111">(</span><span style="color:#111">S3Boto3Storage</span><span style="color:#111">):</span>
+    <span style="color:#111">bucket_name</span> <span style="color:#f92672">=</span> <span style="color:#111">settings</span><span style="color:#f92672">.</span><span style="color:#111">MEDIAFILES_BUCKET</span></code></pre></div>
 <p>We simply tell the class in what bucket we want to store those media files.</p>
 
 <h3 id="elasticbeanstalk-configuration">ElasticBeanstalk Configuration</h3>
@@ -196,8 +196,8 @@ For <strong>static files</strong> use <code>&lt;img src=&quot;{% static '/url' %
 For <strong>media files</strong> use something like <code>&lt;img src=&quot;{{ myobject.avatar.url }}&quot;&gt;</code></p>
 
 <p>One of the biggest issues I found when using this deployment workflow was setting up the static files correctly in the ElasticBeanstalk environment after the app is deployed. Initially I tried using the <code>after_deploy</code> stage in <code>.travis.yml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">after_deploy:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>python<span style="color:#bbb"> </span>manage.py<span style="color:#bbb"> </span>collectstatic</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">after_deploy<span style="color:#111">:</span>
+  - python manage.py collectstatic</code></pre></div>
 <p>But this would simply just get executed in the same TravisCI environment, not in the ElasticBeanstalk instance.</p>
 
 <h2 id="setting-up-rds-relational-database-service">Setting Up RDS (Relational Database Service)</h2>
@@ -205,27 +205,27 @@ For <strong>media files</strong> use something like <code>&lt;img src=&quot;{{ m
 <p>We will want our database to live <em>outside</em> the instance that is holding the application. To do this, go to your dashboard, <em>Configuration &gt; Database</em> and add the settings that resemble your development database settings. In my case I am using Postgresql 9.6.</p>
 
 <p>After you assign the RDS database, RDS will expose the database and user credentials via environment variables, which we can access from our Django application. This means that we could set the following production configuration in our application:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># settings/prod.py</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># settings/prod.py</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os</span>
+<span style="color:#f92672">import</span> <span style="color:#111">os</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">.common</span> <span style="color:#080;font-weight:bold">import</span> <span style="color:#333">*</span>
+<span style="color:#f92672">from</span> <span style="color:#111">.common</span> <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
 
-DEBUG <span style="color:#333">=</span> False
+<span style="color:#111">DEBUG</span> <span style="color:#f92672">=</span> <span style="color:#111">False</span>
 
-<span style="color:#888"># DATABASE</span>
-<span style="color:#080;font-weight:bold">if</span> <span style="background-color:#fff0f0">&#39;RDS_DB_NAME&#39;</span> <span style="color:#000;font-weight:bold">in</span> os<span style="color:#333">.</span>environ:
-    DATABASES <span style="color:#333">=</span> {
-        <span style="background-color:#fff0f0">&#39;default&#39;</span>: {
-            <span style="background-color:#fff0f0">&#39;ENGINE&#39;</span>: <span style="background-color:#fff0f0">&#39;django.db.backends.postgresql_psycopg2&#39;</span>,
-            <span style="background-color:#fff0f0">&#39;NAME&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_DB_NAME&#39;</span>],
-            <span style="background-color:#fff0f0">&#39;USER&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_USERNAME&#39;</span>],
-            <span style="background-color:#fff0f0">&#39;PASSWORD&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_PASSWORD&#39;</span>],
-            <span style="background-color:#fff0f0">&#39;HOST&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_HOSTNAME&#39;</span>],
-            <span style="background-color:#fff0f0">&#39;PORT&#39;</span>: os<span style="color:#333">.</span>environ[<span style="background-color:#fff0f0">&#39;RDS_PORT&#39;</span>],
-        }
-    }</code></pre></div>
+<span style="color:#75715e"># DATABASE</span>
+<span style="color:#00a8c8">if</span> <span style="color:#d88200">&#39;RDS_DB_NAME&#39;</span> <span style="color:#f92672">in</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">:</span>
+    <span style="color:#111">DATABASES</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+        <span style="color:#d88200">&#39;default&#39;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#d88200">&#39;ENGINE&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;django.db.backends.postgresql_psycopg2&#39;</span><span style="color:#111">,</span>
+            <span style="color:#d88200">&#39;NAME&#39;</span><span style="color:#111">:</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">[</span><span style="color:#d88200">&#39;RDS_DB_NAME&#39;</span><span style="color:#111">],</span>
+            <span style="color:#d88200">&#39;USER&#39;</span><span style="color:#111">:</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">[</span><span style="color:#d88200">&#39;RDS_USERNAME&#39;</span><span style="color:#111">],</span>
+            <span style="color:#d88200">&#39;PASSWORD&#39;</span><span style="color:#111">:</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">[</span><span style="color:#d88200">&#39;RDS_PASSWORD&#39;</span><span style="color:#111">],</span>
+            <span style="color:#d88200">&#39;HOST&#39;</span><span style="color:#111">:</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">[</span><span style="color:#d88200">&#39;RDS_HOSTNAME&#39;</span><span style="color:#111">],</span>
+            <span style="color:#d88200">&#39;PORT&#39;</span><span style="color:#111">:</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">environ</span><span style="color:#111">[</span><span style="color:#d88200">&#39;RDS_PORT&#39;</span><span style="color:#111">],</span>
+        <span style="color:#111">}</span>
+    <span style="color:#111">}</span></code></pre></div>
 <h2 id="levaraging-ebcli">Levaraging ebcli</h2>
 
 <p>We will need to leverage the ElasticBeanstalk CLI (ebcli) in order to run necessary tasks after deployment inside the instance. These tasks are (not limited to):</p>
@@ -237,19 +237,19 @@ DEBUG <span style="color:#333">=</span> False
 </ol>
 
 <p>The way ebcli does this is through a configuration folder called <code>.ebextensions</code> in the root of the repository. This directorycontains the steps in YAML on how to perform these tasks. For example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># django.config</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>container_commands:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>01_migrate:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py migrate --noinput&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>leader_only:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>02_auto_createsuperuser:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py auto_createsuperuser&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>leader_only:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>03_collectstatic:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py collectstatic --settings=myapp.settings.prod --noinput&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>04_wsgipass:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>command:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#39;echo &#34;WSGIPassAuthorization On&#34; &gt;&gt; ../wsgi.conf&#39;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># django.config</span>
+
+container_commands<span style="color:#111">:</span>
+  01_migrate<span style="color:#111">:</span>
+    command<span style="color:#111">:</span> <span style="color:#d88200">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py migrate --noinput&#34;</span>
+    leader_only<span style="color:#111">:</span> <span style="color:#00a8c8">true</span>
+  02_auto_createsuperuser<span style="color:#111">:</span>
+    command<span style="color:#111">:</span> <span style="color:#d88200">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py auto_createsuperuser&#34;</span>
+    leader_only<span style="color:#111">:</span> <span style="color:#00a8c8">true</span>
+  03_collectstatic<span style="color:#111">:</span>
+    command<span style="color:#111">:</span> <span style="color:#d88200">&#34;source /opt/python/run/venv/bin/activate &amp;&amp; python manage.py collectstatic --settings=myapp.settings.prod --noinput&#34;</span>
+  04_wsgipass<span style="color:#111">:</span>
+    command<span style="color:#111">:</span> <span style="color:#d88200">&#39;echo &#34;WSGIPassAuthorization On&#34; &gt;&gt; ../wsgi.conf&#39;</span></code></pre></div>
 <p>This <code>.ebextensions</code> directory should be commited to your repository&rsquo;s source control. When you run the command <code>eb deploy</code>, it will bundle your application and deploy it to the ElasticBeanstalk environment we created before, and run those commands.</p>
 
 <p>-&gt; The <code>WSGIPassAuthorization On</code> setting must be set in the WSGI configuration in order to be able to pass authorization headers in your application. If you are using Django REST Framework&rsquo;s <code>TokenAuthorization</code> and this setting is not set, you will not be able to perform requests even with a valid token.</p>
@@ -267,41 +267,41 @@ DEBUG <span style="color:#333">=</span> False
 <p>We will place the configuration in a <code>.travis.yml</code> file at the root of the repository. This configuration will tell Travis what to prepare in the build and how to run the tests.</p>
 
 <p>In my case, I am using <a href="http://pytest.org/">pytest</a> and <a href="https://pytest-django.readthedocs.io/">pytest-dango</a> for my test suite, and PostgreSQL 9.6 for my database:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language:<span style="color:#bbb"> </span>python<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>python:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;3.6&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>services:<span style="color:#bbb"> </span>postgresql<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>install:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>pip<span style="color:#bbb"> </span>install<span style="color:#bbb"> </span>-r<span style="color:#bbb"> </span>requirements.txt<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>pip<span style="color:#bbb"> </span>install<span style="color:#bbb"> </span>-r<span style="color:#bbb"> </span>requirements-dev.txt<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>before_script:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>flake8<span style="color:#bbb"> </span>.<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;CREATE DATABASE mydb;&#34;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;CREATE USER myuser WITH PASSWORD &#39;password&#39;;&#34;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>psql<span style="color:#bbb"> </span>-c<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;ALTER USER myuser CREATEDB;&#34;</span><span style="color:#bbb"> </span>-U<span style="color:#bbb"> </span>postgres<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>python<span style="color:#bbb"> </span>manage.py<span style="color:#bbb"> </span>migrate<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>script:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>pytest<span style="color:#bbb"> </span>--nomigrations<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>addons:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>postgresql:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;9.6&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>deploy:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>provider:<span style="color:#bbb"> </span>elasticbeanstalk<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>access_key_id:<span style="color:#bbb"> </span>$ACCESSKEYID<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>secret_access_key:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>secure:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;$SECRETACCESSKEY&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>region:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;us-east-1&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>app:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;myapp&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>env:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;myapp-prod&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>bucket_name:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#34;myapp&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>on:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>branch:<span style="color:#bbb"> </span>master</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language<span style="color:#111">:</span> python
+
+python<span style="color:#111">:</span>
+  - <span style="color:#d88200">&#34;3.6&#34;</span>
+
+services<span style="color:#111">:</span> postgresql
+
+install<span style="color:#111">:</span>
+  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
+
+before_script<span style="color:#111">:</span>
+  - flake8 .
+  - psql -c <span style="color:#d88200">&#34;CREATE DATABASE mydb;&#34;</span> -U postgres
+  - psql -c <span style="color:#d88200">&#34;CREATE USER myuser WITH PASSWORD &#39;password&#39;;&#34;</span> -U postgres
+  - psql -c <span style="color:#d88200">&#34;ALTER USER myuser CREATEDB;&#34;</span> -U postgres
+  - python manage.py migrate
+
+script<span style="color:#111">:</span>
+  - pytest --nomigrations
+
+addons<span style="color:#111">:</span>
+  postgresql<span style="color:#111">:</span> <span style="color:#d88200">&#34;9.6&#34;</span>
+
+deploy<span style="color:#111">:</span>
+  provider<span style="color:#111">:</span> elasticbeanstalk
+  access_key_id<span style="color:#111">:</span> $ACCESSKEYID
+  secret_access_key<span style="color:#111">:</span>
+    secure<span style="color:#111">:</span> <span style="color:#d88200">&#34;$SECRETACCESSKEY&#34;</span>
+  region<span style="color:#111">:</span> <span style="color:#d88200">&#34;us-east-1&#34;</span>
+  app<span style="color:#111">:</span> <span style="color:#d88200">&#34;myapp&#34;</span>
+  env<span style="color:#111">:</span> <span style="color:#d88200">&#34;myapp-prod&#34;</span>
+  bucket_name<span style="color:#111">:</span> <span style="color:#d88200">&#34;myapp&#34;</span>
+  on<span style="color:#111">:</span>
+    branch<span style="color:#111">:</span> master</code></pre></div>
 <p>=&gt; Notice how we are passing sensitive AWS credentials through <strong>environment variables</strong>. You can set these in TravisCI at <em>Your repository &gt; More Options &gt; Settings &gt; Environment Variables</em> Make sure that the names match this configuration.</p>
 
 <p>Make sure that the <code>app</code> and <code>env</code> values match the correct values you used when creating the application and environment in ElasticBeanstalk.</p>
@@ -315,8 +315,8 @@ DEBUG <span style="color:#333">=</span> False
 <p>Sadly the deployment from TravisCI to ElasticBeanstalk will not run the commands we configured in <code>.ebextensions</code>. This is probably because <a href="https://github.com/travis-ci/dpl">dpl (TravisCI&rsquo;s deployment tool)</a> does not use ebcli to deploy the application.</p>
 
 <p>You might be tempted (like I did) to try and use the <code>after_deploy</code> hook in <code>.travis.yml</code> as mentioned in the <a href="https://docs.travis-ci.com/user/deployment/elasticbeanstalk/#Running-commands-before-and-after-deploy">docs</a>, like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">after_deploy:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>python<span style="color:#bbb"> </span>manage.py<span style="color:#bbb"> </span>collectstatic<span style="color:#bbb"> </span>--settings=myapp.settings.prod<span style="color:#bbb"> </span>--noinput</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">after_deploy<span style="color:#111">:</span>
+  - python manage.py collectstatic --settings=myapp.settings.prod --noinput</code></pre></div>
 <p>Unfortunately the above will run inside the TravisCI build machine and not in the AWS instance.</p>
 
 <p>However though, maybe you could still install ebcli inside the travis build and create a <code>.sh</code> file that contains the <code>ebcli deploy</code> command and execute it. But I haven&rsquo;t gotten to test this yet.</p>

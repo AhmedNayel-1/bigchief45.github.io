@@ -109,15 +109,15 @@
 <h2 id="extending-the-component-through-zenpacks">Extending The Component, Through ZenPacks</h2>
 
 <p>Let&rsquo;s assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># ...</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>classes:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>CustomDevice:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>base:<span style="color:#bbb"> </span>[zenpacklib.Device]<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>label:<span style="color:#bbb"> </span>Custom<span style="color:#bbb"> </span>Device<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>properties:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>power_status:<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>type:<span style="color:#bbb"> </span>boolean</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
+
+classes<span style="color:#111">:</span>
+  CustomDevice<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Custom Device
+    properties<span style="color:#111">:</span>
+      power_status<span style="color:#111">:</span>
+        type<span style="color:#111">:</span> boolean</code></pre></div>
 <p>What we want is to display this value in the device&rsquo;s detail bar, similar to the device&rsquo;s ping status display.</p>
 
   
@@ -187,15 +187,15 @@ chmod 755 zenpacklib.py
 </code></pre>
 
 <p>Here we will create a new Bashscript file with the name of our daemon. In this case we will name it <code>mydaemon</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#579">#! /usr/bin/env bash
-</span><span style="color:#579"></span>
-<span style="color:#963">DAEMON_NAME</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;mydaemon&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /usr/bin/env bash
+</span><span style="color:#75715e"></span>
+<span style="color:#111">DAEMON_NAME</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;mydaemon&#34;</span>
 
-. <span style="color:#963">$ZENHOME</span>/bin/zenfunctions
+. <span style="color:#111">$ZENHOME</span>/bin/zenfunctions
 
-<span style="color:#963">MYPATH</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>python -c <span style="background-color:#fff0f0">&#34;import os.path; print os.path.realpath(&#39;</span><span style="color:#963">$0</span><span style="background-color:#fff0f0">&#39;)&#34;</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">THISDIR</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>dirname <span style="color:#963">$MYPATH</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">PRGHOME</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>dirname <span style="color:#963">$THISDIR</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">PRGNAME</span><span style="color:#333">=</span><span style="color:#963">$DAEMON_NAME</span>.py <span style="color:#963">CFGFILE</span><span style="color:#333">=</span><span style="color:#963">$CFGDIR</span>/<span style="color:#963">$DAEMON_NAME</span>.conf
+<span style="color:#111">MYPATH</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>python -c <span style="color:#d88200">&#34;import os.path; print os.path.realpath(&#39;</span><span style="color:#111">$0</span><span style="color:#d88200">&#39;)&#34;</span><span style="color:#d88200">`</span> <span style="color:#111">THISDIR</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$MYPATH</span><span style="color:#d88200">`</span> <span style="color:#111">PRGHOME</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$THISDIR</span><span style="color:#d88200">`</span> <span style="color:#111">PRGNAME</span><span style="color:#f92672">=</span><span style="color:#111">$DAEMON_NAME</span>.py <span style="color:#111">CFGFILE</span><span style="color:#f92672">=</span><span style="color:#111">$CFGDIR</span>/<span style="color:#111">$DAEMON_NAME</span>.conf
 
-generic <span style="background-color:#fff0f0">&#34;</span><span style="color:#963">$@</span><span style="background-color:#fff0f0">&#34;</span></code></pre></div>
+generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</span><span style="color:#d88200">&#34;</span></code></pre></div>
 <p>Once the ZenPack is installed, files under this <code>daemons</code> directory will become executable (<code>chmod 0755</code>), a symlink to the file will be created in <code>$ZENHOME/bin</code>, and a configuration file will be generated in <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code></p>
 
 <p><strong>NOTE:</strong> If you created your ZenPack using the Zenoss user interface, the <code>daemons</code> directory will also be automatically created, and will contain an example daemon file named <code>zenexample</code> with code similar to the one above. In this case you should simply replace the necessary values.</p>

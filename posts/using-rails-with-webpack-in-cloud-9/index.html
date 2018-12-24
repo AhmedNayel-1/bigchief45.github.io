@@ -101,9 +101,9 @@
 </code></pre>
 
 <p>Add the gem to <code>Gemfile</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># Gemfile</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gemfile</span>
 
-gem <span style="background-color:#fff0f0">&#39;webpacker&#39;</span>, <span style="color:#a60;background-color:#fff0f0">github</span>: <span style="background-color:#fff0f0">&#39;rails/webpacker&#39;</span></code></pre></div>
+<span style="color:#111">gem</span> <span style="color:#d88200">&#39;webpacker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">github</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;rails/webpacker&#39;</span></code></pre></div>
 <p>Install Webpacker</p>
 
 <pre><code>rails webpacker:install
@@ -147,21 +147,21 @@ gem <span style="background-color:#fff0f0">&#39;webpacker&#39;</span>, <span sty
 <p>Cloud 9 has some restrictions when it comes to security, ports, and interfaces when running services. To go around this, we first need to add a mapping from the hostname used in previewing our application, to <code>0.0.0.0</code>, which is the interface used when running services.</p>
 
 <p>This is done by running the following command:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;0.0.0.0 </span><span style="color:#963">$C9_HOSTNAME</span><span style="background-color:#fff0f0">&#34;</span> | sudo tee -a /etc/hosts</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">echo</span> <span style="color:#d88200">&#34;0.0.0.0 </span><span style="color:#111">$C9_HOSTNAME</span><span style="color:#d88200">&#34;</span> <span style="color:#111">|</span> sudo tee -a /etc/hosts</code></pre></div>
 <p>Where <code>$C9_HOSTNAME</code> is a variable already defined by Cloud 9 and it will contain the hostname used to preview the application in the browser.</p>
 
 <p>Next we must modify <code>app/config/webpack/configuration.js</code> to allow Webpack&rsquo;s output to be served using HTTPS, which is required by Cloud 9:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#080;font-weight:bold">const</span> publicPath <span style="color:#333">=</span> env.NODE_ENV <span style="color:#333">!==</span> <span style="background-color:#fff0f0">&#39;production&#39;</span> <span style="color:#333">&amp;&amp;</span> devServer.enabled <span style="color:#333">?</span>
-  <span style="background-color:#fff0f0">`https://</span><span style="background-color:#eee">${</span>devServer.host<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">:</span><span style="background-color:#eee">${</span>devServer.port<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">/`</span> <span style="color:#333">:</span> <span style="background-color:#fff0f0">`/</span><span style="background-color:#eee">${</span>paths.entry<span style="background-color:#eee">}</span><span style="background-color:#fff0f0">/`</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">const</span> <span style="color:#75af00">publicPath</span> <span style="color:#f92672">=</span> <span style="color:#75af00">env</span><span style="color:#111">.</span><span style="color:#75af00">NODE_ENV</span> <span style="color:#f92672">!==</span> <span style="color:#d88200">&#39;production&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">devServer</span><span style="color:#111">.</span><span style="color:#75af00">enabled</span> <span style="color:#f92672">?</span>
+  <span style="color:#d88200">`https://</span><span style="color:#d88200">${</span><span style="color:#75af00">devServer</span><span style="color:#111">.</span><span style="color:#75af00">host</span><span style="color:#d88200">}</span><span style="color:#d88200">:</span><span style="color:#d88200">${</span><span style="color:#75af00">devServer</span><span style="color:#111">.</span><span style="color:#75af00">port</span><span style="color:#d88200">}</span><span style="color:#d88200">/`</span> <span style="color:#f92672">:</span> <span style="color:#d88200">`/</span><span style="color:#d88200">${</span><span style="color:#75af00">paths</span><span style="color:#111">.</span><span style="color:#75af00">entry</span><span style="color:#d88200">}</span><span style="color:#d88200">/`</span>
 </code></pre></div>
 <p>Lastly, configure the webpack dev server to run using the <code>$C9_HOSTNAME</code> address. To get the value of this address you can first run:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">echo</span> <span style="color:#963">$C9_HOSTNAME</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">echo</span> <span style="color:#111">$C9_HOSTNAME</span></code></pre></div>
 <p>Then copy the value an set it in the <code>host</code> field in <code>app/config/webpack/development.server.yml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># Restart webpack-dev-server if you make changes here</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>default:<span style="color:#bbb"> </span><span style="color:#579">&amp;default</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>enabled:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>host:<span style="color:#bbb"> </span><span style="background-color:#fff0f0">&#39;$C9_HOSTNAME value here&#39;</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>port:<span style="color:#bbb"> </span><span style="color:#60e;font-weight:bold">8081</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># Restart webpack-dev-server if you make changes here</span>
+default<span style="color:#111">:</span> <span style="color:#75715e">&amp;default</span>
+  enabled<span style="color:#111">:</span> <span style="color:#00a8c8">true</span>
+  host<span style="color:#111">:</span> <span style="color:#d88200">&#39;$C9_HOSTNAME value here&#39;</span>
+  port<span style="color:#111">:</span> <span style="color:#ae81ff">8081</span></code></pre></div>
 <p>Make sure that <code>port</code> is set to <code>8081</code>.</p>
 
 <p>Now try running the webpack dev server:</p>
@@ -172,7 +172,7 @@ gem <span style="background-color:#fff0f0">&#39;webpacker&#39;</span>, <span sty
 <h2 id="fetching-assets-in-rails">Fetching Assets in Rails</h2>
 
 <p>To make Rails use the Vue components located in <code>app/javascript</code>, we can use the following tags in our views:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-erb" data-lang="erb">&lt;%= javascript_pack_tag &#39;application&#39; %&gt;
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-erb" data-lang="erb">&lt;%= javascript_pack_tag &#39;application&#39; %&gt;
 &lt;%= javascript_pack_tag &#39;hello_vue&#39; %&gt;</code></pre></div>
 <p>Now run the Rails server using <code>$PORT</code> and <code>$IP</code> as port and binding. When you open your application, it should load <code>hello_vue</code>.</p>
 </div>

@@ -127,15 +127,15 @@ chmod 755 zenpacklib.py
 </code></pre>
 
 <p>Here we will create a new Bashscript file with the name of our daemon. In this case we will name it <code>mydaemon</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#579">#! /usr/bin/env bash
-</span><span style="color:#579"></span>
-<span style="color:#963">DAEMON_NAME</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;mydaemon&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /usr/bin/env bash
+</span><span style="color:#75715e"></span>
+<span style="color:#111">DAEMON_NAME</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;mydaemon&#34;</span>
 
-. <span style="color:#963">$ZENHOME</span>/bin/zenfunctions
+. <span style="color:#111">$ZENHOME</span>/bin/zenfunctions
 
-<span style="color:#963">MYPATH</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>python -c <span style="background-color:#fff0f0">&#34;import os.path; print os.path.realpath(&#39;</span><span style="color:#963">$0</span><span style="background-color:#fff0f0">&#39;)&#34;</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">THISDIR</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>dirname <span style="color:#963">$MYPATH</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">PRGHOME</span><span style="color:#333">=</span><span style="background-color:#fff0f0">`</span>dirname <span style="color:#963">$THISDIR</span><span style="background-color:#fff0f0">`</span> <span style="color:#963">PRGNAME</span><span style="color:#333">=</span><span style="color:#963">$DAEMON_NAME</span>.py <span style="color:#963">CFGFILE</span><span style="color:#333">=</span><span style="color:#963">$CFGDIR</span>/<span style="color:#963">$DAEMON_NAME</span>.conf
+<span style="color:#111">MYPATH</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>python -c <span style="color:#d88200">&#34;import os.path; print os.path.realpath(&#39;</span><span style="color:#111">$0</span><span style="color:#d88200">&#39;)&#34;</span><span style="color:#d88200">`</span> <span style="color:#111">THISDIR</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$MYPATH</span><span style="color:#d88200">`</span> <span style="color:#111">PRGHOME</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$THISDIR</span><span style="color:#d88200">`</span> <span style="color:#111">PRGNAME</span><span style="color:#f92672">=</span><span style="color:#111">$DAEMON_NAME</span>.py <span style="color:#111">CFGFILE</span><span style="color:#f92672">=</span><span style="color:#111">$CFGDIR</span>/<span style="color:#111">$DAEMON_NAME</span>.conf
 
-generic <span style="background-color:#fff0f0">&#34;</span><span style="color:#963">$@</span><span style="background-color:#fff0f0">&#34;</span></code></pre></div>
+generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</span><span style="color:#d88200">&#34;</span></code></pre></div>
 <p>Once the ZenPack is installed, files under this <code>daemons</code> directory will become executable (<code>chmod 0755</code>), a symlink to the file will be created in <code>$ZENHOME/bin</code>, and a configuration file will be generated in <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code></p>
 
 <p><strong>NOTE:</strong> If you created your ZenPack using the Zenoss user interface, the <code>daemons</code> directory will also be automatically created, and will contain an example daemon file named <code>zenexample</code> with code similar to the one above. In this case you should simply replace the necessary values.</p>
@@ -169,114 +169,114 @@ generic <span style="background-color:#fff0f0">&#34;</span><span style="color:#9
 </ul>
 
 <p>Here is an example of a daemon code:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># This is an example of a custom collector daemon.</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># This is an example of a custom collector daemon.</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
-log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.Example&#39;</span>)
+<span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zen.Example&#39;</span><span style="color:#111">)</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">Globals</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">zope.component</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">zope.interface</span>
+<span style="color:#f92672">import</span> <span style="color:#111">Globals</span>
+<span style="color:#f92672">import</span> <span style="color:#111">zope.component</span>
+<span style="color:#f92672">import</span> <span style="color:#111">zope.interface</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">twisted.internet</span> <span style="color:#080;font-weight:bold">import</span> defer
+<span style="color:#f92672">from</span> <span style="color:#111">twisted.internet</span> <span style="color:#f92672">import</span> <span style="color:#111">defer</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.daemon</span> <span style="color:#080;font-weight:bold">import</span> CollectorDaemon
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.interfaces</span> \
-    <span style="color:#080;font-weight:bold">import</span> ICollectorPreferences, IScheduledTask, IEventService, IDataService
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenCollector.daemon</span> <span style="color:#f92672">import</span> <span style="color:#111">CollectorDaemon</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenCollector.interfaces</span> \
+    <span style="color:#f92672">import</span> <span style="color:#111">ICollectorPreferences</span><span style="color:#111">,</span> <span style="color:#111">IScheduledTask</span><span style="color:#111">,</span> <span style="color:#111">IEventService</span><span style="color:#111">,</span> <span style="color:#111">IDataService</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.tasks</span> \
-    <span style="color:#080;font-weight:bold">import</span> SimpleTaskFactory, SimpleTaskSplitter, TaskStates
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenCollector.tasks</span> \
+    <span style="color:#f92672">import</span> <span style="color:#111">SimpleTaskFactory</span><span style="color:#111">,</span> <span style="color:#111">SimpleTaskSplitter</span><span style="color:#111">,</span> <span style="color:#111">TaskStates</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.observable</span> <span style="color:#080;font-weight:bold">import</span> ObservableMixin
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.observable</span> <span style="color:#f92672">import</span> <span style="color:#111">ObservableMixin</span>
 
-<span style="color:#888"># unused is way to keep Python linters from complaining about imports that we</span>
-<span style="color:#888"># don&#39;t explicitely use. Occasionally there is a valid reason to do this.</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> unused
+<span style="color:#75715e"># unused is way to keep Python linters from complaining about imports that we</span>
+<span style="color:#75715e"># don&#39;t explicitely use. Occasionally there is a valid reason to do this.</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Utils</span> <span style="color:#f92672">import</span> <span style="color:#111">unused</span>
 
-<span style="color:#888"># We must import our ConfigService here so zenhub will allow it to be</span>
-<span style="color:#888"># serialized and deserialized. We&#39;ll declare it unused to satisfy linters.</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">ZenPacks.NAMESPACE.PACKNAME.services.ExampleConfigService</span> \
-    <span style="color:#080;font-weight:bold">import</span> ExampleConfigService
+<span style="color:#75715e"># We must import our ConfigService here so zenhub will allow it to be</span>
+<span style="color:#75715e"># serialized and deserialized. We&#39;ll declare it unused to satisfy linters.</span>
+<span style="color:#f92672">from</span> <span style="color:#111">ZenPacks.NAMESPACE.PACKNAME.services.ExampleConfigService</span> \
+    <span style="color:#f92672">import</span> <span style="color:#111">ExampleConfigService</span>
 
-unused(Globals)
-unused(ExampleConfigService)
-
-
-<span style="color:#888"># Your implementation of ICollectorPreferences is where you can handle custom</span>
-<span style="color:#888"># command line (or config file) options and do global configuration of the</span>
-<span style="color:#888"># daemon.</span>
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenExamplePreferences</span>(<span style="color:#007020">object</span>):
-    zope<span style="color:#333">.</span>interface<span style="color:#333">.</span>implements(ICollectorPreferences)
-
-    <span style="color:#080;font-weight:bold">def</span> __init__(self):
-        self<span style="color:#333">.</span>collectorName <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;zenexample&#39;</span>
-        self<span style="color:#333">.</span>configurationService <span style="color:#333">=</span> \
-            <span style="background-color:#fff0f0">&#34;ZenPacks.NAMESPACE.PACKNAME.services.ExampleConfigService&#34;</span>
-
-        <span style="color:#888"># How often the daemon will collect each device. Specified in seconds.</span>
-        self<span style="color:#333">.</span>cycleInterval <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">5</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">60</span>
-
-        <span style="color:#888"># How often the daemon will reload configuration. In seconds.</span>
-        self<span style="color:#333">.</span>configCycleInterval <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">5</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">60</span>
-
-        self<span style="color:#333">.</span>options <span style="color:#333">=</span> None
-
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">buildOptions</span>(self, parser):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;
-</span><span style="background-color:#fff0f0">        Required to implement the ICollectorPreferences interface.
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
-        <span style="color:#080;font-weight:bold">pass</span>
-
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">postStartup</span>(self):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;
-</span><span style="background-color:#fff0f0">        Required to implement the ICollectorPreferences interface.
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
-        <span style="color:#080;font-weight:bold">pass</span>
+<span style="color:#111">unused</span><span style="color:#111">(</span><span style="color:#111">Globals</span><span style="color:#111">)</span>
+<span style="color:#111">unused</span><span style="color:#111">(</span><span style="color:#111">ExampleConfigService</span><span style="color:#111">)</span>
 
 
-<span style="color:#888"># The implementation of IScheduledTask for your daemon is usually where most</span>
-<span style="color:#888"># of the work is done. This is where you implement the specific logic required</span>
-<span style="color:#888"># to collect data.</span>
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ZenExampleTask</span>(ObservableMixin):
-    zope<span style="color:#333">.</span>interface<span style="color:#333">.</span>implements(IScheduledTask)
+<span style="color:#75715e"># Your implementation of ICollectorPreferences is where you can handle custom</span>
+<span style="color:#75715e"># command line (or config file) options and do global configuration of the</span>
+<span style="color:#75715e"># daemon.</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenExamplePreferences</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
+    <span style="color:#111">zope</span><span style="color:#f92672">.</span><span style="color:#111">interface</span><span style="color:#f92672">.</span><span style="color:#111">implements</span><span style="color:#111">(</span><span style="color:#111">ICollectorPreferences</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, taskName, deviceId, interval, taskConfig):
-        <span style="color:#007020">super</span>(ZenExampleTask, self)<span style="color:#333">.</span>__init__()
-        self<span style="color:#333">.</span>_taskConfig <span style="color:#333">=</span> taskConfig
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">collectorName</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;zenexample&#39;</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">configurationService</span> <span style="color:#f92672">=</span> \
+            <span style="color:#d88200">&#34;ZenPacks.NAMESPACE.PACKNAME.services.ExampleConfigService&#34;</span>
 
-        self<span style="color:#333">.</span>_eventService <span style="color:#333">=</span> zope<span style="color:#333">.</span>component<span style="color:#333">.</span>queryUtility(IEventService)
-        self<span style="color:#333">.</span>_dataService <span style="color:#333">=</span> zope<span style="color:#333">.</span>component<span style="color:#333">.</span>queryUtility(IDataService)
-        self<span style="color:#333">.</span>_preferences <span style="color:#333">=</span> zope<span style="color:#333">.</span>component<span style="color:#333">.</span>queryUtility(
-            ICollectorPreferences, <span style="background-color:#fff0f0">&#39;zenexample&#39;</span>)
+        <span style="color:#75715e"># How often the daemon will collect each device. Specified in seconds.</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">cycleInterval</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span>
 
-        <span style="color:#888"># All of these properties are required to implement the IScheduledTask</span>
-        <span style="color:#888"># interface.</span>
-        self<span style="color:#333">.</span>name <span style="color:#333">=</span> taskName
-        self<span style="color:#333">.</span>configId <span style="color:#333">=</span> deviceId
-        self<span style="color:#333">.</span>interval <span style="color:#333">=</span> interval
-        self<span style="color:#333">.</span>state <span style="color:#333">=</span> TaskStates<span style="color:#333">.</span>STATE_IDLE
+        <span style="color:#75715e"># How often the daemon will reload configuration. In seconds.</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">configCycleInterval</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span>
 
-    <span style="color:#888"># doTask is where the collector logic should go. It is also required to</span>
-    <span style="color:#888"># implement the IScheduledTask interface. It will be called directly by the</span>
-    <span style="color:#888"># framework when it&#39;s this task&#39;s turn to run.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">doTask</span>(self):
-        <span style="color:#888"># This method must return a deferred because the collector framework</span>
-        <span style="color:#888"># is asynchronous.</span>
-        d <span style="color:#333">=</span> defer<span style="color:#333">.</span>Deferred()
-        <span style="color:#080;font-weight:bold">return</span> d
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">options</span> <span style="color:#f92672">=</span> <span style="color:#111">None</span>
 
-    <span style="color:#888"># cleanup is required to implement the IScheduledTask interface.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">cleanup</span>(self):
-        <span style="color:#080;font-weight:bold">pass</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">buildOptions</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">parser</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">        Required to implement the ICollectorPreferences interface.
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+        <span style="color:#00a8c8">pass</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">postStartup</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">        Required to implement the ICollectorPreferences interface.
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+        <span style="color:#00a8c8">pass</span>
 
 
-<span style="color:#080;font-weight:bold">if</span> __name__ <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;__main__&#39;</span>:
-    myPreferences <span style="color:#333">=</span> ZenExamplePreferences()
-    myTaskFactory <span style="color:#333">=</span> SimpleTaskFactory(ZenExampleTask)
-    myTaskSplitter <span style="color:#333">=</span> SimpleTaskSplitter(myTaskFactory)
+<span style="color:#75715e"># The implementation of IScheduledTask for your daemon is usually where most</span>
+<span style="color:#75715e"># of the work is done. This is where you implement the specific logic required</span>
+<span style="color:#75715e"># to collect data.</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenExampleTask</span><span style="color:#111">(</span><span style="color:#111">ObservableMixin</span><span style="color:#111">):</span>
+    <span style="color:#111">zope</span><span style="color:#f92672">.</span><span style="color:#111">interface</span><span style="color:#f92672">.</span><span style="color:#111">implements</span><span style="color:#111">(</span><span style="color:#111">IScheduledTask</span><span style="color:#111">)</span>
 
-    daemon <span style="color:#333">=</span> CollectorDaemon(myPreferences, myTaskSplitter)
-    daemon<span style="color:#333">.</span>run()</code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">taskName</span><span style="color:#111">,</span> <span style="color:#111">deviceId</span><span style="color:#111">,</span> <span style="color:#111">interval</span><span style="color:#111">,</span> <span style="color:#111">taskConfig</span><span style="color:#111">):</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenExampleTask</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">()</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_taskConfig</span> <span style="color:#f92672">=</span> <span style="color:#111">taskConfig</span>
+
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_eventService</span> <span style="color:#f92672">=</span> <span style="color:#111">zope</span><span style="color:#f92672">.</span><span style="color:#111">component</span><span style="color:#f92672">.</span><span style="color:#111">queryUtility</span><span style="color:#111">(</span><span style="color:#111">IEventService</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_dataService</span> <span style="color:#f92672">=</span> <span style="color:#111">zope</span><span style="color:#f92672">.</span><span style="color:#111">component</span><span style="color:#f92672">.</span><span style="color:#111">queryUtility</span><span style="color:#111">(</span><span style="color:#111">IDataService</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_preferences</span> <span style="color:#f92672">=</span> <span style="color:#111">zope</span><span style="color:#f92672">.</span><span style="color:#111">component</span><span style="color:#f92672">.</span><span style="color:#111">queryUtility</span><span style="color:#111">(</span>
+            <span style="color:#111">ICollectorPreferences</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;zenexample&#39;</span><span style="color:#111">)</span>
+
+        <span style="color:#75715e"># All of these properties are required to implement the IScheduledTask</span>
+        <span style="color:#75715e"># interface.</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">taskName</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">configId</span> <span style="color:#f92672">=</span> <span style="color:#111">deviceId</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">interval</span> <span style="color:#f92672">=</span> <span style="color:#111">interval</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">state</span> <span style="color:#f92672">=</span> <span style="color:#111">TaskStates</span><span style="color:#f92672">.</span><span style="color:#111">STATE_IDLE</span>
+
+    <span style="color:#75715e"># doTask is where the collector logic should go. It is also required to</span>
+    <span style="color:#75715e"># implement the IScheduledTask interface. It will be called directly by the</span>
+    <span style="color:#75715e"># framework when it&#39;s this task&#39;s turn to run.</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">doTask</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># This method must return a deferred because the collector framework</span>
+        <span style="color:#75715e"># is asynchronous.</span>
+        <span style="color:#111">d</span> <span style="color:#f92672">=</span> <span style="color:#111">defer</span><span style="color:#f92672">.</span><span style="color:#111">Deferred</span><span style="color:#111">()</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">d</span>
+
+    <span style="color:#75715e"># cleanup is required to implement the IScheduledTask interface.</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">cleanup</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">pass</span>
+
+
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
+    <span style="color:#111">myPreferences</span> <span style="color:#f92672">=</span> <span style="color:#111">ZenExamplePreferences</span><span style="color:#111">()</span>
+    <span style="color:#111">myTaskFactory</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleTaskFactory</span><span style="color:#111">(</span><span style="color:#111">ZenExampleTask</span><span style="color:#111">)</span>
+    <span style="color:#111">myTaskSplitter</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleTaskSplitter</span><span style="color:#111">(</span><span style="color:#111">myTaskFactory</span><span style="color:#111">)</span>
+
+    <span style="color:#111">daemon</span> <span style="color:#f92672">=</span> <span style="color:#111">CollectorDaemon</span><span style="color:#111">(</span><span style="color:#111">myPreferences</span><span style="color:#111">,</span> <span style="color:#111">myTaskSplitter</span><span style="color:#111">)</span>
+    <span style="color:#111">daemon</span><span style="color:#f92672">.</span><span style="color:#111">run</span><span style="color:#111">()</span></code></pre></div>
 <p>Note that the <code>doTask()</code> method is the logic that will be executed on each of the daemon&rsquo;s cycle. It is on that method where you should write any necessary collection or monitoring logic.</p>
 
 <h3 id="configuration-services">Configuration Services</h3>
@@ -294,122 +294,122 @@ unused(ExampleConfigService)
 <p><code>_createDeviceProxy()</code>: A proxy represents the list of devices that will be sent to the daemon. Calls to other custom methods can be made inside this method. <code>proxy.datapoints</code> is the list that contains all the data points for a device. We can append dictionaries of data into this list.</p>
 
 <p>Here is an complete example of a configuration service:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="background-color:#fff0f0">&#34;&#34;&#34;
-</span><span style="background-color:#fff0f0">ExampleConfigService
-</span><span style="background-color:#fff0f0">ZenHub service for providing configuration to the zenexample collector daemon.
-</span><span style="background-color:#fff0f0">
-</span><span style="background-color:#fff0f0">    This provides the daemon with a dictionary of datapoints for every device.
-</span><span style="background-color:#fff0f0">&#34;&#34;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">ExampleConfigService
+</span><span style="color:#d88200">ZenHub service for providing configuration to the zenexample collector daemon.
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    This provides the daemon with a dictionary of datapoints for every device.
+</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
-log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.mydaemon&#39;</span>)
+<span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zen.mydaemon&#39;</span><span style="color:#111">)</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">Globals</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> unused
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenCollector.services.config</span> <span style="color:#080;font-weight:bold">import</span> CollectorConfigService
+<span style="color:#f92672">import</span> <span style="color:#111">Globals</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Utils</span> <span style="color:#f92672">import</span> <span style="color:#111">unused</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenCollector.services.config</span> <span style="color:#f92672">import</span> <span style="color:#111">CollectorConfigService</span>
 
-unused(Globals)
+<span style="color:#111">unused</span><span style="color:#111">(</span><span style="color:#111">Globals</span><span style="color:#111">)</span>
 
-<span style="color:#888"># Your daemon configuration service should almost certainly subclass</span>
-<span style="color:#888"># CollectorConfigService to make it as easy as possible for you to implement.</span>
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PowerMonConfigService</span>(CollectorConfigService):
-    <span style="background-color:#fff0f0">&#34;&#34;&#34;
-</span><span style="background-color:#fff0f0">    ZenHub service for the zenexample collector daemon.
-</span><span style="background-color:#fff0f0">    &#34;&#34;&#34;</span>
+<span style="color:#75715e"># Your daemon configuration service should almost certainly subclass</span>
+<span style="color:#75715e"># CollectorConfigService to make it as easy as possible for you to implement.</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">PowerMonConfigService</span><span style="color:#111">(</span><span style="color:#111">CollectorConfigService</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">    ZenHub service for the zenexample collector daemon.
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
 
-    <span style="color:#888"># When the collector daemon requests a list of devices to poll from ZenHub</span>
-    <span style="color:#888"># your service can filter the devices that are returned by implementing</span>
-    <span style="color:#888"># this _filterDevice method. If _filterDevice returns True for a device,</span>
-    <span style="color:#888"># it will be returned to the collector. If _filterDevice returns False, the</span>
-    <span style="color:#888"># collector daemon won&#39;t collect from it.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_filterDevice</span>(self, device):
-        <span style="color:#888"># First use standard filtering.</span>
-        <span style="color:#007020">filter</span> <span style="color:#333">=</span> CollectorConfigService<span style="color:#333">.</span>_filterDevice(self, device)
+    <span style="color:#75715e"># When the collector daemon requests a list of devices to poll from ZenHub</span>
+    <span style="color:#75715e"># your service can filter the devices that are returned by implementing</span>
+    <span style="color:#75715e"># this _filterDevice method. If _filterDevice returns True for a device,</span>
+    <span style="color:#75715e"># it will be returned to the collector. If _filterDevice returns False, the</span>
+    <span style="color:#75715e"># collector daemon won&#39;t collect from it.</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_filterDevice</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># First use standard filtering.</span>
+        <span style="color:#111">filter</span> <span style="color:#f92672">=</span> <span style="color:#111">CollectorConfigService</span><span style="color:#f92672">.</span><span style="color:#111">_filterDevice</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">)</span>
 
-        <span style="color:#888"># If the standard filtering logic said the device shouldn&#39;t be filtered</span>
-        <span style="color:#888"># we can setup some other contraint.</span>
+        <span style="color:#75715e"># If the standard filtering logic said the device shouldn&#39;t be filtered</span>
+        <span style="color:#75715e"># we can setup some other contraint.</span>
 
-        has_flag <span style="color:#333">=</span> False			<span style="color:#888"># Flag to determine if should filter devise</span>
-        <span style="color:#080;font-weight:bold">if</span> <span style="color:#007020">filter</span>:
-           <span style="color:#888"># Return only devices that have a valid value for Power Data Point (Assigned by ServerMonitor ZenPack)</span>
-           <span style="color:#080;font-weight:bold">try</span>:
-              <span style="color:#080;font-weight:bold">if</span> device<span style="color:#333">.</span>getRRDValue(<span style="background-color:#fff0f0">&#39;Power&#39;</span>) <span style="color:#333">!=</span> None:
-                 has_flag <span style="color:#333">=</span> True
-           <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
-              <span style="color:#080;font-weight:bold">print</span> e
+        <span style="color:#111">has_flag</span> <span style="color:#f92672">=</span> <span style="color:#111">False</span>			<span style="color:#75715e"># Flag to determine if should filter devise</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">filter</span><span style="color:#111">:</span>
+           <span style="color:#75715e"># Return only devices that have a valid value for Power Data Point (Assigned by ServerMonitor ZenPack)</span>
+           <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+              <span style="color:#00a8c8">if</span> <span style="color:#111">device</span><span style="color:#f92672">.</span><span style="color:#111">getRRDValue</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Power&#39;</span><span style="color:#111">)</span> <span style="color:#f92672">!=</span> <span style="color:#111">None</span><span style="color:#111">:</span>
+                 <span style="color:#111">has_flag</span> <span style="color:#f92672">=</span> <span style="color:#111">True</span>
+           <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">e</span><span style="color:#111">:</span>
+              <span style="color:#00a8c8">print</span> <span style="color:#111">e</span>
 
-        <span style="color:#080;font-weight:bold">return</span> CollectorConfigService<span style="color:#333">.</span>_filterDevice(self, device) <span style="color:#000;font-weight:bold">and</span> has_flag
+        <span style="color:#00a8c8">return</span> <span style="color:#111">CollectorConfigService</span><span style="color:#f92672">.</span><span style="color:#111">_filterDevice</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">)</span> <span style="color:#f92672">and</span> <span style="color:#111">has_flag</span>
 
-    <span style="color:#888"># The _createDeviceProxy method allows you to build up the DeviceProxy</span>
-    <span style="color:#888"># object that will be sent to the collector daemon. Whatever is returned</span>
-    <span style="color:#888"># from this method will be sent as the device&#39;s representation to the</span>
-    <span style="color:#888"># collector daemon. Use serializable types. DeviceProxy works, as do any</span>
-    <span style="color:#888"># simple Python types.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_createDeviceProxy</span>(self, device):
-        proxy <span style="color:#333">=</span> CollectorConfigService<span style="color:#333">.</span>_createDeviceProxy(self, device)
+    <span style="color:#75715e"># The _createDeviceProxy method allows you to build up the DeviceProxy</span>
+    <span style="color:#75715e"># object that will be sent to the collector daemon. Whatever is returned</span>
+    <span style="color:#75715e"># from this method will be sent as the device&#39;s representation to the</span>
+    <span style="color:#75715e"># collector daemon. Use serializable types. DeviceProxy works, as do any</span>
+    <span style="color:#75715e"># simple Python types.</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_createDeviceProxy</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">):</span>
+        <span style="color:#111">proxy</span> <span style="color:#f92672">=</span> <span style="color:#111">CollectorConfigService</span><span style="color:#f92672">.</span><span style="color:#111">_createDeviceProxy</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">)</span>
 
-        proxy<span style="color:#333">.</span>configCycleInterval <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">5</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">60</span> 					<span style="color:#888"># 5 minutes</span>
-        proxy<span style="color:#333">.</span>datapoints <span style="color:#333">=</span> []
+        <span style="color:#111">proxy</span><span style="color:#f92672">.</span><span style="color:#111">configCycleInterval</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span> 					<span style="color:#75715e"># 5 minutes</span>
+        <span style="color:#111">proxy</span><span style="color:#f92672">.</span><span style="color:#111">datapoints</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
 
-        perfServer <span style="color:#333">=</span> device<span style="color:#333">.</span>getPerformanceServer()
+        <span style="color:#111">perfServer</span> <span style="color:#f92672">=</span> <span style="color:#111">device</span><span style="color:#f92672">.</span><span style="color:#111">getPerformanceServer</span><span style="color:#111">()</span>
 
-        self<span style="color:#333">.</span>_getPowerDp(proxy, device, device<span style="color:#333">.</span><span style="color:#007020">id</span>, None, perfServer)
-
-
-        <span style="color:#080;font-weight:bold">return</span> proxy
-
-    <span style="color:#888"># This is not a method we must implement. It is used by the custom</span>
-    <span style="color:#888"># _createDeviceProxy method above.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">_getPowerDp</span>(
-            self, proxy, deviceOrComponent, deviceId, componentId, perfServer
-            ):
-
-        <span style="color:#080;font-weight:bold">try</span>:
-           <span style="color:#888"># Get the ServerDevice RRD Template. Specified by the ServerMonitor ZenPack</span>
-           template <span style="color:#333">=</span> deviceOrComponent<span style="color:#333">.</span>getRRDTemplateByName(<span style="background-color:#fff0f0">&#39;ServerDevice&#39;</span>)
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getPowerDp</span><span style="color:#111">(</span><span style="color:#111">proxy</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">perfServer</span><span style="color:#111">)</span>
 
 
-           <span style="color:#888"># Get the Power data point for the device. Specified by the ServerMonitor ZenPack</span>
-           dp <span style="color:#333">=</span> template<span style="color:#333">.</span>getRRDDataPoint(<span style="background-color:#fff0f0">&#39;Power&#39;</span>)
+        <span style="color:#00a8c8">return</span> <span style="color:#111">proxy</span>
 
-           <span style="color:#888"># Get the value</span>
-           dp_value <span style="color:#333">=</span> deviceOrComponent<span style="color:#333">.</span>getRRDValue(<span style="background-color:#fff0f0">&#39;Power&#39;</span>)
+    <span style="color:#75715e"># This is not a method we must implement. It is used by the custom</span>
+    <span style="color:#75715e"># _createDeviceProxy method above.</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_getPowerDp</span><span style="color:#111">(</span>
+            <span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">proxy</span><span style="color:#111">,</span> <span style="color:#111">deviceOrComponent</span><span style="color:#111">,</span> <span style="color:#111">deviceId</span><span style="color:#111">,</span> <span style="color:#111">componentId</span><span style="color:#111">,</span> <span style="color:#111">perfServer</span>
+            <span style="color:#111">):</span>
 
-           dpInfo <span style="color:#333">=</span> <span style="color:#007020">dict</span>(
-              devId <span style="color:#333">=</span> deviceId,
-              dpId <span style="color:#333">=</span> dp<span style="color:#333">.</span>getId(),
-              rrdCmd <span style="color:#333">=</span> perfServer<span style="color:#333">.</span>getDefaultRRDCreateCommand(),
-              dpValue <span style="color:#333">=</span> dp_value
-              )
-
-           proxy<span style="color:#333">.</span>datapoints<span style="color:#333">.</span>append(dpInfo)
-
-        <span style="color:#080;font-weight:bold">except</span> <span style="color:#f00;font-weight:bold">Exception</span> <span style="color:#080;font-weight:bold">as</span> e:
-           <span style="color:#080;font-weight:bold">print</span> e
+        <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+           <span style="color:#75715e"># Get the ServerDevice RRD Template. Specified by the ServerMonitor ZenPack</span>
+           <span style="color:#111">template</span> <span style="color:#f92672">=</span> <span style="color:#111">deviceOrComponent</span><span style="color:#f92672">.</span><span style="color:#111">getRRDTemplateByName</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ServerDevice&#39;</span><span style="color:#111">)</span>
 
 
-<span style="color:#888"># For diagnostic purposes, allow the user to show the results of the</span>
-<span style="color:#888"># proxy creation.</span>
-<span style="color:#888"># Run this service as a script to see which devices will be sent to the daemon.</span>
-<span style="color:#888"># Add the --device=name flag to see the detailed contents of the proxy that</span>
-<span style="color:#888"># will be sent to the daemon</span>
-<span style="color:#888">#</span>
-<span style="color:#080;font-weight:bold">if</span> __name__ <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;__main__&#39;</span>:
-    <span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenHub.ServiceTester</span> <span style="color:#080;font-weight:bold">import</span> ServiceTester
-    tester <span style="color:#333">=</span> ServiceTester(PowerMonConfigService)
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">printer</span>(config):
-        <span style="color:#888"># Fill this out</span>
-        <span style="color:#080;font-weight:bold">print</span> config<span style="color:#333">.</span>datapoints
+           <span style="color:#75715e"># Get the Power data point for the device. Specified by the ServerMonitor ZenPack</span>
+           <span style="color:#111">dp</span> <span style="color:#f92672">=</span> <span style="color:#111">template</span><span style="color:#f92672">.</span><span style="color:#111">getRRDDataPoint</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Power&#39;</span><span style="color:#111">)</span>
+
+           <span style="color:#75715e"># Get the value</span>
+           <span style="color:#111">dp_value</span> <span style="color:#f92672">=</span> <span style="color:#111">deviceOrComponent</span><span style="color:#f92672">.</span><span style="color:#111">getRRDValue</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Power&#39;</span><span style="color:#111">)</span>
+
+           <span style="color:#111">dpInfo</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">(</span>
+              <span style="color:#111">devId</span> <span style="color:#f92672">=</span> <span style="color:#111">deviceId</span><span style="color:#111">,</span>
+              <span style="color:#111">dpId</span> <span style="color:#f92672">=</span> <span style="color:#111">dp</span><span style="color:#f92672">.</span><span style="color:#111">getId</span><span style="color:#111">(),</span>
+              <span style="color:#111">rrdCmd</span> <span style="color:#f92672">=</span> <span style="color:#111">perfServer</span><span style="color:#f92672">.</span><span style="color:#111">getDefaultRRDCreateCommand</span><span style="color:#111">(),</span>
+              <span style="color:#111">dpValue</span> <span style="color:#f92672">=</span> <span style="color:#111">dp_value</span>
+              <span style="color:#111">)</span>
+
+           <span style="color:#111">proxy</span><span style="color:#f92672">.</span><span style="color:#111">datapoints</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">dpInfo</span><span style="color:#111">)</span>
+
+        <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">e</span><span style="color:#111">:</span>
+           <span style="color:#00a8c8">print</span> <span style="color:#111">e</span>
 
 
-    tester<span style="color:#333">.</span>printDeviceProxy <span style="color:#333">=</span> printer
-    tester<span style="color:#333">.</span>showDeviceInfo()</code></pre></div>
+<span style="color:#75715e"># For diagnostic purposes, allow the user to show the results of the</span>
+<span style="color:#75715e"># proxy creation.</span>
+<span style="color:#75715e"># Run this service as a script to see which devices will be sent to the daemon.</span>
+<span style="color:#75715e"># Add the --device=name flag to see the detailed contents of the proxy that</span>
+<span style="color:#75715e"># will be sent to the daemon</span>
+<span style="color:#75715e">#</span>
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
+    <span style="color:#f92672">from</span> <span style="color:#111">Products.ZenHub.ServiceTester</span> <span style="color:#f92672">import</span> <span style="color:#111">ServiceTester</span>
+    <span style="color:#111">tester</span> <span style="color:#f92672">=</span> <span style="color:#111">ServiceTester</span><span style="color:#111">(</span><span style="color:#111">PowerMonConfigService</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">printer</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># Fill this out</span>
+        <span style="color:#00a8c8">print</span> <span style="color:#111">config</span><span style="color:#f92672">.</span><span style="color:#111">datapoints</span>
+
+
+    <span style="color:#111">tester</span><span style="color:#f92672">.</span><span style="color:#111">printDeviceProxy</span> <span style="color:#f92672">=</span> <span style="color:#111">printer</span>
+    <span style="color:#111">tester</span><span style="color:#f92672">.</span><span style="color:#111">showDeviceInfo</span><span style="color:#111">()</span></code></pre></div>
 <h2 id="daemon-logs">Daemon Logs</h2>
 
 <p>Log files generated by the daemon will be placed in a file in <code>$ZENHOME/log/&lt;daemon_name&gt;.log</code>. It is possible that the <code>INFO</code> and <code>DEBUG</code> logs will not show in the file, if this is the case then we can add the following code to the daemon file, after setting the logger:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">logging</span>
-log <span style="color:#333">=</span> logging<span style="color:#333">.</span>getLogger(<span style="background-color:#fff0f0">&#39;zen.DAEMON_NAME&#39;</span>)
-logging<span style="color:#333">.</span>basicConfig() <span style="color:#888"># Add this new line</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zen.DAEMON_NAME&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">basicConfig</span><span style="color:#111">()</span> <span style="color:#75715e"># Add this new line</span></code></pre></div>
 <p>Alternatively you can set the <code>logseverity 10</code> (default is 20) configuration in the daemon configuration. This will make the daemon show DEBUG level logs.</p>
 
 <h2 id="daemon-configuration">Daemon Configuration</h2>

@@ -96,20 +96,20 @@
 <h2 id="removing-device-classes">Removing Device Classes</h2>
 
 <p>We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &ldquo;KVM&rdquo; device class:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>manage_deleteOrganizer(<span style="background-color:#fff0f0">&#34;/zport/dmd/Devices/KVM&#34;</span>)
-commit()</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">manage_deleteOrganizer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;/zport/dmd/Devices/KVM&#34;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
 <h2 id="change-zenoss-user-s-password">Change Zenoss User&rsquo;s Password</h2>
 
 <p>Let&rsquo;s say we want to change the default <em>admin</em> user&rsquo;s password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">app<span style="color:#333">.</span>acl_users<span style="color:#333">.</span>userManager<span style="color:#333">.</span>updateUserPassword(<span style="background-color:#fff0f0">&#39;admin&#39;</span>, <span style="background-color:#fff0f0">&#39;newpassword&#39;</span>)
-commit()</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;newpassword&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
 <h2 id="creating-zendmd-scripts">Creating Zendmd Scripts</h2>
 
 <p>We can create zendmd scripts that can be run in a zendmd environment when called. For example we can take one of the scripts above and place it in a file called <code>change_password.zendmd</code> (The <em>zendmd</em> extension is just good practice for identifying this script as a zendmd script):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888">#!/usr/bin/env zendmd</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env zendmd</span>
 
-app<span style="color:#333">.</span>acl_users<span style="color:#333">.</span>userManager<span style="color:#333">.</span>updateUserPassword(<span style="background-color:#fff0f0">&#39;admin&#39;</span>, <span style="background-color:#fff0f0">&#39;newpassword&#39;</span>)
-commit()</code></pre></div>
+<span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;newpassword&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
 <p>Next we should give it executable permissions:</p>
 
 <pre><code>chmod 0755 change_password.zendmd
@@ -123,16 +123,16 @@ commit()</code></pre></div>
 <h2 id="obtaining-zproperty-values">Obtaining zProperty Values</h2>
 
 <p>We can easily obtain values from zProperties added by ZenPacks:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dmd<span style="color:#333">.</span>Devices<span style="color:#333">.</span>getProperty(<span style="background-color:#fff0f0">&#39;zProp&#39;</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">getProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zProp&#39;</span><span style="color:#111">)</span></code></pre></div>
 <h2 id="use-zendmd-as-a-standalone-program">Use zendmd as a Standalone Program</h2>
 
 <p>From a simple Python file, we can get access to zendmd by using the right imports. We can then work with the <code>dmd</code> object as usual:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888">#!/usr/bin/env python</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">Globals</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.ZenScriptBase</span> <span style="color:#080;font-weight:bold">import</span> ZenScriptBase
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">transaction</span> <span style="color:#080;font-weight:bold">import</span> commit
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+<span style="color:#f92672">import</span> <span style="color:#111">Globals</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.ZenScriptBase</span> <span style="color:#f92672">import</span> <span style="color:#111">ZenScriptBase</span>
+<span style="color:#f92672">from</span> <span style="color:#111">transaction</span> <span style="color:#f92672">import</span> <span style="color:#111">commit</span>
 
-dmd <span style="color:#333">=</span> ZenScriptBase(connect<span style="color:#333">=</span>True)<span style="color:#333">.</span>dmd</code></pre></div>
+<span style="color:#111">dmd</span> <span style="color:#f92672">=</span> <span style="color:#111">ZenScriptBase</span><span style="color:#111">(</span><span style="color:#111">connect</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">dmd</span></code></pre></div>
 </div>
 
 

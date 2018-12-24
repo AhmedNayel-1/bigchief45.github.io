@@ -100,25 +100,25 @@
 <p>All the work will be done inside the node&rsquo;s <code>getShortDescription()</code> method. We will build a string in HTML format that contains a <code>&lt;img&gt;</code> tag that points to our image.  The image&rsquo;s location will be handled using a <code>URL</code> object.</p>
 
 <p>Here is a complete example of how we can achieve is:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyNode</span> <span style="color:#080;font-weight:bold">extends</span> BeanNode<span style="color:#333">&lt;</span>MyObject<span style="color:#333">&gt;</span> <span style="color:#333">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">final</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyNode</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">BeanNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyObject</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String MY_ICON <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;com/myapp/mypackage/icon.png&#34;</span><span style="color:#333">;</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">String</span> <span style="color:#111">MY_ICON</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;com/myapp/mypackage/icon.png&#34;</span><span style="color:#f92672">;</span>
 
-  <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">MyNode</span><span style="color:#333">(</span>MyObject bean<span style="color:#333">)</span> <span style="color:#080;font-weight:bold">throws</span> IntrospectionException <span style="color:#333">{</span>
-    <span style="color:#888">// Initialization with factory here
-</span><span style="color:#888"></span>  <span style="color:#333">}</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyNode</span><span style="color:#f92672">(</span><span style="color:#111">MyObject</span> <span style="color:#111">bean</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">IntrospectionException</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// Initialization with factory here
+</span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
 
-  <span style="color:#555;font-weight:bold">@Override</span>
-  <span style="color:#080;font-weight:bold">public</span> String <span style="color:#06b;font-weight:bold">getShortDescription</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-    URL iconUrl <span style="color:#333">=</span> getClass<span style="color:#333">().</span><span style="color:#00c">getClassLoader</span><span style="color:#333">().</span><span style="color:#00c">getResource</span><span style="color:#333">(</span>MY_ICON<span style="color:#333">);</span>
+  <span style="color:#75af00">@Override</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getShortDescription</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">URL</span> <span style="color:#111">iconUrl</span> <span style="color:#f92672">=</span> <span style="color:#111">getClass</span><span style="color:#f92672">().</span><span style="color:#75af00">getClassLoader</span><span style="color:#f92672">().</span><span style="color:#75af00">getResource</span><span style="color:#f92672">(</span><span style="color:#111">MY_ICON</span><span style="color:#f92672">);</span>
 
-    String s <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;&lt;html&gt;&#34;</span><span style="color:#333">;</span>
-    s <span style="color:#333">+=</span> <span style="background-color:#fff0f0">&#34;&lt;p&gt;&lt;img src=\&#34;&#34;</span> <span style="color:#333">+</span> iconUrl <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#34;\&#34;&gt; Custom message&lt;/p&gt;&#34;</span><span style="color:#333">;</span>
-    s <span style="color:#333">+=</span> <span style="background-color:#fff0f0">&#34;&lt;/html&gt;&#34;</span><span style="color:#333">;</span>
+    <span style="color:#111">String</span> <span style="color:#111">s</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;&lt;html&gt;&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#111">s</span> <span style="color:#f92672">+=</span> <span style="color:#d88200">&#34;&lt;p&gt;&lt;img src=\&#34;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">iconUrl</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;\&#34;&gt; Custom message&lt;/p&gt;&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#111">s</span> <span style="color:#f92672">+=</span> <span style="color:#d88200">&#34;&lt;/html&gt;&#34;</span><span style="color:#f92672">;</span>
 
-    <span style="color:#080;font-weight:bold">return</span> s<span style="color:#333">;</span>
-  <span style="color:#333">}</span>
-<span style="color:#333">}</span></code></pre></div>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">s</span><span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>Notice how we escape double quotes.</p>
 </div>
 

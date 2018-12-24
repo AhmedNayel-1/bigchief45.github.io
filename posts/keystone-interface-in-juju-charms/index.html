@@ -102,10 +102,10 @@
 <p>Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an <strong>interface</strong>. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the <em>keystone Identity data</em>. For this, we use the <strong><a href="https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin">keystone-admin interface</a></strong>.</p>
 
 <p>With this in mind, we configure our charm to require this relation and interface in <code>metadata.yaml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#888"># ...</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>requires:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>identity-admin:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>interface:<span style="color:#bbb"> </span>keystone-admin</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
+requires<span style="color:#111">:</span>
+  identity-admin<span style="color:#111">:</span>
+    interface<span style="color:#111">:</span> keystone-admin</code></pre></div>
 <h2 id="relation-hooks">Relation Hooks</h2>
 
 <p>Now that the relation and interface is correctly configured, we can use the interface to obtain the necessary data in our hooks.  The hook that we need to implement is the <em>identity-admin-relation-changed</em> hook, which will be triggered when we run the <code>juju add-relation keystone myservice</code>.</p>

@@ -192,11 +192,11 @@
 <p><img src="/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example" /></p>
 
 <p>For this tutorial, we will use the following model as an example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Book</span>(models<span style="color:#333">.</span>Model):
-    title <span style="color:#333">=</span> models<span style="color:#333">.</span>CharField()
-    author <span style="color:#333">=</span> models<span style="color:#333">.</span>ForeignKey(Author)
-    isbn <span style="color:#333">=</span> models<span style="color:#333">.</span>CharField()
-    editorial <span style="color:#333">=</span> models<span style="color:#333">.</span>ForeignKey(Editorial)</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">):</span>
+    <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
+    <span style="color:#111">author</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Author</span><span style="color:#111">)</span>
+    <span style="color:#111">isbn</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
+    <span style="color:#111">editorial</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Editorial</span><span style="color:#111">)</span></code></pre></div>
 <h2 id="creating-the-form">Creating the Form</h2>
 
 <p>We will begin by creating the form that will be cloned. That is, the form that will represent <strong>one</strong> search query out of the many that will/could be nested together.</p>

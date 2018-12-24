@@ -107,11 +107,11 @@
 <p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman&rsquo;s renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
 
 <p>To begin, we will create a <code>lib</code> (if it doesn&rsquo;t exist) under our blog&rsquo;s directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">module</span> <span style="color:#0e84b5;font-weight:bold">MarkdownHelper</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
 
-  <span style="color:#007020">require</span> <span style="background-color:#fff0f0">&#39;middleman-core/renderers/redcarpet&#39;</span>
+  <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>The required file above is what will allow us to inherit from Middleman&rsquo;s renderer.</p>
 
   
@@ -181,24 +181,24 @@
 <h2 id="using-benchmark">Using Benchmark</h2>
 
 <p>To start benchmarking our code, we simply need to require <code>benchmark</code> and use the methods provided by the <code>Benchmark</code> module. For me, the most practical way is to use <code>Benchmark#bm</code> method, where we pass a block of code we want to measure:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#007020">require</span> <span style="background-color:#fff0f0">&#39;benchmark&#39;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
 
-<span style="color:#036;font-weight:bold">Benchmark</span><span style="color:#333">.</span>bm <span style="color:#080;font-weight:bold">do</span> <span style="color:#333">|</span>x<span style="color:#333">|</span>
-  x<span style="color:#333">.</span>report <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#888"># our code here</span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#75715e"># our code here</span>
+  <span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>Inside the block we are using the <code>report</code> method of the block&rsquo;s variable, which will basically do a separate benchmark for each report.</p>
 
 <p>However, we can improve this even more by adding a label to <code>report</code> and a label width to <code>bm</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#007020">require</span> <span style="background-color:#fff0f0">&#39;benchmark&#39;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
 
-<span style="color:#036;font-weight:bold">Benchmark</span><span style="color:#333">.</span>bm(<span style="color:#00d;font-weight:bold">20</span>) <span style="color:#080;font-weight:bold">do</span> <span style="color:#333">|</span>x<span style="color:#333">|</span>
-  x<span style="color:#333">.</span>report(<span style="background-color:#fff0f0">&#34;my_algorithm&#34;</span>) <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#888"># our code here</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;my_algorithm&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#75715e"># our code here</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>Let&rsquo;s see it in action with some common algorithms.</p>
 
   

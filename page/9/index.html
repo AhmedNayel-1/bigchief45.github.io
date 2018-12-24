@@ -193,7 +193,7 @@
 <p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn&rsquo;t exist), within the ZenPack&rsquo;s top directory.</p>
 
 <p><strong>actions.json</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
   &#34;triggers&#34;: [
     {
       &#34;name&#34;: &#34;Critical_death_event&#34;,
@@ -310,27 +310,27 @@
 <h2 id="configuration">Configuration</h2>
 
 <p>Gnocchi&rsquo;s configuration is stored in a file called <code>gnocchi.conf</code>. Ideally, this file would be in <code>~/gnocchi.conf</code> or <code>/etc/gnocchi/gnocchi.conf</code>. Let&rsquo;s take a look at a basic Gnocchi configuration:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#080;font-weight:bold">[DEFAULT]</span>
-<span style="color:#00c">debug</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">true</span>
-<span style="color:#00c">verbose</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">true</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[DEFAULT]</span>
+<span style="color:#75af00">debug</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
+<span style="color:#75af00">verbose</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
 
-<span style="color:#080;font-weight:bold">[api]</span>
-<span style="color:#00c">workers</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">1</span>
+<span style="color:#00a8c8">[api]</span>
+<span style="color:#75af00">workers</span> <span style="color:#f92672">=</span> <span style="color:#d88200">1</span>
 
-<span style="color:#080;font-weight:bold">[database]</span>
-<span style="color:#00c">backend</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">sqlalchemy</span>
+<span style="color:#00a8c8">[database]</span>
+<span style="color:#75af00">backend</span> <span style="color:#f92672">=</span> <span style="color:#d88200">sqlalchemy</span>
 
-<span style="color:#080;font-weight:bold">[indexer]</span>
-<span style="color:#00c">url</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi</span>
+<span style="color:#00a8c8">[indexer]</span>
+<span style="color:#75af00">url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi</span>
 
-<span style="color:#080;font-weight:bold">[storage]</span>
-<span style="color:#00c">coordination_url</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">file:///home/ubuntu/gn/locks</span>
-<span style="color:#00c">driver</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">file</span>
-<span style="color:#00c">file_basepath</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">/home/ubuntu/gn</span>
+<span style="color:#00a8c8">[storage]</span>
+<span style="color:#75af00">coordination_url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">file:///home/ubuntu/gn/locks</span>
+<span style="color:#75af00">driver</span> <span style="color:#f92672">=</span> <span style="color:#d88200">file</span>
+<span style="color:#75af00">file_basepath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">/home/ubuntu/gn</span>
 
-<span style="color:#080;font-weight:bold">[cors]</span>
-<span style="color:#00c">allowed_origin</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">*</span>
-<span style="color:#00c">allow_credentials</span> <span style="color:#333">=</span> <span style="background-color:#fff0f0">false</span></code></pre></div>
+<span style="color:#00a8c8">[cors]</span>
+<span style="color:#75af00">allowed_origin</span> <span style="color:#f92672">=</span> <span style="color:#d88200">*</span>
+<span style="color:#75af00">allow_credentials</span> <span style="color:#f92672">=</span> <span style="color:#d88200">false</span></code></pre></div>
 <p>The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.</p>
 
 <h3 id="database-setup">Database Setup</h3>
@@ -375,8 +375,8 @@
 <h2 id="gnocchi-rest-api">Gnocchi REST API</h2>
 
 <p>Gnocchi&rsquo;s REST API is based on <a href="http://www.pecanpy.org/index.html">Pecan</a>, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&rsquo;s <code>rest/__init__.py</code> file:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pecan</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">pecan</span> <span style="color:#080;font-weight:bold">import</span> rest</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">pecan</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pecan</span> <span style="color:#f92672">import</span> <span style="color:#111">rest</span></code></pre></div>
 <h3 id="metrics">Metrics</h3>
 
 <p>Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
@@ -384,24 +384,24 @@
 <p>A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.</p>
 
 <p>Farther down the code in <code>rest/__init__.py</code>, we can find a metric controller which inherits from a Pecan REST controller:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MetricController</span>(rest<span style="color:#333">.</span>RestController):
-    _custom_actions <span style="color:#333">=</span> {
-        <span style="background-color:#fff0f0">&#39;measures&#39;</span>: [<span style="background-color:#fff0f0">&#39;POST&#39;</span>, <span style="background-color:#fff0f0">&#39;GET&#39;</span>]
-    }
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MetricController</span><span style="color:#111">(</span><span style="color:#111">rest</span><span style="color:#f92672">.</span><span style="color:#111">RestController</span><span style="color:#111">):</span>
+    <span style="color:#111">_custom_actions</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+        <span style="color:#d88200">&#39;measures&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;POST&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;GET&#39;</span><span style="color:#111">]</span>
+    <span style="color:#111">}</span>
 
-    <span style="color:#080;font-weight:bold">def</span> __init__(self, metric):
-        self<span style="color:#333">.</span>metric <span style="color:#333">=</span> metric
-        mgr <span style="color:#333">=</span> extension<span style="color:#333">.</span>ExtensionManager(namespace<span style="color:#333">=</span><span style="background-color:#fff0f0">&#39;gnocchi.aggregates&#39;</span>,
-                                         invoke_on_load<span style="color:#333">=</span>True)
-        self<span style="color:#333">.</span>custom_agg <span style="color:#333">=</span> <span style="color:#007020">dict</span>((x<span style="color:#333">.</span>name, x<span style="color:#333">.</span>obj) <span style="color:#080;font-weight:bold">for</span> x <span style="color:#000;font-weight:bold">in</span> mgr)
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">metric</span>
+        <span style="color:#111">mgr</span> <span style="color:#f92672">=</span> <span style="color:#111">extension</span><span style="color:#f92672">.</span><span style="color:#111">ExtensionManager</span><span style="color:#111">(</span><span style="color:#111">namespace</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;gnocchi.aggregates&#39;</span><span style="color:#111">,</span>
+                                         <span style="color:#111">invoke_on_load</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">custom_agg</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">obj</span><span style="color:#111">)</span> <span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">mgr</span><span style="color:#111">)</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">enforce_metric</span>(self, rule):
-        enforce(rule, json<span style="color:#333">.</span>to_primitive(self<span style="color:#333">.</span>metric))
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">enforce_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">rule</span><span style="color:#111">):</span>
+        <span style="color:#111">enforce</span><span style="color:#111">(</span><span style="color:#111">rule</span><span style="color:#111">,</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">to_primitive</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#111">))</span>
 
-    <span style="color:#555;font-weight:bold">@pecan.expose</span>(<span style="background-color:#fff0f0">&#39;json&#39;</span>)
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">get_all</span>(self):
-        self<span style="color:#333">.</span>enforce_metric(<span style="background-color:#fff0f0">&#34;get metric&#34;</span>)
-        <span style="color:#080;font-weight:bold">return</span> self<span style="color:#333">.</span>metric</code></pre></div>
+    <span style="color:#75af00">@pecan.expose</span><span style="color:#111">(</span><span style="color:#d88200">&#39;json&#39;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_all</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">enforce_metric</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get metric&#34;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span></code></pre></div>
 <p>From the <a href="http://pecan.readthedocs.io/en/latest/routing.html">Pecan documentation</a>, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.</p>
 
 <p>We can tell Pecan which methods in a class are publically-visible via <code>expose()</code>. If a method is not decorated with <code>expose()</code>, Pecan will never route a request to it. In the example above, the <code>get_all()</code> method is exposed to Pecan. Additionally, it makes use of Pecan&rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.</p>

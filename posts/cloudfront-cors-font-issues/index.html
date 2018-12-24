@@ -103,15 +103,15 @@
 <h2 id="s3-bucket-cors-policy">S3 Bucket CORS Policy</h2>
 
 <p>You might have to begin by setting an appropriate CORS policy for the S3 Bucket. In the S3 Console, navigate to <em>Your Bucket &gt; Permissions &gt; CORS Configuration</em> and paste the following configuration:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
-<span style="color:#070">&lt;CORSConfiguration</span> <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://s3.amazonaws.com/doc/2006-03-01/&#34;</span><span style="color:#070">&gt;</span>
-<span style="color:#070">&lt;CORSRule&gt;</span>
-    <span style="color:#070">&lt;AllowedOrigin&gt;</span>*<span style="color:#070">&lt;/AllowedOrigin&gt;</span>
-    <span style="color:#070">&lt;AllowedMethod&gt;</span>GET<span style="color:#070">&lt;/AllowedMethod&gt;</span>
-    <span style="color:#070">&lt;MaxAgeSeconds&gt;</span>3000<span style="color:#070">&lt;/MaxAgeSeconds&gt;</span>
-    <span style="color:#070">&lt;AllowedHeader&gt;</span>Authorization<span style="color:#070">&lt;/AllowedHeader&gt;</span>
-<span style="color:#070">&lt;/CORSRule&gt;</span>
-<span style="color:#070">&lt;/CORSConfiguration&gt;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;CORSConfiguration</span> <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://s3.amazonaws.com/doc/2006-03-01/&#34;</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;CORSRule&gt;</span>
+    <span style="color:#f92672">&lt;AllowedOrigin&gt;</span>*<span style="color:#f92672">&lt;/AllowedOrigin&gt;</span>
+    <span style="color:#f92672">&lt;AllowedMethod&gt;</span>GET<span style="color:#f92672">&lt;/AllowedMethod&gt;</span>
+    <span style="color:#f92672">&lt;MaxAgeSeconds&gt;</span>3000<span style="color:#f92672">&lt;/MaxAgeSeconds&gt;</span>
+    <span style="color:#f92672">&lt;AllowedHeader&gt;</span>Authorization<span style="color:#f92672">&lt;/AllowedHeader&gt;</span>
+<span style="color:#f92672">&lt;/CORSRule&gt;</span>
+<span style="color:#f92672">&lt;/CORSConfiguration&gt;</span></code></pre></div>
 <p>Some people have reported that changing the value of <code>&lt;AllowedHeader&gt;</code> to <code>*</code> fixed their issue. So you might want to keep that in mind as well.</p>
 
 <h2 id="cloudfront-whitelisted-headers">CloudFront Whitelisted Headers</h2>

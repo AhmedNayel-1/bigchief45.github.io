@@ -152,16 +152,16 @@
 <h3 id="setting-up-the-routes">Setting up the Routes</h3>
 
 <p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># config/routes.rb</span>
-<span style="color:#036;font-weight:bold">Rails</span><span style="color:#333">.</span>application<span style="color:#333">.</span>routes<span style="color:#333">.</span>draw <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#888"># ...</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
+<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
+  <span style="color:#75715e"># ...</span>
 
-  resources <span style="color:#a60;background-color:#fff0f0">:notifications</span>, <span style="color:#a60;background-color:#fff0f0">only</span>: <span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:index</span><span style="color:#333">]</span> <span style="color:#080;font-weight:bold">do</span>
-    post <span style="color:#a60;background-color:#fff0f0">:mark_as_read</span>, <span style="color:#a60;background-color:#fff0f0">on</span>: <span style="color:#a60;background-color:#fff0f0">:collection</span>
-    post <span style="color:#a60;background-color:#fff0f0">:mark_as_read</span>, <span style="color:#a60;background-color:#fff0f0">on</span>: <span style="color:#a60;background-color:#fff0f0">:member</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:collection</span>
+    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:member</span>
+  <span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -199,18 +199,18 @@
 <h2 id="models-and-routes">Models and Routes</h2>
 
 <p>Before starting with the models, lets quickly define the application resources in our routes:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># config/routes.rb</span>
-<span style="color:#036;font-weight:bold">Rails</span><span style="color:#333">.</span>application<span style="color:#333">.</span>routes<span style="color:#333">.</span>draw <span style="color:#080;font-weight:bold">do</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
+<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
 
-  devise_for <span style="color:#a60;background-color:#fff0f0">:users</span>
+  <span style="color:#111">devise_for</span> <span style="color:#d88200">:users</span>
 
-  resources <span style="color:#a60;background-color:#fff0f0">:posts</span> <span style="color:#080;font-weight:bold">do</span>
-    resources <span style="color:#a60;background-color:#fff0f0">:comments</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#111">resources</span> <span style="color:#d88200">:posts</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#111">resources</span> <span style="color:#d88200">:comments</span>
+  <span style="color:#00a8c8">end</span>
 
-  resources <span style="color:#a60;background-color:#fff0f0">:notifications</span>, <span style="color:#a60;background-color:#fff0f0">only</span>: <span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:index</span><span style="color:#333">]</span>
+  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <h3 id="the-notification-model">The Notification Model</h3>
 
 <p>We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:</p>
@@ -260,16 +260,16 @@
 <h2 id="preparing-the-roles">Preparing the Roles</h2>
 
 <p>Assuming you already have initialized a Devise <code>User</code> model along with a Rolify <code>Role</code> model, a very common question I see is how should the roles be prepared so that the <em>new</em> users can have a list of already created roles to choose from when registering? In the <a href="https://github.com/RolifyCommunity/rolify">Rolify documentation</a>, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">user <span style="color:#333">=</span> <span style="color:#036;font-weight:bold">User</span><span style="color:#333">.</span>find(<span style="color:#00d;font-weight:bold">1</span>)
-user<span style="color:#333">.</span>add_role <span style="color:#a60;background-color:#fff0f0">:admin</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">User</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span>
+<span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span> <span style="color:#d88200">:admin</span></code></pre></div>
 <p>A new <code>admin</code> role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.</p>
 
 <p>Answers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># db/seeds.rb</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># db/seeds.rb</span>
 
-<span style="color:#036;font-weight:bold">Role</span><span style="color:#333">.</span>create!(<span style="color:#007020">name</span>: <span style="background-color:#fff0f0">&#39;admin&#39;</span>)
-<span style="color:#036;font-weight:bold">Role</span><span style="color:#333">.</span>create!(<span style="color:#007020">name</span>: <span style="background-color:#fff0f0">&#39;doctor&#39;</span>)
-<span style="color:#036;font-weight:bold">Role</span><span style="color:#333">.</span>create!(<span style="color:#007020">name</span>: <span style="background-color:#fff0f0">&#39;nurse&#39;</span>)</code></pre></div>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;doctor&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;nurse&#39;</span><span style="color:#111">)</span></code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -301,14 +301,14 @@ user<span style="color:#333">.</span>add_role <span style="color:#a60;background
 <p>In the view, I want to use Select2 to search for people in a <code>Person</code> table in the application&rsquo;s database. Select2 should use AJAX to hit a controller&rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).</p>
 
 <p>The controller action looks something like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">search</span>
-  <span style="color:#33b">@people</span> <span style="color:#333">=</span> <span style="color:#036;font-weight:bold">Person</span><span style="color:#333">.</span>all<span style="color:#333">.</span>where(<span style="background-color:#fff0f0">&#39;name LIKE ? OR last_name LIKE ?&#39;</span>,
-    <span style="background-color:#fff0f0">&#34;%</span><span style="background-color:#eee">#{</span>params<span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:q</span><span style="color:#333">]</span><span style="background-color:#eee">}</span><span style="background-color:#fff0f0">%&#34;</span>, <span style="background-color:#fff0f0">&#34;%</span><span style="background-color:#eee">#{</span>params<span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:q</span><span style="color:#333">]</span><span style="background-color:#eee">}</span><span style="background-color:#fff0f0">%&#34;</span>)
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">search</span>
+  <span style="color:#111">@people</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Person</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#f92672">.</span><span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">&#39;name LIKE ? OR last_name LIKE ?&#39;</span><span style="color:#111">,</span>
+    <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">)</span>
 
-  respond_to <span style="color:#080;font-weight:bold">do</span> <span style="color:#333">|</span><span style="color:#007020">format</span><span style="color:#333">|</span>
-    <span style="color:#007020">format</span><span style="color:#333">.</span>json { render <span style="color:#a60;background-color:#fff0f0">json</span>: <span style="color:#33b">@people</span><span style="color:#333">.</span>map { <span style="color:#333">|</span><span style="color:#007020">p</span><span style="color:#333">|</span> { <span style="color:#007020">id</span>: <span style="color:#007020">p</span><span style="color:#333">.</span>id, <span style="color:#a60;background-color:#fff0f0">full_name</span>: <span style="color:#007020">p</span><span style="color:#333">.</span>full_name } } }
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+  <span style="color:#111">respond_to</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">format</span><span style="color:#f92672">|</span>
+    <span style="color:#111">format</span><span style="color:#f92672">.</span><span style="color:#111">json</span> <span style="color:#111">{</span> <span style="color:#111">render</span> <span style="color:#d88200">json</span><span style="color:#111">:</span> <span style="color:#111">@people</span><span style="color:#f92672">.</span><span style="color:#111">map</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">p</span><span style="color:#f92672">|</span> <span style="color:#111">{</span> <span style="color:#111">id</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#d88200">full_name</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">full_name</span> <span style="color:#111">}</span> <span style="color:#111">}</span> <span style="color:#111">}</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 
   
   <div style="margin: 20px 0px;">

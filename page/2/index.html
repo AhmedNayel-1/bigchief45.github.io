@@ -165,10 +165,10 @@
 <h2 id="creating-and-registering-a-new-status-bar">Creating and Registering a New Status Bar</h2>
 
 <p>To create a new status bar, create a new Java class that implements the <code>StatusLineElementProvider</code> interface. To register it as a status bar, we use the <code>@ServiceProvider</code> annotation:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#555;font-weight:bold">@ServiceProvider</span><span style="color:#333">(</span>service <span style="color:#333">=</span> StatusLineElementProvider<span style="color:#333">.</span><span style="color:#00c">class</span><span style="color:#333">,</span> position <span style="color:#333">=</span> 1<span style="color:#333">)</span>
-<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyStatusBar</span> <span style="color:#080;font-weight:bold">implements</span> StatusLineElementProvider <span style="color:#333">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@ServiceProvider</span><span style="color:#f92672">(</span><span style="color:#111">service</span> <span style="color:#f92672">=</span> <span style="color:#111">StatusLineElementProvider</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStatusBar</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">StatusLineElementProvider</span> <span style="color:#f92672">{</span>
 
-<span style="color:#333">}</span></code></pre></div>
+<span style="color:#f92672">}</span></code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -223,10 +223,10 @@
   </h1>
   <time datetime="2018-06-26T00:00:00Z" class="post-date">Tue, Jun 26, 2018</time>
   <p>It&rsquo;s very easy to post file data to Django using requests:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">requests</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">requests</span>
 
 
-requests<span style="color:#333">.</span>post(url, files<span style="color:#333">=</span>{<span style="background-color:#fff0f0">&#39;cover&#39;</span>: <span style="color:#007020">open</span>(<span style="background-color:#fff0f0">&#39;imgpath.jpg&#39;</span>, <span style="background-color:#fff0f0">&#39;rb&#39;</span>)})</code></pre></div>
+<span style="color:#111">requests</span><span style="color:#f92672">.</span><span style="color:#111">post</span><span style="color:#111">(</span><span style="color:#111">url</span><span style="color:#111">,</span> <span style="color:#111">files</span><span style="color:#f92672">=</span><span style="color:#111">{</span><span style="color:#d88200">&#39;cover&#39;</span><span style="color:#111">:</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#d88200">&#39;imgpath.jpg&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;rb&#39;</span><span style="color:#111">)})</span></code></pre></div>
 <p>However I was having a hard time getting that to work using <a href="https://wiki.python.org/moin/BytesIO">BytesIO</a>. The reason I wanted to use BytesIO was because I was reading the file binary data located in S3, from AWS Lambda. I didn&rsquo;t want to write the file to disk first and then do something like the code shown above.</p>
 
 <p>Here&rsquo;s how to achieve that:</p>

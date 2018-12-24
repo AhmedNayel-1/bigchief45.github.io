@@ -125,26 +125,26 @@ sudo pip install --upgrade pip
 <p>Devstack should be run as a non-root user with sudo enabled. Since this user will be making many changes to your system, it will need to have sudo privileges.</p>
 
 <p>Create the group <code>stack</code> and add the user <code>stack</code> in it:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo groupadd stack
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo groupadd stack
 sudo useradd -g stack -s /bin/bash -d /opt/stack -m stack</code></pre></div>
 <p>Grant super user permissions to the <code>stack</code> user:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo su
-<span style="color:#007020">echo</span> <span style="background-color:#fff0f0">&#34;stack ALL=(ALL) NOPASSWD: ALL&#34;</span> &gt;&gt; /etc/sudoers</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo su
+<span style="color:#111">echo</span> <span style="color:#d88200">&#34;stack ALL=(ALL) NOPASSWD: ALL&#34;</span> &gt;&gt; /etc/sudoers</code></pre></div>
 <p>Logout from <code>root</code> by pressing <kbd>Ctrl + D</kbd></p>
 
 <p>Create a password for the <code>stack</code> user:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo passwd stack</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo passwd stack</code></pre></div>
 <p>Now to login as the stack user and go to the home directory of the stack user:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">su stack
-<span style="color:#007020">cd</span> ~</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">su stack
+<span style="color:#111">cd</span> ~</code></pre></div>
 <p>Check that the present working directory is <code>/opt/stack</code> by using the <code>pwd</code> command.</p>
 
 <h2 id="setting-up-git">Setting Up Git</h2>
 
 <p>We will be using <a href="https://git-scm.com/">git</a> for version control. Let&rsquo;s install it using apt-get:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git</code></pre></div>
 <p>Now let&rsquo;s configure our credentials:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git config --global user.name <span style="background-color:#fff0f0">&#34;YOUR_FIRSTNAME YOUR_LASTNAME&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git config --global user.name <span style="color:#d88200">&#34;YOUR_FIRSTNAME YOUR_LASTNAME&#34;</span>
 git config --global user.email YOUR_EMAIL@EMAIL_ADDRESS.com</code></pre></div>
 <p>We can check and confirm our git configuration using the <code>git config --list</code> command.</p>
 
@@ -153,9 +153,9 @@ git config --global user.email YOUR_EMAIL@EMAIL_ADDRESS.com</code></pre></div>
 <p><img src="https://docs.openstack.org/developer/devstack/_images/logo-blue.png" alt="Devstack" /></p>
 
 <p>Now we are ready to download Devstack from OpenStack&rsquo;s git repository by cloning the repository:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://git.openstack.org/openstack-dev/devstack</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://git.openstack.org/openstack-dev/devstack</code></pre></div>
 <p>Now let&rsquo;s enter the <code>devstack</code> directory (<code>cd devstack</code>) and copy a sample configuration into the devstack directory:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp samples/local.conf .</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp samples/local.conf .</code></pre></div>
 <h3 id="configuring-devstack">Configuring DevStack</h3>
 
 <p>The <code>local.conf</code> file allows us to specify the preferred configuration for devstack before deploying it. In this file we can configure passwords, logging, projects we want to download (such as Ceilometer), etc.</p>
@@ -189,7 +189,7 @@ The password: openstack
 <h2 id="setting-up-ssh-keys">Setting Up SSH Keys</h2>
 
 <p>Let&rsquo;s create a new SSH key, using the provided email as a label. We can save the key in the default prompted location, we can also leave the secure passphrase blank.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -C <span style="background-color:#fff0f0">&#34;YOUR_EMAIL@EMAIL_ADDRESS.com&#34;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -C <span style="color:#d88200">&#34;YOUR_EMAIL@EMAIL_ADDRESS.com&#34;</span></code></pre></div>
 <p>Start the ssh-agent in the background:</p>
 
 <pre><code>eval &quot;$(ssh-agent -s)&quot;
@@ -198,7 +198,7 @@ The password: openstack
 <p>-&gt; In shell terminology, <code>eval</code> is a built-in, not a function. It will take an argument and construct a command of it, which will be executed by the shell.</p>
 
 <p>Add the SSH key to ssh-agent:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-add ~/.ssh/id_rsa</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-add ~/.ssh/id_rsa</code></pre></div>
 <p>Let&rsquo;s download and install xclip. This is a utility for copying content to a clipboard in Linux. At the same time let&rsquo;s copy the contents of the SSH key (<code>id_rsa.pub</code>):</p>
 
 <pre><code>sudo apt-get install xclip
@@ -208,7 +208,7 @@ sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub
 <p>Now you can login into your <a href="www.github.com">Github</a> account, go to <em>Settings</em>, click <em>SSH and GPG keys</em> then select <em>new SSH key</em>. Write a description in “Title” and paste your key into the “Key” field. Finally press <em>Add SSH Key</em>.</p>
 
 <p>Let&rsquo;s test the connection using SSH:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -T git@github.com</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -T git@github.com</code></pre></div>
 <h2 id="setting-up-gerrit">Setting Up Gerrit</h2>
 
 <p><a href="https://www.gerritcodereview.com/">Gerrit</a> is the code review system used in OpenStack development.</p>
@@ -216,13 +216,13 @@ sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub
 <p>Before setting up Gerrit, make sure that you have followed the <a href="/posts/getting-started-on-contributing-to-openstack.html">preliminary steps</a> for preparing to contribute to OpenStack.</p>
 
 <p>Let&rsquo;s copy our SSH again using xclip:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub</code></pre></div>
 <p>Now sign in to <a href="https://review.openstack.org/">https://review.openstack.org/</a> using your Launchpad ID. Click on <em>Settings</em> then select <em>SSH Public Keys</em> and press <em>Add Key</em>. Press <kbd>Ctrl+V</kbd> to paste the key and then click <em>Add</em>.</p>
 
 <p>Now let&rsquo;s proceed to install git review. Git-review tool is a git subcommand that handles all the details of working with Gerrit.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git-review</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git-review</code></pre></div>
 <p>Check if git review works inside Keystone (or any other project) directory of OpenStack:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> keystone
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">cd</span> keystone
 
 git review -s</code></pre></div>
 <p>You will be prompted for your gerrit username, which can be configured in the OpenStack gerrit settings. A remote will now be set up and will match to the project&rsquo;s git repository.</p>
@@ -238,13 +238,13 @@ git review -s</code></pre></div>
 <p>-&gt; There are two types of OpenStack tests: the OpenStack integration test suite, called Tempest, and unit tests in each particular project (Nova, Neutron, Swift and so forth).</p>
 
 <p>Install tox and pbr:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install python-tox
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install python-tox
 sudo pip install pbr</code></pre></div>
 <p>Update and upgrade:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update
 sudo apt-get upgrade</code></pre></div>
 <p>Go inside any project directory like Keystone, Cinder or Nova and run tox:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ceilometer
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">cd</span> ceilometer
 tox -e py27,pep8</code></pre></div>
 <p>You can run a single test or let tox run the full suite. At the end of the test, you’ll get a nice printout of what exactly was run. Note that you don’t have to specify the full file path.</p>
 

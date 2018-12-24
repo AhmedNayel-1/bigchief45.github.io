@@ -108,66 +108,66 @@
 <p>With Stateful, what we really want to achieve is that we can create different and separate (separate files) states that will contain different attributes and methods. Moreover, each and every state will have its own <code>update()</code> and <code>draw()</code> functions that will work just like <code>love.update()</code> and <code>love.draw()</code>. The key thing here though is that each state will be able to draw itself in a different way.</p>
 
 <p>With this approach, we will also want our <code>main.lua</code> to be as clean as possible. Meaning that it won&rsquo;t contain anything else other than declarations for the usual functions that are used (the ones mentioned above):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">class <span style="color:#333">=</span> require <span style="background-color:#fff0f0">&#39;lib/middleclass&#39;</span>
-Stateful <span style="color:#333">=</span> require <span style="background-color:#fff0f0">&#39;lib/stateful&#39;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#111">class</span> <span style="color:#f92672">=</span> <span style="color:#111">require</span> <span style="color:#d88200">&#39;lib/middleclass&#39;</span>
+<span style="color:#111">Stateful</span> <span style="color:#f92672">=</span> <span style="color:#111">require</span> <span style="color:#d88200">&#39;lib/stateful&#39;</span>
 
-require <span style="background-color:#fff0f0">&#39;game&#39;</span>
+<span style="color:#111">require</span> <span style="color:#d88200">&#39;game&#39;</span>
 
-<span style="color:#080;font-weight:bold">local</span> game
+<span style="color:#00a8c8">local</span> <span style="color:#111">game</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">load</span>()
-  <span style="color:#888">-- Launch Game starting at Main Menu</span>
-  game <span style="color:#333">=</span> Game:new()
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">love</span><span style="color:#111">.</span><span style="color:#75af00">load</span><span style="color:#111">()</span>
+  <span style="color:#75715e">-- Launch Game starting at Main Menu</span>
+  <span style="color:#111">game</span> <span style="color:#f92672">=</span> <span style="color:#111">Game</span><span style="color:#111">:</span><span style="color:#111">new</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">update</span>(dt)
-  game:update(dt)
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">love</span><span style="color:#111">.</span><span style="color:#75af00">update</span><span style="color:#111">(</span><span style="color:#111">dt</span><span style="color:#111">)</span>
+  <span style="color:#111">game</span><span style="color:#111">:</span><span style="color:#111">update</span><span style="color:#111">(</span><span style="color:#111">dt</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">draw</span>()
-  game:draw()
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">love</span><span style="color:#111">.</span><span style="color:#75af00">draw</span><span style="color:#111">()</span>
+  <span style="color:#111">game</span><span style="color:#111">:</span><span style="color:#111">draw</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
-  game:keypressed(key, code)
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">love</span><span style="color:#111">.</span><span style="color:#75af00">keypressed</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">,</span> <span style="color:#111">code</span><span style="color:#111">)</span>
+  <span style="color:#111">game</span><span style="color:#111">:</span><span style="color:#111">keypressed</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">,</span> <span style="color:#111">code</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">love</span>.<span style="color:#06b;font-weight:bold">mousepressed</span>(x, y, button, istouch)
-  game:mousepressed(x, y, button, istouch)
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">love</span><span style="color:#111">.</span><span style="color:#75af00">mousepressed</span><span style="color:#111">(</span><span style="color:#111">x</span><span style="color:#111">,</span> <span style="color:#111">y</span><span style="color:#111">,</span> <span style="color:#111">button</span><span style="color:#111">,</span> <span style="color:#111">istouch</span><span style="color:#111">)</span>
+  <span style="color:#111">game</span><span style="color:#111">:</span><span style="color:#111">mousepressed</span><span style="color:#111">(</span><span style="color:#111">x</span><span style="color:#111">,</span> <span style="color:#111">y</span><span style="color:#111">,</span> <span style="color:#111">button</span><span style="color:#111">,</span> <span style="color:#111">istouch</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>As you can see, <code>main.lua</code> simply globally requires Middleclass and Stateful, creates a new instance of <code>Game</code> (Class definition of this class is found inside <code>game.lua</code>), and then proceeds to pass the same functions to <code>game</code>.</p>
 
 <p>This way, <code>main.lua</code> will be nothing but a clean entry point that quickly delegates responsibilities to <code>Game</code>. Let&rsquo;s take a look at this <code>Game</code> class:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#888">--- game.lua</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">--- game.lua</span>
 
-Game <span style="color:#333">=</span> class(<span style="background-color:#fff0f0">&#39;Game&#39;</span>):include(Stateful)
+<span style="color:#111">Game</span> <span style="color:#f92672">=</span> <span style="color:#111">class</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Game&#39;</span><span style="color:#111">):</span><span style="color:#111">include</span><span style="color:#111">(</span><span style="color:#111">Stateful</span><span style="color:#111">)</span>
 
-require <span style="background-color:#fff0f0">&#39;states/menu&#39;</span>
-require <span style="background-color:#fff0f0">&#39;states/pause&#39;</span>
-require <span style="background-color:#fff0f0">&#39;states/game_over&#39;</span>
+<span style="color:#111">require</span> <span style="color:#d88200">&#39;states/menu&#39;</span>
+<span style="color:#111">require</span> <span style="color:#d88200">&#39;states/pause&#39;</span>
+<span style="color:#111">require</span> <span style="color:#d88200">&#39;states/game_over&#39;</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">initialize</span>()
-  self:gotoState(<span style="background-color:#fff0f0">&#39;Menu&#39;</span>)
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Game</span><span style="color:#111">:</span><span style="color:#75af00">initialize</span><span style="color:#111">()</span>
+  <span style="color:#111">self</span><span style="color:#111">:</span><span style="color:#111">gotoState</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Menu&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">exit</span>()
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Game</span><span style="color:#111">:</span><span style="color:#75af00">exit</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">update</span>(dt)
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Game</span><span style="color:#111">:</span><span style="color:#75af00">update</span><span style="color:#111">(</span><span style="color:#111">dt</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">draw</span>()
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Game</span><span style="color:#111">:</span><span style="color:#75af00">draw</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
-  <span style="color:#888">-- Pause game</span>
-  <span style="color:#080;font-weight:bold">if</span> key <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;p&#39;</span> <span style="color:#080;font-weight:bold">then</span>
-    self:pushState(<span style="background-color:#fff0f0">&#39;Pause&#39;</span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Game</span><span style="color:#111">:</span><span style="color:#75af00">keypressed</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">,</span> <span style="color:#111">code</span><span style="color:#111">)</span>
+  <span style="color:#75715e">-- Pause game</span>
+  <span style="color:#00a8c8">if</span> <span style="color:#111">key</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;p&#39;</span> <span style="color:#00a8c8">then</span>
+    <span style="color:#111">self</span><span style="color:#111">:</span><span style="color:#111">pushState</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Pause&#39;</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Game</span>:<span style="color:#06b;font-weight:bold">mousepressed</span>(x, y, button, isTouch)
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Game</span><span style="color:#111">:</span><span style="color:#75af00">mousepressed</span><span style="color:#111">(</span><span style="color:#111">x</span><span style="color:#111">,</span> <span style="color:#111">y</span><span style="color:#111">,</span> <span style="color:#111">button</span><span style="color:#111">,</span> <span style="color:#111">isTouch</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p><code>Game</code> will be the  <em>real</em> starting point of the game. And will act as a parent for the other states.</p>
 
 <p>We begin by globally creating the <code>Game</code> class using Middleclass, and then declaring that it contains states, using the Stateful <code>include(Stateful)</code> mixin.</p>
@@ -197,25 +197,25 @@ require <span style="background-color:#fff0f0">&#39;states/game_over&#39;</span>
 <h2 id="the-menu-state">The Menu State</h2>
 
 <p>As soon as a game instance is created in <code>main.lua</code>, the class switches to the <code>Menu</code> state. Let&rsquo;s take a look at the code for this state:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#888">-- states/menu.lua</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- states/menu.lua</span>
 
-<span style="color:#080;font-weight:bold">local</span> Menu <span style="color:#333">=</span> Game:addState(<span style="background-color:#fff0f0">&#39;Menu&#39;</span>)
+<span style="color:#00a8c8">local</span> <span style="color:#111">Menu</span> <span style="color:#f92672">=</span> <span style="color:#111">Game</span><span style="color:#111">:</span><span style="color:#111">addState</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Menu&#39;</span><span style="color:#111">)</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">enteredState</span>()
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Menu</span><span style="color:#111">:</span><span style="color:#75af00">enteredState</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">update</span>(dt)
-  <span style="color:#888">-- You should switch to another state here,</span>
-  <span style="color:#888">-- Usually when a button is pressed.</span>
-  <span style="color:#888">-- Either with gotoState() or pushState()</span>
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Menu</span><span style="color:#111">:</span><span style="color:#75af00">update</span><span style="color:#111">(</span><span style="color:#111">dt</span><span style="color:#111">)</span>
+  <span style="color:#75715e">-- You should switch to another state here,</span>
+  <span style="color:#75715e">-- Usually when a button is pressed.</span>
+  <span style="color:#75715e">-- Either with gotoState() or pushState()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">draw</span>()
-  <span style="color:#888">-- Draw your menu stuff (buttons, etc.) here</span>
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Menu</span><span style="color:#111">:</span><span style="color:#75af00">draw</span><span style="color:#111">()</span>
+  <span style="color:#75715e">-- Draw your menu stuff (buttons, etc.) here</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Menu</span>:<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Menu</span><span style="color:#111">:</span><span style="color:#75af00">keypressed</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">,</span> <span style="color:#111">code</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>You can see how all these state objects look very similar and contain <code>update()</code> and <code>draw()</code> functions.</p>
 
 <p>The <code>enteredState()</code> function allows us to do useful things when the game switches to this state.</p>
@@ -231,31 +231,31 @@ require <span style="background-color:#fff0f0">&#39;states/game_over&#39;</span>
 <h2 id="the-pause-state">The Pause State</h2>
 
 <p>The pause state is entered when the <code>p</code> key is pressed in the game. This is done using the <code>pushState()</code> function which simply pushes the new state into the stack.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#888">-- states/pause.lua</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- states/pause.lua</span>
 
-<span style="color:#080;font-weight:bold">local</span> Pause <span style="color:#333">=</span> Game:addState(<span style="background-color:#fff0f0">&#39;Pause&#39;</span>)
+<span style="color:#00a8c8">local</span> <span style="color:#111">Pause</span> <span style="color:#f92672">=</span> <span style="color:#111">Game</span><span style="color:#111">:</span><span style="color:#111">addState</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Pause&#39;</span><span style="color:#111">)</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">enteredState</span>()
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Pause</span><span style="color:#111">:</span><span style="color:#75af00">enteredState</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">exitedState</span>()
-<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Pause</span><span style="color:#111">:</span><span style="color:#75af00">exitedState</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">draw</span>()
-  love.graphics.setBackgroundColor(BG_COLOR)
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Pause</span><span style="color:#111">:</span><span style="color:#75af00">draw</span><span style="color:#111">()</span>
+  <span style="color:#111">love.graphics</span><span style="color:#111">.</span><span style="color:#111">setBackgroundColor</span><span style="color:#111">(</span><span style="color:#111">BG_COLOR</span><span style="color:#111">)</span>
 
-  love.graphics.setColor(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">51</span>, <span style="color:#00d;font-weight:bold">100</span>)
-  love.graphics.rectangle(<span style="background-color:#fff0f0">&#39;fill&#39;</span>, <span style="color:#00d;font-weight:bold">350</span>, <span style="color:#00d;font-weight:bold">200</span>, <span style="color:#00d;font-weight:bold">200</span>, <span style="color:#00d;font-weight:bold">50</span>)
+  <span style="color:#111">love.graphics</span><span style="color:#111">.</span><span style="color:#111">setColor</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">51</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">)</span>
+  <span style="color:#111">love.graphics</span><span style="color:#111">.</span><span style="color:#111">rectangle</span><span style="color:#111">(</span><span style="color:#d88200">&#39;fill&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">350</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">50</span><span style="color:#111">)</span>
 
-  love.graphics.setColor(<span style="color:#00d;font-weight:bold">255</span>, <span style="color:#00d;font-weight:bold">223</span>, <span style="color:#00d;font-weight:bold">0</span>)
-  love.graphics.printf(<span style="background-color:#fff0f0">&#39;GAME PAUSED&#39;</span>, <span style="color:#00d;font-weight:bold">350</span>, <span style="color:#00d;font-weight:bold">220</span>, <span style="color:#00d;font-weight:bold">200</span>, <span style="background-color:#fff0f0">&#39;center&#39;</span>)
-<span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#111">love.graphics</span><span style="color:#111">.</span><span style="color:#111">setColor</span><span style="color:#111">(</span><span style="color:#ae81ff">255</span><span style="color:#111">,</span> <span style="color:#ae81ff">223</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+  <span style="color:#111">love.graphics</span><span style="color:#111">.</span><span style="color:#111">printf</span><span style="color:#111">(</span><span style="color:#d88200">&#39;GAME PAUSED&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">350</span><span style="color:#111">,</span> <span style="color:#ae81ff">220</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;center&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">function</span> <span style="color:#b06;font-weight:bold">Pause</span>:<span style="color:#06b;font-weight:bold">keypressed</span>(key, code)
-  <span style="color:#080;font-weight:bold">if</span> key <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;p&#39;</span> <span style="color:#080;font-weight:bold">then</span>
-    self:popState(<span style="background-color:#fff0f0">&#39;Pause&#39;</span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">Pause</span><span style="color:#111">:</span><span style="color:#75af00">keypressed</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">,</span> <span style="color:#111">code</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">if</span> <span style="color:#111">key</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;p&#39;</span> <span style="color:#00a8c8">then</span>
+    <span style="color:#111">self</span><span style="color:#111">:</span><span style="color:#111">popState</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Pause&#39;</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>Again, we see the <code>enteredState()</code> callback function and the usual <code>draw()</code> and <code>update()</code> functions. Nothing important here.</p>
 
 <p>What I really want to show from this state is how we <em>unpause</em>. Naturally, by pressing the <code>p</code> key again. When this happens, the <code>keypressed</code> function is called, and then Stateful&rsquo;s <code>popState()</code> function is called as well, indicating which state we want to pop: the current state.</p>

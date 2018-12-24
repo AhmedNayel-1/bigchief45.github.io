@@ -99,15 +99,15 @@
 <h2 id="the-serializer">The Serializer</h2>
 
 <p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># serializers.py</span>
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">myapp.models</span> <span style="color:#080;font-weight:bold">import</span> Book
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">rest_framework</span> <span style="color:#080;font-weight:bold">import</span> serializers
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># serializers.py</span>
+<span style="color:#f92672">from</span> <span style="color:#111">myapp.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Book</span>
+<span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">serializers</span>
 
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BookSerializer</span>(serializers<span style="color:#333">.</span>ModelSerializer):
-    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Meta</span>:
-        model <span style="color:#333">=</span> Book
-        fields <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;__all__&#39;</span></code></pre></div>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookSerializer</span><span style="color:#111">(</span><span style="color:#111">serializers</span><span style="color:#f92672">.</span><span style="color:#111">ModelSerializer</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">class</span> <span style="color:#75af00">Meta</span><span style="color:#111">:</span>
+        <span style="color:#111">model</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span>
+        <span style="color:#111">fields</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;__all__&#39;</span></code></pre></div>
 <p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>
 
   

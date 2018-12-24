@@ -98,21 +98,21 @@
 <p>This seemed pretty nice, and I was curious how they achieved this, so I started browsing around the source code. It turns out that this overriding is done in a file called <code>overrides.zcml</code>, which is placed in the ZenPack&rsquo;s top directory.</p>
 
 <p><strong>overrides.zcml</strong>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#579">&lt;?xml version = &#34;1.0&#34; encoding = &#34;utf-8&#34;?&gt;</span>
-<span style="color:#070">&lt;configure</span>
-    <span style="color:#00c">xmlns=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zope&#34;</span>
-    <span style="color:#00c">xmlns:browser =</span> <span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/browser&#34;</span>
-    <span style="color:#00c">xmlns:zcml=</span><span style="background-color:#fff0f0">&#34;http://namespaces.zope.org/zcml&#34;</span>
-    <span style="color:#070">&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version = &#34;1.0&#34; encoding = &#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configure</span>
+    <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
+    <span style="color:#75af00">xmlns:browser =</span> <span style="color:#d88200">&#34;http://namespaces.zope.org/browser&#34;</span>
+    <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span>
+    <span style="color:#f92672">&gt;</span>
 
-    <span style="color:#888">&lt;!-- Network map page --&gt;</span>
-    <span style="color:#070">&lt;browser:page</span>
-        <span style="color:#00c">template=</span><span style="background-color:#fff0f0">&#34;./networkMap.pt&#34;</span>
-        <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;networkMap&#34;</span>
-        <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
-        <span style="color:#00c">permission=</span><span style="background-color:#fff0f0">&#34;zenoss.View&#34;</span>
-        <span style="color:#070">/&gt;</span>
-<span style="color:#070">&lt;/configure&gt;</span></code></pre></div>
+    <span style="color:#75715e">&lt;!-- Network map page --&gt;</span>
+    <span style="color:#f92672">&lt;browser:page</span>
+        <span style="color:#75af00">template=</span><span style="color:#d88200">&#34;./networkMap.pt&#34;</span>
+        <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;networkMap&#34;</span>
+        <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
+        <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
+        <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/configure&gt;</span></code></pre></div>
 <p>In this file, they are overriding the network map page (named <code>networkMap</code>, which is a <code>browser:page</code>) to use a different template instead. This is a custom template that also resides in the ZenPack. In the case of the Layer 2 ZenPack, it is also located in the ZenPack&rsquo;s top directory, but you can specify a different location such as <code>./browser/templates/</code> which is very common template location in other ZenPacks.</p>
 
 <p>Layer 2 ZenPack Network Map:</p>
@@ -120,23 +120,23 @@
 <p><img src="https://github.com/zenoss/ZenPacks.zenoss.Layer2/blob/master/screenshots/layer2_network_map.png?raw=true" alt="Layer 2 ZenPack Network Map" /></p>
 
 <p>The template is a <code>.pt</code> file that defines certain blocks in the document using TAL and METAL expressions to be filled with content, usually using JavaScript. Here is the <code>networkMap.pt</code> template used in the ZenPack:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#579">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
 
-&lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:use-macro</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;context/page_macros/base-new&#34;</span>&gt;
-    &lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:fill-slot</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;title&#34;</span>&gt;Network Map&lt;/<span style="color:#070">tal:block</span>&gt;
+<span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:use-macro</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;context/page_macros/base-new&#34;</span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;title&#34;</span><span style="color:#111">&gt;</span>Network Map<span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
 
-    &lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:fill-slot</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;head-local&#34;</span>&gt;
-        &lt;<span style="color:#070">meta</span> <span style="color:#00c">http-equiv</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;X-UA-Compatible&#34;</span> <span style="color:#00c">content</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;IE=edge&#34;</span> /&gt;
-    &lt;/<span style="color:#070">tal:block</span>&gt;
+    <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;head-local&#34;</span><span style="color:#111">&gt;</span>
+        <span style="color:#111">&lt;</span><span style="color:#f92672">meta</span> <span style="color:#75af00">http-equiv</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;X-UA-Compatible&#34;</span> <span style="color:#75af00">content</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;IE=edge&#34;</span> <span style="color:#111">/&gt;</span>
+    <span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
 
-    &lt;<span style="color:#070">tal:block</span> <span style="color:#00c">metal:fill-slot</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;script_afterLayout&#34;</span>&gt;
-        &lt;<span style="color:#070">script</span> <span style="color:#00c">type</span><span style="color:#333">=</span><span style="background-color:#fff0f0">&#34;text/javascript&#34;</span>&gt;
-            Ext.onReady(<span style="color:#080;font-weight:bold">function</span>(){
-                <span style="color:#007020">window</span>.form_panel.render(Ext.getCmp(<span style="background-color:#fff0f0">&#39;center_panel&#39;</span>));
-            });
-        &lt;/<span style="color:#070">script</span>&gt;
-    &lt;/<span style="color:#070">tal:block</span>&gt;
-&lt;/<span style="color:#070">tal:block</span>&gt;</code></pre></div>
+    <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;script_afterLayout&#34;</span><span style="color:#111">&gt;</span>
+        <span style="color:#111">&lt;</span><span style="color:#f92672">script</span> <span style="color:#75af00">type</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;text/javascript&#34;</span><span style="color:#111">&gt;</span>
+            <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">onReady</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(){</span>
+                <span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">form_panel</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">(</span><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#d88200">&#39;center_panel&#39;</span><span style="color:#111">));</span>
+            <span style="color:#111">});</span>
+        <span style="color:#111">&lt;/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
+<span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span></code></pre></div>
 </div>
 
 

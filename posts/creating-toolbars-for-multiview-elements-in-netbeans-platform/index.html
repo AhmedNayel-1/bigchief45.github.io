@@ -103,17 +103,17 @@
 
 <p>If you recall from the previous post, a <code>JPanel</code> that implements <code>MultiViewElement</code> was created after finishing the wizard. This <code>MultiViewElement</code> object has some very important characteristics that are key to this tutorial:</p>
 
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyCustomVisualElement</span> <span style="color:#080;font-weight:bold">extends</span> JPanel <span style="color:#080;font-weight:bold">implements</span> MultiViewElement <span style="color:#333">{</span>
-  <span style="color:#888">// ...
-</span><span style="color:#888"></span>  <span style="color:#080;font-weight:bold">private</span> JToolBar toolbar <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> JToolBar<span style="color:#333">();</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">final</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyCustomVisualElement</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">JPanel</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">MultiViewElement</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  <span style="color:#00a8c8">private</span> <span style="color:#111">JToolBar</span> <span style="color:#111">toolbar</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JToolBar</span><span style="color:#f92672">();</span>
 
-  <span style="color:#888">// ...
-</span><span style="color:#888"></span>
-  <span style="color:#555;font-weight:bold">@Override</span>
-  <span style="color:#080;font-weight:bold">public</span> JComponent <span style="color:#06b;font-weight:bold">getToolbarRepresentation</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-      <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">this</span><span style="color:#333">.</span><span style="color:#00c">toolbar</span><span style="color:#333">;</span>
-  <span style="color:#333">}</span>
-<span style="color:#333">}</span></code></pre></div>
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+  <span style="color:#75af00">@Override</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#111">JComponent</span> <span style="color:#75af00">getToolbarRepresentation</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+      <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">toolbar</span><span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>As you can see, the creation of this file includes a <code>JToolbar</code> component inside this <code>JPanel</code>, as well as a <code>getToolbarRepresentation()</code> method. This is how the visual element renders the toolbar for our data file.</p>
 
 <h2 id="creating-the-toolbar">Creating the Toolbar</h2>
@@ -134,10 +134,10 @@
 <p>To add the action logic to each button you can double click each button and then Netbeans will display the appropriate method to write your logic.</p>
 
 <p>Assuming that I am working with a <code>TableModel</code> object, and the buttons in the toolbar can add or remove rows, the actions would need to have the correct reference to this table and its model. This implementation is really up to you, but we could easily pass these objects when instantiating the toolbar in the <code>MultiView</code> object:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#555;font-weight:bold">@Override</span>
-<span style="color:#080;font-weight:bold">public</span> JComponent <span style="color:#06b;font-weight:bold">getToolbarRepresentation</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">new</span> MyCustomVisualElementToolbar<span style="color:#333">(</span>obj<span style="color:#333">,</span> dataTable<span style="color:#333">);</span>
-<span style="color:#333">}</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Override</span>
+<span style="color:#00a8c8">public</span> <span style="color:#111">JComponent</span> <span style="color:#75af00">getToolbarRepresentation</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyCustomVisualElementToolbar</span><span style="color:#f92672">(</span><span style="color:#111">obj</span><span style="color:#f92672">,</span> <span style="color:#111">dataTable</span><span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>Where <code>obj</code> is the custom data object (from the custom file type wizard) and <code>dataTable</code> is a <code>JTable</code> in the <code>MultiView</code> visual element object.</p>
 
 <p>After you build and run your application, you should see your custom toolbar when opening a file and selecting the right view element that contains the toolbar. When clicking the buttons, the respective action logic should be executed.</p>

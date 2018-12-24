@@ -106,23 +106,23 @@
 <p>A variable named <code>command</code> must be initialized and it must contain a string that exactly represents the command to be executed in a remote host Bash shell. The output will then be processed into a <code>results</code> variable that can be processed in the <code>process</code> method.</p>
 
 <p>Let&rsquo;s take a look at a basic skeleton of this kind of plugin:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="background-color:#fff0f0">&#34;&#34;&#34;Modeler plugin&#39;s description&#34;&#34;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#d88200">&#34;&#34;&#34;Modeler plugin&#39;s description&#34;&#34;&#34;</span>
 
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.DataCollector.plugins.CollectorPlugin</span> <span style="color:#080;font-weight:bold">import</span> CommandPlugin
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.DataCollector.plugins.DataMaps</span> <span style="color:#080;font-weight:bold">import</span> ObjectMap, RelationshipMap
-<span style="color:#080;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">Products.ZenUtils.Utils</span> <span style="color:#080;font-weight:bold">import</span> prepId
+<span style="color:#f92672">from</span> <span style="color:#111">Products.DataCollector.plugins.CollectorPlugin</span> <span style="color:#f92672">import</span> <span style="color:#111">CommandPlugin</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.DataCollector.plugins.DataMaps</span> <span style="color:#f92672">import</span> <span style="color:#111">ObjectMap</span><span style="color:#111">,</span> <span style="color:#111">RelationshipMap</span>
+<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Utils</span> <span style="color:#f92672">import</span> <span style="color:#111">prepId</span>
 
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">json</span>
+<span style="color:#f92672">import</span> <span style="color:#111">json</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyPlugin</span>(CommandPlugin):
-    command <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#39;sudo ceph -s -f json&#39;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyPlugin</span><span style="color:#111">(</span><span style="color:#111">CommandPlugin</span><span style="color:#111">):</span>
+    <span style="color:#111">command</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;sudo ceph -s -f json&#39;</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">process</span>(self, device, results, log):
-        results <span style="color:#333">=</span> json<span style="color:#333">.</span>loads(results)
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">process</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">,</span> <span style="color:#111">results</span><span style="color:#111">,</span> <span style="color:#111">log</span><span style="color:#111">):</span>
+        <span style="color:#111">results</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">results</span><span style="color:#111">)</span>
 
-        log<span style="color:#333">.</span>info(<span style="background-color:#fff0f0">&#39;Modeler {0} processing data for device {1}&#39;</span><span style="color:#333">.</span>format(self<span style="color:#333">.</span>name(), device<span style="color:#333">.</span><span style="color:#007020">id</span>))
+        <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Modeler {0} processing data for device {1}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">(),</span> <span style="color:#111">device</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">))</span>
 
-        <span style="color:#080;font-weight:bold">return</span> None</code></pre></div>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">None</span></code></pre></div>
 <p>Notice where the <code>CommandPlugin</code> class is imported from. Other types of plugins can also be imported from nearby locations.</p>
 
 <p>The importing of <code>ObjectMap</code> and <code>RelationshipMap</code> is for returning the processed results. These are objects that Zenoss can understand when modeling devices. They represent the corresponding attributes of devices and components, and the corresponding relationships between them. For example, a <em>linux device</em> has many <em>network interfaces</em>.</p>

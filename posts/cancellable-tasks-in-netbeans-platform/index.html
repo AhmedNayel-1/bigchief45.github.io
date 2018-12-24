@@ -102,63 +102,63 @@
 <p>The trick to making your tasks cancellable is by implementing the <code>Cancellable</code> interface and using a <strong>request processor</strong> and <strong>progress handle</strong> that&rsquo;s configured to be able to cancel a given task.</p>
 
 <p>When the user cancels the task using the GUI, the <code>cancel()</code> method will be called, and this is where we will handle the logic to determine if the task was cancelled or not. Here is an example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">org.openide.util.Cancellable</span><span style="color:#333">;</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">org.netbeans.api.progress.ProgressHandle</span><span style="color:#333">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">org.openide.util.Cancellable</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> <span style="color:#111">org.netbeans.api.progress.ProgressHandle</span><span style="color:#f92672">;</span>
 
-<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyCancellableTask</span> <span style="color:#080;font-weight:bold">implements</span> Runnable<span style="color:#333">,</span> Cancellable <span style="color:#333">{</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">final</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyCancellableTask</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Runnable</span><span style="color:#f92672">,</span> <span style="color:#111">Cancellable</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">final</span> ProgressHandle progress<span style="color:#333">;</span>
-  <span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">boolean</span> cancelled <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">false</span><span style="color:#333">;</span>
+  <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">ProgressHandle</span> <span style="color:#111">progress</span><span style="color:#f92672">;</span>
+  <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">boolean</span> <span style="color:#111">cancelled</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
 
-  <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">MyCancellableTask</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-    <span style="color:#888">// Notice how we pass this same task as a &#39;Cancellable&#39; object to the progress handle
-</span><span style="color:#888"></span>    progress <span style="color:#333">=</span> ProgressHandle<span style="color:#333">.</span><span style="color:#00c">createHandle</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;Executing MyCancellableTask&#34;</span><span style="color:#333">,</span> <span style="color:#080;font-weight:bold">this</span><span style="color:#333">);</span>
-  <span style="color:#333">}</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyCancellableTask</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// Notice how we pass this same task as a &#39;Cancellable&#39; object to the progress handle
+</span><span style="color:#75715e"></span>    <span style="color:#111">progress</span> <span style="color:#f92672">=</span> <span style="color:#111">ProgressHandle</span><span style="color:#f92672">.</span><span style="color:#75af00">createHandle</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Executing MyCancellableTask&#34;</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
 
-  <span style="color:#555;font-weight:bold">@Override</span>
-  <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">run</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-    progress<span style="color:#333">.</span><span style="color:#00c">start</span><span style="color:#333">();</span>
+  <span style="color:#75af00">@Override</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">progress</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
 
-    <span style="color:#888">// Do some time consuming task
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> 0<span style="color:#333">;</span> i <span style="color:#333">&lt;</span> Integer<span style="color:#333">.</span><span style="color:#00c">MAX_VALUE</span><span style="color:#333">;</span> i<span style="color:#333">++)</span> <span style="color:#333">{</span>
-      <span style="color:#888">// We still check for interrupted thread just to be safe
-</span><span style="color:#888"></span>      <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>Thread<span style="color:#333">.</span><span style="color:#00c">interrupted</span><span style="color:#333">()</span> <span style="color:#333">||</span> cancelled<span style="color:#333">)</span> <span style="color:#333">{</span>
-        <span style="color:#888">// In this case we can use break, but if there is more logic after the loop
-</span><span style="color:#888"></span>        <span style="color:#888">// then we should finish the progress handle and return
-</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">break</span><span style="color:#333">;</span>
-      <span style="color:#333">}</span>
+    <span style="color:#75715e">// Do some time consuming task
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">Integer</span><span style="color:#f92672">.</span><span style="color:#75af00">MAX_VALUE</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+      <span style="color:#75715e">// We still check for interrupted thread just to be safe
+</span><span style="color:#75715e"></span>      <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">interrupted</span><span style="color:#f92672">()</span> <span style="color:#f92672">||</span> <span style="color:#111">cancelled</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// In this case we can use break, but if there is more logic after the loop
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// then we should finish the progress handle and return
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">break</span><span style="color:#f92672">;</span>
+      <span style="color:#f92672">}</span>
 
-      System<span style="color:#333">.</span><span style="color:#00c">out</span><span style="color:#333">.</span><span style="color:#00c">println</span><span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;i = &#34;</span> <span style="color:#333">+</span> i<span style="color:#333">);</span>
-    <span style="color:#333">}</span>
+      <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;i = &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">i</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
 
-    progress<span style="color:#333">.</span><span style="color:#00c">finish</span><span style="color:#333">();</span>
-  <span style="color:#333">}</span>
+    <span style="color:#111">progress</span><span style="color:#f92672">.</span><span style="color:#75af00">finish</span><span style="color:#f92672">();</span>
+  <span style="color:#f92672">}</span>
 
-  <span style="color:#555;font-weight:bold">@Override</span>
-  <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">synchronized</span> <span style="color:#339;font-weight:bold">boolean</span> <span style="color:#06b;font-weight:bold">cancel</span><span style="color:#333">()</span> <span style="color:#333">{</span>
-    cancelled <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">true</span><span style="color:#333">;</span>
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">true</span><span style="color:#333">;</span>
-  <span style="color:#333">}</span>
+  <span style="color:#75af00">@Override</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">synchronized</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">cancel</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">cancelled</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
 
-<span style="color:#333">}</span></code></pre></div>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>Notice how we are now handling the state of the task (if it&rsquo;s cancelled or not) using a boolean, instead of just relying on <code>Thread.interrupted()</code>.</p>
 
 <p>We can now start this cancellable task like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">StartMyCancellableTaskAction</span> <span style="color:#080;font-weight:bold">implements</span> ActionListener <span style="color:#333">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">StartMyCancellableTaskAction</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">ActionListener</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">StartMyCancellableTaskAction</span><span style="color:#333">()</span> <span style="color:#333">{</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#75af00">StartMyCancellableTaskAction</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#333">}</span>
+  <span style="color:#f92672">}</span>
 
-  <span style="color:#555;font-weight:bold">@Override</span>
-  <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">actionPerformed</span><span style="color:#333">(</span>ActionEvent evt<span style="color:#333">)</span> <span style="color:#333">{</span>
-    <span style="color:#888">// Use a custom RequestProcessor, since we need to specify support for cancellable
-</span><span style="color:#888"></span>    <span style="color:#888">// tasks
-</span><span style="color:#888"></span>    RequestProcessor rp <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> RequestProcessor<span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;MyCancellableTask&#34;</span><span style="color:#333">,</span> 1<span style="color:#333">,</span> <span style="color:#080;font-weight:bold">true</span><span style="color:#333">);</span>
-    MyCancellableTask task <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> MyCancellableTask<span style="color:#333">();</span>
-    rp<span style="color:#333">.</span><span style="color:#00c">post</span><span style="color:#333">(</span>task<span style="color:#333">);</span>
-  <span style="color:#333">}</span>
-<span style="color:#333">}</span></code></pre></div>
+  <span style="color:#75af00">@Override</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">actionPerformed</span><span style="color:#f92672">(</span><span style="color:#111">ActionEvent</span> <span style="color:#111">evt</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// Use a custom RequestProcessor, since we need to specify support for cancellable
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// tasks
+</span><span style="color:#75715e"></span>    <span style="color:#111">RequestProcessor</span> <span style="color:#111">rp</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RequestProcessor</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;MyCancellableTask&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">);</span>
+    <span style="color:#111">MyCancellableTask</span> <span style="color:#111">task</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyCancellableTask</span><span style="color:#f92672">();</span>
+    <span style="color:#111">rp</span><span style="color:#f92672">.</span><span style="color:#75af00">post</span><span style="color:#f92672">(</span><span style="color:#111">task</span><span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <h2 id="references">References</h2>
 
 <ol>

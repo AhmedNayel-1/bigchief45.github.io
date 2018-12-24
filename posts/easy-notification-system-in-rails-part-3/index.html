@@ -105,34 +105,34 @@
 <p>Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&rsquo;ve been using <strong>comments</strong> and <strong>posts</strong> as examples.</p>
 
 <p>Therefore, we can create an action for each:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># app/mailers/notifications_mailer.rb</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/mailers/notifications_mailer.rb</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">NotificationsMailer</span> <span style="color:#333">&lt;</span> <span style="color:#036;font-weight:bold">ApplicationMailer</span>
-  before_action { <span style="color:#33b">@notification</span> <span style="color:#333">=</span> params<span style="color:#333">[</span><span style="color:#a60;background-color:#fff0f0">:notification</span><span style="color:#333">]</span> }
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">NotificationsMailer</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationMailer</span>
+  <span style="color:#111">before_action</span> <span style="color:#111">{</span> <span style="color:#111">@notification</span> <span style="color:#f92672">=</span> <span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:notification</span><span style="color:#f92672">]</span> <span style="color:#111">}</span>
 
-  default <span style="color:#a60;background-color:#fff0f0">from</span>: <span style="background-color:#fff0f0">&#39;youremail@yourdomain.com&#39;</span>
+  <span style="color:#111">default</span> <span style="color:#d88200">from</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;youremail@yourdomain.com&#39;</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">post_notification</span>
-    <span style="color:#33b">@recipient</span> <span style="color:#333">=</span> <span style="color:#33b">@notification</span><span style="color:#333">.</span>recipient
-    <span style="color:#33b">@url</span> <span style="color:#333">=</span> post_url(<span style="color:#33b">@notification</span><span style="color:#333">.</span>notifiable)
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">post_notification</span>
+    <span style="color:#111">@recipient</span> <span style="color:#f92672">=</span> <span style="color:#111">@notification</span><span style="color:#f92672">.</span><span style="color:#111">recipient</span>
+    <span style="color:#111">@url</span> <span style="color:#f92672">=</span> <span style="color:#111">post_url</span><span style="color:#111">(</span><span style="color:#111">@notification</span><span style="color:#f92672">.</span><span style="color:#111">notifiable</span><span style="color:#111">)</span>
 
-    mail(<span style="color:#a60;background-color:#fff0f0">to</span>: <span style="color:#33b">@recipient</span><span style="color:#333">.</span>email, <span style="color:#a60;background-color:#fff0f0">subject</span>: t(<span style="background-color:#fff0f0">&#39;email.notifications.subject&#39;</span>))
-  <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#111">mail</span><span style="color:#111">(</span><span style="color:#d88200">to</span><span style="color:#111">:</span> <span style="color:#111">@recipient</span><span style="color:#f92672">.</span><span style="color:#111">email</span><span style="color:#111">,</span> <span style="color:#d88200">subject</span><span style="color:#111">:</span> <span style="color:#111">t</span><span style="color:#111">(</span><span style="color:#d88200">&#39;email.notifications.subject&#39;</span><span style="color:#111">))</span>
+  <span style="color:#00a8c8">end</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">comment_notification</span>
-    <span style="color:#33b">@recipient</span> <span style="color:#333">=</span> <span style="color:#33b">@notification</span><span style="color:#333">.</span>recipient
-    <span style="color:#33b">@url</span> <span style="color:#333">=</span> post_url(<span style="color:#33b">@notification</span><span style="color:#333">.</span>notifiable<span style="color:#333">.</span>post)
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">comment_notification</span>
+    <span style="color:#111">@recipient</span> <span style="color:#f92672">=</span> <span style="color:#111">@notification</span><span style="color:#f92672">.</span><span style="color:#111">recipient</span>
+    <span style="color:#111">@url</span> <span style="color:#f92672">=</span> <span style="color:#111">post_url</span><span style="color:#111">(</span><span style="color:#111">@notification</span><span style="color:#f92672">.</span><span style="color:#111">notifiable</span><span style="color:#f92672">.</span><span style="color:#111">post</span><span style="color:#111">)</span>
 
-    mail(<span style="color:#a60;background-color:#fff0f0">to</span>: <span style="color:#33b">@recipient</span><span style="color:#333">.</span>email, <span style="color:#a60;background-color:#fff0f0">subject</span>: t(<span style="background-color:#fff0f0">&#39;email.notifications.subject&#39;</span>))
-  <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#111">mail</span><span style="color:#111">(</span><span style="color:#d88200">to</span><span style="color:#111">:</span> <span style="color:#111">@recipient</span><span style="color:#f92672">.</span><span style="color:#111">email</span><span style="color:#111">,</span> <span style="color:#d88200">subject</span><span style="color:#111">:</span> <span style="color:#111">t</span><span style="color:#111">(</span><span style="color:#d88200">&#39;email.notifications.subject&#39;</span><span style="color:#111">))</span>
+  <span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>Notice that we are using a new Rails 5.1 <a href="http://edgeapi.rubyonrails.org/classes/ActionMailer/Parameterized.html">ActionMailer::Parameterized</a> feature. This allows us to use a <code>before_action</code> to set instance variables before all actions, similar to controllers. These parameters will then be manually passed when the mailer is called.</p>
 
 <h3 id="mailer-views">Mailer Views</h3>
 
 <p>Let&rsquo;s go ahead and build the mailer&rsquo;s views. For each mailer action, we must create a HTML view and a plain text view with the same name. Here is an example view for posts mail:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">-# app/views/notifications_mailer/post_notification.html.haml
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">-# app/views/notifications_mailer/post_notification.html.haml
 
 !!!
 %html
@@ -155,22 +155,22 @@
 <h2 id="sending-the-e-mails">Sending the E-mails</h2>
 
 <p>We will be using again ActiveRecord callbacks on our Notification model to send the e-mail:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#888"># app/models/notification.rb</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/notification.rb</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Notification</span> <span style="color:#333">&lt;</span> <span style="color:#036;font-weight:bold">ApplicationRecord</span>
-  <span style="color:#888"># ...</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">Notification</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationRecord</span>
+  <span style="color:#75715e"># ...</span>
 
-  after_create <span style="color:#a60;background-color:#fff0f0">:mail_notification</span>
+  <span style="color:#111">after_create</span> <span style="color:#d88200">:mail_notification</span>
 
-  <span style="color:#038;font-weight:bold">private</span>
+  <span style="color:#00a8c8">private</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">mail_notification</span>
-    action <span style="color:#333">=</span> (<span style="color:#007020">self</span><span style="color:#333">.</span>notifiable_type<span style="color:#333">.</span>underscore <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#39;_notification&#39;</span>)<span style="color:#333">.</span>to_sym
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">mail_notification</span>
+    <span style="color:#111">action</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">notifiable_type</span><span style="color:#f92672">.</span><span style="color:#111">underscore</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;_notification&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_sym</span>
 
-    <span style="color:#036;font-weight:bold">NotificationMailer</span><span style="color:#333">.</span>with(<span style="color:#a60;background-color:#fff0f0">notification</span>: <span style="color:#007020">self</span>)<span style="color:#333">.</span>send(action)<span style="color:#333">.</span>deliver_now
-  <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#00a8c8">NotificationMailer</span><span style="color:#f92672">.</span><span style="color:#111">with</span><span style="color:#111">(</span><span style="color:#d88200">notification</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">send</span><span style="color:#111">(</span><span style="color:#111">action</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">deliver_now</span>
+  <span style="color:#00a8c8">end</span>
 
-<span style="color:#080;font-weight:bold">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>With the <code>after_create</code> callback, after the notification object is persisted in the database, Raisl will proceed to call the <code>mail_notification</code> method. In this method we will use the notification&rsquo;s <code>notifiable_type</code> attribute to form an underscored string that should match the corresponding *action** in the mailer (<code>post_notification</code>, <code>comment_notification</code>, or any other actions added in the future), represented by a Ruby symbol.</p>
 
 <p>Next we proceed to call the mailer to send the e-mail. We use the <code>with</code> method to manually pass in the notification as a parameter, as mentioned before. We then use the Ruby method <strong>send</strong> to call the corresponding mailer action based on the symbol we constructed.</p>

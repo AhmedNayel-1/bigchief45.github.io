@@ -102,7 +102,7 @@
 <h2 id="querying-the-api">Querying the API</h2>
 
 <p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let&rsquo;s say we want to obtain all the available information of a specific device:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="background-color:#fff0f0">&#34;admin:zenoss&#34;</span> -X POST -H <span style="background-color:#fff0f0">&#34;Content-Type: application/json&#34;</span> -d <span style="background-color:#fff0f0">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#963">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="color:#d88200">&#34;admin:zenoss&#34;</span> -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#111">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
 <p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
 
 <p>This is all fine if all we need is querying the API and nothing else. But what if we really want to know <strong><em>how</em></strong> the API back-end works? How the endpoints are created? What are routers?</p>
@@ -136,41 +136,41 @@
 <p>In the Zenoss Core 4 source code, these routers are defined and written in Python, and can be found in <code>$ZENHOME/Products/Zuul/routers/</code>.</p>
 
 <p>A quick glance at the Device Router (<code>$ZENHOME/Products/Zuul/routers/device.py</code>) reveals the following:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># ...</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ...</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">DeviceRouter</span>(TreeRouter):
-    <span style="background-color:#fff0f0">&#34;&#34;&#34;
-</span><span style="background-color:#fff0f0">    A JSON/ExtDirect interface to operations on devices
-</span><span style="background-color:#fff0f0">    &#34;&#34;&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">DeviceRouter</span><span style="color:#111">(</span><span style="color:#111">TreeRouter</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">    A JSON/ExtDirect interface to operations on devices
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
 
-    <span style="color:#888"># ...</span>
+    <span style="color:#75715e"># ...</span>
 
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">getInfo</span>(self, uid, keys<span style="color:#333">=</span>None):
-        <span style="background-color:#fff0f0">&#34;&#34;&#34;
-</span><span style="background-color:#fff0f0">        Get the properties of a device or device organizer
-</span><span style="background-color:#fff0f0">
-</span><span style="background-color:#fff0f0">        @type  uid: string
-</span><span style="background-color:#fff0f0">        @param uid: Unique identifier of an object
-</span><span style="background-color:#fff0f0">        @type  keys: list
-</span><span style="background-color:#fff0f0">        @param keys: (optional) List of keys to include in the returned
-</span><span style="background-color:#fff0f0">                     dictionary. If None then all keys will be returned
-</span><span style="background-color:#fff0f0">                     (default: None)
-</span><span style="background-color:#fff0f0">        @rtype:   DirectResponse
-</span><span style="background-color:#fff0f0">        @return:  B{Properties}
-</span><span style="background-color:#fff0f0">            - data: (dictionary) Object properties
-</span><span style="background-color:#fff0f0">            - disabled: (bool) If current user doesn&#39;t have permission to use setInfo
-</span><span style="background-color:#fff0f0">        &#34;&#34;&#34;</span>
-        facade <span style="color:#333">=</span> self<span style="color:#333">.</span>_getFacade()
-        process <span style="color:#333">=</span> facade<span style="color:#333">.</span>getInfo(uid)
-        data <span style="color:#333">=</span> Zuul<span style="color:#333">.</span>marshal(process, keys)
-        disabled <span style="color:#333">=</span> <span style="color:#000;font-weight:bold">not</span> Zuul<span style="color:#333">.</span>checkPermission(<span style="background-color:#fff0f0">&#39;Manage DMD&#39;</span>, self<span style="color:#333">.</span>context)
-        <span style="color:#080;font-weight:bold">return</span> DirectResponse(data<span style="color:#333">=</span>data, disabled<span style="color:#333">=</span>disabled)</code></pre></div>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">getInfo</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">uid</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">):</span>
+        <span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">        Get the properties of a device or device organizer
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">        @type  uid: string
+</span><span style="color:#d88200">        @param uid: Unique identifier of an object
+</span><span style="color:#d88200">        @type  keys: list
+</span><span style="color:#d88200">        @param keys: (optional) List of keys to include in the returned
+</span><span style="color:#d88200">                     dictionary. If None then all keys will be returned
+</span><span style="color:#d88200">                     (default: None)
+</span><span style="color:#d88200">        @rtype:   DirectResponse
+</span><span style="color:#d88200">        @return:  B{Properties}
+</span><span style="color:#d88200">            - data: (dictionary) Object properties
+</span><span style="color:#d88200">            - disabled: (bool) If current user doesn&#39;t have permission to use setInfo
+</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+        <span style="color:#111">facade</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getFacade</span><span style="color:#111">()</span>
+        <span style="color:#111">process</span> <span style="color:#f92672">=</span> <span style="color:#111">facade</span><span style="color:#f92672">.</span><span style="color:#111">getInfo</span><span style="color:#111">(</span><span style="color:#111">uid</span><span style="color:#111">)</span>
+        <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">marshal</span><span style="color:#111">(</span><span style="color:#111">process</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#111">)</span>
+        <span style="color:#111">disabled</span> <span style="color:#f92672">=</span> <span style="color:#f92672">not</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">checkPermission</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Manage DMD&#39;</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">context</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">DirectResponse</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#f92672">=</span><span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">disabled</span><span style="color:#f92672">=</span><span style="color:#111">disabled</span><span style="color:#111">)</span></code></pre></div>
 <p>Perfect. We can see the explanation of the method and its parameters written as comments, this is probably how the documentation is generated.</p>
 
 <p>Although it seems that it&rsquo;s pretty obvious what is happening in the method, there are a few things that aren&rsquo;t very clear:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">facade <span style="color:#333">=</span> self<span style="color:#333">.</span>_getFacade()
-process <span style="color:#333">=</span> facade<span style="color:#333">.</span>getInfo(uid)
-data <span style="color:#333">=</span> Zuul<span style="color:#333">.</span>marshal(process, keys)</code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">facade</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getFacade</span><span style="color:#111">()</span>
+<span style="color:#111">process</span> <span style="color:#f92672">=</span> <span style="color:#111">facade</span><span style="color:#f92672">.</span><span style="color:#111">getInfo</span><span style="color:#111">(</span><span style="color:#111">uid</span><span style="color:#111">)</span>
+<span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">marshal</span><span style="color:#111">(</span><span style="color:#111">process</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#111">)</span></code></pre></div>
 <p><em>Facade</em>? <em>getFacade()</em>? It seems that the router method is actually not the method doing the work. Instead, it is calling a method with the same name, but from a different object, a <strong>Facade</strong> object.</p>
 
 <h3 id="facades">Facades</h3>
@@ -215,23 +215,23 @@ data <span style="color:#333">=</span> Zuul<span style="color:#333">.</span>mars
 <p><img src="/posts/the-zenoss-json-api/zenoss_remotes.jpg" alt="Zenoss Remotes" /></p>
 
 <p>These default remotes are defined in <code>$ZENHOME/Products/Zuul/routers/configure.zcml</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#888">&lt;!-- ... --&gt;</span>
-<span style="color:#070">&lt;browser:directRouter</span>
-  <span style="color:#00c">name=</span><span style="background-color:#fff0f0">&#34;device_router&#34;</span>
-  <span style="color:#00c">for=</span><span style="background-color:#fff0f0">&#34;*&#34;</span>
-  <span style="color:#00c">class=</span><span style="background-color:#fff0f0">&#34;.device.DeviceRouter&#34;</span>
-  <span style="color:#00c">namespace=</span><span style="background-color:#fff0f0">&#34;Zenoss.remote&#34;</span>
-  <span style="color:#00c">timeout=</span><span style="background-color:#fff0f0">&#34;180000&#34;</span>
-  <span style="color:#070">/&gt;</span>
-<span style="color:#888">&lt;!-- ... --&gt;</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- ... --&gt;</span>
+<span style="color:#f92672">&lt;browser:directRouter</span>
+  <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;device_router&#34;</span>
+  <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
+  <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;.device.DeviceRouter&#34;</span>
+  <span style="color:#75af00">namespace=</span><span style="color:#d88200">&#34;Zenoss.remote&#34;</span>
+  <span style="color:#75af00">timeout=</span><span style="color:#d88200">&#34;180000&#34;</span>
+  <span style="color:#f92672">/&gt;</span>
+<span style="color:#75715e">&lt;!-- ... --&gt;</span></code></pre></div>
 <h3 id="querying-the-api-1">Querying the API</h3>
 
 <p>We can query the API in JavaScript using the Zenoss remotes. For example, we can do the same cURL query we did at the beginning of this post, but using JavaScript to interact with ExtJS and the Zenoss back-end.</p>
 
 <p>In the browser console:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Zenoss.remote.DeviceRouter.getDevices({uid<span style="color:#333">:</span> <span style="background-color:#fff0f0">&#39;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/&#39;</span>}, <span style="color:#080;font-weight:bold">function</span>(result) {
-  console.log(result.devices);
-});
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">remote</span><span style="color:#111">.</span><span style="color:#75af00">DeviceRouter</span><span style="color:#111">.</span><span style="color:#75af00">getDevices</span><span style="color:#111">({</span><span style="color:#75af00">uid</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/&#39;</span><span style="color:#111">},</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">.</span><span style="color:#75af00">devices</span><span style="color:#111">);</span>
+<span style="color:#111">});</span>
 </code></pre></div>
 <p>The above will output an object to the console for each existing device in the device class speficied for the <code>uid</code>.</p>
 

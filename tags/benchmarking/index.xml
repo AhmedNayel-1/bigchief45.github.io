@@ -24,24 +24,24 @@
 &lt;h2 id=&#34;using-benchmark&#34;&gt;Using Benchmark&lt;/h2&gt;
 
 &lt;p&gt;To start benchmarking our code, we simply need to require &lt;code&gt;benchmark&lt;/code&gt; and use the methods provided by the &lt;code&gt;Benchmark&lt;/code&gt; module. For me, the most practical way is to use &lt;code&gt;Benchmark#bm&lt;/code&gt; method, where we pass a block of code we want to measure:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
 
-&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bm &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;x&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
-  x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;report &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
-    &lt;span style=&#34;color:#888&#34;&gt;# our code here&lt;/span&gt;
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;bm&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;report&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# our code here&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Inside the block we are using the &lt;code&gt;report&lt;/code&gt; method of the block&amp;rsquo;s variable, which will basically do a separate benchmark for each report.&lt;/p&gt;
 
 &lt;p&gt;However, we can improve this even more by adding a label to &lt;code&gt;report&lt;/code&gt; and a label width to &lt;code&gt;bm&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
 
-&lt;span style=&#34;color:#036;font-weight:bold&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bm(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;x&lt;span style=&#34;color:#333&#34;&gt;|&lt;/span&gt;
-  x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;report(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;my_algorithm&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;do&lt;/span&gt;
-    &lt;span style=&#34;color:#888&#34;&gt;# our code here&lt;/span&gt;
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;bm&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;report&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;my_algorithm&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# our code here&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Let&amp;rsquo;s see it in action with some common algorithms.&lt;/p&gt;</description>
     </item>
     
