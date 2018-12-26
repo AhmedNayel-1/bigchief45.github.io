@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-06-06 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-06-06 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-06-07 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-06-07 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,41 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/">Zenoss Custom Notification Actions Using Subscribers</a>
+  </h1>
+  <time datetime="2017-06-07T00:00:00Z" class="post-date">Wed, Jun 7, 2017</time>
+  <p>In a <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification&rsquo;s content pane, as shown below:</p>
+
+<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content" /></p>
+
+<p>In this post I want to change and improve this by using <em><strong>subscribers</strong></em> functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the <em>Pager</em> field instead.</p>
+
+<h2 id="the-pager-action">The Pager Action</h2>
+
+<p>Using Zenoss Core 4&rsquo;s pager action&rsquo;s <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
+
+<p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/python-functional-http-testing-with-gabbi/">Python Functional HTTP Testing With Gabbi</a>
@@ -283,61 +318,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/testing-a-rails-api-with-rspec/">Testing a Rails API With RSpec</a>
-  </h1>
-  <time datetime="2017-05-15T00:00:00Z" class="post-date">Mon, May 15, 2017</time>
-  <p>As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.</p>
-
-<h2 id="setting-up-the-necessary-tools">Setting Up the Necessary Tools</h2>
-
-<p>In addition to RSpec, there are a few tools that make my testing experience much easier. These are:</p>
-
-<ul>
-<li><a href="https://github.com/thoughtbot/factory_girl_rails">Factory Girl</a></li>
-<li><a href="https://github.com/stympy/faker">Faker</a></li>
-<li><a href="https://github.com/thoughtbot/shoulda-matchers">Shoulda Matchers</a></li>
-<li><a href="https://github.com/DatabaseCleaner/database_cleaner">Database Cleaner</a></li>
-</ul>
-
-<p>After Adding these gems to the Gemfile. I proceed to create a <code>/support</code> directory under the <code>/spec</code> directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.</p>
-
-<p><strong>/spec/support/shoulda.rb</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">Shoulda</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Matchers</span><span style="color:#f92672">.</span><span style="color:#111">configure</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">config</span><span style="color:#f92672">|</span>
-  <span style="color:#111">config</span><span style="color:#f92672">.</span><span style="color:#111">integrate</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">with</span><span style="color:#f92672">|</span>
-    <span style="color:#75715e"># Choose a test framework:</span>
-    <span style="color:#111">with</span><span style="color:#f92672">.</span><span style="color:#111">test_framework</span> <span style="color:#d88200">:rspec</span>
-
-    <span style="color:#75715e"># Or, choose the following (which implies all of the above):</span>
-    <span style="color:#111">with</span><span style="color:#f92672">.</span><span style="color:#111">library</span> <span style="color:#d88200">:rails</span>
-  <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/tdd" class="label label-default">tdd</a></li>
-  
-    <a href="https://aalvarez.me/tags/bdd" class="label label-default">bdd</a></li>
-  
-    <a href="https://aalvarez.me/tags/rspec" class="label label-default">rspec</a></li>
-  
-    <a href="https://aalvarez.me/tags/json" class="label label-default">json</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/testing-a-rails-api-with-rspec/">Read More…</a>
     </div>
   
 </article>

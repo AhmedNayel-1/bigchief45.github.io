@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-03-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-03-17 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-03-22 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-03-22 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,49 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/">Setting Up an OpenStack Dev Environment</a>
+  </h1>
+  <time datetime="2017-03-22T00:00:00Z" class="post-date">Wed, Mar 22, 2017</time>
+  <p>Before beginning to <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html">contribute to OpenStack</a>, it is necessary that we setup an ideal development environment for a smoother workflow.</p>
+
+<p>In this post I will cover how to setup a Devstack development environment in a <strong>Ubuntu 16.04</strong> virtual machine using <a href="http://www.vmware.com/">VMware Player</a>.</p>
+
+<h2 id="setting-up-the-ubuntu-virtual-machine">Setting Up the Ubuntu Virtual Machine</h2>
+
+<p>Make sure you have <a href="http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html">VMware Player</a> installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a <a href="http://releases.ubuntu.com/xenial/">Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)</a> for <strong>32-bit PC i836</strong>.</p>
+
+<p>In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu <code>.iso</code> image file when prompted. Proceed with the installation and select the <em>Erase Disk and Install Ubuntu</em> option when prompted.</p>
+
+<p>~&gt; I tried using <a href="https://www.virtualbox.org/">VirtualBox</a> for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend <strong>Ubuntu 16.04</strong>.</p>
+
+<p>Once the installation is finished, restart the virtual machine.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/devstack" class="label label-default">devstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/overriding-default-zenoss-pages/">Overriding Default Zenoss Pages</a>
@@ -288,56 +331,6 @@ rvm<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/chinese-onomatopoeia-in-literature/">Chinese Onomatopoeia in Literature</a>
-  </h1>
-  <time datetime="2017-03-06T00:00:00Z" class="post-date">Mon, Mar 6, 2017</time>
-  <p>It&rsquo;s been almost a year since I started reading the Harry Potter series completely in Traditional Chinese, currently I just recently started <em>Harry Potter and the Order of the Phoenix</em> (Book #5).</p>
-
-<p>Through my Chinese reading journey I have come accross a lot of Chinese <a href="https://en.wikipedia.org/wiki/Onomatopoeia">onomatopoeia</a> that you don&rsquo;t really come across with in other types of writings such as Internet articles, conversations, and newspaper articles.</p>
-
-<p>In this post I go into detail about each of these sounds I encounter in literature.</p>
-
-<h2 id="咕嚕-gūlū">咕嚕 (gūlū)</h2>
-
-<p><img src="http://1.bp.blogspot.com/-MpohU7WZ4TU/UCldacYdETI/AAAAAAAAACc/98W-mOiWIUM/s1600/hungry+stomach.jpg" alt="Hungry" /></p>
-
-<p><strong>Definition:</strong> rumble, roll.</p>
-
-<p>Used a lot when describing the rumbling sound of the stomach when hungry.</p>
-
-<p><strong>Examples:</strong></p>
-
-<ul>
-<li>他的肚子<strong>咕嚕咕嚕</strong>直響 - His stomach kept rumbling).</li>
-<li>粗大的圓木<strong>咕嚕咕嚕</strong>地從山坡上滾下來 - Large logs came rolling down the slope</li>
-</ul>
-
-<h2 id="啪啪-pāpā">啪啪 (pāpā)</h2>
-
-<p><img src="http://www.shapingyouth.org/wp-content/uploads/2015/05/hands-clapping-clip-art.png" alt="Clapping" /></p>
-
-<p><strong>Definition:</strong>  The sound of clapping, slapping, a gunshot.</p>
-
-<p><strong>Examples:</strong></p>
-
-<ul>
-<li><strong>啪</strong>的一聲, 瓶塞飛出來了 - The cork popped and flew out of the bottle.</li>
-</ul>
-
-  
-  <div style="margin: 20px 0px;">
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/chinese-onomatopoeia-in-literature/">Read More…</a>
     </div>
   
 </article>

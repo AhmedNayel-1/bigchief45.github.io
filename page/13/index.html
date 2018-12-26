@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-02-23 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-02-23 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-03-06 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-03-06 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,56 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/chinese-onomatopoeia-in-literature/">Chinese Onomatopoeia in Literature</a>
+  </h1>
+  <time datetime="2017-03-06T00:00:00Z" class="post-date">Mon, Mar 6, 2017</time>
+  <p>It&rsquo;s been almost a year since I started reading the Harry Potter series completely in Traditional Chinese, currently I just recently started <em>Harry Potter and the Order of the Phoenix</em> (Book #5).</p>
+
+<p>Through my Chinese reading journey I have come accross a lot of Chinese <a href="https://en.wikipedia.org/wiki/Onomatopoeia">onomatopoeia</a> that you don&rsquo;t really come across with in other types of writings such as Internet articles, conversations, and newspaper articles.</p>
+
+<p>In this post I go into detail about each of these sounds I encounter in literature.</p>
+
+<h2 id="咕嚕-gūlū">咕嚕 (gūlū)</h2>
+
+<p><img src="http://1.bp.blogspot.com/-MpohU7WZ4TU/UCldacYdETI/AAAAAAAAACc/98W-mOiWIUM/s1600/hungry+stomach.jpg" alt="Hungry" /></p>
+
+<p><strong>Definition:</strong> rumble, roll.</p>
+
+<p>Used a lot when describing the rumbling sound of the stomach when hungry.</p>
+
+<p><strong>Examples:</strong></p>
+
+<ul>
+<li>他的肚子<strong>咕嚕咕嚕</strong>直響 - His stomach kept rumbling).</li>
+<li>粗大的圓木<strong>咕嚕咕嚕</strong>地從山坡上滾下來 - Large logs came rolling down the slope</li>
+</ul>
+
+<h2 id="啪啪-pāpā">啪啪 (pāpā)</h2>
+
+<p><img src="http://www.shapingyouth.org/wp-content/uploads/2015/05/hands-clapping-clip-art.png" alt="Clapping" /></p>
+
+<p><strong>Definition:</strong>  The sound of clapping, slapping, a gunshot.</p>
+
+<p><strong>Examples:</strong></p>
+
+<ul>
+<li><strong>啪</strong>的一聲, 瓶塞飛出來了 - The cork popped and flew out of the bottle.</li>
+</ul>
+
+  
+  <div style="margin: 20px 0px;">
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/chinese-onomatopoeia-in-literature/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Working With Zenoss Python Data Source Plugins</a>
@@ -331,54 +381,6 @@ juju switch local
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Processing Nova Live Migration Events in Zenoss</a>
-  </h1>
-  <time datetime="2017-01-23T00:00:00Z" class="post-date">Mon, Jan 23, 2017</time>
-  <p>When monitoring OpenStack using the OpenStack Infrastructure ZenPack integrated with Ceilometer, it is possible to get fast virtual machine state changes (on/off powering, etc.) by receiving events sent from Ceilometer to Zenoss.</p>
-
-<p>However I discovered that when trying to get the same effect for <strong>live migration</strong> (live migrating a virtual machine from one compute node to another) scenarios, this would not work. I proceeded to investigate why.</p>
-
-<h2 id="ceilometer-dispatcher-live-migration-events">Ceilometer Dispatcher Live Migration Events</h2>
-
-<p>I decided that the first thing to check was if the <a href="https://github.com/zenoss/ceilometer_zenoss">Zenoss Ceilometer dispatcher</a> was <strong>capturing</strong> and <strong>sending</strong> the live migration events to Zenoss. Indeed, the logs can be found in Ceilometer under <code>/var/log/ceilometer/ceilometer-collector.log</code>:</p>
-
-<pre><code>2017-01-23 14:22:02.593 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 3538a01c-ab8d-4e64-b0ff-6e8fe270e06a, compute.instance.live_migration.post.dest.start, 2017-01-23 06:22:02.584049, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
-
-2017-01-23 14:22:02.771 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 8db64329-606c-4184-9b5b-eb815166cb17, compute.instance.live_migration.post.dest.end, 2017-01-23 06:22:02.761138, &lt;Trait: state_description 1 &gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
-
-2017-01-23 14:22:02.782 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: d0dc4f4a-454a-42c5-b767-386dc3e0d1f3, compute.instance.live_migration._post.end, 2017-01-23 06:22:02.776665, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3205&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
-</code></pre>
-
-<p>Notice the <code>live_migration.post.dest.start</code> and <code>live_migration.post.dest.end</code> logs.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
-  
-    <a href="https://aalvarez.me/tags/nova" class="label label-default">nova</a></li>
-  
-    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
-  
-    <a href="https://aalvarez.me/tags/rabbitmq" class="label label-default">rabbitmq</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Read More…</a>
     </div>
   
 </article>

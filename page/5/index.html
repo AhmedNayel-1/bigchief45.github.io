@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-11-27 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-11-27 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-12-20 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-12-20 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,37 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/java-jtable-tricks/">Java JTable Tricks</a>
+  </h1>
+  <time datetime="2017-12-20T00:00:00Z" class="post-date">Wed, Dec 20, 2017</time>
+  <p>Java&rsquo;s JTable is a GUI component that has been around for many many years. While a bit difficult to work with, it&rsquo;s almost a mandatory component in an application that displays a lot of data.</p>
+
+<p>In this post I share some nice tricks for working with JTables in Java applications.</p>
+
+<h2 id="scrolling">Scrolling</h2>
+
+<p>A JTable by itself does not provide any scrolling when handling a lot of data. To fix this, we need to place the table inside a <code>JScrollPane</code> component. Additionally, we can place this <code>JScrollPane</code> into a <code>JPanel</code> in our window:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#111">myPanel</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">JScrollPane</span><span style="color:#f92672">(</span><span style="color:#111">myTable</span><span style="color:#f92672">,</span>
+    <span style="color:#111">JScrollPane</span><span style="color:#f92672">.</span><span style="color:#75af00">VERTICAL_SCROLLBAR_AS_NEEDED</span><span style="color:#f92672">,</span>
+    <span style="color:#111">JScrollPane</span><span style="color:#f92672">.</span><span style="color:#75af00">HORIZONTAL_SCROLLBAR_AS_NEEDED</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">);</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/java" class="label label-default">java</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/java-jtable-tricks/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Bulk Create With Django REST Framework</a>
@@ -288,55 +319,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/">Umask Permissions in a Puma Production Environment</a>
-  </h1>
-  <time datetime="2017-10-18T00:00:00Z" class="post-date">Wed, Oct 18, 2017</time>
-  <p>Recently I was having an issue with a Sinatra application deployed in a staging
-server. The application was deployed with Puma and Nginx in the following location:</p>
-
-<pre><code>/var/www/
-</code></pre>
-
-<p>This web service would then try to access some files in another directory on the server,
-mounted as an SFTP directory. The Sinatra app would open these files and generate some
-new files from them, depending on the HTTP request received.</p>
-
-<p>The problem was that the operation would fail due to a permissions issue. I was baffled
-since I had set <strong>read</strong> and <strong>write</strong> permissions to the directory and the files in it.</p>
-
-<h2 id="umask-the-problem-and-solution">Umask: The Problem and Solution</h2>
-
-<p>It took around two days to find the culprit: <strong>umask</strong>. In Linux, <a href="https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work">umask</a>
-acts as another set of permissions for <strong>processes</strong> and cannot be set for directories,
-basically speaking.</p>
-
-<p>I realized that this probably meant that the process running the Puma application server had
-a umask configuration that was not allowing the generation of new files.</p>
-
-<p>I decided to test this if this was the case. In the <a href="https://github.com/puma/puma">Puma</a>
-documentation, I found an option to change the permissions of the UNIX socket using
-umask:</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/sinatra" class="label label-default">sinatra</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/">Read More…</a>
     </div>
   
 </article>

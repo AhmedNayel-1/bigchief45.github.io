@@ -50,7 +50,7 @@
     "dateModified" : "2018-12-21 21:03:28 &#43;0000 UTC",
     "url" : "https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/",
     "wordCount" : "735",
-    "keywords" : [ "python","pytest","Blog" ]
+    "keywords" : [ "python","pytestб tdd","Blog" ]
 }
 </script>
 
@@ -279,7 +279,7 @@ if (!doNotTrack) {
 <span style="color:#f92672">import</span> <span style="color:#111">pytest</span>
 
 
-<span style="color:#75af00">@pytest.fixture</span><span style="color:#111">()</span>
+<span style="color:#75af00">@pytest.fixture</span>
 <span style="color:#00a8c8">def</span> <span style="color:#75af00">image_mock</span><span style="color:#111">():</span>
     <span style="color:#111">file</span> <span style="color:#f92672">=</span> <span style="color:#111">BytesIO</span><span style="color:#111">()</span>
     <span style="color:#111">image</span> <span style="color:#f92672">=</span> <span style="color:#111">Image</span><span style="color:#f92672">.</span><span style="color:#111">new</span><span style="color:#111">(</span><span style="color:#d88200">&#39;RGBA&#39;</span><span style="color:#111">,</span> <span style="color:#111">size</span><span style="color:#f92672">=</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#111">,</span> <span style="color:#ae81ff">50</span><span style="color:#111">),</span> <span style="color:#111">color</span><span style="color:#f92672">=</span><span style="color:#111">(</span><span style="color:#ae81ff">155</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">))</span>
@@ -294,7 +294,7 @@ if (!doNotTrack) {
 <span style="color:#f92672">import</span> <span style="color:#111">PyPDF2</span>
 
 
-<span style="color:#75af00">@pytest.fixture</span><span style="color:#111">()</span>
+<span style="color:#75af00">@pytest.fixture</span>
 <span style="color:#00a8c8">def</span> <span style="color:#75af00">pdf_file</span><span style="color:#111">(</span><span style="color:#111">tmpdir_factory</span><span style="color:#111">):</span>
     <span style="color:#111">file_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;pdftest.pdf&#39;</span>
 
@@ -327,7 +327,7 @@ if (!doNotTrack) {
   
     <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
   
-    <a href="https://aalvarez.me/tags/pytest" class="label label-default">pytest</a></li>
+    <a href="https://aalvarez.me/tags/pytest%D0%B1-tdd" class="label label-default">pytestб tdd</a></li>
   
 </div>
 
