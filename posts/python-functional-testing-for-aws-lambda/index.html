@@ -22,7 +22,7 @@
     "headline" : "Python Functional Testing for AWS Lambda",
     "description" : "<p>In this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.</p>
 
-<p>For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.</p>
+<p>For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.</p>
 
 <p>Let&rsquo;s get started!</p>",
     "inLanguage" : "en-US",
@@ -35,7 +35,7 @@
     "datePublished": "2018-12-26 17:17:28 &#43;0000 UTC",
     "dateModified" : "2018-12-26 17:17:28 &#43;0000 UTC",
     "url" : "https://aalvarez.me/posts/python-functional-testing-for-aws-lambda/",
-    "wordCount" : "637",
+    "wordCount" : "645",
     "keywords" : [ "python","pytest","aws lambda","serverless","tdd","Blog" ]
 }
 </script>
@@ -141,14 +141,15 @@ if (!doNotTrack) {
 
   <p>In this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.</p>
 
-<p>For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.</p>
+<p>For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.</p>
 
 <p>Let&rsquo;s get started!</p>
 
 <h2 id="a-look-into-our-lambda-function">A Look Into Our Lambda Function</h2>
 
 <p>Keeping in mind the characteristics I just mentioned, our Lambda funtion will more or less look like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">subprocess</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os</span>
+<span style="color:#f92672">import</span> <span style="color:#111">subprocess</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">boto3</span>
 
@@ -185,11 +186,14 @@ if (!doNotTrack) {
         <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span><span style="color:#111">:</span>
             <span style="color:#00a8c8">pass</span>
         <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
-            <span style="color:#75715e"># After the processing is done, the result is uploaded to S3</span>
+            <span style="color:#75715e"># After the processing is done, the result is uploaded to</span>
+            <span style="color:#75715e"># S3</span>
             <span style="color:#111">s3_client</span><span style="color:#f92672">.</span><span style="color:#111">put_object</span><span style="color:#111">()</span>
         <span style="color:#00a8c8">finally</span><span style="color:#111">:</span>
             <span style="color:#75715e"># Some cleanup of the container could be done here.</span>
-            <span style="color:#75715e"># We can also assert this in our tests</span></code></pre></div>
+            <span style="color:#75715e"># We can also assert this in our tests</span>
+            <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#d88200">&#39;somefile.json&#39;</span><span style="color:#111">)</span>
+            <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#d88200">&#39;somefileother.xml&#39;</span><span style="color:#111">)</span></code></pre></div>
 <p>Now that we understand more or less the elements and instructions that compose our function. Let&rsquo;s take a look on how we can write a functional test for it.</p>
 
 <h2 id="a-functional-test-for-our-function">A Functional Test For Our Function</h2>
@@ -249,7 +253,7 @@ if (!doNotTrack) {
 
 <h2 id="closing-thoughts">Closing Thoughts</h2>
 
-<p>There you have it! A nice functional test for an AWS Lambda function that we can call and run <strong>locally</strong> 🎉</p>
+<p>🎉 🎉 🎉 There you have it! A nice functional test for an AWS Lambda function that we can call and run <strong>locally</strong>.</p>
 
 <p>If you have any questions please feel free to ask in the comments section.</p>
 </div>
