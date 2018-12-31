@@ -49,7 +49,7 @@ if (!doNotTrack) {
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-123-45', 'auto');
+	ga('create', 'UA-131322667-1', 'auto');
 	
 	ga('send', 'pageview');
 }
@@ -209,7 +209,7 @@ if (!doNotTrack) {
 <li>The subprocess call (optional, I&rsquo;ll discuss this later)</li>
 </ul>
 
-<p>I discuss how to mock all the above things (except the last one) in my previous post, <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests.html"><em>Pytest Tricks for Better Python Tests</em></a>.</p>
+<p>I discuss how to mock all the above things (except the last one) in my previous post, <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/"><em>Pytest Tricks for Better Python Tests</em></a>.</p>
 
 <p>This is how our functional test looks like:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os</span>
@@ -243,7 +243,7 @@ if (!doNotTrack) {
         <span style="color:#75715e"># the environment were made successfully</span>
         <span style="color:#00a8c8">assert</span> <span style="color:#f92672">not</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#d88200">&#39;somefile.json&#39;</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">assert</span> <span style="color:#f92672">not</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#d88200">&#39;someotherfile.xml&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>As you can see, the test is quite simple. Mostly it&rsquo;s just manually calling the <code>handler()</code> function and asserting the necessary stuff. The heavy loading is done with all the fixtures we created, as explained in <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests.html"><em>Pytest Tricks for Better Python Tests</em></a>.</p>
+<p>As you can see, the test is quite simple. Mostly it&rsquo;s just manually calling the <code>handler()</code> function and asserting the necessary stuff. The heavy loading is done with all the fixtures we created, as explained in <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/"><em>Pytest Tricks for Better Python Tests</em></a>.</p>
 
 <h3 id="should-i-mock-the-subprocess-call">Should I Mock the Subprocess Call?</h3>
 
@@ -302,7 +302,7 @@ if (!doNotTrack) {
 var doNotTrack = false;
 if (!doNotTrack) {
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-123-45', 'auto');
+	ga('create', 'UA-131322667-1', 'auto');
 	
 	ga('send', 'pageview');
 }
