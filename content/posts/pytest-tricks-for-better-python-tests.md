@@ -1,7 +1,7 @@
 ---
 title: "Pytest Tricks for Better Python Tests"
 date: 2018-12-21T21:03:28Z
-tags: [python, pytest]
+tags: [python, pytestб tdd]
 ---
 
 [Pytest](https://pytest.org/) is my Python testing framework of choice. Very easy to use, and makes tests look much better.
@@ -138,3 +138,70 @@ class MyTest:
 This allows us to be able to specify a dynamic ID to the fixture. This way we don't have to worry about using the same ID in every test.
 
 One drawback of this trick though, is that we have to call the fixture as a function first to be able to use it, as opposed to the normal way of using fixtures by just referring to them.
+
+## Mocking Files
+
+If your application deals with processing certain types of files such as images or PDF files, then you will need to create appropriate mocks of these files in your tests.
+
+
+### Image Files
+
+Here is how I mock image files:
+
+```python
+from io import BytesIO
+from PIL import Image
+
+import pytest
+
+
+@pytest.fixture
+def image_mock():
+    file = BytesIO()
+    image = Image.new('RGBA', size=(50, 50), color=(155, 0, 0))
+    image.save(file, 'png')
+    file.name = 'test.png'
+    file.seek(0)
+    return file
+```
+
+### PDF Files
+
+Here is how I mock PDF files using [PyPDF2](https://pypi.org/project/PyPDF2/):
+
+```python
+import pytest
+import PyPDF2
+
+
+@pytest.fixture
+def pdf_file(tmpdir_factory):
+    file_name = 'pdftest.pdf'
+
+    # Fill with blank pages
+    writer = PyPDF2.PdfFileWriter()
+    for _ in range(num_pages):
+        writer.addBlankPage(width=100, height=100)
+
+    # You can also throw in some bookmarks
+    writer.addBookmark(title='Intro', pagenum=0)
+    writer.addBookmark(title='Index', pagenum=1)
+    writer.addBookmark(title='Epilogue', pagenum=2)
+
+    fn = tmpdir_factory.mktemp('tmp', numbered=True).join(file_name)
+    with open(fn, 'wb') as pdf:
+        writer.write(pdf)
+
+    return fn
+```
+
+If you need more customization, you can apply the parameterized fixture principles I discussed in the previous section.
+
+You can also combine this trick with the AWS S3 mock previously mentioned so that you can simulate file uploads to S3. In your tests you could do the following:
+
+```python
+class MyTest:
+    def test_something(self, s3_bucket, image_mock):
+        # Upload a mock image to S3
+        s3_bucket.put_object(Key='my_image.png', Body=image_mock)
+```

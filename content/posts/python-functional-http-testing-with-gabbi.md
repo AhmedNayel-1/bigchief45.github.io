@@ -1,14 +1,6 @@
 ---
 date: '2017-06-06'
-tags:
-- python
-- gabbi
-- gnocchi
-- tdd
-- bdd
-- web-dev
-- backend
-- yaml
+tags: [python, gabbi, tdd]
 title: Python Functional HTTP Testing With Gabbi
 ---
 
