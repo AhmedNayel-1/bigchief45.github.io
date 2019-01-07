@@ -18,5 +18,12 @@
       <li><small>{{ . }}</small></li>
     {{ end }}
   </ul>
+
+  <!-- TAGS -->
+  <div>
+    {{ range .tags }}
+      <span class="label label-default"><small>{{ . }}</small></span>
+    {{ end }}
+  </div>
 </div>
 {{ end }}
