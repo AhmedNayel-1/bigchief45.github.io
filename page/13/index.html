@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-03-06 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-03-06 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-03-07 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-03-07 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,60 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/">Integrating TravisCI With Rails and Heroku</a>
+  </h1>
+  <time datetime="2017-03-07T00:00:00Z" class="post-date">Tue, Mar 7, 2017</time>
+  <p>Adding <a href="https://travis-ci.org/">TravisCI</a> to your application&rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.</p>
+
+<p>In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.</p>
+
+<h2 id="setting-up-travisci">Setting up TravisCI</h2>
+
+<p>Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a <code>.travis.yml</code> file to the application&rsquo;s root directory with the following contents:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language<span style="color:#111">:</span> Ruby
+rvm<span style="color:#111">:</span>
+  - <span style="color:#ae81ff">2.3</span>.<span style="color:#ae81ff">0</span></code></pre></div>
+<p>The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.</p>
+
+<h3 id="configure-postgresql">Configure Postgresql</h3>
+
+<p>Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to <code>.travis.yml</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">services<span style="color:#111">:</span>
+  - postgresql</code></pre></div>
+<p>Then we will add another configuration that will make Travis create a Postgresql database with username <code>postgres</code> and blank password for the build:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before_script<span style="color:#111">:</span>
+  - psql -c <span style="color:#d88200">&#39;create database travis_ci_test;&#39;</span> -U postgres</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="https://aalvarez.me/tags/rspec" class="label label-default">rspec</a></li>
+  
+    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+    <a href="https://aalvarez.me/tags/travisci" class="label label-default">travisci</a></li>
+  
+    <a href="https://aalvarez.me/tags/github" class="label label-default">github</a></li>
+  
+    <a href="https://aalvarez.me/tags/git" class="label label-default">git</a></li>
+  
+    <a href="https://aalvarez.me/tags/heroku" class="label label-default">heroku</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/chinese-onomatopoeia-in-literature/">Chinese Onomatopoeia in Literature</a>
@@ -336,51 +390,6 @@ juju switch local
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/getting-started-with-juju-locally/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">C Gotchas For Beginners</a>
-  </h1>
-  <time datetime="2017-02-07T00:00:00Z" class="post-date">Tue, Feb 7, 2017</time>
-  <p>Similar to <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners.html">my post</a> on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you <strong>must</strong> know if you are to become a good C programmer.</p>
-
-<h2 id="boolean-types">Boolean Types</h2>
-
-<p>C actually does not have a boolean type. They are usually defined like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define BOOL char
-</span><span style="color:#75715e">#define FALSE 0
-</span><span style="color:#75715e">#define TRUE 1</span></code></pre></div>
-<p>However it is argued that it is a better practice to simply use integers instead (<code>0</code> and <code>1</code>).</p>
-
-<h2 id="memory-address-of-array-elements">Memory Address of Array Elements</h2>
-
-<p>In C, arrays have a contiguous memory allocation. We can verify this by printing the memory addresses of each element of an array. We can do so using <code>&amp;</code> to access the memory location of the array element:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#00a8c8">int</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-  <span style="color:#00a8c8">char</span> <span style="color:#111">vowels</span><span style="color:#111">[]</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;a&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;e&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;i&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;o&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;u&#39;</span><span style="color:#111">};</span>
-
-  <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span><span style="color:#111">;</span> <span style="color:#111">i</span><span style="color:#f92672">++</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#111">printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Address of vowel [%d]: %u</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#111">vowels</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]);</span>
-  <span style="color:#111">}</span>
-
-  <span style="color:#00a8c8">return</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
-<span style="color:#111">}</span></code></pre></div>
-<p>The above code will produces the following output for me:</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/c" class="label label-default">c</a></li>
-  
-    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">Read More…</a>
     </div>
   
 </article>

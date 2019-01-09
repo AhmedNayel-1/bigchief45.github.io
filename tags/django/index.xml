@@ -6,10 +6,25 @@
     <description>Recent content in Django on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Jan 2019 17:28:17 +0000</lastBuildDate>
     
 	<atom:link href="https://aalvarez.me/tags/django/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Media-Type Based Responses With Django Rest Framework</title>
+      <link>https://aalvarez.me/posts/media-type-based-responses-with-django-rest-framework/</link>
+      <pubDate>Wed, 09 Jan 2019 17:28:17 +0000</pubDate>
+      
+      <guid>https://aalvarez.me/posts/media-type-based-responses-with-django-rest-framework/</guid>
+      <description>&lt;p&gt;Nowadays a typical REST API responds with data in JSON format. But what if you wanted to serve data in a different format (and not just a serialization format) using the &lt;strong&gt;same&lt;/strong&gt; endpoint, but specified by the client?&lt;/p&gt;
+
+&lt;p&gt;Django REST Framework &lt;a href=&#34;https://www.django-rest-framework.org/api-guide/renderers/&#34;&gt;renderers&lt;/a&gt; can help us achieve this nice feature.&lt;/p&gt;
+
+&lt;h2 id=&#34;use-case-onix-for-books-compatible-api&#34;&gt;Use Case: ONIX For Books Compatible API&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/ONIX_for_Books&#34;&gt;ONIX for books&lt;/a&gt; is an XML format for sharing bibliographic data pertaining to both traditional books and eBooks. Let&amp;rsquo;s say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in &lt;a href=&#34;https://www.editeur.org/83/Overview/&#34;&gt;ONIX&lt;/a&gt; format, which is an XML standard that defines how the metadata should be described and put together for consumption.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>BytesIO File Uploads to Django Using Requests</title>
