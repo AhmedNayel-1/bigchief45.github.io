@@ -1,5 +1,5 @@
 ---
-title: "Setting Up Elastic Beanstalk Health Checks With Django"
+title: "Setting Up Elastic Beanstalk Health Checks With a Django Application"
 date: 2019-01-15T20:33:50Z
 tags: [django, elasticbeanstalk]
 ---
