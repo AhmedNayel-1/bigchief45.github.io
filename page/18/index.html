@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-15 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-15 00:00:00 &#43;0000 UTC",
+    "datePublished": "2016-11-16 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-16 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,43 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/big-o-notation-omega-theta/">Big O Notation - Omega &amp; Theta</a>
+  </h1>
+  <time datetime="2016-11-16T00:00:00Z" class="post-date">Wed, Nov 16, 2016</time>
+  <p>In a <a href="https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation.html">previous post</a> I went over the basic and most common Big O notations along with respective common algorithms, and finally adding some Ruby benchmarks for each.</p>
+
+<p>However I did not cover some other very important concepts in Big O notation: <strong>Omega</strong> and <strong>Theta</strong>.</p>
+
+<h2 id="understanding-omega">Understanding Omega</h2>
+
+<p>The Omega symbol (Ω) represents a certain algorithm&rsquo;s <em>best-case</em> asymptotic complexity. For example, let&rsquo;s take again a look at the <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">binary search algorithm</a>:</p>
+
+<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search" /></p>
+
+<p>Previously we determined that the Big O notation for this algorithm is <em>O(log n)</em>. This represent the <strong>worst</strong> asymptotic complexity that the algorithm can possibly have.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/algorithms" class="label label-default">algorithms</a></li>
+  
+    <a href="https://aalvarez.me/tags/mathematics" class="label label-default">mathematics</a></li>
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="https://aalvarez.me/tags/computerscience" class="label label-default">computerscience</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/big-o-notation-omega-theta/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/">Ruby Benchmarking &amp; Big O Notation</a>
@@ -338,88 +375,6 @@ classes<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/">Creating Zenoss ZenPack Daemons</a>
-  </h1>
-  <time datetime="2016-11-07T00:00:00Z" class="post-date">Mon, Nov 7, 2016</time>
-  <p>ZenPacks are powerful custom add-ons that can help us extend Zenoss&rsquo;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using <a href="http://zenpacklib.zenoss.com/en/latest/index.html"><strong>zenpacklib</strong></a>, but it is also possible to create it from the Zenoss user interface.</p>
-
-<h2 id="about-zenpacklib">About zenpacklib</h2>
-
-<p><strong>zenpacklib</strong> is a Python library developed by the Zenoss team to facilitate the process of creating ZenPacks, specially ZenPacks that deal with modeling and monitoring devices and components. Most of the newer ZenPacks that are being released are now being built with zenpacklib.</p>
-
-<p>We can obtain zenpacklib by running the following commands:</p>
-
-<pre><code>wget http://zenpacklib.zenoss.com/zenpacklib.py
-chmod 755 zenpacklib.py
-</code></pre>
-
-<p>This will download the zenpacklib Python library and give it executable permissions.</p>
-
-<h2 id="creating-the-zenpack">Creating the ZenPack</h2>
-
-<p>Using the zenpacklib file we just downloaded, we proceed to create a new fresh ZenPack:</p>
-
-<pre><code>./zenpacklib.py create ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;
-</code></pre>
-
-<p>This will create the ZenPack base directory with the necessary base files.</p>
-
-<p>Now we go into this directory to begin.</p>
-
-<pre><code>cd ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;
-</code></pre>
-
-<h2 id="creating-the-zenpack-daemon">Creating the ZenPack Daemon</h2>
-
-<p>Our custom daemon declaration will be located in a directory named <code>daemons</code>, inside our ZenPack directory:</p>
-
-<pre><code>mkdir ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;/&lt;your_namespace&gt;/&lt;zenpack_name&gt;/daemons
-</code></pre>
-
-<p>Here we will create a new Bashscript file with the name of our daemon. In this case we will name it <code>mydaemon</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /usr/bin/env bash
-</span><span style="color:#75715e"></span>
-<span style="color:#111">DAEMON_NAME</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;mydaemon&#34;</span>
-
-. <span style="color:#111">$ZENHOME</span>/bin/zenfunctions
-
-<span style="color:#111">MYPATH</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>python -c <span style="color:#d88200">&#34;import os.path; print os.path.realpath(&#39;</span><span style="color:#111">$0</span><span style="color:#d88200">&#39;)&#34;</span><span style="color:#d88200">`</span> <span style="color:#111">THISDIR</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$MYPATH</span><span style="color:#d88200">`</span> <span style="color:#111">PRGHOME</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$THISDIR</span><span style="color:#d88200">`</span> <span style="color:#111">PRGNAME</span><span style="color:#f92672">=</span><span style="color:#111">$DAEMON_NAME</span>.py <span style="color:#111">CFGFILE</span><span style="color:#f92672">=</span><span style="color:#111">$CFGDIR</span>/<span style="color:#111">$DAEMON_NAME</span>.conf
-
-generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</span><span style="color:#d88200">&#34;</span></code></pre></div>
-<p>Once the ZenPack is installed, files under this <code>daemons</code> directory will become executable (<code>chmod 0755</code>), a symlink to the file will be created in <code>$ZENHOME/bin</code>, and a configuration file will be generated in <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code></p>
-
-<p><strong>NOTE:</strong> If you created your ZenPack using the Zenoss user interface, the <code>daemons</code> directory will also be automatically created, and will contain an example daemon file named <code>zenexample</code> with code similar to the one above. In this case you should simply replace the necessary values.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/daemons" class="label label-default">daemons</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/">Read More…</a>
     </div>
   
 </article>

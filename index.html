@@ -135,6 +135,35 @@ if (!doNotTrack) {
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/">Setting Up Elastic Beanstalk Health Checks With Django</a>
+  </h1>
+  <time datetime="2019-01-15T20:33:50Z" class="post-date">Tue, Jan 15, 2019</time>
+  <p>I was having an issue the past few days with Django and Elastic Beanstalk in a production environment that was driving me nuts.</p>
+
+<p>Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer where <code>4xx</code> requests:</p>
+
+<p><img src="https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png" alt="Elastic Beanstalk 4xx requests" /></p>
+
+<p>This issue was probably caused by several reasons. In this post I will go over the reasons I think I was experiencing it, and how it was fixed in the end.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+    <a href="https://aalvarez.me/tags/elasticbeanstalk" class="label label-default">elasticbeanstalk</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-django/">Setting Up Elastic Beanstalk Health Checks With Django</a>
   </h1>
   <time datetime="2019-01-15T20:33:50Z" class="post-date">Tue, Jan 15, 2019</time>
@@ -262,36 +291,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/cloudfront-cors-font-issues/">CloudFront CORS Font Issues</a>
-  </h1>
-  <time datetime="2018-12-12T16:32:22Z" class="post-date">Wed, Dec 12, 2018</time>
-  <p>I was experiencing an issue with CloudFront and some static assets of a Django application deployed to ElasticBeanstalk. The issue was happening when trying to retrieve some fonts that are stored in S3 and served by CloudFront, the browser dev tools would show some errors similar to the following:</p>
-
-<pre><code>Access to Font at 'http://CLOUDFRONT_HOSTNAME.cloudfront.net/FONT_PATH' from origin 'http://www.example.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
-</code></pre>
-
-<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a> issue. And apparently, very common when trying to load fonts.</p>
-
-<p>To fix this, there are a few possible things that you might have to try. I will list some of the fixes I found.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/cloudfront" class="label label-default">cloudfront</a></li>
-  
-    <a href="https://aalvarez.me/tags/cors" class="label label-default">cors</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/cloudfront-cors-font-issues/">Read More…</a>
     </div>
   
 </article>

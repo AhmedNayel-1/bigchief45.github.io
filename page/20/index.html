@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-10-26 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-10-26 00:00:00 &#43;0000 UTC",
+    "datePublished": "2016-10-27 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-10-27 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,59 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/zenoss-renderers/">Zenoss Renderers</a>
+  </h1>
+  <time datetime="2016-10-27T00:00:00Z" class="post-date">Thu, Oct 27, 2016</time>
+  <p>Zenoss makes use of some very interesting graphical components called renderers. These are used to manipulate the way data is shown in the Zenoss user interface.</p>
+
+<p>For example, a value of <em>total bytes used</em> could be 6080626688 in bytes, which is a very high number and doesn&rsquo;t really convey much meaning. However, we can use a built-in Zenoss renderer called <code>bytesString</code> which will convert this value in bytes to the closest representation:</p>
+
+<p><img src="https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers.png" alt="Zenoss Renderers" /></p>
+
+<p>As we can see, this is a much better and meaningful way of displaying the data.</p>
+
+<p>The built-in Zenoss renderers and source code can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss/Renderers.js</code></p>
+
+<p>They are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the <code>renderer</code> property. For example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">HardDisk<span style="color:#111">:</span>
+  base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
+  label<span style="color:#111">:</span> Hard Disk
+  properties<span style="color:#111">:</span>
+     location<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Location
+
+     capacity<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Capacity
+
+     raid_name<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Raid Name
+
+     raid_level<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Raid Level
+
+     status<span style="color:#111">:</span>
+        label<span style="color:#111">:</span> Status
+        renderer<span style="color:#111">:</span> Zenoss.render.pingStatus</code></pre></div>
+<p><code>Zenoss.render.pingStatus</code> is one of the default renderers that come built-in within Zenoss Core 4, similar to <code>Zenoss.render.bytesString</code>.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/zenoss-renderers/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/">Changing Zenoss Dashboard Portlets Using CLI</a>
@@ -282,61 +335,6 @@ if (!doNotTrack) {
     </div>
   
 </article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/debian-packaging-in-ubuntu/">Debian Packaging in Ubuntu</a>
-  </h1>
-  <time datetime="2016-10-11T00:00:00Z" class="post-date">Tue, Oct 11, 2016</time>
-  <p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
-
-<h2 id="package-source-structure">Package Source &amp; Structure</h2>
-
-<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
-
-<pre><code>mkdir mypackage-1.0.0
-</code></pre>
-
-<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
-
-<pre><code>cd mypackage-1.0.0
-mkdir DEBIAN
-touch DEBIAN/control
-</code></pre>
-
-<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
-
-<pre><code>Package: mypackage
-Version: 1.0-0
-Section: base
-Priority: optional
-Architecture: all
-Depends: python2.7
-Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
-Description: A new and improved C++ Compiler
-</code></pre>
-
-<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-    <a href="https://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
-  
-    <a href="https://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
-  
-    <a href="https://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/debian-packaging-in-ubuntu/">Read More…</a>
-    </div>
-  
-</article>
 
 
 
@@ -348,6 +346,8 @@ Description: A new and improved C++ Compiler
       <a href="https://aalvarez.me//page/19/" style="float: left;">← Newer Posts</a>
     
 
+    
+      <a href="https://aalvarez.me//page/21/" style="float: right;">Older Posts →</a>
     
   </div>
 

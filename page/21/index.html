@@ -17,9 +17,9 @@
          "@type": "WebPage",
          "@id": "https://aalvarez.me/"
     },
-    "articleSection" : "tags",
-    "name" : "Django",
-    "headline" : "Django",
+    "articleSection" : "",
+    "name" : "Andrés Álvarez",
+    "headline" : "Andrés Álvarez",
     "description" : "",
     "inLanguage" : "en-US",
     "author" : "",
@@ -27,10 +27,10 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2018",
-    "datePublished": "2018-02-09 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-02-09 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/tags/django/",
+    "copyrightYear" : "2016",
+    "datePublished": "2016-10-11 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-10-11 00:00:00 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
 }
@@ -52,7 +52,7 @@ if (!doNotTrack) {
 </script>
 
 
-  <title>Django &middot; Andrés Álvarez</title>
+  <title>Andrés Álvarez</title>
 
   
   <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/print.css" media="print">
@@ -70,7 +70,7 @@ if (!doNotTrack) {
   <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
 
   
-  <link href="https://aalvarez.me/tags/django/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+  <link href="https://aalvarez.me/index.xml" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
 
   
 </head>
@@ -131,77 +131,63 @@ if (!doNotTrack) {
 </aside>
 
     <main class="content container">
-    <h1>Posts Tagged 'Django'</h1>
+    <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/debian-packaging-in-ubuntu/">Debian Packaging in Ubuntu</a>
+  </h1>
+  <time datetime="2016-10-11T00:00:00Z" class="post-date">Tue, Oct 11, 2016</time>
+  <p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
 
-  <h2>2018</h2>
+<h2 id="package-source-structure">Package Source &amp; Structure</h2>
+
+<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
+
+<pre><code>mkdir mypackage-1.0.0
+</code></pre>
+
+<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
+
+<pre><code>cd mypackage-1.0.0
+mkdir DEBIAN
+touch DEBIAN/control
+</code></pre>
+
+<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
+
+<pre><code>Package: mypackage
+Version: 1.0-0
+Section: base
+Priority: optional
+Architecture: all
+Depends: python2.7
+Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
+Description: A new and improved C++ Compiler
+</code></pre>
+
+<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
 
   
-    <h3><a href="https://aalvarez.me/posts/testing-django-and-drf-with-pytest/">Testing Django and DRF With Pytest</a></h3>
-    <time datetime="2018-02-09T00:00:00Z" class="post-date">Fri, Feb 9, 2018</time>
-
-    <div style="margin: 20px 0px;">
+  <div style="margin: 20px 0px;">
   
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
   
-    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+    <a href="https://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
   
-    <a href="https://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
+    <a href="https://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="https://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
   
 </div>
 
 
-    <hr>
   
-    <h3><a href="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/">Building a Django Continuous Integration and Delivery Pipeline to AWS</a></h3>
-    <time datetime="2018-01-30T00:00:00Z" class="post-date">Tue, Jan 30, 2018</time>
-
-    <div style="margin: 20px 0px;">
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/debian-packaging-in-ubuntu/">Read More…</a>
+    </div>
   
-    <a href="https://aalvarez.me/tags/aws" class="label label-default">aws</a></li>
-  
-    <a href="https://aalvarez.me/tags/elasticbeanstalk" class="label label-default">elasticbeanstalk</a></li>
-  
-    <a href="https://aalvarez.me/tags/ci/cd" class="label label-default">ci/cd</a></li>
-  
-    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
-  
-</div>
-
-
-    <hr>
-  
-    <h3><a href="https://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/">Django Dynamic Queryset Filtering With Pagination</a></h3>
-    <time datetime="2018-01-17T00:00:00Z" class="post-date">Wed, Jan 17, 2018</time>
-
-    <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
-  
-</div>
-
-
-    <hr>
-  
-    <h3><a href="https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/">Django AJAX Search With Elasticsearch</a></h3>
-    <time datetime="2018-01-10T00:00:00Z" class="post-date">Wed, Jan 10, 2018</time>
-
-    <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/elasticsearch" class="label label-default">elasticsearch</a></li>
-  
-</div>
-
-
-    <hr>
-  
-
+</article>
 
 
 
@@ -210,13 +196,15 @@ if (!doNotTrack) {
 
   <div>
     
-      <a href="https://aalvarez.me//tags/django/" style="float: left;">← Newer Posts</a>
+      <a href="https://aalvarez.me//page/20/" style="float: left;">← Newer Posts</a>
     
 
     
   </div>
 
 
+
+</div>
     </main>
 
     
