@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-09-05 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-09-05 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-09-04 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-09-04 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,62 +133,6 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Easy Notification System in Rails Part 2</a>
-  </h1>
-  <time datetime="2017-09-05T00:00:00Z" class="post-date">Tue, Sep 5, 2017</time>
-  <p><em>Read Part 1 of this series <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">here</a></em></p>
-
-<p>In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.</p>
-
-<p>In this post we will be adding more functionality to our notification system.s</p>
-
-<h2 id="mark-as-read-feature">Mark as Read Feature</h2>
-
-<p>We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:</p>
-
-<ul>
-<li>For a single notification, it should be marked <em>as read</em> when it is clicked from the list of notifications.</li>
-<li>For all notifications, they should be marked as read when a specific button is pressed.</li>
-</ul>
-
-<h3 id="setting-up-the-routes">Setting up the Routes</h3>
-
-<p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
-<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
-  <span style="color:#75715e"># ...</span>
-
-  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span> <span style="color:#00a8c8">do</span>
-    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:collection</span>
-    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:member</span>
-  <span style="color:#00a8c8">end</span>
-
-<span style="color:#00a8c8">end</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Read More…</a>
-    </div>
-  
-</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/easy-notification-system-in-rails/">Easy Notification System in Rails</a>
@@ -368,6 +312,81 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/an-introduction-to-game-states-in-love2d/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/getting-started-with-love2d-basics/">Getting Started With Love2D Basics</a>
+  </h1>
+  <time datetime="2017-07-19T00:00:00Z" class="post-date">Wed, Jul 19, 2017</time>
+  <p>I recently started playing around with <a href="https://love2d.org/">Love2D</a> for game development. Although I am completely new to Lua, so far it&rsquo;s been pretty fun and I really like it.</p>
+
+<p>I created this post to write down the most important basic concepts that I have encountered so far, so that I can use as quick reference later.</p>
+
+<h2 id="setting-up-a-basic-ide">Setting Up a Basic IDE</h2>
+
+<p>So far I&rsquo;ve been using Love2D in Windows. Initially I started using Sublime Text 2 as my editor, but then figured out how to make my Love2D development experience much better using <a href="https://atom.io/">Atom</a> combined with Github for Windows.</p>
+
+<p>In Atom there is a great package called <a href="https://github.com/rameshvarun/love-ide"><strong>love-ide</strong></a> which has many great tools and features for developming with Love.</p>
+
+<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide.jpg" alt="Love Atom IDE" /></p>
+
+<p>Some of these features include Lua linting, autocomplete, and being able to run the Love application right from Atom.</p>
+
+<p>Additionally, we will want to use Window&rsquo;s console for debugging. To do so, enable these options:</p>
+
+<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide_windows.jpg" alt="Love in Windows" /></p>
+
+<h2 id="working-with-keyboard-keys">Working With Keyboard Keys</h2>
+
+<p>We can interact with user input through the keyboard by determining if a certain key has been pressed. This is done like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#00a8c8">if</span> <span style="color:#111">love.keyboard</span><span style="color:#111">.</span><span style="color:#111">isDown</span><span style="color:#111">(</span><span style="color:#d88200">&#34;right&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">then</span>
+  <span style="color:#75715e">-- ...</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>The <a href="https://love2d.org/wiki/love.keyboard.isDown"><code>love.keyboard.isDown</code></a> function receives a <code>KeyConstant</code> string argument to indicate which key we want to test for. The complete list can be found <a href="https://love2d.org/wiki/KeyConstant">here</a>. Here are some examples:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Key string</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>space</code></td>
+<td align="center">Space key</td>
+</tr>
+
+<tr>
+<td align="center"><code>backspace</code></td>
+<td align="center">Backspace key</td>
+</tr>
+
+<tr>
+<td align="center"><code>down</code></td>
+<td align="center">Down arrow key</td>
+</tr>
+</tbody>
+</table>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/love2d" class="label label-default">love2d</a></li>
+  
+    <a href="https://aalvarez.me/tags/lua" class="label label-default">lua</a></li>
+  
+    <a href="https://aalvarez.me/tags/game-dev" class="label label-default">game dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/getting-started-with-love2d-basics/">Read More…</a>
     </div>
   
 </article>
