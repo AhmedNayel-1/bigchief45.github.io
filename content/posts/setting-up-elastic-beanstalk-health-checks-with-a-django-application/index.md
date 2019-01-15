@@ -1,14 +1,14 @@
 ---
 title: "Setting Up Elastic Beanstalk Health Checks With Django"
 date: 2019-01-15T20:33:50Z
-tags: [django, elastic beanstalk]
+tags: [django, elasticbeanstalk]
 ---
 
 I was having an issue the past few days with Django and Elastic Beanstalk in a production environment that was driving me nuts.
 
 Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer where `4xx` requests:
 
-![Elastic Beanstalk 4xx requests](/posts/setting-up-elastic-beanstalk-health-checks-with-django/eb_unhealthy_400_requests.png)
+![Elastic Beanstalk 4xx requests](/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png)
 
 This issue was probably caused by several reasons. In this post I will go over the reasons I think I was experiencing it, and how it was fixed in the end.
 
@@ -22,7 +22,7 @@ Before I start, I want to briefly go over my Elastic Beanstalk environment's pro
 - HTTPS secured
 - Django 1.11
 
-It is worth mentioning that despite the health check constantly failing, the aoolication is working and running fine.
+It is worth mentioning that despite the health check constantly failing, the application is working and running fine.
 
 ## Troubleshooting The 4xx Requests
 
@@ -66,9 +66,12 @@ This made the health check responses go from 400 to 301 ([Moved Permanently](htt
 
 ## Fixing The 3xx Requests
 
-The health now reports 100% of requests failing with 3xx. The reason for this is because the application is secured with HTTPS and has some security configurations such as these:
+The health now reports 100% of requests failing with 3xx. The reason for this is because the Django application is secured with HTTPS and has some security configurations such as these:
 
 ```python
+# settings.prod.py
+
+
 # Security
 # https://docs.djangoproject.com/en/1.11/topics/security/
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -81,7 +84,7 @@ CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 ```
 
-This ensures that _all_ requests to the application must be done with HTTPS. Requests done using HTTP will be redirected to HTTPS. This is what the 301 status code means. Django receives the health check request at `/`. Since this is a HTTP request, it returns the 301 code indicating that the request should be resent using HTTPS. This is something that browsers do automatically.
+This ensures that _all_ requests to the application must be done with HTTPS. Requests done using HTTP will be redirected to HTTPS. This is what the 301 status code means. Django receives the health check request at `/`. Since this is an HTTP request, it returns the 301 code indicating that the request should be resent using HTTPS. This is something that browsers do automatically.
 
 To fix this, we can include the 301 code to the acceptable health check responses. To do this navigate to _EC2 > Load Balancing > Target Groups_ and select the target group that your load balancer is currently using and under the _Health Checks_ tab, select _edit_ and set `200-301` for the _Success codes_ field.
 
