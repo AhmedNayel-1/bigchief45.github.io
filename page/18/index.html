@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-14 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-14 00:00:00 &#43;0000 UTC",
+    "datePublished": "2016-11-15 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-15 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,62 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/">Ruby Benchmarking &amp; Big O Notation</a>
+  </h1>
+  <time datetime="2016-11-15T00:00:00Z" class="post-date">Tue, Nov 15, 2016</time>
+  <p>The Ruby <a href="http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html">Benchmark</a> library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.</p>
+
+<p>I was doing some <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O Notation</a> reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.</p>
+
+<h2 id="using-benchmark">Using Benchmark</h2>
+
+<p>To start benchmarking our code, we simply need to require <code>benchmark</code> and use the methods provided by the <code>Benchmark</code> module. For me, the most practical way is to use <code>Benchmark#bm</code> method, where we pass a block of code we want to measure:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
+
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#75715e"># our code here</span>
+  <span style="color:#00a8c8">end</span>
+
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>Inside the block we are using the <code>report</code> method of the block&rsquo;s variable, which will basically do a separate benchmark for each report.</p>
+
+<p>However, we can improve this even more by adding a label to <code>report</code> and a label width to <code>bm</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
+
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;my_algorithm&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#75715e"># our code here</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>Let&rsquo;s see it in action with some common algorithms.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/algorithms" class="label label-default">algorithms</a></li>
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="https://aalvarez.me/tags/benchmarking" class="label label-default">benchmarking</a></li>
+  
+    <a href="https://aalvarez.me/tags/mathematics" class="label label-default">mathematics</a></li>
+  
+    <a href="https://aalvarez.me/tags/computerscience" class="label label-default">computerscience</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/infinite-sequences-in-ruby-using-enumerator/">Infinite Sequences in Ruby Using Enumerator</a>
@@ -364,45 +420,6 @@ generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</spa
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/">Monitoring CPU Utilization in Zenoss</a>
-  </h1>
-  <time datetime="2016-11-04T00:00:00Z" class="post-date">Fri, Nov 4, 2016</time>
-  <p>While taking a look at the CPU Utilization graphs offered Zenoss Core&rsquo;s <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
-
-<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
-
-<p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
-  
-    <a href="https://aalvarez.me/tags/cpu" class="label label-default">cpu</a></li>
-  
-    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
-  
-    <a href="https://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
-  
-    <a href="https://aalvarez.me/tags/rpn" class="label label-default">rpn</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/">Read More…</a>
     </div>
   
 </article>

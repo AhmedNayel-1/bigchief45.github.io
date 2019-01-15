@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-03-07 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-03-07 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-03-08 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-03-08 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,42 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/python-tricks-for-better-code/">Python Tricks for Better Code</a>
+  </h1>
+  <time datetime="2017-03-08T00:00:00Z" class="post-date">Wed, Mar 8, 2017</time>
+  <p>A compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.</p>
+
+<h2 id="enumerate">Enumerate</h2>
+
+<p>When working with items in a list and we want to print or handle each item&rsquo;s index, instead of using a counter variable:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Bad way</span>
+<span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#00a8c8">for</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">places</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span>
+    <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span></code></pre></div>
+<p>We can use <code>enumerate</code> to improve our code:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">enumerate</span><span style="color:#111">(</span><span style="color:#111">places</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span></code></pre></div>
+<p><code>enumerate</code> returns a list of indexes along with each item in the list.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/python-tricks-for-better-code/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/">Integrating TravisCI With Rails and Heroku</a>
@@ -330,66 +366,6 @@ rvm<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/useful-zendmd-tricks/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/getting-started-with-juju-locally/">Getting Started With Juju Locally</a>
-  </h1>
-  <time datetime="2017-02-10T00:00:00Z" class="post-date">Fri, Feb 10, 2017</time>
-  <p><a href="https://jujucharms.com/">Juju</a> is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.</p>
-
-<p>In this post I will explain how easy it is to get started with Juju in a <strong>local</strong> environment.</p>
-
-<h2 id="installation">Installation</h2>
-
-<p>To start we will need to add the necessary repository from where we will retrieve the Juju packages:</p>
-
-<pre><code>sudo add-apt-repository ppa:juju/stable
-sudo apt-get update
-</code></pre>
-
-<p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
-
-<pre><code>sudo apt-get install juju-core
-sudo apt-get install juju-local
-</code></pre>
-
-<h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
-
-<p>Before we set up the local environment, let&rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
-
-<pre><code>juju generate-config
-juju switch local
-</code></pre>
-
-<p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
-
-<pre><code>juju bootstrap
-</code></pre>
-
-<p>After the process is complete, we are now ready to start using Juju.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/juju" class="label label-default">juju</a></li>
-  
-    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/iptables" class="label label-default">iptables</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/getting-started-with-juju-locally/">Read More…</a>
     </div>
   
 </article>

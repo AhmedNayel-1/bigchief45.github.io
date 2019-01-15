@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-07-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-07-17 00:00:00 &#43;0000 UTC",
+    "datePublished": "2018-07-19 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-07-19 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,37 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/netbeans-platform-status-bars/">Netbeans Platform Status Bars</a>
+  </h1>
+  <time datetime="2018-07-19T00:00:00Z" class="post-date">Thu, Jul 19, 2018</time>
+  <p>In desktop applications, status bars are a great way to convey information to the user about the current status of certain items in the application, such as connection status, total amount of items, current mode, current row and column number in an editor, etc.</p>
+
+<p>Implementing custom status bars to a Netbeans Platform application is extremely easy. In this article I will go over how we can achieve really cool things with status bars and lookups.</p>
+
+<h2 id="creating-and-registering-a-new-status-bar">Creating and Registering a New Status Bar</h2>
+
+<p>To create a new status bar, create a new Java class that implements the <code>StatusLineElementProvider</code> interface. To register it as a status bar, we use the <code>@ServiceProvider</code> annotation:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@ServiceProvider</span><span style="color:#f92672">(</span><span style="color:#111">service</span> <span style="color:#f92672">=</span> <span style="color:#111">StatusLineElementProvider</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStatusBar</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">StatusLineElementProvider</span> <span style="color:#f92672">{</span>
+
+<span style="color:#f92672">}</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/netbeans-platform-status-bars/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/">Implementing Auto Updates for a Netbeans Platform Maven Application Using Github Pages</a>
@@ -251,37 +282,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/">Creating Toolbars for MultiView Elements in Netbeans Platform</a>
-  </h1>
-  <time datetime="2018-04-23T00:00:00Z" class="post-date">Mon, Apr 23, 2018</time>
-  <p>On a <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html">previous post</a> I talked about creating a new file type that Netbeans Platform can recognize and display the file&rsquo;s data in different ways by creating different visual editors that implement the <code>MultiViewElement</code> interface.</p>
-
-<p>However, that tutorial did not cover how to add a custom toolbar to each multi view. Like the one Netbeans already provides when editing source code:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png" alt="Netbeans MultiView Toolbar" /></p>
-
-<p>This is a very handy toolbar that can be used to add buttons that perform different kinds of actions with the current active file.</p>
-
-<h2 id="a-deeper-look-into-the-multiviewelement-object">A Deeper Look Into the MultiViewElement Object</h2>
-
-<p>If you recall from the previous post, a <code>JPanel</code> that implements <code>MultiViewElement</code> was created after finishing the wizard. This <code>MultiViewElement</code> object has some very important characteristics that are key to this tutorial:</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/">Read More…</a>
     </div>
   
 </article>

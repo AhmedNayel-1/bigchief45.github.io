@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-02-07 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-02-07 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-02-10 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-02-10 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,66 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/getting-started-with-juju-locally/">Getting Started With Juju Locally</a>
+  </h1>
+  <time datetime="2017-02-10T00:00:00Z" class="post-date">Fri, Feb 10, 2017</time>
+  <p><a href="https://jujucharms.com/">Juju</a> is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.</p>
+
+<p>In this post I will explain how easy it is to get started with Juju in a <strong>local</strong> environment.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>To start we will need to add the necessary repository from where we will retrieve the Juju packages:</p>
+
+<pre><code>sudo add-apt-repository ppa:juju/stable
+sudo apt-get update
+</code></pre>
+
+<p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
+
+<pre><code>sudo apt-get install juju-core
+sudo apt-get install juju-local
+</code></pre>
+
+<h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
+
+<p>Before we set up the local environment, let&rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
+
+<pre><code>juju generate-config
+juju switch local
+</code></pre>
+
+<p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
+
+<pre><code>juju bootstrap
+</code></pre>
+
+<p>After the process is complete, we are now ready to start using Juju.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/juju" class="label label-default">juju</a></li>
+  
+    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/iptables" class="label label-default">iptables</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/getting-started-with-juju-locally/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">C Gotchas For Beginners</a>
@@ -309,54 +369,6 @@ zProperties<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/understanding-snmp-and-net-snmp/">Understanding SNMP and Net-SNMP</a>
-  </h1>
-  <time datetime="2017-01-16T00:00:00Z" class="post-date">Mon, Jan 16, 2017</time>
-  <p><a href="http://net-snmp.sourceforge.net/">Net-SNMP</a> is a suite of tools used to implement SNMP (Simple Network Management Protocol). SNMP is a widely used protocol for monitoring the health and welfare of network equipment (eg. routers), computer equipment and even devices like UPSs. Net-SNMP includes tools with capabilities such as:</p>
-
-<ul>
-<li>An extensible agent</li>
-<li>An SNMP library</li>
-<li>Tools to request or set information from SNMP agents</li>
-<li>Tools to generate and handle SNMP traps</li>
-<li>A version of the unix &lsquo;netstat&rsquo; command using SNMP</li>
-<li>A graphical Perl/Tk/SNMP based mib browser</li>
-</ul>
-
-<h2 id="how-snmp-works">How SNMP Works</h2>
-
-<p>SNMP allows a management station to treat its network as a distributed database of health and configuration information. SNMP contains a small set of operations:</p>
-
-<ul>
-<li>GET: Retrieve data from a network node</li>
-<li>GETNEXT: Retrieve the next element from a network node</li>
-<li>SET: Send configuration or control commands to a network node</li>
-<li>TRAP: A network node can send a notification to the management station</li>
-<li>INFORM: An acknowledged trap (network nodes can try and send it again if no acknowledgement is received)</li>
-</ul>
-
-<p><img src="http://computernetworkingsimplified.com/wp-content/uploads/2014/02/snmparchitecture1.jpg" alt="SNMP Architecture" /></p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/snmp" class="label label-default">snmp</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/understanding-snmp-and-net-snmp/">Read More…</a>
     </div>
   
 </article>

@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-01-10 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-01-10 00:00:00 &#43;0000 UTC",
+    "datePublished": "2018-01-17 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-01-17 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,31 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/">Django Dynamic Queryset Filtering With Pagination</a>
+  </h1>
+  <time datetime="2018-01-17T00:00:00Z" class="post-date">Wed, Jan 17, 2018</time>
+  <p><a href="https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html">This blog article</a> does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn&rsquo;t go into paginating the filtered queryset results.</p>
+
+<p>I had a very hard time trying to implement this pagination feature using <strong>class based views</strong>. More specifically, using the <code>FilterView</code> that comes with the <a href="https://github.com/carltongibson/django-filter">django-filter</a> package.</p>
+
+<p>In the end it turned out to be very simple. The <a href="https://django-filter.readthedocs.io/en/master/guide/usage.html#generic-view-configuration">documentation</a> was a bit misleading on this so it took a while to understand and find the solution.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/">Django AJAX Search With Elasticsearch</a>
@@ -277,39 +302,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Creating an Upload Progress Dialog in Java</a>
-  </h1>
-  <time datetime="2017-11-16T00:00:00Z" class="post-date">Thu, Nov 16, 2017</time>
-  <p>Many Java file upload <a href="http://www.codejava.net/coding/swing-application-to-upload-files-to-ftp-server-with-progress-bar">tutorials</a> teach you how to show the current progress of a file upload using a JProgressBar in the user interface, usually placed in the main JFrame.</p>
-
-<p>However I was trying make this much more visually appealing, like the way <a href="https://winscp.net/eng/index.php">WinSCP</a> does it:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/scp_file_upload.png" alt="SCP File Upload" /></p>
-
-<p>This will require the use of another Swing class: JDialog. Basically the flow of the program will be like this:</p>
-
-<ol>
-<li>Main class with main method calls <code>SwingWorker</code> class.</li>
-<li><code>SwingWorker</code> is in charge of doing the <em>actual</em> upload. It will also create an instance of a <code>JDialog</code> to show the current upload progress.</li>
-<li><code>JDialog</code> class will contain the progress bar and other useful upload information.</li>
-</ol>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/java" class="label label-default">java</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Read More…</a>
     </div>
   
 </article>
