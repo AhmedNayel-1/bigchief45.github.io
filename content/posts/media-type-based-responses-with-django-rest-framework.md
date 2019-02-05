@@ -1,5 +1,5 @@
 ---
-title: "Media-Type Based Responses With Django Rest Framework"
+title: "Media-Type Based Responses With Django REST Framework"
 date: 2019-01-09T17:28:17Z
 tags: [django]
 ---
