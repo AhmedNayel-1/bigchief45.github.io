@@ -8,7 +8,7 @@ It is possible to add buttons that toggle a dropdown menu to the main toolbar in
 
 For example, the Netbeans IDE _Run Project_, _Debug Project_, and _Profile Project_ buttons have a small arrow next to them. When clicked, a dropdown menu with more related actions is shown:
 
-![Netbeans IDE Dropdown Buttons](/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions)
+![Netbeans IDE Dropdown Buttons](/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png)
 
 In this article, I will teach you how to implement this behavior.
 
