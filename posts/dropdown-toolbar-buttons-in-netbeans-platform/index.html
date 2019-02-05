@@ -37,7 +37,7 @@
     "datePublished": "2019-02-05 20:16:38 &#43;0000 UTC",
     "dateModified" : "2019-02-05 20:16:38 &#43;0000 UTC",
     "url" : "https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/",
-    "wordCount" : "638",
+    "wordCount" : "642",
     "keywords" : [ "netbeans platform","Blog" ]
 }
 </script>
@@ -280,13 +280,15 @@ if (!doNotTrack) {
     <span style="color:#00a8c8">return</span> <span style="color:#111">button</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span></code></pre></div>
-<p>This actions <em>is</em> registered in the toolbar. In this example, it is registered in a custom toolbar called <code>Main</code>, derived from the name after the <code>/</code> in <code>Toolbars/Main</code>.</p>
+<p>This action <em>is</em> registered in the toolbar. In this example, it is registered in a custom toolbar called <code>Main</code>, derived from the name after the <code>/</code> in <code>Toolbars/Main</code>.</p>
 
 <p>Notice how we are fetching the previously defined actions using <code>Actions.forID()</code> method and each action&rsquo;s <code>category</code> and <code>id</code> attributes defined in their respective annotations.</p>
 
 <p>Another important element here is the <code>DropDownButtonFactory</code> utility class provided by the platform. This is what gives us that nice button with dropdown arrow UI effect that we are looking for.</p>
 
 <p>One last thing to notice is that we are no longer implementing <code>ActionListener</code>, but rather extending <code>AbstractAction</code>.</p>
+
+<p>That&rsquo;s it! Super simple.</p>
 
 <h2 id="references">References</h2>
 
