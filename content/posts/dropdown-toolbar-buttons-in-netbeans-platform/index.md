@@ -157,13 +157,15 @@ public class MyDropdownAction extends AbstractAction
 }
 ```
 
-This actions _is_ registered in the toolbar. In this example, it is registered in a custom toolbar called `Main`, derived from the name after the `/` in `Toolbars/Main`.
+This action _is_ registered in the toolbar. In this example, it is registered in a custom toolbar called `Main`, derived from the name after the `/` in `Toolbars/Main`.
 
 Notice how we are fetching the previously defined actions using `Actions.forID()` method and each action's `category` and `id` attributes defined in their respective annotations.
 
 Another important element here is the `DropDownButtonFactory` utility class provided by the platform. This is what gives us that nice button with dropdown arrow UI effect that we are looking for.
 
 One last thing to notice is that we are no longer implementing `ActionListener`, but rather extending `AbstractAction`.
+
+That's it! Super simple.
 
 ## References
 
