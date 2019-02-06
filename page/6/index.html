@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-11-21 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-11-21 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-11-27 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-11-27 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,43 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Bulk Create With Django REST Framework</a>
+  </h1>
+  <time datetime="2017-11-27T00:00:00Z" class="post-date">Mon, Nov 27, 2017</time>
+  <p>In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
+
+<h2 id="the-serializer">The Serializer</h2>
+
+<p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># serializers.py</span>
+<span style="color:#f92672">from</span> <span style="color:#111">myapp.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Book</span>
+<span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">serializers</span>
+
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookSerializer</span><span style="color:#111">(</span><span style="color:#111">serializers</span><span style="color:#f92672">.</span><span style="color:#111">ModelSerializer</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">class</span> <span style="color:#75af00">Meta</span><span style="color:#111">:</span>
+        <span style="color:#111">model</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span>
+        <span style="color:#111">fields</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;__all__&#39;</span></code></pre></div>
+<p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Building an OCR Service With TesseractJS in AWS Lambda</a>
@@ -300,46 +337,6 @@ umask:</p>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/">Easy Notification System in Rails Part 3</a>
-  </h1>
-  <time datetime="2017-09-12T00:00:00Z" class="post-date">Tue, Sep 12, 2017</time>
-  <p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">part 1</a> and <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series</em></p>
-
-<p>In this post, we will be sending automatic e-emails every time notifications are created.</p>
-
-<h2 id="creating-the-mailer">Creating the Mailer</h2>
-
-<p>We will work with one <a href="http://guides.rubyonrails.org/action_mailer_basics.html">mailer</a> that will send e-mails for every notification that is created. We can generate our mailer with this command:</p>
-
-<pre><code>rails g mailer NotificationsMailer
-</code></pre>
-
-<p>Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&rsquo;ve been using <strong>comments</strong> and <strong>posts</strong> as examples.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/">Read More…</a>
     </div>
   
 </article>

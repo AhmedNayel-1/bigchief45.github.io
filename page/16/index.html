@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-12-25 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-12-25 00:00:00 &#43;0000 UTC",
+    "datePublished": "2016-12-26 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-12-26 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,53 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Custom Pages in Zenoss</a>
+  </h1>
+  <time datetime="2016-12-26T00:00:00Z" class="post-date">Mon, Dec 26, 2016</time>
+  <p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
+
+<h2 id="page-viewlets">Page Viewlets</h2>
+
+<p>Previously we created navigation item viewlets, this time we will be creating <strong>page</strong> viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to <code>browser/configure.zcml</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:page</span>
+  <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;secondaryPage&#34;</span>
+  <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
+  <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
+  <span style="color:#75af00">template=</span><span style="color:#d88200">&#34;templates/my_template.pt&#34;</span>
+  <span style="color:#f92672">/&gt;</span></code></pre></div>
+<p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
+
+<p>Also let&rsquo;s not forget to create a necessary python init file:</p>
+
+<pre><code>touch browser/__init__.py
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/d3" class="label label-default">d3</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/cracking-passwords-with-aircrack-ng/">Cracking Passwords With aircrack-ng</a>
@@ -315,41 +362,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/ip-addresses-a-review/">IP Addresses - A Review</a>
-  </h1>
-  <time datetime="2016-12-02T00:00:00Z" class="post-date">Fri, Dec 2, 2016</time>
-  <p><em>A review of IP addresses, as part of my Computer Networking Fundamentals series.</em></p>
-
-<p>A lot of people know what IP addresses are, and a lot of people also probably know that each device that is connected to the Internet must have a <strong><em>unique</em></strong> IP Address, like <em>108.161.228.70</em></p>
-
-<p>However, in this article I want to do a more in-depth review about IP addresses and how the work.</p>
-
-<p>From a technical point of view and for reviewing purposes, it is worth remembering that IP Addresses (at least IPv4) are <strong>32-bit</strong> addresses, because each number separated by each dot (called <em>octet</em>) is an 8-bit number. Since IP Addresses have 4 octets, these together make a sum of 32-bits.</p>
-
-<p class="lead">Another very important detail of IP Addresses is that the <strong>first two</strong> octets represent a <strong>destination network</strong>, while the <strong>last two</strong> octets represent a <strong>destination host</strong> within that destination network.</p>
-
-<p>Since the first two octets make a sum of 16 bits, 2^16 yields a total of 65,536 networks. At the same time, the remaining 16 bits also yield a total of 65,536 different hosts. <strong><em>But</em></strong> these are 65,536 different hosts <strong><em>per each</em></strong> network.</p>
-
-<p>This raises a big issue because it makes it hard to decide how many bits in the IP address should be allocated to the network and how many bits should be allocated for the hosts, without wasting IP addresses. This is where <strong>subnet masks</strong> come in.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/networking" class="label label-default">networking</a></li>
-  
-    <a href="https://aalvarez.me/tags/ip" class="label label-default">ip</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/ip-addresses-a-review/">Read More…</a>
     </div>
   
 </article>

@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-03-14 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-03-14 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-03-17 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-03-17 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,35 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/overriding-default-zenoss-pages/">Overriding Default Zenoss Pages</a>
+  </h1>
+  <time datetime="2017-03-17T00:00:00Z" class="post-date">Fri, Mar 17, 2017</time>
+  <p>While testing the <a href="https://github.com/zenoss/ZenPacks.zenoss.Layer2">Layer 2 ZenPack</a>, I noticed that the network map provided by the ZenPack was placed in the same page of the old default Zenoss&rsquo;s network map, replacing the latter which was made using Flash. After the ZenPack is installed, when you click on the <em>Network Map</em> secondary link in the Infrastructure page, you will get the new map instead.</p>
+
+<p><img src="https://aalvarez.me/posts/overriding-default-zenoss-pages/map_link.jpg" alt="Network Map link" /></p>
+
+<p>This seemed pretty nice, and I was curious how they achieved this, so I started browsing around the source code. It turns out that this overriding is done in a file called <code>overrides.zcml</code>, which is placed in the ZenPack&rsquo;s top directory.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/overriding-default-zenoss-pages/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/">Getting Started on Contributing to OpenStack</a>
@@ -309,62 +338,6 @@ rvm<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/chinese-onomatopoeia-in-literature/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Working With Zenoss Python Data Source Plugins</a>
-  </h1>
-  <time datetime="2017-02-23T00:00:00Z" class="post-date">Thu, Feb 23, 2017</time>
-  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
-
-<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
-
-<p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
-
-<h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
-
-<p>For this post, I will be using an example where we will be executing an <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
-
-<p>If I run the following command from my shell:</p>
-
-<pre><code>ipmitool -H $BMC_IP -I lanplus -U admin -P admin power status
-</code></pre>
-
-<p>I get the following output:</p>
-
-<pre><code>Chassis Power is on
-</code></pre>
-
-<p>What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:</p>
-
-<ol>
-<li>Map the value into a boolean property of a custon zenpacklib class.</li>
-<li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
-<li>Update the device model with the new property value.</li>
-<li><a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
-</ol>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Read More…</a>
     </div>
   
 </article>

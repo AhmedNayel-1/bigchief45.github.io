@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-04-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-04-17 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-04-18 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-04-18 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,47 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/understanding-oslo_config-in-openstack/">Understanding oslo_config in OpenStack</a>
+  </h1>
+  <time datetime="2017-04-18T00:00:00Z" class="post-date">Tue, Apr 18, 2017</time>
+  <p>The OpenStack <a href="https://wiki.openstack.org/wiki/Oslo">Oslo</a> library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.</p>
+
+<p>In this post I want to go over <a href="https://wiki.openstack.org/wiki/Oslo/Config">oslo_config</a>. This library helps with parsing of <strong>options</strong> found in configuration files or command line arguments.</p>
+
+<h2 id="understanding-options">Understanding Options</h2>
+
+<p>An option is defined using the <code>Opt</code> class or one of its sub-classes, from the <code>cfg</code> module:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">oslo_config</span> <span style="color:#f92672">import</span> <span style="color:#111">cfg</span>
+
+<span style="color:#111">common_opts</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_host&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;0.0.0.0&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;IP address to listen on.&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">Opt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_port&#39;</span><span style="color:#111">,</span>
+            <span style="color:#111">type</span><span style="color:#f92672">=</span><span style="color:#111">PortType</span><span style="color:#111">,</span>
+            <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#ae81ff">9292</span><span style="color:#111">,</span>
+            <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Port number to listen on.&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">]</span></code></pre></div>
+<p>In the example above we can see that we are using <code>Opt</code> and <code>StrOpt</code>, one of its sub-classes. You might notice that the second option&rsquo;s constructor has a <code>type=PortType</code> argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises <code>ValueError</code> if the value cannot be converted. The different types available can be found in the <code>types</code> module:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/understanding-oslo_config-in-openstack/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/tech-and-open-source-chinese-vocabulary/">Tech and Open Source Chinese Vocabulary</a>
@@ -295,84 +336,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/understanding-ceilometer-transformers/">Understanding Ceilometer Transformers</a>
-  </h1>
-  <time datetime="2017-04-07T00:00:00Z" class="post-date">Fri, Apr 7, 2017</time>
-  <p>Ceilometer <strong>transformers</strong> are part of the Ceilometer <strong>pipeline</strong>, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for <strong>samples</strong> and a pipeline for <strong>events</strong>.</p>
-
-<p>Configurations for these pipelines can be found in <code>/etc/ceilometer/pipeline.yaml</code> and <code>/etc/ceilometer/event_pipeline.yaml</code>.</p>
-
-<p>Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline" /></p>
-
-<p>Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:</p>
-
-<table>
-<thead>
-<tr>
-<th align="left">Name of transformer</th>
-<th align="center">Reference name for configuration</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="left">Accumulator</td>
-<td align="center">accumulator</td>
-</tr>
-
-<tr>
-<td align="left">Aggregator</td>
-<td align="center">aggregator</td>
-</tr>
-
-<tr>
-<td align="left">Arithmetic</td>
-<td align="center">arithmetic</td>
-</tr>
-
-<tr>
-<td align="left">Rate of change</td>
-<td align="center">rate_of_change</td>
-</tr>
-
-<tr>
-<td align="left">Unit conversion</td>
-<td align="center">unit_conversion</td>
-</tr>
-
-<tr>
-<td align="left">Delta</td>
-<td align="center">delta</td>
-</tr>
-</tbody>
-</table>
-
-<p>Let&rsquo;s take a more detailed look into the accumulator transformer.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
-  
-    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
-  
-    <a href="https://aalvarez.me/tags/cloudcomputing" class="label label-default">cloudcomputing</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/understanding-ceilometer-transformers/">Read More…</a>
     </div>
   
 </article>

@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-16 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-16 00:00:00 &#43;0000 UTC",
+    "datePublished": "2016-11-17 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-17 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,49 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/custom-markdown-in-middleman/">Custom Markdown in Middleman</a>
+  </h1>
+  <time datetime="2016-11-17T00:00:00Z" class="post-date">Thu, Nov 17, 2016</time>
+  <p><a href="https://middlemanapp.com/">Middleman</a> is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it&rsquo;s the framework I am currently using for this blog.</p>
+
+<p>Unfortunately Middleman&rsquo;s <a href="https://middlemanapp.com/basics/install/">documentation</a> is a bit unorganized and incomplete. I often find myself browsing through the <a href="https://github.com/middleman/middleman">source code</a> to understand how to use or implement some custom features.</p>
+
+<p>For example, using <a href="https://github.com/vmg/redcarpet">redcarpet</a> I wanted to be able to create some re-usable &ldquo;markdown components&rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.</p>
+
+<p>And this post I am going to explain how to integrate this functionality into your blog using Middleman.</p>
+
+<h2 id="creating-a-custom-renderer">Creating a Custom Renderer</h2>
+
+<p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman&rsquo;s renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
+
+<p>To begin, we will create a <code>lib</code> (if it doesn&rsquo;t exist) under our blog&rsquo;s directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
+
+  <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
+
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>The required file above is what will allow us to inherit from Middleman&rsquo;s renderer.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/middleman" class="label label-default">middleman</a></li>
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/markdown" class="label label-default">markdown</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/custom-markdown-in-middleman/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/big-o-notation-omega-theta/">Big O Notation - Omega &amp; Theta</a>
@@ -318,63 +361,6 @@ What is the value of the first triangle number to have over five hundred divisor
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/">Modifying the Zenoss Device Detail Bar</a>
-  </h1>
-  <time datetime="2016-11-08T00:00:00Z" class="post-date">Tue, Nov 8, 2016</time>
-  <p>The Zenoss Core <a href="https://www.sencha.com/products/extjs/"><strong>ExtJS</strong></a> graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.</p>
-
-<p>Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss</code>, and as you would expect, the device detail bar component is also located there.</p>
-
-<h2 id="the-device-detail-bar">The Device Detail Bar</h2>
-
-<p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
-
-<p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
-
-<h2 id="extending-the-component-through-zenpacks">Extending The Component, Through ZenPacks</h2>
-
-<p>Let&rsquo;s assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
-
-classes<span style="color:#111">:</span>
-  CustomDevice<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Custom Device
-    properties<span style="color:#111">:</span>
-      power_status<span style="color:#111">:</span>
-        type<span style="color:#111">:</span> boolean</code></pre></div>
-<p>What we want is to display this value in the device&rsquo;s detail bar, similar to the device&rsquo;s ping status display.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/">Read More…</a>
     </div>
   
 </article>

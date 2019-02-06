@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https://aalvarez.me/"
+    },
+    "articleSection" : "posts",
+    "name" : "Making Functions Timeout in Python",
+    "headline" : "Making Functions Timeout in Python",
+    "description" : "<p>Sometimes you need to execute a function that can take a lot of time to finish. You are not sure exactly when the function will finish, but you do not want to wait too long, or let your program &ldquo;hang&rdquo; waiting for a response.</p>
+
+<p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&rsquo;s execution.</p>
+
+<p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the standard library.</p>
+
+<p>Here is a complete example:</p>",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-02-06 16:02:35 &#43;0000 UTC",
+    "dateModified" : "2019-02-06 16:02:35 &#43;0000 UTC",
+    "url" : "https://aalvarez.me/posts/making-functions-timeout-in-python/",
+    "wordCount" : "269",
+    "keywords" : [ "python","Blog" ]
+}
+</script>
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  <title>Making Functions Timeout in Python &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/hyde.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/extra.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/overrides.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://aalvarez.me/"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://aalvarez.me/">Home</a> </li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Making Functions Timeout in Python</h1>
+  <time datetime=2019-02-06T16:02:35Z class="post-date">Wed, Feb 6, 2019</time>
+
+  <p>Sometimes you need to execute a function that can take a lot of time to finish. You are not sure exactly when the function will finish, but you do not want to wait too long, or let your program &ldquo;hang&rdquo; waiting for a response.</p>
+
+<p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&rsquo;s execution.</p>
+
+<p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the standard library.</p>
+
+<p>Here is a complete example:</p>
+
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">signal</span>
+
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">timeout</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">time</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_time</span> <span style="color:#f92672">=</span> <span style="color:#111">time</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__enter__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># Register and schedule the signal with the specified time</span>
+        <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">signal</span><span style="color:#111">(</span><span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">SIGALRM</span><span style="color:#111">,</span> <span style="color:#111">timeout</span><span style="color:#f92672">.</span><span style="color:#111">_raise_timeout</span><span style="color:#111">)</span>
+        <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">alarm</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_time</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__exit__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">exc_type</span><span style="color:#111">,</span> <span style="color:#111">exc_value</span><span style="color:#111">,</span> <span style="color:#111">traceback</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># Unregister the signal so it won&#39;t be triggered if there is</span>
+        <span style="color:#75715e"># no timeout</span>
+        <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">signal</span><span style="color:#111">(</span><span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">SIGALRM</span><span style="color:#111">,</span> <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">SIG_IGN</span><span style="color:#111">)</span>
+
+    <span style="color:#75af00">@staticmethod</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_raise_timeout</span><span style="color:#111">(</span><span style="color:#111">signum</span><span style="color:#111">,</span> <span style="color:#111">frame</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">raise</span> <span style="color:#111">TimeoutError</span></code></pre></div>
+<p>Most implementations I found in StackOverflow place the <code>raise_timeout</code> function outside. However, I prefer to have it nicely encapsulated by implementing it as a static method of the context manager 👍</p>
+
+<p>Now we can use our context manager like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">time</span>
+
+
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">with</span> <span style="color:#111">timeout</span><span style="color:#111">(</span><span style="color:#ae81ff">5</span><span style="color:#111">):</span>
+            <span style="color:#111">time</span><span style="color:#f92672">.</span><span style="color:#111">sleep</span><span style="color:#111">(</span><span style="color:#ae81ff">10</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">except</span> <span style="color:#111">TimeoutError</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;The function timed out&#39;</span><span style="color:#111">)</span>
+
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Done.&#39;</span><span style="color:#111">)</span></code></pre></div>
+<p>Since we are sleeping for 10 seconds (which exceeds the 5 second timeout limit), the code above will timeout and raise the <code>TimeoutError</code> error.</p>
+
+<p>If you reduce the sleep time, or increase the timeout time, the function should be able to reach the last print statement.</p>
+
+<p>There we have it! A simple way to timeout or long running functions in Python 🎉</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

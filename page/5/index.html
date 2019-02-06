@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-01-30 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-01-30 00:00:00 &#43;0000 UTC",
+    "datePublished": "2018-02-09 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-02-09 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,39 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/testing-django-and-drf-with-pytest/">Testing Django and DRF With Pytest</a>
+  </h1>
+  <time datetime="2018-02-09T00:00:00Z" class="post-date">Fri, Feb 9, 2018</time>
+  <p><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a> has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
+
+<p>We will be using the following tools:</p>
+
+<ul>
+<li><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a>: Python testing framework</li>
+<li><a href="https://pytest-django.readthedocs.io/">pytest-django</a>: Pytest extensions for Django</li>
+<li><a href="https://factoryboy.readthedocs.io/">factoryboy</a>: Factories for easy test data generation.</li>
+</ul>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+    <a href="https://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/testing-django-and-drf-with-pytest/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/">Building a Django Continuous Integration and Delivery Pipeline to AWS</a>
@@ -264,43 +297,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/java-jtable-tricks/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Bulk Create With Django REST Framework</a>
-  </h1>
-  <time datetime="2017-11-27T00:00:00Z" class="post-date">Mon, Nov 27, 2017</time>
-  <p>In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
-
-<h2 id="the-serializer">The Serializer</h2>
-
-<p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># serializers.py</span>
-<span style="color:#f92672">from</span> <span style="color:#111">myapp.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Book</span>
-<span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">serializers</span>
-
-
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookSerializer</span><span style="color:#111">(</span><span style="color:#111">serializers</span><span style="color:#f92672">.</span><span style="color:#111">ModelSerializer</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">class</span> <span style="color:#75af00">Meta</span><span style="color:#111">:</span>
-        <span style="color:#111">model</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span>
-        <span style="color:#111">fields</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;__all__&#39;</span></code></pre></div>
-<p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/djangorestframework" class="label label-default">djangorestframework</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Read More…</a>
     </div>
   
 </article>
