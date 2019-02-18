@@ -24,7 +24,7 @@
 
 <p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&rsquo;s execution.</p>
 
-<p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the standard library.</p>
+<p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the Python standard library.</p>
 
 <p>Here is a complete example:</p>",
     "inLanguage" : "en-US",
@@ -37,7 +37,7 @@
     "datePublished": "2019-02-06 16:02:35 &#43;0000 UTC",
     "dateModified" : "2019-02-06 16:02:35 &#43;0000 UTC",
     "url" : "https://aalvarez.me/posts/making-functions-timeout-in-python/",
-    "wordCount" : "269",
+    "wordCount" : "270",
     "keywords" : [ "python","Blog" ]
 }
 </script>
@@ -145,7 +145,7 @@ if (!doNotTrack) {
 
 <p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&rsquo;s execution.</p>
 
-<p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the standard library.</p>
+<p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the Python standard library.</p>
 
 <p>Here is a complete example:</p>
 
@@ -153,13 +153,13 @@ if (!doNotTrack) {
 
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">timeout</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">time</span><span style="color:#111">):</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_time</span> <span style="color:#f92672">=</span> <span style="color:#111">time</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">seconds</span><span style="color:#111">):</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_seconds</span> <span style="color:#f92672">=</span> <span style="color:#111">seconds</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#111">__enter__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
         <span style="color:#75715e"># Register and schedule the signal with the specified time</span>
         <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">signal</span><span style="color:#111">(</span><span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">SIGALRM</span><span style="color:#111">,</span> <span style="color:#111">timeout</span><span style="color:#f92672">.</span><span style="color:#111">_raise_timeout</span><span style="color:#111">)</span>
-        <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">alarm</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_time</span><span style="color:#111">)</span>
+        <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">alarm</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_seconds</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">return</span> <span style="color:#111">self</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#111">__exit__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">exc_type</span><span style="color:#111">,</span> <span style="color:#111">exc_value</span><span style="color:#111">,</span> <span style="color:#111">traceback</span><span style="color:#111">):</span>
@@ -178,7 +178,7 @@ if (!doNotTrack) {
 
 <span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
-        <span style="color:#00a8c8">with</span> <span style="color:#111">timeout</span><span style="color:#111">(</span><span style="color:#ae81ff">5</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">with</span> <span style="color:#111">timeout</span><span style="color:#111">(</span><span style="color:#111">seconds</span><span style="color:#f92672">=</span><span style="color:#ae81ff">5</span><span style="color:#111">):</span>
             <span style="color:#111">time</span><span style="color:#f92672">.</span><span style="color:#111">sleep</span><span style="color:#111">(</span><span style="color:#ae81ff">10</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">except</span> <span style="color:#111">TimeoutError</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;The function timed out&#39;</span><span style="color:#111">)</span>
