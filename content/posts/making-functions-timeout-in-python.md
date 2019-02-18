@@ -9,7 +9,7 @@ Sometimes you need to execute a function that can take a lot of time to finish. 
 
 We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program's execution.
 
-We can achieve this by using a custom [context manager](http://book.pythontips.com/en/latest/context_managers.html) and the [`signal`](https://docs.python.org/2/library/signal.html) module from the standard library.
+We can achieve this by using a custom [context manager](http://book.pythontips.com/en/latest/context_managers.html) and the [`signal`](https://docs.python.org/2/library/signal.html) module from the Python standard library.
 
 Here is a complete example:
 
@@ -20,13 +20,13 @@ import signal
 
 
 class timeout:
-    def __init__(self, time):
-        self._time = time
+    def __init__(self, seconds):
+        self._seconds = seconds
 
     def __enter__(self):
         # Register and schedule the signal with the specified time
         signal.signal(signal.SIGALRM, timeout._raise_timeout)
-        signal.alarm(self._time)
+        signal.alarm(self._seconds)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -49,7 +49,7 @@ import time
 
 if __name__ == '__main__':
     try:
-        with timeout(5):
+        with timeout(seconds=5):
             time.sleep(10)
     except TimeoutError:
         print('The function timed out')
