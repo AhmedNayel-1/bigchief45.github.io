@@ -37,7 +37,7 @@
     "datePublished": "2019-01-15 20:33:50 &#43;0000 UTC",
     "dateModified" : "2019-01-15 20:33:50 &#43;0000 UTC",
     "url" : "https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/",
-    "wordCount" : "533",
+    "wordCount" : "536",
     "keywords" : [ "django","elasticbeanstalk","Blog" ]
 }
 </script>
@@ -154,7 +154,7 @@ if (!doNotTrack) {
 <p>Before I start, I want to briefly go over my Elastic Beanstalk environment&rsquo;s properties:</p>
 
 <ul>
-<li>Load balanced (1 to 4 instances)</li>
+<li>Load balanced (1 to 4 instances) with an <em>Application Load Balancer</em></li>
 <li>HTTPS secured</li>
 <li>Django 1.11</li>
 </ul>
@@ -201,8 +201,6 @@ if (!doNotTrack) {
 <p>The health now reports 100% of requests failing with 3xx. The reason for this is because the Django application is secured with HTTPS and has some security configurations such as these:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># settings.prod.py</span>
 
-
-<span style="color:#75715e"># Security</span>
 <span style="color:#75715e"># https://docs.djangoproject.com/en/1.11/topics/security/</span>
 <span style="color:#111">SECURE_PROXY_SSL_HEADER</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#d88200">&#39;HTTP_X_FORWARDED_PROTO&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;https&#39;</span><span style="color:#111">)</span>
 <span style="color:#111">SECURE_HSTS_SECONDS</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>
