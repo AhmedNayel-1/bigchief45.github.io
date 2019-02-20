@@ -18,7 +18,7 @@ This issue was probably caused by several reasons. In this post I will go over t
 
 Before I start, I want to briefly go over my Elastic Beanstalk environment's properties:
 
-- Load balanced (1 to 4 instances)
+- Load balanced (1 to 4 instances) with an **Application Load Balancer**
 - HTTPS secured
 - Django 1.11
 
@@ -71,8 +71,6 @@ The health now reports 100% of requests failing with 3xx. The reason for this is
 ```python
 # settings.prod.py
 
-
-# Security
 # https://docs.djangoproject.com/en/1.11/topics/security/
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = 60
