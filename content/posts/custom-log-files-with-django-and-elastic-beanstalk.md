@@ -7,7 +7,7 @@ keywords: [django, elasticbeanstalk, logs, monitoring]
 
 With Amazon ElasticBeanstalk it is possible to view log files of your deployed application. However, ElasticBeanstalk by default only returns certain logs like `/var/log/httpd/error_log` or `/var/log/httpd/access_log` if you are using Apache httpd.
 
-If you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk application.
+If you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk console.
 
 
 In this post I will show you how to achieve this, using Django as our backend framework.
