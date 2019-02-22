@@ -193,7 +193,7 @@ if (!doNotTrack) {
     <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Hello World&#34;</span><span style="color:#111">)</span></code></pre></div>
 <h2 id="configuring-permissions-in-elasticbeanstalk">Configuring Permissions in ElasticBeanstalk</h2>
 
-<p>Some permissions must be configured in this path so that Django can successfully write logs to these new custom files. In your <code>.ebextension</code> directory, create a new file called <code>logging.config</code>:</p>
+<p>Some permissions must be configured in this path so that Django can successfully write logs to these new custom files. In your <code>.ebextensions</code> directory, create a new file called <code>logging.config</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">commands<span style="color:#111">:</span>
   01_change_permissions<span style="color:#111">:</span>
     command<span style="color:#111">:</span> chmod g+s /opt/python/log
