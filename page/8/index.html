@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-07-27 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-07-27 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-08-14 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-08-14 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,49 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/select2-with-simple-form-in-rails/">Select2 With Simple Form in Rails</a>
+  </h1>
+  <time datetime="2017-08-14T00:00:00Z" class="post-date">Mon, Aug 14, 2017</time>
+  <p><a href="https://select2.github.io/">Select2</a> is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.</p>
+
+<p>Recently while working on a Rails project, I was experiencing some problems when using Select2 and <a href="https://github.com/plataformatec/simple_form">Simple Form</a> in my view.</p>
+
+<p>In the view, I want to use Select2 to search for people in a <code>Person</code> table in the application&rsquo;s database. Select2 should use AJAX to hit a controller&rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).</p>
+
+<p>The controller action looks something like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">search</span>
+  <span style="color:#111">@people</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Person</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#f92672">.</span><span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">&#39;name LIKE ? OR last_name LIKE ?&#39;</span><span style="color:#111">,</span>
+    <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">)</span>
+
+  <span style="color:#111">respond_to</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">format</span><span style="color:#f92672">|</span>
+    <span style="color:#111">format</span><span style="color:#f92672">.</span><span style="color:#111">json</span> <span style="color:#111">{</span> <span style="color:#111">render</span> <span style="color:#d88200">json</span><span style="color:#111">:</span> <span style="color:#111">@people</span><span style="color:#f92672">.</span><span style="color:#111">map</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">p</span><span style="color:#f92672">|</span> <span style="color:#111">{</span> <span style="color:#111">id</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#d88200">full_name</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">full_name</span> <span style="color:#111">}</span> <span style="color:#111">}</span> <span style="color:#111">}</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
+  
+    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/select2-with-simple-form-in-rails/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/an-introduction-to-game-states-in-love2d/">An Introduction to Game States in Love2D</a>
@@ -339,41 +382,6 @@ He answers 'Whatever.' to anything else.
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/">Zenoss Custom Notification Actions Using Subscribers</a>
-  </h1>
-  <time datetime="2017-06-07T00:00:00Z" class="post-date">Wed, Jun 7, 2017</time>
-  <p>In a <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification&rsquo;s content pane, as shown below:</p>
-
-<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content" /></p>
-
-<p>In this post I want to change and improve this by using <em><strong>subscribers</strong></em> functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the <em>Pager</em> field instead.</p>
-
-<h2 id="the-pager-action">The Pager Action</h2>
-
-<p>Using Zenoss Core 4&rsquo;s pager action&rsquo;s <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
-
-<p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/">Read More…</a>
     </div>
   
 </article>

@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-02-09 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-02-09 00:00:00 &#43;0000 UTC",
+    "datePublished": "2018-03-28 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2018-03-28 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,39 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform/">Custom File Types in Netbeans Platform</a>
+  </h1>
+  <time datetime="2018-03-28T00:00:00Z" class="post-date">Wed, Mar 28, 2018</time>
+  <p>If your desktop Java application needs to deal with very particular or special kinds of files, we can make use of Netbeans Platform&rsquo;s custom File Type feature to define a file that our application can recognize, and display visual and editing components to view and edit the file&rsquo;s data.</p>
+
+<p>Moreover, we can also make use of Netbeans Platform&rsquo;s <em>Favorites</em> pane, which displays a tree view of a file system, where we can open the special files we need to work with.</p>
+
+<h2 id="creating-a-new-module">Creating a New Module</h2>
+
+<p>For this article, we are going to create a new file type for CSV (Comma Separated Value) files. When we open these files, our application will display a visual representation in the form of an editable JTable.</p>
+
+<p>All this functionaltiy will live in its own Netbeans Platform Module. Meaning that it can be plugged in into different applications in a modular fashion.</p>
+
+<p>We are going to create the module and build it using <a href="https://maven.apache.org/">Maven</a>, since we are also going to be adding some functionalities that depend on external libraries that we can easily include in our project with Maven. But you can also just create the module without Maven as well. To create the module go to <em>New Project &gt; Maven &gt; Netbeans Module</em></p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/java" class="label label-default">java</a></li>
+  
+    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/testing-django-and-drf-with-pytest/">Testing Django and DRF With Pytest</a>
@@ -266,37 +299,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/java-jtable-tricks/">Java JTable Tricks</a>
-  </h1>
-  <time datetime="2017-12-20T00:00:00Z" class="post-date">Wed, Dec 20, 2017</time>
-  <p>Java&rsquo;s JTable is a GUI component that has been around for many many years. While a bit difficult to work with, it&rsquo;s almost a mandatory component in an application that displays a lot of data.</p>
-
-<p>In this post I share some nice tricks for working with JTables in Java applications.</p>
-
-<h2 id="scrolling">Scrolling</h2>
-
-<p>A JTable by itself does not provide any scrolling when handling a lot of data. To fix this, we need to place the table inside a <code>JScrollPane</code> component. Additionally, we can place this <code>JScrollPane</code> into a <code>JPanel</code> in our window:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#111">myPanel</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">JScrollPane</span><span style="color:#f92672">(</span><span style="color:#111">myTable</span><span style="color:#f92672">,</span>
-    <span style="color:#111">JScrollPane</span><span style="color:#f92672">.</span><span style="color:#75af00">VERTICAL_SCROLLBAR_AS_NEEDED</span><span style="color:#f92672">,</span>
-    <span style="color:#111">JScrollPane</span><span style="color:#f92672">.</span><span style="color:#75af00">HORIZONTAL_SCROLLBAR_AS_NEEDED</span><span style="color:#f92672">)</span>
-    <span style="color:#f92672">);</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/java" class="label label-default">java</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/java-jtable-tricks/">Read More…</a>
     </div>
   
 </article>

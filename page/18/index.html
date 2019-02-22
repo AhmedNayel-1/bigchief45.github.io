@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-17 00:00:00 &#43;0000 UTC",
+    "datePublished": "2016-11-18 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2016-11-18 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,56 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers/">IPMI &amp; Baseboard Management Controllers</a>
+  </h1>
+  <time datetime="2016-11-18T00:00:00Z" class="post-date">Fri, Nov 18, 2016</time>
+  <p>An <strong>Intelligent Platform Management Interface (IPMI)</strong> is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system&rsquo;s CPU, BIOS, and operating system.</p>
+
+<p>IPMI can also help manage computers that are unresponsive or powered off, by using a network connection to the <strong>hardware</strong>, rather than to a operating system or login shell.</p>
+
+<p>More specifically, IPMI can help us monitor, obtain data, and perform tasks such as:</p>
+
+<ul>
+<li>System temperature</li>
+<li>Voltages</li>
+<li>Fans</li>
+<li>Power supplies</li>
+<li>Chassis intrusion</li>
+<li>Perform recovery procedures</li>
+<li>System rebooting</li>
+<li>System powering</li>
+</ul>
+
+<p>An IPMI sub-system consists of a main controller, called the baseboard management controller (BMC) and other management controllers distributed among different system modules that are referred to as <em>satellite controllers</em>. The satellite controllers within the same chassis connect to the BMC via another system interface (not covered in this post) called Intelligent Platform Management Bus/Bridge (IPMB)</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="https://aalvarez.me/tags/hardware" class="label label-default">hardware</a></li>
+  
+    <a href="https://aalvarez.me/tags/ipmi" class="label label-default">ipmi</a></li>
+  
+    <a href="https://aalvarez.me/tags/ipmitool" class="label label-default">ipmitool</a></li>
+  
+    <a href="https://aalvarez.me/tags/bmc" class="label label-default">bmc</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/custom-markdown-in-middleman/">Custom Markdown in Middleman</a>
@@ -316,51 +366,6 @@ What is the value of the first triangle number to have over five hundred divisor
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/infinite-sequences-in-ruby-using-enumerator/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/">Modifying the Zenoss Infrastructure Grid</a>
-  </h1>
-  <time datetime="2016-11-10T00:00:00Z" class="post-date">Thu, Nov 10, 2016</time>
-  <p>Continuing from my previous post, where I explained <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">how to modify the device detail bar from a ZenPack using ExtJS</a>, in this post I will explain how we can modify the device list grid shown in the infrastructure page.</p>
-
-<h2 id="the-infrastructure-grid">The Infrastructure Grid</h2>
-
-<p>This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include <em>device name</em>, <em>device class</em>, <em>IP address</em>, <em>production state</em>, and <em>events</em>, as shown in the image below:</p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png" alt="Zenoss Infrastructure Grid" /></p>
-
-<p>However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&rsquo;t do this by default is beyond me).</p>
-
-<h2 id="devicepanels-js">DevicePanels.js</h2>
-
-<p>The source code for the grid is found in <code>$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js</code>. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called <code>deviceColumns</code>.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/">Read More…</a>
     </div>
   
 </article>
