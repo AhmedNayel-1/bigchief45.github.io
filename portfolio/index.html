@@ -136,6 +136,32 @@ if (!doNotTrack) {
 <p>A small showcase of my public and personal projects.</p>
 
 
+<div>
+  <h3>Python Serverless OCR Microservice</h3>
+
+  <p>A serverless microservice written in Python and deployed in AWS Lambda that uses Google's <a href="https://github.com/tesseract-ocr" target="_blank">Tesseract OCR</a> library to extract OCR (Optical Character Recognition) data from book pages image files that are uploaded to an S3 bucket as image files.</p>
+
+  <img src="https://aalvarez.me/img/portfolio/python_ocr_serverless_microservice.png" title="Python Serverless OCR Micro-Service" class="text-center">
+
+  <p>The OCR data is extracted in <a href="https://en.wikipedia.org/wiki/Hocr" target="_blank">hOCR format</a> and then reformatted as JSON to be saved in an S3 bucket. This data OCR data can then be used to <strong>simulate</strong> text highlighting in an image-based online reader like Google's or Amazon's.</p>
+</div>
+
+<hr>
+
+
+<div>
+  <h3>Python Serverless PDF Processing Microservices</h3>
+
+  <p>A collection of serverless microservices written in Python and deployed in AWS Lambda. One of these services extracts meta data, table of contents, and full text from PDF files. This data is then stored in different locations. For example, full text of PDFs is stored in Elasticsearch so that full text search can be made on all uploaded PDF files in the cloud</p>
+
+  <img src="https://aalvarez.me/img/portfolio/python_pdf_processing_microservices.png" title="Python Serverless PDF Processing Microservices" class="text-center">
+
+  <p>Another service is in charge of converting every page of the PDF into an image. So that each page can be displayed by an online reader as an image. When an image is requested, another service that leverages Amazon API Gateway is in charge of fetching the image from a CDN and providing its corresponding OCR data.</p>
+</div>
+
+<hr>
+
+
   <div class="media">
     <a href="http://justix.herokuapp.com" target="_blank">
       <img src="https://aalvarez.me/img/portfolio/justix.jpg" title="Justix" style="float: right; margin-left: 20px;" width="300" height="300">
