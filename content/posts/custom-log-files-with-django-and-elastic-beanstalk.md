@@ -71,7 +71,7 @@ def some_view(request):
 
 ## Configuring Permissions in ElasticBeanstalk
 
-Some permissions must be configured in this path so that Django can successfully write logs to these new custom files. In your `.ebextension` directory, create a new file called `logging.config`:
+Some permissions must be configured in this path so that Django can successfully write logs to these new custom files. In your `.ebextensions` directory, create a new file called `logging.config`:
 
 ```yaml
 commands:
