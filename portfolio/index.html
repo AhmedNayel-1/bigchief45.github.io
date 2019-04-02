@@ -148,13 +148,29 @@ if (!doNotTrack) {
 
 
 <div>
-  <h3>Python Serverless PDF Processing Microservices</h3>
+  <h3>Librarian: Python Serverless PDF Processing Microservices</h3>
 
   <p>A collection of serverless microservices written in Python and deployed in AWS Lambda. One of these services extracts meta data, table of contents, and full text from PDF files. This data is then stored in different locations. For example, full text of PDFs is stored in Elasticsearch so that full text search can be made on all uploaded PDF files in the cloud</p>
 
-  <img src="https://aalvarez.me/img/portfolio/python_pdf_processing_microservices.png" title="Python Serverless PDF Processing Microservices" class="text-center">
+  <img src="https://aalvarez.me/img/portfolio/librarian.png" title="Python Serverless PDF Processing Microservices" class="text-center">
 
   <p>Another service is in charge of converting every page of the PDF into an image. So that each page can be displayed by an online reader as an image. When an image is requested, another service that leverages Amazon API Gateway is in charge of fetching the image from a CDN and providing its corresponding OCR data.</p>
+</div>
+
+<hr>
+
+
+<div>
+  <h3>eLibro Content Manager</h3>
+
+  <img src="https://aalvarez.me/img/portfolio/elibro_cm.png" title="eLibro Content Manager" class="text-center">
+
+  <p>eLibro Content Manager is a native desktop Java application built using the <a href="http://platform.netbeans.org/" target="_blank">Netbeans Rich Client Platform (RCP)</a>, the platform that powers the <a href="https://netbeans.org/" target="_blank">Netbeans IDE</a>.</p>
+
+  <p>The application uses the <a href="https://github.com/aws/aws-sdk-java" target="_blank">AWS Java SDK</a> to allow interaction with files and data stored in Amazon S3 and Amazon DynamoDB. This application allows employees in charge of uploading the company's content  (books) to upload and manipulate content files to S3, so that they can automatically be processed by Librarian.</p>
+
+  <p>Additionally, it allows viewing the current health status of each book, depending on whether the book was successfully processed or not.</p>
+
 </div>
 
 <hr>
