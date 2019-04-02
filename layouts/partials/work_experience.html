@@ -13,11 +13,9 @@
 
   <p><small>{{ .description }}</small></p>
 
-  <ul>
-    {{ range .tasks }}
-      <li><small>{{ . }}</small></li>
-    {{ end }}
-  </ul>
+  {{ range .tasks }}
+    <p><small>{{ . }}</small></p>
+  {{ end }}
 
   <!-- TAGS -->
   <div>
