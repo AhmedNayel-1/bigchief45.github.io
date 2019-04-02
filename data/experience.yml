@@ -1,7 +1,7 @@
 jobs:
   # E-Libro
   -
-    company: E-Libro
+    company: eLibro
     link: http://www.e-libro.com/
     image: elibro.png
 
@@ -9,13 +9,12 @@ jobs:
     period: 2017 - Present
     location: Remote
 
-    description: Design and development from scratch of an eBook processing platform running on AWS. The platform is responsible for processing thousands of uploaded books to extract metadata, OCR data, images, text-to-speech audio, and full text-search data to be stored in different services such as S3, DynamoDB and Elasticsearch.
     tasks:
-      - Creation and development of a serverless service oriented architecture of book processing platform using S3, AWS Lambda, Amazon SQS, Amazon Polly, DynamoDB and Elasticsearch.
-      - Creation and development of a content manager desktop Netbeans Platform Java application for uploading books en masse to cloud.
-      - Serverless API for performing full text search across thousands of books stored in Elasticsearch.
-      - Django development for eBook viewing web platform and application.
-      - REST API development using Django REST Framework.
+      - "Architected, created and developed Librarian: a collection of serverless book processing microservices that processed more than 100K books. (Python, Serverless Framework, Amazon S3, AWS Lambda, Amazon SQS, Amazon SNS, Amazon Polly, Amazon DynamoDB, Elasticsearch)"
+      - "Creation and development of eLibro Content Manager: A native desktop Netbeans Platform Java application for uploading and manipulating books stored in Amazon S3 and indexed in DynamoDB. (Java, Netbeans Platform, Java AWS SDK, Amazon S3, Amazon DynamoDB)"
+      - "Created and Developed a serverless API to fetch and provide specific book pages stored in S3, and for performing full text search across thousands of books stored in Elasticsearch. (Python, Serverless Framework, Amazon API Gateway, Elasticsearch)"
+      - "Development of elibro.net: a web application for eBooks used by universities. (Django, Django REST Framework, Postgresql, Amazon ElasticBeanstalk)"
+      - "Development of experience.elibro.net: a web application for displaying free and premium ebook collections. (Django, Postgresql)"
 
     tags: [Python 3, Django, Django REST Framework, Pytest, Ruby, Sinatra, Nginx, Java, Maven, Netbeans Platform, Retrofit, JUnit, ElasticSearch, Amazon S3, aws CloudFormation, Amazon DynamoDB, AWS Lambda, Amazon EC2, Amazon SNS, Amazon SQS, AWS API Gateway, Amazon RDS, Amazon Polly, AWS ElasticBeanstalk, AWS CloudFront, Chalice, JavaScript, NodeJS, ClaudiaJS, Serverless Framework, TesseractJS, TravisCI, tesseract-ocr, Docker, Stripe]
 
@@ -29,16 +28,14 @@ jobs:
     period: 2015 - 2017
     location: Hsinchu, Taiwan
 
-    description: ""
-
     tasks:
-      - Maintenance of ITRI’s OpenStack and data center monitoring platform (PDCM).
-      - Development of new features and add-ons for PDCM.
-      - ZenPack development for Zenoss Core 4.
-      - Integration between OpenStack’s Ceilometer and PDCM.
-      - Juju Charm development
+      - Maintenance of ITRI’s OpenStack and data center monitoring platform.
+      - Automatic gathering of hardware data for monitoring purposes (SNMP, IPMI)
+      - Development of new new features and addons for monitoring platform (Python, Zenoss, Zenpacklib).
+      - OpenStack and PDCM service orchestration with Juju
+      - Juju Charm development (Juju, Bashscript)
 
-    tags: [Python 2, Python 3 ,JavaScript, ExtJS, Zenoss Core 4, Zenpacklib, Zope 2, Twisted, rrdtool, SNMP, IPMI, OpenStack, Ceilometer, Gnocchi, Gerrit, Ubuntu, CentOS, Logstash, Kibana, Juju, RabbitMQ, Redis, BashScript, Git, Gitlab, D3]
+    tags: [Python 2, Python 3, JavaScript, ExtJS, Zenoss Core 4, Zenpacklib, Zope 2, Twisted, rrdtool, SNMP, IPMI, OpenStack, Ceilometer, Gnocchi, Gerrit, Ubuntu, CentOS, Logstash, Kibana, Juju, RabbitMQ, Redis, BashScript, Git, Gitlab, D3]
 
   # Grupo POPA
   -
@@ -50,8 +47,7 @@ jobs:
     period: 2011
     location: Tegucigalpa, Honduras
 
-    description: "Development of add-on applications for SAP BusinessOne using Microsoft Visual Studio and SAP SDK."
-
-    tasks: []
+    tasks:
+      - Development of add-on applications for SAP BusinessOne. (C#, Microsoft SQL Server, SAP SDK)
 
     tags: [SAP BusinessOne, "C#", Visual Basic, .NET, SQL, Microsoft SQL Server, Microsoft Visual Studio]
