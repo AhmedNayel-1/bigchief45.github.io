@@ -27,9 +27,9 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2018",
-    "datePublished": "2018-12-26 17:17:28 &#43;0000 UTC",
-    "dateModified" : "2018-12-26 17:17:28 &#43;0000 UTC",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-01-09 17:28:17 &#43;0000 UTC",
+    "dateModified" : "2019-01-09 17:28:17 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,35 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/media-type-based-responses-with-django-rest-framework/">Media-Type Based Responses With Django REST Framework</a>
+  </h1>
+  <time datetime="2019-01-09T17:28:17Z" class="post-date">Wed, Jan 9, 2019</time>
+  <p>Nowadays a typical REST API responds with data in JSON format. But what if you wanted to serve data in a different format (and not just a serialization format) using the <strong>same</strong> endpoint, but specified by the client?</p>
+
+<p>Django REST Framework <a href="https://www.django-rest-framework.org/api-guide/renderers/">renderers</a> can help us achieve this nice feature.</p>
+
+<h2 id="use-case-onix-for-books-compatible-api">Use Case: ONIX For Books Compatible API</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/ONIX_for_Books">ONIX for books</a> is an XML format for sharing bibliographic data pertaining to both traditional books and eBooks.</p>
+
+<p>Let&rsquo;s say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in <a href="https://www.editeur.org/83/Overview/">ONIX</a> format, which is an XML standard that defines how the metadata should be described and put together for consumption.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/media-type-based-responses-with-django-rest-framework/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/python-functional-testing-for-aws-lambda/">Python Functional Testing for AWS Lambda</a>
@@ -259,33 +288,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/cancellable-tasks-in-netbeans-platform/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/recursive-python-aws-lambda-functions/">Recursive Python AWS Lambda Functions</a>
-  </h1>
-  <time datetime="2018-09-18T00:00:00Z" class="post-date">Tue, Sep 18, 2018</time>
-  <p>There are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.</p>
-
-<p>Basically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/recursive-python-aws-lambda-functions/">Read More…</a>
     </div>
   
 </article>

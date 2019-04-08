@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-08-14 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-08-14 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-08-24 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-08-24 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,45 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/integrating-devise-with-rolify-in-rails/">Integrating Devise With Rolify in Rails</a>
+  </h1>
+  <time datetime="2017-08-24T00:00:00Z" class="post-date">Thu, Aug 24, 2017</time>
+  <p>I have searched through tons of StackOverflow questions and blog posts on how to <strong>properly</strong> integrate Rolify with Devise when <strong>registering as a new user</strong> through the registration view provided by Devise. All proposed solutions and half-solutions seemed very messy to me, but I found a very simple way to achieve this.</p>
+
+<h2 id="preparing-the-roles">Preparing the Roles</h2>
+
+<p>Assuming you already have initialized a Devise <code>User</code> model along with a Rolify <code>Role</code> model, a very common question I see is how should the roles be prepared so that the <em>new</em> users can have a list of already created roles to choose from when registering? In the <a href="https://github.com/RolifyCommunity/rolify">Rolify documentation</a>, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">User</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span>
+<span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span> <span style="color:#d88200">:admin</span></code></pre></div>
+<p>A new <code>admin</code> role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.</p>
+
+<p>Answers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># db/seeds.rb</span>
+
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;doctor&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;nurse&#39;</span><span style="color:#111">)</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/integrating-devise-with-rolify-in-rails/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/select2-with-simple-form-in-rails/">Select2 With Simple Form in Rails</a>
@@ -336,52 +375,6 @@ class_relationships<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/">Using Lambdas in Case Statements in Ruby</a>
-  </h1>
-  <time datetime="2017-06-12T00:00:00Z" class="post-date">Mon, Jun 12, 2017</time>
-  <p>In a <a href="http://aalvarez.me/blog/posts/using-objects-and-ranges-with-cases-in-ruby.html">previous post</a> I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.</p>
-
-<p>The other day I was trying to solve the <a href="http://exercism.io/submissions/03c3c93f23b8420faff3107e2ad18286">Bob Ruby exercise in Exercism</a>, and I came up with another very cool way to use case statements: with Lambdas.</p>
-
-<h2 id="the-problem">The Problem</h2>
-
-<p>The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem&rsquo;s README file:</p>
-
-<pre><code>Bob is a lackadaisical teenager. In conversation, his responses are very limited.
-
-Bob answers 'Sure.' if you ask him a question.
-
-He answers 'Whoa, chill out!' if you yell at him.
-
-He says 'Fine. Be that way!' if you address him without actually saying anything.
-
-He answers 'Whatever.' to anything else.
-</code></pre>
-
-<h2 id="solutions">Solutions</h2>
-
-<p>The test provided by Exercism indicates that we should create a <code>Bob</code> class with a <code>hey</code> class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
-  
-    <a href="https://aalvarez.me/tags/exercism" class="label label-default">exercism</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/">Read More…</a>
     </div>
   
 </article>

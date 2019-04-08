@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-01-23 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-01-23 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-02-07 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-02-07 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,51 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">C Gotchas For Beginners</a>
+  </h1>
+  <time datetime="2017-02-07T00:00:00Z" class="post-date">Tue, Feb 7, 2017</time>
+  <p>Similar to <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners.html">my post</a> on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you <strong>must</strong> know if you are to become a good C programmer.</p>
+
+<h2 id="boolean-types">Boolean Types</h2>
+
+<p>C actually does not have a boolean type. They are usually defined like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define BOOL char
+</span><span style="color:#75715e">#define FALSE 0
+</span><span style="color:#75715e">#define TRUE 1</span></code></pre></div>
+<p>However it is argued that it is a better practice to simply use integers instead (<code>0</code> and <code>1</code>).</p>
+
+<h2 id="memory-address-of-array-elements">Memory Address of Array Elements</h2>
+
+<p>In C, arrays have a contiguous memory allocation. We can verify this by printing the memory addresses of each element of an array. We can do so using <code>&amp;</code> to access the memory location of the array element:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#00a8c8">int</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">char</span> <span style="color:#111">vowels</span><span style="color:#111">[]</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;a&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;e&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;i&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;o&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;u&#39;</span><span style="color:#111">};</span>
+
+  <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span><span style="color:#111">;</span> <span style="color:#111">i</span><span style="color:#f92672">++</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Address of vowel [%d]: %u</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#111">vowels</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]);</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#00a8c8">return</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
+<span style="color:#111">}</span></code></pre></div>
+<p>The above code will produces the following output for me:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/c" class="label label-default">c</a></li>
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/c-gotchas-for-beginners/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Processing Nova Live Migration Events in Zenoss</a>
@@ -312,39 +357,6 @@ zProperties<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/understanding-snmp-and-net-snmp/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/">Fixing Zenoss Device Network Interface Graphs</a>
-  </h1>
-  <time datetime="2017-01-13T00:00:00Z" class="post-date">Fri, Jan 13, 2017</time>
-  <p>When testing the monitoring of the OpenStack compute node devices in Zenoss (using <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a>), I noticed that I could not get any graphs for the <strong>network interfaces</strong> of the device, although we could still get and model all the available interfaces:</p>
-
-<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces" /></p>
-
-<p>This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
-  
-    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/">Read More…</a>
     </div>
   
 </article>
