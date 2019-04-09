@@ -4,8 +4,6 @@ date: 2019-04-08T15:09:13Z
 tags: [codingchallenges]
 ---
 
-Here is a coding challenge from a recent technical interview.
-
 **Difficulty:** Easy
 
 ## Problem
@@ -71,6 +69,20 @@ def longest_substring(s: str) -> int:
                     return len(g)
 
         n -= 1
+```
+
+## Takeaways
+
+A very common task also present in other coding challenges is creating substring groups of size n from a string, as shown in this challenge. In Python we can do this in one line, although I feel it's a bit hard to remember it:
+
+```python
+groups = [s[i:i+n] for i in range(0, len(s), n)]
+```
+
+Another very simple concept is the checking of unique characters in a string. To achieve this we simply conver the string to a set, which will remove all the duplicate characters, and then compare its length to the original string's length. No need to loop through the string:
+
+```python
+unique = len(set(g)) == len(g)
 ```
 
 ## References
