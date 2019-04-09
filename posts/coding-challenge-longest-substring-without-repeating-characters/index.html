@@ -20,9 +20,7 @@
     "articleSection" : "posts",
     "name" : "Coding Challenge: Longest Substring Without Repeating Characters",
     "headline" : "Coding Challenge: Longest Substring Without Repeating Characters",
-    "description" : "<p>Here is a coding challenge from a recent technical interview.</p>
-
-<p><strong>Difficulty:</strong> Easy</p>
+    "description" : "<p><strong>Difficulty:</strong> Easy</p>
 
 <h2 id="problem">Problem</h2>
 
@@ -45,7 +43,7 @@
     "datePublished": "2019-04-08 15:09:13 &#43;0000 UTC",
     "dateModified" : "2019-04-08 15:09:13 &#43;0000 UTC",
     "url" : "https://aalvarez.me/posts/coding-challenge-longest-substring-without-repeating-characters/",
-    "wordCount" : "333",
+    "wordCount" : "430",
     "keywords" : [ "codingchallenges","Blog" ]
 }
 </script>
@@ -149,9 +147,7 @@ if (!doNotTrack) {
   <h1>Coding Challenge: Longest Substring Without Repeating Characters</h1>
   <time datetime=2019-04-08T15:09:13Z class="post-date">Mon, Apr 8, 2019</time>
 
-  <p>Here is a coding challenge from a recent technical interview.</p>
-
-<p><strong>Difficulty:</strong> Easy</p>
+  <p><strong>Difficulty:</strong> Easy</p>
 
 <h2 id="problem">Problem</h2>
 
@@ -205,6 +201,12 @@ if (!doNotTrack) {
                     <span style="color:#00a8c8">return</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span>
 
         <span style="color:#111">n</span> <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span></code></pre></div>
+<h2 id="takeaways">Takeaways</h2>
+
+<p>A very common task also present in other coding challenges is creating substring groups of size n from a string, as shown in this challenge. In Python we can do this in one line, although I feel it&rsquo;s a bit hard to remember it:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">groups</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">s</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">:</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#111">n</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">),</span> <span style="color:#111">n</span><span style="color:#111">)]</span></code></pre></div>
+<p>Another very simple concept is the checking of unique characters in a string. To achieve this we simply conver the string to a set, which will remove all the duplicate characters, and then compare its length to the original string&rsquo;s length. No need to loop through the string:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">unique</span> <span style="color:#f92672">=</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">set</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">))</span> <span style="color:#f92672">==</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span></code></pre></div>
 <h2 id="references">References</h2>
 
 <ul>
