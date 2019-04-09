@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-03-29 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-03-29 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-04-03 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-04-03 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,51 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/">Using Rails With Webpack in Cloud 9</a>
+  </h1>
+  <time datetime="2017-04-03T00:00:00Z" class="post-date">Mon, Apr 3, 2017</time>
+  <p>The <a href="https://github.com/rails/webpacker">rails/webpacker</a> project allows integration of <a href="https://webpack.github.io/">Webpack</a> with a Rails application. However, setting this up in a <a href="https://c9.io">Cloud 9</a> development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.</p>
+
+<h2 id="creating-the-application">Creating the Application</h2>
+
+<p>We will first create a regular Rails application and then use the webpacker gem to install Webpack.</p>
+
+<pre><code>rails new webpack-app
+</code></pre>
+
+<p>Add the gem to <code>Gemfile</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gemfile</span>
+
+<span style="color:#111">gem</span> <span style="color:#d88200">&#39;webpacker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">github</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;rails/webpacker&#39;</span></code></pre></div>
+<p>Install Webpacker</p>
+
+<pre><code>rails webpacker:install
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/cloud9" class="label label-default">cloud9</a></li>
+  
+    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="https://aalvarez.me/tags/webpack" class="label label-default">webpack</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/">Using Objects and Ranges With Cases in Ruby</a>
@@ -290,42 +335,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/python-tricks-for-better-code/">Python Tricks for Better Code</a>
-  </h1>
-  <time datetime="2017-03-08T00:00:00Z" class="post-date">Wed, Mar 8, 2017</time>
-  <p>A compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.</p>
-
-<h2 id="enumerate">Enumerate</h2>
-
-<p>When working with items in a list and we want to print or handle each item&rsquo;s index, instead of using a counter variable:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Bad way</span>
-<span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#00a8c8">for</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">places</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span>
-    <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span></code></pre></div>
-<p>We can use <code>enumerate</code> to improve our code:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">enumerate</span><span style="color:#111">(</span><span style="color:#111">places</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span></code></pre></div>
-<p><code>enumerate</code> returns a list of indexes along with each item in the list.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/python-tricks-for-better-code/">Read More…</a>
     </div>
   
 </article>

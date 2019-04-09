@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-05-02 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-05-02 00:00:00 &#43;0000 UTC",
+    "datePublished": "2017-05-04 00:00:00 &#43;0000 UTC",
+    "dateModified" : "2017-05-04 00:00:00 &#43;0000 UTC",
     "url" : "https://aalvarez.me/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,79 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Custom Triggers and Notifications in a ZenPack</a>
+  </h1>
+  <time datetime="2017-05-04T00:00:00Z" class="post-date">Thu, May 4, 2017</time>
+  <p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
+
+<p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
+
+<h2 id="defining-zenpack-triggers-notifications">Defining ZenPack Triggers &amp; Notifications</h2>
+
+<p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn&rsquo;t exist), within the ZenPack&rsquo;s top directory.</p>
+
+<p><strong>actions.json</strong>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
+  &#34;triggers&#34;: [
+    {
+      &#34;name&#34;: &#34;Critical_death_event&#34;,
+      &#34;uuid&#34;: &#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;,
+      &#34;enabled&#34;: false,
+      &#34;rule&#34;: {
+        &#34;api_version&#34;: 1,
+        &#34;type&#34;: 1,
+        &#34;source&#34;: &#34;(evt.event_class.startswith(\&#34;/Status/Ping\&#34;)) and (evt.status == 0) and (evt.severity &gt; 2)&#34;
+      }
+    }
+  ],
+
+  &#34;notifications&#34;: [
+    {
+      &#34;id&#34;: &#34;send_sms_message&#34;,
+      &#34;description&#34;: &#34;Send SMS using Twilio&#34;,
+      &#34;action&#34;: &#34;command&#34;,
+      &#34;guid&#34;: &#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&#34;,
+      &#34;enabled&#34;: false,
+      &#34;action_timeout&#34;: 60,
+      &#34;delay_seconds&#34;: 0,
+      &#34;repeat_seconds&#34;: 0,
+      &#34;send_initial_occurrence&#34;: false,
+      &#34;send_clear&#34;: false,
+      &#34;body_format&#34;: &#34;echo \&#34;Hello World!\&#34;&#34;,
+      &#34;clear_body_format&#34;: &#34;&#34;,
+      &#34;subscriptions&#34;: [&#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;]
+    }
+  ]
+}</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpack" class="label label-default">zenpack</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/zendmd" class="label label-default">zendmd</a></li>
+  
+    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/working-with-rrdtool/">Working With RRDTool</a>
@@ -374,51 +447,6 @@ if (!doNotTrack) {
 </div>
 
 
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/debian-package-versioning/">Debian Package Versioning</a>
-  </h1>
-  <time datetime="2017-04-13T00:00:00Z" class="post-date">Thu, Apr 13, 2017</time>
-  <p>In a previous post I talked about <a href="https://aalvarez.me/posts/managing-debian-package-dependencies.html">managing Debian package dependencies</a>. However I did not go into detail about the structure the versioning of packages must have.</p>
-
-<p>To recap, let&rsquo;s see how we can specify a specific package version of a dependency that our package needs:</p>
-
-<pre><code>Depends: erlang (&gt;= 1.2)
-</code></pre>
-
-<p>In the example above, the required version for erlang is simply <code>1.2</code> or greater. A package&rsquo;s version format however, can be a bit more complex than this.</p>
-
-<h2 id="version-format-and-components">Version Format and Components</h2>
-
-<p>The official format of a Debian package&rsquo;s version is:</p>
-
-<pre><code>[epoch:]upstream_version[-debian_revision]
-</code></pre>
-
-<p>Let&rsquo;s go into detail about each of the components in that format.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-    <a href="https://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
-  
-    <a href="https://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
-  
-    <a href="https://aalvarez.me/tags/aptitude" class="label label-default">aptitude</a></li>
-  
-    <a href="https://aalvarez.me/tags/apt" class="label label-default">apt</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/debian-package-versioning/">Read More…</a>
-    </div>
   
 </article>
 
