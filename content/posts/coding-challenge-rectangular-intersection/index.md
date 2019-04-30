@@ -4,7 +4,7 @@ date: 2019-04-09T18:07:34Z
 tags: [codingchallenges]
 ---
 
-**Difficulty:** Easy
+**Difficulty:** Medium
 
 ## Problem
 
