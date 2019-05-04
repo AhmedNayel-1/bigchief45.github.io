@@ -37,7 +37,7 @@ The points of the intersection rectangle will be the **two middle** points of ea
 
 With this information we can easily calculate the intersection rectangle's width and height with some simple subtraction and return an answer.
 
-:warning: This method will only work if the triangles overlap. So before we try to find an intersection rectangle, we must first determine if the rectangles overlap or not. We will do this by substracting the right-hand side to the farthest left minus the largest left-hand side to the farthest right.
+:warning: This method will only work if the rectangles overlap. So before we try to find an intersection rectangle, we must first determine if the rectangles overlap or not. We will do this by substracting the right-hand side to the farthest left minus the largest left-hand side to the farthest right.
 
 ## Solution (Python):
 
