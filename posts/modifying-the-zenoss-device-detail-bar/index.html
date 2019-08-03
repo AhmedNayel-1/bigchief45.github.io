@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Modifying the Zenoss Device Detail Bar",
     "headline" : "Modifying the Zenoss Device Detail Bar",
-    "description" : "<p>The Zenoss Core <a href="https://www.sencha.com/products/extjs/"><strong>ExtJS</strong></a> graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.</p>
-
-<p>Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss</code>, and as you would expect, the device detail bar component is also located there.</p>
-
-<h2 id="the-device-detail-bar">The Device Detail Bar</h2>
-
-<p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
-
-<p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
-
-<h2 id="extending-the-component-through-zenpacks">Extending The Component, Through ZenPacks</h2>
-
-<p>Let&rsquo;s assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
-
-classes<span style="color:#111">:</span>
-  CustomDevice<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Custom Device
-    properties<span style="color:#111">:</span>
-      power_status<span style="color:#111">:</span>
-        type<span style="color:#111">:</span> boolean</code></pre></div>
-<p>What we want is to display this value in the device&rsquo;s detail bar, similar to the device&rsquo;s ping status display.</p>",
+    "description" : "\x3cp\x3eThe Zenoss Core \x3ca href=\x22https:\/\/www.sencha.com\/products\/extjs\/\x22\x3e\x3cstrong\x3eExtJS\x3c\/strong\x3e\x3c\/a\x3e graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.\x3c\/p\x3e\n\n\x3cp\x3eZenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in \x3ccode\x3e$ZENHOME\/Products\/ZenUI3\/browser\/resources\/js\/zenoss\x3c\/code\x3e, and as you would expect, the device detail bar component is also located there.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-device-detail-bar\x22\x3eThe Device Detail Bar\x3c\/h2\x3e\n\n\x3cp\x3eThis is the detail bar located on the device view page which shows the device\x26rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in \x3ccode\x3eDeviceDetailBar.js\x3c\/code\x3e\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/modifying-the-zenoss-device-detail-bar\/device_detail_bar.png\x22 alt=\x22Device Detail Bar\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eHowever since we are going to \x3cstrong\x3e\x3cem\x3eextend\x3c\/em\x3e\x3c\/strong\x3e this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.\x3c\/p\x3e\n\n\x3ch2 id=\x22extending-the-component-through-zenpacks\x22\x3eExtending The Component, Through ZenPacks\x3c\/h2\x3e\n\n\x3cp\x3eLet\x26rsquo;s assume we are starting with a freshly created ZenPack, which adds a new \x3ccode\x3epower_status\x3c\/code\x3e integer field to certain devices, according to its \x3ccode\x3ezenpack.yaml\x3c\/code\x3e file:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\nclasses\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  CustomDevice\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Device\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Custom Device\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      power_status\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        type\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e boolean\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eWhat we want is to display this value in the device\x26rsquo;s detail bar, similar to the device\x26rsquo;s ping status display.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -52,9 +28,9 @@ classes<span style="color:#111">:</span>
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-08 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-08 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/",
+    "datePublished": "2016-11-08 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-11-08 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/modifying-the-zenoss-device-detail-bar\/",
     "wordCount" : "798",
     "keywords" : [ "zenoss","extjs","monitoring","javascript","ui","zenpacks","sysadmin","Blog" ]
 }

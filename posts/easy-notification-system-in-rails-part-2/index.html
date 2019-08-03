@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,39 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Easy Notification System in Rails Part 2",
     "headline" : "Easy Notification System in Rails Part 2",
-    "description" : "<p><em>Read Part 1 of this series <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">here</a></em></p>
-
-<p>In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.</p>
-
-<p>In this post we will be adding more functionality to our notification system.s</p>
-
-<h2 id="mark-as-read-feature">Mark as Read Feature</h2>
-
-<p>We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:</p>
-
-<ul>
-<li>For a single notification, it should be marked <em>as read</em> when it is clicked from the list of notifications.</li>
-<li>For all notifications, they should be marked as read when a specific button is pressed.</li>
-</ul>
-
-<h3 id="setting-up-the-routes">Setting up the Routes</h3>
-
-<p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
-<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
-  <span style="color:#75715e"># ...</span>
-
-  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span> <span style="color:#00a8c8">do</span>
-    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:collection</span>
-    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:member</span>
-  <span style="color:#00a8c8">end</span>
-
-<span style="color:#00a8c8">end</span></code></pre></div>",
+    "description" : "\x3cp\x3e\x3cem\x3eRead Part 1 of this series \x3ca href=\x22\/posts\/easy-notification-system-in-rails.html\x22\x3ehere\x3c\/a\x3e\x3c\/em\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.\x3c\/p\x3e\n\n\x3cp\x3eIn this post we will be adding more functionality to our notification system.s\x3c\/p\x3e\n\n\x3ch2 id=\x22mark-as-read-feature\x22\x3eMark as Read Feature\x3c\/h2\x3e\n\n\x3cp\x3eWe will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3eFor a single notification, it should be marked \x3cem\x3eas read\x3c\/em\x3e when it is clicked from the list of notifications.\x3c\/li\x3e\n\x3cli\x3eFor all notifications, they should be marked as read when a specific button is pressed.\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3ch3 id=\x22setting-up-the-routes\x22\x3eSetting up the Routes\x3c\/h3\x3e\n\n\x3cp\x3eLet\x26rsquo;s begin adding the necessary routes. In part 1 we defined a \x3ccode\x3enotifications\x3c\/code\x3e resource. We will add a \x3ca href=\x22http:\/\/guides.rubyonrails.org\/routing.html#adding-more-restful-actions\x22\x3ecollection\x3c\/a\x3e POST route and a \x3ca href=\x22http:\/\/guides.rubyonrails.org\/routing.html#adding-more-restful-actions\x22\x3emember\x3c\/a\x3e POST route of the same name:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# config\/routes.rb\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRails\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eapplication\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eroutes\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3edraw\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n  \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:notifications\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eonly\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:index\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3epost\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:mark_as_read\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eon\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:collection\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3epost\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:mark_as_read\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eon\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:member\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -55,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-09-05 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-09-05 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/",
+    "datePublished": "2017-09-05 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-09-05 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/easy-notification-system-in-rails-part-2\/",
     "wordCount" : "825",
     "keywords" : [ "ruby","rails","coffeescript","javascript","web dev","Blog" ]
 }

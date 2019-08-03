@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,30 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Custom Markdown in Middleman",
     "headline" : "Custom Markdown in Middleman",
-    "description" : "<p><a href="https://middlemanapp.com/">Middleman</a> is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it&rsquo;s the framework I am currently using for this blog.</p>
-
-<p>Unfortunately Middleman&rsquo;s <a href="https://middlemanapp.com/basics/install/">documentation</a> is a bit unorganized and incomplete. I often find myself browsing through the <a href="https://github.com/middleman/middleman">source code</a> to understand how to use or implement some custom features.</p>
-
-<p>For example, using <a href="https://github.com/vmg/redcarpet">redcarpet</a> I wanted to be able to create some re-usable &ldquo;markdown components&rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.</p>
-
-<p>And this post I am going to explain how to integrate this functionality into your blog using Middleman.</p>
-
-<h2 id="creating-a-custom-renderer">Creating a Custom Renderer</h2>
-
-<p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman&rsquo;s renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
-
-<p>To begin, we will create a <code>lib</code> (if it doesn&rsquo;t exist) under our blog&rsquo;s directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
-
-  <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
-
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The required file above is what will allow us to inherit from Middleman&rsquo;s renderer.</p>",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/middlemanapp.com\/\x22\x3eMiddleman\x3c\/a\x3e is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it\x26rsquo;s the framework I am currently using for this blog.\x3c\/p\x3e\n\n\x3cp\x3eUnfortunately Middleman\x26rsquo;s \x3ca href=\x22https:\/\/middlemanapp.com\/basics\/install\/\x22\x3edocumentation\x3c\/a\x3e is a bit unorganized and incomplete. I often find myself browsing through the \x3ca href=\x22https:\/\/github.com\/middleman\/middleman\x22\x3esource code\x3c\/a\x3e to understand how to use or implement some custom features.\x3c\/p\x3e\n\n\x3cp\x3eFor example, using \x3ca href=\x22https:\/\/github.com\/vmg\/redcarpet\x22\x3eredcarpet\x3c\/a\x3e I wanted to be able to create some re-usable \x26ldquo;markdown components\x26rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.\x3c\/p\x3e\n\n\x3cp\x3eAnd this post I am going to explain how to integrate this functionality into your blog using Middleman.\x3c\/p\x3e\n\n\x3ch2 id=\x22creating-a-custom-renderer\x22\x3eCreating a Custom Renderer\x3c\/h2\x3e\n\n\x3cp\x3eMiddleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog\x26rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from \x3ccode\x3eRedcarpet::Render::HTML\x3c\/code\x3e. However, the \x3cstrong\x3ekey\x3c\/strong\x3e thing here is to actually inherit directly from \x3ca href=\x22https:\/\/github.com\/middleman\/middleman\/blob\/master\/middleman-core\/lib\/middleman-core\/renderers\/redcarpet.rb#L65\x22\x3eMiddleman\x26rsquo;s renderer\x3c\/a\x3e (which of course, inherits from \x3ccode\x3eRedcarpet::Render::HTML\x3c\/code\x3e).\x3c\/p\x3e\n\n\x3cp\x3eTo begin, we will create a \x3ccode\x3elib\x3c\/code\x3e (if it doesn\x26rsquo;t exist) under our blog\x26rsquo;s directory and create a file named \x3ccode\x3emarkdown_helper.rb\x3c\/code\x3e inside it. The initial contents of this helper will be:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3emodule\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eMarkdownHelper\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;middleman-core\/renderers\/redcarpet\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe required file above is what will allow us to inherit from Middleman\x26rsquo;s renderer.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -46,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-17 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/custom-markdown-in-middleman/",
+    "datePublished": "2016-11-17 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-11-17 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/custom-markdown-in-middleman\/",
     "wordCount" : "1047",
     "keywords" : [ "middleman","ruby","markdown","Blog" ]
 }

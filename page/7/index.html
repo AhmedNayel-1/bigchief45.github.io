@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "",
     "name" : "Andrés Álvarez",
@@ -27,10 +27,10 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2017",
-    "datePublished": "2017-11-16 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-11-16 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-02 16:34:42 -0600 CST",
+    "dateModified" : "2019-08-02 16:34:42 -0600 CST",
+    "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
 }
@@ -133,6 +133,46 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Building an OCR Service With TesseractJS in AWS Lambda</a>
+  </h1>
+  <time datetime="2017-11-21T00:00:00Z" class="post-date">Tue, Nov 21, 2017</time>
+  <p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
+
+<p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
+
+<p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
+
+<h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
+
+<p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
+
+<p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
+
+<pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/nodejs" class="label label-default">nodejs</a></li>
+  
+    <a href="https://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
+  
+    <a href="https://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
+  
+    <a href="https://aalvarez.me/tags/ocr" class="label label-default">ocr</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Creating an Upload Progress Dialog in Java</a>
@@ -300,62 +340,6 @@ umask:</p>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Easy Notification System in Rails Part 2</a>
-  </h1>
-  <time datetime="2017-09-05T00:00:00Z" class="post-date">Tue, Sep 5, 2017</time>
-  <p><em>Read Part 1 of this series <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">here</a></em></p>
-
-<p>In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.</p>
-
-<p>In this post we will be adding more functionality to our notification system.s</p>
-
-<h2 id="mark-as-read-feature">Mark as Read Feature</h2>
-
-<p>We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:</p>
-
-<ul>
-<li>For a single notification, it should be marked <em>as read</em> when it is clicked from the list of notifications.</li>
-<li>For all notifications, they should be marked as read when a specific button is pressed.</li>
-</ul>
-
-<h3 id="setting-up-the-routes">Setting up the Routes</h3>
-
-<p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
-<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
-  <span style="color:#75715e"># ...</span>
-
-  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span> <span style="color:#00a8c8">do</span>
-    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:collection</span>
-    <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:member</span>
-  <span style="color:#00a8c8">end</span>
-
-<span style="color:#00a8c8">end</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Read More…</a>
     </div>
   
 </article>

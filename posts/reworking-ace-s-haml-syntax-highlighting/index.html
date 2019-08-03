@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,40 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
-    "name" : "Reworking Ace&#39;s HAML Syntax Highlighting",
-    "headline" : "Reworking Ace&#39;s HAML Syntax Highlighting",
-    "description" : "<p><a href="https://github.com/ajaxorg/ace">Ace</a> is a great web text editor and the default editor for <a href="https://c9.io">Cloud 9 IDE</a>. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn&rsquo;t support correct highlighting of some HAML stuff such as HAML comments (which begin with <code>-#</code>) or block comments.</p>
-
-<p>This is how Ace&rsquo;s HAML syntax highlighting issues look like:</p>
-
-<p><img src="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg" alt="HAML Highlighting Issues" /></p>
-
-<p>I proceeded to study Ace&rsquo;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state machine</a>. The source where this happens is found in <a href="https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js"><code>lib/ace/mode/haml_highlight_rules.js</code></a></p>
-
-<h2 id="defining-states">Defining States</h2>
-
-<p>A few states have to be defined to represent where the lexer currently &ldquo;stands&rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.</p>
-
-<p>In Ace, all syntax highlighting lexers must begin with a <code>start</code> state. From this state we can switch to other defined states. The example below shows how we begin from the <code>start</code> state and can jump to a comment block state when the code matches a regular expression that represents this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">$rules</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
-    <span style="color:#d88200">&#34;start&#34;</span><span style="color:#f92672">:</span> <span style="color:#111">[</span>
-        <span style="color:#111">{</span>
-            <span style="color:#75af00">token</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment.block&#34;</span><span style="color:#111">,</span> <span style="color:#75715e">// multiline HTML comment
-</span><span style="color:#75715e"></span>            <span style="color:#75af00">regex</span><span style="color:#f92672">:</span> <span style="color:#d88200">/^\/$/</span><span style="color:#111">,</span>
-            <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment&#34;</span>
-        <span style="color:#111">},</span>
-        <span style="color:#111">{</span>
-            <span style="color:#75af00">token</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment.block&#34;</span><span style="color:#111">,</span> <span style="color:#75715e">// multiline HAML comment
-</span><span style="color:#75715e"></span>            <span style="color:#75af00">regex</span><span style="color:#f92672">:</span> <span style="color:#d88200">/^\-#$/</span><span style="color:#111">,</span>
-            <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment&#34;</span>
-<span style="color:#111">},</span>
-
-<span style="color:#75715e">/* ... */</span>
-</code></pre></div>
-<p>Notice that we define 2 different comment types, since HAML <a href="http://haml.info/docs/yardoc/file.REFERENCE.html">supports</a> HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as <code>comment.block</code> <strong>tokens</strong>, and will also make the lexer jump to a <code>comment</code> state, denoted by the <code>next</code> keyword.</p>",
+    "name" : "Reworking Ace\x27s HAML Syntax Highlighting",
+    "headline" : "Reworking Ace\x27s HAML Syntax Highlighting",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/github.com\/ajaxorg\/ace\x22\x3eAce\x3c\/a\x3e is a great web text editor and the default editor for \x3ca href=\x22https:\/\/c9.io\x22\x3eCloud 9 IDE\x3c\/a\x3e. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn\x26rsquo;t support correct highlighting of some HAML stuff such as HAML comments (which begin with \x3ccode\x3e-#\x3c\/code\x3e) or block comments.\x3c\/p\x3e\n\n\x3cp\x3eThis is how Ace\x26rsquo;s HAML syntax highlighting issues look like:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/reworking-ace-s-haml-syntax-highlighting\/haml_bad_highlighting.jpg\x22 alt=\x22HAML Highlighting Issues\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eI proceeded to study Ace\x26rsquo;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Finite-state_machine\x22\x3estate machine\x3c\/a\x3e. The source where this happens is found in \x3ca href=\x22https:\/\/github.com\/ajaxorg\/ace\/blob\/master\/lib\/ace\/mode\/haml_highlight_rules.js\x22\x3e\x3ccode\x3elib\/ace\/mode\/haml_highlight_rules.js\x3c\/code\x3e\x3c\/a\x3e\x3c\/p\x3e\n\n\x3ch2 id=\x22defining-states\x22\x3eDefining States\x3c\/h2\x3e\n\n\x3cp\x3eA few states have to be defined to represent where the lexer currently \x26ldquo;stands\x26rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.\x3c\/p\x3e\n\n\x3cp\x3eIn Ace, all syntax highlighting lexers must begin with a \x3ccode\x3estart\x3c\/code\x3e state. From this state we can switch to other defined states. The example below shows how we begin from the \x3ccode\x3estart\x3c\/code\x3e state and can jump to a comment block state when the code matches a regular expression that represents this:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-javascript\x22 data-lang=\x22javascript\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3ethis\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3e$rules\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;start\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n            \x3cspan style=\x22color:#75af00\x22\x3etoken\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;comment.block\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#75715e\x22\x3e\/\/ multiline HTML comment\n\x3c\/span\x3e\x3cspan style=\x22color:#75715e\x22\x3e\x3c\/span\x3e            \x3cspan style=\x22color:#75af00\x22\x3eregex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\/^\\\/$\/\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n            \x3cspan style=\x22color:#75af00\x22\x3enext\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;comment\x26#34;\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3e},\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n            \x3cspan style=\x22color:#75af00\x22\x3etoken\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;comment.block\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#75715e\x22\x3e\/\/ multiline HAML comment\n\x3c\/span\x3e\x3cspan style=\x22color:#75715e\x22\x3e\x3c\/span\x3e            \x3cspan style=\x22color:#75af00\x22\x3eregex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\/^\\-#$\/\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n            \x3cspan style=\x22color:#75af00\x22\x3enext\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;comment\x26#34;\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3e},\x3c\/span\x3e\n\n\x3cspan style=\x22color:#75715e\x22\x3e\/* ... *\/\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eNotice that we define 2 different comment types, since HAML \x3ca href=\x22http:\/\/haml.info\/docs\/yardoc\/file.REFERENCE.html\x22\x3esupports\x3c\/a\x3e HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as \x3ccode\x3ecomment.block\x3c\/code\x3e \x3cstrong\x3etokens\x3c\/strong\x3e, and will also make the lexer jump to a \x3ccode\x3ecomment\x3c\/code\x3e state, denoted by the \x3ccode\x3enext\x3c\/code\x3e keyword.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -56,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-04-10 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-04-10 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/",
+    "datePublished": "2017-04-10 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-04-10 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/reworking-ace-s-haml-syntax-highlighting\/",
     "wordCount" : "457",
     "keywords" : [ "haml","ace","open source","javascript","cloud9","Blog" ]
 }

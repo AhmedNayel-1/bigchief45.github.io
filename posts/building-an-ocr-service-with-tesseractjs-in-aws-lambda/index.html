@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,25 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Building an OCR Service With TesseractJS in AWS Lambda",
     "headline" : "Building an OCR Service With TesseractJS in AWS Lambda",
-    "description" : "<p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
-
-<p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
-
-<p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
-
-<h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
-
-<p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
-
-<p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
-
-<pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
-</code></pre>",
+    "description" : "\x3cp\x3eThe past few days I was trying to make \x3ca href=\x22https:\/\/github.com\/naptha\/tesseract.js\x22\x3eTesseractJS\x3c\/a\x3e work in \x3ca href=\x22https:\/\/aws.amazon.com\/lambda\/\x22\x3eAWS Lambda\x3c\/a\x3e so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.\x3c\/p\x3e\n\n\x3cp\x3eTesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.\x3c\/p\x3e\n\n\x3cp\x3eWe will be using a \x3cstrong\x3eNodeJS 6.10\x3c\/strong\x3e runtime in AWS Lambda. And I will be deploying the service with \x3ca href=\x22https:\/\/claudiajs.com\/\x22\x3eClaudiaJS\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3ch2 id=\x22downloading-the-tesseractjs-files\x22\x3eDownloading the TesseractJS Files\x3c\/h2\x3e\n\n\x3cp\x3eWhen running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.\x3c\/p\x3e\n\n\x3cp\x3eThe problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the \x3ccode\x3e\/tmp\/\x3c\/code\x3e directory, you will get an error like this in your logs:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eError: EROFS: read-only file system, open \x27eng.traineddata\x27\n\x3c\/code\x3e\x3c\/pre\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -41,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-11-21 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-11-21 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/",
+    "datePublished": "2017-11-21 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-11-21 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/building-an-ocr-service-with-tesseractjs-in-aws-lambda\/",
     "wordCount" : "1327",
     "keywords" : [ "nodejs","aws lambda","serverless","ocr","Blog" ]
 }
@@ -264,7 +251,7 @@ if (!doNotTrack) {
 
 <span style="color:#75715e">// Process with Tesseract
 </span><span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span></code></pre></div>
+</span></code></pre></div>
 <p>This was not working, I was getting an error like the following:</p>
 
 <pre><code>/var/task/tesseract/src/common/desaturate.js:22

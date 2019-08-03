@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,19 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "BytesIO File Uploads to Django Using Requests",
     "headline" : "BytesIO File Uploads to Django Using Requests",
-    "description" : "<p>It&rsquo;s very easy to post file data to Django using requests:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">requests</span>
-
-
-<span style="color:#111">requests</span><span style="color:#f92672">.</span><span style="color:#111">post</span><span style="color:#111">(</span><span style="color:#111">url</span><span style="color:#111">,</span> <span style="color:#111">files</span><span style="color:#f92672">=</span><span style="color:#111">{</span><span style="color:#d88200">&#39;cover&#39;</span><span style="color:#111">:</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#d88200">&#39;imgpath.jpg&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;rb&#39;</span><span style="color:#111">)})</span></code></pre></div>
-<p>However I was having a hard time getting that to work using <a href="https://wiki.python.org/moin/BytesIO">BytesIO</a>. The reason I wanted to use BytesIO was because I was reading the file binary data located in S3, from AWS Lambda. I didn&rsquo;t want to write the file to disk first and then do something like the code shown above.</p>
-
-<p>Here&rsquo;s how to achieve that:</p>",
+    "description" : "\x3cp\x3eIt\x26rsquo;s very easy to post file data to Django using requests:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3erequests\x3c\/span\x3e\n\n\n\x3cspan style=\x22color:#111\x22\x3erequests\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3epost\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eurl\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3efiles\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;cover\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eopen\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;imgpath.jpg\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;rb\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)})\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eHowever I was having a hard time getting that to work using \x3ca href=\x22https:\/\/wiki.python.org\/moin\/BytesIO\x22\x3eBytesIO\x3c\/a\x3e. The reason I wanted to use BytesIO was because I was reading the file binary data located in S3, from AWS Lambda. I didn\x26rsquo;t want to write the file to disk first and then do something like the code shown above.\x3c\/p\x3e\n\n\x3cp\x3eHere\x26rsquo;s how to achieve that:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -35,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-06-26 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-06-26 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/bytesio-file-uploads-to-django-using-requests/",
+    "datePublished": "2018-06-26 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2018-06-26 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/bytesio-file-uploads-to-django-using-requests\/",
     "wordCount" : "194",
     "keywords" : [ "python","django","Blog" ]
 }

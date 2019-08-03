@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Customizing the ZenPack Installation Process",
     "headline" : "Customizing the ZenPack Installation Process",
-    "description" : "<p>There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&rsquo;s top directory&rsquo;s <code>__init__.py</code> file. When creating a fresh ZenPack using <strong>zenpacklib</strong>, this <code>__init__.py</code> file will contain the following contents:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">zenpacklib</span>
-
-<span style="color:#111">CFG</span> <span style="color:#f92672">=</span> <span style="color:#111">zenpacklib</span><span style="color:#f92672">.</span><span style="color:#111">load_yaml</span><span style="color:#111">()</span></code></pre></div>
-<p>To add custom functionality that gets executed when the ZenPack is installed, we need to extend the <code>install</code> method of the <code>ZenPack</code> class. Below the original code, we can proceed to do so:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">):</span>
-        <span style="color:#75715e"># Our custom logic here</span>
-
-        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span></code></pre></div>
-<p>No other imports are necessary. Notice the last line of the <code>install</code> method, this is where the ZenPack gets installed.</p>
-
-<p>For the purpuse of giving an example, Let&rsquo;s say that our ZenPack creates two new <a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html">zProperties</a>, one property to store an API key, and the other one to store a URL. Moreover let&rsquo;s say that we obtain these values from somewhere and we want to assign them <strong>automatically</strong> to the properties upon the installation of the ZenPack.</p>
-
-<p>These two new properties are defined in <code>zenpack.yaml</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name<span style="color:#111">:</span> ZenPacks.aalvarez.MyZenPack
-
-zProperties<span style="color:#111">:</span>
-  zMyApiUrl<span style="color:#111">:</span>
-    category<span style="color:#111">:</span> MyApi
-    type<span style="color:#111">:</span> string
-
-  zMyApiKey<span style="color:#111">:</span>
-    category<span style="color:#111">:</span> MyApi
-    type<span style="color:#111">:</span> string</code></pre></div>",
+    "description" : "\x3cp\x3eThere are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack\x26rsquo;s top directory\x26rsquo;s \x3ccode\x3e__init__.py\x3c\/code\x3e file. When creating a fresh ZenPack using \x3cstrong\x3ezenpacklib\x3c\/strong\x3e, this \x3ccode\x3e__init__.py\x3c\/code\x3e file will contain the following contents:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#f92672\x22\x3efrom\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ezenpacklib\x3c\/span\x3e\n\n\x3cspan style=\x22color:#111\x22\x3eCFG\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ezenpacklib\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eload_yaml\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eTo add custom functionality that gets executed when the ZenPack is installed, we need to extend the \x3ccode\x3einstall\x3c\/code\x3e method of the \x3ccode\x3eZenPack\x3c\/code\x3e class. Below the original code, we can proceed to do so:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eclass\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eZenPack\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eschema\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eZenPack\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3edef\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3einstall\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eapp\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n        \x3cspan style=\x22color:#75715e\x22\x3e# Our custom logic here\x3c\/span\x3e\n\n        \x3cspan style=\x22color:#111\x22\x3esuper\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eZenPack\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3einstall\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eapp\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eNo other imports are necessary. Notice the last line of the \x3ccode\x3einstall\x3c\/code\x3e method, this is where the ZenPack gets installed.\x3c\/p\x3e\n\n\x3cp\x3eFor the purpuse of giving an example, Let\x26rsquo;s say that our ZenPack creates two new \x3ca href=\x22https:\/\/zenpack-sdk.zenoss.com\/en\/latest\/yaml-zProperties.html\x22\x3ezProperties\x3c\/a\x3e, one property to store an API key, and the other one to store a URL. Moreover let\x26rsquo;s say that we obtain these values from somewhere and we want to assign them \x3cstrong\x3eautomatically\x3c\/strong\x3e to the properties upon the installation of the ZenPack.\x3c\/p\x3e\n\n\x3cp\x3eThese two new properties are defined in \x3ccode\x3ezenpack.yaml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3ename\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e ZenPacks.aalvarez.MyZenPack\n\nzProperties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  zMyApiUrl\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    category\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e MyApi\n    type\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e string\n\n  zMyApiKey\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    category\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e MyApi\n    type\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e string\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -52,9 +28,9 @@ zProperties<span style="color:#111">:</span>
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-01-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-01-17 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/customizing-the-zenpack-installation-process/",
+    "datePublished": "2017-01-17 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-01-17 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/customizing-the-zenpack-installation-process\/",
     "wordCount" : "317",
     "keywords" : [ "zenoss","zenpacks","zenpacklib","python","Blog" ]
 }

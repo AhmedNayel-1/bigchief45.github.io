@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,37 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
-    "name" : "Ruby Benchmarking &amp; Big O Notation",
-    "headline" : "Ruby Benchmarking &amp; Big O Notation",
-    "description" : "<p>The Ruby <a href="http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html">Benchmark</a> library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.</p>
-
-<p>I was doing some <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O Notation</a> reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.</p>
-
-<h2 id="using-benchmark">Using Benchmark</h2>
-
-<p>To start benchmarking our code, we simply need to require <code>benchmark</code> and use the methods provided by the <code>Benchmark</code> module. For me, the most practical way is to use <code>Benchmark#bm</code> method, where we pass a block of code we want to measure:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
-
-<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span> <span style="color:#00a8c8">do</span>
-    <span style="color:#75715e"># our code here</span>
-  <span style="color:#00a8c8">end</span>
-
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Inside the block we are using the <code>report</code> method of the block&rsquo;s variable, which will basically do a separate benchmark for each report.</p>
-
-<p>However, we can improve this even more by adding a label to <code>report</code> and a label width to <code>bm</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
-
-<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;my_algorithm&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
-    <span style="color:#75715e"># our code here</span>
-  <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Let&rsquo;s see it in action with some common algorithms.</p>",
+    "name" : "Ruby Benchmarking \x26 Big O Notation",
+    "headline" : "Ruby Benchmarking \x26 Big O Notation",
+    "description" : "\x3cp\x3eThe Ruby \x3ca href=\x22http:\/\/ruby-doc.org\/stdlib-2.0.0\/libdoc\/benchmark\/rdoc\/Benchmark.html\x22\x3eBenchmark\x3c\/a\x3e library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.\x3c\/p\x3e\n\n\x3cp\x3eI was doing some \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Big_O_notation\x22\x3eBig O Notation\x3c\/a\x3e reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.\x3c\/p\x3e\n\n\x3ch2 id=\x22using-benchmark\x22\x3eUsing Benchmark\x3c\/h2\x3e\n\n\x3cp\x3eTo start benchmarking our code, we simply need to require \x3ccode\x3ebenchmark\x3c\/code\x3e and use the methods provided by the \x3ccode\x3eBenchmark\x3c\/code\x3e module. For me, the most practical way is to use \x3ccode\x3eBenchmark#bm\x3c\/code\x3e method, where we pass a block of code we want to measure:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;benchmark\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eBenchmark\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ebm\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ereport\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#75715e\x22\x3e# our code here\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eInside the block we are using the \x3ccode\x3ereport\x3c\/code\x3e method of the block\x26rsquo;s variable, which will basically do a separate benchmark for each report.\x3c\/p\x3e\n\n\x3cp\x3eHowever, we can improve this even more by adding a label to \x3ccode\x3ereport\x3c\/code\x3e and a label width to \x3ccode\x3ebm\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;benchmark\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eBenchmark\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ebm\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e20\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ereport\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;my_algorithm\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#75715e\x22\x3e# our code here\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eLet\x26rsquo;s see it in action with some common algorithms.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -53,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-15 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-15 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/",
+    "datePublished": "2016-11-15 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-11-15 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/ruby-benchmarking-and-big-o-notation\/",
     "wordCount" : "1243",
     "keywords" : [ "ruby","algorithms","programming","benchmarking","mathematics","computerscience","Blog" ]
 }

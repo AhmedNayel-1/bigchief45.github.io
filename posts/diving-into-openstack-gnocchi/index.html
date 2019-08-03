@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,115 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Diving Into OpenStack Gnocchi",
     "headline" : "Diving Into OpenStack Gnocchi",
-    "description" : "<p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
-
-<p>It is the preferred storage method for metrics in Ceilometer, as of OpenStack Ocata.</p>
-
-<p>In this post I want to dive into Gnocchi specifics such as its configuration, supported backends, APIs, daemons, and source code.</p>
-
-<h2 id="configuration">Configuration</h2>
-
-<p>Gnocchi&rsquo;s configuration is stored in a file called <code>gnocchi.conf</code>. Ideally, this file would be in <code>~/gnocchi.conf</code> or <code>/etc/gnocchi/gnocchi.conf</code>. Let&rsquo;s take a look at a basic Gnocchi configuration:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[DEFAULT]</span>
-<span style="color:#75af00">debug</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
-<span style="color:#75af00">verbose</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
-
-<span style="color:#00a8c8">[api]</span>
-<span style="color:#75af00">workers</span> <span style="color:#f92672">=</span> <span style="color:#d88200">1</span>
-
-<span style="color:#00a8c8">[database]</span>
-<span style="color:#75af00">backend</span> <span style="color:#f92672">=</span> <span style="color:#d88200">sqlalchemy</span>
-
-<span style="color:#00a8c8">[indexer]</span>
-<span style="color:#75af00">url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">postgresql://gnocchi:gnocchi@127.0.0.1/gnocchi</span>
-
-<span style="color:#00a8c8">[storage]</span>
-<span style="color:#75af00">coordination_url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">file:///home/ubuntu/gn/locks</span>
-<span style="color:#75af00">driver</span> <span style="color:#f92672">=</span> <span style="color:#d88200">file</span>
-<span style="color:#75af00">file_basepath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">/home/ubuntu/gn</span>
-
-<span style="color:#00a8c8">[cors]</span>
-<span style="color:#75af00">allowed_origin</span> <span style="color:#f92672">=</span> <span style="color:#d88200">*</span>
-<span style="color:#75af00">allow_credentials</span> <span style="color:#f92672">=</span> <span style="color:#d88200">false</span></code></pre></div>
-<p>The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.</p>
-
-<h3 id="database-setup">Database Setup</h3>
-
-<p>For this example, we are going to use <a href="www.c9.io">Cloud 9</a> as our environment, and Postgresql as the database. This means that we need to first setup the database before we start using Gnocchi.</p>
-
-<p>Make sure the Postgresql service is running:</p>
-
-<pre><code>sudo service postgresql start
-</code></pre>
-
-<p>We can enter the Postgresql command line using:</p>
-
-<pre><code>sudo sudo -u postgres psql
-</code></pre>
-
-<p>Now let&rsquo;s create a new Postgresql user:</p>
-
-<pre><code>CREATE USER gnocchi SUPERUSER PASSWORD 'gnocchi';
-</code></pre>
-
-<p>Then create the database:</p>
-
-<pre><code>CREATE DATABASE gnocchi WITH TEMPLATE = template0 ENCODING = 'UNICODE';
-</code></pre>
-
-<p>When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:</p>
-
-<pre><code>gnocchi-upgrade
-</code></pre>
-
-<p>You should see the following output logs:</p>
-
-<pre><code>2017-05-17 05:28:50.917 3895 INFO gnocchi.cli [-] Upgrading indexer &lt;gnocchi.indexer.sqlalchemy.SQLAlchemyIndexer object at 0x7ff76cff6190&gt;
-2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
-2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
-2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
-2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
-2017-05-17 05:28:51.154 3895 INFO gnocchi.cli [-] Upgrading storage &lt;gnocchi.storage.file.FileStorage object at 0x7ff7688f9710&gt;
-</code></pre>
-
-<h2 id="gnocchi-rest-api">Gnocchi REST API</h2>
-
-<p>Gnocchi&rsquo;s REST API is based on <a href="http://www.pecanpy.org/index.html">Pecan</a>, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&rsquo;s <code>rest/__init__.py</code> file:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">pecan</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pecan</span> <span style="color:#f92672">import</span> <span style="color:#111">rest</span></code></pre></div>
-<h3 id="metrics">Metrics</h3>
-
-<p>Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
-
-<p>A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.</p>
-
-<p>Farther down the code in <code>rest/__init__.py</code>, we can find a metric controller which inherits from a Pecan REST controller:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MetricController</span><span style="color:#111">(</span><span style="color:#111">rest</span><span style="color:#f92672">.</span><span style="color:#111">RestController</span><span style="color:#111">):</span>
-    <span style="color:#111">_custom_actions</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
-        <span style="color:#d88200">&#39;measures&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;POST&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;GET&#39;</span><span style="color:#111">]</span>
-    <span style="color:#111">}</span>
-
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">metric</span>
-        <span style="color:#111">mgr</span> <span style="color:#f92672">=</span> <span style="color:#111">extension</span><span style="color:#f92672">.</span><span style="color:#111">ExtensionManager</span><span style="color:#111">(</span><span style="color:#111">namespace</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;gnocchi.aggregates&#39;</span><span style="color:#111">,</span>
-                                         <span style="color:#111">invoke_on_load</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">custom_agg</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">obj</span><span style="color:#111">)</span> <span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">mgr</span><span style="color:#111">)</span>
-
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">enforce_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">rule</span><span style="color:#111">):</span>
-        <span style="color:#111">enforce</span><span style="color:#111">(</span><span style="color:#111">rule</span><span style="color:#111">,</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">to_primitive</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#111">))</span>
-
-    <span style="color:#75af00">@pecan.expose</span><span style="color:#111">(</span><span style="color:#d88200">&#39;json&#39;</span><span style="color:#111">)</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_all</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">enforce_metric</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get metric&#34;</span><span style="color:#111">)</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span></code></pre></div>
-<p>From the <a href="http://pecan.readthedocs.io/en/latest/routing.html">Pecan documentation</a>, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.</p>
-
-<p>We can tell Pecan which methods in a class are publically-visible via <code>expose()</code>. If a method is not decorated with <code>expose()</code>, Pecan will never route a request to it. In the example above, the <code>get_all()</code> method is exposed to Pecan. Additionally, it makes use of Pecan&rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.</p>",
+    "description" : "\x3cp\x3eGnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.\x3c\/p\x3e\n\n\x3cp\x3eIt is the preferred storage method for metrics in Ceilometer, as of OpenStack Ocata.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I want to dive into Gnocchi specifics such as its configuration, supported backends, APIs, daemons, and source code.\x3c\/p\x3e\n\n\x3ch2 id=\x22configuration\x22\x3eConfiguration\x3c\/h2\x3e\n\n\x3cp\x3eGnocchi\x26rsquo;s configuration is stored in a file called \x3ccode\x3egnocchi.conf\x3c\/code\x3e. Ideally, this file would be in \x3ccode\x3e~\/gnocchi.conf\x3c\/code\x3e or \x3ccode\x3e\/etc\/gnocchi\/gnocchi.conf\x3c\/code\x3e. Let\x26rsquo;s take a look at a basic Gnocchi configuration:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ini\x22 data-lang=\x22ini\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3e[DEFAULT]\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3edebug\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3etrue\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3everbose\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3etrue\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3e[api]\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3eworkers\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e1\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3e[database]\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3ebackend\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3esqlalchemy\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3e[indexer]\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3eurl\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3epostgresql:\/\/gnocchi:gnocchi@127.0.0.1\/gnocchi\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3e[storage]\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3ecoordination_url\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3efile:\/\/\/home\/ubuntu\/gn\/locks\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3edriver\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3efile\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3efile_basepath\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\/home\/ubuntu\/gn\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3e[cors]\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3eallowed_origin\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e*\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3eallow_credentials\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3efalse\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.\x3c\/p\x3e\n\n\x3ch3 id=\x22database-setup\x22\x3eDatabase Setup\x3c\/h3\x3e\n\n\x3cp\x3eFor this example, we are going to use \x3ca href=\x22www.c9.io\x22\x3eCloud 9\x3c\/a\x3e as our environment, and Postgresql as the database. This means that we need to first setup the database before we start using Gnocchi.\x3c\/p\x3e\n\n\x3cp\x3eMake sure the Postgresql service is running:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3esudo service postgresql start\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eWe can enter the Postgresql command line using:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3esudo sudo -u postgres psql\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eNow let\x26rsquo;s create a new Postgresql user:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eCREATE USER gnocchi SUPERUSER PASSWORD \x27gnocchi\x27;\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eThen create the database:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eCREATE DATABASE gnocchi WITH TEMPLATE = template0 ENCODING = \x27UNICODE\x27;\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eWhen the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3egnocchi-upgrade\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eYou should see the following output logs:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3e2017-05-17 05:28:50.917 3895 INFO gnocchi.cli [-] Upgrading indexer \x26lt;gnocchi.indexer.sqlalchemy.SQLAlchemyIndexer object at 0x7ff76cff6190\x26gt;\n2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.\n2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.\n2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.\n2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.\n2017-05-17 05:28:51.154 3895 INFO gnocchi.cli [-] Upgrading storage \x26lt;gnocchi.storage.file.FileStorage object at 0x7ff7688f9710\x26gt;\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3ch2 id=\x22gnocchi-rest-api\x22\x3eGnocchi REST API\x3c\/h2\x3e\n\n\x3cp\x3eGnocchi\x26rsquo;s REST API is based on \x3ca href=\x22http:\/\/www.pecanpy.org\/index.html\x22\x3ePecan\x3c\/a\x3e, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi\x26rsquo;s \x3ccode\x3erest\/__init__.py\x3c\/code\x3e file:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3epecan\x3c\/span\x3e\n\x3cspan style=\x22color:#f92672\x22\x3efrom\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3epecan\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3erest\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3ch3 id=\x22metrics\x22\x3eMetrics\x3c\/h3\x3e\n\n\x3cp\x3eGnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.\x3c\/p\x3e\n\n\x3cp\x3eA metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.\x3c\/p\x3e\n\n\x3cp\x3eFarther down the code in \x3ccode\x3erest\/__init__.py\x3c\/code\x3e, we can find a metric controller which inherits from a Pecan REST controller:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eclass\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eMetricController\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3erest\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eRestController\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3e_custom_actions\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n        \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;measures\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;POST\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;GET\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e\n\n    \x3cspan style=\x22color:#00a8c8\x22\x3edef\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e__init__\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emetric\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emetric\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emetric\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3emgr\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eextension\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eExtensionManager\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3enamespace\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;gnocchi.aggregates\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n                                         \x3cspan style=\x22color:#111\x22\x3einvoke_on_load\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eTrue\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ecustom_agg\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3edict\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e((\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ename\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eobj\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emgr\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\n    \x3cspan style=\x22color:#00a8c8\x22\x3edef\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eenforce_metric\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3erule\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3eenforce\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3erule\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ejson\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eto_primitive\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emetric\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e))\x3c\/span\x3e\n\n    \x3cspan style=\x22color:#75af00\x22\x3e@pecan.expose\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;json\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3edef\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eget_all\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eenforce_metric\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;get metric\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n        \x3cspan style=\x22color:#00a8c8\x22\x3ereturn\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eself\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emetric\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eFrom the \x3ca href=\x22http:\/\/pecan.readthedocs.io\/en\/latest\/routing.html\x22\x3ePecan documentation\x3c\/a\x3e, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.\x3c\/p\x3e\n\n\x3cp\x3eWe can tell Pecan which methods in a class are publically-visible via \x3ccode\x3eexpose()\x3c\/code\x3e. If a method is not decorated with \x3ccode\x3eexpose()\x3c\/code\x3e, Pecan will never route a request to it. In the example above, the \x3ccode\x3eget_all()\x3c\/code\x3e method is exposed to Pecan. Additionally, it makes use of Pecan\x26rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -131,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-04-25 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-04-25 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/diving-into-openstack-gnocchi/",
+    "datePublished": "2017-04-25 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-04-25 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/diving-into-openstack-gnocchi\/",
     "wordCount" : "1416",
     "keywords" : [ "gnocchi","ceilometer","openstack","python","ceph","pecan","Blog" ]
 }

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Django Formsets with Generic FormViews",
     "headline" : "Django Formsets with Generic FormViews",
-    "description" : "<p><a href="https://docs.djangoproject.com/en/2.0/topics/forms/formsets/">Django Formsets</a> is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django&rsquo;s built-in generic class based views, the <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView">FormView</a>.</p>
-
-<h2 id="the-scenario">The Scenario</h2>
-
-<p>To add some context to this tutorial, let&rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:</p>
-
-<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example" /></p>
-
-<p>For this tutorial, we will use the following model as an example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">):</span>
-    <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
-    <span style="color:#111">author</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Author</span><span style="color:#111">)</span>
-    <span style="color:#111">isbn</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
-    <span style="color:#111">editorial</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Editorial</span><span style="color:#111">)</span></code></pre></div>
-<h2 id="creating-the-form">Creating the Form</h2>
-
-<p>We will begin by creating the form that will be cloned. That is, the form that will represent <strong>one</strong> search query out of the many that will/could be nested together.</p>
-
-<p>For our case, the form will only contain 3 fields:</p>
-
-<ol>
-<li>The query field: Indicates which field of the model we will query.</li>
-<li>The lookup type: Indicates which <a href="https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups">lookup</a> is going to be used to make the query.</li>
-<li>The query value: Indicates what we want to actually search for (i.e <em>Harry Potter</em> for the book title.)</li>
-</ol>",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/topics\/forms\/formsets\/\x22\x3eDjango Formsets\x3c\/a\x3e is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django\x26rsquo;s built-in generic class based views, the \x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/ref\/class-based-views\/generic-editing\/#django.views.generic.edit.FormView\x22\x3eFormView\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-scenario\x22\x3eThe Scenario\x3c\/h2\x3e\n\n\x3cp\x3eTo add some context to this tutorial, let\x26rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/django-formsets-with-generic-formviews\/nested_search_example.png\x22 alt=\x22Nested Search Example\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eFor this tutorial, we will use the following model as an example:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eclass\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eBook\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eModel\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3etitle\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eCharField\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eauthor\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eForeignKey\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eAuthor\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eisbn\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eCharField\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eeditorial\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eForeignKey\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eEditorial\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3ch2 id=\x22creating-the-form\x22\x3eCreating the Form\x3c\/h2\x3e\n\n\x3cp\x3eWe will begin by creating the form that will be cloned. That is, the form that will represent \x3cstrong\x3eone\x3c\/strong\x3e search query out of the many that will\/could be nested together.\x3c\/p\x3e\n\n\x3cp\x3eFor our case, the form will only contain 3 fields:\x3c\/p\x3e\n\n\x3col\x3e\n\x3cli\x3eThe query field: Indicates which field of the model we will query.\x3c\/li\x3e\n\x3cli\x3eThe lookup type: Indicates which \x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/topics\/db\/queries\/#field-lookups\x22\x3elookup\x3c\/a\x3e is going to be used to make the query.\x3c\/li\x3e\n\x3cli\x3eThe query value: Indicates what we want to actually search for (i.e \x3cem\x3eHarry Potter\x3c\/em\x3e for the book title.)\x3c\/li\x3e\n\x3c\/ol\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -52,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-04-19 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-04-19 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/django-formsets-with-generic-formviews/",
+    "datePublished": "2018-04-19 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2018-04-19 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/django-formsets-with-generic-formviews\/",
     "wordCount" : "936",
     "keywords" : [ "django","Blog" ]
 }

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,40 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Debian Packaging in Ubuntu",
     "headline" : "Debian Packaging in Ubuntu",
-    "description" : "<p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
-
-<h2 id="package-source-structure">Package Source &amp; Structure</h2>
-
-<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
-
-<pre><code>mkdir mypackage-1.0.0
-</code></pre>
-
-<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
-
-<pre><code>cd mypackage-1.0.0
-mkdir DEBIAN
-touch DEBIAN/control
-</code></pre>
-
-<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
-
-<pre><code>Package: mypackage
-Version: 1.0-0
-Section: base
-Priority: optional
-Architecture: all
-Depends: python2.7
-Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
-Description: A new and improved C++ Compiler
-</code></pre>
-
-<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>",
+    "description" : "\x3cp\x3eDebian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.\x3c\/p\x3e\n\n\x3ch2 id=\x22package-source-structure\x22\x3ePackage Source \x26amp; Structure\x3c\/h2\x3e\n\n\x3cp\x3eWe will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory\x26rsquo;s title:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3emkdir mypackage-1.0.0\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eInside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ecd mypackage-1.0.0\nmkdir DEBIAN\ntouch DEBIAN\/control\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eThis \x3ccode\x3econtrol\x3c\/code\x3e file will describe our package to the Debian package manager (\x3ccode\x3edpkg\x3c\/code\x3e). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ePackage: mypackage\nVersion: 1.0-0\nSection: base\nPriority: optional\nArchitecture: all\nDepends: python2.7\nMaintainer: Andres Alvarez \x26lt;myemail@gmail.com\x26gt;\nDescription: A new and improved C\x2b\x2b Compiler\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eWith this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -56,9 +28,9 @@ Description: A new and improved C++ Compiler
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-10-11 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-10-11 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/debian-packaging-in-ubuntu/",
+    "datePublished": "2016-10-11 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-10-11 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/debian-packaging-in-ubuntu\/",
     "wordCount" : "531",
     "keywords" : [ "linux","ubuntu","debian","packaging","Blog" ]
 }

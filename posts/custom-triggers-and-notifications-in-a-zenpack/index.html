@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,52 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Custom Triggers and Notifications in a ZenPack",
     "headline" : "Custom Triggers and Notifications in a ZenPack",
-    "description" : "<p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
-
-<p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
-
-<h2 id="defining-zenpack-triggers-notifications">Defining ZenPack Triggers &amp; Notifications</h2>
-
-<p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn&rsquo;t exist), within the ZenPack&rsquo;s top directory.</p>
-
-<p><strong>actions.json</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
-  &#34;triggers&#34;: [
-    {
-      &#34;name&#34;: &#34;Critical_death_event&#34;,
-      &#34;uuid&#34;: &#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;,
-      &#34;enabled&#34;: false,
-      &#34;rule&#34;: {
-        &#34;api_version&#34;: 1,
-        &#34;type&#34;: 1,
-        &#34;source&#34;: &#34;(evt.event_class.startswith(\&#34;/Status/Ping\&#34;)) and (evt.status == 0) and (evt.severity &gt; 2)&#34;
-      }
-    }
-  ],
-
-  &#34;notifications&#34;: [
-    {
-      &#34;id&#34;: &#34;send_sms_message&#34;,
-      &#34;description&#34;: &#34;Send SMS using Twilio&#34;,
-      &#34;action&#34;: &#34;command&#34;,
-      &#34;guid&#34;: &#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&#34;,
-      &#34;enabled&#34;: false,
-      &#34;action_timeout&#34;: 60,
-      &#34;delay_seconds&#34;: 0,
-      &#34;repeat_seconds&#34;: 0,
-      &#34;send_initial_occurrence&#34;: false,
-      &#34;send_clear&#34;: false,
-      &#34;body_format&#34;: &#34;echo \&#34;Hello World!\&#34;&#34;,
-      &#34;clear_body_format&#34;: &#34;&#34;,
-      &#34;subscriptions&#34;: [&#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;]
-    }
-  ]
-}</code></pre></div>",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/triggering-commands-from-events-in-zenoss.html\x22\x3eprevious post\x3c\/a\x3e I talked about how to use \x3cstrong\x3etriggers\x3c\/strong\x3e and \x3cstrong\x3ecommand notifications\x3c\/strong\x3e in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.\x3c\/p\x3e\n\n\x3cp\x3eIn this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.\x3c\/p\x3e\n\n\x3ch2 id=\x22defining-zenpack-triggers-notifications\x22\x3eDefining ZenPack Triggers \x26amp; Notifications\x3c\/h2\x3e\n\n\x3cp\x3eTriggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named \x3ccode\x3eactions.json\x3c\/code\x3e in a directory called \x3ccode\x3ezep\x3c\/code\x3e (create it if it doesn\x26rsquo;t exist), within the ZenPack\x26rsquo;s top directory.\x3c\/p\x3e\n\n\x3cp\x3e\x3cstrong\x3eactions.json\x3c\/strong\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-json?line_numbers=false\x22 data-lang=\x22json?line_numbers=false\x22\x3e{\n  \x26#34;triggers\x26#34;: [\n    {\n      \x26#34;name\x26#34;: \x26#34;Critical_death_event\x26#34;,\n      \x26#34;uuid\x26#34;: \x26#34;4c055067-98b7-483e-8f49-2820b4f2f721\x26#34;,\n      \x26#34;enabled\x26#34;: false,\n      \x26#34;rule\x26#34;: {\n        \x26#34;api_version\x26#34;: 1,\n        \x26#34;type\x26#34;: 1,\n        \x26#34;source\x26#34;: \x26#34;(evt.event_class.startswith(\\\x26#34;\/Status\/Ping\\\x26#34;)) and (evt.status == 0) and (evt.severity \x26gt; 2)\x26#34;\n      }\n    }\n  ],\n\n  \x26#34;notifications\x26#34;: [\n    {\n      \x26#34;id\x26#34;: \x26#34;send_sms_message\x26#34;,\n      \x26#34;description\x26#34;: \x26#34;Send SMS using Twilio\x26#34;,\n      \x26#34;action\x26#34;: \x26#34;command\x26#34;,\n      \x26#34;guid\x26#34;: \x26#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6\x26#34;,\n      \x26#34;enabled\x26#34;: false,\n      \x26#34;action_timeout\x26#34;: 60,\n      \x26#34;delay_seconds\x26#34;: 0,\n      \x26#34;repeat_seconds\x26#34;: 0,\n      \x26#34;send_initial_occurrence\x26#34;: false,\n      \x26#34;send_clear\x26#34;: false,\n      \x26#34;body_format\x26#34;: \x26#34;echo \\\x26#34;Hello World!\\\x26#34;\x26#34;,\n      \x26#34;clear_body_format\x26#34;: \x26#34;\x26#34;,\n      \x26#34;subscriptions\x26#34;: [\x26#34;4c055067-98b7-483e-8f49-2820b4f2f721\x26#34;]\n    }\n  ]\n}\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -68,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-05-04 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-05-04 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/",
+    "datePublished": "2017-05-04 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-05-04 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/custom-triggers-and-notifications-in-a-zenpack\/",
     "wordCount" : "547",
     "keywords" : [ "zenoss","zenpack","zenpacklib","python","zendmd","sysadmin","monitoring","Blog" ]
 }

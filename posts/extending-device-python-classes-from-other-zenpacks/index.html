@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Extending Device Python Classes From Other ZenPacks",
     "headline" : "Extending Device Python Classes From Other ZenPacks",
-    "description" : "<p>Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from <code>Device</code>. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html">Python data source</a>.</p>
-
-<p>The <code>zenpack.yaml</code> file for the first and main ZenPack would look something like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ZenPack1</span>
-
-classes<span style="color:#111">:</span>
-  SpecialServer<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Special Server
-
-  SpecialComponent<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Special Component
-    properties<span style="color:#111">:</span>
-      <span style="color:#75715e"># ...</span>
-
-  AmazingComponent<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Amazing Component
-    properties<span style="color:#111">:</span>
-      <span style="color:#75715e"># ...</span>
-
-class_relationships<span style="color:#111">:</span>
-  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC SpecialComponent
-  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent</code></pre></div>",
+    "description" : "\x3cp\x3eRecently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from \x3ccode\x3eDevice\x3c\/code\x3e. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a \x3ca href=\x22\/posts\/working-with-zenoss-python-data-sources.html\x22\x3ePython data source\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3cp\x3eThe \x3ccode\x3ezenpack.yaml\x3c\/code\x3e file for the first and main ZenPack would look something like this:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ZenPack1\x3c\/span\x3e\n\nclasses\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  SpecialServer\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Device\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Special Server\n\n  SpecialComponent\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Special Component\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\n  AmazingComponent\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Amazing Component\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\nclass_relationships\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - SpecialServer \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3eMC SpecialComponent\n  - SpecialServer \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3eMC AmazingComponent\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -52,9 +28,9 @@ class_relationships<span style="color:#111">:</span>
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-06-27 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-06-27 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/",
+    "datePublished": "2017-06-27 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-06-27 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/extending-device-python-classes-from-other-zenpacks\/",
     "wordCount" : "723",
     "keywords" : [ "zenoss","python","zenpacklib","zenpacks","zope","Blog" ]
 }

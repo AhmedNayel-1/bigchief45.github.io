@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,26 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Keystone Interface in Juju Charms",
     "headline" : "Keystone Interface in Juju Charms",
-    "description" : "<p><a href="https://jujucharms.com/docs/1.18/authors-interfaces">Juju Charms interfaces</a> make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.</p>
-
-<p>In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:</p>
-
-<p><code>juju add-relation keystone myservice</code></p>
-
-<h2 id="juju-relations">Juju Relations</h2>
-
-<p>Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an <strong>interface</strong>. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the <em>keystone Identity data</em>. For this, we use the <strong><a href="https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin">keystone-admin interface</a></strong>.</p>
-
-<p>With this in mind, we configure our charm to require this relation and interface in <code>metadata.yaml</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
-requires<span style="color:#111">:</span>
-  identity-admin<span style="color:#111">:</span>
-    interface<span style="color:#111">:</span> keystone-admin</code></pre></div>",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/jujucharms.com\/docs\/1.18\/authors-interfaces\x22\x3eJuju Charms interfaces\x3c\/a\x3e make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.\x3c\/p\x3e\n\n\x3cp\x3eIn the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:\x3c\/p\x3e\n\n\x3cp\x3e\x3ccode\x3ejuju add-relation keystone myservice\x3c\/code\x3e\x3c\/p\x3e\n\n\x3ch2 id=\x22juju-relations\x22\x3eJuju Relations\x3c\/h2\x3e\n\n\x3cp\x3eJuju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an \x3cstrong\x3einterface\x3c\/strong\x3e. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the \x3cem\x3ekeystone Identity data\x3c\/em\x3e. For this, we use the \x3cstrong\x3e\x3ca href=\x22https:\/\/git.launchpad.net\/~canonical-is\/charms\/\x2bsource\/interface-keystone-admin\x22\x3ekeystone-admin interface\x3c\/a\x3e\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eWith this in mind, we configure our charm to require this relation and interface in \x3ccode\x3emetadata.yaml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\nrequires\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  identity-admin\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    interface\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e keystone-admin\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -42,9 +28,9 @@ requires<span style="color:#111">:</span>
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-10-28 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-10-28 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/keystone-interface-in-juju-charms/",
+    "datePublished": "2016-10-28 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-10-28 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/keystone-interface-in-juju-charms\/",
     "wordCount" : "404",
     "keywords" : [ "juju","keystone","devops","bash","keystone","openstack","Blog" ]
 }

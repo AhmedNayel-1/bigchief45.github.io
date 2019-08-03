@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,25 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Testing JSON API Strong Parameters in Rails",
     "headline" : "Testing JSON API Strong Parameters in Rails",
-    "description" : "<p>Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&rsquo;s factory, and then add the corresponding model and request specs.</p>
-
-<p>The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.</p>
-
-<p>In an API following the <a href="http://jsonapi.org/">JSON API</a> specification, here is an example of how the strong parameters method would look like:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">thing_params</span>
-  <span style="color:#111">params</span><span style="color:#f92672">.</span><span style="color:#111">require</span><span style="color:#111">(</span><span style="color:#d88200">:data</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">require</span><span style="color:#111">(</span><span style="color:#d88200">:attributes</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">permit</span><span style="color:#111">(</span><span style="color:#d88200">:color</span><span style="color:#111">,</span> <span style="color:#d88200">:size</span><span style="color:#111">,</span> <span style="color:#d88200">:age</span><span style="color:#111">,</span> <span style="color:#d88200">:name</span><span style="color:#111">,</span>
-      <span style="color:#d88200">:owner</span><span style="color:#111">,</span> <span style="color:#d88200">:origin</span><span style="color:#111">,</span> <span style="color:#d88200">:location</span><span style="color:#111">,</span> <span style="color:#d88200">:purpose</span><span style="color:#111">,</span> <span style="color:#d88200">:price</span><span style="color:#111">,</span> <span style="color:#d88200">:alive</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>As you can see, the list of attributes is getting pretty long. And we <strong>do not</strong> want to explicitly keep adding more attributes to the test.</p>
-
-<h2 id="testing-strong-parameters-in-controller-specs">Testing Strong Parameters in Controller Specs</h2>
-
-<p>After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that <strong>all</strong> attributes of importance are whitelisted in the controller.</p>",
+    "description" : "\x3cp\x3eRecently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model\x26rsquo;s factory, and then add the corresponding model and request specs.\x3c\/p\x3e\n\n\x3cp\x3eThe problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren\x26rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.\x3c\/p\x3e\n\n\x3cp\x3eIn an API following the \x3ca href=\x22http:\/\/jsonapi.org\/\x22\x3eJSON API\x3c\/a\x3e specification, here is an example of how the strong parameters method would look like:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3edef\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3ething_params\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3eparams\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:data\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:attributes\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3epermit\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:color\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:size\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:age\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:name\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n      \x3cspan style=\x22color:#d88200\x22\x3e:owner\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:origin\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:location\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:purpose\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:price\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:alive\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eAs you can see, the list of attributes is getting pretty long. And we \x3cstrong\x3edo not\x3c\/strong\x3e want to explicitly keep adding more attributes to the test.\x3c\/p\x3e\n\n\x3ch2 id=\x22testing-strong-parameters-in-controller-specs\x22\x3eTesting Strong Parameters in Controller Specs\x3c\/h2\x3e\n\n\x3cp\x3eAfter the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it\x26rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that \x3cstrong\x3eall\x3c\/strong\x3e attributes of importance are whitelisted in the controller.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -41,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-05-25 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-05-25 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/",
+    "datePublished": "2017-05-25 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-05-25 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/testing-json-api-strong-parameters-in-rails\/",
     "wordCount" : "795",
     "keywords" : [ "rspec","json","rails","tdd","bdd","web-dev","backend","Blog" ]
 }

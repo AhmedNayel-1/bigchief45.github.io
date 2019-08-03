@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,26 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Select2 With Simple Form in Rails",
     "headline" : "Select2 With Simple Form in Rails",
-    "description" : "<p><a href="https://select2.github.io/">Select2</a> is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.</p>
-
-<p>Recently while working on a Rails project, I was experiencing some problems when using Select2 and <a href="https://github.com/plataformatec/simple_form">Simple Form</a> in my view.</p>
-
-<p>In the view, I want to use Select2 to search for people in a <code>Person</code> table in the application&rsquo;s database. Select2 should use AJAX to hit a controller&rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).</p>
-
-<p>The controller action looks something like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">search</span>
-  <span style="color:#111">@people</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Person</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#f92672">.</span><span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">&#39;name LIKE ? OR last_name LIKE ?&#39;</span><span style="color:#111">,</span>
-    <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">)</span>
-
-  <span style="color:#111">respond_to</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">format</span><span style="color:#f92672">|</span>
-    <span style="color:#111">format</span><span style="color:#f92672">.</span><span style="color:#111">json</span> <span style="color:#111">{</span> <span style="color:#111">render</span> <span style="color:#d88200">json</span><span style="color:#111">:</span> <span style="color:#111">@people</span><span style="color:#f92672">.</span><span style="color:#111">map</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">p</span><span style="color:#f92672">|</span> <span style="color:#111">{</span> <span style="color:#111">id</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#d88200">full_name</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">full_name</span> <span style="color:#111">}</span> <span style="color:#111">}</span> <span style="color:#111">}</span>
-  <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/select2.github.io\/\x22\x3eSelect2\x3c\/a\x3e is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.\x3c\/p\x3e\n\n\x3cp\x3eRecently while working on a Rails project, I was experiencing some problems when using Select2 and \x3ca href=\x22https:\/\/github.com\/plataformatec\/simple_form\x22\x3eSimple Form\x3c\/a\x3e in my view.\x3c\/p\x3e\n\n\x3cp\x3eIn the view, I want to use Select2 to search for people in a \x3ccode\x3ePerson\x3c\/code\x3e table in the application\x26rsquo;s database. Select2 should use AJAX to hit a controller\x26rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).\x3c\/p\x3e\n\n\x3cp\x3eThe controller action looks something like this:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3edef\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3esearch\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e@people\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3ePerson\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eall\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ewhere\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;name LIKE ? OR last_name LIKE ?\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n    \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;%\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e#{\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eparams\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:q\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e}\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e%\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;%\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e#{\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eparams\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:q\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e}\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e%\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3erespond_to\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eformat\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eformat\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ejson\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3erender\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3ejson\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e@people\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emap\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ep\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eid\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ep\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eid\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3efull_name\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ep\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3efull_name\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -42,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-08-14 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-08-14 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/select2-with-simple-form-in-rails/",
+    "datePublished": "2017-08-14 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-08-14 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/select2-with-simple-form-in-rails\/",
     "wordCount" : "394",
     "keywords" : [ "rails","ruby","javascript","coffeescript","web dev","Blog" ]
 }

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,48 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Easy Notification System in Rails",
     "headline" : "Easy Notification System in Rails",
-    "description" : "<p>Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.</p>
-
-<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver&rsquo;s In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
-
-<p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
-
-<h2 id="models-and-routes">Models and Routes</h2>
-
-<p>Before starting with the models, lets quickly define the application resources in our routes:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
-<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
-
-  <span style="color:#111">devise_for</span> <span style="color:#d88200">:users</span>
-
-  <span style="color:#111">resources</span> <span style="color:#d88200">:posts</span> <span style="color:#00a8c8">do</span>
-    <span style="color:#111">resources</span> <span style="color:#d88200">:comments</span>
-  <span style="color:#00a8c8">end</span>
-
-  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span>
-
-<span style="color:#00a8c8">end</span></code></pre></div>
-<h3 id="the-notification-model">The Notification Model</h3>
-
-<p>We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:</p>
-
-<pre><code>rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
-</code></pre>
-
-<p>Here is an explanation for some of the fields for the above model:</p>
-
-<ul>
-<li><code>recipient_id</code>: Represents the user in your application which will receive the notification.</li>
-<li><code>actor_id</code>: Represents the user in your application which <em>triggered</em> the notification.</li>
-<li><code>read_at</code>: The time when the notification was read. A value of <code>nil</code> is used for unread notifications.</li>
-<li><code>notifiable_id</code>: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.</li>
-<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&rsquo;s class.</li>
-</ul>",
+    "description" : "\x3cp\x3eHaving a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.\x3c\/p\x3e\n\n\x3cp\x3eThis post is heavily inspired by \x3ca href=\x22https:\/\/gorails.com\/episodes\/in-app-navbar-notifications?autoplay=1\x22\x3eChris Oliver\x26rsquo;s In-App Navbar Notifications tutorial\x3c\/a\x3e, with a few personal changes and additions.\x3c\/p\x3e\n\n\x3cp\x3e\x3cem\x3eRead \x3ca href=\x22\/posts\/easy-notification-system-in-rails-part-2.html\x22\x3epart 2\x3c\/a\x3e of this series.\x3c\/em\x3e\x3c\/p\x3e\n\n\x3ch2 id=\x22models-and-routes\x22\x3eModels and Routes\x3c\/h2\x3e\n\n\x3cp\x3eBefore starting with the models, lets quickly define the application resources in our routes:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# config\/routes.rb\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRails\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eapplication\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eroutes\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3edraw\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3edevise_for\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:users\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:posts\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:comments\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:notifications\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eonly\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:index\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3ch3 id=\x22the-notification-model\x22\x3eThe Notification Model\x3c\/h3\x3e\n\n\x3cp\x3eWe will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3erails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eHere is an explanation for some of the fields for the above model:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3e\x3ccode\x3erecipient_id\x3c\/code\x3e: Represents the user in your application which will receive the notification.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eactor_id\x3c\/code\x3e: Represents the user in your application which \x3cem\x3etriggered\x3c\/em\x3e the notification.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eread_at\x3c\/code\x3e: The time when the notification was read. A value of \x3ccode\x3enil\x3c\/code\x3e is used for unread notifications.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3enotifiable_id\x3c\/code\x3e: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3enotifiable_type\x3c\/code\x3e: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object\x26rsquo;s class.\x3c\/li\x3e\n\x3c\/ul\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -64,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-09-04 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-09-04 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/easy-notification-system-in-rails/",
+    "datePublished": "2017-09-04 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-09-04 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/easy-notification-system-in-rails\/",
     "wordCount" : "1303",
     "keywords" : [ "ruby","rails","coffeescript","javascript","web dev","Blog" ]
 }

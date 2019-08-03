@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,39 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Querying Nested Documents in ElasticSearch",
     "headline" : "Querying Nested Documents in ElasticSearch",
-    "description" : "<p>The other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.</p>
-
-<p>I wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its <code>text</code> field.</p>
-
-<h2 id="nested-documents">Nested Documents</h2>
-
-<p>ElasticSearch 5 supports [nested documents](). These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-mapping.html">nested object mapping</a> for the index:</p>
-
-<pre><code>PUT /my_index
-
-{
-  &quot;mappings&quot;: {
-    &quot;book&quot;: {
-      &quot;properties&quot;: {
-        &quot;pages&quot;: {
-          &quot;type&quot;: &quot;nested&quot;,
-          &quot;properties&quot;: {
-            &quot;id&quot;:    { &quot;type&quot;: &quot;integer&quot;  },
-            &quot;text&quot;: { &quot;type&quot;: &quot;text&quot;  },
-          }
-        }
-      }
-    }
-  }
-}
-</code></pre>
-
-<p>Notice how the mapping is created using a <code>PUT</code> request at the <strong>index</strong> level.</p>",
+    "description" : "\x3cp\x3eThe other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.\x3c\/p\x3e\n\n\x3cp\x3eI wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its \x3ccode\x3etext\x3c\/code\x3e field.\x3c\/p\x3e\n\n\x3ch2 id=\x22nested-documents\x22\x3eNested Documents\x3c\/h2\x3e\n\n\x3cp\x3eElasticSearch 5 supports [nested documents](). These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a \x3ca href=\x22https:\/\/www.elastic.co\/guide\/en\/elasticsearch\/guide\/current\/nested-mapping.html\x22\x3enested object mapping\x3c\/a\x3e for the index:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ePUT \/my_index\n\n{\n  \x26quot;mappings\x26quot;: {\n    \x26quot;book\x26quot;: {\n      \x26quot;properties\x26quot;: {\n        \x26quot;pages\x26quot;: {\n          \x26quot;type\x26quot;: \x26quot;nested\x26quot;,\n          \x26quot;properties\x26quot;: {\n            \x26quot;id\x26quot;:    { \x26quot;type\x26quot;: \x26quot;integer\x26quot;  },\n            \x26quot;text\x26quot;: { \x26quot;type\x26quot;: \x26quot;text\x26quot;  },\n          }\n        }\n      }\n    }\n  }\n}\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eNotice how the mapping is created using a \x3ccode\x3ePUT\x3c\/code\x3e request at the \x3cstrong\x3eindex\x3c\/strong\x3e level.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -55,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-10-23 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-10-23 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/",
+    "datePublished": "2017-10-23 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-10-23 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/querying-nested-documents-in-elasticsearch\/",
     "wordCount" : "811",
     "keywords" : [ "elasticsearch","Blog" ]
 }

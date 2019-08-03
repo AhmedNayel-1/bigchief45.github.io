@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,59 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Zenoss Monitoring Template Data Points",
     "headline" : "Zenoss Monitoring Template Data Points",
-    "description" : "<p><em>Content from this post is mostly obtained from <strong>Zenoss Core Administration guide</strong>.</em></p>
-
-<p>In Zenoss Core <strong>monitoring templates</strong>, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented
-by a <strong>data point</strong>.</p>
-
-<p>When creating a data point, there are some important fields that we can define for our data point:</p>
-
-<ul>
-<li><p><strong>Name:</strong> Displays the name you entered in the <em>Add a New DataPoint</em> dialog.</p></li>
-
-<li><p><strong>RRD Type:</strong> Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:</p>
-
-<ul>
-<li><strong>COUNTER:</strong> Saves the rate of change of the value over a step period. This assumes that the value is always
-increasing (the difference between the current and the previous value is greater than 0). Traffic counters on a
-router are an ideal candidate for using COUNTER.</li>
-
-<li><p><strong>GAUGE:</strong> Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
-To see memory consumption in a server, for example, you might want to select this value.</p></li>
-
-<li><p><strong>DERIVE:</strong> Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
-in free disk space on your server, for example, then you might want to select this value.</p></li>
-
-<li><p><strong>ABSOLUTE:</strong> Saves the rate of change, but assumes that the previous value is set to 0. The difference between
-the current and the previous value is always equal to the current value. Thus, ABSOLUTE stores the current
-value, divided by the step interval.</p></li>
-</ul></li>
-
-<li><p><strong>Create Command:</strong> Enter an RRD expression used to create the database for this data point. If you do not enter
-a value, then the system uses a default applicable to most situations. For details about the <kbd>rrdcreate</kbd> command, go <a href="http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html">here</a>.</p></li>
-
-<li><p><strong>RRD Minimum:</strong> Enter a value. Any value received that is less than this number is ignored.</p></li>
-
-<li><p><strong>RRD Maximum:</strong> Enter a value. Any value received that is greater than this number is ignored.</p></li>
-</ul>
-
-<h2 id="data-point-aliases">Data Point Aliases</h2>
-
-<p>Performance reports pull information from various data points that represent a metric. The report itself knows which
-data points it requires, and which modifications are needed, if any, to put the data in its proper units and format.</p>
-
-<p>The addition of a data point requires changing the report.</p>
-
-<p><img src="https://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg" alt="CPU Utilization Report" /></p>
-
-<p>To allow for more flexibility in changes, some reports use <em>data point aliases</em>. Data point aliases group data points so
-they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
-can normalize that data into a common unit.</p>",
+    "description" : "\x3cp\x3e\x3cem\x3eContent from this post is mostly obtained from \x3cstrong\x3eZenoss Core Administration guide\x3c\/strong\x3e.\x3c\/em\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn Zenoss Core \x3cstrong\x3emonitoring templates\x3c\/strong\x3e, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented\nby a \x3cstrong\x3edata point\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eWhen creating a data point, there are some important fields that we can define for our data point:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eName:\x3c\/strong\x3e Displays the name you entered in the \x3cem\x3eAdd a New DataPoint\x3c\/em\x3e dialog.\x3c\/p\x3e\x3c\/li\x3e\n\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eRRD Type:\x3c\/strong\x3e Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3e\x3cstrong\x3eCOUNTER:\x3c\/strong\x3e Saves the rate of change of the value over a step period. This assumes that the value is always\nincreasing (the difference between the current and the previous value is greater than 0). Traffic counters on a\nrouter are an ideal candidate for using COUNTER.\x3c\/li\x3e\n\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eGAUGE:\x3c\/strong\x3e Does not save the rate of change, but saves the actual value. There are no divisions or calculations.\nTo see memory consumption in a server, for example, you might want to select this value.\x3c\/p\x3e\x3c\/li\x3e\n\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eDERIVE:\x3c\/strong\x3e Same as COUNTER, but additionally allows negative values. If you want to see the rate of change\nin free disk space on your server, for example, then you might want to select this value.\x3c\/p\x3e\x3c\/li\x3e\n\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eABSOLUTE:\x3c\/strong\x3e Saves the rate of change, but assumes that the previous value is set to 0. The difference between\nthe current and the previous value is always equal to the current value. Thus, ABSOLUTE stores the current\nvalue, divided by the step interval.\x3c\/p\x3e\x3c\/li\x3e\n\x3c\/ul\x3e\x3c\/li\x3e\n\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eCreate Command:\x3c\/strong\x3e Enter an RRD expression used to create the database for this data point. If you do not enter\na value, then the system uses a default applicable to most situations. For details about the \x3ckbd\x3errdcreate\x3c\/kbd\x3e command, go \x3ca href=\x22http:\/\/oss.oetiker.ch\/rrdtool\/doc\/rrdcreate.en.html\x22\x3ehere\x3c\/a\x3e.\x3c\/p\x3e\x3c\/li\x3e\n\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eRRD Minimum:\x3c\/strong\x3e Enter a value. Any value received that is less than this number is ignored.\x3c\/p\x3e\x3c\/li\x3e\n\n\x3cli\x3e\x3cp\x3e\x3cstrong\x3eRRD Maximum:\x3c\/strong\x3e Enter a value. Any value received that is greater than this number is ignored.\x3c\/p\x3e\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3ch2 id=\x22data-point-aliases\x22\x3eData Point Aliases\x3c\/h2\x3e\n\n\x3cp\x3ePerformance reports pull information from various data points that represent a metric. The report itself knows which\ndata points it requires, and which modifications are needed, if any, to put the data in its proper units and format.\x3c\/p\x3e\n\n\x3cp\x3eThe addition of a data point requires changing the report.\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/zenoss-monitoring-template-data-points\/cpu_report.jpg\x22 alt=\x22CPU Utilization Report\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eTo allow for more flexibility in changes, some reports use \x3cem\x3edata point aliases\x3c\/em\x3e. Data point aliases group data points so\nthey can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin\ncan normalize that data into a common unit.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -75,9 +28,9 @@ can normalize that data into a common unit.</p>",
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-03 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-03 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/zenoss-monitoring-template-data-points/",
+    "datePublished": "2016-11-03 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-11-03 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/zenoss-monitoring-template-data-points\/",
     "wordCount" : "722",
     "keywords" : [ "zenoss","monitoring","snmp","data","linux","cpu","rrdtool","rpn","python","Blog" ]
 }

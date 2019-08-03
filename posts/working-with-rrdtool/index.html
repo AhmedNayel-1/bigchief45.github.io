@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,31 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Working With RRDTool",
     "headline" : "Working With RRDTool",
-    "description" : "<p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="https://aalvarez.me/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
-
-<h2 id="round-robin-databases">Round Robin Databases</h2>
-
-<p>RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing <strong>time series</strong> data.</p>
-
-<p>Moreover, rrdtool also <strong>doesn&rsquo;t</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
-
-<p>This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the <code>03</code> minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.</p>
-
-<p>In rrdtool, each database table is stored in a separate <code>.rrd</code> file. This means that one file represents one table.</p>
-
-<p>We can create a database using the following command:</p>
-
-<pre><code>rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
-</code></pre>
-
-<h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
-
-<p>One important parameter here is the <code>step</code> parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. <strong>This means that it only stores data every 300 seconds</strong>. Because of this re-sampling, rrdtool will not accept data from the past.</p>",
+    "description" : "\x3cp\x3eZenoss makes a lot of use of \x3ca href=\x22http:\/\/oss.oetiker.ch\/rrdtool\/\x22\x3eRRDTool\x3c\/a\x3e for \x3ca href=\x22\/posts\/using-rrdtool-in-zenoss.html\x22\x3estoring monitored performance data and generating graphs\x3c\/a\x3e. In this post I want to go into more detail on the components of RRDTool and how works.\x3c\/p\x3e\n\n\x3ch2 id=\x22round-robin-databases\x22\x3eRound Robin Databases\x3c\/h2\x3e\n\n\x3cp\x3eRRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing \x3cstrong\x3etime series\x3c\/strong\x3e data.\x3c\/p\x3e\n\n\x3cp\x3eMoreover, rrdtool also \x3cstrong\x3edoesn\x26rsquo;t\x3c\/strong\x3e store the data handed to it. Instead, it first \x3cstrong\x3ere-samples\x3c\/strong\x3e the data and \x3cem\x3ethen\x3c\/em\x3e stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.\x3c\/p\x3e\n\n\x3cp\x3eThis means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the \x3ccode\x3e03\x3c\/code\x3e minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.\x3c\/p\x3e\n\n\x3cp\x3eIn rrdtool, each database table is stored in a separate \x3ccode\x3e.rrd\x3c\/code\x3e file. This means that one file represents one table.\x3c\/p\x3e\n\n\x3cp\x3eWe can create a database using the following command:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3errdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3ch3 id=\x22data-re-sampling-step\x22\x3eData Re-sampling: Step\x3c\/h3\x3e\n\n\x3cp\x3eOne important parameter here is the \x3ccode\x3estep\x3c\/code\x3e parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. \x3cstrong\x3eThis means that it only stores data every 300 seconds\x3c\/strong\x3e. Because of this re-sampling, rrdtool will not accept data from the past.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -47,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-05-02 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-05-02 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/working-with-rrdtool/",
+    "datePublished": "2017-05-02 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-05-02 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/working-with-rrdtool\/",
     "wordCount" : "1276",
     "keywords" : [ "rrdtool","monitoring","sysadmin","Blog" ]
 }

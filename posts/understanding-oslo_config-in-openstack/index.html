@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,30 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Understanding oslo_config in OpenStack",
     "headline" : "Understanding oslo_config in OpenStack",
-    "description" : "<p>The OpenStack <a href="https://wiki.openstack.org/wiki/Oslo">Oslo</a> library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.</p>
-
-<p>In this post I want to go over <a href="https://wiki.openstack.org/wiki/Oslo/Config">oslo_config</a>. This library helps with parsing of <strong>options</strong> found in configuration files or command line arguments.</p>
-
-<h2 id="understanding-options">Understanding Options</h2>
-
-<p>An option is defined using the <code>Opt</code> class or one of its sub-classes, from the <code>cfg</code> module:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">oslo_config</span> <span style="color:#f92672">import</span> <span style="color:#111">cfg</span>
-
-<span style="color:#111">common_opts</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
-    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_host&#39;</span><span style="color:#111">,</span>
-               <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;0.0.0.0&#39;</span><span style="color:#111">,</span>
-               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;IP address to listen on.&#39;</span><span style="color:#111">),</span>
-    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">Opt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_port&#39;</span><span style="color:#111">,</span>
-            <span style="color:#111">type</span><span style="color:#f92672">=</span><span style="color:#111">PortType</span><span style="color:#111">,</span>
-            <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#ae81ff">9292</span><span style="color:#111">,</span>
-            <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Port number to listen on.&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">]</span></code></pre></div>
-<p>In the example above we can see that we are using <code>Opt</code> and <code>StrOpt</code>, one of its sub-classes. You might notice that the second option&rsquo;s constructor has a <code>type=PortType</code> argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises <code>ValueError</code> if the value cannot be converted. The different types available can be found in the <code>types</code> module:</p>",
+    "description" : "\x3cp\x3eThe OpenStack \x3ca href=\x22https:\/\/wiki.openstack.org\/wiki\/Oslo\x22\x3eOslo\x3c\/a\x3e library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I want to go over \x3ca href=\x22https:\/\/wiki.openstack.org\/wiki\/Oslo\/Config\x22\x3eoslo_config\x3c\/a\x3e. This library helps with parsing of \x3cstrong\x3eoptions\x3c\/strong\x3e found in configuration files or command line arguments.\x3c\/p\x3e\n\n\x3ch2 id=\x22understanding-options\x22\x3eUnderstanding Options\x3c\/h2\x3e\n\n\x3cp\x3eAn option is defined using the \x3ccode\x3eOpt\x3c\/code\x3e class or one of its sub-classes, from the \x3ccode\x3ecfg\x3c\/code\x3e module:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#f92672\x22\x3efrom\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eoslo_config\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ecfg\x3c\/span\x3e\n\n\x3cspan style=\x22color:#111\x22\x3ecommon_opts\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3ecfg\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eStrOpt\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;bind_host\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n               \x3cspan style=\x22color:#111\x22\x3edefault\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;0.0.0.0\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n               \x3cspan style=\x22color:#111\x22\x3ehelp\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;IP address to listen on.\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e),\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3ecfg\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eOpt\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;bind_port\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n            \x3cspan style=\x22color:#111\x22\x3etype\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ePortType\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n            \x3cspan style=\x22color:#111\x22\x3edefault\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e9292\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n            \x3cspan style=\x22color:#111\x22\x3ehelp\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;Port number to listen on.\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eIn the example above we can see that we are using \x3ccode\x3eOpt\x3c\/code\x3e and \x3ccode\x3eStrOpt\x3c\/code\x3e, one of its sub-classes. You might notice that the second option\x26rsquo;s constructor has a \x3ccode\x3etype=PortType\x3c\/code\x3e argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises \x3ccode\x3eValueError\x3c\/code\x3e if the value cannot be converted. The different types available can be found in the \x3ccode\x3etypes\x3c\/code\x3e module:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -46,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-04-18 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-04-18 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/understanding-oslo_config-in-openstack/",
+    "datePublished": "2017-04-18 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-04-18 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/understanding-oslo_config-in-openstack\/",
     "wordCount" : "632",
     "keywords" : [ "openstack","python","Blog" ]
 }

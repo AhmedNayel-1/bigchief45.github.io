@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,20 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Managing Debian Package Dependencies",
     "headline" : "Managing Debian Package Dependencies",
-    "description" : "<p>In a previous post, I talked about <a href="2016-10-11-debian-packaging-in-ubuntu.html">building a simple Debian package in Ubuntu</a>, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.</p>
-
-<h2 id="dpkg-and-dependencies">dpkg and Dependencies</h2>
-
-<p>Previously we installed our package using the <kbd>dpkg -i</kbd> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
-
-<blockquote>
-<p>dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.</p>
-</blockquote>",
+    "description" : "\x3cp\x3eIn a previous post, I talked about \x3ca href=\x222016-10-11-debian-packaging-in-ubuntu.html\x22\x3ebuilding a simple Debian package in Ubuntu\x3c\/a\x3e, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.\x3c\/p\x3e\n\n\x3ch2 id=\x22dpkg-and-dependencies\x22\x3edpkg and Dependencies\x3c\/h2\x3e\n\n\x3cp\x3ePreviously we installed our package using the \x3ckbd\x3edpkg -i\x3c\/kbd\x3e command. However, the problem with \x3ccode\x3edpkg\x3c\/code\x3e is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as \x3ccode\x3eapt-get\x3c\/code\x3e) are required to fetch dependencies from repositories.\x3c\/p\x3e\n\n\x3cblockquote\x3e\n\x3cp\x3edkpg is only the core tool that installs\/removes\/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install\/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.\x3c\/p\x3e\n\x3c\/blockquote\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -36,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-10-14 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-10-14 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/managing-debian-package-dependencies/",
+    "datePublished": "2016-10-14 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-10-14 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/managing-debian-package-dependencies\/",
     "wordCount" : "493",
     "keywords" : [ "linux","ubuntu","debian","packaging","Blog" ]
 }

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "",
     "name" : "Andrés Álvarez",
@@ -27,10 +27,10 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2018",
-    "datePublished": "2018-11-28 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-11-28 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-02 16:34:42 -0600 CST",
+    "dateModified" : "2019-08-02 16:34:42 -0600 CST",
+    "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
 }
@@ -135,6 +135,36 @@ if (!doNotTrack) {
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/cloudfront-cors-font-issues/">CloudFront CORS Font Issues</a>
+  </h1>
+  <time datetime="2018-12-12T16:32:22Z" class="post-date">Wed, Dec 12, 2018</time>
+  <p>I was experiencing an issue with CloudFront and some static assets of a Django application deployed to ElasticBeanstalk. The issue was happening when trying to retrieve some fonts that are stored in S3 and served by CloudFront, the browser dev tools would show some errors similar to the following:</p>
+
+<pre><code>Access to Font at 'http://CLOUDFRONT_HOSTNAME.cloudfront.net/FONT_PATH' from origin 'http://www.example.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+</code></pre>
+
+<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a> issue. And apparently, very common when trying to load fonts.</p>
+
+<p>To fix this, there are a few possible things that you might have to try. I will list some of the fixes I found.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/cloudfront" class="label label-default">cloudfront</a></li>
+  
+    <a href="https://aalvarez.me/tags/cors" class="label label-default">cors</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/cloudfront-cors-font-issues/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/cancellable-tasks-in-netbeans-platform/">Cancellable Tasks in Netbeans Platform</a>
   </h1>
   <time datetime="2018-11-28T00:00:00Z" class="post-date">Wed, Nov 28, 2018</time>
@@ -234,43 +264,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/troubleshooting-strange-aws-issues/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/">Loosely Coupled Node Actions in Netbeans Platform</a>
-  </h1>
-  <time datetime="2018-07-25T00:00:00Z" class="post-date">Wed, Jul 25, 2018</time>
-  <p>Nodes in Netbeans Platform can possess actions that can be executed with the node object as context. For example, the Project, Package, and Class nodes in the Netbeans IDE have a set of actions which can be seen by right clicking on the nodes:</p>
-
-<p><img src="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/netbeans_ide_node_actions.png" alt="Netbeans IDE Node Actions" /></p>
-
-<p>In the Netbeans Platform tutorials I found <a href="https://platform.netbeans.org/tutorials/nbm-nodesapi2.html#actions">a tutorial</a> that explains how to add these actions to nodes. The problem is that in that tutorial the action class was created as an <strong>inner class</strong> of the node class. Making the action <strong>tightly coupled</strong> with the node.</p>
-
-<p>I managed to implement a more modular and loosely coupled approach, which is what I will explain in this post.</p>
-
-<p>Our loosely coupled approach will basically allow us to:</p>
-
-<ol>
-<li>Keep the domain logic (Java Beans and POJOs) in its own domain module.</li>
-<li>Keep the view logic (nodes that represent beans) in another module.</li>
-<li>Keep the node actions logic in yet another module. This allows us to plug and unplug different action&rsquo;s that belong to separate modules. Making our application&rsquo;s node actions very modular.</li>
-</ol>
-
-<p>Let&rsquo;s begin!</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/">Read More…</a>
     </div>
   
 </article>

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "",
     "name" : "Andrés Álvarez",
@@ -27,10 +27,10 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2018",
-    "datePublished": "2018-01-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-01-17 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-02 16:34:42 -0600 CST",
+    "dateModified" : "2019-08-02 16:34:42 -0600 CST",
+    "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
 }
@@ -133,6 +133,45 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/">Building a Django Continuous Integration and Delivery Pipeline to AWS</a>
+  </h1>
+  <time datetime="2018-01-30T00:00:00Z" class="post-date">Tue, Jan 30, 2018</time>
+  <p>Building a CI/CD (Continuous Integration / Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.</p>
+
+<p>In this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to <a href="https://www.heroku.com/">Heroku</a>. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.</p>
+
+<p>The pipeline will work as follows:</p>
+
+<ol>
+<li>Code will be pushed to source control repository. For this article, I will use Github.</li>
+<li>Project will be built and tested in a CI job at <a href="https://travis-ci.com/">TravisCI</a>.</li>
+<li>TravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.</li>
+</ol>
+
+<p>We will be using both the <strong><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html">ElasticBeanstalk CLI (ebcli)</a></strong> and the <strong>AWS ElasticBeanstalk Console</strong> to achieve this.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/aws" class="label label-default">aws</a></li>
+  
+    <a href="https://aalvarez.me/tags/elasticbeanstalk" class="label label-default">elasticbeanstalk</a></li>
+  
+    <a href="https://aalvarez.me/tags/ci/cd" class="label label-default">ci/cd</a></li>
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/">Django Dynamic Queryset Filtering With Pagination</a>
@@ -262,46 +301,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/bulk-create-with-django-rest-framework/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Building an OCR Service With TesseractJS in AWS Lambda</a>
-  </h1>
-  <time datetime="2017-11-21T00:00:00Z" class="post-date">Tue, Nov 21, 2017</time>
-  <p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
-
-<p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
-
-<p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
-
-<h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
-
-<p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
-
-<p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
-
-<pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
-</code></pre>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/nodejs" class="label label-default">nodejs</a></li>
-  
-    <a href="https://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
-  
-    <a href="https://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
-  
-    <a href="https://aalvarez.me/tags/ocr" class="label label-default">ocr</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/">Read More…</a>
     </div>
   
 </article>

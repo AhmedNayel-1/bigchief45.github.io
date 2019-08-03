@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,37 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Triggering Commands From Events in Zenoss",
     "headline" : "Triggering Commands From Events in Zenoss",
-    "description" : "<p>In Zenoss Core 4, we can configure some <strong><em>email</em></strong> notifications that produce and send emails based on conditions defined in a trigger, when an event is created.</p>
-
-<p>Additionally, Zenoss Core 4 also provides <strong><em>command</em></strong> type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.</p>
-
-<p>For example, let&rsquo;s say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:</p>
-
-<ol>
-<li>The device is suddenly down.</li>
-<li>Zenoss pings the device and gets no response.</li>
-<li>The device status is then changed to <em>DOWN</em>.</li>
-<li>An Event with an event class of <code>/Status/Ping</code> and a severity of <em>Critical</em> is created.</li>
-</ol>
-
-<p>With this information, we can create a trigger that will represent this exact scenario. Moreover, we can configure a command notification to be executed when this trigger is fired.</p>
-
-<h2 id="configuring-a-trigger">Configuring a Trigger</h2>
-
-<ol>
-<li>Navigate to Events &gt; Triggers</li>
-<li>Create a new trigger.</li>
-<li>Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:</li>
-</ol>
-
-<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
-
-<p>=&gt; Because we want to make sure the device is truly <em>DOWN</em>, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.</p>",
+    "description" : "\x3cp\x3eIn Zenoss Core 4, we can configure some \x3cstrong\x3e\x3cem\x3eemail\x3c\/em\x3e\x3c\/strong\x3e notifications that produce and send emails based on conditions defined in a trigger, when an event is created.\x3c\/p\x3e\n\n\x3cp\x3eAdditionally, Zenoss Core 4 also provides \x3cstrong\x3e\x3cem\x3ecommand\x3c\/em\x3e\x3c\/strong\x3e type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.\x3c\/p\x3e\n\n\x3cp\x3eFor example, let\x26rsquo;s say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:\x3c\/p\x3e\n\n\x3col\x3e\n\x3cli\x3eThe device is suddenly down.\x3c\/li\x3e\n\x3cli\x3eZenoss pings the device and gets no response.\x3c\/li\x3e\n\x3cli\x3eThe device status is then changed to \x3cem\x3eDOWN\x3c\/em\x3e.\x3c\/li\x3e\n\x3cli\x3eAn Event with an event class of \x3ccode\x3e\/Status\/Ping\x3c\/code\x3e and a severity of \x3cem\x3eCritical\x3c\/em\x3e is created.\x3c\/li\x3e\n\x3c\/ol\x3e\n\n\x3cp\x3eWith this information, we can create a trigger that will represent this exact scenario. Moreover, we can configure a command notification to be executed when this trigger is fired.\x3c\/p\x3e\n\n\x3ch2 id=\x22configuring-a-trigger\x22\x3eConfiguring a Trigger\x3c\/h2\x3e\n\n\x3col\x3e\n\x3cli\x3eNavigate to Events \x26gt; Triggers\x3c\/li\x3e\n\x3cli\x3eCreate a new trigger.\x3c\/li\x3e\n\x3cli\x3eAdd the rules that represent the scenario mentioned before. In this case, all of these rules must apply:\x3c\/li\x3e\n\x3c\/ol\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/triggering-commands-from-events-in-zenoss\/edit_trigger.png\x22 alt=\x22Edit Trigger\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3e=\x26gt; Because we want to make sure the device is truly \x3cem\x3eDOWN\x3c\/em\x3e, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -53,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-10-31 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-10-31 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/",
+    "datePublished": "2016-10-31 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-10-31 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/triggering-commands-from-events-in-zenoss\/",
     "wordCount" : "436",
     "keywords" : [ "zenoss","monitoring","devops","Blog" ]
 }

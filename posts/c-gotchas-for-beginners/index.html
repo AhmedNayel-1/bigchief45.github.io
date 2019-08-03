@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,34 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "C Gotchas For Beginners",
     "headline" : "C Gotchas For Beginners",
-    "description" : "<p>Similar to <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners.html">my post</a> on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you <strong>must</strong> know if you are to become a good C programmer.</p>
-
-<h2 id="boolean-types">Boolean Types</h2>
-
-<p>C actually does not have a boolean type. They are usually defined like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define BOOL char
-</span><span style="color:#75715e">#define FALSE 0
-</span><span style="color:#75715e">#define TRUE 1</span></code></pre></div>
-<p>However it is argued that it is a better practice to simply use integers instead (<code>0</code> and <code>1</code>).</p>
-
-<h2 id="memory-address-of-array-elements">Memory Address of Array Elements</h2>
-
-<p>In C, arrays have a contiguous memory allocation. We can verify this by printing the memory addresses of each element of an array. We can do so using <code>&amp;</code> to access the memory location of the array element:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#00a8c8">int</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-  <span style="color:#00a8c8">char</span> <span style="color:#111">vowels</span><span style="color:#111">[]</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;a&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;e&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;i&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;o&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;u&#39;</span><span style="color:#111">};</span>
-
-  <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span><span style="color:#111">;</span> <span style="color:#111">i</span><span style="color:#f92672">++</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#111">printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Address of vowel [%d]: %u</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#111">vowels</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]);</span>
-  <span style="color:#111">}</span>
-
-  <span style="color:#00a8c8">return</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
-<span style="color:#111">}</span></code></pre></div>
-<p>The above code will produces the following output for me:</p>",
+    "description" : "\x3cp\x3eSimilar to \x3ca href=\x22\/posts\/javascript-gotchas-for-beginners.html\x22\x3emy post\x3c\/a\x3e on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you \x3cstrong\x3emust\x3c\/strong\x3e know if you are to become a good C programmer.\x3c\/p\x3e\n\n\x3ch2 id=\x22boolean-types\x22\x3eBoolean Types\x3c\/h2\x3e\n\n\x3cp\x3eC actually does not have a boolean type. They are usually defined like this:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-c\x22 data-lang=\x22c\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e#define BOOL char\n\x3c\/span\x3e\x3cspan style=\x22color:#75715e\x22\x3e#define FALSE 0\n\x3c\/span\x3e\x3cspan style=\x22color:#75715e\x22\x3e#define TRUE 1\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eHowever it is argued that it is a better practice to simply use integers instead (\x3ccode\x3e0\x3c\/code\x3e and \x3ccode\x3e1\x3c\/code\x3e).\x3c\/p\x3e\n\n\x3ch2 id=\x22memory-address-of-array-elements\x22\x3eMemory Address of Array Elements\x3c\/h2\x3e\n\n\x3cp\x3eIn C, arrays have a contiguous memory allocation. We can verify this by printing the memory addresses of each element of an array. We can do so using \x3ccode\x3e\x26amp;\x3c\/code\x3e to access the memory location of the array element:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-c\x22 data-lang=\x22c\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eint\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3emain\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3echar\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3evowels\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e[]\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;a\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;e\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;i\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;o\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;u\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e};\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eint\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e0\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e;\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e\x26lt;\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e5\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e;\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e\x2b\x2b\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eprintf\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;Address of vowel [%d]: %u\x3c\/span\x3e\x3cspan style=\x22color:#8045ff\x22\x3e\\n\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e\x26amp;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3evowels\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e]);\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#00a8c8\x22\x3ereturn\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e0\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e;\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe above code will produces the following output for me:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -50,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-02-07 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-02-07 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/c-gotchas-for-beginners/",
+    "datePublished": "2017-02-07 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-02-07 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/c-gotchas-for-beginners\/",
     "wordCount" : "909",
     "keywords" : [ "c","programming","Blog" ]
 }

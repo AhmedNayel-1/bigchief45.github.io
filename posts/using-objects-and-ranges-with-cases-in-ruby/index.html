@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,32 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Using Objects and Ranges With Cases in Ruby",
     "headline" : "Using Objects and Ranges With Cases in Ruby",
-    "description" : "<p>Ruby&rsquo;s <a href="http://www.techotopia.com/index.php/The_Ruby_case_Statement"><code>case</code> statement</a> provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of <code>if</code> statements and I actually found a pretty neat way to implement using the Ruby <code>case</code>.</p>
-
-<p>In my application I have a Rails model called <code>Entry</code> which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3&rsquo;s nice <a href="http://getbootstrap.com/components/#progress">progress bars</a> and I want the progress bar&rsquo;s contextual class to be changed and determined by the range in which this data point sits in.</p>
-
-<p>If we take <a href="https://en.wikipedia.org/wiki/Cholesterol">total cholesterol</a> as an example, a quick Google search indicates that an ideal value would be less than 200 mg/dL, a high value (not good) would be between 200-239 mg/dL, and a very high value (definitely not good) would be above 240 mg/dL.</p>
-
-<p>To implement this, I created a <code>Recommendations</code> module under the <code>/models</code> directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:</p>
-
-<pre><code>app/models/
-├── application_record.rb
-├── concerns
-├── entry.rb
-├── recommendations
-│   ├── blood_glucose.rb
-│   ├── diastolic_pressure.rb
-│   ├── hdl.rb
-│   ├── ldl.rb
-│   ├── systolic_pressure.rb
-│   └── total_cholesterol.rb
-└── user.rb
-</code></pre>",
+    "description" : "\x3cp\x3eRuby\x26rsquo;s \x3ca href=\x22http:\/\/www.techotopia.com\/index.php\/The_Ruby_case_Statement\x22\x3e\x3ccode\x3ecase\x3c\/code\x3e statement\x3c\/a\x3e provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of \x3ccode\x3eif\x3c\/code\x3e statements and I actually found a pretty neat way to implement using the Ruby \x3ccode\x3ecase\x3c\/code\x3e.\x3c\/p\x3e\n\n\x3cp\x3eIn my application I have a Rails model called \x3ccode\x3eEntry\x3c\/code\x3e which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3\x26rsquo;s nice \x3ca href=\x22http:\/\/getbootstrap.com\/components\/#progress\x22\x3eprogress bars\x3c\/a\x3e and I want the progress bar\x26rsquo;s contextual class to be changed and determined by the range in which this data point sits in.\x3c\/p\x3e\n\n\x3cp\x3eIf we take \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Cholesterol\x22\x3etotal cholesterol\x3c\/a\x3e as an example, a quick Google search indicates that an ideal value would be less than 200 mg\/dL, a high value (not good) would be between 200-239 mg\/dL, and a very high value (definitely not good) would be above 240 mg\/dL.\x3c\/p\x3e\n\n\x3cp\x3eTo implement this, I created a \x3ccode\x3eRecommendations\x3c\/code\x3e module under the \x3ccode\x3e\/models\x3c\/code\x3e directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eapp\/models\/\n├── application_record.rb\n├── concerns\n├── entry.rb\n├── recommendations\n│   ├── blood_glucose.rb\n│   ├── diastolic_pressure.rb\n│   ├── hdl.rb\n│   ├── ldl.rb\n│   ├── systolic_pressure.rb\n│   └── total_cholesterol.rb\n└── user.rb\n\x3c\/code\x3e\x3c\/pre\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -48,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-03-29 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-03-29 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/",
+    "datePublished": "2017-03-29 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-03-29 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/using-objects-and-ranges-with-cases-in-ruby\/",
     "wordCount" : "598",
     "keywords" : [ "ruby","rails","programming","web dev","bootstrap","Blog" ]
 }

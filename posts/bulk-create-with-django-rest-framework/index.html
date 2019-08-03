@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,26 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Bulk Create With Django REST Framework",
     "headline" : "Bulk Create With Django REST Framework",
-    "description" : "<p>In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
-
-<h2 id="the-serializer">The Serializer</h2>
-
-<p>Let&rsquo;s assume that we will be working with an existing <code>Book</code> model in our Django application. We will create a serializer for this model using Django REST&rsquo;s <a href="http://www.django-rest-framework.org/api-guide/serializers/#modelserializer">ModelSerializer</a> helper class:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># serializers.py</span>
-<span style="color:#f92672">from</span> <span style="color:#111">myapp.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Book</span>
-<span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">serializers</span>
-
-
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookSerializer</span><span style="color:#111">(</span><span style="color:#111">serializers</span><span style="color:#f92672">.</span><span style="color:#111">ModelSerializer</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">class</span> <span style="color:#75af00">Meta</span><span style="color:#111">:</span>
-        <span style="color:#111">model</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span>
-        <span style="color:#111">fields</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;__all__&#39;</span></code></pre></div>
-<p>The <code>&quot;__all__&quot;</code> string indicates that we want to serialize <strong>all</strong> of the model&rsquo;s fields.</p>",
+    "description" : "\x3cp\x3eIn this quick post I will go over how to create an endpoint that allows bulk creation of a resource using \x3ca href=\x22http:\/\/www.django-rest-framework.org\/\x22\x3eDjango REST Framework\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-serializer\x22\x3eThe Serializer\x3c\/h2\x3e\n\n\x3cp\x3eLet\x26rsquo;s assume that we will be working with an existing \x3ccode\x3eBook\x3c\/code\x3e model in our Django application. We will create a serializer for this model using Django REST\x26rsquo;s \x3ca href=\x22http:\/\/www.django-rest-framework.org\/api-guide\/serializers\/#modelserializer\x22\x3eModelSerializer\x3c\/a\x3e helper class:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# serializers.py\x3c\/span\x3e\n\x3cspan style=\x22color:#f92672\x22\x3efrom\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emyapp.models\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eBook\x3c\/span\x3e\n\x3cspan style=\x22color:#f92672\x22\x3efrom\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3erest_framework\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eserializers\x3c\/span\x3e\n\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eclass\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eBookSerializer\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eserializers\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eModelSerializer\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3eclass\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eMeta\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3emodel\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eBook\x3c\/span\x3e\n        \x3cspan style=\x22color:#111\x22\x3efields\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;__all__\x26#39;\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe \x3ccode\x3e\x26quot;__all__\x26quot;\x3c\/code\x3e string indicates that we want to serialize \x3cstrong\x3eall\x3c\/strong\x3e of the model\x26rsquo;s fields.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -42,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-11-27 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-11-27 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/bulk-create-with-django-rest-framework/",
+    "datePublished": "2017-11-27 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-11-27 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/bulk-create-with-django-rest-framework\/",
     "wordCount" : "335",
     "keywords" : [ "python","djangorestframework","Blog" ]
 }

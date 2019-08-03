@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,33 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Extending Zenoss Navigation Bars",
     "headline" : "Extending Zenoss Navigation Bars",
-    "description" : "<p>It is possible to extend the functionality of Zenoss&rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.</p>
-
-<h2 id="configure-zcml">configure.zcml</h2>
-
-<p>Zenoss ZenPacks can contain a file in the ZenPack top directory called <code>configure.zcml</code>. I&rsquo;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.</p>
-
-<p>It is in this file where we will declare and create new navigational links from our ZenPack.</p>
-
-<p>~&gt; In this post we assume that the ZenPack is created using <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.</p>
-
-<p>Usually this file begins with some required boilerplate code:</p>
-
-<p><strong>configure.zcml</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
-<span style="color:#f92672">&lt;configure</span>
-  <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
-  <span style="color:#75af00">xmlns:browser=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/browser&#34;</span>
-  <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#f92672">&gt;</span>
-
-  <span style="color:#75715e">&lt;!-- Our custom code here --&gt;</span>
-  <span style="color:#f92672">&lt;include</span> <span style="color:#75af00">package=</span><span style="color:#d88200">&#34;.browser&#34;</span> <span style="color:#f92672">/&gt;</span>
-<span style="color:#f92672">&lt;/configure&gt;</span></code></pre></div>",
+    "description" : "\x3cp\x3eIt is possible to extend the functionality of Zenoss\x26rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.\x3c\/p\x3e\n\n\x3ch2 id=\x22configure-zcml\x22\x3econfigure.zcml\x3c\/h2\x3e\n\n\x3cp\x3eZenoss ZenPacks can contain a file in the ZenPack top directory called \x3ccode\x3econfigure.zcml\x3c\/code\x3e. I\x26rsquo;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.\x3c\/p\x3e\n\n\x3cp\x3eIt is in this file where we will declare and create new navigational links from our ZenPack.\x3c\/p\x3e\n\n\x3cp\x3e~\x26gt; In this post we assume that the ZenPack is created using \x3ca href=\x22https:\/\/zenpacklib.zenoss.com\/en\/latest\/\x22\x3ezenpacklib\x3c\/a\x3e, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.\x3c\/p\x3e\n\n\x3cp\x3eUsually this file begins with some required boilerplate code:\x3c\/p\x3e\n\n\x3cp\x3e\x3cstrong\x3econfigure.zcml\x3c\/strong\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-xml\x22 data-lang=\x22xml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e\x26lt;?xml version=\x26#34;1.0\x26#34; encoding=\x26#34;utf-8\x26#34;?\x26gt;\x3c\/span\x3e\n\x3cspan style=\x22color:#f92672\x22\x3e\x26lt;configure\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3exmlns=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;http:\/\/namespaces.zope.org\/zope\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3exmlns:browser=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;http:\/\/namespaces.zope.org\/browser\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3exmlns:zcml=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;http:\/\/namespaces.zope.org\/zcml\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e\x26gt;\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#75715e\x22\x3e\x26lt;!-- Our custom code here --\x26gt;\x3c\/span\x3e\n  \x3cspan style=\x22color:#f92672\x22\x3e\x26lt;include\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3epackage=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;.browser\x26#34;\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e\/\x26gt;\x3c\/span\x3e\n\x3cspan style=\x22color:#f92672\x22\x3e\x26lt;\/configure\x26gt;\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -49,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-12-21 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-12-21 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/extending-zenoss-navigations/",
+    "datePublished": "2016-12-21 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-12-21 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/extending-zenoss-navigations\/",
     "wordCount" : "545",
     "keywords" : [ "zenoss","zope","zenpacks","javascript","xml","ui","Blog" ]
 }

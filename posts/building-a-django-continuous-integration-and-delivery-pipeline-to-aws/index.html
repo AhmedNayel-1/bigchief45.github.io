@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,24 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Building a Django Continuous Integration and Delivery Pipeline to AWS",
     "headline" : "Building a Django Continuous Integration and Delivery Pipeline to AWS",
-    "description" : "<p>Building a CI/CD (Continuous Integration / Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.</p>
-
-<p>In this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to <a href="https://www.heroku.com/">Heroku</a>. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.</p>
-
-<p>The pipeline will work as follows:</p>
-
-<ol>
-<li>Code will be pushed to source control repository. For this article, I will use Github.</li>
-<li>Project will be built and tested in a CI job at <a href="https://travis-ci.com/">TravisCI</a>.</li>
-<li>TravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.</li>
-</ol>
-
-<p>We will be using both the <strong><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html">ElasticBeanstalk CLI (ebcli)</a></strong> and the <strong>AWS ElasticBeanstalk Console</strong> to achieve this.</p>",
+    "description" : "\x3cp\x3eBuilding a CI\/CD (Continuous Integration \/ Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to \x3ca href=\x22https:\/\/www.heroku.com\/\x22\x3eHeroku\x3c\/a\x3e. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.\x3c\/p\x3e\n\n\x3cp\x3eThe pipeline will work as follows:\x3c\/p\x3e\n\n\x3col\x3e\n\x3cli\x3eCode will be pushed to source control repository. For this article, I will use Github.\x3c\/li\x3e\n\x3cli\x3eProject will be built and tested in a CI job at \x3ca href=\x22https:\/\/travis-ci.com\/\x22\x3eTravisCI\x3c\/a\x3e.\x3c\/li\x3e\n\x3cli\x3eTravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.\x3c\/li\x3e\n\x3c\/ol\x3e\n\n\x3cp\x3eWe will be using both the \x3cstrong\x3e\x3ca href=\x22https:\/\/docs.aws.amazon.com\/elasticbeanstalk\/latest\/dg\/eb-cli3.html\x22\x3eElasticBeanstalk CLI (ebcli)\x3c\/a\x3e\x3c\/strong\x3e and the \x3cstrong\x3eAWS ElasticBeanstalk Console\x3c\/strong\x3e to achieve this.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -40,11 +28,11 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-01-30 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-01-30 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/",
+    "datePublished": "2018-01-30 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2018-01-30 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/building-a-django-continuous-integration-and-delivery-pipeline-to-aws\/",
     "wordCount" : "1733",
-    "keywords" : [ "aws","elasticbeanstalk","ci/cd","django","Blog" ]
+    "keywords" : [ "aws","elasticbeanstalk","ci\/cd","django","Blog" ]
 }
 </script>
 

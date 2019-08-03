@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,24 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Django AJAX Search With Elasticsearch",
     "headline" : "Django AJAX Search With Elasticsearch",
-    "description" : "<p>In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&rsquo;s get started!</p>
-
-<h2 id="the-search-template">The Search Template</h2>
-
-<p>The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.</p>
-
-<p>This template is extremely simple and does not need a <code>&lt;form&gt;</code> tag. I will create it as a partial under <code>templates/search.html</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% csrf_token %}
-&lt;input id=&#34;search&#34; name=&#34;q&#34; placeholder=&#34;Search...&#34;&gt;</code></pre></div>
-<p>Notice how we have given the input a <code>name</code> with the value of <code>q</code>. This will be important when our view receives the query from this input field.</p>
-
-<p>I can then render this partial in the main template like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% include &#39;search.html&#39; %}</code></pre></div>",
+    "description" : "\x3cp\x3eIn this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let\x26rsquo;s get started!\x3c\/p\x3e\n\n\x3ch2 id=\x22the-search-template\x22\x3eThe Search Template\x3c\/h2\x3e\n\n\x3cp\x3eThe starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.\x3c\/p\x3e\n\n\x3cp\x3eThis template is extremely simple and does not need a \x3ccode\x3e\x26lt;form\x26gt;\x3c\/code\x3e tag. I will create it as a partial under \x3ccode\x3etemplates\/search.html\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-liquid\x22 data-lang=\x22liquid\x22\x3e{% csrf_token %}\n\x26lt;input id=\x26#34;search\x26#34; name=\x26#34;q\x26#34; placeholder=\x26#34;Search...\x26#34;\x26gt;\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eNotice how we have given the input a \x3ccode\x3ename\x3c\/code\x3e with the value of \x3ccode\x3eq\x3c\/code\x3e. This will be important when our view receives the query from this input field.\x3c\/p\x3e\n\n\x3cp\x3eI can then render this partial in the main template like this:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-liquid\x22 data-lang=\x22liquid\x22\x3e{% include \x26#39;search.html\x26#39; %}\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -40,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-01-10 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-01-10 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/",
+    "datePublished": "2018-01-10 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2018-01-10 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/django-ajax-search-with-elasticsearch\/",
     "wordCount" : "719",
     "keywords" : [ "django","python","javascript","elasticsearch","Blog" ]
 }

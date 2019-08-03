@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,34 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Understanding Gnocchi Measures",
     "headline" : "Understanding Gnocchi Measures",
-    "description" : "<p>Measures are simple objects that represent the timeseries data. They simply contain a <strong>timestamp</strong> and a <strong>value</strong>, and they belong to <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics.html">metrics</a>. You could say that a measure <em>has many</em> metrics.</p>
-
-<h2 id="adding-measures-to-a-metric">Adding Measures to a Metric</h2>
-
-<p>Using the REST API, we can easily add measures to a metric:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">POST</span> <span style="color:#111">/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-<span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
-<span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">198</span>
-
-<span style="color:#111">[</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:33:57&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">43.1</span>
-  <span style="color:#111">},</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:34:12&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">12</span>
-  <span style="color:#111">},</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:34:20&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">2</span>
-  <span style="color:#111">}</span>
-<span style="color:#111">]</span></code></pre></div>",
+    "description" : "\x3cp\x3eMeasures are simple objects that represent the timeseries data. They simply contain a \x3cstrong\x3etimestamp\x3c\/strong\x3e and a \x3cstrong\x3evalue\x3c\/strong\x3e, and they belong to \x3ca href=\x22\/posts\/understanding-gnocchi-metrics.html\x22\x3emetrics\x3c\/a\x3e. You could say that a measure \x3cem\x3ehas many\x3c\/em\x3e metrics.\x3c\/p\x3e\n\n\x3ch2 id=\x22adding-measures-to-a-metric\x22\x3eAdding Measures to a Metric\x3c\/h2\x3e\n\n\x3cp\x3eUsing the REST API, we can easily add measures to a metric:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-http\x22 data-lang=\x22http\x22\x3e\x3cspan style=\x22color:#75af00\x22\x3ePOST\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e\/v1\/metric\/511b61a1-8d67-42d5-8add-66d4209a0469\/measures\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3eHTTP\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e\/\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e1.1\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3eContent-Type\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3eapplication\/json\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3eContent-Length\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e198\x3c\/span\x3e\n\n\x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;timestamp\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;2014-10-06T14:33:57\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;value\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e43.1\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e},\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;timestamp\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;2014-10-06T14:34:12\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;value\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e12\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e},\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;timestamp\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;2014-10-06T14:34:20\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;value\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e2\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -50,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-05-24 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-05-24 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/understanding-gnocchi-measures/",
+    "datePublished": "2017-05-24 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-05-24 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/understanding-gnocchi-measures\/",
     "wordCount" : "559",
     "keywords" : [ "gnocchi","python","Blog" ]
 }

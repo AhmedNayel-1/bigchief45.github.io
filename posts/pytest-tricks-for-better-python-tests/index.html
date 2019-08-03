@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,30 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Pytest Tricks for Better Python Tests",
     "headline" : "Pytest Tricks for Better Python Tests",
-    "description" : "<p><a href="https://pytest.org/">Pytest</a> is my Python testing framework of choice. Very easy to use, and makes tests look much better.</p>
-
-<p>In this article I&rsquo;ll show you some cool tricks I have incorporated into my test suites using Pytest.</p>
-
-<h2 id="environment-variables">Environment Variables</h2>
-
-<p>When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.</p>
-
-<p>With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in <code>conftest.py</code> that will be loaded automatically:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># conftest.py</span>
-
-<span style="color:#f92672">import</span> <span style="color:#111">pytest</span>
-
-
-<span style="color:#75af00">@pytest.fixture</span><span style="color:#111">(</span><span style="color:#111">autouse</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">env_setup</span><span style="color:#111">(</span><span style="color:#111">monkeypatch</span><span style="color:#111">):</span>
-    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;MY_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span>
-    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ANOTHER_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p><a href="https://docs.pytest.org/en/latest/monkeypatch.html"><code>monkeypatch</code></a> is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the <code>autouse</code> option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.</p>",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/pytest.org\/\x22\x3ePytest\x3c\/a\x3e is my Python testing framework of choice. Very easy to use, and makes tests look much better.\x3c\/p\x3e\n\n\x3cp\x3eIn this article I\x26rsquo;ll show you some cool tricks I have incorporated into my test suites using Pytest.\x3c\/p\x3e\n\n\x3ch2 id=\x22environment-variables\x22\x3eEnvironment Variables\x3c\/h2\x3e\n\n\x3cp\x3eWhen your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.\x3c\/p\x3e\n\n\x3cp\x3eWith Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in \x3ccode\x3econftest.py\x3c\/code\x3e that will be loaded automatically:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# conftest.py\x3c\/span\x3e\n\n\x3cspan style=\x22color:#f92672\x22\x3eimport\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3epytest\x3c\/span\x3e\n\n\n\x3cspan style=\x22color:#75af00\x22\x3e@pytest.fixture\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eautouse\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eTrue\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3edef\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eenv_setup\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emonkeypatch\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3emonkeypatch\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3esetenv\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;MY_SETTING\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;some-value\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3emonkeypatch\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3esetenv\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;ANOTHER_SETTING\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;some-value\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3e\x3ca href=\x22https:\/\/docs.pytest.org\/en\/latest\/monkeypatch.html\x22\x3e\x3ccode\x3emonkeypatch\x3c\/code\x3e\x3c\/a\x3e is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the \x3ccode\x3eautouse\x3c\/code\x3e option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -46,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-12-21 21:03:28 &#43;0000 UTC",
-    "dateModified" : "2018-12-21 21:03:28 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/",
+    "datePublished": "2018-12-21 21:03:28 \x2b0000 UTC",
+    "dateModified" : "2018-12-21 21:03:28 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/pytest-tricks-for-better-python-tests\/",
     "wordCount" : "735",
     "keywords" : [ "python","pytestб tdd","Blog" ]
 }

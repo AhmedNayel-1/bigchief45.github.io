@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "",
     "name" : "Andrés Álvarez",
@@ -28,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2019",
-    "datePublished": "2019-04-09 18:07:34 &#43;0000 UTC",
-    "dateModified" : "2019-04-09 18:07:34 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/",
+    "datePublished": "2019-08-02 16:34:42 -0600 CST",
+    "dateModified" : "2019-08-02 16:34:42 -0600 CST",
+    "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
 }
@@ -133,6 +133,30 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/django-oring-list-of-q-objects/">Django: ORing List of Q Objects</a>
+  </h1>
+  <time datetime="2019-08-02T16:34:42-0600" class="post-date">Fri, Aug 2, 2019</time>
+  Django allows using the OR bitwise operator | with Q objects for more complex lookups:
+Q(question__startswith=&#39;Who&#39;) | Q(question__startswith=&#39;What&#39;) However this requires explicitely typing each Q object. How can we apply this OR opperation to all the Q objects in a list?
+In Python 3 we can do so like this:
+from functools import reduce from operator import __or__ qs = MyModel.objects.filter(reduce(__or__, filters)) Where filters is a list containing multiple Q objects like the ones shown in the first example.
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/django-oring-list-of-q-objects/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/coding-challenge-rectangular-intersection/">Coding Challenge: Rectangular Intersection</a>
@@ -254,33 +278,6 @@ r = Rectangle(2, 7, 30 8)
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/making-functions-timeout-in-python/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/">Dropdown Toolbar Buttons in Netbeans Platform</a>
-  </h1>
-  <time datetime="2019-02-05T20:16:38Z" class="post-date">Tue, Feb 5, 2019</time>
-  <p>It is possible to add buttons that toggle a dropdown menu to the main toolbar in your Netbeans Platform application.</p>
-
-<p>For example, the Netbeans IDE <em>Run Project</em>, <em>Debug Project</em>, and <em>Profile Project</em> buttons have a small arrow next to them. When clicked, a dropdown menu with more related actions is shown:</p>
-
-<p><img src="https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png" alt="Netbeans IDE Dropdown Buttons" /></p>
-
-<p>In this article, I will teach you how to implement this behavior.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/">Read More…</a>
     </div>
   
 </article>

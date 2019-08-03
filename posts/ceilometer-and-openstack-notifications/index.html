@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,45 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Ceilometer and OpenStack Notifications",
     "headline" : "Ceilometer and OpenStack Notifications",
-    "description" : "<p>Ceilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are <strong>notifications</strong>, which will be explained in this post.</p>
-
-<h2 id="openstack-notifications">OpenStack Notifications</h2>
-
-<p>All OpenStack services (such as Nova Compute, Neutron, etc.) send notifications about executed operations or the state of the system. Many of these notifications carry information that can be metered such as <strong>CPU time</strong> of a virtual machine instance created by the compute service.</p>
-
-<p>OpenStack services send these notifications through an AMQP message queue. However, not all these notifications are consumed by the Telemetry service, as the intention is only to capture the billable events and notifications that can be used for monitoring or profiling purposes. The notification agent filters by the <strong>event type</strong>. Each notification message contains the event type.</p>
-
-<p>Here is a table with a few examples:</p>
-
-<table>
-<thead>
-<tr>
-<th align="center">OpenStack Service</th>
-<th align="center">Event types</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">OpenStack Compute</td>
-<td align="center"><code>scheduler.run_instance.scheduled</code>, <code>scheduler.select_destinations</code>, <code>compute.instance.*</code></td>
-</tr>
-
-<tr>
-<td align="center">OpenStack Image</td>
-<td align="center"><code>image.update</code>, <code>image.upload</code>,  <code>image.delete</code>, <code>image.send</code></td>
-</tr>
-</tbody>
-</table>
-
-<p>In Ceilometer, the <strong>notification agent</strong> is reponsible for consuming these notifications from the AMQP message bus, and then transforming them into <strong>events</strong> and <strong>samples</strong>.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/2-1-collection-notification.png" alt="Notifications Collection" /></p>",
+    "description" : "\x3cp\x3eCeilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are \x3cstrong\x3enotifications\x3c\/strong\x3e, which will be explained in this post.\x3c\/p\x3e\n\n\x3ch2 id=\x22openstack-notifications\x22\x3eOpenStack Notifications\x3c\/h2\x3e\n\n\x3cp\x3eAll OpenStack services (such as Nova Compute, Neutron, etc.) send notifications about executed operations or the state of the system. Many of these notifications carry information that can be metered such as \x3cstrong\x3eCPU time\x3c\/strong\x3e of a virtual machine instance created by the compute service.\x3c\/p\x3e\n\n\x3cp\x3eOpenStack services send these notifications through an AMQP message queue. However, not all these notifications are consumed by the Telemetry service, as the intention is only to capture the billable events and notifications that can be used for monitoring or profiling purposes. The notification agent filters by the \x3cstrong\x3eevent type\x3c\/strong\x3e. Each notification message contains the event type.\x3c\/p\x3e\n\n\x3cp\x3eHere is a table with a few examples:\x3c\/p\x3e\n\n\x3ctable\x3e\n\x3cthead\x3e\n\x3ctr\x3e\n\x3cth align=\x22center\x22\x3eOpenStack Service\x3c\/th\x3e\n\x3cth align=\x22center\x22\x3eEvent types\x3c\/th\x3e\n\x3c\/tr\x3e\n\x3c\/thead\x3e\n\n\x3ctbody\x3e\n\x3ctr\x3e\n\x3ctd align=\x22center\x22\x3eOpenStack Compute\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3e\x3ccode\x3escheduler.run_instance.scheduled\x3c\/code\x3e, \x3ccode\x3escheduler.select_destinations\x3c\/code\x3e, \x3ccode\x3ecompute.instance.*\x3c\/code\x3e\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22center\x22\x3eOpenStack Image\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3e\x3ccode\x3eimage.update\x3c\/code\x3e, \x3ccode\x3eimage.upload\x3c\/code\x3e,  \x3ccode\x3eimage.delete\x3c\/code\x3e, \x3ccode\x3eimage.send\x3c\/code\x3e\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3c\/tbody\x3e\n\x3c\/table\x3e\n\n\x3cp\x3eIn Ceilometer, the \x3cstrong\x3enotification agent\x3c\/strong\x3e is reponsible for consuming these notifications from the AMQP message bus, and then transforming them into \x3cstrong\x3eevents\x3c\/strong\x3e and \x3cstrong\x3esamples\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22https:\/\/docs.openstack.org\/developer\/ceilometer\/_images\/2-1-collection-notification.png\x22 alt=\x22Notifications Collection\x22 \/\x3e\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -61,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-04-06 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-04-06 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/ceilometer-and-openstack-notifications/",
+    "datePublished": "2017-04-06 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-04-06 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/ceilometer-and-openstack-notifications\/",
     "wordCount" : "616",
     "keywords" : [ "ceilometer","openstack","cloudcomputing","Blog" ]
 }

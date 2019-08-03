@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,30 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Configuring a local apt repository",
     "headline" : "Configuring a local apt repository",
-    "description" : "<p>Setting up a local apt repository can allow you to use <code>apt-get install</code> command to install your own packages. This is a better approach than using <code>dpkg -i</code> because apt will fetch and install the required dependencies (which should also be located in your local repository) in an <strong>offline</strong> fashion.</p>
-
-<h2 id="add-local-repository-to-sources">Add Local Repository to Sources</h2>
-
-<p>First we need to add our local repository to <code>apt</code>&rsquo;s list of source repositories, this can be found in <code>/etc/apt/sources.list</code>. To add our local repository, we add the following line at the top of the file:</p>
-
-<pre><code>/path/to/local-deb-repo/ ./
-</code></pre>
-
-<p>Where <em>local-deb-repo</em> is the name of our local repository directory.</p>
-
-<h2 id="add-debian-packages">Add Debian Packages</h2>
-
-<p>Now we create local repository&rsquo;s directory just like we specified it in the previous step:</p>
-
-<pre><code>mkdir /path/to/local-deb-repo/
-</code></pre>
-
-<p>Once we&rsquo;ve done that, we can proceed to put the Debian package files (<code>.deb</code>) and their dependencies inside the directory.</p>",
+    "description" : "\x3cp\x3eSetting up a local apt repository can allow you to use \x3ccode\x3eapt-get install\x3c\/code\x3e command to install your own packages. This is a better approach than using \x3ccode\x3edpkg -i\x3c\/code\x3e because apt will fetch and install the required dependencies (which should also be located in your local repository) in an \x3cstrong\x3eoffline\x3c\/strong\x3e fashion.\x3c\/p\x3e\n\n\x3ch2 id=\x22add-local-repository-to-sources\x22\x3eAdd Local Repository to Sources\x3c\/h2\x3e\n\n\x3cp\x3eFirst we need to add our local repository to \x3ccode\x3eapt\x3c\/code\x3e\x26rsquo;s list of source repositories, this can be found in \x3ccode\x3e\/etc\/apt\/sources.list\x3c\/code\x3e. To add our local repository, we add the following line at the top of the file:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3e\/path\/to\/local-deb-repo\/ .\/\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eWhere \x3cem\x3elocal-deb-repo\x3c\/em\x3e is the name of our local repository directory.\x3c\/p\x3e\n\n\x3ch2 id=\x22add-debian-packages\x22\x3eAdd Debian Packages\x3c\/h2\x3e\n\n\x3cp\x3eNow we create local repository\x26rsquo;s directory just like we specified it in the previous step:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3emkdir \/path\/to\/local-deb-repo\/\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eOnce we\x26rsquo;ve done that, we can proceed to put the Debian package files (\x3ccode\x3e.deb\x3c\/code\x3e) and their dependencies inside the directory.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -46,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-10-17 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-10-17 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/configuring-a-local-apt-repository/",
+    "datePublished": "2016-10-17 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-10-17 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/configuring-a-local-apt-repository\/",
     "wordCount" : "251",
     "keywords" : [ "linux","apt","aptitude","repository","Blog" ]
 }

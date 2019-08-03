@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,63 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Understanding Ceilometer Transformers",
     "headline" : "Understanding Ceilometer Transformers",
-    "description" : "<p>Ceilometer <strong>transformers</strong> are part of the Ceilometer <strong>pipeline</strong>, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for <strong>samples</strong> and a pipeline for <strong>events</strong>.</p>
-
-<p>Configurations for these pipelines can be found in <code>/etc/ceilometer/pipeline.yaml</code> and <code>/etc/ceilometer/event_pipeline.yaml</code>.</p>
-
-<p>Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline" /></p>
-
-<p>Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:</p>
-
-<table>
-<thead>
-<tr>
-<th align="left">Name of transformer</th>
-<th align="center">Reference name for configuration</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="left">Accumulator</td>
-<td align="center">accumulator</td>
-</tr>
-
-<tr>
-<td align="left">Aggregator</td>
-<td align="center">aggregator</td>
-</tr>
-
-<tr>
-<td align="left">Arithmetic</td>
-<td align="center">arithmetic</td>
-</tr>
-
-<tr>
-<td align="left">Rate of change</td>
-<td align="center">rate_of_change</td>
-</tr>
-
-<tr>
-<td align="left">Unit conversion</td>
-<td align="center">unit_conversion</td>
-</tr>
-
-<tr>
-<td align="left">Delta</td>
-<td align="center">delta</td>
-</tr>
-</tbody>
-</table>
-
-<p>Let&rsquo;s take a more detailed look into the accumulator transformer.</p>",
+    "description" : "\x3cp\x3eCeilometer \x3cstrong\x3etransformers\x3c\/strong\x3e are part of the Ceilometer \x3cstrong\x3epipeline\x3c\/strong\x3e, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for \x3cstrong\x3esamples\x3c\/strong\x3e and a pipeline for \x3cstrong\x3eevents\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eConfigurations for these pipelines can be found in \x3ccode\x3e\/etc\/ceilometer\/pipeline.yaml\x3c\/code\x3e and \x3ccode\x3e\/etc\/ceilometer\/event_pipeline.yaml\x3c\/code\x3e.\x3c\/p\x3e\n\n\x3cp\x3eTransformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22https:\/\/docs.openstack.org\/developer\/ceilometer\/_images\/3-Pipeline.png\x22 alt=\x22Ceilometer Pipeline\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eDifferent types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:\x3c\/p\x3e\n\n\x3ctable\x3e\n\x3cthead\x3e\n\x3ctr\x3e\n\x3cth align=\x22left\x22\x3eName of transformer\x3c\/th\x3e\n\x3cth align=\x22center\x22\x3eReference name for configuration\x3c\/th\x3e\n\x3c\/tr\x3e\n\x3c\/thead\x3e\n\n\x3ctbody\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eAccumulator\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eaccumulator\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eAggregator\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eaggregator\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eArithmetic\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3earithmetic\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eRate of change\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3erate_of_change\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eUnit conversion\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eunit_conversion\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eDelta\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3edelta\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3c\/tbody\x3e\n\x3c\/table\x3e\n\n\x3cp\x3eLet\x26rsquo;s take a more detailed look into the accumulator transformer.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -79,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-04-07 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-04-07 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/understanding-ceilometer-transformers/",
+    "datePublished": "2017-04-07 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-04-07 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/understanding-ceilometer-transformers\/",
     "wordCount" : "482",
     "keywords" : [ "ceilometer","openstack","cloudcomputing","python","Blog" ]
 }

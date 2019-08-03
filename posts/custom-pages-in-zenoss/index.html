@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,28 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Custom Pages in Zenoss",
     "headline" : "Custom Pages in Zenoss",
-    "description" : "<p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
-
-<h2 id="page-viewlets">Page Viewlets</h2>
-
-<p>Previously we created navigation item viewlets, this time we will be creating <strong>page</strong> viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to <code>browser/configure.zcml</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:page</span>
-  <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;secondaryPage&#34;</span>
-  <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
-  <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
-  <span style="color:#75af00">template=</span><span style="color:#d88200">&#34;templates/my_template.pt&#34;</span>
-  <span style="color:#f92672">/&gt;</span></code></pre></div>
-<p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
-
-<p>Also let&rsquo;s not forget to create a necessary python init file:</p>
-
-<pre><code>touch browser/__init__.py
-</code></pre>",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/extending-zenoss-navigations.html\x22\x3eprevious post\x3c\/a\x3e I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn\x26rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.\x3c\/p\x3e\n\n\x3ch2 id=\x22page-viewlets\x22\x3ePage Viewlets\x3c\/h2\x3e\n\n\x3cp\x3ePreviously we created navigation item viewlets, this time we will be creating \x3cstrong\x3epage\x3c\/strong\x3e viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to \x3ccode\x3ebrowser\/configure.zcml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-xml\x22 data-lang=\x22xml\x22\x3e\x3cspan style=\x22color:#f92672\x22\x3e\x26lt;browser:page\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3ename=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;secondaryPage\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3efor=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;*\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3epermission=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;zenoss.View\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3etemplate=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;templates\/my_template.pt\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#f92672\x22\x3e\/\x26gt;\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eIt is important that the \x3cstrong\x3ename\x3c\/strong\x3e attribute matches the URL of the navigation link we created previously. Another important attribute is the \x3cstrong\x3etemplate\x3c\/strong\x3e attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and \x3ca href=\x22http:\/\/old.zope.org\/Members\/tone\/METAL\x22\x3eMETAL\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3cp\x3eAlso let\x26rsquo;s not forget to create a necessary python init file:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3etouch browser\/__init__.py\n\x3c\/code\x3e\x3c\/pre\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -44,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-12-26 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-12-26 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/custom-pages-in-zenoss/",
+    "datePublished": "2016-12-26 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-12-26 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/custom-pages-in-zenoss\/",
     "wordCount" : "756",
     "keywords" : [ "zenoss","extjs","javascript","zope","zenpacks","d3","Blog" ]
 }

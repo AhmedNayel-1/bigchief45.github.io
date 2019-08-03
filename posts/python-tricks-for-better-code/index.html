@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,25 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Python Tricks for Better Code",
     "headline" : "Python Tricks for Better Code",
-    "description" : "<p>A compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.</p>
-
-<h2 id="enumerate">Enumerate</h2>
-
-<p>When working with items in a list and we want to print or handle each item&rsquo;s index, instead of using a counter variable:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Bad way</span>
-<span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#00a8c8">for</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">places</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span>
-    <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span></code></pre></div>
-<p>We can use <code>enumerate</code> to improve our code:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">enumerate</span><span style="color:#111">(</span><span style="color:#111">places</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span></code></pre></div>
-<p><code>enumerate</code> returns a list of indexes along with each item in the list.</p>",
+    "description" : "\x3cp\x3eA compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.\x3c\/p\x3e\n\n\x3ch2 id=\x22enumerate\x22\x3eEnumerate\x3c\/h2\x3e\n\n\x3cp\x3eWhen working with items in a list and we want to print or handle each item\x26rsquo;s index, instead of using a counter variable:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# Bad way\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e0\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplaces\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3eprint\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e\x2b=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eWe can use \x3ccode\x3eenumerate\x3c\/code\x3e to improve our code:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eenumerate\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eplaces\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3eprint\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3e\x3ccode\x3eenumerate\x3c\/code\x3e returns a list of indexes along with each item in the list.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -41,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-03-08 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-03-08 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/python-tricks-for-better-code/",
+    "datePublished": "2017-03-08 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-03-08 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/python-tricks-for-better-code\/",
     "wordCount" : "849",
     "keywords" : [ "python","programming","Blog" ]
 }

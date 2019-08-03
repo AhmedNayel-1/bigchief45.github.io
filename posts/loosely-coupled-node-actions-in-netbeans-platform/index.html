@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,28 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Loosely Coupled Node Actions in Netbeans Platform",
     "headline" : "Loosely Coupled Node Actions in Netbeans Platform",
-    "description" : "<p>Nodes in Netbeans Platform can possess actions that can be executed with the node object as context. For example, the Project, Package, and Class nodes in the Netbeans IDE have a set of actions which can be seen by right clicking on the nodes:</p>
-
-<p><img src="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/netbeans_ide_node_actions.png" alt="Netbeans IDE Node Actions" /></p>
-
-<p>In the Netbeans Platform tutorials I found <a href="https://platform.netbeans.org/tutorials/nbm-nodesapi2.html#actions">a tutorial</a> that explains how to add these actions to nodes. The problem is that in that tutorial the action class was created as an <strong>inner class</strong> of the node class. Making the action <strong>tightly coupled</strong> with the node.</p>
-
-<p>I managed to implement a more modular and loosely coupled approach, which is what I will explain in this post.</p>
-
-<p>Our loosely coupled approach will basically allow us to:</p>
-
-<ol>
-<li>Keep the domain logic (Java Beans and POJOs) in its own domain module.</li>
-<li>Keep the view logic (nodes that represent beans) in another module.</li>
-<li>Keep the node actions logic in yet another module. This allows us to plug and unplug different action&rsquo;s that belong to separate modules. Making our application&rsquo;s node actions very modular.</li>
-</ol>
-
-<p>Let&rsquo;s begin!</p>",
+    "description" : "\x3cp\x3eNodes in Netbeans Platform can possess actions that can be executed with the node object as context. For example, the Project, Package, and Class nodes in the Netbeans IDE have a set of actions which can be seen by right clicking on the nodes:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/loosely-coupled-node-actions-in-netbeans-platform\/netbeans_ide_node_actions.png\x22 alt=\x22Netbeans IDE Node Actions\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn the Netbeans Platform tutorials I found \x3ca href=\x22https:\/\/platform.netbeans.org\/tutorials\/nbm-nodesapi2.html#actions\x22\x3ea tutorial\x3c\/a\x3e that explains how to add these actions to nodes. The problem is that in that tutorial the action class was created as an \x3cstrong\x3einner class\x3c\/strong\x3e of the node class. Making the action \x3cstrong\x3etightly coupled\x3c\/strong\x3e with the node.\x3c\/p\x3e\n\n\x3cp\x3eI managed to implement a more modular and loosely coupled approach, which is what I will explain in this post.\x3c\/p\x3e\n\n\x3cp\x3eOur loosely coupled approach will basically allow us to:\x3c\/p\x3e\n\n\x3col\x3e\n\x3cli\x3eKeep the domain logic (Java Beans and POJOs) in its own domain module.\x3c\/li\x3e\n\x3cli\x3eKeep the view logic (nodes that represent beans) in another module.\x3c\/li\x3e\n\x3cli\x3eKeep the node actions logic in yet another module. This allows us to plug and unplug different action\x26rsquo;s that belong to separate modules. Making our application\x26rsquo;s node actions very modular.\x3c\/li\x3e\n\x3c\/ol\x3e\n\n\x3cp\x3eLet\x26rsquo;s begin!\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -44,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2018",
-    "datePublished": "2018-07-25 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2018-07-25 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/",
+    "datePublished": "2018-07-25 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2018-07-25 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/loosely-coupled-node-actions-in-netbeans-platform\/",
     "wordCount" : "952",
     "keywords" : [ "netbeans platform","Blog" ]
 }

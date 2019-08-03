@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,24 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Modifying the Zenoss Infrastructure Grid",
     "headline" : "Modifying the Zenoss Infrastructure Grid",
-    "description" : "<p>Continuing from my previous post, where I explained <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">how to modify the device detail bar from a ZenPack using ExtJS</a>, in this post I will explain how we can modify the device list grid shown in the infrastructure page.</p>
-
-<h2 id="the-infrastructure-grid">The Infrastructure Grid</h2>
-
-<p>This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include <em>device name</em>, <em>device class</em>, <em>IP address</em>, <em>production state</em>, and <em>events</em>, as shown in the image below:</p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png" alt="Zenoss Infrastructure Grid" /></p>
-
-<p>However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&rsquo;t do this by default is beyond me).</p>
-
-<h2 id="devicepanels-js">DevicePanels.js</h2>
-
-<p>The source code for the grid is found in <code>$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js</code>. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called <code>deviceColumns</code>.</p>",
+    "description" : "\x3cp\x3eContinuing from my previous post, where I explained \x3ca href=\x22\/posts\/modifying-the-zenoss-device-detail-bar.html\x22\x3ehow to modify the device detail bar from a ZenPack using ExtJS\x3c\/a\x3e, in this post I will explain how we can modify the device list grid shown in the infrastructure page.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-infrastructure-grid\x22\x3eThe Infrastructure Grid\x3c\/h2\x3e\n\n\x3cp\x3eThis is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include \x3cem\x3edevice name\x3c\/em\x3e, \x3cem\x3edevice class\x3c\/em\x3e, \x3cem\x3eIP address\x3c\/em\x3e, \x3cem\x3eproduction state\x3c\/em\x3e, and \x3cem\x3eevents\x3c\/em\x3e, as shown in the image below:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/modifying-the-zenoss-infrastructure-grid\/zenoss_device_grid.png\x22 alt=\x22Zenoss Infrastructure Grid\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eHowever it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn\x26rsquo;t do this by default is beyond me).\x3c\/p\x3e\n\n\x3ch2 id=\x22devicepanels-js\x22\x3eDevicePanels.js\x3c\/h2\x3e\n\n\x3cp\x3eThe source code for the grid is found in \x3ccode\x3e$ZENHOME\/Products\/ZenUI\/browser\/resources\/js\/zenoss\/DevicePanels.js\x3c\/code\x3e. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called \x3ccode\x3edeviceColumns\x3c\/code\x3e.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -40,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-10 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-10 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/",
+    "datePublished": "2016-11-10 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-11-10 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/modifying-the-zenoss-infrastructure-grid\/",
     "wordCount" : "1131",
     "keywords" : [ "zenoss","extjs","monitoring","javascript","ui","zenpacks","sysadmin","Blog" ]
 }

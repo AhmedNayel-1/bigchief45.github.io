@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Umask Permissions in a Puma Production Environment",
     "headline" : "Umask Permissions in a Puma Production Environment",
-    "description" : "<p>Recently I was having an issue with a Sinatra application deployed in a staging
-server. The application was deployed with Puma and Nginx in the following location:</p>
-
-<pre><code>/var/www/
-</code></pre>
-
-<p>This web service would then try to access some files in another directory on the server,
-mounted as an SFTP directory. The Sinatra app would open these files and generate some
-new files from them, depending on the HTTP request received.</p>
-
-<p>The problem was that the operation would fail due to a permissions issue. I was baffled
-since I had set <strong>read</strong> and <strong>write</strong> permissions to the directory and the files in it.</p>
-
-<h2 id="umask-the-problem-and-solution">Umask: The Problem and Solution</h2>
-
-<p>It took around two days to find the culprit: <strong>umask</strong>. In Linux, <a href="https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work">umask</a>
-acts as another set of permissions for <strong>processes</strong> and cannot be set for directories,
-basically speaking.</p>
-
-<p>I realized that this probably meant that the process running the Puma application server had
-a umask configuration that was not allowing the generation of new files.</p>
-
-<p>I decided to test this if this was the case. In the <a href="https://github.com/puma/puma">Puma</a>
-documentation, I found an option to change the permissions of the UNIX socket using
-umask:</p>",
+    "description" : "\x3cp\x3eRecently I was having an issue with a Sinatra application deployed in a staging\nserver. The application was deployed with Puma and Nginx in the following location:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3e\/var\/www\/\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eThis web service would then try to access some files in another directory on the server,\nmounted as an SFTP directory. The Sinatra app would open these files and generate some\nnew files from them, depending on the HTTP request received.\x3c\/p\x3e\n\n\x3cp\x3eThe problem was that the operation would fail due to a permissions issue. I was baffled\nsince I had set \x3cstrong\x3eread\x3c\/strong\x3e and \x3cstrong\x3ewrite\x3c\/strong\x3e permissions to the directory and the files in it.\x3c\/p\x3e\n\n\x3ch2 id=\x22umask-the-problem-and-solution\x22\x3eUmask: The Problem and Solution\x3c\/h2\x3e\n\n\x3cp\x3eIt took around two days to find the culprit: \x3cstrong\x3eumask\x3c\/strong\x3e. In Linux, \x3ca href=\x22https:\/\/askubuntu.com\/questions\/44542\/what-is-umask-and-how-does-it-work\x22\x3eumask\x3c\/a\x3e\nacts as another set of permissions for \x3cstrong\x3eprocesses\x3c\/strong\x3e and cannot be set for directories,\nbasically speaking.\x3c\/p\x3e\n\n\x3cp\x3eI realized that this probably meant that the process running the Puma application server had\na umask configuration that was not allowing the generation of new files.\x3c\/p\x3e\n\n\x3cp\x3eI decided to test this if this was the case. In the \x3ca href=\x22https:\/\/github.com\/puma\/puma\x22\x3ePuma\x3c\/a\x3e\ndocumentation, I found an option to change the permissions of the UNIX socket using\numask:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -52,9 +28,9 @@ umask:</p>",
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-10-18 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-10-18 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/",
+    "datePublished": "2017-10-18 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-10-18 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/umask-permissions-in-a-puma-production-environment\/",
     "wordCount" : "263",
     "keywords" : [ "ruby","sinatra","web dev","Blog" ]
 }

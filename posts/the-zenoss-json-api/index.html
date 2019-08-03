@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,28 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "The Zenoss JSON API",
     "headline" : "The Zenoss JSON API",
-    "description" : "<p>The <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using <a href="https://curl.haxx.se/">cURL</a> or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.</p>
-
-<p>The API documentation can be downloaded <a href="https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip">here</a>. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.</p>
-
-<p>In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&rsquo;s front-end (made using <a href="https://www.sencha.com/products/extjs/">ExtJS</a>) interacts with it.</p>
-
-<p>~&gt; Even though Zenoss calls its API a <em>JSON API</em> (Simply because it returns data in JSON format), the API <strong>is not</strong> <a href="http://jsonapi.org/">JSON API specification</a> compliant.</p>
-
-<h2 id="querying-the-api">Querying the API</h2>
-
-<p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let&rsquo;s say we want to obtain all the available information of a specific device:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="color:#d88200">&#34;admin:zenoss&#34;</span> -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#111">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
-<p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
-
-<p>This is all fine if all we need is querying the API and nothing else. But what if we really want to know <strong><em>how</em></strong> the API back-end works? How the endpoints are created? What are routers?</p>
-
-<p>This is what we are gonna learn next.</p>",
+    "description" : "\x3cp\x3eThe \x3ca href=\x22http:\/\/wiki.zenoss.org\/Working_with_the_JSON_API\x22\x3eZenoss JSON API\x3c\/a\x3e allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using \x3ca href=\x22https:\/\/curl.haxx.se\/\x22\x3ecURL\x3c\/a\x3e or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.\x3c\/p\x3e\n\n\x3cp\x3eThe API documentation can be downloaded \x3ca href=\x22https:\/\/www.zenoss.com\/sites\/default\/files\/documentation\/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip\x22\x3ehere\x3c\/a\x3e. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss\x26rsquo;s front-end (made using \x3ca href=\x22https:\/\/www.sencha.com\/products\/extjs\/\x22\x3eExtJS\x3c\/a\x3e) interacts with it.\x3c\/p\x3e\n\n\x3cp\x3e~\x26gt; Even though Zenoss calls its API a \x3cem\x3eJSON API\x3c\/em\x3e (Simply because it returns data in JSON format), the API \x3cstrong\x3eis not\x3c\/strong\x3e \x3ca href=\x22http:\/\/jsonapi.org\/\x22\x3eJSON API specification\x3c\/a\x3e compliant.\x3c\/p\x3e\n\n\x3ch2 id=\x22querying-the-api\x22\x3eQuerying the API\x3c\/h2\x3e\n\n\x3cp\x3eTo see the API in action, we can begin by making a simple query using \x3ccode\x3ecURL\x3c\/code\x3e. Let\x26rsquo;s say we want to obtain all the available information of a specific device:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-bash\x22 data-lang=\x22bash\x22\x3ecurl -u \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;admin:zenoss\x26#34;\x3c\/span\x3e -X POST -H \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;Content-Type: application\/json\x26#34;\x3c\/span\x3e -d \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;{\x26#34;action\x26#34;: \x26#34;DeviceRouter\x26#34;, \x26#34;method\x26#34;: \x26#34;getInfo\x26#34;, \x26#34;data\x26#34;: [{\x26#34;uid\x26#34;: \x26#34;\/zport\/dmd\/Devices\/Server\/SSH\/Linux\/NovaHost\/devices\/$DEVICE_IP\x26#34;}], \x26#34;tid\x26#34;: 1}\x26#39;\x3c\/span\x3e http:\/\/\x3cspan style=\x22color:#111\x22\x3e$ZENOSS_HOST\x3c\/span\x3e:8080\/zport\/dmd\/device_router\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe above request will return the information of the device in JSON format, assuming that we replace \x3ccode\x3e$ZENOSS_HOST\x3c\/code\x3e with the IP address of our Zenoss server, and \x3ccode\x3e$DEVICE_IP\x3c\/code\x3e with the IP address of the device we want to query.\x3c\/p\x3e\n\n\x3cp\x3eThis is all fine if all we need is querying the API and nothing else. But what if we really want to know \x3cstrong\x3e\x3cem\x3ehow\x3c\/em\x3e\x3c\/strong\x3e the API back-end works? How the endpoints are created? What are routers?\x3c\/p\x3e\n\n\x3cp\x3eThis is what we are gonna learn next.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -44,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2016",
-    "datePublished": "2016-11-24 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2016-11-24 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/the-zenoss-json-api/",
+    "datePublished": "2016-11-24 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2016-11-24 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/the-zenoss-json-api\/",
     "wordCount" : "1232",
     "keywords" : [ "zenoss","json","api","python","extjs","javascript","curl","zope","Blog" ]
 }

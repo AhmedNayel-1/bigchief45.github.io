@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Testing a Rails API With RSpec",
     "headline" : "Testing a Rails API With RSpec",
-    "description" : "<p>As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.</p>
-
-<h2 id="setting-up-the-necessary-tools">Setting Up the Necessary Tools</h2>
-
-<p>In addition to RSpec, there are a few tools that make my testing experience much easier. These are:</p>
-
-<ul>
-<li><a href="https://github.com/thoughtbot/factory_girl_rails">Factory Girl</a></li>
-<li><a href="https://github.com/stympy/faker">Faker</a></li>
-<li><a href="https://github.com/thoughtbot/shoulda-matchers">Shoulda Matchers</a></li>
-<li><a href="https://github.com/DatabaseCleaner/database_cleaner">Database Cleaner</a></li>
-</ul>
-
-<p>After Adding these gems to the Gemfile. I proceed to create a <code>/support</code> directory under the <code>/spec</code> directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.</p>
-
-<p><strong>/spec/support/shoulda.rb</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">Shoulda</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Matchers</span><span style="color:#f92672">.</span><span style="color:#111">configure</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">config</span><span style="color:#f92672">|</span>
-  <span style="color:#111">config</span><span style="color:#f92672">.</span><span style="color:#111">integrate</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">with</span><span style="color:#f92672">|</span>
-    <span style="color:#75715e"># Choose a test framework:</span>
-    <span style="color:#111">with</span><span style="color:#f92672">.</span><span style="color:#111">test_framework</span> <span style="color:#d88200">:rspec</span>
-
-    <span style="color:#75715e"># Or, choose the following (which implies all of the above):</span>
-    <span style="color:#111">with</span><span style="color:#f92672">.</span><span style="color:#111">library</span> <span style="color:#d88200">:rails</span>
-  <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>",
+    "description" : "\x3cp\x3eAs I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.\x3c\/p\x3e\n\n\x3ch2 id=\x22setting-up-the-necessary-tools\x22\x3eSetting Up the Necessary Tools\x3c\/h2\x3e\n\n\x3cp\x3eIn addition to RSpec, there are a few tools that make my testing experience much easier. These are:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/github.com\/thoughtbot\/factory_girl_rails\x22\x3eFactory Girl\x3c\/a\x3e\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/github.com\/stympy\/faker\x22\x3eFaker\x3c\/a\x3e\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/github.com\/thoughtbot\/shoulda-matchers\x22\x3eShoulda Matchers\x3c\/a\x3e\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/github.com\/DatabaseCleaner\/database_cleaner\x22\x3eDatabase Cleaner\x3c\/a\x3e\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3cp\x3eAfter Adding these gems to the Gemfile. I proceed to create a \x3ccode\x3e\/support\x3c\/code\x3e directory under the \x3ccode\x3e\/spec\x3c\/code\x3e directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.\x3c\/p\x3e\n\n\x3cp\x3e\x3cstrong\x3e\/spec\/support\/shoulda.rb\x3c\/strong\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eShoulda\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e::\x3c\/span\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eMatchers\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3econfigure\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3econfig\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3econfig\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eintegrate\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ewith\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n    \x3cspan style=\x22color:#75715e\x22\x3e# Choose a test framework:\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3ewith\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3etest_framework\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:rspec\x3c\/span\x3e\n\n    \x3cspan style=\x22color:#75715e\x22\x3e# Or, choose the following (which implies all of the above):\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3ewith\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3elibrary\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:rails\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -52,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-05-15 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-05-15 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/testing-a-rails-api-with-rspec/",
+    "datePublished": "2017-05-15 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-05-15 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/testing-a-rails-api-with-rspec\/",
     "wordCount" : "1002",
     "keywords" : [ "rails","ruby","tdd","bdd","rspec","json","Blog" ]
 }

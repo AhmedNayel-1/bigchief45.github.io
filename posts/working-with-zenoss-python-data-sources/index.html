@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,39 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Working With Zenoss Python Data Source Plugins",
     "headline" : "Working With Zenoss Python Data Source Plugins",
-    "description" : "<p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
-
-<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks&rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
-
-<p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
-
-<h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
-
-<p>For this post, I will be using an example where we will be executing an <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
-
-<p>If I run the following command from my shell:</p>
-
-<pre><code>ipmitool -H $BMC_IP -I lanplus -U admin -P admin power status
-</code></pre>
-
-<p>I get the following output:</p>
-
-<pre><code>Chassis Power is on
-</code></pre>
-
-<p>What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:</p>
-
-<ol>
-<li>Map the value into a boolean property of a custon zenpacklib class.</li>
-<li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
-<li>Update the device model with the new property value.</li>
-<li><a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">Display the property&rsquo;s value in the device detail bar using JavaScript</a>.</li>
-</ol>",
+    "description" : "\x3cp\x3eUsing Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using \x3ca href=\x22\/posts\/ssh-monitoring-in-zenpacks.html\x22\x3ecommand datasources\x3c\/a\x3e. Python data sources come with the introduction of the \x3ca href=\x22https:\/\/www.zenoss.com\/product\/zenpacks\/pythoncollector\x22\x3ePythonCollector ZenPack\x3c\/a\x3e, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.\x3c\/p\x3e\n\n\x3cp\x3ePython data source plugins work exceptionally great in replacing data collection logic in \x3ca href=\x22\/posts\/creating-zenoss-zenpack-daemons.html\x22\x3ecustom daemons\x3c\/a\x3e written in Python. This means that the ZenPacks\x26rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.\x3c\/p\x3e\n\n\x3cp\x3eMoreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.\x3c\/p\x3e\n\n\x3ch2 id=\x22example-scenario-bmc-power-status\x22\x3eExample Scenario: BMC Power Status\x3c\/h2\x3e\n\n\x3cp\x3eFor this post, I will be using an example where we will be executing an \x3ca href=\x22\/posts\/ipmi-baseboard-management-controllers.html\x22\x3eipmitool command\x3c\/a\x3e to check the power chassis status of a \x3ca href=\x22\/posts\/ipmi-baseboard-management-controllers.html\x22\x3eBMC device\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3cp\x3eIf I run the following command from my shell:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eipmitool -H $BMC_IP -I lanplus -U admin -P admin power status\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eI get the following output:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eChassis Power is on\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eWhat we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:\x3c\/p\x3e\n\n\x3col\x3e\n\x3cli\x3eMap the value into a boolean property of a custon zenpacklib class.\x3c\/li\x3e\n\x3cli\x3eCreate a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.\x3c\/li\x3e\n\x3cli\x3eUpdate the device model with the new property value.\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22\/posts\/modifying-the-zenoss-device-detail-bar.html\x22\x3eDisplay the property\x26rsquo;s value in the device detail bar using JavaScript\x3c\/a\x3e.\x3c\/li\x3e\n\x3c\/ol\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -55,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-02-23 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-02-23 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/working-with-zenoss-python-data-sources/",
+    "datePublished": "2017-02-23 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-02-23 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/working-with-zenoss-python-data-sources\/",
     "wordCount" : "1748",
     "keywords" : [ "zenoss","python","monitoring","zenpacks","zenpacklib","Blog" ]
 }

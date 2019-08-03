@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.52" />
+  <meta name="generator" content="Hugo 0.55.6" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +15,12 @@
     "@type" : "BlogPosting",
     "mainEntityOfPage": {
          "@type": "WebPage",
-         "@id": "https://aalvarez.me/"
+         "@id": "https:\/\/aalvarez.me\/"
     },
     "articleSection" : "posts",
     "name" : "Custom Notification Action Types in Zenoss",
     "headline" : "Custom Notification Action Types in Zenoss",
-    "description" : "<p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how we could create <em>command</em> type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html">more recent post</a> I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.</p>
-
-<p>In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.</p>
-
-<h2 id="zenoss-default-notification-actions">Zenoss Default Notification Actions</h2>
-
-<p>By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:</p>
-
-<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg" alt="Zenoss Default Actions" /></p>
-
-<p>These action types are:</p>
-
-<ul>
-<li><strong>Command</strong>: Runs an executable script. Discussed in one of my <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous posts</a>.</li>
-<li><strong>Email</strong>: Sends an e-mail to a user.</li>
-<li><strong>Page</strong>: Sends a message to a user&rsquo;s <a href="https://en.wikipedia.org/wiki/Pager">pager</a>, also known as <em>beeper</em>. Probably safe to say that this is not used by anyone anymore.</li>
-<li><strong>Syslog</strong>: Logs a message to <a href="https://en.wikipedia.org/wiki/Syslog">syslog</a></li>
-<li><strong>SNMP Trap</strong>: Sends an SNMP trap.</li>
-</ul>
-
-<p>All these notifications are sent when an event matches a trigger rule.</p>
-
-<h2 id="creating-the-new-action">Creating the New Action</h2>
-
-<p>Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!</p>",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/triggering-commands-from-events-in-zenoss.html\x22\x3eprevious post\x3c\/a\x3e I talked about how we could create \x3cem\x3ecommand\x3c\/em\x3e type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a \x3ca href=\x22\/posts\/custom-triggers-and-notifications-in-a-zenpack.html\x22\x3emore recent post\x3c\/a\x3e I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will explain how to create additional custom action types that can be used by notifications for different purposes.\x3c\/p\x3e\n\n\x3ch2 id=\x22zenoss-default-notification-actions\x22\x3eZenoss Default Notification Actions\x3c\/h2\x3e\n\n\x3cp\x3eBy default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-notification-action-types-in-zenoss\/default_notifications.jpg\x22 alt=\x22Zenoss Default Actions\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eThese action types are:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3e\x3cstrong\x3eCommand\x3c\/strong\x3e: Runs an executable script. Discussed in one of my \x3ca href=\x22\/posts\/triggering-commands-from-events-in-zenoss.html\x22\x3eprevious posts\x3c\/a\x3e.\x3c\/li\x3e\n\x3cli\x3e\x3cstrong\x3eEmail\x3c\/strong\x3e: Sends an e-mail to a user.\x3c\/li\x3e\n\x3cli\x3e\x3cstrong\x3ePage\x3c\/strong\x3e: Sends a message to a user\x26rsquo;s \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Pager\x22\x3epager\x3c\/a\x3e, also known as \x3cem\x3ebeeper\x3c\/em\x3e. Probably safe to say that this is not used by anyone anymore.\x3c\/li\x3e\n\x3cli\x3e\x3cstrong\x3eSyslog\x3c\/strong\x3e: Logs a message to \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Syslog\x22\x3esyslog\x3c\/a\x3e\x3c\/li\x3e\n\x3cli\x3e\x3cstrong\x3eSNMP Trap\x3c\/strong\x3e: Sends an SNMP trap.\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3cp\x3eAll these notifications are sent when an event matches a trigger rule.\x3c\/p\x3e\n\n\x3ch2 id=\x22creating-the-new-action\x22\x3eCreating the New Action\x3c\/h2\x3e\n\n\x3cp\x3eNext, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let\x26rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -52,9 +28,9 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2017",
-    "datePublished": "2017-05-09 00:00:00 &#43;0000 UTC",
-    "dateModified" : "2017-05-09 00:00:00 &#43;0000 UTC",
-    "url" : "https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/",
+    "datePublished": "2017-05-09 00:00:00 \x2b0000 UTC",
+    "dateModified" : "2017-05-09 00:00:00 \x2b0000 UTC",
+    "url" : "https:\/\/aalvarez.me\/posts\/custom-notification-action-types-in-zenoss\/",
     "wordCount" : "1049",
     "keywords" : [ "zenoss","zenpack","python","zope","Blog" ]
 }
