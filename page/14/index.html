@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2019",
-    "datePublished": "2019-04-09 18:07:34 \x2b0000 UTC",
-    "dateModified" : "2019-04-09 18:07:34 \x2b0000 UTC",
+    "datePublished": "2019-08-04 12:35:00 -0600 CST",
+    "dateModified" : "2019-08-04 12:35:00 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,45 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/">Getting Started on Contributing to OpenStack</a>
+  </h1>
+  <time datetime="2017-03-14T00:00:00Z" class="post-date">Tue, Mar 14, 2017</time>
+  <p><img src="http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png" alt="OpenStack" /></p>
+
+<p>I have started to become interested in contributing to the <a href="https://www.openstack.org/">OpenStack</a> project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.</p>
+
+<h2 id="picking-a-project">Picking a Project</h2>
+
+<p>OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the <a href="https://wiki.openstack.org/wiki/Telemetry">Telemetry</a> part, more specifically on <strong>Ceilometer</strong>.</p>
+
+<p>After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The <a href="https://docs.openstack.org/developer/ceilometer/">Ceilometer developer documentation</a> offers good explanations and diagrams of its architecture and components.</p>
+
+<p><a href="https://wiki.openstack.org/wiki/Ceilometer/Contributing">Here</a> is another nice guide on contributing to Ceilometer.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="https://aalvarez.me/tags/open-source" class="label label-default">open source</a></li>
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/python-tricks-for-better-code/">Python Tricks for Better Code</a>
@@ -326,46 +365,6 @@ rvm<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/useful-zendmd-tricks/">Useful Zendmd Tricks</a>
-  </h1>
-  <time datetime="2017-02-14T00:00:00Z" class="post-date">Tue, Feb 14, 2017</time>
-  <p>The <a href="http://wiki.zenoss.org/Category:ZenDMD">Zenoss Zendmd Tips Wiki</a> page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.</p>
-
-<h2 id="removing-device-classes">Removing Device Classes</h2>
-
-<p>We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &ldquo;KVM&rdquo; device class:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">manage_deleteOrganizer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;/zport/dmd/Devices/KVM&#34;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-<h2 id="change-zenoss-user-s-password">Change Zenoss User&rsquo;s Password</h2>
-
-<p>Let&rsquo;s say we want to change the default <em>admin</em> user&rsquo;s password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;newpassword&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zendmd" class="label label-default">zendmd</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/useful-zendmd-tricks/">Read More…</a>
     </div>
   
 </article>

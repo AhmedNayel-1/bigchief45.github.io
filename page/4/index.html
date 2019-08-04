@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2019",
-    "datePublished": "2019-04-09 18:07:34 \x2b0000 UTC",
-    "dateModified" : "2019-04-09 18:07:34 \x2b0000 UTC",
+    "datePublished": "2019-08-04 12:35:00 -0600 CST",
+    "dateModified" : "2019-08-04 12:35:00 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,43 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/">Loosely Coupled Node Actions in Netbeans Platform</a>
+  </h1>
+  <time datetime="2018-07-25T00:00:00Z" class="post-date">Wed, Jul 25, 2018</time>
+  <p>Nodes in Netbeans Platform can possess actions that can be executed with the node object as context. For example, the Project, Package, and Class nodes in the Netbeans IDE have a set of actions which can be seen by right clicking on the nodes:</p>
+
+<p><img src="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/netbeans_ide_node_actions.png" alt="Netbeans IDE Node Actions" /></p>
+
+<p>In the Netbeans Platform tutorials I found <a href="https://platform.netbeans.org/tutorials/nbm-nodesapi2.html#actions">a tutorial</a> that explains how to add these actions to nodes. The problem is that in that tutorial the action class was created as an <strong>inner class</strong> of the node class. Making the action <strong>tightly coupled</strong> with the node.</p>
+
+<p>I managed to implement a more modular and loosely coupled approach, which is what I will explain in this post.</p>
+
+<p>Our loosely coupled approach will basically allow us to:</p>
+
+<ol>
+<li>Keep the domain logic (Java Beans and POJOs) in its own domain module.</li>
+<li>Keep the view logic (nodes that represent beans) in another module.</li>
+<li>Keep the node actions logic in yet another module. This allows us to plug and unplug different action&rsquo;s that belong to separate modules. Making our application&rsquo;s node actions very modular.</li>
+</ol>
+
+<p>Let&rsquo;s begin!</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/netbeans-platform-status-bars/">Netbeans Platform Status Bars</a>
@@ -249,39 +286,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/using-listeners-in-custom-netbeans-platform-wizards/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/">Netbeans Platform Node Icon Badges</a>
-  </h1>
-  <time datetime="2018-05-03T00:00:00Z" class="post-date">Thu, May 3, 2018</time>
-  <p>The Netbeans IDE has some very cool way of letting users know when a certain file contains errors. For example, if you are editing a Java file and the file contains syntax errors, Netbeans will change the file icons with a new icon indicating errors:</p>
-
-<p><img src="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png" alt="Netbeans Error Icons" /></p>
-
-<p>You can see that the error icons propagate all the way up to the top-most parent, the project itself.</p>
-
-<h2 id="netbeans-platform-icon-badges">Netbeans Platform Icon Badges</h2>
-
-<p>As a user of the Netbeans IDE and before even knowing what the Netbeans Platform was, I always assumed that the normal state of the icon and the error state of the icon were two completely different icons handled by Netbeans. A few days ago I learned that this is not the case.</p>
-
-<p>Netbeans uses the concept of <strong>icon badges</strong> to display these kind of error icons. Icon badges are basically multiple images merged together <em>at runtime</em> into a single <code>Image</code> object.</p>
-
-<p>In this article I want to quickly go over how you can apply this concept in your Netbeans Platform application when using the Nodes API.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/">Read More…</a>
     </div>
   
 </article>

@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2019",
-    "datePublished": "2019-04-09 18:07:34 \x2b0000 UTC",
-    "dateModified" : "2019-04-09 18:07:34 \x2b0000 UTC",
+    "datePublished": "2019-08-04 12:35:00 -0600 CST",
+    "dateModified" : "2019-08-04 12:35:00 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,81 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/getting-started-with-love2d-basics/">Getting Started With Love2D Basics</a>
+  </h1>
+  <time datetime="2017-07-19T00:00:00Z" class="post-date">Wed, Jul 19, 2017</time>
+  <p>I recently started playing around with <a href="https://love2d.org/">Love2D</a> for game development. Although I am completely new to Lua, so far it&rsquo;s been pretty fun and I really like it.</p>
+
+<p>I created this post to write down the most important basic concepts that I have encountered so far, so that I can use as quick reference later.</p>
+
+<h2 id="setting-up-a-basic-ide">Setting Up a Basic IDE</h2>
+
+<p>So far I&rsquo;ve been using Love2D in Windows. Initially I started using Sublime Text 2 as my editor, but then figured out how to make my Love2D development experience much better using <a href="https://atom.io/">Atom</a> combined with Github for Windows.</p>
+
+<p>In Atom there is a great package called <a href="https://github.com/rameshvarun/love-ide"><strong>love-ide</strong></a> which has many great tools and features for developming with Love.</p>
+
+<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide.jpg" alt="Love Atom IDE" /></p>
+
+<p>Some of these features include Lua linting, autocomplete, and being able to run the Love application right from Atom.</p>
+
+<p>Additionally, we will want to use Window&rsquo;s console for debugging. To do so, enable these options:</p>
+
+<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide_windows.jpg" alt="Love in Windows" /></p>
+
+<h2 id="working-with-keyboard-keys">Working With Keyboard Keys</h2>
+
+<p>We can interact with user input through the keyboard by determining if a certain key has been pressed. This is done like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#00a8c8">if</span> <span style="color:#111">love.keyboard</span><span style="color:#111">.</span><span style="color:#111">isDown</span><span style="color:#111">(</span><span style="color:#d88200">&#34;right&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">then</span>
+  <span style="color:#75715e">-- ...</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>The <a href="https://love2d.org/wiki/love.keyboard.isDown"><code>love.keyboard.isDown</code></a> function receives a <code>KeyConstant</code> string argument to indicate which key we want to test for. The complete list can be found <a href="https://love2d.org/wiki/KeyConstant">here</a>. Here are some examples:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Key string</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><code>space</code></td>
+<td align="center">Space key</td>
+</tr>
+
+<tr>
+<td align="center"><code>backspace</code></td>
+<td align="center">Backspace key</td>
+</tr>
+
+<tr>
+<td align="center"><code>down</code></td>
+<td align="center">Down arrow key</td>
+</tr>
+</tbody>
+</table>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/love2d" class="label label-default">love2d</a></li>
+  
+    <a href="https://aalvarez.me/tags/lua" class="label label-default">lua</a></li>
+  
+    <a href="https://aalvarez.me/tags/game-dev" class="label label-default">game dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/getting-started-with-love2d-basics/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/">Extending Device Python Classes From Other ZenPacks</a>
@@ -295,52 +370,6 @@ He answers 'Whatever.' to anything else.
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/python-functional-http-testing-with-gabbi/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/">Testing JSON API Strong Parameters in Rails</a>
-  </h1>
-  <time datetime="2017-05-25T00:00:00Z" class="post-date">Thu, May 25, 2017</time>
-  <p>Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&rsquo;s factory, and then add the corresponding model and request specs.</p>
-
-<p>The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.</p>
-
-<p>In an API following the <a href="http://jsonapi.org/">JSON API</a> specification, here is an example of how the strong parameters method would look like:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">thing_params</span>
-  <span style="color:#111">params</span><span style="color:#f92672">.</span><span style="color:#111">require</span><span style="color:#111">(</span><span style="color:#d88200">:data</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">require</span><span style="color:#111">(</span><span style="color:#d88200">:attributes</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">permit</span><span style="color:#111">(</span><span style="color:#d88200">:color</span><span style="color:#111">,</span> <span style="color:#d88200">:size</span><span style="color:#111">,</span> <span style="color:#d88200">:age</span><span style="color:#111">,</span> <span style="color:#d88200">:name</span><span style="color:#111">,</span>
-      <span style="color:#d88200">:owner</span><span style="color:#111">,</span> <span style="color:#d88200">:origin</span><span style="color:#111">,</span> <span style="color:#d88200">:location</span><span style="color:#111">,</span> <span style="color:#d88200">:purpose</span><span style="color:#111">,</span> <span style="color:#d88200">:price</span><span style="color:#111">,</span> <span style="color:#d88200">:alive</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>As you can see, the list of attributes is getting pretty long. And we <strong>do not</strong> want to explicitly keep adding more attributes to the test.</p>
-
-<h2 id="testing-strong-parameters-in-controller-specs">Testing Strong Parameters in Controller Specs</h2>
-
-<p>After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that <strong>all</strong> attributes of importance are whitelisted in the controller.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/rspec" class="label label-default">rspec</a></li>
-  
-    <a href="https://aalvarez.me/tags/json" class="label label-default">json</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/tdd" class="label label-default">tdd</a></li>
-  
-    <a href="https://aalvarez.me/tags/bdd" class="label label-default">bdd</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
-  
-    <a href="https://aalvarez.me/tags/backend" class="label label-default">backend</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/">Read More…</a>
     </div>
   
 </article>
