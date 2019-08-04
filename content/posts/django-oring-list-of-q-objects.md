@@ -1,7 +1,8 @@
 ---
-title: "Django Oring List of Q Objects"
-date: 2019-08-04T12:35:00-06:00
-tags: [django]
+date: "2019-08-04T12:35:00-06:00"
+tags:
+- django
+title: "Django: ORing A List of Q Objects"
 ---
 
 Django allows using the OR bitwise operator `|` with `Q` objects for more complex lookups:
@@ -23,6 +24,8 @@ qs = MyModel.objects.filter(reduce(__or__, filters))
 ```
 
 Where `filters` is a list containing multiple `Q` objects like the ones shown in the first example.
+
+<!--more-->
 
 ## References
 
