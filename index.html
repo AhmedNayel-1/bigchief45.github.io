@@ -135,13 +135,20 @@ if (!doNotTrack) {
 
 <article class="post">
   <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/django-oring-list-of-q-objects/">Django Oring List of Q Objects</a>
+    <a href="https://aalvarez.me/posts/django-oring-list-of-q-objects/">Django: ORing A List of Q Objects</a>
   </h1>
   <time datetime="2019-08-04T12:35:00-0600" class="post-date">Sun, Aug 4, 2019</time>
-  Django allows using the OR bitwise operator | with Q objects for more complex lookups:
-Q(question__startswith=&#39;Who&#39;) | Q(question__startswith=&#39;What&#39;) However this requires explicitely typing each Q object. How can we apply this OR opperation to all the Q objects in a list?
-In Python 3 we can do so like this:
-from functools import reduce from operator import __or__ qs = MyModel.objects.filter(reduce(__or__, filters)) Where filters is a list containing multiple Q objects like the ones shown in the first example.
+  <p>Django allows using the OR bitwise operator <code>|</code> with <code>Q</code> objects for more complex lookups:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">question__startswith</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Who&#39;</span><span style="color:#111">)</span> <span style="color:#f92672">|</span> <span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">question__startswith</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;What&#39;</span><span style="color:#111">)</span></code></pre></div>
+<p>However this requires explicitely typing each <code>Q</code> object. How can we apply this OR opperation to all the <code>Q</code> objects in a list?</p>
+
+<p>In Python 3 we can do so like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">functools</span> <span style="color:#f92672">import</span> <span style="color:#111">reduce</span>
+<span style="color:#f92672">from</span> <span style="color:#111">operator</span> <span style="color:#f92672">import</span> <span style="color:#111">__or__</span>
+
+
+<span style="color:#111">qs</span> <span style="color:#f92672">=</span> <span style="color:#111">MyModel</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">filter</span><span style="color:#111">(</span><span style="color:#111">reduce</span><span style="color:#111">(</span><span style="color:#111">__or__</span><span style="color:#111">,</span> <span style="color:#111">filters</span><span style="color:#111">))</span></code></pre></div>
+<p>Where <code>filters</code> is a list containing multiple <code>Q</code> objects like the ones shown in the first example.</p>
 
   
   <div style="margin: 20px 0px;">
