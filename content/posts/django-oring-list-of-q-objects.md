@@ -1,6 +1,6 @@
 ---
-title: "Django: ORing List of Q Objects"
-date: 2019-08-02T16:34:42-06:00
+title: "Django Oring List of Q Objects"
+date: 2019-08-04T12:35:00-06:00
 tags: [django]
 ---
 
