@@ -6,22 +6,10 @@
     <description>Recent content on Andrés Álvarez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Aug 2019 16:34:42 -0600</lastBuildDate>
+    <lastBuildDate>Tue, 09 Apr 2019 18:07:34 +0000</lastBuildDate>
     
 	<atom:link href="https://aalvarez.me/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Django: ORing List of Q Objects</title>
-      <link>https://aalvarez.me/posts/django-oring-list-of-q-objects/</link>
-      <pubDate>Fri, 02 Aug 2019 16:34:42 -0600</pubDate>
-      
-      <guid>https://aalvarez.me/posts/django-oring-list-of-q-objects/</guid>
-      <description>Django allows using the OR bitwise operator | with Q objects for more complex lookups:
-Q(question__startswith=&amp;#39;Who&amp;#39;) | Q(question__startswith=&amp;#39;What&amp;#39;) However this requires explicitely typing each Q object. How can we apply this OR opperation to all the Q objects in a list?
-In Python 3 we can do so like this:
-from functools import reduce from operator import __or__ qs = MyModel.objects.filter(reduce(__or__, filters)) Where filters is a list containing multiple Q objects like the ones shown in the first example.</description>
-    </item>
     
     <item>
       <title>Coding Challenge: Rectangular Intersection</title>

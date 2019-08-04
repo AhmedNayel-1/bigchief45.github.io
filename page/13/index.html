@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2019",
-    "datePublished": "2019-08-02 16:34:42 -0600 CST",
-    "dateModified" : "2019-08-02 16:34:42 -0600 CST",
+    "datePublished": "2019-04-09 18:07:34 \x2b0000 UTC",
+    "dateModified" : "2019-04-09 18:07:34 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,64 +133,6 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/ceilometer-and-openstack-notifications/">Ceilometer and OpenStack Notifications</a>
-  </h1>
-  <time datetime="2017-04-06T00:00:00Z" class="post-date">Thu, Apr 6, 2017</time>
-  <p>Ceilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are <strong>notifications</strong>, which will be explained in this post.</p>
-
-<h2 id="openstack-notifications">OpenStack Notifications</h2>
-
-<p>All OpenStack services (such as Nova Compute, Neutron, etc.) send notifications about executed operations or the state of the system. Many of these notifications carry information that can be metered such as <strong>CPU time</strong> of a virtual machine instance created by the compute service.</p>
-
-<p>OpenStack services send these notifications through an AMQP message queue. However, not all these notifications are consumed by the Telemetry service, as the intention is only to capture the billable events and notifications that can be used for monitoring or profiling purposes. The notification agent filters by the <strong>event type</strong>. Each notification message contains the event type.</p>
-
-<p>Here is a table with a few examples:</p>
-
-<table>
-<thead>
-<tr>
-<th align="center">OpenStack Service</th>
-<th align="center">Event types</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">OpenStack Compute</td>
-<td align="center"><code>scheduler.run_instance.scheduled</code>, <code>scheduler.select_destinations</code>, <code>compute.instance.*</code></td>
-</tr>
-
-<tr>
-<td align="center">OpenStack Image</td>
-<td align="center"><code>image.update</code>, <code>image.upload</code>,  <code>image.delete</code>, <code>image.send</code></td>
-</tr>
-</tbody>
-</table>
-
-<p>In Ceilometer, the <strong>notification agent</strong> is reponsible for consuming these notifications from the AMQP message bus, and then transforming them into <strong>events</strong> and <strong>samples</strong>.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/2-1-collection-notification.png" alt="Notifications Collection" /></p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
-  
-    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
-  
-    <a href="https://aalvarez.me/tags/cloudcomputing" class="label label-default">cloudcomputing</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/ceilometer-and-openstack-notifications/">Read More…</a>
-    </div>
-  
-</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/">Using Rails With Webpack in Cloud 9</a>
@@ -354,6 +296,45 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/overriding-default-zenoss-pages/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/">Getting Started on Contributing to OpenStack</a>
+  </h1>
+  <time datetime="2017-03-14T00:00:00Z" class="post-date">Tue, Mar 14, 2017</time>
+  <p><img src="http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png" alt="OpenStack" /></p>
+
+<p>I have started to become interested in contributing to the <a href="https://www.openstack.org/">OpenStack</a> project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.</p>
+
+<h2 id="picking-a-project">Picking a Project</h2>
+
+<p>OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the <a href="https://wiki.openstack.org/wiki/Telemetry">Telemetry</a> part, more specifically on <strong>Ceilometer</strong>.</p>
+
+<p>After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The <a href="https://docs.openstack.org/developer/ceilometer/">Ceilometer developer documentation</a> offers good explanations and diagrams of its architecture and components.</p>
+
+<p><a href="https://wiki.openstack.org/wiki/Ceilometer/Contributing">Here</a> is another nice guide on contributing to Ceilometer.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="https://aalvarez.me/tags/open-source" class="label label-default">open source</a></li>
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/">Read More…</a>
     </div>
   
 </article>

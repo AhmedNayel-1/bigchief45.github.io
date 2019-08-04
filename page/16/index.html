@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2019",
-    "datePublished": "2019-08-02 16:34:42 -0600 CST",
-    "dateModified" : "2019-08-02 16:34:42 -0600 CST",
+    "datePublished": "2019-04-09 18:07:34 \x2b0000 UTC",
+    "dateModified" : "2019-04-09 18:07:34 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,57 +133,6 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Customizing the ZenPack Installation Process</a>
-  </h1>
-  <time datetime="2017-01-17T00:00:00Z" class="post-date">Tue, Jan 17, 2017</time>
-  <p>There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&rsquo;s top directory&rsquo;s <code>__init__.py</code> file. When creating a fresh ZenPack using <strong>zenpacklib</strong>, this <code>__init__.py</code> file will contain the following contents:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">zenpacklib</span>
-
-<span style="color:#111">CFG</span> <span style="color:#f92672">=</span> <span style="color:#111">zenpacklib</span><span style="color:#f92672">.</span><span style="color:#111">load_yaml</span><span style="color:#111">()</span></code></pre></div>
-<p>To add custom functionality that gets executed when the ZenPack is installed, we need to extend the <code>install</code> method of the <code>ZenPack</code> class. Below the original code, we can proceed to do so:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">):</span>
-        <span style="color:#75715e"># Our custom logic here</span>
-
-        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span></code></pre></div>
-<p>No other imports are necessary. Notice the last line of the <code>install</code> method, this is where the ZenPack gets installed.</p>
-
-<p>For the purpuse of giving an example, Let&rsquo;s say that our ZenPack creates two new <a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html">zProperties</a>, one property to store an API key, and the other one to store a URL. Moreover let&rsquo;s say that we obtain these values from somewhere and we want to assign them <strong>automatically</strong> to the properties upon the installation of the ZenPack.</p>
-
-<p>These two new properties are defined in <code>zenpack.yaml</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name<span style="color:#111">:</span> ZenPacks.aalvarez.MyZenPack
-
-zProperties<span style="color:#111">:</span>
-  zMyApiUrl<span style="color:#111">:</span>
-    category<span style="color:#111">:</span> MyApi
-    type<span style="color:#111">:</span> string
-
-  zMyApiKey<span style="color:#111">:</span>
-    category<span style="color:#111">:</span> MyApi
-    type<span style="color:#111">:</span> string</code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Read More…</a>
-    </div>
-  
-</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/understanding-snmp-and-net-snmp/">Understanding SNMP and Net-SNMP</a>
@@ -342,6 +291,43 @@ zProperties<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/cracking-passwords-with-aircrack-ng/">Cracking Passwords With aircrack-ng</a>
+  </h1>
+  <time datetime="2016-12-25T00:00:00Z" class="post-date">Sun, Dec 25, 2016</time>
+  <p>aircrack-ng is a powerful suite of tools that allows to assess wireless network security. The tools in the suite allows us to perform various actions such as packet monitoring in the environment, montoring of specific access points, de-authentication attacks on access points, and cracking of WEP and WPA PSK (WPA 1 and 2) passwords.</p>
+
+<p><img src="http://www.aircrack-ng.org/resources/aircrack-ng-new-logo.jpg" alt="aircrack-ng" /></p>
+
+<p>In this post I will explain on how to perform these actions.</p>
+
+<h2 id="wireless-card-monitor-mode">Wireless Card Monitor Mode</h2>
+
+<p>Before we begin it is crucial that we change the mode of our wireless network card to <strong>monitor mode</strong>. BY default, our wireless network card&rsquo;s mode is <strong>managed mode</strong>. In managed mode, the network card generally only listens to packets addressed to the card, whereas in monitor mode it will hear <strong>every packet in the air</strong>. Additionally, monitor mode will also allows us to perform packet injection attacks (i.e. de-authentication attacks).</p>
+
+<p>To set our network card into monitor mode, we can run the following commands in a terminal:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/aircrack-ng" class="label label-default">aircrack-ng</a></li>
+  
+    <a href="https://aalvarez.me/tags/security" class="label label-default">security</a></li>
+  
+    <a href="https://aalvarez.me/tags/hacking" class="label label-default">hacking</a></li>
+  
+    <a href="https://aalvarez.me/tags/kali-linux" class="label label-default">kali linux</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/cracking-passwords-with-aircrack-ng/">Read More…</a>
     </div>
   
 </article>

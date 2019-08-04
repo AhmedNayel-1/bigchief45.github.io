@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2019",
-    "datePublished": "2019-08-02 16:34:42 -0600 CST",
-    "dateModified" : "2019-08-02 16:34:42 -0600 CST",
+    "datePublished": "2019-04-09 18:07:34 \x2b0000 UTC",
+    "dateModified" : "2019-04-09 18:07:34 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,46 +133,6 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/useful-zendmd-tricks/">Useful Zendmd Tricks</a>
-  </h1>
-  <time datetime="2017-02-14T00:00:00Z" class="post-date">Tue, Feb 14, 2017</time>
-  <p>The <a href="http://wiki.zenoss.org/Category:ZenDMD">Zenoss Zendmd Tips Wiki</a> page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.</p>
-
-<h2 id="removing-device-classes">Removing Device Classes</h2>
-
-<p>We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &ldquo;KVM&rdquo; device class:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">manage_deleteOrganizer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;/zport/dmd/Devices/KVM&#34;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-<h2 id="change-zenoss-user-s-password">Change Zenoss User&rsquo;s Password</h2>
-
-<p>Let&rsquo;s say we want to change the default <em>admin</em> user&rsquo;s password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;newpassword&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zendmd" class="label label-default">zendmd</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/useful-zendmd-tricks/">Read More…</a>
-    </div>
-  
-</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/getting-started-with-juju-locally/">Getting Started With Juju Locally</a>
@@ -358,6 +318,57 @@ juju switch local
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Customizing the ZenPack Installation Process</a>
+  </h1>
+  <time datetime="2017-01-17T00:00:00Z" class="post-date">Tue, Jan 17, 2017</time>
+  <p>There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&rsquo;s top directory&rsquo;s <code>__init__.py</code> file. When creating a fresh ZenPack using <strong>zenpacklib</strong>, this <code>__init__.py</code> file will contain the following contents:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">zenpacklib</span>
+
+<span style="color:#111">CFG</span> <span style="color:#f92672">=</span> <span style="color:#111">zenpacklib</span><span style="color:#f92672">.</span><span style="color:#111">load_yaml</span><span style="color:#111">()</span></code></pre></div>
+<p>To add custom functionality that gets executed when the ZenPack is installed, we need to extend the <code>install</code> method of the <code>ZenPack</code> class. Below the original code, we can proceed to do so:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">):</span>
+        <span style="color:#75715e"># Our custom logic here</span>
+
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span></code></pre></div>
+<p>No other imports are necessary. Notice the last line of the <code>install</code> method, this is where the ZenPack gets installed.</p>
+
+<p>For the purpuse of giving an example, Let&rsquo;s say that our ZenPack creates two new <a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html">zProperties</a>, one property to store an API key, and the other one to store a URL. Moreover let&rsquo;s say that we obtain these values from somewhere and we want to assign them <strong>automatically</strong> to the properties upon the installation of the ZenPack.</p>
+
+<p>These two new properties are defined in <code>zenpack.yaml</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name<span style="color:#111">:</span> ZenPacks.aalvarez.MyZenPack
+
+zProperties<span style="color:#111">:</span>
+  zMyApiUrl<span style="color:#111">:</span>
+    category<span style="color:#111">:</span> MyApi
+    type<span style="color:#111">:</span> string
+
+  zMyApiKey<span style="color:#111">:</span>
+    category<span style="color:#111">:</span> MyApi
+    type<span style="color:#111">:</span> string</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Read More…</a>
     </div>
   
 </article>
