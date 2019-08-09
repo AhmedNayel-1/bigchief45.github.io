@@ -6,11 +6,11 @@ tags: [django, elasticbeanstalk]
 
 I was having an issue the past few days with Django and Elastic Beanstalk in a production environment that was driving me nuts.
 
-Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer where `4xx` requests:
+Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer were `4xx` requests:
 
 ![Elastic Beanstalk 4xx requests](/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png)
 
-This issue was probably caused by several reasons. In this post I will go over the reasons I think I was experiencing it, and how it was fixed in the end.
+This issue was probably caused by several reasons. In this post I will go over the possible causes, and how I managed to resolve this issue.
 
 <!--more-->
 
@@ -46,7 +46,7 @@ import requests
 
 def get_ec2_instance_ip():
     """
-    Tries to obtain the IP address of the current EC2 instance in AWS
+    Try to obtain the IP address of the current EC2 instance in AWS
     """
     try:
         ip = requests.get(
@@ -55,6 +55,7 @@ def get_ec2_instance_ip():
         ).text
     except requests.exceptions.ConnectionError:
         return None
+
     return ip
 
 
@@ -82,8 +83,11 @@ CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 ```
 
-This ensures that _all_ requests to the application must be done with HTTPS. Requests done using HTTP will be redirected to HTTPS. This is what the 301 status code means. Django receives the health check request at `/`. Since this is an HTTP request, it returns the 301 code indicating that the request should be resent using HTTPS. This is something that browsers do automatically.
+This ensures that _all_ requests to the application must be done with HTTPS. Requests done using HTTP will be redirected to HTTPS. 
 
-To fix this, we can include the 301 code to the acceptable health check responses. To do this navigate to _EC2 > Load Balancing > Target Groups_ and select the target group that your load balancer is currently using and under the _Health Checks_ tab, select _edit_ and set `200-301` for the _Success codes_ field.
+This is what the 301 status code means. Django receives the health check request at `/`. Since this is an HTTP request, it returns the 301 code indicating that the request should be resent using HTTPS. This is something that browsers do automatically.
 
-The health check should now be working and your instance status should return to an OK state :tada:
+To fix this, we can include the 301 code to the acceptable health check responses. To do this, first switch to the EC2 Management Console, then navigate to _EC2 > Load Balancing > Target Groups_ and select the target group that your load balancer is currently using and under the _Health Checks_ tab, select _edit_ and set `200-301` for the _Success codes_ field.
+
+The health check should now be working and your instance status should return to an OK state :tada: :tada: :tada:
+
