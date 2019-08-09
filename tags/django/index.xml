@@ -51,11 +51,11 @@
       <guid>https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/</guid>
       <description>&lt;p&gt;I was having an issue the past few days with Django and Elastic Beanstalk in a production environment that was driving me nuts.&lt;/p&gt;
 
-&lt;p&gt;Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer where &lt;code&gt;4xx&lt;/code&gt; requests:&lt;/p&gt;
+&lt;p&gt;Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer were &lt;code&gt;4xx&lt;/code&gt; requests:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png&#34; alt=&#34;Elastic Beanstalk 4xx requests&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;This issue was probably caused by several reasons. In this post I will go over the reasons I think I was experiencing it, and how it was fixed in the end.&lt;/p&gt;</description>
+&lt;p&gt;This issue was probably caused by several reasons. In this post I will go over the possible causes, and how I managed to resolve this issue.&lt;/p&gt;</description>
     </item>
     
     <item>
