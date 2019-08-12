@@ -1,7 +1,7 @@
 ---
 title: "Pytest Tricks for Better Python Tests"
 date: 2018-12-21T21:03:28Z
-tags: [python, pytestб tdd]
+tags: [python, pytest, tdd]
 ---
 
 [Pytest](https://pytest.org/) is my Python testing framework of choice. Very easy to use, and makes tests look much better.
