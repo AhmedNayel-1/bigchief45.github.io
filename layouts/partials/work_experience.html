@@ -3,9 +3,9 @@
 {{ range $.Site.Data.experience.jobs }}
 <div style="margin-bottom: 60px;">
   <h4>
-    💼 <a href="{{ .link }}">{{ .company }}</a> - {{ .position }}
+    💼 <a href="{{ .link }}" target="_blank">{{ .company }}</a> - {{ .position }}
 
-    <a href="{{ .link }}">
+    <a href="{{ .link }}" target="_blank">
       <img src="/img/work_experience/{{ .image }}" title="{{ .company }}" width="60" height="60" style="float: right;">
     </a>
   </h4>
