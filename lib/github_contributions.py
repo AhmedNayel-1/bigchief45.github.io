@@ -17,6 +17,7 @@ REPOSITORIES = [
   'serverless/serverless',
   'encode/httpx',
   'ajaxorg/ace',
+  'timgrossmann/InstaPy',
   'jneen/rouge',
   'gnocchixyz/gnocchi',
   # 'gnocchixyz/python-gnocchiclient',
