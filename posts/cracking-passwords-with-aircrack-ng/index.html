@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Cracking Passwords With aircrack-ng",
     "headline" : "Cracking Passwords With aircrack-ng",
-    "description" : "\x3cp\x3eaircrack-ng is a powerful suite of tools that allows to assess wireless network security. The tools in the suite allows us to perform various actions such as packet monitoring in the environment, montoring of specific access points, de-authentication attacks on access points, and cracking of WEP and WPA PSK (WPA 1 and 2) passwords.\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22http:\/\/www.aircrack-ng.org\/resources\/aircrack-ng-new-logo.jpg\x22 alt=\x22aircrack-ng\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will explain on how to perform these actions.\x3c\/p\x3e\n\n\x3ch2 id=\x22wireless-card-monitor-mode\x22\x3eWireless Card Monitor Mode\x3c\/h2\x3e\n\n\x3cp\x3eBefore we begin it is crucial that we change the mode of our wireless network card to \x3cstrong\x3emonitor mode\x3c\/strong\x3e. BY default, our wireless network card\x26rsquo;s mode is \x3cstrong\x3emanaged mode\x3c\/strong\x3e. In managed mode, the network card generally only listens to packets addressed to the card, whereas in monitor mode it will hear \x3cstrong\x3eevery packet in the air\x3c\/strong\x3e. Additionally, monitor mode will also allows us to perform packet injection attacks (i.e. de-authentication attacks).\x3c\/p\x3e\n\n\x3cp\x3eTo set our network card into monitor mode, we can run the following commands in a terminal:\x3c\/p\x3e",
+    "description" : "\x3cp\x3eaircrack-ng is a powerful suite of tools that allows to assess wireless network security. The tools in the suite allows us to perform various actions such as packet monitoring in the environment, montoring of specific access points, de-authentication attacks on access points, and cracking of WEP and WPA PSK (WPA 1 and 2) passwords.\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22http:\/\/www.aircrack-ng.org\/resources\/aircrack-ng-new-logo.jpg\x22 alt=\x22aircrack-ng\x22\x3e\x3c\/p\x3e\n\x3cp\x3eIn this post I will explain on how to perform these actions.\x3c\/p\x3e\n\x3ch2 id=\x22wireless-card-monitor-mode\x22\x3eWireless Card Monitor Mode\x3c\/h2\x3e\n\x3cp\x3eBefore we begin it is crucial that we change the mode of our wireless network card to \x3cstrong\x3emonitor mode\x3c\/strong\x3e. BY default, our wireless network card\x27s mode is \x3cstrong\x3emanaged mode\x3c\/strong\x3e. In managed mode, the network card generally only listens to packets addressed to the card, whereas in monitor mode it will hear \x3cstrong\x3eevery packet in the air\x3c\/strong\x3e. Additionally, monitor mode will also allows us to perform packet injection attacks (i.e. de-authentication attacks).\x3c\/p\x3e\n\x3cp\x3eTo set our network card into monitor mode, we can run the following commands in a terminal:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2016-12-25 00:00:00 \x2b0000 UTC",
     "dateModified" : "2016-12-25 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/cracking-passwords-with-aircrack-ng\/",
-    "wordCount" : "648",
+    "wordCount" : "670",
     "keywords" : [ "aircrack-ng","security","hacking","kali linux","Blog" ]
 }
 </script>
@@ -136,103 +136,92 @@ if (!doNotTrack) {
   <time datetime=2016-12-25T00:00:00Z class="post-date">Sun, Dec 25, 2016</time>
 
   <p>aircrack-ng is a powerful suite of tools that allows to assess wireless network security. The tools in the suite allows us to perform various actions such as packet monitoring in the environment, montoring of specific access points, de-authentication attacks on access points, and cracking of WEP and WPA PSK (WPA 1 and 2) passwords.</p>
-
-<p><img src="http://www.aircrack-ng.org/resources/aircrack-ng-new-logo.jpg" alt="aircrack-ng" /></p>
-
+<p><img src="http://www.aircrack-ng.org/resources/aircrack-ng-new-logo.jpg" alt="aircrack-ng"></p>
 <p>In this post I will explain on how to perform these actions.</p>
-
 <h2 id="wireless-card-monitor-mode">Wireless Card Monitor Mode</h2>
-
-<p>Before we begin it is crucial that we change the mode of our wireless network card to <strong>monitor mode</strong>. BY default, our wireless network card&rsquo;s mode is <strong>managed mode</strong>. In managed mode, the network card generally only listens to packets addressed to the card, whereas in monitor mode it will hear <strong>every packet in the air</strong>. Additionally, monitor mode will also allows us to perform packet injection attacks (i.e. de-authentication attacks).</p>
-
+<p>Before we begin it is crucial that we change the mode of our wireless network card to <strong>monitor mode</strong>. BY default, our wireless network card's mode is <strong>managed mode</strong>. In managed mode, the network card generally only listens to packets addressed to the card, whereas in monitor mode it will hear <strong>every packet in the air</strong>. Additionally, monitor mode will also allows us to perform packet injection attacks (i.e. de-authentication attacks).</p>
 <p>To set our network card into monitor mode, we can run the following commands in a terminal:</p>
+e><p>airodump-ng <!-- raw HTML omitted --></p>
+<pre><code>
+The output will reveal some interesting data:
 
-e>
+- PWR: The signal. The higher the number, the better the signal.
 
-<p>airodump-ng <interface>
-````</p>
+## Scanning Specific Access Points
 
-<p>The output will reveal some interesting data:</p>
+We can perform a more precise and specific scan using this command:
 
-<ul>
-<li>PWR: The signal. The higher the number, the better the signal.</li>
-</ul>
+```
+airodump-ng -c &lt;channel&gt; --bssid &lt;bssid&gt; -w &lt;file&gt; &lt;interface&gt;
+```
 
-<h2 id="scanning-specific-access-points">Scanning Specific Access Points</h2>
+Where:
 
-<p>We can perform a more precise and specific scan using this command:</p>
+- `-c` stands for the channel.
+- `--bssid` stands for the MAC address of the access point.
+- `-w` stands for the output file to write to.
 
-<pre><code>airodump-ng -c &lt;channel&gt; --bssid &lt;bssid&gt; -w &lt;file&gt; &lt;interface&gt;
-</code></pre>
+The command will output a scan on the access point. Additionally, it will also show devices (`STATION`) connected to this access point.
 
-<p>Where:</p>
+**NOTE:** In order to crack the key, **at least 1 device must be connected to the access point**.
 
-<ul>
-<li><code>-c</code> stands for the channel.</li>
-<li><code>--bssid</code> stands for the MAC address of the access point.</li>
-<li><code>-w</code> stands for the output file to write to.</li>
-</ul>
+## De-authentication Attacks
 
-<p>The command will output a scan on the access point. Additionally, it will also show devices (<code>STATION</code>) connected to this access point.</p>
+We can use `aireplay-ng` to perform a de-authentication attack. For example:
 
-<p><strong>NOTE:</strong> In order to crack the key, <strong>at least 1 device must be connected to the access point</strong>.</p>
+```
+aireplay-ng -0 0 -a &lt;access_point_bssid&gt; &lt;interface&gt;
+```
 
-<h2 id="de-authentication-attacks">De-authentication Attacks</h2>
+Where:
 
-<p>We can use <code>aireplay-ng</code> to perform a de-authentication attack. For example:</p>
+- `-0` represents the amount of de-authentication transmissions we wish to send. A `0` stands for an infinite loop.
+- `-a` represents the wireless access point's MAC address.
 
-<pre><code>aireplay-ng -0 0 -a &lt;access_point_bssid&gt; &lt;interface&gt;
-</code></pre>
+This de-authentication attack will start injecting packets to the access point. Causing all the client's connected to the access point to almost immediately disconnect, until the attack is finished.
 
-<p>Where:</p>
+It is also possible to target specific clients by adding the `-c &lt;client_mac_address&gt;` option.
 
-<ul>
-<li><code>-0</code> represents the amount of de-authentication transmissions we wish to send. A <code>0</code> stands for an infinite loop.</li>
-<li><code>-a</code> represents the wireless access point&rsquo;s MAC address.</li>
-</ul>
+After some time, we will stop the attack so that the previously connected clients can re-connect to the access point and generate the **[handshake](https://en.wikipedia.org/wiki/Handshaking)** packet data, which will be collected by the scan we will be running in another terminal. This handshake data is what we will use to crack the password.
 
-<p>This de-authentication attack will start injecting packets to the access point. Causing all the client&rsquo;s connected to the access point to almost immediately disconnect, until the attack is finished.</p>
+## Cracking Passwords
 
-<p>It is also possible to target specific clients by adding the <code>-c &lt;client_mac_address&gt;</code> option.</p>
+To begin cracking passwords we can use the `aircrack-ng` tool:
 
-<p>After some time, we will stop the attack so that the previously connected clients can re-connect to the access point and generate the <strong><a href="https://en.wikipedia.org/wiki/Handshaking">handshake</a></strong> packet data, which will be collected by the scan we will be running in another terminal. This handshake data is what we will use to crack the password.</p>
+```
+aircrack-ng -w [word list or file] -e &lt;essid&gt; &lt;capture file&gt;
+```
 
-<h2 id="cracking-passwords">Cracking Passwords</h2>
+Where `-w` stands for the word list or password. These can be found online for download. It is worth noting that the region's spoken language where the cracking is being done is important when using a word list.
 
-<p>To begin cracking passwords we can use the <code>aircrack-ng</code> tool:</p>
+The command can further be used with `crunch`. For example:
 
-<pre><code>aircrack-ng -w [word list or file] -e &lt;essid&gt; &lt;capture file&gt;
-</code></pre>
+```
+crunch &lt;min-len&gt; &lt;max-len&gt; -t &lt;pattern&gt; | aircrack-ng -w - -e &lt;essid&gt; &lt;capture_file&gt;
+```
 
-<p>Where <code>-w</code> stands for the word list or password. These can be found online for download. It is worth noting that the region&rsquo;s spoken language where the cracking is being done is important when using a word list.</p>
+Where:
 
-<p>The command can further be used with <code>crunch</code>. For example:</p>
+- `-t` stands for a certain pattern to be filled with wildcard characters.
+- `-` passed to `-w` means to read from Standard Output (in this case, output from crunch).
 
-<pre><code>crunch &lt;min-len&gt; &lt;max-len&gt; -t &lt;pattern&gt; | aircrack-ng -w - -e &lt;essid&gt; &lt;capture_file&gt;
-</code></pre>
+### Using Crunch
 
-<p>Where:</p>
+Crunch is a tool that can generate wordlists from character sets. These generated wordlists is the input that will be fed to **aircrack-ng**. For example, assuming that the access point's password is *hello123*, we can specify a pattern that tries to match that password:
 
-<ul>
-<li><code>-t</code> stands for a certain pattern to be filled with wildcard characters.</li>
-<li><code>-</code> passed to <code>-w</code> means to read from Standard Output (in this case, output from crunch).</li>
-</ul>
+```
+crunch 8 8 -t hello%%%
+```
 
-<h3 id="using-crunch">Using Crunch</h3>
+We can also specify a character set using the `-f` option:
 
-<p>Crunch is a tool that can generate wordlists from character sets. These generated wordlists is the input that will be fed to <strong>aircrack-ng</strong>. For example, assuming that the access point&rsquo;s password is <em>hello123</em>, we can specify a pattern that tries to match that password:</p>
+```
+crunch &lt;min-len&gt; &lt;max-len&gt; -t &lt;pattern&gt; -f /usr/share/crunch/charset.lst &lt;charsetname&gt;
+```
 
-<pre><code>crunch 8 8 -t hello%%%
-</code></pre>
+Where the character's set name can be found inside the character set file.
 
-<p>We can also specify a character set using the <code>-f</code> option:</p>
-
-<pre><code>crunch &lt;min-len&gt; &lt;max-len&gt; -t &lt;pattern&gt; -f /usr/share/crunch/charset.lst &lt;charsetname&gt;
-</code></pre>
-
-<p>Where the character&rsquo;s set name can be found inside the character set file.</p>
-
-<p>It is important to keep in mind that a prior knowledge of the password&rsquo;s structure is needed. Otherwise the cracking process is practically <strong>impossible</strong> because of the lack of processing power and time required to crack a password from the thousands of possible existing combinations.</p>
+It is important to keep in mind that a prior knowledge of the password's structure is needed. Otherwise the cracking process is practically **impossible** because of the lack of processing power and time required to crack a password from the thousands of possible existing combinations.</code></pre>
 </div>
 
 

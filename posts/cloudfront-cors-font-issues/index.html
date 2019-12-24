@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "CloudFront CORS Font Issues",
     "headline" : "CloudFront CORS Font Issues",
-    "description" : "\x3cp\x3eI was experiencing an issue with CloudFront and some static assets of a Django application deployed to ElasticBeanstalk. The issue was happening when trying to retrieve some fonts that are stored in S3 and served by CloudFront, the browser dev tools would show some errors similar to the following:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eAccess to Font at \x27http:\/\/CLOUDFRONT_HOSTNAME.cloudfront.net\/FONT_PATH\x27 from origin \x27http:\/\/www.example.com\x27 has been blocked by CORS policy: No \x27Access-Control-Allow-Origin\x27 header is present on the requested resource.\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eA \x3ca href=\x22https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/HTTP\/CORS\x22\x3eCORS\x3c\/a\x3e issue. And apparently, very common when trying to load fonts.\x3c\/p\x3e\n\n\x3cp\x3eTo fix this, there are a few possible things that you might have to try. I will list some of the fixes I found.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eI was experiencing an issue with CloudFront and some static assets of a Django application deployed to ElasticBeanstalk. The issue was happening when trying to retrieve some fonts that are stored in S3 and served by CloudFront, the browser dev tools would show some errors similar to the following:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3eAccess to Font at \x27http:\/\/CLOUDFRONT_HOSTNAME.cloudfront.net\/FONT_PATH\x27 from origin \x27http:\/\/www.example.com\x27 has been blocked by CORS policy: No \x27Access-Control-Allow-Origin\x27 header is present on the requested resource.\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eA \x3ca href=\x22https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/HTTP\/CORS\x22\x3eCORS\x3c\/a\x3e issue. And apparently, very common when trying to load fonts.\x3c\/p\x3e\n\x3cp\x3eTo fix this, there are a few possible things that you might have to try. I will list some of the fixes I found.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,36 +136,25 @@ if (!doNotTrack) {
   <time datetime=2018-12-12T16:32:22Z class="post-date">Wed, Dec 12, 2018</time>
 
   <p>I was experiencing an issue with CloudFront and some static assets of a Django application deployed to ElasticBeanstalk. The issue was happening when trying to retrieve some fonts that are stored in S3 and served by CloudFront, the browser dev tools would show some errors similar to the following:</p>
-
 <pre><code>Access to Font at 'http://CLOUDFRONT_HOSTNAME.cloudfront.net/FONT_PATH' from origin 'http://www.example.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
-</code></pre>
-
-<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a> issue. And apparently, very common when trying to load fonts.</p>
-
+</code></pre><p>A <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a> issue. And apparently, very common when trying to load fonts.</p>
 <p>To fix this, there are a few possible things that you might have to try. I will list some of the fixes I found.</p>
-
 <h2 id="s3-bucket-cors-policy">S3 Bucket CORS Policy</h2>
-
 <p>You might have to begin by setting an appropriate CORS policy for the S3 Bucket. In the S3 Console, navigate to <em>Your Bucket &gt; Permissions &gt; CORS Configuration</em> and paste the following configuration:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
 <span style="color:#f92672">&lt;CORSConfiguration</span> <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://s3.amazonaws.com/doc/2006-03-01/&#34;</span><span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;CORSRule&gt;</span>
-    <span style="color:#f92672">&lt;AllowedOrigin&gt;</span>*<span style="color:#f92672">&lt;/AllowedOrigin&gt;</span>
-    <span style="color:#f92672">&lt;AllowedMethod&gt;</span>GET<span style="color:#f92672">&lt;/AllowedMethod&gt;</span>
-    <span style="color:#f92672">&lt;MaxAgeSeconds&gt;</span>3000<span style="color:#f92672">&lt;/MaxAgeSeconds&gt;</span>
-    <span style="color:#f92672">&lt;AllowedHeader&gt;</span>Authorization<span style="color:#f92672">&lt;/AllowedHeader&gt;</span>
+<span style="color:#f92672">&lt;CORSRule</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;AllowedOrigin</span><span style="color:#f92672">&gt;</span>*<span style="color:#f92672">&lt;/AllowedOrigin&gt;</span>
+    <span style="color:#f92672">&lt;AllowedMethod</span><span style="color:#f92672">&gt;</span>GET<span style="color:#f92672">&lt;/AllowedMethod&gt;</span>
+    <span style="color:#f92672">&lt;MaxAgeSeconds</span><span style="color:#f92672">&gt;</span>3000<span style="color:#f92672">&lt;/MaxAgeSeconds&gt;</span>
+    <span style="color:#f92672">&lt;AllowedHeader</span><span style="color:#f92672">&gt;</span>Authorization<span style="color:#f92672">&lt;/AllowedHeader&gt;</span>
 <span style="color:#f92672">&lt;/CORSRule&gt;</span>
-<span style="color:#f92672">&lt;/CORSConfiguration&gt;</span></code></pre></div>
-<p>Some people have reported that changing the value of <code>&lt;AllowedHeader&gt;</code> to <code>*</code> fixed their issue. So you might want to keep that in mind as well.</p>
-
+<span style="color:#f92672">&lt;/CORSConfiguration&gt;</span>
+</code></pre></div><p>Some people have reported that changing the value of <code>&lt;AllowedHeader&gt;</code> to <code>*</code> fixed their issue. So you might want to keep that in mind as well.</p>
 <h2 id="cloudfront-whitelisted-headers">CloudFront Whitelisted Headers</h2>
-
-<p>This was the solution that fixed the issue for me. In the CloudFront Console, navigate to your CloudFront distribution&rsquo;s <em>Behaviors</em> tab.</p>
-
+<p>This was the solution that fixed the issue for me. In the CloudFront Console, navigate to your CloudFront distribution's <em>Behaviors</em> tab.</p>
 <p>Select the existing default behavior (<code>Default (*)</code>) and select <em>Edit</em>. For the <em>Cache Based on Selected Request Headers</em> option, select <em>Whitelist</em> from the dropdown. This will prompt a list of headers to appear. Look for the <em>Origin</em> header and add it to the whitelist, and save the changes.</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="http://thelazylog.com/correct-configuration-to-fix-cors-issue-with-cloudfront/">http://thelazylog.com/correct-configuration-to-fix-cors-issue-with-cloudfront/</a></li>
 <li><a href="https://serverfault.com/questions/867016/aws-s3-cloudfront-web-font-cors-error">https://serverfault.com/questions/867016/aws-s3-cloudfront-web-font-cors-error</a></li>

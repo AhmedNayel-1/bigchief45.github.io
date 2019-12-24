@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -163,22 +163,13 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-04-13T00:00:00Z" class="post-date">Thu, Apr 13, 2017</time>
   <p>In a previous post I talked about <a href="https://aalvarez.me/posts/managing-debian-package-dependencies.html">managing Debian package dependencies</a>. However I did not go into detail about the structure the versioning of packages must have.</p>
-
-<p>To recap, let&rsquo;s see how we can specify a specific package version of a dependency that our package needs:</p>
-
+<p>To recap, let's see how we can specify a specific package version of a dependency that our package needs:</p>
 <pre><code>Depends: erlang (&gt;= 1.2)
-</code></pre>
-
-<p>In the example above, the required version for erlang is simply <code>1.2</code> or greater. A package&rsquo;s version format however, can be a bit more complex than this.</p>
-
+</code></pre><p>In the example above, the required version for erlang is simply <code>1.2</code> or greater. A package's version format however, can be a bit more complex than this.</p>
 <h2 id="version-format-and-components">Version Format and Components</h2>
-
-<p>The official format of a Debian package&rsquo;s version is:</p>
-
+<p>The official format of a Debian package's version is:</p>
 <pre><code>[epoch:]upstream_version[-debian_revision]
-</code></pre>
-
-<p>Let&rsquo;s go into detail about each of the components in that format.</p>
+</code></pre><p>Let's go into detail about each of the components in that format.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -208,15 +199,10 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-04-11T00:00:00Z" class="post-date">Tue, Apr 11, 2017</time>
   <p>Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer <strong>publishers</strong>. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.</p>
-
 <p>Publishers are specified in the <code>publishers</code> section for each pipeline that is defined in the <code>pipeline.yaml</code> and the <code>event_pipeline.yaml</code> files.</p>
-
 <p>Many different publishers are available. The following are the most common and important publishers:</p>
-
 <h3 id="gnocchi">Gnocchi</h3>
-
-<p><img src="http://gnocchi.xyz/_images/gnocchi-logo.jpg" alt="Gnocchi Logo" /></p>
-
+<p><img src="http://gnocchi.xyz/_images/gnocchi-logo.jpg" alt="Gnocchi Logo"></p>
 <p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
 
   
@@ -246,18 +232,12 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/">Reworking Ace&#39;s HAML Syntax Highlighting</a>
   </h1>
   <time datetime="2017-04-10T00:00:00Z" class="post-date">Mon, Apr 10, 2017</time>
-  <p><a href="https://github.com/ajaxorg/ace">Ace</a> is a great web text editor and the default editor for <a href="https://c9.io">Cloud 9 IDE</a>. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn&rsquo;t support correct highlighting of some HAML stuff such as HAML comments (which begin with <code>-#</code>) or block comments.</p>
-
-<p>This is how Ace&rsquo;s HAML syntax highlighting issues look like:</p>
-
-<p><img src="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg" alt="HAML Highlighting Issues" /></p>
-
-<p>I proceeded to study Ace&rsquo;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state machine</a>. The source where this happens is found in <a href="https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js"><code>lib/ace/mode/haml_highlight_rules.js</code></a></p>
-
+  <p><a href="https://github.com/ajaxorg/ace">Ace</a> is a great web text editor and the default editor for <a href="https://c9.io">Cloud 9 IDE</a>. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn't support correct highlighting of some HAML stuff such as HAML comments (which begin with <code>-#</code>) or block comments.</p>
+<p>This is how Ace's HAML syntax highlighting issues look like:</p>
+<p><img src="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg" alt="HAML Highlighting Issues"></p>
+<p>I proceeded to study Ace's logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state machine</a>. The source where this happens is found in <a href="https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js"><code>lib/ace/mode/haml_highlight_rules.js</code></a></p>
 <h2 id="defining-states">Defining States</h2>
-
 <p>A few states have to be defined to represent where the lexer currently &ldquo;stands&rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.</p>
-
 <p>In Ace, all syntax highlighting lexers must begin with a <code>start</code> state. From this state we can switch to other defined states. The example below shows how we begin from the <code>start</code> state and can jump to a comment block state when the code matches a regular expression that represents this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">$rules</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
     <span style="color:#d88200">&#34;start&#34;</span><span style="color:#f92672">:</span> <span style="color:#111">[</span>
@@ -265,16 +245,15 @@ if (!doNotTrack) {
             <span style="color:#75af00">token</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment.block&#34;</span><span style="color:#111">,</span> <span style="color:#75715e">// multiline HTML comment
 </span><span style="color:#75715e"></span>            <span style="color:#75af00">regex</span><span style="color:#f92672">:</span> <span style="color:#d88200">/^\/$/</span><span style="color:#111">,</span>
             <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment&#34;</span>
-        <span style="color:#111">},</span>
+        <span style="color:#111">}</span><span style="color:#111">,</span>
         <span style="color:#111">{</span>
             <span style="color:#75af00">token</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment.block&#34;</span><span style="color:#111">,</span> <span style="color:#75715e">// multiline HAML comment
 </span><span style="color:#75715e"></span>            <span style="color:#75af00">regex</span><span style="color:#f92672">:</span> <span style="color:#d88200">/^\-#$/</span><span style="color:#111">,</span>
             <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment&#34;</span>
-<span style="color:#111">},</span>
+<span style="color:#111">}</span><span style="color:#111">,</span>
 
 <span style="color:#75715e">/* ... */</span>
-</code></pre></div>
-<p>Notice that we define 2 different comment types, since HAML <a href="http://haml.info/docs/yardoc/file.REFERENCE.html">supports</a> HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as <code>comment.block</code> <strong>tokens</strong>, and will also make the lexer jump to a <code>comment</code> state, denoted by the <code>next</code> keyword.</p>
+</code></pre></div><p>Notice that we define 2 different comment types, since HAML <a href="http://haml.info/docs/yardoc/file.REFERENCE.html">supports</a> HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as <code>comment.block</code> <strong>tokens</strong>, and will also make the lexer jump to a <code>comment</code> state, denoted by the <code>next</code> keyword.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -304,15 +283,10 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-04-07T00:00:00Z" class="post-date">Fri, Apr 7, 2017</time>
   <p>Ceilometer <strong>transformers</strong> are part of the Ceilometer <strong>pipeline</strong>, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for <strong>samples</strong> and a pipeline for <strong>events</strong>.</p>
-
 <p>Configurations for these pipelines can be found in <code>/etc/ceilometer/pipeline.yaml</code> and <code>/etc/ceilometer/event_pipeline.yaml</code>.</p>
-
 <p>Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline" /></p>
-
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline"></p>
 <p>Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:</p>
-
 <table>
 <thead>
 <tr>
@@ -320,41 +294,34 @@ if (!doNotTrack) {
 <th align="center">Reference name for configuration</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">Accumulator</td>
 <td align="center">accumulator</td>
 </tr>
-
 <tr>
 <td align="left">Aggregator</td>
 <td align="center">aggregator</td>
 </tr>
-
 <tr>
 <td align="left">Arithmetic</td>
 <td align="center">arithmetic</td>
 </tr>
-
 <tr>
 <td align="left">Rate of change</td>
 <td align="center">rate_of_change</td>
 </tr>
-
 <tr>
 <td align="left">Unit conversion</td>
 <td align="center">unit_conversion</td>
 </tr>
-
 <tr>
 <td align="left">Delta</td>
 <td align="center">delta</td>
 </tr>
 </tbody>
 </table>
-
-<p>Let&rsquo;s take a more detailed look into the accumulator transformer.</p>
+<p>Let's take a more detailed look into the accumulator transformer.</p>
 
   
   <div style="margin: 20px 0px;">

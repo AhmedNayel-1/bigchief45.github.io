@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Creating Toolbars for MultiView Elements in Netbeans Platform",
     "headline" : "Creating Toolbars for MultiView Elements in Netbeans Platform",
-    "description" : "\x3cp\x3eOn a \x3ca href=\x22\/posts\/custom-file-types-in-netbeans-platform.html\x22\x3eprevious post\x3c\/a\x3e I talked about creating a new file type that Netbeans Platform can recognize and display the file\x26rsquo;s data in different ways by creating different visual editors that implement the \x3ccode\x3eMultiViewElement\x3c\/code\x3e interface.\x3c\/p\x3e\n\n\x3cp\x3eHowever, that tutorial did not cover how to add a custom toolbar to each multi view. Like the one Netbeans already provides when editing source code:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/creating-toolbars-for-multiview-elements-in-netbeans-platform\/netbeans_multiview_toolbar.png\x22 alt=\x22Netbeans MultiView Toolbar\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eThis is a very handy toolbar that can be used to add buttons that perform different kinds of actions with the current active file.\x3c\/p\x3e\n\n\x3ch2 id=\x22a-deeper-look-into-the-multiviewelement-object\x22\x3eA Deeper Look Into the MultiViewElement Object\x3c\/h2\x3e\n\n\x3cp\x3eIf you recall from the previous post, a \x3ccode\x3eJPanel\x3c\/code\x3e that implements \x3ccode\x3eMultiViewElement\x3c\/code\x3e was created after finishing the wizard. This \x3ccode\x3eMultiViewElement\x3c\/code\x3e object has some very important characteristics that are key to this tutorial:\x3c\/p\x3e",
+    "description" : "\x3cp\x3eOn a \x3ca href=\x22\/posts\/custom-file-types-in-netbeans-platform.html\x22\x3eprevious post\x3c\/a\x3e I talked about creating a new file type that Netbeans Platform can recognize and display the file\x27s data in different ways by creating different visual editors that implement the \x3ccode\x3eMultiViewElement\x3c\/code\x3e interface.\x3c\/p\x3e\n\x3cp\x3eHowever, that tutorial did not cover how to add a custom toolbar to each multi view. Like the one Netbeans already provides when editing source code:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/creating-toolbars-for-multiview-elements-in-netbeans-platform\/netbeans_multiview_toolbar.png\x22 alt=\x22Netbeans MultiView Toolbar\x22\x3e\x3c\/p\x3e\n\x3cp\x3eThis is a very handy toolbar that can be used to add buttons that perform different kinds of actions with the current active file.\x3c\/p\x3e\n\x3ch2 id=\x22a-deeper-look-into-the-multiviewelement-object\x22\x3eA Deeper Look Into the MultiViewElement Object\x3c\/h2\x3e\n\x3cp\x3eIf you recall from the previous post, a \x3ccode\x3eJPanel\x3c\/code\x3e that implements \x3ccode\x3eMultiViewElement\x3c\/code\x3e was created after finishing the wizard. This \x3ccode\x3eMultiViewElement\x3c\/code\x3e object has some very important characteristics that are key to this tutorial:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,55 +135,40 @@ if (!doNotTrack) {
   <h1>Creating Toolbars for MultiView Elements in Netbeans Platform</h1>
   <time datetime=2018-04-23T00:00:00Z class="post-date">Mon, Apr 23, 2018</time>
 
-  <p>On a <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html">previous post</a> I talked about creating a new file type that Netbeans Platform can recognize and display the file&rsquo;s data in different ways by creating different visual editors that implement the <code>MultiViewElement</code> interface.</p>
-
+  <p>On a <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html">previous post</a> I talked about creating a new file type that Netbeans Platform can recognize and display the file's data in different ways by creating different visual editors that implement the <code>MultiViewElement</code> interface.</p>
 <p>However, that tutorial did not cover how to add a custom toolbar to each multi view. Like the one Netbeans already provides when editing source code:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png" alt="Netbeans MultiView Toolbar" /></p>
-
+<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png" alt="Netbeans MultiView Toolbar"></p>
 <p>This is a very handy toolbar that can be used to add buttons that perform different kinds of actions with the current active file.</p>
-
 <h2 id="a-deeper-look-into-the-multiviewelement-object">A Deeper Look Into the MultiViewElement Object</h2>
-
 <p>If you recall from the previous post, a <code>JPanel</code> that implements <code>MultiViewElement</code> was created after finishing the wizard. This <code>MultiViewElement</code> object has some very important characteristics that are key to this tutorial:</p>
-
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">final</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyCustomVisualElement</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">JPanel</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">MultiViewElement</span> <span style="color:#f92672">{</span>
   <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>  <span style="color:#00a8c8">private</span> <span style="color:#111">JToolBar</span> <span style="color:#111">toolbar</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JToolBar</span><span style="color:#f92672">();</span>
+</span><span style="color:#75715e"></span>  <span style="color:#00a8c8">private</span> <span style="color:#111">JToolBar</span> <span style="color:#111">toolbar</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JToolBar</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
   <span style="color:#75715e">// ...
 </span><span style="color:#75715e"></span>
   <span style="color:#75af00">@Override</span>
-  <span style="color:#00a8c8">public</span> <span style="color:#111">JComponent</span> <span style="color:#75af00">getToolbarRepresentation</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#111">JComponent</span> <span style="color:#75af00">getToolbarRepresentation</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
       <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">toolbar</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>As you can see, the creation of this file includes a <code>JToolbar</code> component inside this <code>JPanel</code>, as well as a <code>getToolbarRepresentation()</code> method. This is how the visual element renders the toolbar for our data file.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>As you can see, the creation of this file includes a <code>JToolbar</code> component inside this <code>JPanel</code>, as well as a <code>getToolbarRepresentation()</code> method. This is how the visual element renders the toolbar for our data file.</p>
 <h2 id="creating-the-toolbar">Creating the Toolbar</h2>
-
 <p>There are two ways we can create our custom toolbar and render it:</p>
-
 <ol>
 <li>Write the code inside our <code>MultiViewElement</code> that adds all necessary buttons to the toolbar, each with their respective icons and actions defined, and return the toolbar in <code>getToolbarRepresentation</code>().</li>
-<li>Create a separate <code>JPanel</code> component and create the toolbar inside that panel using Netbeans&rsquo;s GUI Builder (Matisse) which lets us drag and drop the necessary buttons to create the toolbar. Lastly we can return a new instance of this panel inside <code>getToolbarRepresentation()</code>.</li>
+<li>Create a separate <code>JPanel</code> component and create the toolbar inside that panel using Netbeans's GUI Builder (Matisse) which lets us drag and drop the necessary buttons to create the toolbar. Lastly we can return a new instance of this panel inside <code>getToolbarRepresentation()</code>.</li>
 </ol>
-
-<p>I prefer the second approach, since it allows me to separate the toolbar code (which could be a lot, depending on how many actions you want to include) from the visual element code. The only trick with this approach is that you will probably need to pass the data object (among other things) to this new <code>JPanel</code>&rsquo;s constructor&rsquo;.</p>
-
-<p>Having said that, let&rsquo;s go ahead and create a new JPanel Form in our module. Using the GUI Builder, drag and drop a <code>JToolbar</code> component, and then drag and drop the necessary buttons inside this toolbar. Here is an example:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/custom_toolbar_example.png" alt="Custom Toolbar Example" /></p>
-
+<p>I prefer the second approach, since it allows me to separate the toolbar code (which could be a lot, depending on how many actions you want to include) from the visual element code. The only trick with this approach is that you will probably need to pass the data object (among other things) to this new <code>JPanel</code>'s constructor&rsquo;.</p>
+<p>Having said that, let's go ahead and create a new JPanel Form in our module. Using the GUI Builder, drag and drop a <code>JToolbar</code> component, and then drag and drop the necessary buttons inside this toolbar. Here is an example:</p>
+<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/custom_toolbar_example.png" alt="Custom Toolbar Example"></p>
 <p>To add the action logic to each button you can double click each button and then Netbeans will display the appropriate method to write your logic.</p>
-
 <p>Assuming that I am working with a <code>TableModel</code> object, and the buttons in the toolbar can add or remove rows, the actions would need to have the correct reference to this table and its model. This implementation is really up to you, but we could easily pass these objects when instantiating the toolbar in the <code>MultiView</code> object:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Override</span>
-<span style="color:#00a8c8">public</span> <span style="color:#111">JComponent</span> <span style="color:#75af00">getToolbarRepresentation</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyCustomVisualElementToolbar</span><span style="color:#f92672">(</span><span style="color:#111">obj</span><span style="color:#f92672">,</span> <span style="color:#111">dataTable</span><span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>Where <code>obj</code> is the custom data object (from the custom file type wizard) and <code>dataTable</code> is a <code>JTable</code> in the <code>MultiView</code> visual element object.</p>
-
+<span style="color:#00a8c8">public</span> <span style="color:#111">JComponent</span> <span style="color:#75af00">getToolbarRepresentation</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyCustomVisualElementToolbar</span><span style="color:#f92672">(</span><span style="color:#111">obj</span><span style="color:#f92672">,</span> <span style="color:#111">dataTable</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Where <code>obj</code> is the custom data object (from the custom file type wizard) and <code>dataTable</code> is a <code>JTable</code> in the <code>MultiView</code> visual element object.</p>
 <p>After you build and run your application, you should see your custom toolbar when opening a file and selecting the right view element that contains the toolbar. When clicking the buttons, the respective action logic should be executed.</p>
 </div>
 

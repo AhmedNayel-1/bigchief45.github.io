@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Custom Pages in Zenoss",
     "headline" : "Custom Pages in Zenoss",
-    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/extending-zenoss-navigations.html\x22\x3eprevious post\x3c\/a\x3e I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn\x26rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.\x3c\/p\x3e\n\n\x3ch2 id=\x22page-viewlets\x22\x3ePage Viewlets\x3c\/h2\x3e\n\n\x3cp\x3ePreviously we created navigation item viewlets, this time we will be creating \x3cstrong\x3epage\x3c\/strong\x3e viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to \x3ccode\x3ebrowser\/configure.zcml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-xml\x22 data-lang=\x22xml\x22\x3e\x3cspan style=\x22color:#f92672\x22\x3e\x26lt;browser:page\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3ename=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;secondaryPage\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3efor=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;*\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3epermission=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;zenoss.View\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3etemplate=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;templates\/my_template.pt\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#f92672\x22\x3e\/\x26gt;\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eIt is important that the \x3cstrong\x3ename\x3c\/strong\x3e attribute matches the URL of the navigation link we created previously. Another important attribute is the \x3cstrong\x3etemplate\x3c\/strong\x3e attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and \x3ca href=\x22http:\/\/old.zope.org\/Members\/tone\/METAL\x22\x3eMETAL\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3cp\x3eAlso let\x26rsquo;s not forget to create a necessary python init file:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3etouch browser\/__init__.py\n\x3c\/code\x3e\x3c\/pre\x3e",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/extending-zenoss-navigations.html\x22\x3eprevious post\x3c\/a\x3e I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn\x27t get to creating the custom pages that these links would link to. This is what we will learn today.\x3c\/p\x3e\n\x3ch2 id=\x22page-viewlets\x22\x3ePage Viewlets\x3c\/h2\x3e\n\x3cp\x3ePreviously we created navigation item viewlets, this time we will be creating \x3cstrong\x3epage\x3c\/strong\x3e viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to \x3ccode\x3ebrowser\/configure.zcml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-xml\x22 data-lang=\x22xml\x22\x3e\x3cspan style=\x22color:#f92672\x22\x3e\x26lt;browser:page\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3ename=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;secondaryPage\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3efor=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;*\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3epermission=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;zenoss.View\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#75af00\x22\x3etemplate=\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;templates\/my_template.pt\x26#34;\x3c\/span\x3e\n  \x3cspan style=\x22color:#f92672\x22\x3e\/\x26gt;\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eIt is important that the \x3cstrong\x3ename\x3c\/strong\x3e attribute matches the URL of the navigation link we created previously. Another important attribute is the \x3cstrong\x3etemplate\x3c\/strong\x3e attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and \x3ca href=\x22http:\/\/old.zope.org\/Members\/tone\/METAL\x22\x3eMETAL\x3c\/a\x3e.\x3c\/p\x3e\n\x3cp\x3eAlso let\x27s not forget to create a necessary python init file:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3etouch browser\/__init__.py\n\x3c\/code\x3e\x3c\/pre\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2016-12-26 00:00:00 \x2b0000 UTC",
     "dateModified" : "2016-12-26 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/custom-pages-in-zenoss\/",
-    "wordCount" : "756",
+    "wordCount" : "755",
     "keywords" : [ "zenoss","extjs","javascript","zope","zenpacks","d3","Blog" ]
 }
 </script>
@@ -135,82 +135,67 @@ if (!doNotTrack) {
   <h1>Custom Pages in Zenoss</h1>
   <time datetime=2016-12-26T00:00:00Z class="post-date">Mon, Dec 26, 2016</time>
 
-  <p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
-
+  <p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn't get to creating the custom pages that these links would link to. This is what we will learn today.</p>
 <h2 id="page-viewlets">Page Viewlets</h2>
-
 <p>Previously we created navigation item viewlets, this time we will be creating <strong>page</strong> viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to <code>browser/configure.zcml</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:page</span>
   <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;secondaryPage&#34;</span>
   <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
   <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
   <span style="color:#75af00">template=</span><span style="color:#d88200">&#34;templates/my_template.pt&#34;</span>
-  <span style="color:#f92672">/&gt;</span></code></pre></div>
-<p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
-
-<p>Also let&rsquo;s not forget to create a necessary python init file:</p>
-
+  <span style="color:#f92672">/&gt;</span>
+</code></pre></div><p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
+<p>Also let's not forget to create a necessary python init file:</p>
 <pre><code>touch browser/__init__.py
-</code></pre>
-
-<h2 id="zope-zenoss-templates">Zope &amp; Zenoss Templates</h2>
-
+</code></pre><h2 id="zope--zenoss-templates">Zope &amp; Zenoss Templates</h2>
 <p>We will proceed and create the <code>my_template.pt</code> template in a new <em>templates</em> directory:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mkdir" data-lang="mkdir">browser/templates/
-touch browser/templates/my_template.py</code></pre></div>
-<p>The template code will basically consist of different tags that will represent <strong>slots</strong>. We can use tags to fill these slots with content and JavaScript, this is how we populate the page with content. A basic template file skeleton would look like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:use-macro</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;here/page_macros/base-new&#34;</span><span style="color:#111">&gt;</span>
- <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;title&#34;</span><span style="color:#111">&gt;</span>YOUR TITLE HERE<span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
+<pre><code class="language-mkdir" data-lang="mkdir">browser/templates/
+touch browser/templates/my_template.py
+</code></pre><p>The template code will basically consist of different tags that will represent <strong>slots</strong>. We can use tags to fill these slots with content and JavaScript, this is how we populate the page with content. A basic template file skeleton would look like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:use-macro</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;here/page_macros/base-new&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+ <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;title&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>YOUR TITLE HERE<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
 
- <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;head-local&#34;</span><span style="color:#111">&gt;</span>
-    <span style="color:#111">&lt;</span><span style="color:#f92672">meta</span> <span style="color:#75af00">http-equiv</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;X-UA-Compatible&#34;</span> <span style="color:#75af00">content</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;IE=edge&#34;</span> <span style="color:#111">/&gt;</span>
- <span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
+ <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;head-local&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;</span><span style="color:#f92672">meta</span> <span style="color:#75af00">http-equiv</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;X-UA-Compatible&#34;</span> <span style="color:#75af00">content</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;IE=edge&#34;</span> <span style="color:#111">/</span><span style="color:#111">&gt;</span>
+ <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
 
- <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;center_panel_content&#34;</span><span style="color:#111">&gt;</span>
- <span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
+ <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;center_panel_content&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+ <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
 
- <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;script_layout&#34;</span><span style="color:#111">&gt;</span>
- <span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
+ <span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;script_layout&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+ <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
 
-<span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span></code></pre></div>
-<p>Notice that we are leaving some slots unfilled for now, we will proceed to fill them later. The 1st line of the code above is very important:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:use-macro</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;here/page_macros/base-new&#34;</span><span style="color:#111">&gt;</span></code></pre></div>
-<p>This code allows us to inherit from one of the many built-in Zenoss templates available. Each template has different page layout characteristics such as columns, menu bars, and other components. In this case we are using the <code>base-new</code> template.</p>
+<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
 
+</code></pre></div><p>Notice that we are leaving some slots unfilled for now, we will proceed to fill them later. The 1st line of the code above is very important:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:use-macro</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;here/page_macros/base-new&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+</code></pre></div><p>This code allows us to inherit from one of the many built-in Zenoss templates available. Each template has different page layout characteristics such as columns, menu bars, and other components. In this case we are using the <code>base-new</code> template.</p>
 <p>You can see the list of templates that we can use by checking out the source code in <code>$ZENHOME/Products/ZenUI3/browser/macros.py</code>. These <code>.pt</code> template files are located in <code>$ZENHOME/Products/ZenUI3/browser/templates</code>.</p>
-
 <h2 id="adding-content-to-the-page">Adding Content to the Page</h2>
-
 <p>If we restart <em>zopectl</em> we can already see that the link works and it actually takes us to the new page that uses the <code>base-new</code> template. In the center we will see a big white space that is actually an <a href="http://docs.sencha.com/extjs/4.0.1/#!/api/Ext.panel.Panel">ExtJS panel</a> called <code>center_panel</code>. To add new stuff to this available area we need to do so using ExtJS framework.</p>
-
-<p>Let&rsquo;s say we want to add a <a href="http://d3js.org/">D3 (Data Driven Documents)</a> example like <a href="http://bl.ocks.org/mbostock/1153292">Mobile Patent Suits</a> into the panel. First we need to include the JavaScript reference to the D3 library inside the <code>script_layout</code> slot, at the same time we can also add the CSS for the D3 visualization, and lastly the JavaScript code that will render the visualization (<code>mps.js</code>):</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;script_layout&#34;</span><span style="color:#111">&gt;</span>
-  <span style="color:#111">&lt;</span><span style="color:#f92672">script</span> <span style="color:#75af00">src</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;//d3js.org/d3.v3.min.js&#34;</span><span style="color:#111">&gt;&lt;/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
-  <span style="color:#111">&lt;</span><span style="color:#f92672">link</span> <span style="color:#75af00">rel</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;stylesheet&#34;</span> <span style="color:#75af00">type</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;text/css&#34;</span> <span style="color:#75af00">href</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;++resource++myzenpackname/css/patent_suits.css&#34;</span><span style="color:#111">&gt;</span>
+<p>Let's say we want to add a <a href="http://d3js.org/">D3 (Data Driven Documents)</a> example like <a href="http://bl.ocks.org/mbostock/1153292">Mobile Patent Suits</a> into the panel. First we need to include the JavaScript reference to the D3 library inside the <code>script_layout</code> slot, at the same time we can also add the CSS for the D3 visualization, and lastly the JavaScript code that will render the visualization (<code>mps.js</code>):</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">tal:block</span> <span style="color:#75af00">metal:fill-slot</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;script_layout&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+  <span style="color:#111">&lt;</span><span style="color:#f92672">script</span> <span style="color:#75af00">src</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;//d3js.org/d3.v3.min.js&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span><span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
+  <span style="color:#111">&lt;</span><span style="color:#f92672">link</span> <span style="color:#75af00">rel</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;stylesheet&#34;</span> <span style="color:#75af00">type</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;text/css&#34;</span> <span style="color:#75af00">href</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;++resource++myzenpackname/css/patent_suits.css&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
 
   <span style="color:#111">&lt;</span><span style="color:#f92672">script</span>
    <span style="color:#75af00">tal:attributes</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;src python: context.zport.getVersionedResourcePath(&#39;/++resource++myzenpackname/js/mps.js&#39;)&#34;</span>
-  <span style="color:#111">&gt;</span>
-  <span style="color:#111">&lt;/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
-<span style="color:#111">&lt;/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span></code></pre></div>
-<p>~&gt; I am not sure if this is the best approach for calling the JavaScript file, the <a href="https://github.com/zenoss/ZenPacks.zenoss.Dashboard">Dashboard ZenPack</a> seems to use this approach. However other ZenPacks seem to take a different approach regardless of using <strong>zenpacklib</strong>.</p>
-
+  <span style="color:#111"></span><span style="color:#111">&gt;</span>
+  <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
+<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">tal:block</span><span style="color:#111">&gt;</span>
+</code></pre></div><p>~&gt; I am not sure if this is the best approach for calling the JavaScript file, the <a href="https://github.com/zenoss/ZenPacks.zenoss.Dashboard">Dashboard ZenPack</a> seems to use this approach. However other ZenPacks seem to take a different approach regardless of using <strong>zenpacklib</strong>.</p>
 <p>Now we need to create the resource directory that will contain the CSS and JavaScript files:</p>
-
 <pre><code>mkdir browser/resources
 mkdir browser/resources/css
 mkdir browser/resouces/js
-</code></pre>
-
-<p>Copy the CSS source code of the <em>Mobile Patent Suits</em> source code and place it in a file under <code>browser/resources/css/patent_suits.css</code>.</p>
-
-<p>Then let&rsquo;s create the JavaScript file <code>browser/resources/js/mps.js</code> and paste the JavaScript source code after the following lines:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">onReady</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(){</span>
+</code></pre><p>Copy the CSS source code of the <em>Mobile Patent Suits</em> source code and place it in a file under <code>browser/resources/css/patent_suits.css</code>.</p>
+<p>Then let's create the JavaScript file <code>browser/resources/js/mps.js</code> and paste the JavaScript source code after the following lines:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">onReady</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">{</span>
 
   <span style="color:#75715e">// Create a panel to put the D3 visualization
 </span><span style="color:#75715e"></span>  <span style="color:#00a8c8">var</span> <span style="color:#75af00">suits_panel</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Ext.panel.Panel&#39;</span><span style="color:#111">,</span> <span style="color:#111">{</span>
     <span style="color:#75af00">flex</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-  <span style="color:#111">});</span>
+  <span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
   <span style="color:#75715e">// Create a panel to represent the whole content area
 </span><span style="color:#75715e"></span>  <span style="color:#00a8c8">var</span> <span style="color:#75af00">hbox_center_panel</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Ext.panel.Panel&#39;</span><span style="color:#111">,</span> <span style="color:#111">{</span>
@@ -219,13 +204,13 @@ mkdir browser/resouces/js
       <span style="color:#75af00">pack</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;start&#39;</span><span style="color:#111">,</span>
       <span style="color:#75af00">align</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;stretch&#39;</span>
     <span style="color:#111">}</span>
-  <span style="color:#111">});</span>
+  <span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
   <span style="color:#75715e">// Add the visualization panel to the content area
-</span><span style="color:#75715e"></span>  <span style="color:#75af00">hbox_center_panel</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#75af00">suits_panel</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>  <span style="color:#75af00">hbox_center_panel</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#75af00">suits_panel</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
   <span style="color:#75715e">// Add the content panel to the original template panel
-</span><span style="color:#75715e"></span>  <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#d88200">&#39;center_panel&#39;</span><span style="color:#111">).</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#75af00">hbox_center_panel</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>  <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#d88200">&#39;center_panel&#39;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#75af00">hbox_center_panel</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
   <span style="color:#75715e">// D3 Mobile Patent Suits code here
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">/*
@@ -234,24 +219,19 @@ mkdir browser/resouces/js
 
   <span style="color:#75715e">// We will want to change this line from the D3 visualization,
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// So that the SVG appends to the suits panel
-</span><span style="color:#75715e"></span>  <span style="color:#00a8c8">var</span> <span style="color:#75af00">svg</span> <span style="color:#f92672">=</span> <span style="color:#75af00">d3</span><span style="color:#111">.</span><span style="color:#75af00">select</span><span style="color:#111">(</span><span style="color:#d88200">&#34;#&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">suits_panel</span><span style="color:#111">.</span><span style="color:#75af00">body</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">).</span><span style="color:#75af00">append</span><span style="color:#111">(</span><span style="color:#d88200">&#34;svg&#34;</span><span style="color:#111">)</span>
+</span><span style="color:#75715e"></span>  <span style="color:#00a8c8">var</span> <span style="color:#75af00">svg</span> <span style="color:#f92672">=</span> <span style="color:#75af00">d3</span><span style="color:#111">.</span><span style="color:#75af00">select</span><span style="color:#111">(</span><span style="color:#d88200">&#34;#&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">suits_panel</span><span style="color:#111">.</span><span style="color:#75af00">body</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">append</span><span style="color:#111">(</span><span style="color:#d88200">&#34;svg&#34;</span><span style="color:#111">)</span>
 
-<span style="color:#111">});</span>
-</code></pre></div>
-<h3 id="registering-the-resource-directory">Registering the Resource Directory</h3>
-
+<span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
+</code></pre></div><h3 id="registering-the-resource-directory">Registering the Resource Directory</h3>
 <p>In order for Zenoss to recognize our ZenPack resources, we need to register it in <code>browser/configure.zcml</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- Browser Resources --&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Browser Resources </span><span style="color:#75715e">--&gt;</span>
   <span style="color:#f92672">&lt;browser:resourceDirectory</span>
     <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;myzenpackname&#34;</span>
     <span style="color:#75af00">directory=</span><span style="color:#d88200">&#34;resources&#34;</span>
-    <span style="color:#f92672">/&gt;</span></code></pre></div>
-<p>Be sure to use the correct <strong>name</strong> field when referencing the resources in page template files.</p>
-
+    <span style="color:#f92672">/&gt;</span>
+</code></pre></div><p>Be sure to use the correct <strong>name</strong> field when referencing the resources in page template files.</p>
 <p>If we restart <em>zopectl</em> we should see the visualization in our new custom page:</p>
-
-<p><img src="https://aalvarez.me/posts/custom-pages-in-zenoss/d3_visualization.jpg" alt="D3 Visualization" /></p>
-
+<p><img src="https://aalvarez.me/posts/custom-pages-in-zenoss/d3_visualization.jpg" alt="D3 Visualization"></p>
 <p>In the screenshot above I actually just added a <em>Network Topology</em> secondary navigation link to INFRASTRUCTURE, and render the visualization on the new page for that link.</p>
 </div>
 

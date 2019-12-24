@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Recursive Python AWS Lambda Functions",
     "headline" : "Recursive Python AWS Lambda Functions",
-    "description" : "\x3cp\x3eThere are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.\x3c\/p\x3e\n\n\x3cp\x3eBasically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eThere are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.\x3c\/p\x3e\n\x3cp\x3eBasically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,18 +136,12 @@ if (!doNotTrack) {
   <time datetime=2018-09-18T00:00:00Z class="post-date">Tue, Sep 18, 2018</time>
 
   <p>There are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.</p>
-
 <p>Basically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.</p>
-
 <h2 id="defining-our-use-case">Defining Our Use Case</h2>
-
-<p>Let&rsquo;s base our business logic on a very common use case: processing of uploaded files to S3. Obviously it is implied that we will be dealing with a processing task that will require a relatively large amount of time (i.e more than 5 minutes) to complete, for each file.</p>
-
+<p>Let's base our business logic on a very common use case: processing of uploaded files to S3. Obviously it is implied that we will be dealing with a processing task that will require a relatively large amount of time (i.e more than 5 minutes) to complete, for each file.</p>
 <p>Additionally we will also be using an SQS queue, therefore everytime a file is uploaded to S3, a message is sent to the queue, and each message will trigger our <em>initial</em> functions.</p>
-
 <h2 id="implementing-recursion">Implementing Recursion</h2>
-
-<p>Let&rsquo;s begin writing the handler for our Lambda function. The first thing we need to do is parse the event object to get the S3 key of the uploaded file:</p>
+<p>Let's begin writing the handler for our Lambda function. The first thing we need to do is parse the event object to get the S3 key of the uploaded file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os</span>
 <span style="color:#f92672">import</span> <span style="color:#111">json</span>
 
@@ -157,49 +151,49 @@ if (!doNotTrack) {
 <span style="color:#111">BATCH_SIZE</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span>
 
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">):</span>
-    <span style="color:#111">sqs_record</span> <span style="color:#f92672">=</span> <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span>  <span style="color:#75715e"># Assumes a Batch Size of 1 in the queue</span>
-    <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;position&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>  <span style="color:#75715e"># Represents the starting position</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">sqs_record</span> <span style="color:#f92672">=</span> <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Records</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span>  <span style="color:#75715e"># Assumes a Batch Size of 1 in the queue</span>
+    <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">position</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>  <span style="color:#75715e"># Represents the starting position</span>
     <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">_get_object_key_from_s3_notification</span><span style="color:#111">(</span><span style="color:#111">sqs_record</span><span style="color:#111">)</span>
 
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">_get_object_key_from_s3_notification</span><span style="color:#111">(</span><span style="color:#111">record</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;Returns the file&#39;s S3 key from the record object.&#34;&#34;&#34;</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">_get_object_key_from_s3_notification</span><span style="color:#111">(</span><span style="color:#111">record</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Returns the file</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">s S3 key from the record object.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
-    <span style="color:#111">body</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">record</span><span style="color:#111">[</span><span style="color:#d88200">&#39;body&#39;</span><span style="color:#111">])</span>
-    <span style="color:#111">msg</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">body</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Message&#39;</span><span style="color:#111">])</span>
-    <span style="color:#00a8c8">return</span> <span style="color:#111">msg</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;key&#39;</span><span style="color:#111">]</span></code></pre></div>
-<p>Now we can proceed to download the file. Let&rsquo;s keep in mind that we want to make use of the optimization benefits that container re-use gives us. This means that we will first check if the file already exists before we proceed to download it:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">):</span>
+    <span style="color:#111">body</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">record</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">body</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">)</span>
+    <span style="color:#111">msg</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">body</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Message</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">msg</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Records</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">s3</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">object</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">key</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
+</code></pre></div><p>Now we can proceed to download the file. Let's keep in mind that we want to make use of the optimization benefits that container re-use gives us. This means that we will first check if the file already exists before we proceed to download it:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#75715e"># ...</span>
 
-    <span style="color:#111">file_path</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;/tmp/{}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">)</span>
+    <span style="color:#111">file_path</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">/tmp/{}</span><span style="color:#d88200">&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">)</span>
     <span style="color:#111">file_exists</span> <span style="color:#f92672">=</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#111">file_path</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">file_exists</span><span style="color:#111">:</span>
-        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;File does not exists. Downloading...&#39;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">File does not exists. Downloading...</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
         <span style="color:#75715e"># Download the file from S3</span>
 
     <span style="color:#75715e"># Processing of the batch goes here</span>
 
-    <span style="color:#111">position</span> <span style="color:#f92672">+=</span> <span style="color:#111">BATCH_SIZE</span>  <span style="color:#75715e"># Move the position pointer for next batch</span>
-    <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">_process_is_complete</span><span style="color:#111">(</span><span style="color:#111">position</span><span style="color:#111">):</span>
+    <span style="color:#111">position</span> <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#111">BATCH_SIZE</span>  <span style="color:#75715e"># Move the position pointer for next batch</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">_process_is_complete</span><span style="color:#111">(</span><span style="color:#111">position</span><span style="color:#111">)</span><span style="color:#111">:</span>
          <span style="color:#75715e"># Some function that can determine if the process is completed or not.</span>
          <span style="color:#75715e"># If it&#39;s not, a new function will be invoked.</span>
-         <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200">&#39;position&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">position</span>
+         <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">position</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">position</span>
          <span style="color:#111">_recurse</span><span style="color:#111">(</span><span style="color:#111">context</span><span style="color:#111">,</span> <span style="color:#111">event</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
-        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Processing complete&#39;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Processing complete</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
         <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#111">file_path</span><span style="color:#111">)</span>  <span style="color:#75715e"># Cleanup</span>
 
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">_recurse</span><span style="color:#111">(</span><span style="color:#111">context</span><span style="color:#111">,</span> <span style="color:#111">payload</span><span style="color:#111">):</span>
-    <span style="color:#111">lambda_client</span> <span style="color:#f92672">=</span> <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">client</span><span style="color:#111">(</span><span style="color:#d88200">&#39;lambda&#39;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">_recurse</span><span style="color:#111">(</span><span style="color:#111">context</span><span style="color:#111">,</span> <span style="color:#111">payload</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">lambda_client</span> <span style="color:#f92672">=</span> <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">client</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">lambda</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
     <span style="color:#111">lambda_client</span><span style="color:#f92672">.</span><span style="color:#111">invoke</span><span style="color:#111">(</span>
         <span style="color:#111">FunctionName</span><span style="color:#f92672">=</span><span style="color:#111">context</span><span style="color:#f92672">.</span><span style="color:#111">function_name</span><span style="color:#111">,</span>
-        <span style="color:#111">InvocationType</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Event&#39;</span><span style="color:#111">,</span>
+        <span style="color:#111">InvocationType</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Event</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
         <span style="color:#111">Payload</span><span style="color:#f92672">=</span><span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">dumps</span><span style="color:#111">(</span><span style="color:#111">payload</span><span style="color:#111">)</span>
-    <span style="color:#111">)</span></code></pre></div>
-<p>And there you have it! This code will spawn multiple Lambda functions depending on how many batches are needed to complete the whole process. Of course you will need to add the necessary logic for <code>_process_is_complete()</code> in order to know when to stop.</p>
+    <span style="color:#111">)</span>
+</code></pre></div><p>And there you have it! This code will spawn multiple Lambda functions depending on how many batches are needed to complete the whole process. Of course you will need to add the necessary logic for <code>_process_is_complete()</code> in order to know when to stop.</p>
 </div>
 
 

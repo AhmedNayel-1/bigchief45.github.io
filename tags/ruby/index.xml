@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ruby on Andrés Álvarez</title>
@@ -19,26 +19,18 @@
       <guid>https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/</guid>
       <description>&lt;p&gt;Recently I was having an issue with a Sinatra application deployed in a staging
 server. The application was deployed with Puma and Nginx in the following location:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;/var/www/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This web service would then try to access some files in another directory on the server,
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This web service would then try to access some files in another directory on the server,
 mounted as an SFTP directory. The Sinatra app would open these files and generate some
 new files from them, depending on the HTTP request received.&lt;/p&gt;
-
 &lt;p&gt;The problem was that the operation would fail due to a permissions issue. I was baffled
 since I had set &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; permissions to the directory and the files in it.&lt;/p&gt;
-
 &lt;h2 id=&#34;umask-the-problem-and-solution&#34;&gt;Umask: The Problem and Solution&lt;/h2&gt;
-
 &lt;p&gt;It took around two days to find the culprit: &lt;strong&gt;umask&lt;/strong&gt;. In Linux, &lt;a href=&#34;https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work&#34;&gt;umask&lt;/a&gt;
 acts as another set of permissions for &lt;strong&gt;processes&lt;/strong&gt; and cannot be set for directories,
 basically speaking.&lt;/p&gt;
-
 &lt;p&gt;I realized that this probably meant that the process running the Puma application server had
 a umask configuration that was not allowing the generation of new files.&lt;/p&gt;
-
 &lt;p&gt;I decided to test this if this was the case. In the &lt;a href=&#34;https://github.com/puma/puma&#34;&gt;Puma&lt;/a&gt;
 documentation, I found an option to change the permissions of the UNIX socket using
 umask:&lt;/p&gt;</description>
@@ -51,17 +43,11 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/</guid>
       <description>&lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;part 1&lt;/a&gt; and &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;In this post, we will be sending automatic e-emails every time notifications are created.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-the-mailer&#34;&gt;Creating the Mailer&lt;/h2&gt;
-
 &lt;p&gt;We will work with one &lt;a href=&#34;http://guides.rubyonrails.org/action_mailer_basics.html&#34;&gt;mailer&lt;/a&gt; that will send e-mails for every notification that is created. We can generate our mailer with this command:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails g mailer NotificationsMailer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&amp;rsquo;ve been using &lt;strong&gt;comments&lt;/strong&gt; and &lt;strong&gt;posts&lt;/strong&gt; as examples.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&#39;ve been using &lt;strong&gt;comments&lt;/strong&gt; and &lt;strong&gt;posts&lt;/strong&gt; as examples.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -71,23 +57,16 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/</guid>
       <description>&lt;p&gt;&lt;em&gt;Read Part 1 of this series &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.&lt;/p&gt;
-
 &lt;p&gt;In this post we will be adding more functionality to our notification system.s&lt;/p&gt;
-
 &lt;h2 id=&#34;mark-as-read-feature&#34;&gt;Mark as Read Feature&lt;/h2&gt;
-
 &lt;p&gt;We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;For a single notification, it should be marked &lt;em&gt;as read&lt;/em&gt; when it is clicked from the list of notifications.&lt;/li&gt;
 &lt;li&gt;For all notifications, they should be marked as read when a specific button is pressed.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h3 id=&#34;setting-up-the-routes&#34;&gt;Setting up the Routes&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
+&lt;p&gt;Let&#39;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
@@ -97,7 +76,8 @@ umask:&lt;/p&gt;</description>
     &lt;span style=&#34;color:#111&#34;&gt;post&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:mark_as_read&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:member&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -107,13 +87,9 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails/</guid>
       <description>&lt;p&gt;Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.&lt;/p&gt;
-
-&lt;p&gt;This post is heavily inspired by &lt;a href=&#34;https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1&#34;&gt;Chris Oliver&amp;rsquo;s In-App Navbar Notifications tutorial&lt;/a&gt;, with a few personal changes and additions.&lt;/p&gt;
-
+&lt;p&gt;This post is heavily inspired by &lt;a href=&#34;https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1&#34;&gt;Chris Oliver&#39;s In-App Navbar Notifications tutorial&lt;/a&gt;, with a few personal changes and additions.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series.&lt;/em&gt;&lt;/p&gt;
-
 &lt;h2 id=&#34;models-and-routes&#34;&gt;Models and Routes&lt;/h2&gt;
-
 &lt;p&gt;Before starting with the models, lets quickly define the application resources in our routes:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
@@ -126,22 +102,17 @@ umask:&lt;/p&gt;</description>
 
   &lt;span style=&#34;color:#111&#34;&gt;resources&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:notifications&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;only&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
 &lt;p&gt;We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is an explanation for some of the fields for the above model:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here is an explanation for some of the fields for the above model:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;recipient_id&lt;/code&gt;: Represents the user in your application which will receive the notification.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;actor_id&lt;/code&gt;: Represents the user in your application which &lt;em&gt;triggered&lt;/em&gt; the notification.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;read_at&lt;/code&gt;: The time when the notification was read. A value of &lt;code&gt;nil&lt;/code&gt; is used for unread notifications.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;notifiable_id&lt;/code&gt;: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;notifiable_type&lt;/code&gt;: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&amp;rsquo;s class.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;notifiable_type&lt;/code&gt;: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&#39;s class.&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
@@ -152,20 +123,18 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/integrating-devise-with-rolify-in-rails/</guid>
       <description>&lt;p&gt;I have searched through tons of StackOverflow questions and blog posts on how to &lt;strong&gt;properly&lt;/strong&gt; integrate Rolify with Devise when &lt;strong&gt;registering as a new user&lt;/strong&gt; through the registration view provided by Devise. All proposed solutions and half-solutions seemed very messy to me, but I found a very simple way to achieve this.&lt;/p&gt;
-
 &lt;h2 id=&#34;preparing-the-roles&#34;&gt;Preparing the Roles&lt;/h2&gt;
-
 &lt;p&gt;Assuming you already have initialized a Devise &lt;code&gt;User&lt;/code&gt; model along with a Rolify &lt;code&gt;Role&lt;/code&gt; model, a very common question I see is how should the roles be prepared so that the &lt;em&gt;new&lt;/em&gt; users can have a list of already created roles to choose from when registering? In the &lt;a href=&#34;https://github.com/RolifyCommunity/rolify&#34;&gt;Rolify documentation&lt;/a&gt;, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;find&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;add_role&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:admin&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;A new &lt;code&gt;admin&lt;/code&gt; role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.&lt;/p&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;find&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;add_role&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:admin&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;A new &lt;code&gt;admin&lt;/code&gt; role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.&lt;/p&gt;
 &lt;p&gt;Answers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# db/seeds.rb&lt;/span&gt;
 
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;doctor&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;nurse&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;nurse&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -175,20 +144,18 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/select2-with-simple-form-in-rails/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://select2.github.io/&#34;&gt;Select2&lt;/a&gt; is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.&lt;/p&gt;
-
 &lt;p&gt;Recently while working on a Rails project, I was experiencing some problems when using Select2 and &lt;a href=&#34;https://github.com/plataformatec/simple_form&#34;&gt;Simple Form&lt;/a&gt; in my view.&lt;/p&gt;
-
-&lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&amp;rsquo;s database. Select2 should use AJAX to hit a controller&amp;rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
-
+&lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&#39;s database. Select2 should use AJAX to hit a controller&#39;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
 &lt;p&gt;The controller action looks something like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;where&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;name LIKE ? OR last_name LIKE ?&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
   &lt;span style=&#34;color:#111&#34;&gt;respond_to&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;render&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;map&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;full_name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;full_name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -198,13 +165,9 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/</guid>
       <description>&lt;p&gt;In a &lt;a href=&#34;http://aalvarez.me/blog/posts/using-objects-and-ranges-with-cases-in-ruby.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.&lt;/p&gt;
-
 &lt;p&gt;The other day I was trying to solve the &lt;a href=&#34;http://exercism.io/submissions/03c3c93f23b8420faff3107e2ad18286&#34;&gt;Bob Ruby exercise in Exercism&lt;/a&gt;, and I came up with another very cool way to use case statements: with Lambdas.&lt;/p&gt;
-
 &lt;h2 id=&#34;the-problem&#34;&gt;The Problem&lt;/h2&gt;
-
-&lt;p&gt;The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem&amp;rsquo;s README file:&lt;/p&gt;
-
+&lt;p&gt;The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem&#39;s README file:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Bob is a lackadaisical teenager. In conversation, his responses are very limited.
 
 Bob answers &#39;Sure.&#39; if you ask him a question.
@@ -214,10 +177,7 @@ He answers &#39;Whoa, chill out!&#39; if you yell at him.
 He says &#39;Fine. Be that way!&#39; if you address him without actually saying anything.
 
 He answers &#39;Whatever.&#39; to anything else.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;solutions&#34;&gt;Solutions&lt;/h2&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;solutions&#34;&gt;Solutions&lt;/h2&gt;
 &lt;p&gt;The test provided by Exercism indicates that we should create a &lt;code&gt;Bob&lt;/code&gt; class with a &lt;code&gt;hey&lt;/code&gt; class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:&lt;/p&gt;</description>
     </item>
     
@@ -228,20 +188,15 @@ He answers &#39;Whatever.&#39; to anything else.
       
       <guid>https://aalvarez.me/posts/testing-a-rails-api-with-rspec/</guid>
       <description>&lt;p&gt;As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-the-necessary-tools&#34;&gt;Setting Up the Necessary Tools&lt;/h2&gt;
-
 &lt;p&gt;In addition to RSpec, there are a few tools that make my testing experience much easier. These are:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/thoughtbot/factory_girl_rails&#34;&gt;Factory Girl&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/stympy/faker&#34;&gt;Faker&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/thoughtbot/shoulda-matchers&#34;&gt;Shoulda Matchers&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/DatabaseCleaner/database_cleaner&#34;&gt;Database Cleaner&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;After Adding these gems to the Gemfile. I proceed to create a &lt;code&gt;/support&lt;/code&gt; directory under the &lt;code&gt;/spec&lt;/code&gt; directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.&lt;/p&gt;
-
 &lt;p&gt;&lt;strong&gt;/spec/support/shoulda.rb&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;Shoulda&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;Matchers&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;integrate&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
@@ -251,7 +206,8 @@ He answers &#39;Whatever.&#39; to anything else.
     &lt;span style=&#34;color:#75715e&#34;&gt;# Or, choose the following (which implies all of the above):&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;library&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:rails&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -260,16 +216,11 @@ He answers &#39;Whatever.&#39; to anything else.
       <pubDate>Mon, 08 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/rails-api-with-nested-resources/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&amp;rsquo;s form and create all objects at once when the form is saved.&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&#39;s form and create all objects at once when the form is saved.&lt;/p&gt;
 &lt;p&gt;I was recently finding myself trying to implement a similar functionality using only Rails 5 API and &lt;a href=&#34;http://jsonapi.org&#34;&gt;JSON API specification&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&amp;rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&#39;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;accepts-nested-attributes-for&#34;&gt;accepts_nested_attributes_for&lt;/h2&gt;
-
 &lt;p&gt;&lt;a href=&#34;http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html&#34;&gt;&lt;code&gt;accepts_nested_attributes_for&lt;/code&gt; &lt;/a&gt; allows us to save attributes on &lt;strong&gt;associated&lt;/strong&gt; records (work experience, educational background) through a parent record (user). By default nested attribute updating is turned off and you can enable it using the &lt;code&gt;#accepts_nested_attributes_for&lt;/code&gt; class method.&lt;/p&gt;</description>
     </item>
     
@@ -279,14 +230,10 @@ He answers &#39;Whatever.&#39; to anything else.
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/</guid>
-      <description>&lt;p&gt;Ruby&amp;rsquo;s &lt;a href=&#34;http://www.techotopia.com/index.php/The_Ruby_case_Statement&#34;&gt;&lt;code&gt;case&lt;/code&gt; statement&lt;/a&gt; provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of &lt;code&gt;if&lt;/code&gt; statements and I actually found a pretty neat way to implement using the Ruby &lt;code&gt;case&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;In my application I have a Rails model called &lt;code&gt;Entry&lt;/code&gt; which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3&amp;rsquo;s nice &lt;a href=&#34;http://getbootstrap.com/components/#progress&#34;&gt;progress bars&lt;/a&gt; and I want the progress bar&amp;rsquo;s contextual class to be changed and determined by the range in which this data point sits in.&lt;/p&gt;
-
+      <description>&lt;p&gt;Ruby&#39;s &lt;a href=&#34;http://www.techotopia.com/index.php/The_Ruby_case_Statement&#34;&gt;&lt;code&gt;case&lt;/code&gt; statement&lt;/a&gt; provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of &lt;code&gt;if&lt;/code&gt; statements and I actually found a pretty neat way to implement using the Ruby &lt;code&gt;case&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In my application I have a Rails model called &lt;code&gt;Entry&lt;/code&gt; which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3&#39;s nice &lt;a href=&#34;http://getbootstrap.com/components/#progress&#34;&gt;progress bars&lt;/a&gt; and I want the progress bar&#39;s contextual class to be changed and determined by the range in which this data point sits in.&lt;/p&gt;
 &lt;p&gt;If we take &lt;a href=&#34;https://en.wikipedia.org/wiki/Cholesterol&#34;&gt;total cholesterol&lt;/a&gt; as an example, a quick Google search indicates that an ideal value would be less than 200 mg/dL, a high value (not good) would be between 200-239 mg/dL, and a very high value (definitely not good) would be above 240 mg/dL.&lt;/p&gt;
-
 &lt;p&gt;To implement this, I created a &lt;code&gt;Recommendations&lt;/code&gt; module under the &lt;code&gt;/models&lt;/code&gt; directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;app/models/
 ├── application_record.rb
 ├── concerns
@@ -308,26 +255,22 @@ He answers &#39;Whatever.&#39; to anything else.
       <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/</guid>
-      <description>&lt;p&gt;Adding &lt;a href=&#34;https://travis-ci.org/&#34;&gt;TravisCI&lt;/a&gt; to your application&amp;rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.&lt;/p&gt;
-
+      <description>&lt;p&gt;Adding &lt;a href=&#34;https://travis-ci.org/&#34;&gt;TravisCI&lt;/a&gt; to your application&#39;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.&lt;/p&gt;
 &lt;p&gt;In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-travisci&#34;&gt;Setting up TravisCI&lt;/h2&gt;
-
-&lt;p&gt;Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a &lt;code&gt;.travis.yml&lt;/code&gt; file to the application&amp;rsquo;s root directory with the following contents:&lt;/p&gt;
+&lt;p&gt;Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a &lt;code&gt;.travis.yml&lt;/code&gt; file to the application&#39;s root directory with the following contents:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;language&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Ruby
 rvm&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;2.3&lt;/span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.&lt;/p&gt;
-
+  - &lt;span style=&#34;color:#ae81ff&#34;&gt;2.3&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;.0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.&lt;/p&gt;
 &lt;h3 id=&#34;configure-postgresql&#34;&gt;Configure Postgresql&lt;/h3&gt;
-
 &lt;p&gt;Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to &lt;code&gt;.travis.yml&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;services&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  - postgresql&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Then we will add another configuration that will make Travis create a Postgresql database with username &lt;code&gt;postgres&lt;/code&gt; and blank password for the build:&lt;/p&gt;
+  - postgresql
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then we will add another configuration that will make Travis create a Postgresql database with username &lt;code&gt;postgres&lt;/code&gt; and blank password for the build:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;before_script&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  - psql -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;create database travis_ci_test;&amp;#39;&lt;/span&gt; -U postgres&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+  - psql -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;create database travis_ci_test;&amp;#39;&lt;/span&gt; -U postgres
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -336,25 +279,19 @@ rvm&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       <pubDate>Thu, 17 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/custom-markdown-in-middleman/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://middlemanapp.com/&#34;&gt;Middleman&lt;/a&gt; is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it&amp;rsquo;s the framework I am currently using for this blog.&lt;/p&gt;
-
-&lt;p&gt;Unfortunately Middleman&amp;rsquo;s &lt;a href=&#34;https://middlemanapp.com/basics/install/&#34;&gt;documentation&lt;/a&gt; is a bit unorganized and incomplete. I often find myself browsing through the &lt;a href=&#34;https://github.com/middleman/middleman&#34;&gt;source code&lt;/a&gt; to understand how to use or implement some custom features.&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://middlemanapp.com/&#34;&gt;Middleman&lt;/a&gt; is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it&#39;s the framework I am currently using for this blog.&lt;/p&gt;
+&lt;p&gt;Unfortunately Middleman&#39;s &lt;a href=&#34;https://middlemanapp.com/basics/install/&#34;&gt;documentation&lt;/a&gt; is a bit unorganized and incomplete. I often find myself browsing through the &lt;a href=&#34;https://github.com/middleman/middleman&#34;&gt;source code&lt;/a&gt; to understand how to use or implement some custom features.&lt;/p&gt;
 &lt;p&gt;For example, using &lt;a href=&#34;https://github.com/vmg/redcarpet&#34;&gt;redcarpet&lt;/a&gt; I wanted to be able to create some re-usable &amp;ldquo;markdown components&amp;rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.&lt;/p&gt;
-
 &lt;p&gt;And this post I am going to explain how to integrate this functionality into your blog using Middleman.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-a-custom-renderer&#34;&gt;Creating a Custom Renderer&lt;/h2&gt;
-
-&lt;p&gt;Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&amp;rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from &lt;code&gt;Redcarpet::Render::HTML&lt;/code&gt;. However, the &lt;strong&gt;key&lt;/strong&gt; thing here is to actually inherit directly from &lt;a href=&#34;https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65&#34;&gt;Middleman&amp;rsquo;s renderer&lt;/a&gt; (which of course, inherits from &lt;code&gt;Redcarpet::Render::HTML&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;To begin, we will create a &lt;code&gt;lib&lt;/code&gt; (if it doesn&amp;rsquo;t exist) under our blog&amp;rsquo;s directory and create a file named &lt;code&gt;markdown_helper.rb&lt;/code&gt; inside it. The initial contents of this helper will be:&lt;/p&gt;
+&lt;p&gt;Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&#39;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from &lt;code&gt;Redcarpet::Render::HTML&lt;/code&gt;. However, the &lt;strong&gt;key&lt;/strong&gt; thing here is to actually inherit directly from &lt;a href=&#34;https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65&#34;&gt;Middleman&#39;s renderer&lt;/a&gt; (which of course, inherits from &lt;code&gt;Redcarpet::Render::HTML&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;To begin, we will create a &lt;code&gt;lib&lt;/code&gt; (if it doesn&#39;t exist) under our blog&#39;s directory and create a file named &lt;code&gt;markdown_helper.rb&lt;/code&gt; inside it. The initial contents of this helper will be:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MarkdownHelper&lt;/span&gt;
 
   &lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;middleman-core/renderers/redcarpet&amp;#39;&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The required file above is what will allow us to inherit from Middleman&amp;rsquo;s renderer.&lt;/p&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The required file above is what will allow us to inherit from Middleman&#39;s renderer.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -364,11 +301,8 @@ rvm&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/</guid>
       <description>&lt;p&gt;The Ruby &lt;a href=&#34;http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html&#34;&gt;Benchmark&lt;/a&gt; library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.&lt;/p&gt;
-
 &lt;p&gt;I was doing some &lt;a href=&#34;https://en.wikipedia.org/wiki/Big_O_notation&#34;&gt;Big O Notation&lt;/a&gt; reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.&lt;/p&gt;
-
 &lt;h2 id=&#34;using-benchmark&#34;&gt;Using Benchmark&lt;/h2&gt;
-
 &lt;p&gt;To start benchmarking our code, we simply need to require &lt;code&gt;benchmark&lt;/code&gt; and use the methods provided by the &lt;code&gt;Benchmark&lt;/code&gt; module. For me, the most practical way is to use &lt;code&gt;Benchmark#bm&lt;/code&gt; method, where we pass a block of code we want to measure:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
 
@@ -377,18 +311,17 @@ rvm&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     &lt;span style=&#34;color:#75715e&#34;&gt;# our code here&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Inside the block we are using the &lt;code&gt;report&lt;/code&gt; method of the block&amp;rsquo;s variable, which will basically do a separate benchmark for each report.&lt;/p&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Inside the block we are using the &lt;code&gt;report&lt;/code&gt; method of the block&#39;s variable, which will basically do a separate benchmark for each report.&lt;/p&gt;
 &lt;p&gt;However, we can improve this even more by adding a label to &lt;code&gt;report&lt;/code&gt; and a label width to &lt;code&gt;bm&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;bm&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;report&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;my_algorithm&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;bm&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;report&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;my_algorithm&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
     &lt;span style=&#34;color:#75715e&#34;&gt;# our code here&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Let&amp;rsquo;s see it in action with some common algorithms.&lt;/p&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Let&#39;s see it in action with some common algorithms.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -398,7 +331,6 @@ rvm&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/infinite-sequences-in-ruby-using-enumerator/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://ruby-doc.org/core-2.3.1/Enumerator.html&#34;&gt;Enumerator&lt;/a&gt; class in Ruby allows us to generate some very smooth and useful infinite sequences. For example, in some &lt;a href=&#34;https://projecteuler.net/&#34;&gt;Project Euler&lt;/a&gt; problems it is required to generate sequences without a specific limit. A good example of this is the &lt;em&gt;Highly Divisible Triangular Number&lt;/em&gt; problem:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;The sequence of triangle numbers is generated by adding the natural numbers. So the 7th triangle number would be 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28. The first ten terms would be:
 
 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
@@ -416,9 +348,7 @@ Let us list the factors of the first seven triangle numbers:
 We can see that 28 is the first triangle number to have over five divisors.
 
 What is the value of the first triangle number to have over five hundred divisors?
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;So first we would want to be able to generate a (infinite) sequence of &lt;a href=&#34;https://en.wikipedia.org/wiki/Triangular_number&#34;&gt;triangular numbers&lt;/a&gt; that we can use to do many programming operations, such as iterating over the sequence.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So first we would want to be able to generate a (infinite) sequence of &lt;a href=&#34;https://en.wikipedia.org/wiki/Triangular_number&#34;&gt;triangular numbers&lt;/a&gt; that we can use to do many programming operations, such as iterating over the sequence.&lt;/p&gt;</description>
     </item>
     
   </channel>

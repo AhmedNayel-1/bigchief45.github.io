@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -138,20 +138,16 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/">Testing JSON API Strong Parameters in Rails</a>
   </h1>
   <time datetime="2017-05-25T00:00:00Z" class="post-date">Thu, May 25, 2017</time>
-  <p>Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&rsquo;s factory, and then add the corresponding model and request specs.</p>
-
-<p>The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.</p>
-
+  <p>Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model's factory, and then add the corresponding model and request specs.</p>
+<p>The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren't saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.</p>
 <p>In an API following the <a href="http://jsonapi.org/">JSON API</a> specification, here is an example of how the strong parameters method would look like:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">thing_params</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">thing_params</span>
   <span style="color:#111">params</span><span style="color:#f92672">.</span><span style="color:#111">require</span><span style="color:#111">(</span><span style="color:#d88200">:data</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">require</span><span style="color:#111">(</span><span style="color:#d88200">:attributes</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">permit</span><span style="color:#111">(</span><span style="color:#d88200">:color</span><span style="color:#111">,</span> <span style="color:#d88200">:size</span><span style="color:#111">,</span> <span style="color:#d88200">:age</span><span style="color:#111">,</span> <span style="color:#d88200">:name</span><span style="color:#111">,</span>
       <span style="color:#d88200">:owner</span><span style="color:#111">,</span> <span style="color:#d88200">:origin</span><span style="color:#111">,</span> <span style="color:#d88200">:location</span><span style="color:#111">,</span> <span style="color:#d88200">:purpose</span><span style="color:#111">,</span> <span style="color:#d88200">:price</span><span style="color:#111">,</span> <span style="color:#d88200">:alive</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>As you can see, the list of attributes is getting pretty long. And we <strong>do not</strong> want to explicitly keep adding more attributes to the test.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>As you can see, the list of attributes is getting pretty long. And we <strong>do not</strong> want to explicitly keep adding more attributes to the test.</p>
 <h2 id="testing-strong-parameters-in-controller-specs">Testing Strong Parameters in Controller Specs</h2>
-
-<p>After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that <strong>all</strong> attributes of importance are whitelisted in the controller.</p>
+<p>After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it's great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that <strong>all</strong> attributes of importance are whitelisted in the controller.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -185,28 +181,13 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-05-24T00:00:00Z" class="post-date">Wed, May 24, 2017</time>
   <p>Measures are simple objects that represent the timeseries data. They simply contain a <strong>timestamp</strong> and a <strong>value</strong>, and they belong to <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics.html">metrics</a>. You could say that a measure <em>has many</em> metrics.</p>
-
 <h2 id="adding-measures-to-a-metric">Adding Measures to a Metric</h2>
-
 <p>Using the REST API, we can easily add measures to a metric:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">POST</span> <span style="color:#111">/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
 <span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
 <span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">198</span>
 
-<span style="color:#111">[</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:33:57&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">43.1</span>
-  <span style="color:#111">},</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:34:12&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">12</span>
-  <span style="color:#111">},</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:34:20&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">2</span>
-  <span style="color:#111">}</span>
-<span style="color:#111">]</span></code></pre></div>
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -230,11 +211,8 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-05-18T00:00:00Z" class="post-date">Thu, May 18, 2017</time>
   <p>Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store <strong>measures</strong>, and the way they do this is defined by <strong>archive policies</strong>. These are concepts that I will cover in future articles.</p>
-
 <p>Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
-
-<p><img src="http://gnocchi.xyz/_images/architecture.png" alt="Gnocchi Architecture" /></p>
-
+<p><img src="http://gnocchi.xyz/_images/architecture.png" alt="Gnocchi Architecture"></p>
 <p>In the Gnocchi architecture, the <strong>storage</strong> back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.</p>
 
   
@@ -261,20 +239,15 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-05-15T00:00:00Z" class="post-date">Mon, May 15, 2017</time>
   <p>As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.</p>
-
 <h2 id="setting-up-the-necessary-tools">Setting Up the Necessary Tools</h2>
-
 <p>In addition to RSpec, there are a few tools that make my testing experience much easier. These are:</p>
-
 <ul>
 <li><a href="https://github.com/thoughtbot/factory_girl_rails">Factory Girl</a></li>
 <li><a href="https://github.com/stympy/faker">Faker</a></li>
 <li><a href="https://github.com/thoughtbot/shoulda-matchers">Shoulda Matchers</a></li>
 <li><a href="https://github.com/DatabaseCleaner/database_cleaner">Database Cleaner</a></li>
 </ul>
-
 <p>After Adding these gems to the Gemfile. I proceed to create a <code>/support</code> directory under the <code>/spec</code> directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.</p>
-
 <p><strong>/spec/support/shoulda.rb</strong>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">Shoulda</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Matchers</span><span style="color:#f92672">.</span><span style="color:#111">configure</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">config</span><span style="color:#f92672">|</span>
   <span style="color:#111">config</span><span style="color:#f92672">.</span><span style="color:#111">integrate</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">with</span><span style="color:#f92672">|</span>
@@ -284,7 +257,8 @@ if (!doNotTrack) {
     <span style="color:#75715e"># Or, choose the following (which implies all of the above):</span>
     <span style="color:#111">with</span><span style="color:#f92672">.</span><span style="color:#111">library</span> <span style="color:#d88200">:rails</span>
   <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span>
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -316,30 +290,21 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-05-09T00:00:00Z" class="post-date">Tue, May 9, 2017</time>
   <p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how we could create <em>command</em> type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html">more recent post</a> I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.</p>
-
 <p>In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.</p>
-
 <h2 id="zenoss-default-notification-actions">Zenoss Default Notification Actions</h2>
-
 <p>By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:</p>
-
-<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg" alt="Zenoss Default Actions" /></p>
-
+<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg" alt="Zenoss Default Actions"></p>
 <p>These action types are:</p>
-
 <ul>
 <li><strong>Command</strong>: Runs an executable script. Discussed in one of my <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous posts</a>.</li>
 <li><strong>Email</strong>: Sends an e-mail to a user.</li>
-<li><strong>Page</strong>: Sends a message to a user&rsquo;s <a href="https://en.wikipedia.org/wiki/Pager">pager</a>, also known as <em>beeper</em>. Probably safe to say that this is not used by anyone anymore.</li>
+<li><strong>Page</strong>: Sends a message to a user's <a href="https://en.wikipedia.org/wiki/Pager">pager</a>, also known as <em>beeper</em>. Probably safe to say that this is not used by anyone anymore.</li>
 <li><strong>Syslog</strong>: Logs a message to <a href="https://en.wikipedia.org/wiki/Syslog">syslog</a></li>
 <li><strong>SNMP Trap</strong>: Sends an SNMP trap.</li>
 </ul>
-
 <p>All these notifications are sent when an event matches a trigger rule.</p>
-
 <h2 id="creating-the-new-action">Creating the New Action</h2>
-
-<p>Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!</p>
+<p>Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let's assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!</p>
 
   
   <div style="margin: 20px 0px;">

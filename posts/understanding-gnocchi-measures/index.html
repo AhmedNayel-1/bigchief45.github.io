@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Understanding Gnocchi Measures",
     "headline" : "Understanding Gnocchi Measures",
-    "description" : "\x3cp\x3eMeasures are simple objects that represent the timeseries data. They simply contain a \x3cstrong\x3etimestamp\x3c\/strong\x3e and a \x3cstrong\x3evalue\x3c\/strong\x3e, and they belong to \x3ca href=\x22\/posts\/understanding-gnocchi-metrics.html\x22\x3emetrics\x3c\/a\x3e. You could say that a measure \x3cem\x3ehas many\x3c\/em\x3e metrics.\x3c\/p\x3e\n\n\x3ch2 id=\x22adding-measures-to-a-metric\x22\x3eAdding Measures to a Metric\x3c\/h2\x3e\n\n\x3cp\x3eUsing the REST API, we can easily add measures to a metric:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-http\x22 data-lang=\x22http\x22\x3e\x3cspan style=\x22color:#75af00\x22\x3ePOST\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e\/v1\/metric\/511b61a1-8d67-42d5-8add-66d4209a0469\/measures\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3eHTTP\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e\/\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e1.1\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3eContent-Type\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3eapplication\/json\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3eContent-Length\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e198\x3c\/span\x3e\n\n\x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;timestamp\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;2014-10-06T14:33:57\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;value\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e43.1\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e},\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;timestamp\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;2014-10-06T14:34:12\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;value\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e12\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e},\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e{\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;timestamp\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;2014-10-06T14:34:20\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e\n    \x3cspan style=\x22color:#f92672\x22\x3e\x26#34;value\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e2\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3e}\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3eMeasures are simple objects that represent the timeseries data. They simply contain a \x3cstrong\x3etimestamp\x3c\/strong\x3e and a \x3cstrong\x3evalue\x3c\/strong\x3e, and they belong to \x3ca href=\x22\/posts\/understanding-gnocchi-metrics.html\x22\x3emetrics\x3c\/a\x3e. You could say that a measure \x3cem\x3ehas many\x3c\/em\x3e metrics.\x3c\/p\x3e\n\x3ch2 id=\x22adding-measures-to-a-metric\x22\x3eAdding Measures to a Metric\x3c\/h2\x3e\n\x3cp\x3eUsing the REST API, we can easily add measures to a metric:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-http\x22 data-lang=\x22http\x22\x3e\x3cspan style=\x22color:#75af00\x22\x3ePOST\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e\/v1\/metric\/511b61a1-8d67-42d5-8add-66d4209a0469\/measures\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3eHTTP\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e\/\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e1.1\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3eContent-Type\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3eapplication\/json\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3eContent-Length\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e198\x3c\/span\x3e\n\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-05-24 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-05-24 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/understanding-gnocchi-measures\/",
-    "wordCount" : "559",
+    "wordCount" : "539",
     "keywords" : [ "gnocchi","python","Blog" ]
 }
 </script>
@@ -136,79 +136,60 @@ if (!doNotTrack) {
   <time datetime=2017-05-24T00:00:00Z class="post-date">Wed, May 24, 2017</time>
 
   <p>Measures are simple objects that represent the timeseries data. They simply contain a <strong>timestamp</strong> and a <strong>value</strong>, and they belong to <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics.html">metrics</a>. You could say that a measure <em>has many</em> metrics.</p>
-
 <h2 id="adding-measures-to-a-metric">Adding Measures to a Metric</h2>
-
 <p>Using the REST API, we can easily add measures to a metric:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">POST</span> <span style="color:#111">/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
 <span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
 <span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">198</span>
 
-<span style="color:#111">[</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:33:57&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">43.1</span>
-  <span style="color:#111">},</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:34:12&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">12</span>
-  <span style="color:#111">},</span>
-  <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;timestamp&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2014-10-06T14:34:20&#34;</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;value&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">2</span>
-  <span style="color:#111">}</span>
-<span style="color:#111">]</span></code></pre></div>
-<p>The following example shows how it can be done with the Gnocchi client. This example uses the <a href="https://pypi.python.org/pypi/psutil/">psutil</a> library to obtain CPU percentage data every minute. This is percentage will be the value for the metric&rsquo;s <code>value</code> field.</p>
+</code></pre></div><p>The following example shows how it can be done with the Gnocchi client. This example uses the <a href="https://pypi.python.org/pypi/psutil/">psutil</a> library to obtain CPU percentage data every minute. This is percentage will be the value for the metric's <code>value</code> field.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">uuid</span>
 <span style="color:#f92672">from</span> <span style="color:#111">datetime</span> <span style="color:#f92672">import</span> <span style="color:#111">datetime</span>
 
 <span style="color:#75715e"># Let&#39;s create a metric first</span>
-<span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">create</span><span style="color:#111">({</span>
-        <span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;my_metric&#39;</span><span style="color:#111">,</span>
-        <span style="color:#d88200">&#39;archive_policy_name&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;high&#39;</span>
-        <span style="color:#111">})</span>
+<span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">create</span><span style="color:#111">(</span><span style="color:#111">{</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">name</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">my_metric</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">archive_policy_name</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">high</span><span style="color:#d88200">&#39;</span>
+        <span style="color:#111">}</span><span style="color:#111">)</span>
 
 <span style="color:#75715e"># Now let&#39;s use psutil library</span>
-<span style="color:#111">psutil</span><span style="color:#f92672">.</span><span style="color:#111">cpu_times</span><span style="color:#111">()</span>
+<span style="color:#111">psutil</span><span style="color:#f92672">.</span><span style="color:#111">cpu_times</span><span style="color:#111">(</span><span style="color:#111">)</span>
 
 <span style="color:#75715e"># Every minute, we will get a CPU percentage, and we will calculate a timestamp</span>
-<span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">60</span><span style="color:#111">):</span>
-    <span style="color:#111">timestamp</span> <span style="color:#f92672">=</span> <span style="color:#111">str</span><span style="color:#111">(</span><span style="color:#111">datetime</span><span style="color:#f92672">.</span><span style="color:#111">now</span><span style="color:#111">())</span><span style="color:#f92672">.</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;.&#39;</span><span style="color:#111">)[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span>
+<span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">60</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">timestamp</span> <span style="color:#f92672">=</span> <span style="color:#111">str</span><span style="color:#111">(</span><span style="color:#111">datetime</span><span style="color:#f92672">.</span><span style="color:#111">now</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">.</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span>
     <span style="color:#111">cpu</span> <span style="color:#f92672">=</span> <span style="color:#111">psutil</span><span style="color:#f92672">.</span><span style="color:#111">cpu_percent</span><span style="color:#111">(</span><span style="color:#111">interval</span><span style="color:#f92672">=</span><span style="color:#ae81ff">60</span><span style="color:#111">)</span>
 
-    <span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">add_measures</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">[</span><span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">],</span> <span style="color:#111">[{</span>
-            <span style="color:#d88200">&#39;timestamp&#39;</span><span style="color:#111">:</span> <span style="color:#111">timestamp</span><span style="color:#111">,</span>
-            <span style="color:#d88200">&#39;value&#39;</span><span style="color:#111">:</span> <span style="color:#111">cpu</span><span style="color:#111">,</span>
-            <span style="color:#111">}])</span></code></pre></div>
-<p>The code above will create a new measure for the metric, every minute.</p>
-
+    <span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">add_measures</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">id</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">,</span> <span style="color:#111">[</span><span style="color:#111">{</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">timestamp</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#111">timestamp</span><span style="color:#111">,</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">value</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#111">cpu</span><span style="color:#111">,</span>
+            <span style="color:#111">}</span><span style="color:#111">]</span><span style="color:#111">)</span>
+</code></pre></div><p>The code above will create a new measure for the metric, every minute.</p>
 <p>If you keep querying the API after the measures are created, you will notice that they do not appear in the response. This delay will depend on the driver, there may be some lag after POSTing measures before they are processed and queryable. To ensure your query returns all measures that have been POSTed, you can force any unprocessed measures to be handled:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">GET</span> <span style="color:#111">/v1/metric/:id/measures?refresh=true</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span></code></pre></div>
-<p>We should then be able to see the measures that have been posted so far:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">GET</span> <span style="color:#111">/v1/metric/:id/measures?refresh=true</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+</code></pre></div><p>We should then be able to see the measures that have been posted so far:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">[</span>
   <span style="color:#111">[</span>
     <span style="color:#d88200">&#34;2017-05-24T08:00:00+00:00&#34;</span><span style="color:#111">,</span>
     <span style="color:#ae81ff">3600</span><span style="color:#111">,</span>
     <span style="color:#ae81ff">47.86666666666667</span>
-  <span style="color:#111">],</span>
+  <span style="color:#111">]</span><span style="color:#111">,</span>
   <span style="color:#111">[</span>
     <span style="color:#d88200">&#34;2017-05-24T09:00:00+00:00&#34;</span><span style="color:#111">,</span>
     <span style="color:#ae81ff">3600</span><span style="color:#111">,</span>
     <span style="color:#ae81ff">46.5</span>
-  <span style="color:#111">],</span>
+  <span style="color:#111">]</span><span style="color:#111">,</span>
   <span style="color:#111">[</span>
     <span style="color:#d88200">&#34;2017-05-24T08:57:00+00:00&#34;</span><span style="color:#111">,</span>
     <span style="color:#ae81ff">60</span><span style="color:#111">,</span>
     <span style="color:#ae81ff">43.4</span>
-  <span style="color:#111">],</span></code></pre></div>
-<h2 id="metric-storage">Metric Storage</h2>
-
+  <span style="color:#111">]</span><span style="color:#111">,</span>
+</code></pre></div><h2 id="metric-storage">Metric Storage</h2>
 <p>Storage of metrics is defined by the selected storage driver. If <em>file</em> is used as storage, we can find the stored metrics in the directory configured in the <code>[storage]</code> section of <code>gnocchi.conf</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[storage]</span>
 <span style="color:#75af00">driver</span> <span style="color:#f92672">=</span> <span style="color:#d88200">file</span>
-<span style="color:#75af00">file_basepath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">/home/ubuntu/gn</span></code></pre></div>
-<p>Inside this directory you will find more directories with the IDs of the created metrics as their names:</p>
-
+<span style="color:#75af00">file_basepath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">/home/ubuntu/gn</span>
+</code></pre></div><p>Inside this directory you will find more directories with the IDs of the created metrics as their names:</p>
 <pre><code>gn/
 ├── 26f0c89a-0a90-405c-a51a-a12220bd3d82
 │   ├── agg_count
@@ -238,43 +219,39 @@ if (!doNotTrack) {
 │   │   ├── 1495584000.0_60.0_v3
 │   │   ├── 1495612800.0_1.0_v3
 │   │   └── 1495616400.0_1.0_v3
-</code></pre>
-
-<p>Inside these metric directories we will find more directories representing the available aggreation methods (count, max, mean, min, sum, etc.) by the metric&rsquo;s <strong>archive policies</strong>, as shown above.</p>
-
+</code></pre><p>Inside these metric directories we will find more directories representing the available aggreation methods (count, max, mean, min, sum, etc.) by the metric's <strong>archive policies</strong>, as shown above.</p>
 <h2 id="source-code">Source Code</h2>
-
 <p>The source code where measures are stored will depend on the driver. Again, using the <em>file</em> driver as an example, we can find the source code in <a href="https://github.com/gnocchixyz/gnocchi/blob/master/gnocchi/storage/file.py#L121"><code>/gnocchi/storage/file.py</code></a>:</p>
-
 <p><strong>/gnocchi/storage/file.py</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">FileStorage</span><span style="color:#111">(</span><span style="color:#111">_carbonara</span><span style="color:#f92672">.</span><span style="color:#111">CarbonaraBasedStorage</span><span style="color:#111">):</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">FileStorage</span><span style="color:#111">(</span><span style="color:#111">_carbonara</span><span style="color:#f92672">.</span><span style="color:#111">CarbonaraBasedStorage</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#111">WRITE_FULL</span> <span style="color:#f92672">=</span> <span style="color:#111">True</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">incoming</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">incoming</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">FileStorage</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">incoming</span><span style="color:#111">)</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath</span> <span style="color:#f92672">=</span> <span style="color:#111">conf</span><span style="color:#f92672">.</span><span style="color:#111">file_basepath</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath_tmp</span> <span style="color:#f92672">=</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">join</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;tmp&#39;</span><span style="color:#111">)</span>
-        <span style="color:#111">utils</span><span style="color:#f92672">.</span><span style="color:#111">ensure_paths</span><span style="color:#111">([</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath_tmp</span><span style="color:#111">])</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath_tmp</span> <span style="color:#f92672">=</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">join</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">tmp</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+        <span style="color:#111">utils</span><span style="color:#f92672">.</span><span style="color:#111">ensure_paths</span><span style="color:#111">(</span><span style="color:#111">[</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath_tmp</span><span style="color:#111">]</span><span style="color:#111">)</span>
 
     <span style="color:#75715e"># ...</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_atomic_file_store</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">dest</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_atomic_file_store</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">dest</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">tmpfile</span> <span style="color:#f92672">=</span> <span style="color:#111">tempfile</span><span style="color:#f92672">.</span><span style="color:#111">NamedTemporaryFile</span><span style="color:#111">(</span>
-            <span style="color:#111">prefix</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;gnocchi&#39;</span><span style="color:#111">,</span> <span style="color:#111">dir</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath_tmp</span><span style="color:#111">,</span>
+            <span style="color:#111">prefix</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">gnocchi</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#111">dir</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">basepath_tmp</span><span style="color:#111">,</span>
             <span style="color:#111">delete</span><span style="color:#f92672">=</span><span style="color:#111">False</span><span style="color:#111">)</span>
         <span style="color:#111">tmpfile</span><span style="color:#f92672">.</span><span style="color:#111">write</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#111">)</span>
-        <span style="color:#111">tmpfile</span><span style="color:#f92672">.</span><span style="color:#111">close</span><span style="color:#111">()</span>
+        <span style="color:#111">tmpfile</span><span style="color:#f92672">.</span><span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#111">)</span>
         <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">rename</span><span style="color:#111">(</span><span style="color:#111">tmpfile</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">dest</span><span style="color:#111">)</span>
 
     <span style="color:#75715e"># ...</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">_store_metric_measures</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">,</span> <span style="color:#111">timestamp_key</span><span style="color:#111">,</span> <span style="color:#111">aggregation</span><span style="color:#111">,</span>
-                               <span style="color:#111">granularity</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">offset</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">version</span><span style="color:#f92672">=</span><span style="color:#ae81ff">3</span><span style="color:#111">):</span>
+                               <span style="color:#111">granularity</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">offset</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">version</span><span style="color:#f92672">=</span><span style="color:#ae81ff">3</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_atomic_file_store</span><span style="color:#111">(</span>
             <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_metric_path_for_split</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">,</span> <span style="color:#111">aggregation</span><span style="color:#111">,</span>
                                               <span style="color:#111">timestamp_key</span><span style="color:#111">,</span> <span style="color:#111">granularity</span><span style="color:#111">,</span>
-                                              <span style="color:#111">version</span><span style="color:#111">),</span>
-        <span style="color:#111">data</span><span style="color:#111">)</span></code></pre></div>
+                                              <span style="color:#111">version</span><span style="color:#111">)</span><span style="color:#111">,</span>
+        <span style="color:#111">data</span><span style="color:#111">)</span>
+</code></pre></div>
 </div>
 
 

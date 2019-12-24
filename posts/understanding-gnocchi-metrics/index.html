@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Understanding Gnocchi Metrics",
     "headline" : "Understanding Gnocchi Metrics",
-    "description" : "\x3cp\x3eMetrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store \x3cstrong\x3emeasures\x3c\/strong\x3e, and the way they do this is defined by \x3cstrong\x3earchive policies\x3c\/strong\x3e. These are concepts that I will cover in future articles.\x3c\/p\x3e\n\n\x3cp\x3eBasically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22http:\/\/gnocchi.xyz\/_images\/architecture.png\x22 alt=\x22Gnocchi Architecture\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn the Gnocchi architecture, the \x3cstrong\x3estorage\x3c\/strong\x3e back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eMetrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store \x3cstrong\x3emeasures\x3c\/strong\x3e, and the way they do this is defined by \x3cstrong\x3earchive policies\x3c\/strong\x3e. These are concepts that I will cover in future articles.\x3c\/p\x3e\n\x3cp\x3eBasically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22http:\/\/gnocchi.xyz\/_images\/architecture.png\x22 alt=\x22Gnocchi Architecture\x22\x3e\x3c\/p\x3e\n\x3cp\x3eIn the Gnocchi architecture, the \x3cstrong\x3estorage\x3c\/strong\x3e back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-05-18 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-05-18 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/understanding-gnocchi-metrics\/",
-    "wordCount" : "598",
+    "wordCount" : "513",
     "keywords" : [ "gnocchi","openstack","python","Blog" ]
 }
 </script>
@@ -136,108 +136,50 @@ if (!doNotTrack) {
   <time datetime=2017-05-18T00:00:00Z class="post-date">Thu, May 18, 2017</time>
 
   <p>Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store <strong>measures</strong>, and the way they do this is defined by <strong>archive policies</strong>. These are concepts that I will cover in future articles.</p>
-
 <p>Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
-
-<p><img src="http://gnocchi.xyz/_images/architecture.png" alt="Gnocchi Architecture" /></p>
-
+<p><img src="http://gnocchi.xyz/_images/architecture.png" alt="Gnocchi Architecture"></p>
 <p>In the Gnocchi architecture, the <strong>storage</strong> back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.</p>
-
 <h2 id="interacting-with-metrics-using-the-api">Interacting With Metrics Using the API</h2>
-
 <p>Using the Gnocchi REST API, a metric can be created by simply passing an archive policy:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">POST</span> <span style="color:#111">/v1/metric</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
 <span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">35</span>
 <span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
 
-<span style="color:#111">{</span>
-  <span style="color:#f92672">&#34;archive_policy_name&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;high&#34;</span>
-<span style="color:#111">}</span></code></pre></div>
-<p>The API will respond with a created <code>201 CREATED</code> status code and some information about the created metric:</p>
+</code></pre></div><p>The API will respond with a created <code>201 CREATED</code> status code and some information about the created metric:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span> <span style="color:#ae81ff">201</span> <span style="color:#75af00">Created</span>
 <span style="color:#111">Location</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">http://localhost/v1/metric/4c964d57-9d67-4c49-bc61-d48d15b705c6</span>
 <span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">206</span>
 <span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
 
-<span style="color:#111">{</span>
-  <span style="color:#f92672">&#34;archive_policy_name&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;high&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;created_by_project_id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;created_by_user_id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;creator&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;4c964d57-9d67-4c49-bc61-d48d15b705c6&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;name&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;resource_id&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;unit&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">null</span>
-<span style="color:#111">}</span></code></pre></div>
-<p>We can then retrieve the complete information of this metric by using its UUID:</p>
+</code></pre></div><p>We can then retrieve the complete information of this metric by using its UUID:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">GET</span> <span style="color:#111">/v1/metric/4c964d57-9d67-4c49-bc61-d48d15b705c6</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-<span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span></code></pre></div>
-<p>The response will be:</p>
+<span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>
+</code></pre></div><p>The response will be:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span> <span style="color:#ae81ff">200</span> <span style="color:#75af00">OK</span>
 <span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">532</span>
 <span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
 
-<span style="color:#111">{</span>
-  <span style="color:#f92672">&#34;archive_policy&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
-    <span style="color:#f92672">&#34;aggregation_methods&#34;</span><span style="color:#111">:</span> <span style="color:#111">[</span>
-      <span style="color:#d88200">&#34;min&#34;</span><span style="color:#111">,</span>
-      <span style="color:#d88200">&#34;count&#34;</span><span style="color:#111">,</span>
-      <span style="color:#d88200">&#34;max&#34;</span><span style="color:#111">,</span>
-      <span style="color:#d88200">&#34;std&#34;</span><span style="color:#111">,</span>
-      <span style="color:#d88200">&#34;sum&#34;</span><span style="color:#111">,</span>
-      <span style="color:#d88200">&#34;mean&#34;</span>
-    <span style="color:#111">],</span>
-    <span style="color:#f92672">&#34;back_window&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span>
-    <span style="color:#f92672">&#34;definition&#34;</span><span style="color:#111">:</span> <span style="color:#111">[</span>
-      <span style="color:#111">{</span>
-        <span style="color:#f92672">&#34;granularity&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;0:00:01&#34;</span><span style="color:#111">,</span>
-        <span style="color:#f92672">&#34;points&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">3600</span><span style="color:#111">,</span>
-        <span style="color:#f92672">&#34;timespan&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;1:00:00&#34;</span>
-      <span style="color:#111">},</span>
-      <span style="color:#111">{</span>
-        <span style="color:#f92672">&#34;granularity&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;0:01:00&#34;</span><span style="color:#111">,</span>
-        <span style="color:#f92672">&#34;points&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">10080</span><span style="color:#111">,</span>
-        <span style="color:#f92672">&#34;timespan&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;7 days, 0:00:00&#34;</span>
-      <span style="color:#111">},</span>
-      <span style="color:#111">{</span>
-        <span style="color:#f92672">&#34;granularity&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;1:00:00&#34;</span><span style="color:#111">,</span>
-        <span style="color:#f92672">&#34;points&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">8760</span><span style="color:#111">,</span>
-        <span style="color:#f92672">&#34;timespan&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;365 days, 0:00:00&#34;</span>
-      <span style="color:#111">}</span>
-    <span style="color:#111">],</span>
-    <span style="color:#f92672">&#34;name&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;high&#34;</span>
-  <span style="color:#111">},</span>
-  <span style="color:#f92672">&#34;created_by_project_id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;created_by_user_id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;creator&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;4c964d57-9d67-4c49-bc61-d48d15b705c6&#34;</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;name&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;resource&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-  <span style="color:#f92672">&#34;unit&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">null</span>
-<span style="color:#111">}</span></code></pre></div>
-<h2 id="metric-source-code">Metric Source Code</h2>
-
+</code></pre></div><h2 id="metric-source-code">Metric Source Code</h2>
 <p>Source code for the Metric object can be found in <a href="https://github.com/openstack/gnocchi/blob/master/gnocchi/storage/__init__.py"><code>storage/__init__.py</code></a>:</p>
-
 <p><strong>storage/<strong>init</strong>.py</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Metric</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Metric</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#111">archive_policy</span><span style="color:#111">,</span>
                  <span style="color:#111">creator</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span>
                  <span style="color:#111">name</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span>
-                 <span style="color:#111">resource_id</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">):</span>
+                 <span style="color:#111">resource_id</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">id</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">archive_policy</span> <span style="color:#f92672">=</span> <span style="color:#111">archive_policy</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">creator</span> <span style="color:#f92672">=</span> <span style="color:#111">creator</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">resource_id</span> <span style="color:#f92672">=</span> <span style="color:#111">resource_id</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__repr__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#39;&lt;</span><span style="color:#d88200">%s</span><span style="color:#d88200"> </span><span style="color:#d88200">%s</span><span style="color:#d88200">&gt;&#39;</span> <span style="color:#f92672">%</span> <span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__class__</span><span style="color:#f92672">.</span><span style="color:#111">__name__</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__repr__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">&lt;</span><span style="color:#d88200">%s</span><span style="color:#d88200"> </span><span style="color:#d88200">%s</span><span style="color:#d88200">&gt;</span><span style="color:#d88200">&#39;</span> <span style="color:#f92672">%</span> <span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__class__</span><span style="color:#f92672">.</span><span style="color:#111">__name__</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__str__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__str__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">return</span> <span style="color:#111">str</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__eq__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">other</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__eq__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">other</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">return</span> <span style="color:#111">(</span><span style="color:#111">isinstance</span><span style="color:#111">(</span><span style="color:#111">other</span><span style="color:#111">,</span> <span style="color:#111">Metric</span><span style="color:#111">)</span>
                 <span style="color:#f92672">and</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span> <span style="color:#f92672">==</span> <span style="color:#111">other</span><span style="color:#f92672">.</span><span style="color:#111">id</span>
                 <span style="color:#f92672">and</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">archive_policy</span> <span style="color:#f92672">==</span> <span style="color:#111">other</span><span style="color:#f92672">.</span><span style="color:#111">archive_policy</span>
@@ -245,24 +187,24 @@ if (!doNotTrack) {
                 <span style="color:#f92672">and</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span> <span style="color:#f92672">==</span> <span style="color:#111">other</span><span style="color:#f92672">.</span><span style="color:#111">name</span>
                 <span style="color:#f92672">and</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">resource_id</span> <span style="color:#f92672">==</span> <span style="color:#111">other</span><span style="color:#f92672">.</span><span style="color:#111">resource_id</span><span style="color:#111">)</span>
 
-<span style="color:#111">__hash__</span> <span style="color:#f92672">=</span> <span style="color:#111">object</span><span style="color:#f92672">.</span><span style="color:#111">__hash__</span></code></pre></div>
-<p>Some exceptions related to metrics are also defined here. For example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MetricAlreadyExists</span><span style="color:#111">(</span><span style="color:#111">StorageError</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;Error raised when this metric already exists.&#34;&#34;&#34;</span>
+<span style="color:#111">__hash__</span> <span style="color:#f92672">=</span> <span style="color:#111">object</span><span style="color:#f92672">.</span><span style="color:#111">__hash__</span>
+</code></pre></div><p>Some exceptions related to metrics are also defined here. For example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MetricAlreadyExists</span><span style="color:#111">(</span><span style="color:#111">StorageError</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Error raised when this metric already exists.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">metric</span>
         <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">MetricAlreadyExists</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span>
-            <span style="color:#d88200">&#34;Metric </span><span style="color:#d88200">%s</span><span style="color:#d88200"> already exists&#34;</span> <span style="color:#f92672">%</span> <span style="color:#111">metric</span><span style="color:#111">)</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">Metric </span><span style="color:#d88200">%s</span><span style="color:#d88200"> already exists</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">%</span> <span style="color:#111">metric</span><span style="color:#111">)</span>
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">LockedMetric</span><span style="color:#111">(</span><span style="color:#111">StorageError</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;Error raised when this metric is already being handled by another.&#34;&#34;&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">LockedMetric</span><span style="color:#111">(</span><span style="color:#111">StorageError</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Error raised when this metric is already being handled by another.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">metric</span>
-        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">LockedMetric</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Metric </span><span style="color:#d88200">%s</span><span style="color:#d88200"> is locked&#34;</span> <span style="color:#f92672">%</span> <span style="color:#111">metric</span><span style="color:#111">)</span></code></pre></div>
-<p>We can see these exceptions being raised by the drivers, which are also located in <code>/storage/</code>. For example, when the <a href="https://github.com/openstack/gnocchi/blob/master/gnocchi/storage/file.py">file driver</a> is trying to create a metric:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_create_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">LockedMetric</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">Metric </span><span style="color:#d88200">%s</span><span style="color:#d88200"> is locked</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">%</span> <span style="color:#111">metric</span><span style="color:#111">)</span>
+</code></pre></div><p>We can see these exceptions being raised by the drivers, which are also located in <code>/storage/</code>. For example, when the <a href="https://github.com/openstack/gnocchi/blob/master/gnocchi/storage/file.py">file driver</a> is trying to create a metric:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_create_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">path</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_metric_dir</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
             <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">mkdir</span><span style="color:#111">(</span><span style="color:#111">path</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">o750</span><span style="color:#111">)</span>
@@ -272,23 +214,21 @@ if (!doNotTrack) {
             <span style="color:#00a8c8">raise</span>
         <span style="color:#00a8c8">for</span> <span style="color:#111">agg</span> <span style="color:#f92672">in</span> <span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">archive_policy</span><span style="color:#f92672">.</span><span style="color:#111">aggregation_methods</span><span style="color:#111">:</span>
             <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
-                <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">mkdir</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_metric_path</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">,</span> <span style="color:#111">agg</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">o750</span><span style="color:#111">)</span>
+                <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">mkdir</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_metric_path</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#111">,</span> <span style="color:#111">agg</span><span style="color:#111">)</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">o750</span><span style="color:#111">)</span>
             <span style="color:#00a8c8">except</span> <span style="color:#75af00">OSError</span> <span style="color:#00a8c8">as</span> <span style="color:#111">e</span><span style="color:#111">:</span>
                 <span style="color:#00a8c8">if</span> <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#111">errno</span> <span style="color:#f92672">!=</span> <span style="color:#111">errno</span><span style="color:#f92672">.</span><span style="color:#111">EEXIST</span><span style="color:#111">:</span>
-                    <span style="color:#00a8c8">raise</span></code></pre></div>
-<p>Since the file driver storages the metric data in the file system using actual <em>files</em>, when a file already exists, a system error will be produced and the <code>OSError</code> exception will be catched.</p>
-
-<p>This storage module makes use of the Python <a href="https://docs.python.org/2/library/errno.html"><code>errno</code> module</a>, which provides standard system <code>errno</code> symbols. In this case, the exception&rsquo;s <code>errno</code> would be <code>EEXIST</code>, indicating the <a href="https://docs.python.org/2/library/errno.html#errno.EEXIST">file already exists</a>. The <code>MetricAlreadyExists</code> exception is then raised.</p>
-
+                    <span style="color:#00a8c8">raise</span>
+</code></pre></div><p>Since the file driver storages the metric data in the file system using actual <em>files</em>, when a file already exists, a system error will be produced and the <code>OSError</code> exception will be catched.</p>
+<p>This storage module makes use of the Python <a href="https://docs.python.org/2/library/errno.html"><code>errno</code> module</a>, which provides standard system <code>errno</code> symbols. In this case, the exception's <code>errno</code> would be <code>EEXIST</code>, indicating the <a href="https://docs.python.org/2/library/errno.html#errno.EEXIST">file already exists</a>. The <code>MetricAlreadyExists</code> exception is then raised.</p>
 <h2 id="interacting-with-metrics-using-the-gnocchi-client">Interacting With Metrics Using the Gnocchi Client</h2>
-
 <p>With the <a href="http://gnocchi.xyz/gnocchiclient/index.html">gnocchi client</a>, we can create metrics like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">create</span><span style="color:#111">({</span>
-        <span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;my_metric&#39;</span><span style="color:#111">,</span>
-        <span style="color:#d88200">&#39;archive_policy_name&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;high&#39;</span><span style="color:#111">,</span>
-<span style="color:#111">})</span></code></pre></div>
-<p>And we can delete it by passing the metric&rsquo;s UUID (if there is no resource ID) like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">delete</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;1c0f69bf-67bb-4080-8e7c-53723f7e6194&#39;</span><span style="color:#111">)</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">create</span><span style="color:#111">(</span><span style="color:#111">{</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">name</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">my_metric</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">archive_policy_name</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">high</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+<span style="color:#111">}</span><span style="color:#111">)</span>
+</code></pre></div><p>And we can delete it by passing the metric's UUID (if there is no resource ID) like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">gnocchi</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#f92672">.</span><span style="color:#111">delete</span><span style="color:#111">(</span><span style="color:#111">metric</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">1c0f69bf-67bb-4080-8e7c-53723f7e6194</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div>
 </div>
 
 

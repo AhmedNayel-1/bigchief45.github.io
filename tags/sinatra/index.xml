@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>sinatra on Andrés Álvarez</title>
@@ -19,26 +19,18 @@
       <guid>https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/</guid>
       <description>&lt;p&gt;Recently I was having an issue with a Sinatra application deployed in a staging
 server. The application was deployed with Puma and Nginx in the following location:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;/var/www/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This web service would then try to access some files in another directory on the server,
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This web service would then try to access some files in another directory on the server,
 mounted as an SFTP directory. The Sinatra app would open these files and generate some
 new files from them, depending on the HTTP request received.&lt;/p&gt;
-
 &lt;p&gt;The problem was that the operation would fail due to a permissions issue. I was baffled
 since I had set &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; permissions to the directory and the files in it.&lt;/p&gt;
-
 &lt;h2 id=&#34;umask-the-problem-and-solution&#34;&gt;Umask: The Problem and Solution&lt;/h2&gt;
-
 &lt;p&gt;It took around two days to find the culprit: &lt;strong&gt;umask&lt;/strong&gt;. In Linux, &lt;a href=&#34;https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work&#34;&gt;umask&lt;/a&gt;
 acts as another set of permissions for &lt;strong&gt;processes&lt;/strong&gt; and cannot be set for directories,
 basically speaking.&lt;/p&gt;
-
 &lt;p&gt;I realized that this probably meant that the process running the Puma application server had
 a umask configuration that was not allowing the generation of new files.&lt;/p&gt;
-
 &lt;p&gt;I decided to test this if this was the case. In the &lt;a href=&#34;https://github.com/puma/puma&#34;&gt;Puma&lt;/a&gt;
 documentation, I found an option to change the permissions of the UNIX socket using
 umask:&lt;/p&gt;</description>

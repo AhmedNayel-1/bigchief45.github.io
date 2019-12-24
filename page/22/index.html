@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,23 +139,14 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-10-11T00:00:00Z" class="post-date">Tue, Oct 11, 2016</time>
   <p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
-
-<h2 id="package-source-structure">Package Source &amp; Structure</h2>
-
-<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
-
+<h2 id="package-source--structure">Package Source &amp; Structure</h2>
+<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory's title:</p>
 <pre><code>mkdir mypackage-1.0.0
-</code></pre>
-
-<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
-
+</code></pre><p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
 <pre><code>cd mypackage-1.0.0
 mkdir DEBIAN
 touch DEBIAN/control
-</code></pre>
-
-<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
-
+</code></pre><p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
 <pre><code>Package: mypackage
 Version: 1.0-0
 Section: base
@@ -164,9 +155,7 @@ Architecture: all
 Depends: python2.7
 Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
 Description: A new and improved C++ Compiler
-</code></pre>
-
-<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
+</code></pre><p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
 
   
   <div style="margin: 20px 0px;">

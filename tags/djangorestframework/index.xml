@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>djangorestframework on Andrés Álvarez</title>
@@ -18,9 +18,7 @@
       
       <guid>https://aalvarez.me/posts/testing-django-and-drf-with-pytest/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt; has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and &lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt;.&lt;/p&gt;
-
 &lt;p&gt;We will be using the following tools:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt;: Python testing framework&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://pytest-django.readthedocs.io/&#34;&gt;pytest-django&lt;/a&gt;: Pytest extensions for Django&lt;/li&gt;
@@ -35,20 +33,18 @@
       
       <guid>https://aalvarez.me/posts/bulk-create-with-django-rest-framework/</guid>
       <description>&lt;p&gt;In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using &lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt;.&lt;/p&gt;
-
 &lt;h2 id=&#34;the-serializer&#34;&gt;The Serializer&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s assume that we will be working with an existing &lt;code&gt;Book&lt;/code&gt; model in our Django application. We will create a serializer for this model using Django REST&amp;rsquo;s &lt;a href=&#34;http://www.django-rest-framework.org/api-guide/serializers/#modelserializer&#34;&gt;ModelSerializer&lt;/a&gt; helper class:&lt;/p&gt;
+&lt;p&gt;Let&#39;s assume that we will be working with an existing &lt;code&gt;Book&lt;/code&gt; model in our Django application. We will create a serializer for this model using Django REST&#39;s &lt;a href=&#34;http://www.django-rest-framework.org/api-guide/serializers/#modelserializer&#34;&gt;ModelSerializer&lt;/a&gt; helper class:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# serializers.py&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;myapp.models&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Book&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rest_framework&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;serializers&lt;/span&gt;
 
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;BookSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;serializers&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ModelSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;BookSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;serializers&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ModelSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Meta&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;model&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Book&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;fields&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;__all__&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The &lt;code&gt;&amp;quot;__all__&amp;quot;&lt;/code&gt; string indicates that we want to serialize &lt;strong&gt;all&lt;/strong&gt; of the model&amp;rsquo;s fields.&lt;/p&gt;</description>
+        &lt;span style=&#34;color:#111&#34;&gt;fields&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;__all__&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The &lt;code&gt;&amp;quot;__all__&amp;quot;&lt;/code&gt; string indicates that we want to serialize &lt;strong&gt;all&lt;/strong&gt; of the model&#39;s fields.&lt;/p&gt;</description>
     </item>
     
   </channel>

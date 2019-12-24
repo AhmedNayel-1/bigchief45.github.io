@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Implementing Auto Updates for a Netbeans Platform Maven Application Using Github Pages",
     "headline" : "Implementing Auto Updates for a Netbeans Platform Maven Application Using Github Pages",
-    "description" : "\x3cp\x3eBeing able to update an application when a new version is released is something of critical importance for desktop applications. Otherwise, the process of updating the application is extremely tedious since you have to download more installers all the time.\x3c\/p\x3e\n\n\x3cp\x3eLuckily, Netbeans Platform comes with integrated support for enabling your custom applications to be able to be updated when a new version is released.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will go over how to implement this on a \x3cstrong\x3eMaven\x3c\/strong\x3e based Netbeans Platform application.\x3c\/p\x3e\n\n\x3ch2 id=\x22how-netbeans-update-center-works\x22\x3eHow Netbeans Update Center Works\x3c\/h2\x3e\n\n\x3cp\x3eThe \x3cstrong\x3eUpdate Center\x3c\/strong\x3e is how we can achieve this functionality. The way it works is that you publish your module\x26rsquo;s NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.\x3c\/p\x3e\n\n\x3cp\x3eWhen you configure an update center in your application, you will configure this web server\x26rsquo;s URL so that the update center client knows where to poll and where to download the new module files to install.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eBeing able to update an application when a new version is released is something of critical importance for desktop applications. Otherwise, the process of updating the application is extremely tedious since you have to download more installers all the time.\x3c\/p\x3e\n\x3cp\x3eLuckily, Netbeans Platform comes with integrated support for enabling your custom applications to be able to be updated when a new version is released.\x3c\/p\x3e\n\x3cp\x3eIn this post I will go over how to implement this on a \x3cstrong\x3eMaven\x3c\/strong\x3e based Netbeans Platform application.\x3c\/p\x3e\n\x3ch2 id=\x22how-netbeans-update-center-works\x22\x3eHow Netbeans Update Center Works\x3c\/h2\x3e\n\x3cp\x3eThe \x3cstrong\x3eUpdate Center\x3c\/strong\x3e is how we can achieve this functionality. The way it works is that you publish your module\x27s NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.\x3c\/p\x3e\n\x3cp\x3eWhen you configure an update center in your application, you will configure this web server\x27s URL so that the update center client knows where to poll and where to download the new module files to install.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,82 +136,52 @@ if (!doNotTrack) {
   <time datetime=2018-07-17T00:00:00Z class="post-date">Tue, Jul 17, 2018</time>
 
   <p>Being able to update an application when a new version is released is something of critical importance for desktop applications. Otherwise, the process of updating the application is extremely tedious since you have to download more installers all the time.</p>
-
 <p>Luckily, Netbeans Platform comes with integrated support for enabling your custom applications to be able to be updated when a new version is released.</p>
-
 <p>In this post I will go over how to implement this on a <strong>Maven</strong> based Netbeans Platform application.</p>
-
 <h2 id="how-netbeans-update-center-works">How Netbeans Update Center Works</h2>
-
-<p>The <strong>Update Center</strong> is how we can achieve this functionality. The way it works is that you publish your module&rsquo;s NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.</p>
-
-<p>When you configure an update center in your application, you will configure this web server&rsquo;s URL so that the update center client knows where to poll and where to download the new module files to install.</p>
-
+<p>The <strong>Update Center</strong> is how we can achieve this functionality. The way it works is that you publish your module's NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.</p>
+<p>When you configure an update center in your application, you will configure this web server's URL so that the update center client knows where to poll and where to download the new module files to install.</p>
 <h2 id="generating-catalog-file-and-nbm-files">Generating Catalog File and NBM Files</h2>
-
-<p>First we will generate the necessary files that need to be uploaded to the web server. I discovered that out of the box, Maven will generate NBM files of modules, thanks to the <a href="https://github.com/mojohaus/nbm-maven-plugin">nbm-maven-plugin</a> plugin included in your application&rsquo;s POM file. However, I could not find the XML catalog file anywhere.</p>
-
+<p>First we will generate the necessary files that need to be uploaded to the web server. I discovered that out of the box, Maven will generate NBM files of modules, thanks to the <a href="https://github.com/mojohaus/nbm-maven-plugin">nbm-maven-plugin</a> plugin included in your application's POM file. However, I could not find the XML catalog file anywhere.</p>
 <p>I found <a href="https://blogs.oracle.com/geertjan/updatesxml,-etc,-for-mavenized-netbeans-rcp-application">a solution</a> that will generate this XML catalog file and all the NBM files all in a single location.</p>
-
-<p>Basically you need to add the following configuration in your application&rsquo;s POM file, inside <code>nbm-maven-plugin</code>.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;executions&gt;</span>
-  <span style="color:#f92672">&lt;execution&gt;</span>
-      <span style="color:#f92672">&lt;id&gt;</span>updatesite<span style="color:#f92672">&lt;/id&gt;</span>
-      <span style="color:#f92672">&lt;phase&gt;</span>package<span style="color:#f92672">&lt;/phase&gt;</span>
-      <span style="color:#f92672">&lt;goals&gt;</span>
-          <span style="color:#f92672">&lt;goal&gt;</span>autoupdate<span style="color:#f92672">&lt;/goal&gt;</span>
+<p>Basically you need to add the following configuration in your application's POM file, inside <code>nbm-maven-plugin</code>.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;executions</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;execution</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;id</span><span style="color:#f92672">&gt;</span>updatesite<span style="color:#f92672">&lt;/id&gt;</span>
+      <span style="color:#f92672">&lt;phase</span><span style="color:#f92672">&gt;</span>package<span style="color:#f92672">&lt;/phase&gt;</span>
+      <span style="color:#f92672">&lt;goals</span><span style="color:#f92672">&gt;</span>
+          <span style="color:#f92672">&lt;goal</span><span style="color:#f92672">&gt;</span>autoupdate<span style="color:#f92672">&lt;/goal&gt;</span>
       <span style="color:#f92672">&lt;/goals&gt;</span>
-      <span style="color:#f92672">&lt;configuration&gt;</span>
-          <span style="color:#f92672">&lt;fileName&gt;</span>updates.xml<span style="color:#f92672">&lt;/fileName&gt;</span>
+      <span style="color:#f92672">&lt;configuration</span><span style="color:#f92672">&gt;</span>
+          <span style="color:#f92672">&lt;fileName</span><span style="color:#f92672">&gt;</span>updates.xml<span style="color:#f92672">&lt;/fileName&gt;</span>
       <span style="color:#f92672">&lt;/configuration&gt;</span>
   <span style="color:#f92672">&lt;/execution&gt;</span>
-<span style="color:#f92672">&lt;/executions&gt;</span></code></pre></div>
-<p>Then you can right click on your application and run the <em>Build with Dependencies</em> command. After this is done, go to the following location on your project&rsquo;s source tree: <code>&lt;ProjectName&gt;/application/target/netbeans_site/</code>.</p>
-
+<span style="color:#f92672">&lt;/executions&gt;</span>
+</code></pre></div><p>Then you can right click on your application and run the <em>Build with Dependencies</em> command. After this is done, go to the following location on your project's source tree: <code>&lt;ProjectName&gt;/application/target/netbeans_site/</code>.</p>
 <p>In this directory you will see a bunch of generated NBM files along with the catalog file called <code>updates.xml</code>. These are the files that you need to upload to your web server everytime a new version is released.</p>
-
 <p>Notice that the directory also contains NBM files for Netbeans modules that your application uses, such as <code>org-netbeans-api-progress-nb-RELEASE82.nbm</code> which is the module that provides progress bars.</p>
-
 <h2 id="setting-up-the-update-center-server">Setting Up the Update Center Server</h2>
-
 <p>The netbeans documentation says you need to publish the generated files to a web server. You can of course use this approach. But I have also experimented with other more simple solutions, such as using Github as the update center.</p>
-
 <p>Basically you will commit and push changes to the catalog file and NBM files to a Github repository. And then you can leverage <strong>Github Pages</strong> as a web server to serve these files so that they can be accessed by your application.</p>
-
-<p>-&gt; Whenever you need to deploy an update, be sure you have incremented the module&rsquo;s specification version number. <a href="http://wiki.netbeans.org/DevFaqImplementationDependency">Read more</a>.</p>
-
+<p>-&gt; Whenever you need to deploy an update, be sure you have incremented the module's specification version number. <a href="http://wiki.netbeans.org/DevFaqImplementationDependency">Read more</a>.</p>
 <h2 id="configuring-the-update-center-in-your-application">Configuring the Update Center in Your Application</h2>
-
-<p>You can now go ahead and add a new module to your application, let&rsquo;s name it <em>Update Center</em>. Inside this module add a new file of type <em>Update Center</em>, located under the <em>Module Development</em> category.</p>
-
+<p>You can now go ahead and add a new module to your application, let's name it <em>Update Center</em>. Inside this module add a new file of type <em>Update Center</em>, located under the <em>Module Development</em> category.</p>
 <p>In the wizard you will have to enter the URL to your descriptor (catalog) XML file. If you are using Github Pages then this should work just as well.</p>
-
 <h2 id="updating-the-application">Updating The Application</h2>
-
-<p>Now when you push new versions of modules to your Github repository, which include the required changes in NBM files and XML attributes, your application&rsquo;s Update Center client should be able to pick the changes and show a notification like the following:</p>
-
-<p><img src="https://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/netbeans_application_updates.png" alt="Application Updates" /></p>
-
+<p>Now when you push new versions of modules to your Github repository, which include the required changes in NBM files and XML attributes, your application's Update Center client should be able to pick the changes and show a notification like the following:</p>
+<p><img src="https://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/netbeans_application_updates.png" alt="Application Updates"></p>
 <p>Likewise you can go to <em>Help &gt; Check for Updates</em> and you will see the list of new available module versions that you pushed to your repository.</p>
-
 <h2 id="bonus-automating-with-continuous-delivery">Bonus: Automating With Continuous Delivery</h2>
-
 <p>So far in order for our users to be able to download and update new modules and features into the application, we need to build and push them first into the update center repository. This is time consuming and tedious. It would be better if everything happened automatically when publishing a new release.</p>
-
 <p>Basically we want to achieve the following workflow:</p>
-
 <ol>
 <li>New releases are pushed to the <code>master</code> branch of our source code repository.</li>
 <li>A CI build is fired on the <code>master</code> branch which builds and runs tests for the application.</li>
 <li>If step 2 passes, the build commits and pushes the new NBM files and XML file to the update center repository.</li>
 </ol>
-
 <p>I will be using <a href="https://travis-ci.org/">TravisCI</a> and Github to achieve this.</p>
-
 <h3 id="creating-a-github-access-token">Creating a Github Access Token</h3>
-
 <p>We will need to <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">create an access token</a> on Github so that the build is able to push to the repository.</p>
-
 <p>Once you have created the token, we will proceed to <a href="https://docs.travis-ci.com/user/encryption-keys/">encrypt it</a> and add it to the <code>.travis.yml</code> configuration. Our Travis file should look something like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language<span style="color:#111">:</span> java
 
@@ -226,67 +196,61 @@ env<span style="color:#111">:</span>
 branches<span style="color:#111">:</span>
   only<span style="color:#111">:</span>
     - master
-    - develop</code></pre></div>
-<h3 id="commiting-and-pushing-the-files">Commiting and Pushing the Files</h3>
-
+    - develop
+</code></pre></div><h3 id="commiting-and-pushing-the-files">Commiting and Pushing the Files</h3>
 <p>Now we need to create a script that will initialize the update center repository inside the build, move the files generated by Maven into the repository, add the files to source control, commit them and finally push them to the remote.</p>
-
 <p>We can tell the build to execute this script as a custom deployment script, in the <code>master</code> branch only:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">deploy<span style="color:#111">:</span>
   provider<span style="color:#111">:</span> script
   script<span style="color:#111">:</span> bash ./deploy_to_update_center.sh
   on<span style="color:#111">:</span>
-    branch<span style="color:#111">:</span> master</code></pre></div>
-<p>=&gt; Executing the script with <code>bash</code> allows us not to worry about the file&rsquo;s execution permissions inside the Travis machine. Read more <a href="https://stackoverflow.com/questions/42154912/permission-denied-for-build-sh-file">here</a></p>
-
+    branch<span style="color:#111">:</span> master
+</code></pre></div><p>=&gt; Executing the script with <code>bash</code> allows us not to worry about the file's execution permissions inside the Travis machine. Read more <a href="https://stackoverflow.com/questions/42154912/permission-denied-for-build-sh-file">here</a></p>
 <p>The <code>deploy_to_update_center.sh</code> script is as follows:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
 </span><span style="color:#75715e"></span>
-setup_git<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+setup_git<span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
   <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Setting up git...&#34;</span>
   git config --global user.email <span style="color:#d88200">&#34;&lt;your_email&gt;&#34;</span>
   git config --global user.name <span style="color:#d88200">&#34;&lt;your_name&gt;&#34;</span>
 
-  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Cloning repository </span><span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
+  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">Cloning repository </span><span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
   git clone https://<span style="color:#d88200">${</span><span style="color:#111">GH_TOKEN</span><span style="color:#d88200">}</span>@github.com/&lt;user&gt;/<span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span>.git
 <span style="color:#f92672">}</span>
 
-commit_build_files<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+commit_build_files<span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
   <span style="color:#111">cd</span> <span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span>
   rm *
 
   <span style="color:#75715e"># You should replace $GH_USER and $REPO_NAME (these are NOT env variables)</span>
   <span style="color:#75715e"># with the correct values inside your Travis build. You can find this path in</span>
   <span style="color:#75715e"># the build logs</span>
-  <span style="color:#111">local</span> <span style="color:#111">BUILD_PATH</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;/home/travis/build/</span><span style="color:#111">$GH_USER</span><span style="color:#d88200">/</span><span style="color:#111">$REPO_NAME</span><span style="color:#d88200">/application/target/netbeans_site&#34;</span>
+  <span style="color:#111">local</span> <span style="color:#111">BUILD_PATH</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">/home/travis/build/</span><span style="color:#111">$GH_USER</span><span style="color:#d88200">/</span><span style="color:#111">$REPO_NAME</span><span style="color:#d88200">/application/target/netbeans_site</span><span style="color:#d88200">&#34;</span>
 
   <span style="color:#75715e"># Move the generated files. You should include here all the module NBM files</span>
   <span style="color:#75715e"># you want to publish to the update center. We use a wildcard * so that we</span>
   <span style="color:#75715e"># don&#39;t have to specify the version.</span>
-  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Copying files from </span><span style="color:#d88200">${</span><span style="color:#111">BUILD_PATH</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
+  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">Copying files from </span><span style="color:#d88200">${</span><span style="color:#111">BUILD_PATH</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
   cp <span style="color:#111">$BUILD_PATH</span>/updates.xml .
   cp <span style="color:#111">$BUILD_PATH</span>/MyCustomModule-*.nbm .
 
   git add .
-  git commit --message <span style="color:#d88200">&#34;Travis build: </span><span style="color:#111">$TRAVIS_BUILD_NUMBER</span><span style="color:#d88200">&#34;</span>
+  git commit --message <span style="color:#d88200">&#34;</span><span style="color:#d88200">Travis build: </span><span style="color:#111">$TRAVIS_BUILD_NUMBER</span><span style="color:#d88200">&#34;</span>
 <span style="color:#f92672">}</span>
 
-upload_files<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;Pushing files to </span><span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
+upload_files<span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  <span style="color:#111">echo</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">Pushing files to </span><span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span>
 
-  git remote add origin-update-center https://<span style="color:#d88200">${</span><span style="color:#111">GH_TOKEN</span><span style="color:#d88200">}</span>@github.com/&lt;user&gt;/<span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span>.git &gt; /dev/null <span style="color:#ae81ff">2</span>&gt;<span style="color:#111">&amp;</span><span style="color:#ae81ff">1</span>
+  git remote add origin-update-center https://<span style="color:#d88200">${</span><span style="color:#111">GH_TOKEN</span><span style="color:#d88200">}</span>@github.com/&lt;user&gt;/<span style="color:#d88200">${</span><span style="color:#111">REPO</span><span style="color:#d88200">}</span>.git &gt; /dev/null 2&gt;<span style="color:#111">&amp;</span><span style="color:#ae81ff">1</span>
   git push --quiet origin-update-center master
 <span style="color:#f92672">}</span>
 
 setup_git
 commit_build_files
-upload_files</code></pre></div>
-<p>There are some things you will need to modify in that file so that it fits your use case. For example, the Github username where the repository is located at, the branch you are using for the update center (in my case, <code>master</code>), etc. etc.</p>
-
+upload_files
+</code></pre></div><p>There are some things you will need to modify in that file so that it fits your use case. For example, the Github username where the repository is located at, the branch you are using for the update center (in my case, <code>master</code>), etc. etc.</p>
 <p>And there you have it! A fully automized Netbeans Platform Update Center!</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://blogs.oracle.com/geertjan/updatesxml,-etc,-for-mavenized-netbeans-rcp-application">updates.xml, etc, for Mavenized NetBeans RCP Application</a></li>
 <li><a href="https://platform.netbeans.org/articles/update-descriptor-specification.html">Understanding AutoUpdate Descriptors</a></li>

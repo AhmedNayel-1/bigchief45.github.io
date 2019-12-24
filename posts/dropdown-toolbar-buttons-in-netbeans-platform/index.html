@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Dropdown Toolbar Buttons in Netbeans Platform",
     "headline" : "Dropdown Toolbar Buttons in Netbeans Platform",
-    "description" : "\x3cp\x3eIt is possible to add buttons that toggle a dropdown menu to the main toolbar in your Netbeans Platform application.\x3c\/p\x3e\n\n\x3cp\x3eFor example, the Netbeans IDE \x3cem\x3eRun Project\x3c\/em\x3e, \x3cem\x3eDebug Project\x3c\/em\x3e, and \x3cem\x3eProfile Project\x3c\/em\x3e buttons have a small arrow next to them. When clicked, a dropdown menu with more related actions is shown:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/dropdown-toolbar-buttons-in-netbeans-platform\/netbeans_ide_dropdown_actions.png\x22 alt=\x22Netbeans IDE Dropdown Buttons\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn this article, I will teach you how to implement this behavior.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIt is possible to add buttons that toggle a dropdown menu to the main toolbar in your Netbeans Platform application.\x3c\/p\x3e\n\x3cp\x3eFor example, the Netbeans IDE \x3cem\x3eRun Project\x3c\/em\x3e, \x3cem\x3eDebug Project\x3c\/em\x3e, and \x3cem\x3eProfile Project\x3c\/em\x3e buttons have a small arrow next to them. When clicked, a dropdown menu with more related actions is shown:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/dropdown-toolbar-buttons-in-netbeans-platform\/netbeans_ide_dropdown_actions.png\x22 alt=\x22Netbeans IDE Dropdown Buttons\x22\x3e\x3c\/p\x3e\n\x3cp\x3eIn this article, I will teach you how to implement this behavior.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,17 +136,11 @@ if (!doNotTrack) {
   <time datetime=2019-02-05T20:16:38Z class="post-date">Tue, Feb 5, 2019</time>
 
   <p>It is possible to add buttons that toggle a dropdown menu to the main toolbar in your Netbeans Platform application.</p>
-
 <p>For example, the Netbeans IDE <em>Run Project</em>, <em>Debug Project</em>, and <em>Profile Project</em> buttons have a small arrow next to them. When clicked, a dropdown menu with more related actions is shown:</p>
-
-<p><img src="https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png" alt="Netbeans IDE Dropdown Buttons" /></p>
-
+<p><img src="https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png" alt="Netbeans IDE Dropdown Buttons"></p>
 <p>In this article, I will teach you how to implement this behavior.</p>
-
 <h2 id="the-default-action">The Default Action</h2>
-
 <p>We will begin by creating the <em>default</em> action. This is the action that will appear next to the dropdown arrow, and gets triggered when clicked.</p>
-
 <p>We will create this action in its own Java class, and register this action using annotations:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">java.awt.event.ActionEvent</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> <span style="color:#111">java.awt.event.ActionListener</span><span style="color:#f92672">;</span>
@@ -166,7 +160,7 @@ if (!doNotTrack) {
 <span style="color:#75af00">@NbBundle.Messages</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;CTL_MyMainAction=Run MyMainAction&#34;</span><span style="color:#f92672">)</span>
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyMainAction</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">ActionListener</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyMainAction</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyMainAction</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 
   <span style="color:#f92672">}</span>
 
@@ -174,15 +168,11 @@ if (!doNotTrack) {
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">actionPerformed</span><span style="color:#f92672">(</span><span style="color:#111">ActionEvent</span> <span style="color:#111">evt</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e">// Action logic goes here
 </span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>The <code>category</code> and <code>id</code> attributes of the <code>@ActionID</code> annotation are very important. Make sure you name them appropriately.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The <code>category</code> and <code>id</code> attributes of the <code>@ActionID</code> annotation are very important. Make sure you name them appropriately.</p>
 <p>Notice that we are <em>not</em> registering this action in the toolbar (usually done with the <code>@ActionReference</code> annotation).  This is because we will later create an action that will contain this default action as well as all the other actions we want to include in the dropdown menu.</p>
-
 <h2 id="the-dropdown-actions">The Dropdown Actions</h2>
-
 <p>Now we will proceed to create all this actions that will appear in the dropdown menu. In this step you are free to create as menu actions as you need, but for teaching purposes I will just create one action.</p>
-
 <p>These actions are created and registered just like we did with the default action:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">java.awt.event.ActionEvent</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> <span style="color:#111">java.awt.event.ActionListener</span><span style="color:#f92672">;</span>
@@ -202,7 +192,7 @@ if (!doNotTrack) {
 <span style="color:#75af00">@NbBundle.Messages</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;CTL_MySecondAction=Run MySecondAction&#34;</span><span style="color:#f92672">)</span>
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MySecondAction</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">ActionListener</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MySecondAction</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MySecondAction</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 
   <span style="color:#f92672">}</span>
 
@@ -210,11 +200,9 @@ if (!doNotTrack) {
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">actionPerformed</span><span style="color:#f92672">(</span><span style="color:#111">ActionEvent</span> <span style="color:#111">evt</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e">// Action logic goes here
 </span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>Now that we have two different actions we can proceed to the final step: Putting them together into a button and dropdown menu.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Now that we have two different actions we can proceed to the final step: Putting them together into a button and dropdown menu.</p>
 <h2 id="the-dropdown-button">The Dropdown Button</h2>
-
 <p>To achieve this behavior, we will create one more action. This action will implement the <code>Presenter.Toolbar</code> interface, which lets us decide how we want this action to look like in the toolbar:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">java.awt.Component</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> <span style="color:#111">java.awt.event.ActionEvent</span><span style="color:#f92672">;</span>
@@ -242,7 +230,7 @@ if (!doNotTrack) {
     <span style="color:#00a8c8">implements</span> <span style="color:#111">Presenter</span><span style="color:#f92672">.</span><span style="color:#75af00">Toolbar</span> <span style="color:#f92672">{</span>
 
   <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Action</span> <span style="color:#111">DEFAULT_ACTION</span> <span style="color:#f92672">=</span> <span style="color:#111">Actions</span><span style="color:#f92672">.</span><span style="color:#75af00">forID</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Main&#34;</span><span style="color:#f92672">,</span>
-          <span style="color:#d88200">&#34;com.aalvarez.mymodule.MyMainAction&#34;</span><span style="color:#f92672">);</span>
+          <span style="color:#d88200">&#34;com.aalvarez.mymodule.MyMainAction&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
   <span style="color:#75af00">@Override</span>
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">actionPerformed</span><span style="color:#f92672">(</span><span style="color:#111">ActionEvent</span> <span style="color:#111">ae</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -250,42 +238,36 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
 
   <span style="color:#75af00">@Override</span>
-  <span style="color:#00a8c8">public</span> <span style="color:#111">Component</span> <span style="color:#75af00">getToolbarPresenter</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">JPopupMenu</span> <span style="color:#111">popup</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JPopupMenu</span><span style="color:#f92672">();</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#111">Component</span> <span style="color:#75af00">getToolbarPresenter</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">JPopupMenu</span> <span style="color:#111">popup</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JPopupMenu</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
     <span style="color:#111">Action</span> <span style="color:#111">mySecondAction</span> <span style="color:#f92672">=</span> <span style="color:#111">Actions</span><span style="color:#f92672">.</span><span style="color:#75af00">forID</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Main&#34;</span><span style="color:#f92672">,</span>
-            <span style="color:#d88200">&#34;com.aalvarez.mymodule.MySecondAction&#34;</span><span style="color:#f92672">);</span>
-    <span style="color:#111">JMenuItem</span> <span style="color:#111">menuItem</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JMenuItem</span><span style="color:#f92672">(</span><span style="color:#111">mySecondAction</span><span style="color:#f92672">);</span>
+            <span style="color:#d88200">&#34;com.aalvarez.mymodule.MySecondAction&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#111">JMenuItem</span> <span style="color:#111">menuItem</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JMenuItem</span><span style="color:#f92672">(</span><span style="color:#111">mySecondAction</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
     <span style="color:#75715e">// You can fetch and add more actions to the popup here
-</span><span style="color:#75715e"></span>    <span style="color:#111">popup</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">menuItem</span><span style="color:#f92672">);</span>
+</span><span style="color:#75715e"></span>    <span style="color:#111">popup</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">menuItem</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
     <span style="color:#75715e">// The button that will display the default action and the
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// dropdown arrow
 </span><span style="color:#75715e"></span>    <span style="color:#111">JButton</span> <span style="color:#111">button</span> <span style="color:#f92672">=</span> <span style="color:#111">DropDownButtonFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">createDropDownButton</span><span style="color:#f92672">(</span>
       <span style="color:#00a8c8">new</span> <span style="color:#111">ImageIcon</span><span style="color:#f92672">(</span>
         <span style="color:#00a8c8">new</span> <span style="color:#111">BufferedImage</span><span style="color:#f92672">(</span><span style="color:#111">16</span><span style="color:#f92672">,</span> <span style="color:#111">16</span><span style="color:#f92672">,</span> <span style="color:#111">BufferedImage</span><span style="color:#f92672">.</span><span style="color:#75af00">TYPE_INT_ARGB</span><span style="color:#f92672">)</span>
-      <span style="color:#f92672">),</span>
+      <span style="color:#f92672">)</span><span style="color:#f92672">,</span>
       <span style="color:#111">popup</span>
-    <span style="color:#f92672">);</span>
+    <span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
-    <span style="color:#111">Actions</span><span style="color:#f92672">.</span><span style="color:#75af00">connect</span><span style="color:#f92672">(</span><span style="color:#111">button</span><span style="color:#f92672">,</span> <span style="color:#111">DEFAULT_ACTION</span><span style="color:#f92672">);</span>
+    <span style="color:#111">Actions</span><span style="color:#f92672">.</span><span style="color:#75af00">connect</span><span style="color:#f92672">(</span><span style="color:#111">button</span><span style="color:#f92672">,</span> <span style="color:#111">DEFAULT_ACTION</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
     <span style="color:#00a8c8">return</span> <span style="color:#111">button</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>This action <em>is</em> registered in the toolbar. In this example, it is registered in a custom toolbar called <code>Main</code>, derived from the name after the <code>/</code> in <code>Toolbars/Main</code>.</p>
-
-<p>Notice how we are fetching the previously defined actions using <code>Actions.forID()</code> method and each action&rsquo;s <code>category</code> and <code>id</code> attributes defined in their respective annotations.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>This action <em>is</em> registered in the toolbar. In this example, it is registered in a custom toolbar called <code>Main</code>, derived from the name after the <code>/</code> in <code>Toolbars/Main</code>.</p>
+<p>Notice how we are fetching the previously defined actions using <code>Actions.forID()</code> method and each action's <code>category</code> and <code>id</code> attributes defined in their respective annotations.</p>
 <p>Another important element here is the <code>DropDownButtonFactory</code> utility class provided by the platform. This is what gives us that nice button with dropdown arrow UI effect that we are looking for.</p>
-
 <p>One last thing to notice is that we are no longer implementing <code>ActionListener</code>, but rather extending <code>AbstractAction</code>.</p>
-
-<p>That&rsquo;s it! Super simple.</p>
-
+<p>That's it! Super simple.</p>
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://rollingsticks.wordpress.com/2007/12/17/getting-downward-arrow-in-the-toolbar-button-with-dropdown-menu/">https://rollingsticks.wordpress.com/2007/12/17/getting-downward-arrow-in-the-toolbar-button-with-dropdown-menu/</a></li>
 <li><a href="https://platform.netbeans.org/tutorials/nbm-google.html">https://platform.netbeans.org/tutorials/nbm-google.html</a></li>

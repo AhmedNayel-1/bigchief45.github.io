@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Fixing Zenoss Device Network Interface Graphs",
     "headline" : "Fixing Zenoss Device Network Interface Graphs",
-    "description" : "\x3cp\x3eWhen testing the monitoring of the OpenStack compute node devices in Zenoss (using \x3ca href=\x22http:\/\/wiki.zenoss.org\/ZenPack:OpenStack_(Provider_View)\x22\x3eOpenStack Infrastructure ZenPack\x3c\/a\x3e), I noticed that I could not get any graphs for the \x3cstrong\x3enetwork interfaces\x3c\/strong\x3e of the device, although we could still get and model all the available interfaces:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/fixing-zenoss-device-network-interface-graphs\/network_interfaces.png\x22 alt=\x22Network Interfaces\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eThis was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eWhen testing the monitoring of the OpenStack compute node devices in Zenoss (using \x3ca href=\x22http:\/\/wiki.zenoss.org\/ZenPack:OpenStack_(Provider_View)\x22\x3eOpenStack Infrastructure ZenPack\x3c\/a\x3e), I noticed that I could not get any graphs for the \x3cstrong\x3enetwork interfaces\x3c\/strong\x3e of the device, although we could still get and model all the available interfaces:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/fixing-zenoss-device-network-interface-graphs\/network_interfaces.png\x22 alt=\x22Network Interfaces\x22\x3e\x3c\/p\x3e\n\x3cp\x3eThis was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-01-13 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-01-13 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/fixing-zenoss-device-network-interface-graphs\/",
-    "wordCount" : "864",
+    "wordCount" : "853",
     "keywords" : [ "zenoss","rrdtool","sysadmin","monitoring","python","Blog" ]
 }
 </script>
@@ -136,19 +136,12 @@ if (!doNotTrack) {
   <time datetime=2017-01-13T00:00:00Z class="post-date">Fri, Jan 13, 2017</time>
 
   <p>When testing the monitoring of the OpenStack compute node devices in Zenoss (using <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a>), I noticed that I could not get any graphs for the <strong>network interfaces</strong> of the device, although we could still get and model all the available interfaces:</p>
-
-<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces" /></p>
-
+<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces"></p>
 <p>This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.</p>
-
 <h2 id="interface-monitoring-templates">Interface Monitoring Templates</h2>
-
 <p>Zenoss comes with two monitoring templates for the network interfaces, <code>ethernetCsmacd</code> and <code>ethernetCsmacd_64</code>. The first one is a standard ethernet network interface monitoring template, the second one is a smilar template but for 64-bit interface counters.</p>
-
 <p>Both of the monitoring templates provide the graphs we need. But there is a slight &ldquo;problem&rdquo; between them and the <code>/Server/SSH/Linux/NovaHost</code> device class, which is where all the OpenStack devices are placed for monitoring.</p>
-
 <p>If we take a look, ethernetCsmacd template is available in the following device classes:</p>
-
 <ul>
 <li>/Devices</li>
 <li>/Server/Cmd</li>
@@ -156,49 +149,40 @@ if (!doNotTrack) {
 <li><strong>/Server/SSH/Linux</strong></li>
 <li>/Server/Windows/WMI</li>
 </ul>
-
 <p>This monitoring template is different in each device class. This is why some of the device classes have different datasources and provide different graphs than others. From the list above, the device class of our interest is <strong>/Server/SSH/Linux</strong> because it is the closest one in the hierarchy to our NovaHost class.</p>
-
-<p>However, when inspecting the available graphs and datasources for <strong>ethernetCsmacd</strong> in /Server/SSH/Linux, I discovered that it is completely blank! Upon further inspection I find a tooltip showing the template&rsquo;s description, which says <em>&ldquo;The SSH Ethernet interface template is available in the Enterprise version&rdquo;</em>.</p>
-
+<p>However, when inspecting the available graphs and datasources for <strong>ethernetCsmacd</strong> in /Server/SSH/Linux, I discovered that it is completely blank! Upon further inspection I find a tooltip showing the template's description, which says <em>&ldquo;The SSH Ethernet interface template is available in the Enterprise version&rdquo;</em>.</p>
 <p>This is conflicting because we do not want to collect this data through SSH, but through SNMP like it is done in the other device classes for this same monitoring template.</p>
-
 <p>Now, if we take a look at ethernetCsmacd_64 template, we see that there is only one device class associated with it:</p>
-
 <ul>
 <li>/Devices</li>
 </ul>
-
 <p>This device class will basically apply to <strong>all</strong> the devices in Zenoss. Additionally and more importantly, this template in this device class offers all the graphs we need.</p>
-
 <h3 id="how-zenoss-assigns-the-interface-monitoring-template">How Zenoss Assigns the Interface Monitoring Template</h3>
-
 <p>The way Zenoss assigns the monitoring template for the network interfaces is very different from the assignment of other monitoring templates to other type of components. The assignment is based on the value of the <strong>interface type</strong>, obtained by Zenoss.</p>
-
 <p>The source code for how this is done can be found in <code>/Products/ZenModel/IpInterface.py</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">getRRDTemplates</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;
-</span><span style="color:#d88200">    Return a list containing the appropriate RRDTemplate for this
-</span><span style="color:#d88200">    IpInterface. If none is found then the list will be empty.
-</span><span style="color:#d88200">
-</span><span style="color:#d88200">    Order of preference if the interface supports 64bit counters:
-</span><span style="color:#d88200">      1. &lt;type&gt;_64
-</span><span style="color:#d88200">      2. ethernetCsmacd_64
-</span><span style="color:#d88200">      3. &lt;type&gt;
-</span><span style="color:#d88200">      4. ethernetCsmacd
-</span><span style="color:#d88200">
-</span><span style="color:#d88200">    Order of preference if the interface doesn&#39;t support 64bit counters:
-</span><span style="color:#d88200">      1. type
-</span><span style="color:#d88200">      2. ethernetCsmacd
-</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
-    <span style="color:#111">templateName</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">getRRDTemplateName</span><span style="color:#111">()</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">getRRDTemplates</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    Return a list containing the appropriate RRDTemplate for this</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    IpInterface. If none is found then the list will be empty.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    Order of preference if the interface supports 64bit counters:</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">      1. &lt;type&gt;_64</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">      2. ethernetCsmacd_64</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">      3. &lt;type&gt;</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">      4. ethernetCsmacd</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    Order of preference if the interface doesn</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">t support 64bit counters:</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">      1. type</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">      2. ethernetCsmacd</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    </span><span style="color:#d88200">&#34;&#34;&#34;</span>
+    <span style="color:#111">templateName</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">getRRDTemplateName</span><span style="color:#111">(</span><span style="color:#111">)</span>
 
-    <span style="color:#111">order</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;ethernetCsmacd&#39;</span><span style="color:#111">]</span>
-    <span style="color:#00a8c8">if</span> <span style="color:#111">templateName</span><span style="color:#f92672">.</span><span style="color:#111">endswith</span><span style="color:#111">(</span><span style="color:#d88200">&#39;_64&#39;</span><span style="color:#111">):</span>
-        <span style="color:#111">order</span><span style="color:#f92672">.</span><span style="color:#111">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;ethernetCsmacd_64&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">order</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ethernetCsmacd</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">templateName</span><span style="color:#f92672">.</span><span style="color:#111">endswith</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">_64</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">order</span><span style="color:#f92672">.</span><span style="color:#111">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ethernetCsmacd_64</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">templateName</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> <span style="color:#111">order</span><span style="color:#111">:</span>
             <span style="color:#111">order</span><span style="color:#f92672">.</span><span style="color:#111">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">templateName</span><span style="color:#111">)</span>
-            <span style="color:#111">order</span><span style="color:#f92672">.</span><span style="color:#111">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#111">templateName</span><span style="color:#111">[:</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3</span><span style="color:#111">])</span>
+            <span style="color:#111">order</span><span style="color:#f92672">.</span><span style="color:#111">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#111">templateName</span><span style="color:#111">[</span><span style="color:#111">:</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3</span><span style="color:#111">]</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">templateName</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> <span style="color:#111">order</span><span style="color:#111">:</span>
             <span style="color:#111">order</span><span style="color:#f92672">.</span><span style="color:#111">insert</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">templateName</span><span style="color:#111">)</span>
@@ -208,27 +192,17 @@ if (!doNotTrack) {
         <span style="color:#00a8c8">if</span> <span style="color:#111">template</span><span style="color:#111">:</span>
             <span style="color:#00a8c8">return</span> <span style="color:#111">[</span><span style="color:#111">template</span><span style="color:#111">]</span>
 
-    <span style="color:#00a8c8">return</span> <span style="color:#111">[]</span></code></pre></div>
-<p>Basically, Zenoss will check if the ethernet interface is of 64-bit type, if it is then it will assign the ethernetCsmacd_64 template, otherwise it will use the ethernetCsmacd template as a default fallback.</p>
-
+    <span style="color:#00a8c8">return</span> <span style="color:#111">[</span><span style="color:#111">]</span>
+</code></pre></div><p>Basically, Zenoss will check if the ethernet interface is of 64-bit type, if it is then it will assign the ethernetCsmacd_64 template, otherwise it will use the ethernetCsmacd template as a default fallback.</p>
 <p>After discovering this, I proceeded to inspect the assigned template for the OpenStack compute node devices and the other devices where the graphs would display correctly. Sure enough, the interface type detected and assigned by Zenoss for the OpenStack compute node devices was ethernetCsmacd.</p>
-
 <p>And this is what explains everything. Since the OpenStack devices (located in <code>/Server/SSH/Linux/NovaHost</code>) are assigned the ethernetCsmacd template located in <code>/Server/SSH/Linux</code>, we cannot see any graphs because this template is <strong>BLANK</strong>. However, since for the other devices, the ethernetCsmacd_64 template is assigned, and this template is located in <code>/Devices</code> (which applies to all devices) and it has all the graphs we need, then this is why these devices were displaying these graphs.</p>
-
 <h2 id="implementing-a-solution">Implementing a Solution</h2>
-
 <p>A possible solution to this is to create a new custom ZenPack that applies all the datasources, datapoints, thresholds, and graphs from ethernetCsmacd in <code>/Devices</code> into ethernetCsmacd in <code>/Server/SSH/Linux/NovaHost</code>.</p>
-
-<p>So I proceeded to create a new ZenPack using zenpacklib and define everything that is already defined in <code>/Devices</code>&rsquo;s ethernetCsmacd, but now into <code>/Server/SSH/Linux/NovaHost</code>. These definitions are constructed inside the ZenPack&rsquo;s <code>zenpack.yaml</code> file.</p>
-
+<p>So I proceeded to create a new ZenPack using zenpacklib and define everything that is already defined in <code>/Devices</code>'s ethernetCsmacd, but now into <code>/Server/SSH/Linux/NovaHost</code>. These definitions are constructed inside the ZenPack's <code>zenpack.yaml</code> file.</p>
 <p>-&gt; I have uploaded this ZenPack to my <a href="https://github.com/BigChief45/ZenPacks.itri.EthernetCsmacd">GitHub</a> and you can browse the source code or just install it in your Zenoss Core to fix the issue. I am sure there are identical or similar ZenPacks out there to address this particular issue.</p>
-
 <p>After finishing the ZenPack and installing it, we can check that ethernetCsmacd has a new location <code>/Server/SSH/Linux/NovaHost</code> with all the elements needed. Our devices will now surely use this template since they both possess the same device class.</p>
-
 <p>If re-model our devices and check the Interfaces components, we can see that indeed we now have network interface graphs (Throughput, Packets, Errors) for our the OpenStack devices:</p>
-
-<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces_graphs.png" alt="Network Interfaces Graphs" /></p>
-
+<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces_graphs.png" alt="Network Interfaces Graphs"></p>
 <p>~&gt; <strong>UPDATE:</strong> It seems that the current latest version (2.1.2) of the LinuxMonitor ZenPack fixes this issue and adds the interface monitoring templates to the <code>/Server/Linux</code> device class, which consequently will also provide the template for the NovaHost class.</p>
 </div>
 

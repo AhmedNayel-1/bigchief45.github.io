@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>web dev on Andrés Álvarez</title>
@@ -19,26 +19,18 @@
       <guid>https://aalvarez.me/posts/umask-permissions-in-a-puma-production-environment/</guid>
       <description>&lt;p&gt;Recently I was having an issue with a Sinatra application deployed in a staging
 server. The application was deployed with Puma and Nginx in the following location:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;/var/www/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This web service would then try to access some files in another directory on the server,
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This web service would then try to access some files in another directory on the server,
 mounted as an SFTP directory. The Sinatra app would open these files and generate some
 new files from them, depending on the HTTP request received.&lt;/p&gt;
-
 &lt;p&gt;The problem was that the operation would fail due to a permissions issue. I was baffled
 since I had set &lt;strong&gt;read&lt;/strong&gt; and &lt;strong&gt;write&lt;/strong&gt; permissions to the directory and the files in it.&lt;/p&gt;
-
 &lt;h2 id=&#34;umask-the-problem-and-solution&#34;&gt;Umask: The Problem and Solution&lt;/h2&gt;
-
 &lt;p&gt;It took around two days to find the culprit: &lt;strong&gt;umask&lt;/strong&gt;. In Linux, &lt;a href=&#34;https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work&#34;&gt;umask&lt;/a&gt;
 acts as another set of permissions for &lt;strong&gt;processes&lt;/strong&gt; and cannot be set for directories,
 basically speaking.&lt;/p&gt;
-
 &lt;p&gt;I realized that this probably meant that the process running the Puma application server had
 a umask configuration that was not allowing the generation of new files.&lt;/p&gt;
-
 &lt;p&gt;I decided to test this if this was the case. In the &lt;a href=&#34;https://github.com/puma/puma&#34;&gt;Puma&lt;/a&gt;
 documentation, I found an option to change the permissions of the UNIX socket using
 umask:&lt;/p&gt;</description>
@@ -51,17 +43,11 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/</guid>
       <description>&lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;part 1&lt;/a&gt; and &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;In this post, we will be sending automatic e-emails every time notifications are created.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-the-mailer&#34;&gt;Creating the Mailer&lt;/h2&gt;
-
 &lt;p&gt;We will work with one &lt;a href=&#34;http://guides.rubyonrails.org/action_mailer_basics.html&#34;&gt;mailer&lt;/a&gt; that will send e-mails for every notification that is created. We can generate our mailer with this command:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails g mailer NotificationsMailer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&amp;rsquo;ve been using &lt;strong&gt;comments&lt;/strong&gt; and &lt;strong&gt;posts&lt;/strong&gt; as examples.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&#39;ve been using &lt;strong&gt;comments&lt;/strong&gt; and &lt;strong&gt;posts&lt;/strong&gt; as examples.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -71,23 +57,16 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/</guid>
       <description>&lt;p&gt;&lt;em&gt;Read Part 1 of this series &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.&lt;/p&gt;
-
 &lt;p&gt;In this post we will be adding more functionality to our notification system.s&lt;/p&gt;
-
 &lt;h2 id=&#34;mark-as-read-feature&#34;&gt;Mark as Read Feature&lt;/h2&gt;
-
 &lt;p&gt;We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;For a single notification, it should be marked &lt;em&gt;as read&lt;/em&gt; when it is clicked from the list of notifications.&lt;/li&gt;
 &lt;li&gt;For all notifications, they should be marked as read when a specific button is pressed.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h3 id=&#34;setting-up-the-routes&#34;&gt;Setting up the Routes&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
+&lt;p&gt;Let&#39;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
@@ -97,7 +76,8 @@ umask:&lt;/p&gt;</description>
     &lt;span style=&#34;color:#111&#34;&gt;post&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:mark_as_read&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:member&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -107,13 +87,9 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails/</guid>
       <description>&lt;p&gt;Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.&lt;/p&gt;
-
-&lt;p&gt;This post is heavily inspired by &lt;a href=&#34;https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1&#34;&gt;Chris Oliver&amp;rsquo;s In-App Navbar Notifications tutorial&lt;/a&gt;, with a few personal changes and additions.&lt;/p&gt;
-
+&lt;p&gt;This post is heavily inspired by &lt;a href=&#34;https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1&#34;&gt;Chris Oliver&#39;s In-App Navbar Notifications tutorial&lt;/a&gt;, with a few personal changes and additions.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series.&lt;/em&gt;&lt;/p&gt;
-
 &lt;h2 id=&#34;models-and-routes&#34;&gt;Models and Routes&lt;/h2&gt;
-
 &lt;p&gt;Before starting with the models, lets quickly define the application resources in our routes:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
@@ -126,22 +102,17 @@ umask:&lt;/p&gt;</description>
 
   &lt;span style=&#34;color:#111&#34;&gt;resources&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:notifications&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;only&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
 &lt;p&gt;We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is an explanation for some of the fields for the above model:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here is an explanation for some of the fields for the above model:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;recipient_id&lt;/code&gt;: Represents the user in your application which will receive the notification.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;actor_id&lt;/code&gt;: Represents the user in your application which &lt;em&gt;triggered&lt;/em&gt; the notification.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;read_at&lt;/code&gt;: The time when the notification was read. A value of &lt;code&gt;nil&lt;/code&gt; is used for unread notifications.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;notifiable_id&lt;/code&gt;: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;notifiable_type&lt;/code&gt;: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&amp;rsquo;s class.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;notifiable_type&lt;/code&gt;: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&#39;s class.&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
@@ -152,20 +123,18 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/integrating-devise-with-rolify-in-rails/</guid>
       <description>&lt;p&gt;I have searched through tons of StackOverflow questions and blog posts on how to &lt;strong&gt;properly&lt;/strong&gt; integrate Rolify with Devise when &lt;strong&gt;registering as a new user&lt;/strong&gt; through the registration view provided by Devise. All proposed solutions and half-solutions seemed very messy to me, but I found a very simple way to achieve this.&lt;/p&gt;
-
 &lt;h2 id=&#34;preparing-the-roles&#34;&gt;Preparing the Roles&lt;/h2&gt;
-
 &lt;p&gt;Assuming you already have initialized a Devise &lt;code&gt;User&lt;/code&gt; model along with a Rolify &lt;code&gt;Role&lt;/code&gt; model, a very common question I see is how should the roles be prepared so that the &lt;em&gt;new&lt;/em&gt; users can have a list of already created roles to choose from when registering? In the &lt;a href=&#34;https://github.com/RolifyCommunity/rolify&#34;&gt;Rolify documentation&lt;/a&gt;, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;find&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;add_role&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:admin&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;A new &lt;code&gt;admin&lt;/code&gt; role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.&lt;/p&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;find&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;user&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;add_role&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:admin&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;A new &lt;code&gt;admin&lt;/code&gt; role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.&lt;/p&gt;
 &lt;p&gt;Answers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# db/seeds.rb&lt;/span&gt;
 
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;doctor&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;nurse&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Role&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create!&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;nurse&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -175,20 +144,18 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/select2-with-simple-form-in-rails/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://select2.github.io/&#34;&gt;Select2&lt;/a&gt; is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.&lt;/p&gt;
-
 &lt;p&gt;Recently while working on a Rails project, I was experiencing some problems when using Select2 and &lt;a href=&#34;https://github.com/plataformatec/simple_form&#34;&gt;Simple Form&lt;/a&gt; in my view.&lt;/p&gt;
-
-&lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&amp;rsquo;s database. Select2 should use AJAX to hit a controller&amp;rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
-
+&lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&#39;s database. Select2 should use AJAX to hit a controller&#39;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
 &lt;p&gt;The controller action looks something like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;where&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;name LIKE ? OR last_name LIKE ?&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
   &lt;span style=&#34;color:#111&#34;&gt;respond_to&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;render&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;map&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;full_name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;full_name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -197,20 +164,16 @@ umask:&lt;/p&gt;</description>
       <pubDate>Thu, 25 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/</guid>
-      <description>&lt;p&gt;Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&amp;rsquo;s factory, and then add the corresponding model and request specs.&lt;/p&gt;
-
-&lt;p&gt;The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&amp;rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.&lt;/p&gt;
-
+      <description>&lt;p&gt;Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&#39;s factory, and then add the corresponding model and request specs.&lt;/p&gt;
+&lt;p&gt;The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&#39;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.&lt;/p&gt;
 &lt;p&gt;In an API following the &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API&lt;/a&gt; specification, here is an example of how the strong parameters method would look like:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;thing_params&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;thing_params&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:data&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:attributes&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;permit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:color&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:size&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:age&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
       &lt;span style=&#34;color:#d88200&#34;&gt;:owner&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:origin&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:location&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:purpose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:price&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:alive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;As you can see, the list of attributes is getting pretty long. And we &lt;strong&gt;do not&lt;/strong&gt; want to explicitly keep adding more attributes to the test.&lt;/p&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;As you can see, the list of attributes is getting pretty long. And we &lt;strong&gt;do not&lt;/strong&gt; want to explicitly keep adding more attributes to the test.&lt;/p&gt;
 &lt;h2 id=&#34;testing-strong-parameters-in-controller-specs&#34;&gt;Testing Strong Parameters in Controller Specs&lt;/h2&gt;
-
-&lt;p&gt;After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&amp;rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that &lt;strong&gt;all&lt;/strong&gt; attributes of importance are whitelisted in the controller.&lt;/p&gt;</description>
+&lt;p&gt;After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&#39;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that &lt;strong&gt;all&lt;/strong&gt; attributes of importance are whitelisted in the controller.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -219,16 +182,11 @@ umask:&lt;/p&gt;</description>
       <pubDate>Mon, 08 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/rails-api-with-nested-resources/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&amp;rsquo;s form and create all objects at once when the form is saved.&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&#39;s form and create all objects at once when the form is saved.&lt;/p&gt;
 &lt;p&gt;I was recently finding myself trying to implement a similar functionality using only Rails 5 API and &lt;a href=&#34;http://jsonapi.org&#34;&gt;JSON API specification&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&amp;rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&#39;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;accepts-nested-attributes-for&#34;&gt;accepts_nested_attributes_for&lt;/h2&gt;
-
 &lt;p&gt;&lt;a href=&#34;http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html&#34;&gt;&lt;code&gt;accepts_nested_attributes_for&lt;/code&gt; &lt;/a&gt; allows us to save attributes on &lt;strong&gt;associated&lt;/strong&gt; records (work experience, educational background) through a parent record (user). By default nested attribute updating is turned off and you can enable it using the &lt;code&gt;#accepts_nested_attributes_for&lt;/code&gt; class method.&lt;/p&gt;</description>
     </item>
     
@@ -249,20 +207,14 @@ umask:&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/rails/webpacker&#34;&gt;rails/webpacker&lt;/a&gt; project allows integration of &lt;a href=&#34;https://webpack.github.io/&#34;&gt;Webpack&lt;/a&gt; with a Rails application. However, setting this up in a &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9&lt;/a&gt; development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-the-application&#34;&gt;Creating the Application&lt;/h2&gt;
-
 &lt;p&gt;We will first create a regular Rails application and then use the webpacker gem to install Webpack.&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails new webpack-app
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Add the gem to &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Add the gem to &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Gemfile&lt;/span&gt;
 
-&lt;span style=&#34;color:#111&#34;&gt;gem&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;github&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Install Webpacker&lt;/p&gt;
-
+&lt;span style=&#34;color:#111&#34;&gt;gem&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;github&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Install Webpacker&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;rails webpacker:install
 &lt;/code&gt;&lt;/pre&gt;</description>
     </item>
@@ -273,14 +225,10 @@ umask:&lt;/p&gt;</description>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/</guid>
-      <description>&lt;p&gt;Ruby&amp;rsquo;s &lt;a href=&#34;http://www.techotopia.com/index.php/The_Ruby_case_Statement&#34;&gt;&lt;code&gt;case&lt;/code&gt; statement&lt;/a&gt; provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of &lt;code&gt;if&lt;/code&gt; statements and I actually found a pretty neat way to implement using the Ruby &lt;code&gt;case&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;In my application I have a Rails model called &lt;code&gt;Entry&lt;/code&gt; which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3&amp;rsquo;s nice &lt;a href=&#34;http://getbootstrap.com/components/#progress&#34;&gt;progress bars&lt;/a&gt; and I want the progress bar&amp;rsquo;s contextual class to be changed and determined by the range in which this data point sits in.&lt;/p&gt;
-
+      <description>&lt;p&gt;Ruby&#39;s &lt;a href=&#34;http://www.techotopia.com/index.php/The_Ruby_case_Statement&#34;&gt;&lt;code&gt;case&lt;/code&gt; statement&lt;/a&gt; provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of &lt;code&gt;if&lt;/code&gt; statements and I actually found a pretty neat way to implement using the Ruby &lt;code&gt;case&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In my application I have a Rails model called &lt;code&gt;Entry&lt;/code&gt; which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3&#39;s nice &lt;a href=&#34;http://getbootstrap.com/components/#progress&#34;&gt;progress bars&lt;/a&gt; and I want the progress bar&#39;s contextual class to be changed and determined by the range in which this data point sits in.&lt;/p&gt;
 &lt;p&gt;If we take &lt;a href=&#34;https://en.wikipedia.org/wiki/Cholesterol&#34;&gt;total cholesterol&lt;/a&gt; as an example, a quick Google search indicates that an ideal value would be less than 200 mg/dL, a high value (not good) would be between 200-239 mg/dL, and a very high value (definitely not good) would be above 240 mg/dL.&lt;/p&gt;
-
 &lt;p&gt;To implement this, I created a &lt;code&gt;Recommendations&lt;/code&gt; module under the &lt;code&gt;/models&lt;/code&gt; directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;app/models/
 ├── application_record.rb
 ├── concerns
@@ -302,26 +250,22 @@ umask:&lt;/p&gt;</description>
       <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/</guid>
-      <description>&lt;p&gt;Adding &lt;a href=&#34;https://travis-ci.org/&#34;&gt;TravisCI&lt;/a&gt; to your application&amp;rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.&lt;/p&gt;
-
+      <description>&lt;p&gt;Adding &lt;a href=&#34;https://travis-ci.org/&#34;&gt;TravisCI&lt;/a&gt; to your application&#39;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.&lt;/p&gt;
 &lt;p&gt;In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-travisci&#34;&gt;Setting up TravisCI&lt;/h2&gt;
-
-&lt;p&gt;Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a &lt;code&gt;.travis.yml&lt;/code&gt; file to the application&amp;rsquo;s root directory with the following contents:&lt;/p&gt;
+&lt;p&gt;Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a &lt;code&gt;.travis.yml&lt;/code&gt; file to the application&#39;s root directory with the following contents:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;language&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Ruby
 rvm&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;2.3&lt;/span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.&lt;/p&gt;
-
+  - &lt;span style=&#34;color:#ae81ff&#34;&gt;2.3&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;.0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.&lt;/p&gt;
 &lt;h3 id=&#34;configure-postgresql&#34;&gt;Configure Postgresql&lt;/h3&gt;
-
 &lt;p&gt;Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to &lt;code&gt;.travis.yml&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;services&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  - postgresql&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Then we will add another configuration that will make Travis create a Postgresql database with username &lt;code&gt;postgres&lt;/code&gt; and blank password for the build:&lt;/p&gt;
+  - postgresql
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then we will add another configuration that will make Travis create a Postgresql database with username &lt;code&gt;postgres&lt;/code&gt; and blank password for the build:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;before_script&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  - psql -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;create database travis_ci_test;&amp;#39;&lt;/span&gt; -U postgres&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+  - psql -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;create database travis_ci_test;&amp;#39;&lt;/span&gt; -U postgres
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

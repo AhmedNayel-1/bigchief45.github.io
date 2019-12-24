@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,11 +139,8 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2019-02-05T20:16:38Z" class="post-date">Tue, Feb 5, 2019</time>
   <p>It is possible to add buttons that toggle a dropdown menu to the main toolbar in your Netbeans Platform application.</p>
-
 <p>For example, the Netbeans IDE <em>Run Project</em>, <em>Debug Project</em>, and <em>Profile Project</em> buttons have a small arrow next to them. When clicked, a dropdown menu with more related actions is shown:</p>
-
-<p><img src="https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png" alt="Netbeans IDE Dropdown Buttons" /></p>
-
+<p><img src="https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png" alt="Netbeans IDE Dropdown Buttons"></p>
 <p>In this article, I will teach you how to implement this behavior.</p>
 
   
@@ -166,11 +163,8 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2019-01-15T20:33:50Z" class="post-date">Tue, Jan 15, 2019</time>
   <p>I was having an issue the past few days with Django and Elastic Beanstalk in a production environment that was driving me nuts.</p>
-
 <p>Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer were <code>4xx</code> requests:</p>
-
-<p><img src="https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png" alt="Elastic Beanstalk 4xx requests" /></p>
-
+<p><img src="https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png" alt="Elastic Beanstalk 4xx requests"></p>
 <p>This issue was probably caused by several reasons. In this post I will go over the possible causes, and how I managed to resolve this issue.</p>
 
   
@@ -195,14 +189,10 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2019-01-09T17:28:17Z" class="post-date">Wed, Jan 9, 2019</time>
   <p>Nowadays a typical REST API responds with data in JSON format. But what if you wanted to serve data in a different format (and not just a serialization format) using the <strong>same</strong> endpoint, but specified by the client?</p>
-
 <p>Django REST Framework <a href="https://www.django-rest-framework.org/api-guide/renderers/">renderers</a> can help us achieve this nice feature.</p>
-
 <h2 id="use-case-onix-for-books-compatible-api">Use Case: ONIX For Books Compatible API</h2>
-
 <p><a href="https://en.wikipedia.org/wiki/ONIX_for_Books">ONIX for books</a> is an XML format for sharing bibliographic data pertaining to both traditional books and eBooks.</p>
-
-<p>Let&rsquo;s say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in <a href="https://www.editeur.org/83/Overview/">ONIX</a> format, which is an XML standard that defines how the metadata should be described and put together for consumption.</p>
+<p>Let's say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in <a href="https://www.editeur.org/83/Overview/">ONIX</a> format, which is an XML standard that defines how the metadata should be described and put together for consumption.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -224,10 +214,8 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2018-12-26T17:17:28Z" class="post-date">Wed, Dec 26, 2018</time>
   <p>In this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.</p>
-
 <p>For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.</p>
-
-<p>Let&rsquo;s get started!</p>
+<p>Let's get started!</p>
 
   
   <div style="margin: 20px 0px;">
@@ -257,13 +245,9 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2018-12-21T21:03:28Z" class="post-date">Fri, Dec 21, 2018</time>
   <p><a href="https://pytest.org/">Pytest</a> is my Python testing framework of choice. Very easy to use, and makes tests look much better.</p>
-
-<p>In this article I&rsquo;ll show you some cool tricks I have incorporated into my test suites using Pytest.</p>
-
+<p>In this article I'll show you some cool tricks I have incorporated into my test suites using Pytest.</p>
 <h2 id="environment-variables">Environment Variables</h2>
-
 <p>When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.</p>
-
 <p>With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in <code>conftest.py</code> that will be loaded automatically:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># conftest.py</span>
 
@@ -271,10 +255,10 @@ if (!doNotTrack) {
 
 
 <span style="color:#75af00">@pytest.fixture</span><span style="color:#111">(</span><span style="color:#111">autouse</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">env_setup</span><span style="color:#111">(</span><span style="color:#111">monkeypatch</span><span style="color:#111">):</span>
-    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;MY_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span>
-    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ANOTHER_SETTING&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;some-value&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p><a href="https://docs.pytest.org/en/latest/monkeypatch.html"><code>monkeypatch</code></a> is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the <code>autouse</code> option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.</p>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">env_setup</span><span style="color:#111">(</span><span style="color:#111">monkeypatch</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">MY_SETTING</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">some-value</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">monkeypatch</span><span style="color:#f92672">.</span><span style="color:#111">setenv</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ANOTHER_SETTING</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">some-value</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p><a href="https://docs.pytest.org/en/latest/monkeypatch.html"><code>monkeypatch</code></a> is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the <code>autouse</code> option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.</p>
 
   
   <div style="margin: 20px 0px;">

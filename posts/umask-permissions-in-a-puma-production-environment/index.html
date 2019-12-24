@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Umask Permissions in a Puma Production Environment",
     "headline" : "Umask Permissions in a Puma Production Environment",
-    "description" : "\x3cp\x3eRecently I was having an issue with a Sinatra application deployed in a staging\nserver. The application was deployed with Puma and Nginx in the following location:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3e\/var\/www\/\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eThis web service would then try to access some files in another directory on the server,\nmounted as an SFTP directory. The Sinatra app would open these files and generate some\nnew files from them, depending on the HTTP request received.\x3c\/p\x3e\n\n\x3cp\x3eThe problem was that the operation would fail due to a permissions issue. I was baffled\nsince I had set \x3cstrong\x3eread\x3c\/strong\x3e and \x3cstrong\x3ewrite\x3c\/strong\x3e permissions to the directory and the files in it.\x3c\/p\x3e\n\n\x3ch2 id=\x22umask-the-problem-and-solution\x22\x3eUmask: The Problem and Solution\x3c\/h2\x3e\n\n\x3cp\x3eIt took around two days to find the culprit: \x3cstrong\x3eumask\x3c\/strong\x3e. In Linux, \x3ca href=\x22https:\/\/askubuntu.com\/questions\/44542\/what-is-umask-and-how-does-it-work\x22\x3eumask\x3c\/a\x3e\nacts as another set of permissions for \x3cstrong\x3eprocesses\x3c\/strong\x3e and cannot be set for directories,\nbasically speaking.\x3c\/p\x3e\n\n\x3cp\x3eI realized that this probably meant that the process running the Puma application server had\na umask configuration that was not allowing the generation of new files.\x3c\/p\x3e\n\n\x3cp\x3eI decided to test this if this was the case. In the \x3ca href=\x22https:\/\/github.com\/puma\/puma\x22\x3ePuma\x3c\/a\x3e\ndocumentation, I found an option to change the permissions of the UNIX socket using\numask:\x3c\/p\x3e",
+    "description" : "\x3cp\x3eRecently I was having an issue with a Sinatra application deployed in a staging\nserver. The application was deployed with Puma and Nginx in the following location:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3e\/var\/www\/\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eThis web service would then try to access some files in another directory on the server,\nmounted as an SFTP directory. The Sinatra app would open these files and generate some\nnew files from them, depending on the HTTP request received.\x3c\/p\x3e\n\x3cp\x3eThe problem was that the operation would fail due to a permissions issue. I was baffled\nsince I had set \x3cstrong\x3eread\x3c\/strong\x3e and \x3cstrong\x3ewrite\x3c\/strong\x3e permissions to the directory and the files in it.\x3c\/p\x3e\n\x3ch2 id=\x22umask-the-problem-and-solution\x22\x3eUmask: The Problem and Solution\x3c\/h2\x3e\n\x3cp\x3eIt took around two days to find the culprit: \x3cstrong\x3eumask\x3c\/strong\x3e. In Linux, \x3ca href=\x22https:\/\/askubuntu.com\/questions\/44542\/what-is-umask-and-how-does-it-work\x22\x3eumask\x3c\/a\x3e\nacts as another set of permissions for \x3cstrong\x3eprocesses\x3c\/strong\x3e and cannot be set for directories,\nbasically speaking.\x3c\/p\x3e\n\x3cp\x3eI realized that this probably meant that the process running the Puma application server had\na umask configuration that was not allowing the generation of new files.\x3c\/p\x3e\n\x3cp\x3eI decided to test this if this was the case. In the \x3ca href=\x22https:\/\/github.com\/puma\/puma\x22\x3ePuma\x3c\/a\x3e\ndocumentation, I found an option to change the permissions of the UNIX socket using\numask:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -137,49 +137,34 @@ if (!doNotTrack) {
 
   <p>Recently I was having an issue with a Sinatra application deployed in a staging
 server. The application was deployed with Puma and Nginx in the following location:</p>
-
 <pre><code>/var/www/
-</code></pre>
-
-<p>This web service would then try to access some files in another directory on the server,
+</code></pre><p>This web service would then try to access some files in another directory on the server,
 mounted as an SFTP directory. The Sinatra app would open these files and generate some
 new files from them, depending on the HTTP request received.</p>
-
 <p>The problem was that the operation would fail due to a permissions issue. I was baffled
 since I had set <strong>read</strong> and <strong>write</strong> permissions to the directory and the files in it.</p>
-
 <h2 id="umask-the-problem-and-solution">Umask: The Problem and Solution</h2>
-
 <p>It took around two days to find the culprit: <strong>umask</strong>. In Linux, <a href="https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work">umask</a>
 acts as another set of permissions for <strong>processes</strong> and cannot be set for directories,
 basically speaking.</p>
-
 <p>I realized that this probably meant that the process running the Puma application server had
 a umask configuration that was not allowing the generation of new files.</p>
-
 <p>I decided to test this if this was the case. In the <a href="https://github.com/puma/puma">Puma</a>
 documentation, I found an option to change the permissions of the UNIX socket using
 umask:</p>
-
 <pre><code>puma -b 'unix:///var/run/puma.sock?umask=0111'
-</code></pre>
-
-<p>Since I am using <a href="https://github.com/capistrano/capistrano">Capistrano</a> for
+</code></pre><p>Since I am using <a href="https://github.com/capistrano/capistrano">Capistrano</a> for
 deployment, I added it to the Capistrano Puma configuration in <code>deploy.rb</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">set</span> <span style="color:#d88200">:puma_bind</span><span style="color:#111">,</span>       <span style="color:#d88200">&#34;unix://</span><span style="color:#d88200">#{</span><span style="color:#111">shared_path</span><span style="color:#d88200">}</span><span style="color:#d88200">/tmp/sockets/</span><span style="color:#d88200">#{</span><span style="color:#111">fetch</span><span style="color:#111">(</span><span style="color:#d88200">:application</span><span style="color:#111">)</span><span style="color:#d88200">}</span><span style="color:#d88200">-puma.sock?umask=0664&#34;</span></code></pre></div>
-<p>Using <code>0664</code> permissions does the following:</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">set</span> <span style="color:#d88200">:puma_bind</span><span style="color:#111">,</span>       <span style="color:#d88200">&#34;</span><span style="color:#d88200">unix://</span><span style="color:#d88200">#{</span><span style="color:#111">shared_path</span><span style="color:#d88200">}</span><span style="color:#d88200">/tmp/sockets/</span><span style="color:#d88200">#{</span><span style="color:#111">fetch</span><span style="color:#111">(</span><span style="color:#d88200">:application</span><span style="color:#111">)</span><span style="color:#d88200">}</span><span style="color:#d88200">-puma.sock?umask=0664</span><span style="color:#d88200">&#34;</span>
+</code></pre></div><p>Using <code>0664</code> permissions does the following:</p>
 <ul>
 <li>Sets <strong>owner</strong> permissions to <strong>read</strong> and <strong>write</strong>.</li>
 <li>Sets <strong>group</strong> permissions to <strong>read</strong> and <strong>write</strong>.</li>
 <li>Sets <strong>other</strong> permissions to <strong>read</strong>.</li>
 </ul>
-
 <p>After re-deploying, I found out this was indeed the issue. With this fix, my Sinatra
 application was now generating the files as intended.</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work">https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work</a></li>
 </ol>

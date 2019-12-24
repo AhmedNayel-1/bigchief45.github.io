@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Zenoss Custom Notification Actions Using Subscribers",
     "headline" : "Zenoss Custom Notification Actions Using Subscribers",
-    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/custom-notification-action-types-in-zenoss.html\x22\x3eprevious post\x3c\/a\x3e I talked about how we could create custom notifications actions in Zenoss. Like a \x3cem\x3eSMS\x3c\/em\x3e notification, for example. In that post we required a valid cellphone number using a text field in the notification\x26rsquo;s content pane, as shown below:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-notification-action-types-in-zenoss\/sms_action.jpg\x22 alt=\x22Notification Content\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn this post I want to change and improve this by using \x3cem\x3e\x3cstrong\x3esubscribers\x3c\/strong\x3e\x3c\/em\x3e functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the \x3cem\x3ePager\x3c\/em\x3e field instead.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-pager-action\x22\x3eThe Pager Action\x3c\/h2\x3e\n\n\x3cp\x3eUsing Zenoss Core 4\x26rsquo;s pager action\x26rsquo;s \x3ca href=\x22https:\/\/github.com\/BigChief45\/zenoss-core-425\/blob\/master\/usr\/local\/zenoss\/Products\/ZenModel\/actions.py#L449\x22\x3esource code\x3c\/a\x3e as reference is a good starting point, since we are going to use the pager field for SMS.\x3c\/p\x3e\n\n\x3cp\x3eWe can see that this action class implements a \x3ccode\x3eexecuteOnTarget\x3c\/code\x3e method instead of a \x3ccode\x3eexecute\x3c\/code\x3e method we used in the previous post.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/custom-notification-action-types-in-zenoss.html\x22\x3eprevious post\x3c\/a\x3e I talked about how we could create custom notifications actions in Zenoss. Like a \x3cem\x3eSMS\x3c\/em\x3e notification, for example. In that post we required a valid cellphone number using a text field in the notification\x27s content pane, as shown below:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-notification-action-types-in-zenoss\/sms_action.jpg\x22 alt=\x22Notification Content\x22\x3e\x3c\/p\x3e\n\x3cp\x3eIn this post I want to change and improve this by using \x3cem\x3e\x3cstrong\x3esubscribers\x3c\/strong\x3e\x3c\/em\x3e functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the \x3cem\x3ePager\x3c\/em\x3e field instead.\x3c\/p\x3e\n\x3ch2 id=\x22the-pager-action\x22\x3eThe Pager Action\x3c\/h2\x3e\n\x3cp\x3eUsing Zenoss Core 4\x27s pager action\x27s \x3ca href=\x22https:\/\/github.com\/BigChief45\/zenoss-core-425\/blob\/master\/usr\/local\/zenoss\/Products\/ZenModel\/actions.py#L449\x22\x3esource code\x3c\/a\x3e as reference is a good starting point, since we are going to use the pager field for SMS.\x3c\/p\x3e\n\x3cp\x3eWe can see that this action class implements a \x3ccode\x3eexecuteOnTarget\x3c\/code\x3e method instead of a \x3ccode\x3eexecute\x3c\/code\x3e method we used in the previous post.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-06-07 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-06-07 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/zenoss-custom-notification-actions-using-subscribers\/",
-    "wordCount" : "451",
+    "wordCount" : "447",
     "keywords" : [ "zenoss","python","monitoring","Blog" ]
 }
 </script>
@@ -135,54 +135,40 @@ if (!doNotTrack) {
   <h1>Zenoss Custom Notification Actions Using Subscribers</h1>
   <time datetime=2017-06-07T00:00:00Z class="post-date">Wed, Jun 7, 2017</time>
 
-  <p>In a <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification&rsquo;s content pane, as shown below:</p>
-
-<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content" /></p>
-
+  <p>In a <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification's content pane, as shown below:</p>
+<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content"></p>
 <p>In this post I want to change and improve this by using <em><strong>subscribers</strong></em> functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the <em>Pager</em> field instead.</p>
-
 <h2 id="the-pager-action">The Pager Action</h2>
-
-<p>Using Zenoss Core 4&rsquo;s pager action&rsquo;s <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
-
+<p>Using Zenoss Core 4's pager action's <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
 <p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
-
 <p>This method is very similar to <code>execute</code>, but it receives an additional <code>target</code> parameter:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">PageAction</span><span style="color:#111">(</span><span style="color:#111">IActionBase</span><span style="color:#111">,</span> <span style="color:#111">TargetableAction</span><span style="color:#111">):</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">PageAction</span><span style="color:#111">(</span><span style="color:#111">IActionBase</span><span style="color:#111">,</span> <span style="color:#111">TargetableAction</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#75715e"># ...</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">executeOnTarget</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">notification</span><span style="color:#111">,</span> <span style="color:#111">signal</span><span style="color:#111">,</span> <span style="color:#111">target</span><span style="color:#111">):</span>
-        <span style="color:#75715e"># ...</span></code></pre></div>
-<p>The <code>target</code> argument is what will represent the subscriber. More specifically, it will represent the subscriber&rsquo;s <em>pager</em> value, which will be a string.</p>
-
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">executeOnTarget</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">notification</span><span style="color:#111">,</span> <span style="color:#111">signal</span><span style="color:#111">,</span> <span style="color:#111">target</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#75715e"># ...</span>
+</code></pre></div><p>The <code>target</code> argument is what will represent the subscriber. More specifically, it will represent the subscriber's <em>pager</em> value, which will be a string.</p>
 <p>Very simple. However, we must not overlook a method from theaction class called <code>getActionableTargets</code>. This method implements an interface that should be designed in the context of the targets. In this case, pager addresses. But it could also be in the context of e-mails or other scenarios:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#00a8c8">def</span> <span style="color:#75af00">getActionableTargets</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">target</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;
-</span><span style="color:#d88200">        @param target: This is an object that implements the IProvidesPagerAddresses
-</span><span style="color:#d88200">            interface.
-</span><span style="color:#d88200">        @type target: UserSettings or GroupSettings.
-</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">IProvidesPagerAddresses</span><span style="color:#f92672">.</span><span style="color:#111">providedBy</span><span style="color:#111">(</span><span style="color:#111">target</span><span style="color:#111">):</span>
-            <span style="color:#00a8c8">return</span> <span style="color:#111">target</span><span style="color:#f92672">.</span><span style="color:#111">getPagerAddresses</span><span style="color:#111">()</span></code></pre></div>
-<p>The importing of these interfaces can be seen at the top of the file:</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#00a8c8">def</span> <span style="color:#75af00">getActionableTargets</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">target</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @param target: This is an object that implements the IProvidesPagerAddresses</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">            interface.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @type target: UserSettings or GroupSettings.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        </span><span style="color:#d88200">&#34;&#34;&#34;</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">IProvidesPagerAddresses</span><span style="color:#f92672">.</span><span style="color:#111">providedBy</span><span style="color:#111">(</span><span style="color:#111">target</span><span style="color:#111">)</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">target</span><span style="color:#f92672">.</span><span style="color:#111">getPagerAddresses</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>The importing of these interfaces can be seen at the top of the file:</p>
 <p><strong>Products/ZenModel/actions.py</strong>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">Products.ZenModel.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">(</span>
     <span style="color:#111">IAction</span><span style="color:#111">,</span> <span style="color:#111">IProvidesEmailAddresses</span><span style="color:#111">,</span> <span style="color:#111">IProvidesPagerAddresses</span><span style="color:#111">,</span>
     <span style="color:#111">IProcessSignal</span><span style="color:#111">,</span> <span style="color:#111">INotificationContextProvider</span><span style="color:#111">,</span>
-<span style="color:#111">)</span></code></pre></div>
-<h2 id="sms-action-with-subscribers">SMS Action With Subscribers</h2>
-
+<span style="color:#111">)</span>
+</code></pre></div><h2 id="sms-action-with-subscribers">SMS Action With Subscribers</h2>
 <p>Now to be able to use a similar <em>subscribers</em> approach like the e-mail action, we simply need to implement the concepts mentioned above. However, since we are going to use the pager field for the mobile number, we can use the <code>IProvidesPagerAddresses</code> interface in our code.</p>
-
 <p>We will rename our <code>execute</code> method to <code>executeOnTarget</code>, and we will include the new <code>target</code> parameter it receives. Additionally, all previous references to the <code>cellphone_number</code> field should be changed to <code>target</code>.</p>
-
 <p>Then we simply include the <code>getActionableTargets</code> method in our class, and make sure we are importing the interface.</p>
-
 <p>With all this we should be good to go. If you create some users and assign a valid mobile number in their <em>pager</em> field, add the users to the notification as subscribers, then the notification should successfully pick up the mobile number.</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">Zenoss Core 4.2.5 Pager Action</a></li>
 </ol>

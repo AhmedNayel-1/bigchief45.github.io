@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Django Formsets with Generic FormViews",
     "headline" : "Django Formsets with Generic FormViews",
-    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/topics\/forms\/formsets\/\x22\x3eDjango Formsets\x3c\/a\x3e is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django\x26rsquo;s built-in generic class based views, the \x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/ref\/class-based-views\/generic-editing\/#django.views.generic.edit.FormView\x22\x3eFormView\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-scenario\x22\x3eThe Scenario\x3c\/h2\x3e\n\n\x3cp\x3eTo add some context to this tutorial, let\x26rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/django-formsets-with-generic-formviews\/nested_search_example.png\x22 alt=\x22Nested Search Example\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eFor this tutorial, we will use the following model as an example:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eclass\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eBook\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eModel\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3etitle\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eCharField\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eauthor\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eForeignKey\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eAuthor\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eisbn\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eCharField\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eeditorial\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eForeignKey\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eEditorial\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3ch2 id=\x22creating-the-form\x22\x3eCreating the Form\x3c\/h2\x3e\n\n\x3cp\x3eWe will begin by creating the form that will be cloned. That is, the form that will represent \x3cstrong\x3eone\x3c\/strong\x3e search query out of the many that will\/could be nested together.\x3c\/p\x3e\n\n\x3cp\x3eFor our case, the form will only contain 3 fields:\x3c\/p\x3e\n\n\x3col\x3e\n\x3cli\x3eThe query field: Indicates which field of the model we will query.\x3c\/li\x3e\n\x3cli\x3eThe lookup type: Indicates which \x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/topics\/db\/queries\/#field-lookups\x22\x3elookup\x3c\/a\x3e is going to be used to make the query.\x3c\/li\x3e\n\x3cli\x3eThe query value: Indicates what we want to actually search for (i.e \x3cem\x3eHarry Potter\x3c\/em\x3e for the book title.)\x3c\/li\x3e\n\x3c\/ol\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/topics\/forms\/formsets\/\x22\x3eDjango Formsets\x3c\/a\x3e is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django\x27s built-in generic class based views, the \x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/ref\/class-based-views\/generic-editing\/#django.views.generic.edit.FormView\x22\x3eFormView\x3c\/a\x3e.\x3c\/p\x3e\n\x3ch2 id=\x22the-scenario\x22\x3eThe Scenario\x3c\/h2\x3e\n\x3cp\x3eTo add some context to this tutorial, let\x27s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/django-formsets-with-generic-formviews\/nested_search_example.png\x22 alt=\x22Nested Search Example\x22\x3e\x3c\/p\x3e\n\x3cp\x3eFor this tutorial, we will use the following model as an example:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3eclass\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3eBook\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eModel\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3etitle\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eCharField\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eauthor\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eForeignKey\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eAuthor\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eisbn\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eCharField\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eeditorial\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3emodels\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eForeignKey\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eEditorial\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3ch2 id=\x22creating-the-form\x22\x3eCreating the Form\x3c\/h2\x3e\n\x3cp\x3eWe will begin by creating the form that will be cloned. That is, the form that will represent \x3cstrong\x3eone\x3c\/strong\x3e search query out of the many that will\/could be nested together.\x3c\/p\x3e\n\x3cp\x3eFor our case, the form will only contain 3 fields:\x3c\/p\x3e\n\x3col\x3e\n\x3cli\x3eThe query field: Indicates which field of the model we will query.\x3c\/li\x3e\n\x3cli\x3eThe lookup type: Indicates which \x3ca href=\x22https:\/\/docs.djangoproject.com\/en\/2.0\/topics\/db\/queries\/#field-lookups\x22\x3elookup\x3c\/a\x3e is going to be used to make the query.\x3c\/li\x3e\n\x3cli\x3eThe query value: Indicates what we want to actually search for (i.e \x3cem\x3eHarry Potter\x3c\/em\x3e for the book title.)\x3c\/li\x3e\n\x3c\/ol\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2018-04-19 00:00:00 \x2b0000 UTC",
     "dateModified" : "2018-04-19 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/django-formsets-with-generic-formviews\/",
-    "wordCount" : "936",
+    "wordCount" : "933",
     "keywords" : [ "django","Blog" ]
 }
 </script>
@@ -135,118 +135,100 @@ if (!doNotTrack) {
   <h1>Django Formsets with Generic FormViews</h1>
   <time datetime=2018-04-19T00:00:00Z class="post-date">Thu, Apr 19, 2018</time>
 
-  <p><a href="https://docs.djangoproject.com/en/2.0/topics/forms/formsets/">Django Formsets</a> is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django&rsquo;s built-in generic class based views, the <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView">FormView</a>.</p>
-
+  <p><a href="https://docs.djangoproject.com/en/2.0/topics/forms/formsets/">Django Formsets</a> is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django's built-in generic class based views, the <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView">FormView</a>.</p>
 <h2 id="the-scenario">The Scenario</h2>
-
-<p>To add some context to this tutorial, let&rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:</p>
-
-<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example" /></p>
-
+<p>To add some context to this tutorial, let's say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:</p>
+<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example"></p>
 <p>For this tutorial, we will use the following model as an example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">):</span>
-    <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">)</span>
     <span style="color:#111">author</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Author</span><span style="color:#111">)</span>
-    <span style="color:#111">isbn</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
-    <span style="color:#111">editorial</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Editorial</span><span style="color:#111">)</span></code></pre></div>
-<h2 id="creating-the-form">Creating the Form</h2>
-
+    <span style="color:#111">isbn</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">)</span>
+    <span style="color:#111">editorial</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Editorial</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="creating-the-form">Creating the Form</h2>
 <p>We will begin by creating the form that will be cloned. That is, the form that will represent <strong>one</strong> search query out of the many that will/could be nested together.</p>
-
 <p>For our case, the form will only contain 3 fields:</p>
-
 <ol>
 <li>The query field: Indicates which field of the model we will query.</li>
 <li>The lookup type: Indicates which <a href="https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups">lookup</a> is going to be used to make the query.</li>
 <li>The query value: Indicates what we want to actually search for (i.e <em>Harry Potter</em> for the book title.)</li>
 </ol>
-
 <p>And this is how we implement it:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">SearchQueryForm</span><span style="color:#111">(</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">Form</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;
-</span><span style="color:#d88200">    Search query form that will be used inside a formset.
-</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">SearchQueryForm</span><span style="color:#111">(</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">Form</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    Search query form that will be used inside a formset.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    </span><span style="color:#d88200">&#34;&#34;&#34;</span>
     <span style="color:#111">query_field</span> <span style="color:#f92672">=</span> <span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">ChoiceField</span><span style="color:#111">(</span>
         <span style="color:#111">choices</span><span style="color:#f92672">=</span><span style="color:#111">(</span>
-            <span style="color:#111">(</span><span style="color:#d88200">&#39;title&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Title&#39;</span><span style="color:#111">),</span>
-            <span style="color:#111">(</span><span style="color:#d88200">&#39;author__name&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Author&#39;</span><span style="color:#111">),</span>
-            <span style="color:#111">(</span><span style="color:#d88200">&#39;isbn&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;ISBN&#39;</span><span style="color:#111">),</span>
-            <span style="color:#111">(</span><span style="color:#d88200">&#39;editorial__name&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Editorial&#39;</span><span style="color:#111">)</span>
-        <span style="color:#111">),</span>
-        <span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">Select</span><span style="color:#111">()</span>
+            <span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">title</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Title</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
+            <span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">author__name</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Author</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
+            <span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">isbn</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ISBN</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
+            <span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">editorial__name</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Editorial</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+        <span style="color:#111">)</span><span style="color:#111">,</span>
+        <span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">Select</span><span style="color:#111">(</span><span style="color:#111">)</span>
     <span style="color:#111">)</span>
 
     <span style="color:#111">lookup</span> <span style="color:#f92672">=</span> <span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">ChoiceField</span><span style="color:#111">(</span>
         <span style="color:#111">choices</span><span style="color:#f92672">=</span><span style="color:#111">(</span>
-            <span style="color:#111">(</span><span style="color:#d88200">&#39;iexact&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Equals&#39;</span><span style="color:#111">),</span>
-            <span style="color:#111">(</span><span style="color:#d88200">&#39;icontains&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Contains&#39;</span><span style="color:#111">)</span>
-        <span style="color:#111">),</span>
-        <span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">Select</span><span style="color:#111">()</span>
+            <span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">iexact</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Equals</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
+            <span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">icontains</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Contains</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+        <span style="color:#111">)</span><span style="color:#111">,</span>
+        <span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">Select</span><span style="color:#111">(</span><span style="color:#111">)</span>
     <span style="color:#111">)</span>
 
-    <span style="color:#111">query</span> <span style="color:#f92672">=</span> <span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">TextInput</span><span style="color:#111">())</span></code></pre></div>
-<p>Notice how we are supplying which fields we provide for querying in the <code>query_field</code> field, using tuples. The left part of the tuple should equal to the actual model field name, and the right part of the tuple is the display string that will show in the select box in the template. Moreover, pay attention to how we can access relationship fields in the query. For example, we can query the book&rsquo;s author&rsquo;s name using <code>author__name</code>.</p>
-
+    <span style="color:#111">query</span> <span style="color:#f92672">=</span> <span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">TextInput</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">)</span>
+</code></pre></div><p>Notice how we are supplying which fields we provide for querying in the <code>query_field</code> field, using tuples. The left part of the tuple should equal to the actual model field name, and the right part of the tuple is the display string that will show in the select box in the template. Moreover, pay attention to how we can access relationship fields in the query. For example, we can query the book's author's name using <code>author__name</code>.</p>
 <p>For the lookups I am only inluding two types: <code>iexact</code> for exact matches, and <code>icontains</code> for <code>LIKE</code> type matches. Both case insensitive.</p>
-
 <h2 id="creating-the-formview">Creating the FormView</h2>
-
-<p>Now that the form is ready, we will create a <code>FormView</code> where we will use a Formset as the view&rsquo;s <em>&ldquo;form&rdquo;</em>:</p>
+<p>Now that the form is ready, we will create a <code>FormView</code> where we will use a Formset as the view's <em>&ldquo;form&rdquo;</em>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">django.db.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Q</span>
 <span style="color:#f92672">from</span> <span style="color:#111">django.forms</span> <span style="color:#f92672">import</span> <span style="color:#111">formset_factory</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">myapp.forms</span> <span style="color:#f92672">import</span> <span style="color:#111">SearchQueryForm</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">NestedSearch</span><span style="color:#111">(</span><span style="color:#111">FormView</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">NestedSearch</span><span style="color:#111">(</span><span style="color:#111">FormView</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#111">form_class</span> <span style="color:#f92672">=</span> <span style="color:#111">formset_factory</span><span style="color:#111">(</span><span style="color:#111">SearchQueryForm</span><span style="color:#111">)</span>
-    <span style="color:#111">template_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;my_search_template.html&#39;</span>
-    <span style="color:#111">success_url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;&#39;</span>
+    <span style="color:#111">template_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">my_search_template.html</span><span style="color:#d88200">&#39;</span>
+    <span style="color:#111">success_url</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">&#39;</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">form_valid</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">form</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">form_valid</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">form</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#75715e"># Build the query chain</span>
-        <span style="color:#111">qs</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+        <span style="color:#111">qs</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">]</span>
         <span style="color:#00a8c8">for</span> <span style="color:#111">form_query</span> <span style="color:#f92672">in</span> <span style="color:#111">form</span><span style="color:#f92672">.</span><span style="color:#111">cleaned_data</span><span style="color:#111">:</span>
-            <span style="color:#111">q</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;{0}__{1}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">form_query</span><span style="color:#111">[</span><span style="color:#d88200">&#39;query_field&#39;</span><span style="color:#111">],</span> <span style="color:#111">form_query</span><span style="color:#111">[</span><span style="color:#d88200">&#39;lookup&#39;</span><span style="color:#111">]):</span> <span style="color:#111">form_query</span><span style="color:#111">[</span><span style="color:#d88200">&#39;query&#39;</span><span style="color:#111">]}</span>
-            <span style="color:#111">qs</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#f92672">**</span><span style="color:#111">q</span><span style="color:#111">))</span>
+            <span style="color:#111">q</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">{0}__{1}</span><span style="color:#d88200">&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">form_query</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">query_field</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">,</span> <span style="color:#111">form_query</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">lookup</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">)</span><span style="color:#111">:</span> <span style="color:#111">form_query</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">query</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">}</span>
+            <span style="color:#111">qs</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">q</span><span style="color:#111">)</span><span style="color:#111">)</span>
 
         <span style="color:#111">results</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">filter</span><span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#111">qs</span><span style="color:#111">)</span>
 
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">render_to_response</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">get_context_data</span><span style="color:#111">(</span><span style="color:#111">results</span><span style="color:#f92672">=</span><span style="color:#111">results</span><span style="color:#111">,</span> <span style="color:#111">form</span><span style="color:#f92672">=</span><span style="color:#111">form</span><span style="color:#111">))</span></code></pre></div>
-<p>A bit of a mouthful. Let&rsquo;s go over it.</p>
-
-<p>We are using Django&rsquo;s <code>formset_factory</code>  to create a simple Formset that will contain an infinite amount of <code>SearchQueryForm</code> forms. Since we are going to redirect to the same view to display the results, we do not need to specify a real <code>success_url</code>.</p>
-
+        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">render_to_response</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">get_context_data</span><span style="color:#111">(</span><span style="color:#111">results</span><span style="color:#f92672">=</span><span style="color:#111">results</span><span style="color:#111">,</span> <span style="color:#111">form</span><span style="color:#f92672">=</span><span style="color:#111">form</span><span style="color:#111">)</span><span style="color:#111">)</span>
+</code></pre></div><p>A bit of a mouthful. Let's go over it.</p>
+<p>We are using Django's <code>formset_factory</code>  to create a simple Formset that will contain an infinite amount of <code>SearchQueryForm</code> forms. Since we are going to redirect to the same view to display the results, we do not need to specify a real <code>success_url</code>.</p>
 <p>After the user submits the form, if the form is valid, the <code>form.cleaned_data</code> will be an array of dictionaries. Each dictionary in the array will represent each <code>SearchQueryForm</code> and will contain 3 keys with their respective values.</p>
-
 <p>We will build the full query chain using <a href="https://docs.djangoproject.com/en/2.0/topics/db/queries/#complex-lookups-with-q-objects">Django Q Objects</a>. Basically, we will make a Q object per <code>SearchQueryForm</code>, and we will send all those Q objects to the usual <code>filter()</code> method on the <code>Book</code> model.</p>
-
 <p>Notice that since we are assigning dynamic field, lookup, and query value to the Q object, we build the query manually and send it to the Q object as keyword arguments. It is a dynamic way of doing this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">author__name__icontains</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Rowling&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>We store all these Q objects in an array so that we can easily pass them to the <code>filter()</code> method using the splat (<code>*</code>) operator.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">author__name__icontains</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Rowling</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>We store all these Q objects in an array so that we can easily pass them to the <code>filter()</code> method using the splat (<code>*</code>) operator.</p>
 <p>Lastly we redirect to the same view while at the same time adding those results to the context so that it will be available to the template.</p>
-
 <h2 id="the-template">The Template</h2>
-
-<p>The template implementation could vary. But here&rsquo;s the basic idea:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">&lt;form action=&#34;&#34; method=&#34;POST&#34;&gt;
+<p>The template implementation could vary. But here's the basic idea:</p>
+<pre><code class="language-liquid" data-lang="liquid">&lt;form action=&quot;&quot; method=&quot;POST&quot;&gt;
   {% csrf_token %}
 
-  &lt;div class=&#34;row&#34;&gt;
-    &lt;div class=&#34;col-md-12&#34;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-md-12&quot;&gt;
       &lt;div&gt;
         {% for f in form %}
-          &lt;div class=&#34;form-group&#34;&gt;
-            &lt;div class=&#34;col-md-2&#34;&gt;
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;div class=&quot;col-md-2&quot;&gt;
               {{ f.query_field }}
             &lt;/div&gt;
-            &lt;div class=&#34;col-md-1&#34;&gt;
+            &lt;div class=&quot;col-md-1&quot;&gt;
               {{ f.lookup }}
             &lt;/div&gt;
-            &lt;div class=&#34;col-md-9&#34;&gt;
+            &lt;div class=&quot;col-md-9&quot;&gt;
               {{ f.query }}
-              &lt;label class=&#34;error&#34;&gt;{{ f.query.errors }}&lt;/label&gt;
+              &lt;label class=&quot;error&quot;&gt;{{ f.query.errors }}&lt;/label&gt;
             &lt;/div&gt;
           &lt;/div&gt;
         {% endfor %}
@@ -254,43 +236,38 @@ if (!doNotTrack) {
 
       &lt;br&gt;
 
-      &lt;button type=&#34;submit&#34; class=&#34;btn btn-primary&#34;&gt;Search&lt;/button&gt;
+      &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;Search&lt;/button&gt;
       {{ form.management_form }}
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/form&gt;</code></pre></div>
-<p>Keep in mind that <code>form</code> here is actually the <em>formset</em>, and <code>f</code> would actually be each form <em>in</em> the formset.</p>
-
+&lt;/form&gt;
+</code></pre><p>Keep in mind that <code>form</code> here is actually the <em>formset</em>, and <code>f</code> would actually be each form <em>in</em> the formset.</p>
 <p>We can add the display of results right below the forms:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% if results %}
+<pre><code class="language-liquid" data-lang="liquid">{% if results %}
   &lt;hr&gt;
   &lt;h2&gt;Results&lt;/h2&gt;
 
   {% for result in results %}
-    {% include &#39;_my_result_partial.html&#39; with book=result %}
+    {% include '_my_result_partial.html' with book=result %}
   {% endfor %}
-{% endif %}</code></pre></div>
-<p>And obviously that means you would have some partial that displays each item using an object with the name <code>book</code>.</p>
-
+{% endif %}
+</code></pre><p>And obviously that means you would have some partial that displays each item using an object with the name <code>book</code>.</p>
 <h3 id="spicying-it-up-with-some-javascript">Spicying It Up With Some JavaScript</h3>
-
 <p>The above approach does not allow us to add or remove forms dynamically. We can use some Javascript to solve this. More specifically, we can use the <a href="https://github.com/elo80ka/django-dynamic-formset">django-dynamic-formset</a> JQuery plugin to handle this for us.</p>
-
 <p>After you have included the Javascript file in your static assets. You can then add the following JQuery code at the end of your template file:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">script</span> <span style="color:#75af00">src</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;{% static &#39;path/to/plugin/&#39; %}&#34;</span><span style="color:#111">&gt;&lt;/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
-<span style="color:#111">&lt;</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
-<span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#39;.nested-query-formset&#39;</span><span style="color:#111">).</span><span style="color:#75af00">formset</span><span style="color:#111">({</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">script</span> <span style="color:#75af00">src</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;{% static &#39;path/to/plugin/&#39; %}&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span><span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
+<span style="color:#111">&lt;</span><span style="color:#f92672">script</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+<span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#39;.nested-query-formset&#39;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">formset</span><span style="color:#111">(</span><span style="color:#111">{</span>
   <span style="color:#75af00">addText</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;add&#39;</span><span style="color:#111">,</span>
   <span style="color:#75af00">deleteText</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;remove&#39;</span>
-<span style="color:#111">});</span>
-<span style="color:#111">&lt;/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span></code></pre></div>
-<p>The selector you use is up to you. But you will have to place it carefully in your HTML so that the generated add/remove links get the correct placing. In the HTML example above I placed it in the following <code>&lt;div&gt;</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">div</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;form-group row nested-query-formset&#34;</span><span style="color:#111">&gt;</span>
-  <span style="color:#75715e">&lt;!-- ... --&gt;</span>
-<span style="color:#111">&lt;/</span><span style="color:#f92672">div</span><span style="color:#111">&gt;</span></code></pre></div>
-<p>And that&rsquo;s it. Here is an example of a personal implementation of this tutorial:</p>
-
-<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_result.gif" alt="Nested Search Implementation" /></p>
+<span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">script</span><span style="color:#111">&gt;</span>
+</code></pre></div><p>The selector you use is up to you. But you will have to place it carefully in your HTML so that the generated add/remove links get the correct placing. In the HTML example above I placed it in the following <code>&lt;div&gt;</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">div</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;form-group row nested-query-formset&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+  <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> ... </span><span style="color:#75715e">--&gt;</span>
+<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">div</span><span style="color:#111">&gt;</span>
+</code></pre></div><p>And that's it. Here is an example of a personal implementation of this tutorial:</p>
+<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_result.gif" alt="Nested Search Implementation"></p>
 </div>
 
 

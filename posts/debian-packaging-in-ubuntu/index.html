@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Debian Packaging in Ubuntu",
     "headline" : "Debian Packaging in Ubuntu",
-    "description" : "\x3cp\x3eDebian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.\x3c\/p\x3e\n\n\x3ch2 id=\x22package-source-structure\x22\x3ePackage Source \x26amp; Structure\x3c\/h2\x3e\n\n\x3cp\x3eWe will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory\x26rsquo;s title:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3emkdir mypackage-1.0.0\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eInside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ecd mypackage-1.0.0\nmkdir DEBIAN\ntouch DEBIAN\/control\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eThis \x3ccode\x3econtrol\x3c\/code\x3e file will describe our package to the Debian package manager (\x3ccode\x3edpkg\x3c\/code\x3e). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ePackage: mypackage\nVersion: 1.0-0\nSection: base\nPriority: optional\nArchitecture: all\nDepends: python2.7\nMaintainer: Andres Alvarez \x26lt;myemail@gmail.com\x26gt;\nDescription: A new and improved C\x2b\x2b Compiler\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eWith this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eDebian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.\x3c\/p\x3e\n\x3ch2 id=\x22package-source--structure\x22\x3ePackage Source \x26amp; Structure\x3c\/h2\x3e\n\x3cp\x3eWe will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory\x27s title:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3emkdir mypackage-1.0.0\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eInside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3ecd mypackage-1.0.0\nmkdir DEBIAN\ntouch DEBIAN\/control\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eThis \x3ccode\x3econtrol\x3c\/code\x3e file will describe our package to the Debian package manager (\x3ccode\x3edpkg\x3c\/code\x3e). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3ePackage: mypackage\nVersion: 1.0-0\nSection: base\nPriority: optional\nArchitecture: all\nDepends: python2.7\nMaintainer: Andres Alvarez \x26lt;myemail@gmail.com\x26gt;\nDescription: A new and improved C\x2b\x2b Compiler\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eWith this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,23 +136,14 @@ if (!doNotTrack) {
   <time datetime=2016-10-11T00:00:00Z class="post-date">Tue, Oct 11, 2016</time>
 
   <p>Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.</p>
-
-<h2 id="package-source-structure">Package Source &amp; Structure</h2>
-
-<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&rsquo;s title:</p>
-
+<h2 id="package-source--structure">Package Source &amp; Structure</h2>
+<p>We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory's title:</p>
 <pre><code>mkdir mypackage-1.0.0
-</code></pre>
-
-<p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
-
+</code></pre><p>Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:</p>
 <pre><code>cd mypackage-1.0.0
 mkdir DEBIAN
 touch DEBIAN/control
-</code></pre>
-
-<p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
-
+</code></pre><p>This <code>control</code> file will describe our package to the Debian package manager (<code>dpkg</code>). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:</p>
 <pre><code>Package: mypackage
 Version: 1.0-0
 Section: base
@@ -161,63 +152,33 @@ Architecture: all
 Depends: python2.7
 Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
 Description: A new and improved C++ Compiler
-</code></pre>
-
-<p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
-
-<p>Now here is where it gets interesting. The directory and file structure inside our package source will resemble the directory structure of our file system. This is how the Debian package manager knows where to depackage the files contained inside our Debian package. For example, let&rsquo;s add the following to our package:</p>
-
+</code></pre><p>With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.</p>
+<p>Now here is where it gets interesting. The directory and file structure inside our package source will resemble the directory structure of our file system. This is how the Debian package manager knows where to depackage the files contained inside our Debian package. For example, let's add the following to our package:</p>
 <pre><code>mkdir -p home/ubuntu
 touch home/ubuntu/hello.sh
-</code></pre>
-
-<p>When our package is depackaged and installed, the package manager will depackage <code>home/ubuntu/hello.sh</code> from our package into <code>home/ubuntu/hello.sh</code> of our file system.</p>
-
+</code></pre><p>When our package is depackaged and installed, the package manager will depackage <code>home/ubuntu/hello.sh</code> from our package into <code>home/ubuntu/hello.sh</code> of our file system.</p>
 <h3 id="post-installation-script">Post-Installation Script</h3>
-
 <p>Additionally, we can create a <code>postinst</code> script with executable permissions inside the <code>DEBIAN</code> directory that will be executed after the installation (depackaging) is finished. For example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
-</span><span style="color:#75715e"></span><span style="color:#111">echo</span> <span style="color:#d88200">&#34;Hello World!&#34;</span></code></pre></div>
-<p>!&gt; You <strong>cannot</strong> run <code>apt-get</code> commands inside post/pre installation scripts, since this will create lock-conflict errors with <code>dpkg</code>. See <a href="http://stackoverflow.com/questions/18599599/apt-get-commands-from-within-a-deb-postinst">here</a> and <a href="http://askubuntu.com/questions/396213/can-i-call-other-dpkg-or-apt-commands-within-my-preinst-scripts">here</a>).</p>
-
+</span><span style="color:#75715e"></span><span style="color:#111">echo</span> <span style="color:#d88200">&#34;Hello World!&#34;</span>
+</code></pre></div><p>!&gt; You <strong>cannot</strong> run <code>apt-get</code> commands inside post/pre installation scripts, since this will create lock-conflict errors with <code>dpkg</code>. See <a href="http://stackoverflow.com/questions/18599599/apt-get-commands-from-within-a-deb-postinst">here</a> and <a href="http://askubuntu.com/questions/396213/can-i-call-other-dpkg-or-apt-commands-within-my-preinst-scripts">here</a>).</p>
 <p>These lock-conflict errors look like the following:</p>
-
 <pre><code>E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
 E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
-</code></pre>
-
-<h2 id="building-and-installing-the-package">Building and Installing the Package</h2>
-
+</code></pre><h2 id="building-and-installing-the-package">Building and Installing the Package</h2>
 <p>Now that our package is ready to be shipped, we can build the source using the following command:</p>
-
 <pre><code>dpkg-deb --build ./mypackage-1.0.0
-</code></pre>
-
-<p>This will create a <code>.deb</code> extension Debian package file that we can now distribute and others can install in their systems. To install, we simply run this command:</p>
-
+</code></pre><p>This will create a <code>.deb</code> extension Debian package file that we can now distribute and others can install in their systems. To install, we simply run this command:</p>
 <pre><code>dpkg -i mypackage-1.0.0.deb
-</code></pre>
-
-<p>And like I mentioned previously, the package manager will proceed to unpack all the contained files to our file system, according to the directory structure of the package.</p>
-
+</code></pre><p>And like I mentioned previously, the package manager will proceed to unpack all the contained files to our file system, according to the directory structure of the package.</p>
 <h2 id="other-useful-dpkg-commands">Other Useful Dpkg Commands</h2>
-
 <h3 id="inspecting-packages">Inspecting Packages</h3>
-
 <p>We can also inspect the contents of the Debian package. The following command will print all the files and their respective locations inside the package.</p>
-
 <pre><code>dpkg -c my-package.deb
-</code></pre>
-
-<p>Additionally we can also print information about the package. This is the information stored inside the <code>DEBIAN/control</code> file:</p>
-
+</code></pre><p>Additionally we can also print information about the package. This is the information stored inside the <code>DEBIAN/control</code> file:</p>
 <pre><code>dpkg -I my-package.deb
-</code></pre>
-
-<h3 id="extracting-contents">Extracting Contents</h3>
-
+</code></pre><h3 id="extracting-contents">Extracting Contents</h3>
 <p>It is also possible to unpack the contents of the package <strong>without</strong> installing it. This will also extract the control information files into a <code>DEBIAN</code> subdirectory:</p>
-
 <pre><code>dpkg-deb -R my-package.deb $TARGET_DIRECTORY
 </code></pre>
 </div>

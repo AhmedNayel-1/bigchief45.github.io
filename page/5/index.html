@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,17 +139,11 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2018-05-03T00:00:00Z" class="post-date">Thu, May 3, 2018</time>
   <p>The Netbeans IDE has some very cool way of letting users know when a certain file contains errors. For example, if you are editing a Java file and the file contains syntax errors, Netbeans will change the file icons with a new icon indicating errors:</p>
-
-<p><img src="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png" alt="Netbeans Error Icons" /></p>
-
+<p><img src="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png" alt="Netbeans Error Icons"></p>
 <p>You can see that the error icons propagate all the way up to the top-most parent, the project itself.</p>
-
 <h2 id="netbeans-platform-icon-badges">Netbeans Platform Icon Badges</h2>
-
 <p>As a user of the Netbeans IDE and before even knowing what the Netbeans Platform was, I always assumed that the normal state of the icon and the error state of the icon were two completely different icons handled by Netbeans. A few days ago I learned that this is not the case.</p>
-
 <p>Netbeans uses the concept of <strong>icon badges</strong> to display these kind of error icons. Icon badges are basically multiple images merged together <em>at runtime</em> into a single <code>Image</code> object.</p>
-
 <p>In this article I want to quickly go over how you can apply this concept in your Netbeans Platform application when using the Nodes API.</p>
 
   
@@ -171,16 +165,11 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/">Creating Toolbars for MultiView Elements in Netbeans Platform</a>
   </h1>
   <time datetime="2018-04-23T00:00:00Z" class="post-date">Mon, Apr 23, 2018</time>
-  <p>On a <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html">previous post</a> I talked about creating a new file type that Netbeans Platform can recognize and display the file&rsquo;s data in different ways by creating different visual editors that implement the <code>MultiViewElement</code> interface.</p>
-
+  <p>On a <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html">previous post</a> I talked about creating a new file type that Netbeans Platform can recognize and display the file's data in different ways by creating different visual editors that implement the <code>MultiViewElement</code> interface.</p>
 <p>However, that tutorial did not cover how to add a custom toolbar to each multi view. Like the one Netbeans already provides when editing source code:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png" alt="Netbeans MultiView Toolbar" /></p>
-
+<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png" alt="Netbeans MultiView Toolbar"></p>
 <p>This is a very handy toolbar that can be used to add buttons that perform different kinds of actions with the current active file.</p>
-
 <h2 id="a-deeper-look-into-the-multiviewelement-object">A Deeper Look Into the MultiViewElement Object</h2>
-
 <p>If you recall from the previous post, a <code>JPanel</code> that implements <code>MultiViewElement</code> was created after finishing the wizard. This <code>MultiViewElement</code> object has some very important characteristics that are key to this tutorial:</p>
 
   
@@ -202,26 +191,19 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/django-formsets-with-generic-formviews/">Django Formsets with Generic FormViews</a>
   </h1>
   <time datetime="2018-04-19T00:00:00Z" class="post-date">Thu, Apr 19, 2018</time>
-  <p><a href="https://docs.djangoproject.com/en/2.0/topics/forms/formsets/">Django Formsets</a> is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django&rsquo;s built-in generic class based views, the <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView">FormView</a>.</p>
-
+  <p><a href="https://docs.djangoproject.com/en/2.0/topics/forms/formsets/">Django Formsets</a> is an extremely handy feature for handling multiple clones of forms in a single view. In this post I will go over how to implement them using one of Django's built-in generic class based views, the <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView">FormView</a>.</p>
 <h2 id="the-scenario">The Scenario</h2>
-
-<p>To add some context to this tutorial, let&rsquo;s say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:</p>
-
-<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example" /></p>
-
+<p>To add some context to this tutorial, let's say we want to implement one of those kind of nested searches you see on some sites. Where you can select a field from a dropdown, and type in a search value for each field. Fields can be added and removed dynamically using JavaScript. Something like this:</p>
+<p><img src="https://aalvarez.me/posts/django-formsets-with-generic-formviews/nested_search_example.png" alt="Nested Search Example"></p>
 <p>For this tutorial, we will use the following model as an example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">):</span>
-    <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Book</span><span style="color:#111">(</span><span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">Model</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">)</span>
     <span style="color:#111">author</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Author</span><span style="color:#111">)</span>
-    <span style="color:#111">isbn</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">()</span>
-    <span style="color:#111">editorial</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Editorial</span><span style="color:#111">)</span></code></pre></div>
-<h2 id="creating-the-form">Creating the Form</h2>
-
+    <span style="color:#111">isbn</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">)</span>
+    <span style="color:#111">editorial</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ForeignKey</span><span style="color:#111">(</span><span style="color:#111">Editorial</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="creating-the-form">Creating the Form</h2>
 <p>We will begin by creating the form that will be cloned. That is, the form that will represent <strong>one</strong> search query out of the many that will/could be nested together.</p>
-
 <p>For our case, the form will only contain 3 fields:</p>
-
 <ol>
 <li>The query field: Indicates which field of the model we will query.</li>
 <li>The lookup type: Indicates which <a href="https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups">lookup</a> is going to be used to make the query.</li>
@@ -247,16 +229,11 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform/">Custom File Types in Netbeans Platform</a>
   </h1>
   <time datetime="2018-03-28T00:00:00Z" class="post-date">Wed, Mar 28, 2018</time>
-  <p>If your desktop Java application needs to deal with very particular or special kinds of files, we can make use of Netbeans Platform&rsquo;s custom File Type feature to define a file that our application can recognize, and display visual and editing components to view and edit the file&rsquo;s data.</p>
-
-<p>Moreover, we can also make use of Netbeans Platform&rsquo;s <em>Favorites</em> pane, which displays a tree view of a file system, where we can open the special files we need to work with.</p>
-
+  <p>If your desktop Java application needs to deal with very particular or special kinds of files, we can make use of Netbeans Platform's custom File Type feature to define a file that our application can recognize, and display visual and editing components to view and edit the file's data.</p>
+<p>Moreover, we can also make use of Netbeans Platform's <em>Favorites</em> pane, which displays a tree view of a file system, where we can open the special files we need to work with.</p>
 <h2 id="creating-a-new-module">Creating a New Module</h2>
-
 <p>For this article, we are going to create a new file type for CSV (Comma Separated Value) files. When we open these files, our application will display a visual representation in the form of an editable JTable.</p>
-
 <p>All this functionaltiy will live in its own Netbeans Platform Module. Meaning that it can be plugged in into different applications in a modular fashion.</p>
-
 <p>We are going to create the module and build it using <a href="https://maven.apache.org/">Maven</a>, since we are also going to be adding some functionalities that depend on external libraries that we can easily include in our project with Maven. But you can also just create the module without Maven as well. To create the module go to <em>New Project &gt; Maven &gt; Netbeans Module</em></p>
 
   
@@ -281,9 +258,7 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2018-02-09T00:00:00Z" class="post-date">Fri, Feb 9, 2018</time>
   <p><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a> has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
-
 <p>We will be using the following tools:</p>
-
 <ul>
 <li><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a>: Python testing framework</li>
 <li><a href="https://pytest-django.readthedocs.io/">pytest-django</a>: Pytest extensions for Django</li>

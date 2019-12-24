@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Using Lambdas in Case Statements in Ruby",
     "headline" : "Using Lambdas in Case Statements in Ruby",
-    "description" : "\x3cp\x3eIn a \x3ca href=\x22http:\/\/aalvarez.me\/blog\/posts\/using-objects-and-ranges-with-cases-in-ruby.html\x22\x3eprevious post\x3c\/a\x3e I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.\x3c\/p\x3e\n\n\x3cp\x3eThe other day I was trying to solve the \x3ca href=\x22http:\/\/exercism.io\/submissions\/03c3c93f23b8420faff3107e2ad18286\x22\x3eBob Ruby exercise in Exercism\x3c\/a\x3e, and I came up with another very cool way to use case statements: with Lambdas.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-problem\x22\x3eThe Problem\x3c\/h2\x3e\n\n\x3cp\x3eThe Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem\x26rsquo;s README file:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eBob is a lackadaisical teenager. In conversation, his responses are very limited.\n\nBob answers \x27Sure.\x27 if you ask him a question.\n\nHe answers \x27Whoa, chill out!\x27 if you yell at him.\n\nHe says \x27Fine. Be that way!\x27 if you address him without actually saying anything.\n\nHe answers \x27Whatever.\x27 to anything else.\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3ch2 id=\x22solutions\x22\x3eSolutions\x3c\/h2\x3e\n\n\x3cp\x3eThe test provided by Exercism indicates that we should create a \x3ccode\x3eBob\x3c\/code\x3e class with a \x3ccode\x3ehey\x3c\/code\x3e class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22http:\/\/aalvarez.me\/blog\/posts\/using-objects-and-ranges-with-cases-in-ruby.html\x22\x3eprevious post\x3c\/a\x3e I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.\x3c\/p\x3e\n\x3cp\x3eThe other day I was trying to solve the \x3ca href=\x22http:\/\/exercism.io\/submissions\/03c3c93f23b8420faff3107e2ad18286\x22\x3eBob Ruby exercise in Exercism\x3c\/a\x3e, and I came up with another very cool way to use case statements: with Lambdas.\x3c\/p\x3e\n\x3ch2 id=\x22the-problem\x22\x3eThe Problem\x3c\/h2\x3e\n\x3cp\x3eThe Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem\x27s README file:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3eBob is a lackadaisical teenager. In conversation, his responses are very limited.\n\nBob answers \x27Sure.\x27 if you ask him a question.\n\nHe answers \x27Whoa, chill out!\x27 if you yell at him.\n\nHe says \x27Fine. Be that way!\x27 if you address him without actually saying anything.\n\nHe answers \x27Whatever.\x27 to anything else.\n\x3c\/code\x3e\x3c\/pre\x3e\x3ch2 id=\x22solutions\x22\x3eSolutions\x3c\/h2\x3e\n\x3cp\x3eThe test provided by Exercism indicates that we should create a \x3ccode\x3eBob\x3c\/code\x3e class with a \x3ccode\x3ehey\x3c\/code\x3e class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,13 +136,9 @@ if (!doNotTrack) {
   <time datetime=2017-06-12T00:00:00Z class="post-date">Mon, Jun 12, 2017</time>
 
   <p>In a <a href="http://aalvarez.me/blog/posts/using-objects-and-ranges-with-cases-in-ruby.html">previous post</a> I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.</p>
-
 <p>The other day I was trying to solve the <a href="http://exercism.io/submissions/03c3c93f23b8420faff3107e2ad18286">Bob Ruby exercise in Exercism</a>, and I came up with another very cool way to use case statements: with Lambdas.</p>
-
 <h2 id="the-problem">The Problem</h2>
-
-<p>The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem&rsquo;s README file:</p>
-
+<p>The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem's README file:</p>
 <pre><code>Bob is a lackadaisical teenager. In conversation, his responses are very limited.
 
 Bob answers 'Sure.' if you ask him a question.
@@ -152,12 +148,8 @@ He answers 'Whoa, chill out!' if you yell at him.
 He says 'Fine. Be that way!' if you address him without actually saying anything.
 
 He answers 'Whatever.' to anything else.
-</code></pre>
-
-<h2 id="solutions">Solutions</h2>
-
+</code></pre><h2 id="solutions">Solutions</h2>
 <p>The test provided by Exercism indicates that we should create a <code>Bob</code> class with a <code>hey</code> class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:</p>
-
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Bob</span>
   <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">hey</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">case</span> <span style="color:#111">remark</span>
@@ -182,18 +174,15 @@ He answers 'Whatever.' to anything else.
 
   <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">nothing?</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
   <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>A very typical case statement. However, notice the <strong>redundancy</strong> in using <code>remark</code> for the case statement, while also passing it to the helper methods we created. In my opinion, the <code>case</code> statement should allow the <code>when</code> statements to be able to work with what was assigned to <code>case</code>. But in the example above, that would not work.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>A very typical case statement. However, notice the <strong>redundancy</strong> in using <code>remark</code> for the case statement, while also passing it to the helper methods we created. In my opinion, the <code>case</code> statement should allow the <code>when</code> statements to be able to work with what was assigned to <code>case</code>. But in the example above, that would not work.</p>
 <h3 id="enter-lambdas">Enter Lambdas</h3>
-
-<p>So what we want to achieve is to remove the <code>remark</code> parameter from the methods, while also calling the methods without needing to pass the remark, because it&rsquo;s already being referenced in the <code>case</code> statement. Ruby <strong>Lambdas</strong> allows us to achieve this.</p>
-
+<p>So what we want to achieve is to remove the <code>remark</code> parameter from the methods, while also calling the methods without needing to pass the remark, because it's already being referenced in the <code>case</code> statement. Ruby <strong>Lambdas</strong> allows us to achieve this.</p>
 <p>Because <code>when</code> statements can take Lambdas and call them automatically, we can redefine the helper methods to return a lambda. Each lambda will perform the necessary logic to determine if the remark is a question, a yell, or nothing.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">private</span>
 
 <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">question?</span>
-  <span style="color:#f92672">-&gt;</span> <span style="color:#111">(</span><span style="color:#111">r</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">r</span><span style="color:#f92672">[-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;?&#39;</span> <span style="color:#111">}</span>
+  <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> <span style="color:#111">(</span><span style="color:#111">r</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">r</span><span style="color:#f92672">[</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;?&#39;</span> <span style="color:#111">}</span>
 <span style="color:#00a8c8">end</span>
 
 <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">yell?</span>
@@ -201,19 +190,16 @@ He answers 'Whatever.' to anything else.
     <span style="color:#111">r</span> <span style="color:#f92672">=</span> <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">delete</span><span style="color:#111">(</span><span style="color:#d88200">&#39;^A-Za-z&#39;</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span> <span style="color:#00a8c8">if</span> <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">empty?</span>
 
-    <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">all?</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">c</span><span style="color:#f92672">|</span> <span style="color:#d88200">/[[:upper:]]/</span><span style="color:#f92672">.</span><span style="color:#111">match</span><span style="color:#111">(</span><span style="color:#111">c</span><span style="color:#111">)</span> <span style="color:#111">}</span>
+    <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">all?</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">c</span><span style="color:#f92672">|</span> <span style="color:#d88200">/</span><span style="color:#d88200">[[:upper:]]</span><span style="color:#d88200">/</span><span style="color:#f92672">.</span><span style="color:#111">match</span><span style="color:#111">(</span><span style="color:#111">c</span><span style="color:#111">)</span> <span style="color:#111">}</span>
   <span style="color:#00a8c8">end</span>
 <span style="color:#00a8c8">end</span>
 
 <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">nothing?</span>
-  <span style="color:#f92672">-&gt;</span> <span style="color:#111">(</span><span style="color:#111">r</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">strip</span><span style="color:#f92672">.</span><span style="color:#111">size</span><span style="color:#f92672">.</span><span style="color:#111">zero?</span> <span style="color:#111">}</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>=&gt; Use the new lambda literal syntax for single line body blocks. Use the lambda method for multi-line blocks. Source: <a href="https://github.com/bbatsov/ruby-style-guide#lambda-multi-line">Rubocop Ruby style guide</a></p>
-
+  <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> <span style="color:#111">(</span><span style="color:#111">r</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">r</span><span style="color:#f92672">.</span><span style="color:#111">strip</span><span style="color:#f92672">.</span><span style="color:#111">size</span><span style="color:#f92672">.</span><span style="color:#111">zero?</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>=&gt; Use the new lambda literal syntax for single line body blocks. Use the lambda method for multi-line blocks. Source: <a href="https://github.com/bbatsov/ruby-style-guide#lambda-multi-line">Rubocop Ruby style guide</a></p>
 <p>Notice that we have removed the <code>remark</code> parameter from the methods. The methods no longer take any arguments, this gives the methods more sense and meaning when defining them as &ldquo;boolean&rdquo; methods by appending the <code>?</code> prefix to the method name.</p>
-
 <p>By making the methods return a lambda, the <code>when</code> statement will receive this lambda when calling the method, and will proceed to call the lambda by passing the object used in the <code>case</code> statement automatically. Pretty neat!</p>
-
 <p>We can then re-write our case statement like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">hey</span><span style="color:#111">(</span><span style="color:#111">remark</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">case</span> <span style="color:#111">remark</span>
@@ -226,11 +212,9 @@ He answers 'Whatever.' to anything else.
     <span style="color:#00a8c8">else</span>
       <span style="color:#d88200">&#39;Whatever.&#39;</span>
     <span style="color:#00a8c8">end</span>
-  <span style="color:#00a8c8">end</span></code></pre></div>
-<p>Much better!</p>
-
+  <span style="color:#00a8c8">end</span>
+</code></pre></div><p>Much better!</p>
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="http://exercism.io/submissions/03c3c93f23b8420faff3107e2ad18286">My solution to Bob</a></li>
 </ol>

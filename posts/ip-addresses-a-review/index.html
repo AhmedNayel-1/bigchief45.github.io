@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "IP Addresses - A Review",
     "headline" : "IP Addresses - A Review",
-    "description" : "\x3cp\x3e\x3cem\x3eA review of IP addresses, as part of my Computer Networking Fundamentals series.\x3c\/em\x3e\x3c\/p\x3e\n\n\x3cp\x3eA lot of people know what IP addresses are, and a lot of people also probably know that each device that is connected to the Internet must have a \x3cstrong\x3e\x3cem\x3eunique\x3c\/em\x3e\x3c\/strong\x3e IP Address, like \x3cem\x3e108.161.228.70\x3c\/em\x3e\x3c\/p\x3e\n\n\x3cp\x3eHowever, in this article I want to do a more in-depth review about IP addresses and how the work.\x3c\/p\x3e\n\n\x3cp\x3eFrom a technical point of view and for reviewing purposes, it is worth remembering that IP Addresses (at least IPv4) are \x3cstrong\x3e32-bit\x3c\/strong\x3e addresses, because each number separated by each dot (called \x3cem\x3eoctet\x3c\/em\x3e) is an 8-bit number. Since IP Addresses have 4 octets, these together make a sum of 32-bits.\x3c\/p\x3e\n\n\x3cp class=\x22lead\x22\x3eAnother very important detail of IP Addresses is that the \x3cstrong\x3efirst two\x3c\/strong\x3e octets represent a \x3cstrong\x3edestination network\x3c\/strong\x3e, while the \x3cstrong\x3elast two\x3c\/strong\x3e octets represent a \x3cstrong\x3edestination host\x3c\/strong\x3e within that destination network.\x3c\/p\x3e\n\n\x3cp\x3eSince the first two octets make a sum of 16 bits, 2^16 yields a total of 65,536 networks. At the same time, the remaining 16 bits also yield a total of 65,536 different hosts. \x3cstrong\x3e\x3cem\x3eBut\x3c\/em\x3e\x3c\/strong\x3e these are 65,536 different hosts \x3cstrong\x3e\x3cem\x3eper each\x3c\/em\x3e\x3c\/strong\x3e network.\x3c\/p\x3e\n\n\x3cp\x3eThis raises a big issue because it makes it hard to decide how many bits in the IP address should be allocated to the network and how many bits should be allocated for the hosts, without wasting IP addresses. This is where \x3cstrong\x3esubnet masks\x3c\/strong\x3e come in.\x3c\/p\x3e",
+    "description" : "\x3cp\x3e\x3cem\x3eA review of IP addresses, as part of my Computer Networking Fundamentals series.\x3c\/em\x3e\x3c\/p\x3e\n\x3cp\x3eA lot of people know what IP addresses are, and a lot of people also probably know that each device that is connected to the Internet must have a \x3cstrong\x3e\x3cem\x3eunique\x3c\/em\x3e\x3c\/strong\x3e IP Address, like \x3cem\x3e108.161.228.70\x3c\/em\x3e\x3c\/p\x3e\n\x3cp\x3eHowever, in this article I want to do a more in-depth review about IP addresses and how the work.\x3c\/p\x3e\n\x3cp\x3eFrom a technical point of view and for reviewing purposes, it is worth remembering that IP Addresses (at least IPv4) are \x3cstrong\x3e32-bit\x3c\/strong\x3e addresses, because each number separated by each dot (called \x3cem\x3eoctet\x3c\/em\x3e) is an 8-bit number. Since IP Addresses have 4 octets, these together make a sum of 32-bits.\x3c\/p\x3e\n\x3c!-- raw HTML omitted --\x3e\n\x3cp\x3eSince the first two octets make a sum of 16 bits, 2^16 yields a total of 65,536 networks. At the same time, the remaining 16 bits also yield a total of 65,536 different hosts. \x3cstrong\x3e\x3cem\x3eBut\x3c\/em\x3e\x3c\/strong\x3e these are 65,536 different hosts \x3cstrong\x3e\x3cem\x3eper each\x3c\/em\x3e\x3c\/strong\x3e network.\x3c\/p\x3e\n\x3cp\x3eThis raises a big issue because it makes it hard to decide how many bits in the IP address should be allocated to the network and how many bits should be allocated for the hosts, without wasting IP addresses. This is where \x3cstrong\x3esubnet masks\x3c\/strong\x3e come in.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2016-12-02 00:00:00 \x2b0000 UTC",
     "dateModified" : "2016-12-02 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/ip-addresses-a-review\/",
-    "wordCount" : "761",
+    "wordCount" : "731",
     "keywords" : [ "networking","ip","Blog" ]
 }
 </script>
@@ -136,65 +136,37 @@ if (!doNotTrack) {
   <time datetime=2016-12-02T00:00:00Z class="post-date">Fri, Dec 2, 2016</time>
 
   <p><em>A review of IP addresses, as part of my Computer Networking Fundamentals series.</em></p>
-
 <p>A lot of people know what IP addresses are, and a lot of people also probably know that each device that is connected to the Internet must have a <strong><em>unique</em></strong> IP Address, like <em>108.161.228.70</em></p>
-
 <p>However, in this article I want to do a more in-depth review about IP addresses and how the work.</p>
-
 <p>From a technical point of view and for reviewing purposes, it is worth remembering that IP Addresses (at least IPv4) are <strong>32-bit</strong> addresses, because each number separated by each dot (called <em>octet</em>) is an 8-bit number. Since IP Addresses have 4 octets, these together make a sum of 32-bits.</p>
-
-<p class="lead">Another very important detail of IP Addresses is that the <strong>first two</strong> octets represent a <strong>destination network</strong>, while the <strong>last two</strong> octets represent a <strong>destination host</strong> within that destination network.</p>
-
+<!-- raw HTML omitted -->
 <p>Since the first two octets make a sum of 16 bits, 2^16 yields a total of 65,536 networks. At the same time, the remaining 16 bits also yield a total of 65,536 different hosts. <strong><em>But</em></strong> these are 65,536 different hosts <strong><em>per each</em></strong> network.</p>
-
 <p>This raises a big issue because it makes it hard to decide how many bits in the IP address should be allocated to the network and how many bits should be allocated for the hosts, without wasting IP addresses. This is where <strong>subnet masks</strong> come in.</p>
-
 <h3 id="subnet-masks">Subnet Masks</h3>
-
-<p>A solution was proposed and along came <strong>subnet masks</strong>. A subnet mask is simply another 32-bit address in binary, but it&rsquo;s purpose is to represent which network and which host is being delt with. The 1 bits represent the network, while the 0 bits represent the host.</p>
-
+<p>A solution was proposed and along came <strong>subnet masks</strong>. A subnet mask is simply another 32-bit address in binary, but it's purpose is to represent which network and which host is being delt with. The 1 bits represent the network, while the 0 bits represent the host.</p>
 <p>This approach allows dynamic size of networks (based on # of hosts) without exceeding that 32-bit limit.</p>
-
-<h4 id="obtaining-a-network-s-ip-address">Obtaining a Network&rsquo;s IP Address</h4>
-
+<h4 id="obtaining-a-networks-ip-address">Obtaining a Network's IP Address</h4>
 <p>To obtain the IP Address of the current network a device is in, we can simply compare each bit between the IP address and the subnet mask:</p>
-
 <ol>
-<li>When <strong>both</strong> bits equal 1, the network&rsquo;s address for that bit is going to be 1.</li>
-<li>When one of the bits is 0 (doesn&rsquo;t matter which), the network&rsquo;s address for that bit will be 0.</li>
+<li>When <strong>both</strong> bits equal 1, the network's address for that bit is going to be 1.</li>
+<li>When one of the bits is 0 (doesn't matter which), the network's address for that bit will be 0.</li>
 </ol>
-
 <p>For example, take a look at the following IP address and subnet mask:</p>
-
 <pre><code>IP Address:   169 . 174 . 141 . 10
 Subnet Mask:  255 . 255 . 255 . 240
-</code></pre>
-
-<p>Converted to binary:</p>
-
+</code></pre><p>Converted to binary:</p>
 <pre><code>IP Address:   10101001  10101110  10001101  00001010
 Subnet Mask:  11111111  11111111  11111111  11110000
-</code></pre>
-
-<p>Implementing the method mentioned above, we obtain the following result:</p>
-
+</code></pre><p>Implementing the method mentioned above, we obtain the following result:</p>
 <pre><code>IP Address:   10101001  10101110  10001101  00001010
 Subnet Mask:  11111111  11111111  11111111  11110000
 
 Network IP:   10101001  10101110  10001101  00000000
-</code></pre>
-
-<p>We can then convert the binary into human-readable format:</p>
-
+</code></pre><p>We can then convert the binary into human-readable format:</p>
 <pre><code>Network IP: 169 . 174 . 141 . 0
-</code></pre>
-
-<h4 id="finding-the-of-hosts">Finding the # of Hosts</h4>
-
+</code></pre><h4 id="finding-the--of-hosts">Finding the # of Hosts</h4>
 <p>Since we know that the 0 bits in the subnet mask refer to the number of hosts (in the case above, 4 bits), that means that the <strong>total</strong> number of hosts in the network above is 2^4 = 16 hosts.</p>
-
 <p>However, since we need to reserve one IP address for the <strong>network IP address</strong> and one IP address for the <strong>broadcast IP address</strong>. This leaves us with a total number of 14 <strong>usable hosts</strong> or IP Addresses. These can be assigned to any device such as computers, printers, and mobile phones:</p>
-
 <pre><code>Network IP:   169 . 174 . 141 . 0
 Host #1:      169 . 174 . 141 . 1
 ...
@@ -203,25 +175,14 @@ Host #1:      169 . 174 . 141 . 1
 ...
 Host #14:     169 . 174 . 141 . 15
 Broadcast IP: 169 . 174 . 141 . 16
-</code></pre>
-
-<h4 id="cidr-notation">CIDR Notation</h4>
-
+</code></pre><h4 id="cidr-notation">CIDR Notation</h4>
 <p>Another very common IP Address notation is an IP Address combined with a subnet mask. For example:</p>
-
 <pre><code>10.68.90.3/20
-</code></pre>
-
-<p>This is called <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation">CIDR notation</a> and it&rsquo;s basically just a shorthand version of writing the subnet mask. This number (<code>/20</code> in the example above) means that the subnet mask will have 20 bits with value <code>1</code>, and the rest of the bits have a value of <code>0</code>.</p>
-
+</code></pre><p>This is called <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation">CIDR notation</a> and it's basically just a shorthand version of writing the subnet mask. This number (<code>/20</code> in the example above) means that the subnet mask will have 20 bits with value <code>1</code>, and the rest of the bits have a value of <code>0</code>.</p>
 <h4 id="broadcast-address">Broadcast Address</h4>
-
 <p>The broadcast address is the address where all the devices connected to the network can receive a <strong><a href="https://en.wikipedia.org/wiki/Datagram">datagram</a></strong>. The messages sent to the broadcast address is received by <strong>all</strong> the hosts attached in the network. Network administrators verify successful data packet transmission via broadcast addresses.</p>
-
 <p>Broadcast addresses are usually set up by the operating system once the IP address and subnet mask is entered.</p>
-
 <p>~&gt; Windows systems do not allow users to change the broadcast address by hand.</p>
-
 <p>IP broadcasts are also used by BOOTP and DHCP clients to find and send requests to their respective servers.</p>
 </div>
 

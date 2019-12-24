@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Integrating Devise With Rolify in Rails",
     "headline" : "Integrating Devise With Rolify in Rails",
-    "description" : "\x3cp\x3eI have searched through tons of StackOverflow questions and blog posts on how to \x3cstrong\x3eproperly\x3c\/strong\x3e integrate Rolify with Devise when \x3cstrong\x3eregistering as a new user\x3c\/strong\x3e through the registration view provided by Devise. All proposed solutions and half-solutions seemed very messy to me, but I found a very simple way to achieve this.\x3c\/p\x3e\n\n\x3ch2 id=\x22preparing-the-roles\x22\x3ePreparing the Roles\x3c\/h2\x3e\n\n\x3cp\x3eAssuming you already have initialized a Devise \x3ccode\x3eUser\x3c\/code\x3e model along with a Rolify \x3ccode\x3eRole\x3c\/code\x3e model, a very common question I see is how should the roles be prepared so that the \x3cem\x3enew\x3c\/em\x3e users can have a list of already created roles to choose from when registering? In the \x3ca href=\x22https:\/\/github.com\/RolifyCommunity\/rolify\x22\x3eRolify documentation\x3c\/a\x3e, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3euser\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3eUser\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3efind\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3euser\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eadd_role\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:admin\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eA new \x3ccode\x3eadmin\x3c\/code\x3e role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.\x3c\/p\x3e\n\n\x3cp\x3eAnswers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# db\/seeds.rb\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eRole\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ecreate!\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ename\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;admin\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRole\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ecreate!\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ename\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;doctor\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRole\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ecreate!\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ename\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;nurse\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3eI have searched through tons of StackOverflow questions and blog posts on how to \x3cstrong\x3eproperly\x3c\/strong\x3e integrate Rolify with Devise when \x3cstrong\x3eregistering as a new user\x3c\/strong\x3e through the registration view provided by Devise. All proposed solutions and half-solutions seemed very messy to me, but I found a very simple way to achieve this.\x3c\/p\x3e\n\x3ch2 id=\x22preparing-the-roles\x22\x3ePreparing the Roles\x3c\/h2\x3e\n\x3cp\x3eAssuming you already have initialized a Devise \x3ccode\x3eUser\x3c\/code\x3e model along with a Rolify \x3ccode\x3eRole\x3c\/code\x3e model, a very common question I see is how should the roles be prepared so that the \x3cem\x3enew\x3c\/em\x3e users can have a list of already created roles to choose from when registering? In the \x3ca href=\x22https:\/\/github.com\/RolifyCommunity\/rolify\x22\x3eRolify documentation\x3c\/a\x3e, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3euser\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3eUser\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3efind\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3euser\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eadd_role\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:admin\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eA new \x3ccode\x3eadmin\x3c\/code\x3e role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.\x3c\/p\x3e\n\x3cp\x3eAnswers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# db\/seeds.rb\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eRole\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ecreate!\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ename\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;admin\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRole\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ecreate!\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ename\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;doctor\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRole\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ecreate!\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ename\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;nurse\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,28 +136,22 @@ if (!doNotTrack) {
   <time datetime=2017-08-24T00:00:00Z class="post-date">Thu, Aug 24, 2017</time>
 
   <p>I have searched through tons of StackOverflow questions and blog posts on how to <strong>properly</strong> integrate Rolify with Devise when <strong>registering as a new user</strong> through the registration view provided by Devise. All proposed solutions and half-solutions seemed very messy to me, but I found a very simple way to achieve this.</p>
-
 <h2 id="preparing-the-roles">Preparing the Roles</h2>
-
 <p>Assuming you already have initialized a Devise <code>User</code> model along with a Rolify <code>Role</code> model, a very common question I see is how should the roles be prepared so that the <em>new</em> users can have a list of already created roles to choose from when registering? In the <a href="https://github.com/RolifyCommunity/rolify">Rolify documentation</a>, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">User</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span>
-<span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span> <span style="color:#d88200">:admin</span></code></pre></div>
-<p>A new <code>admin</code> role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">User</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#111">)</span>
+<span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span> <span style="color:#d88200">:admin</span>
+</code></pre></div><p>A new <code>admin</code> role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.</p>
 <p>Answers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># db/seeds.rb</span>
 
 <span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">)</span>
 <span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;doctor&#39;</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;nurse&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>Obviously any other dummy data you have in your seeds file should be removed for production.</p>
-
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;nurse&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>Obviously any other dummy data you have in your seeds file should be removed for production.</p>
 <h2 id="adding-roles-to-the-registration-form">Adding Roles to the Registration Form</h2>
-
-<p>Now let&rsquo;s proceed to add the available roles to the registration form that the users will use to sign up. Depending on your application, you will have to decide whether you need check boxes (multiple roles) or radio buttons (single role). In this example I will go with radio buttons, limiting the user to a single role only.</p>
-
+<p>Now let's proceed to add the available roles to the registration form that the users will use to sign up. Depending on your application, you will have to decide whether you need check boxes (multiple roles) or radio buttons (single role). In this example I will go with radio buttons, limiting the user to a single role only.</p>
 <p>Using <a href="https://github.com/plataformatec/simple_form">Simple Form</a>, we can render our radio buttons like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+<pre><code class="language-haml" data-lang="haml">= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = devise_error_messages!
 
   .form-inputs
@@ -167,15 +161,12 @@ if (!doNotTrack) {
     = f.input :roles, as: :radio_buttons, collection: Role.all, value_method: :name, required: true
 
   .form-actions
-    = f.button :submit, t(&#39;.sign_up&#39;), class: &#39;btn btn-success&#39;</code></pre></div>
-<p>Notice that we are pulling and displaying <em>all</em> the available roles. This will include the <code>admin</code> role, which you might not want. This can easily be solved using the handy <a href="https://robots.thoughtbot.com/activerecords-wherenot">where.not</a>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">= f.input :roles, as: :radio_buttons, collection: Role.where.not(name: &#39;admin&#39;), value_method: :name, required: true</code></pre></div>
-<p>Additionally, the <code>value_method</code> is very important. We will use the role&rsquo;s name to pass as a parameter value to the Devise controller. This will allow for easier adding of the role to the user.</p>
-
+    = f.button :submit, t('.sign_up'), class: 'btn btn-success'
+</code></pre><p>Notice that we are pulling and displaying <em>all</em> the available roles. This will include the <code>admin</code> role, which you might not want. This can easily be solved using the handy <a href="https://robots.thoughtbot.com/activerecords-wherenot">where.not</a>:</p>
+<pre><code class="language-haml" data-lang="haml">= f.input :roles, as: :radio_buttons, collection: Role.where.not(name: 'admin'), value_method: :name, required: true
+</code></pre><p>Additionally, the <code>value_method</code> is very important. We will use the role's name to pass as a parameter value to the Devise controller. This will allow for easier adding of the role to the user.</p>
 <h2 id="customizing-the-devise-controller">Customizing the Devise Controller</h2>
-
-<p>When the form is submitted by the user, it will go through Devise&rsquo;s registration controller, which will proceed to do all the registration magic. However, after the user is successfully registered, we want this controller to add the role we passed in the form.</p>
-
+<p>When the form is submitted by the user, it will go through Devise's registration controller, which will proceed to do all the registration magic. However, after the user is successfully registered, we want this controller to add the role we passed in the form.</p>
 <p>We can begin by explicitely creating this controller and &ldquo;overwriting&rdquo; its <code>create</code> method:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/controllers/registrations_controller.rb</span>
 
@@ -183,27 +174,23 @@ if (!doNotTrack) {
   <span style="color:#111">before_action</span> <span style="color:#d88200">:configure_sign_up_params</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:create</span><span style="color:#f92672">]</span>
 
   <span style="color:#75715e"># POST /resource</span>
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">create</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">create</span>
     <span style="color:#00a8c8">super</span>
-    <span style="color:#111">resource</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span><span style="color:#111">(</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:user</span><span style="color:#f92672">][</span><span style="color:#d88200">:roles</span><span style="color:#f92672">]</span><span style="color:#111">)</span>
+    <span style="color:#111">resource</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span><span style="color:#111">(</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:user</span><span style="color:#f92672">]</span><span style="color:#f92672">[</span><span style="color:#d88200">:roles</span><span style="color:#f92672">]</span><span style="color:#111">)</span>
   <span style="color:#00a8c8">end</span>
 
   <span style="color:#00a8c8">protected</span>
 
   <span style="color:#75715e"># If you have extra params to permit, append them to the sanitizer.</span>
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">configure_sign_up_params</span>
-    <span style="color:#111">devise_parameter_sanitizer</span><span style="color:#f92672">.</span><span style="color:#111">permit</span><span style="color:#111">(</span><span style="color:#d88200">:sign_up</span><span style="color:#111">,</span> <span style="color:#d88200">keys</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">roles</span><span style="color:#111">:</span> <span style="color:#f92672">[]]</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">configure_sign_up_params</span>
+    <span style="color:#111">devise_parameter_sanitizer</span><span style="color:#f92672">.</span><span style="color:#111">permit</span><span style="color:#111">(</span><span style="color:#d88200">:sign_up</span><span style="color:#111">,</span> <span style="color:#d88200">keys</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">roles</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#f92672">]</span><span style="color:#f92672">]</span><span style="color:#111">)</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Technically we aren&rsquo;t really <em>overwriting</em> the controller, since the controller&rsquo;s original create method is still being called by using the <code>super</code> keyword. After this is done, we proceed to add the role.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Technically we aren't really <em>overwriting</em> the controller, since the controller's original create method is still being called by using the <code>super</code> keyword. After this is done, we proceed to add the role.</p>
 <p>If you are passing many roles (checkboxes) to the controller as parameters, you will need to adjust this part accordingly.</p>
-
 <p>Lastly we also sanitize this extra <code>roles</code> parameter inside a protected method.</p>
-
-<h3 id="don-t-forget-the-routes">Don&rsquo;t Forget the Routes</h3>
-
+<h3 id="dont-forget-the-routes">Don't Forget the Routes</h3>
 <p>We will need to edit the devise route to point to this new registrations controller we created:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># routes.rb</span>
 
@@ -211,8 +198,9 @@ if (!doNotTrack) {
 
   <span style="color:#111">devise_for</span> <span style="color:#d88200">:users</span><span style="color:#111">,</span> <span style="color:#d88200">controllers</span><span style="color:#111">:</span> <span style="color:#111">{</span> <span style="color:#d88200">registrations</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;registrations&#39;</span> <span style="color:#111">}</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>And that&rsquo;s it! The selected role in the form should now be properly added to the newly registered user upon successful registration. The best part of all is that we do not need to re-write the registration controller&rsquo;s create logic thanks to the handy <code>super</code>.</p>
+<span style="color:#00a8c8">end</span>
+
+</code></pre></div><p>And that's it! The selected role in the form should now be properly added to the newly registered user upon successful registration. The best part of all is that we do not need to re-write the registration controller's create logic thanks to the handy <code>super</code>.</p>
 </div>
 
 

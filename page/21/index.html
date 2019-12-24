@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,15 +139,10 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-10-27T00:00:00Z" class="post-date">Thu, Oct 27, 2016</time>
   <p>Zenoss makes use of some very interesting graphical components called renderers. These are used to manipulate the way data is shown in the Zenoss user interface.</p>
-
-<p>For example, a value of <em>total bytes used</em> could be 6080626688 in bytes, which is a very high number and doesn&rsquo;t really convey much meaning. However, we can use a built-in Zenoss renderer called <code>bytesString</code> which will convert this value in bytes to the closest representation:</p>
-
-<p><img src="https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers.png" alt="Zenoss Renderers" /></p>
-
+<p>For example, a value of <em>total bytes used</em> could be 6080626688 in bytes, which is a very high number and doesn't really convey much meaning. However, we can use a built-in Zenoss renderer called <code>bytesString</code> which will convert this value in bytes to the closest representation:</p>
+<p><img src="https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers.png" alt="Zenoss Renderers"></p>
 <p>As we can see, this is a much better and meaningful way of displaying the data.</p>
-
 <p>The built-in Zenoss renderers and source code can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss/Renderers.js</code></p>
-
 <p>They are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the <code>renderer</code> property. For example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">HardDisk<span style="color:#111">:</span>
   base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
@@ -167,8 +162,8 @@ if (!doNotTrack) {
 
      status<span style="color:#111">:</span>
         label<span style="color:#111">:</span> Status
-        renderer<span style="color:#111">:</span> Zenoss.render.pingStatus</code></pre></div>
-<p><code>Zenoss.render.pingStatus</code> is one of the default renderers that come built-in within Zenoss Core 4, similar to <code>Zenoss.render.bytesString</code>.</p>
+        renderer<span style="color:#111">:</span> Zenoss.render.pingStatus
+</code></pre></div><p><code>Zenoss.render.pingStatus</code> is one of the default renderers that come built-in within Zenoss Core 4, similar to <code>Zenoss.render.bytesString</code>.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -192,8 +187,7 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-10-26T00:00:00Z" class="post-date">Wed, Oct 26, 2016</time>
   <p>The Zenoss <a href="http://wiki.zenoss.org/ZenPack:Dashboard">ZenPacks.zenoss.Dashboard</a> ZenPack adds a very nice and new dashboard to our Zenoss Core 4 deployment, replacing the old default dashboard that comes with the installation.</p>
-
-<p><img src="http://wiki.zenoss.org/images/0/01/Separate_dashboard.png" alt="ZenPack Dashboard" /></p>
+<p><img src="http://wiki.zenoss.org/images/0/01/Separate_dashboard.png" alt="ZenPack Dashboard"></p>
 
   
   <div style="margin: 20px 0px;">
@@ -219,24 +213,14 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-10-17T00:00:00Z" class="post-date">Mon, Oct 17, 2016</time>
   <p>Setting up a local apt repository can allow you to use <code>apt-get install</code> command to install your own packages. This is a better approach than using <code>dpkg -i</code> because apt will fetch and install the required dependencies (which should also be located in your local repository) in an <strong>offline</strong> fashion.</p>
-
 <h2 id="add-local-repository-to-sources">Add Local Repository to Sources</h2>
-
-<p>First we need to add our local repository to <code>apt</code>&rsquo;s list of source repositories, this can be found in <code>/etc/apt/sources.list</code>. To add our local repository, we add the following line at the top of the file:</p>
-
+<p>First we need to add our local repository to <code>apt</code>'s list of source repositories, this can be found in <code>/etc/apt/sources.list</code>. To add our local repository, we add the following line at the top of the file:</p>
 <pre><code>/path/to/local-deb-repo/ ./
-</code></pre>
-
-<p>Where <em>local-deb-repo</em> is the name of our local repository directory.</p>
-
+</code></pre><p>Where <em>local-deb-repo</em> is the name of our local repository directory.</p>
 <h2 id="add-debian-packages">Add Debian Packages</h2>
-
-<p>Now we create local repository&rsquo;s directory just like we specified it in the previous step:</p>
-
+<p>Now we create local repository's directory just like we specified it in the previous step:</p>
 <pre><code>mkdir /path/to/local-deb-repo/
-</code></pre>
-
-<p>Once we&rsquo;ve done that, we can proceed to put the Debian package files (<code>.deb</code>) and their dependencies inside the directory.</p>
+</code></pre><p>Once we've done that, we can proceed to put the Debian package files (<code>.deb</code>) and their dependencies inside the directory.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -264,11 +248,8 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-10-14T00:00:00Z" class="post-date">Fri, Oct 14, 2016</time>
   <p>In a previous post, I talked about <a href="2016-10-11-debian-packaging-in-ubuntu.html">building a simple Debian package in Ubuntu</a>, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.</p>
-
 <h2 id="dpkg-and-dependencies">dpkg and Dependencies</h2>
-
-<p>Previously we installed our package using the <kbd>dpkg -i</kbd> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
-
+<p>Previously we installed our package using the <!-- raw HTML omitted -->dpkg -i<!-- raw HTML omitted --> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
 <blockquote>
 <p>dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.</p>
 </blockquote>
@@ -299,18 +280,13 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-10-13T00:00:00Z" class="post-date">Thu, Oct 13, 2016</time>
   <p>For a project involving Zenoss Core 4 and a HaaS solution maintained by another team, we needed a module to interact with the <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> to get the list of events for specific devices. Browsing around I found this <a href="https://github.com/iamseth/python-zenoss">python-zenoss</a> module to work with the Zenoss JSON API. However I was experiencing some issues when installing it, so I decided to create my own Python package to provide a different way to interact with the Zenoss JSON API according to our specific needs.</p>
-
 <p>The package would be installed locally using <code>pip</code>, and all its functionality should be easily accessible using <code>from</code> and <code>import</code> commands in Python.</p>
-
-<p>To start working in our package we will create a base directory. The directory&rsquo;s name will resemble our package&rsquo;s name. For naming, we should following these guidelines:</p>
-
+<p>To start working in our package we will create a base directory. The directory's name will resemble our package's name. For naming, we should following these guidelines:</p>
 <ul>
 <li>All lowercase</li>
 <li>Underscore-separated or no word separators at all (don’t use hyphens)</li>
 </ul>
-
 <p>The package contents are the following:</p>
-
 <pre><code>my_api/
 ├── __init__.py
 ├── api.py

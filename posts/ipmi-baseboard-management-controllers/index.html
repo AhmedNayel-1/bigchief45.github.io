@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "IPMI \x26 Baseboard Management Controllers",
     "headline" : "IPMI \x26 Baseboard Management Controllers",
-    "description" : "\x3cp\x3eAn \x3cstrong\x3eIntelligent Platform Management Interface (IPMI)\x3c\/strong\x3e is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system\x26rsquo;s CPU, BIOS, and operating system.\x3c\/p\x3e\n\n\x3cp\x3eIPMI can also help manage computers that are unresponsive or powered off, by using a network connection to the \x3cstrong\x3ehardware\x3c\/strong\x3e, rather than to a operating system or login shell.\x3c\/p\x3e\n\n\x3cp\x3eMore specifically, IPMI can help us monitor, obtain data, and perform tasks such as:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3eSystem temperature\x3c\/li\x3e\n\x3cli\x3eVoltages\x3c\/li\x3e\n\x3cli\x3eFans\x3c\/li\x3e\n\x3cli\x3ePower supplies\x3c\/li\x3e\n\x3cli\x3eChassis intrusion\x3c\/li\x3e\n\x3cli\x3ePerform recovery procedures\x3c\/li\x3e\n\x3cli\x3eSystem rebooting\x3c\/li\x3e\n\x3cli\x3eSystem powering\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3cp\x3eAn IPMI sub-system consists of a main controller, called the baseboard management controller (BMC) and other management controllers distributed among different system modules that are referred to as \x3cem\x3esatellite controllers\x3c\/em\x3e. The satellite controllers within the same chassis connect to the BMC via another system interface (not covered in this post) called Intelligent Platform Management Bus\/Bridge (IPMB)\x3c\/p\x3e",
+    "description" : "\x3cp\x3eAn \x3cstrong\x3eIntelligent Platform Management Interface (IPMI)\x3c\/strong\x3e is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system\x27s CPU, BIOS, and operating system.\x3c\/p\x3e\n\x3cp\x3eIPMI can also help manage computers that are unresponsive or powered off, by using a network connection to the \x3cstrong\x3ehardware\x3c\/strong\x3e, rather than to a operating system or login shell.\x3c\/p\x3e\n\x3cp\x3eMore specifically, IPMI can help us monitor, obtain data, and perform tasks such as:\x3c\/p\x3e\n\x3cul\x3e\n\x3cli\x3eSystem temperature\x3c\/li\x3e\n\x3cli\x3eVoltages\x3c\/li\x3e\n\x3cli\x3eFans\x3c\/li\x3e\n\x3cli\x3ePower supplies\x3c\/li\x3e\n\x3cli\x3eChassis intrusion\x3c\/li\x3e\n\x3cli\x3ePerform recovery procedures\x3c\/li\x3e\n\x3cli\x3eSystem rebooting\x3c\/li\x3e\n\x3cli\x3eSystem powering\x3c\/li\x3e\n\x3c\/ul\x3e\n\x3cp\x3eAn IPMI sub-system consists of a main controller, called the baseboard management controller (BMC) and other management controllers distributed among different system modules that are referred to as \x3cem\x3esatellite controllers\x3c\/em\x3e. The satellite controllers within the same chassis connect to the BMC via another system interface (not covered in this post) called Intelligent Platform Management Bus\/Bridge (IPMB)\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,12 +135,9 @@ if (!doNotTrack) {
   <h1>IPMI &amp; Baseboard Management Controllers</h1>
   <time datetime=2016-11-18T00:00:00Z class="post-date">Fri, Nov 18, 2016</time>
 
-  <p>An <strong>Intelligent Platform Management Interface (IPMI)</strong> is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system&rsquo;s CPU, BIOS, and operating system.</p>
-
+  <p>An <strong>Intelligent Platform Management Interface (IPMI)</strong> is a set of interfaces that allow system administrators to manage and monitor systems, independently of the system's CPU, BIOS, and operating system.</p>
 <p>IPMI can also help manage computers that are unresponsive or powered off, by using a network connection to the <strong>hardware</strong>, rather than to a operating system or login shell.</p>
-
 <p>More specifically, IPMI can help us monitor, obtain data, and perform tasks such as:</p>
-
 <ul>
 <li>System temperature</li>
 <li>Voltages</li>
@@ -151,32 +148,18 @@ if (!doNotTrack) {
 <li>System rebooting</li>
 <li>System powering</li>
 </ul>
-
 <p>An IPMI sub-system consists of a main controller, called the baseboard management controller (BMC) and other management controllers distributed among different system modules that are referred to as <em>satellite controllers</em>. The satellite controllers within the same chassis connect to the BMC via another system interface (not covered in this post) called Intelligent Platform Management Bus/Bridge (IPMB)</p>
-
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/IPMI-Block-Diagram.png" alt="IPMI Sub-System" /></p>
-
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/IPMI-Block-Diagram.png" alt="IPMI Sub-System"></p>
 <h2 id="the-baseboard-management-controller">The Baseboard Management Controller</h2>
-
 <p>An IPMI sub-system consists of a main controller, called the <strong>baseboard management controller (BMC)</strong> and other management controllers distributed among different system modules that are referred to as satellite controllers.</p>
-
 <p>The BMC is actually a microcontroller that is embedded on the <strong>motherboard</strong> of a computer (usually a server). The BMC manages the interface between system-management software and the hardware.</p>
-
-<p><img src="http://www.servethehome.com/wp-content/uploads/2010/11/Nuvotion-BMC.jpg" alt="BMC" /></p>
-
+<p><img src="http://www.servethehome.com/wp-content/uploads/2010/11/Nuvotion-BMC.jpg" alt="BMC"></p>
 <h2 id="querying-the-bmc-with-ipmitool">Querying the BMC With ipmitool</h2>
-
 <p>It is possible to use a tool called <a href="http://freecode.com/projects/ipmitool">ipmitool</a> to query the BMC for some data (like the one listed above).</p>
-
 <p>For example:</p>
-
 <pre><code>ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD sdr'
-</code></pre>
-
-<p>Where <code>$BMC_IP</code> stands for the BMC server&rsquo;s IP Address, <code>$USERNAME</code> stands for the server&rsquo;s username, and <code>$PASSWORD</code> stands for the server&rsquo;s password for the entered username.</p>
-
+</code></pre><p>Where <code>$BMC_IP</code> stands for the BMC server's IP Address, <code>$USERNAME</code> stands for the server's username, and <code>$PASSWORD</code> stands for the server's password for the entered username.</p>
 <p>If ipmitool can successfully connect and query to the server, it can print out a lot of information such as:</p>
-
 <pre><code>MLB Inlet TEMP   | 28 degrees C      | ok
 PCH Local TEMP   | 56 degrees C      | ok
 MLB Outlet TEMP1 | 45 degrees C      | ok
@@ -228,9 +211,7 @@ PSU1_In_Temp     | 40 degrees C      | ok
 PSU2_In_Temp     | 41 degrees C      | ok
 PSU1_In_Vol      | 220 Volts         | ok
 PSU2_In_Vol      | 220 Volts         | ok
-</code></pre>
-
-<p>With that output, we can then individually select which fields of data we actually need by using combinations of Linux commands such as <code>grep</code> and <code>awk</code>.</p>
+</code></pre><p>With that output, we can then individually select which fields of data we actually need by using combinations of Linux commands such as <code>grep</code> and <code>awk</code>.</p>
 </div>
 
 

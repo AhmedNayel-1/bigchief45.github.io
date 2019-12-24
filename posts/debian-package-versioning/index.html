@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Debian Package Versioning",
     "headline" : "Debian Package Versioning",
-    "description" : "\x3cp\x3eIn a previous post I talked about \x3ca href=\x22\/posts\/managing-debian-package-dependencies.html\x22\x3emanaging Debian package dependencies\x3c\/a\x3e. However I did not go into detail about the structure the versioning of packages must have.\x3c\/p\x3e\n\n\x3cp\x3eTo recap, let\x26rsquo;s see how we can specify a specific package version of a dependency that our package needs:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eDepends: erlang (\x26gt;= 1.2)\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eIn the example above, the required version for erlang is simply \x3ccode\x3e1.2\x3c\/code\x3e or greater. A package\x26rsquo;s version format however, can be a bit more complex than this.\x3c\/p\x3e\n\n\x3ch2 id=\x22version-format-and-components\x22\x3eVersion Format and Components\x3c\/h2\x3e\n\n\x3cp\x3eThe official format of a Debian package\x26rsquo;s version is:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3e[epoch:]upstream_version[-debian_revision]\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eLet\x26rsquo;s go into detail about each of the components in that format.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn a previous post I talked about \x3ca href=\x22\/posts\/managing-debian-package-dependencies.html\x22\x3emanaging Debian package dependencies\x3c\/a\x3e. However I did not go into detail about the structure the versioning of packages must have.\x3c\/p\x3e\n\x3cp\x3eTo recap, let\x27s see how we can specify a specific package version of a dependency that our package needs:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3eDepends: erlang (\x26gt;= 1.2)\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eIn the example above, the required version for erlang is simply \x3ccode\x3e1.2\x3c\/code\x3e or greater. A package\x27s version format however, can be a bit more complex than this.\x3c\/p\x3e\n\x3ch2 id=\x22version-format-and-components\x22\x3eVersion Format and Components\x3c\/h2\x3e\n\x3cp\x3eThe official format of a Debian package\x27s version is:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3e[epoch:]upstream_version[-debian_revision]\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eLet\x27s go into detail about each of the components in that format.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-04-13 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-04-13 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/debian-package-versioning\/",
-    "wordCount" : "680",
+    "wordCount" : "672",
     "keywords" : [ "linux","debian","ubuntu","aptitude","apt","Blog" ]
 }
 </script>
@@ -136,62 +136,32 @@ if (!doNotTrack) {
   <time datetime=2017-04-13T00:00:00Z class="post-date">Thu, Apr 13, 2017</time>
 
   <p>In a previous post I talked about <a href="https://aalvarez.me/posts/managing-debian-package-dependencies.html">managing Debian package dependencies</a>. However I did not go into detail about the structure the versioning of packages must have.</p>
-
-<p>To recap, let&rsquo;s see how we can specify a specific package version of a dependency that our package needs:</p>
-
+<p>To recap, let's see how we can specify a specific package version of a dependency that our package needs:</p>
 <pre><code>Depends: erlang (&gt;= 1.2)
-</code></pre>
-
-<p>In the example above, the required version for erlang is simply <code>1.2</code> or greater. A package&rsquo;s version format however, can be a bit more complex than this.</p>
-
+</code></pre><p>In the example above, the required version for erlang is simply <code>1.2</code> or greater. A package's version format however, can be a bit more complex than this.</p>
 <h2 id="version-format-and-components">Version Format and Components</h2>
-
-<p>The official format of a Debian package&rsquo;s version is:</p>
-
+<p>The official format of a Debian package's version is:</p>
 <pre><code>[epoch:]upstream_version[-debian_revision]
-</code></pre>
-
-<p>Let&rsquo;s go into detail about each of the components in that format.</p>
-
+</code></pre><p>Let's go into detail about each of the components in that format.</p>
 <h3 id="epoch">Epoch</h3>
-
 <p>A single positive integer. It may be omitted, in which case zero is assumed. If it is omitted then the <code>upstream_version</code> may not contain any colons.</p>
-
-<p>It is provided to allow mistakes in the version numbers of older versions of a package, and also a package&rsquo;s previous version numbering schemes, to be left behind.</p>
-
+<p>It is provided to allow mistakes in the version numbers of older versions of a package, and also a package's previous version numbering schemes, to be left behind.</p>
 <h3 id="upstream-version">Upstream Version</h3>
-
-<p>This is the main part of the version number. It is usually the version number of the original (&ldquo;upstream&rdquo;) package from which the <code>.deb</code> file has been made, if this is applicable. Usually this will be in the same format as that specified by the upstream author(s); however, it may need to be reformatted to fit into the package management system&rsquo;s format and comparison scheme.</p>
-
+<p>This is the main part of the version number. It is usually the version number of the original (&ldquo;upstream&rdquo;) package from which the <code>.deb</code> file has been made, if this is applicable. Usually this will be in the same format as that specified by the upstream author(s); however, it may need to be reformatted to fit into the package management system's format and comparison scheme.</p>
 <p>The <code>upstream_version</code> portion of the version number is mandatory.</p>
-
-<p>The <code>upstream_version</code> may contain only alphanumerics and the characters <kbd>.</kbd> <kbd>+</kbd> <kbd>-</kbd> <kbd>:</kbd> <kbd>~</kbd> (full stop, plus, hyphen, colon, tilde) and should start with a digit. If there is no <code>debian_revision</code> then hyphens are not allowed; if there is no epoch then colons are not allowed.</p>
-
+<p>The <code>upstream_version</code> may contain only alphanumerics and the characters <!-- raw HTML omitted -->.<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->-<!-- raw HTML omitted --> <!-- raw HTML omitted -->:<!-- raw HTML omitted --> <!-- raw HTML omitted -->~<!-- raw HTML omitted --> (full stop, plus, hyphen, colon, tilde) and should start with a digit. If there is no <code>debian_revision</code> then hyphens are not allowed; if there is no epoch then colons are not allowed.</p>
 <h3 id="debian-revision">Debian Revision</h3>
-
-<p>This part of the version number specifies the version of the Debian package based on the upstream version. It may contain only alphanumerics and the characters <kbd>+</kbd> <kbd>.</kbd> <kbd>~</kbd> (plus, full stop, tilde) and is compared in the same way as the <code>upstream_version</code> is.</p>
-
-<p>It is optional; if it isn&rsquo;t present then the upstream_version <strong>may not</strong> contain a hyphen. This format represents the case where a piece of software was written specifically to be a Debian package, where the Debian package source must always be identical to the pristine source and therefore no revision indication is required.</p>
-
+<p>This part of the version number specifies the version of the Debian package based on the upstream version. It may contain only alphanumerics and the characters <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->.<!-- raw HTML omitted --> <!-- raw HTML omitted -->~<!-- raw HTML omitted --> (plus, full stop, tilde) and is compared in the same way as the <code>upstream_version</code> is.</p>
+<p>It is optional; if it isn't present then the upstream_version <strong>may not</strong> contain a hyphen. This format represents the case where a piece of software was written specifically to be a Debian package, where the Debian package source must always be identical to the pristine source and therefore no revision indication is required.</p>
 <p>=&gt; It is conventional to restart the <code>debian_revision</code> at 1 each time the <code>upstream_version</code> is increased.</p>
-
 <p>The package management system will break the version number apart at the last hyphen in the string (if there is one) to determine the <code>upstream_version</code> and <code>debian_revision</code>. The absence of a <code>debian_revision</code> is equivalent to a <code>debian_revision</code> of 0.</p>
-
 <h2 id="version-comparison">Version Comparison</h2>
-
 <p>When comparing two version numbers, first the <em>epoch</em> of each are compared, then the <em>upstream_version</em> if <em>epoch</em> is equal, and then <em>debian_revision</em> if <em>upstream_version</em> is also equal.</p>
-
 <p>The purpose of epochs is to allow us to leave behind mistakes in version numbering, and to cope with situations where the version numbering scheme changes. It is not intended to cope with version numbers containing strings of letters which the package management system cannot interpret (such as <code>ALPHA</code> or <code>pre-</code>), or with silly orderings.</p>
-
 <h2 id="an-example">An Example</h2>
-
 <p>We can use the following command to see version information of an installed package using apt-get:</p>
-
 <pre><code>apt-cache policy &lt;package-name&gt;
-</code></pre>
-
-<p>As an example, lets check the information for the erlang package:</p>
-
+</code></pre><p>As an example, lets check the information for the erlang package:</p>
 <pre><code>erlang:
   Installed: 1:16.b.3-dfsg-1ubuntu2.1
   Candidate: 1:16.b.3-dfsg-1ubuntu2.1
@@ -202,10 +172,7 @@ if (!doNotTrack) {
      1:16.b.3-dfsg-1ubuntu2 0
         500 http://archive.ubuntu.com/ubuntu/ trusty/universe amd64 Packages
 
-</code></pre>
-
-<p>From the output we can see that the version of the currently installed erlang is <code>1:16.b.3-dfsg-1ubuntu2.1</code>. Let&rsquo;s separate this long version into the three components:</p>
-
+</code></pre><p>From the output we can see that the version of the currently installed erlang is <code>1:16.b.3-dfsg-1ubuntu2.1</code>. Let's separate this long version into the three components:</p>
 <table>
 <thead>
 <tr>
@@ -213,36 +180,26 @@ if (!doNotTrack) {
 <th>Value</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>Epoch</td>
 <td><code>1</code></td>
 </tr>
-
 <tr>
 <td>Upstream version</td>
 <td><code>16.b.3-dfsg</code></td>
 </tr>
-
 <tr>
 <td>Debian Revision</td>
 <td><code>-1ubuntu2.1</code></td>
 </tr>
 </tbody>
 </table>
-
 <h2 id="specific-version-dependencies">Specific Version Dependencies</h2>
-
-<p>Back to the topic of dependencies, a question arises: which components should we specify when needing a specific version of a package? The examples in the <a href="https://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control">Debian manual</a> don&rsquo;t really show any versions with epoch or upstream versions with letters betwen periods, or multiple hyphens.</p>
-
+<p>Back to the topic of dependencies, a question arises: which components should we specify when needing a specific version of a package? The examples in the <a href="https://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control">Debian manual</a> don't really show any versions with epoch or upstream versions with letters betwen periods, or multiple hyphens.</p>
 <p>The answer is <strong>all of them</strong>. We must specify the full version, like shown below:</p>
-
 <pre><code>Depends: erlang (= 1:16.b.3-dfsg-1ubuntu2.1)
-</code></pre>
-
-<h2 id="references">References</h2>
-
+</code></pre><h2 id="references">References</h2>
 <ul>
 <li><a href="https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version">https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version</a></li>
 <li><a href="https://web.archive.org/web/20121024134944/http://carlo17.home.xs4all.nl/howto/debian.html">Debian Cheatsheet</a></li>

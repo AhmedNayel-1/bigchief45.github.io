@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -138,32 +138,21 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/getting-started-with-love2d-basics/">Getting Started With Love2D Basics</a>
   </h1>
   <time datetime="2017-07-19T00:00:00Z" class="post-date">Wed, Jul 19, 2017</time>
-  <p>I recently started playing around with <a href="https://love2d.org/">Love2D</a> for game development. Although I am completely new to Lua, so far it&rsquo;s been pretty fun and I really like it.</p>
-
+  <p>I recently started playing around with <a href="https://love2d.org/">Love2D</a> for game development. Although I am completely new to Lua, so far it's been pretty fun and I really like it.</p>
 <p>I created this post to write down the most important basic concepts that I have encountered so far, so that I can use as quick reference later.</p>
-
 <h2 id="setting-up-a-basic-ide">Setting Up a Basic IDE</h2>
-
-<p>So far I&rsquo;ve been using Love2D in Windows. Initially I started using Sublime Text 2 as my editor, but then figured out how to make my Love2D development experience much better using <a href="https://atom.io/">Atom</a> combined with Github for Windows.</p>
-
+<p>So far I've been using Love2D in Windows. Initially I started using Sublime Text 2 as my editor, but then figured out how to make my Love2D development experience much better using <a href="https://atom.io/">Atom</a> combined with Github for Windows.</p>
 <p>In Atom there is a great package called <a href="https://github.com/rameshvarun/love-ide"><strong>love-ide</strong></a> which has many great tools and features for developming with Love.</p>
-
-<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide.jpg" alt="Love Atom IDE" /></p>
-
+<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide.jpg" alt="Love Atom IDE"></p>
 <p>Some of these features include Lua linting, autocomplete, and being able to run the Love application right from Atom.</p>
-
-<p>Additionally, we will want to use Window&rsquo;s console for debugging. To do so, enable these options:</p>
-
-<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide_windows.jpg" alt="Love in Windows" /></p>
-
+<p>Additionally, we will want to use Window's console for debugging. To do so, enable these options:</p>
+<p><img src="https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide_windows.jpg" alt="Love in Windows"></p>
 <h2 id="working-with-keyboard-keys">Working With Keyboard Keys</h2>
-
 <p>We can interact with user input through the keyboard by determining if a certain key has been pressed. This is done like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#00a8c8">if</span> <span style="color:#111">love.keyboard</span><span style="color:#111">.</span><span style="color:#111">isDown</span><span style="color:#111">(</span><span style="color:#d88200">&#34;right&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">then</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#00a8c8">if</span> <span style="color:#111">love.keyboard</span><span style="color:#111">.</span><span style="color:#111">isDown</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">right</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">then</span>
   <span style="color:#75715e">-- ...</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The <a href="https://love2d.org/wiki/love.keyboard.isDown"><code>love.keyboard.isDown</code></a> function receives a <code>KeyConstant</code> string argument to indicate which key we want to test for. The complete list can be found <a href="https://love2d.org/wiki/KeyConstant">here</a>. Here are some examples:</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The <a href="https://love2d.org/wiki/love.keyboard.isDown"><code>love.keyboard.isDown</code></a> function receives a <code>KeyConstant</code> string argument to indicate which key we want to test for. The complete list can be found <a href="https://love2d.org/wiki/KeyConstant">here</a>. Here are some examples:</p>
 <table>
 <thead>
 <tr>
@@ -171,18 +160,15 @@ if (!doNotTrack) {
 <th align="center">Description</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="center"><code>space</code></td>
 <td align="center">Space key</td>
 </tr>
-
 <tr>
 <td align="center"><code>backspace</code></td>
 <td align="center">Backspace key</td>
 </tr>
-
 <tr>
 <td align="center"><code>down</code></td>
 <td align="center">Down arrow key</td>
@@ -214,7 +200,6 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-06-27T00:00:00Z" class="post-date">Tue, Jun 27, 2017</time>
   <p>Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from <code>Device</code>. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html">Python data source</a>.</p>
-
 <p>The <code>zenpack.yaml</code> file for the first and main ZenPack would look something like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ZenPack1</span>
 
@@ -237,7 +222,8 @@ classes<span style="color:#111">:</span>
 
 class_relationships<span style="color:#111">:</span>
   - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC SpecialComponent
-  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent</code></pre></div>
+  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -267,13 +253,9 @@ class_relationships<span style="color:#111">:</span>
   </h1>
   <time datetime="2017-06-12T00:00:00Z" class="post-date">Mon, Jun 12, 2017</time>
   <p>In a <a href="http://aalvarez.me/blog/posts/using-objects-and-ranges-with-cases-in-ruby.html">previous post</a> I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.</p>
-
 <p>The other day I was trying to solve the <a href="http://exercism.io/submissions/03c3c93f23b8420faff3107e2ad18286">Bob Ruby exercise in Exercism</a>, and I came up with another very cool way to use case statements: with Lambdas.</p>
-
 <h2 id="the-problem">The Problem</h2>
-
-<p>The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem&rsquo;s README file:</p>
-
+<p>The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem's README file:</p>
 <pre><code>Bob is a lackadaisical teenager. In conversation, his responses are very limited.
 
 Bob answers 'Sure.' if you ask him a question.
@@ -283,10 +265,7 @@ He answers 'Whoa, chill out!' if you yell at him.
 He says 'Fine. Be that way!' if you address him without actually saying anything.
 
 He answers 'Whatever.' to anything else.
-</code></pre>
-
-<h2 id="solutions">Solutions</h2>
-
+</code></pre><h2 id="solutions">Solutions</h2>
 <p>The test provided by Exercism indicates that we should create a <code>Bob</code> class with a <code>hey</code> class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:</p>
 
   
@@ -312,16 +291,11 @@ He answers 'Whatever.' to anything else.
     <a href="https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/">Zenoss Custom Notification Actions Using Subscribers</a>
   </h1>
   <time datetime="2017-06-07T00:00:00Z" class="post-date">Wed, Jun 7, 2017</time>
-  <p>In a <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification&rsquo;s content pane, as shown below:</p>
-
-<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content" /></p>
-
+  <p>In a <a href="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html">previous post</a> I talked about how we could create custom notifications actions in Zenoss. Like a <em>SMS</em> notification, for example. In that post we required a valid cellphone number using a text field in the notification's content pane, as shown below:</p>
+<p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content"></p>
 <p>In this post I want to change and improve this by using <em><strong>subscribers</strong></em> functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the <em>Pager</em> field instead.</p>
-
 <h2 id="the-pager-action">The Pager Action</h2>
-
-<p>Using Zenoss Core 4&rsquo;s pager action&rsquo;s <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
-
+<p>Using Zenoss Core 4's pager action's <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
 <p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
 
   
@@ -348,11 +322,8 @@ He answers 'Whatever.' to anything else.
   </h1>
   <time datetime="2017-06-06T00:00:00Z" class="post-date">Tue, Jun 6, 2017</time>
   <p>Continuing with my journey in contributing to <a href="http://gnocchi.xyz/index.html">Gnocchi</a>, I have learned of an excellent tool which Gnocchi uses to test its API from a HTTP request approach. The tool is called <a href="https://github.com/cdent/gabbi"><strong>Gabbi</strong></a>.</p>
-
-<p>Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&rsquo;s DSL when making <a href="https://github.com/rspec/rspec-rails#request-specs">request specs</a>.</p>
-
+<p>Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec's DSL when making <a href="https://github.com/rspec/rspec-rails#request-specs">request specs</a>.</p>
 <p>For my latest contribution to Gnocchi, I was working on an <a href="https://github.com/gnocchixyz/gnocchi/issues/12">issue</a> where newly created metrics were not being returned in the response from <code>/v1/resource/generic/:id/metric</code>. After applying the fixes and submitting the patch, it was also necessary to update some of the functional Gabbi tests that belong to this specific use case.</p>
-
 <p>One of these original tests is shown below:</p>
 
   

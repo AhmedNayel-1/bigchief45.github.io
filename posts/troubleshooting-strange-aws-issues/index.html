@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Troubleshooting Strange AWS Issues",
     "headline" : "Troubleshooting Strange AWS Issues",
-    "description" : "\x3cp\x3eWe\x26rsquo;ve all been there. The same things working fine one time but failing other times without any idea why.\x3c\/p\x3e\n\n\x3cp\x3eThis post is a list of troubleshooting strange issues I\x26rsquo;ve encountered when using AWS.\x3c\/p\x3e\n\n\x3ch2 id=\x22elasticbeanstalk-failing-to-create-rds-security-group\x22\x3eElasticBeanstalk Failing to Create RDS Security Group\x3c\/h2\x3e\n\n\x3cp\x3eI was having an issue where I couldn\x26rsquo;t create and attach an RDS database to an ElasticBeanstalk environment because an RDS security group was failing at being created. All this was being done using the AWS console.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eWe\x27ve all been there. The same things working fine one time but failing other times without any idea why.\x3c\/p\x3e\n\x3cp\x3eThis post is a list of troubleshooting strange issues I\x27ve encountered when using AWS.\x3c\/p\x3e\n\x3ch2 id=\x22elasticbeanstalk-failing-to-create-rds-security-group\x22\x3eElasticBeanstalk Failing to Create RDS Security Group\x3c\/h2\x3e\n\x3cp\x3eI was having an issue where I couldn\x27t create and attach an RDS database to an ElasticBeanstalk environment because an RDS security group was failing at being created. All this was being done using the AWS console.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,36 +135,22 @@ if (!doNotTrack) {
   <h1>Troubleshooting Strange AWS Issues</h1>
   <time datetime=2018-08-07T00:00:00Z class="post-date">Tue, Aug 7, 2018</time>
 
-  <p>We&rsquo;ve all been there. The same things working fine one time but failing other times without any idea why.</p>
-
-<p>This post is a list of troubleshooting strange issues I&rsquo;ve encountered when using AWS.</p>
-
+  <p>We've all been there. The same things working fine one time but failing other times without any idea why.</p>
+<p>This post is a list of troubleshooting strange issues I've encountered when using AWS.</p>
 <h2 id="elasticbeanstalk-failing-to-create-rds-security-group">ElasticBeanstalk Failing to Create RDS Security Group</h2>
-
-<p>I was having an issue where I couldn&rsquo;t create and attach an RDS database to an ElasticBeanstalk environment because an RDS security group was failing at being created. All this was being done using the AWS console.</p>
-
+<p>I was having an issue where I couldn't create and attach an RDS database to an ElasticBeanstalk environment because an RDS security group was failing at being created. All this was being done using the AWS console.</p>
 <p>The ElasticBeanstalk logs where showing the following:</p>
-
 <pre><code>2018-08-07 13:10:04 UTC-0600	ERROR	Creating RDS database security group named: &lt;name&gt; failed Reason: Either the resource does not exist, or you do not have the required permissions.
 2018-08-07 13:10:04 UTC-0600	ERROR	Service:AmazonCloudFormation, Message:Stack named '&lt;stack name&gt;' aborted operation. Current state: 'UPDATE_ROLLBACK_IN_PROGRESS' Reason: The following resource(s) failed to create: [AWSEBRDSDBSecurityGroup].
-</code></pre>
-
-<p>This was strange. I had never encoutered this issue when creating and attaching an RDS database to an ElasticBeanstalk environment. I managed to find this <a href="https://serverfault.com/questions/920834/cant-add-rds-database-to-elastic-beanstalk-environment">ServerFault question</a> which presented the exact same problem. Yet no concrete solution was given.</p>
-
+</code></pre><p>This was strange. I had never encoutered this issue when creating and attaching an RDS database to an ElasticBeanstalk environment. I managed to find this <a href="https://serverfault.com/questions/920834/cant-add-rds-database-to-elastic-beanstalk-environment">ServerFault question</a> which presented the exact same problem. Yet no concrete solution was given.</p>
 <h4 id="solution">Solution</h4>
-
-<p>The problem indeed is that there are somehow no permissions configured to create the security group in question. I started to inspect another AWS account&rsquo;s (used for dev purposes) IAM Roles and noticed that one role was missing in the account where the issue was happening.</p>
-
-<p>This role was the <code>AWSServiceRoleForRDS</code>. I am not sure exactly why this role was missing from the list, while other roles (such as <code>AWSServiceRoleForSupport</code>) weren&rsquo;t. Anyways, I proceeded to create the <code>AWSServiceRoleForRDS</code> manually in IAM and afterwards proceeded again to create and attach the RDS database.</p>
-
+<p>The problem indeed is that there are somehow no permissions configured to create the security group in question. I started to inspect another AWS account's (used for dev purposes) IAM Roles and noticed that one role was missing in the account where the issue was happening.</p>
+<p>This role was the <code>AWSServiceRoleForRDS</code>. I am not sure exactly why this role was missing from the list, while other roles (such as <code>AWSServiceRoleForSupport</code>) weren't. Anyways, I proceeded to create the <code>AWSServiceRoleForRDS</code> manually in IAM and afterwards proceeded again to create and attach the RDS database.</p>
 <p>Solved!</p>
-
 <h4 id="references">References</h4>
-
 <ul>
-<li><a href="https://serverfault.com/questions/920834/cant-add-rds-database-to-elastic-beanstalk-environment">Can&rsquo;t add RDS database to Elastic Beanstalk environment</a></li>
+<li><a href="https://serverfault.com/questions/920834/cant-add-rds-database-to-elastic-beanstalk-environment">Can't add RDS database to Elastic Beanstalk environment</a></li>
 </ul>
-
 <p>Stay tuned for more issues to come!</p>
 </div>
 

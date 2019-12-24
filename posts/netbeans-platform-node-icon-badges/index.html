@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Netbeans Platform Node Icon Badges",
     "headline" : "Netbeans Platform Node Icon Badges",
-    "description" : "\x3cp\x3eThe Netbeans IDE has some very cool way of letting users know when a certain file contains errors. For example, if you are editing a Java file and the file contains syntax errors, Netbeans will change the file icons with a new icon indicating errors:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/netbeans-platform-node-icon-badges\/netbeans_error_icons.png\x22 alt=\x22Netbeans Error Icons\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eYou can see that the error icons propagate all the way up to the top-most parent, the project itself.\x3c\/p\x3e\n\n\x3ch2 id=\x22netbeans-platform-icon-badges\x22\x3eNetbeans Platform Icon Badges\x3c\/h2\x3e\n\n\x3cp\x3eAs a user of the Netbeans IDE and before even knowing what the Netbeans Platform was, I always assumed that the normal state of the icon and the error state of the icon were two completely different icons handled by Netbeans. A few days ago I learned that this is not the case.\x3c\/p\x3e\n\n\x3cp\x3eNetbeans uses the concept of \x3cstrong\x3eicon badges\x3c\/strong\x3e to display these kind of error icons. Icon badges are basically multiple images merged together \x3cem\x3eat runtime\x3c\/em\x3e into a single \x3ccode\x3eImage\x3c\/code\x3e object.\x3c\/p\x3e\n\n\x3cp\x3eIn this article I want to quickly go over how you can apply this concept in your Netbeans Platform application when using the Nodes API.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eThe Netbeans IDE has some very cool way of letting users know when a certain file contains errors. For example, if you are editing a Java file and the file contains syntax errors, Netbeans will change the file icons with a new icon indicating errors:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/netbeans-platform-node-icon-badges\/netbeans_error_icons.png\x22 alt=\x22Netbeans Error Icons\x22\x3e\x3c\/p\x3e\n\x3cp\x3eYou can see that the error icons propagate all the way up to the top-most parent, the project itself.\x3c\/p\x3e\n\x3ch2 id=\x22netbeans-platform-icon-badges\x22\x3eNetbeans Platform Icon Badges\x3c\/h2\x3e\n\x3cp\x3eAs a user of the Netbeans IDE and before even knowing what the Netbeans Platform was, I always assumed that the normal state of the icon and the error state of the icon were two completely different icons handled by Netbeans. A few days ago I learned that this is not the case.\x3c\/p\x3e\n\x3cp\x3eNetbeans uses the concept of \x3cstrong\x3eicon badges\x3c\/strong\x3e to display these kind of error icons. Icon badges are basically multiple images merged together \x3cem\x3eat runtime\x3c\/em\x3e into a single \x3ccode\x3eImage\x3c\/code\x3e object.\x3c\/p\x3e\n\x3cp\x3eIn this article I want to quickly go over how you can apply this concept in your Netbeans Platform application when using the Nodes API.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,54 +136,43 @@ if (!doNotTrack) {
   <time datetime=2018-05-03T00:00:00Z class="post-date">Thu, May 3, 2018</time>
 
   <p>The Netbeans IDE has some very cool way of letting users know when a certain file contains errors. For example, if you are editing a Java file and the file contains syntax errors, Netbeans will change the file icons with a new icon indicating errors:</p>
-
-<p><img src="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png" alt="Netbeans Error Icons" /></p>
-
+<p><img src="https://aalvarez.me/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png" alt="Netbeans Error Icons"></p>
 <p>You can see that the error icons propagate all the way up to the top-most parent, the project itself.</p>
-
 <h2 id="netbeans-platform-icon-badges">Netbeans Platform Icon Badges</h2>
-
 <p>As a user of the Netbeans IDE and before even knowing what the Netbeans Platform was, I always assumed that the normal state of the icon and the error state of the icon were two completely different icons handled by Netbeans. A few days ago I learned that this is not the case.</p>
-
 <p>Netbeans uses the concept of <strong>icon badges</strong> to display these kind of error icons. Icon badges are basically multiple images merged together <em>at runtime</em> into a single <code>Image</code> object.</p>
-
 <p>In this article I want to quickly go over how you can apply this concept in your Netbeans Platform application when using the Nodes API.</p>
-
 <h2 id="icon-badges-with-nodes">Icon Badges With Nodes</h2>
-
 <p>When defining a node class in Netbeans Platform, there is a method called <code>getIcon</code> which you can define yourself so that when the nodes are rendered in the application, the default node icons will be replaced with the icon of your choosing. For example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyBeanNode</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">BeanNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyBean</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
   <span style="color:#75715e">// Constructor and other stuff here...
 </span><span style="color:#75715e"></span>
   <span style="color:#75af00">@Override</span>
   <span style="color:#00a8c8">public</span> <span style="color:#111">Image</span> <span style="color:#75af00">getIcon</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">type</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#00a8c8">return</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/my/icon&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/my/icon&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>To apply the concept of badging, we can simply use the <code>mergeImages</code> method from <code>ImageUtilities</code>. To determine whether the method needs to merge an error badge icon or not will depend on how you are handling current errors for the nodes. Here is a very basic example:</p>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>To apply the concept of badging, we can simply use the <code>mergeImages</code> method from <code>ImageUtilities</code>. To determine whether the method needs to merge an error badge icon or not will depend on how you are handling current errors for the nodes. Here is a very basic example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyBeanNode</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">BeanNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyBean</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Image</span> <span style="color:#111">ERROR_BADGE</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/error/badge/icon&#34;</span><span style="color:#f92672">);</span>
+  <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Image</span> <span style="color:#111">ERROR_BADGE</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/error/badge/icon&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
   <span style="color:#75715e">// ...
 </span><span style="color:#75715e"></span>
   <span style="color:#75af00">@Override</span>
   <span style="color:#00a8c8">public</span> <span style="color:#111">Image</span> <span style="color:#75af00">getIcon</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">type</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">Image</span> <span style="color:#111">icon</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/my/icon&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#111">Image</span> <span style="color:#111">icon</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">loadImage</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;path/to/my/icon&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
-    <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">getBean</span><span style="color:#f92672">().</span><span style="color:#75af00">hasErrors</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
-      <span style="color:#111">icon</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">mergeImages</span><span style="color:#f92672">(</span><span style="color:#111">icon</span><span style="color:#f92672">,</span> <span style="color:#111">ERROR_BADGE</span><span style="color:#f92672">,</span> <span style="color:#111">7</span><span style="color:#f92672">,</span> <span style="color:#111">7</span><span style="color:#f92672">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">getBean</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#75af00">hasErrors</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      <span style="color:#111">icon</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageUtilities</span><span style="color:#f92672">.</span><span style="color:#75af00">mergeImages</span><span style="color:#f92672">(</span><span style="color:#111">icon</span><span style="color:#f92672">,</span> <span style="color:#111">ERROR_BADGE</span><span style="color:#f92672">,</span> <span style="color:#111">7</span><span style="color:#f92672">,</span> <span style="color:#111">7</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 
     <span style="color:#00a8c8">return</span> <span style="color:#111">icon</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>In the above example we are relying on a <code>hasErrors</code> method in the <code>MyBean</code> object, which is obtained by calling <code>getBean()</code>. Keep in mind that this may or may not be the best way to handle these errors.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>In the above example we are relying on a <code>hasErrors</code> method in the <code>MyBean</code> object, which is obtained by calling <code>getBean()</code>. Keep in mind that this may or may not be the best way to handle these errors.</p>
 <p>Now when the factory object gets called again to render the nodes, nodes that contain errors will have their original icons merged with the error badge icon.</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="http://wiki.netbeans.org/BadgedIcons">http://wiki.netbeans.org/BadgedIcons</a></li>
 <li><a href="https://platform.netbeans.org/tutorials/nbm-povray-8.html">https://platform.netbeans.org/tutorials/nbm-povray-8.html</a></li>

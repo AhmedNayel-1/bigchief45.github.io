@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Zenoss Renderers",
     "headline" : "Zenoss Renderers",
-    "description" : "\x3cp\x3eZenoss makes use of some very interesting graphical components called renderers. These are used to manipulate the way data is shown in the Zenoss user interface.\x3c\/p\x3e\n\n\x3cp\x3eFor example, a value of \x3cem\x3etotal bytes used\x3c\/em\x3e could be 6080626688 in bytes, which is a very high number and doesn\x26rsquo;t really convey much meaning. However, we can use a built-in Zenoss renderer called \x3ccode\x3ebytesString\x3c\/code\x3e which will convert this value in bytes to the closest representation:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/zenoss-renderers\/zenoss_renderers.png\x22 alt=\x22Zenoss Renderers\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eAs we can see, this is a much better and meaningful way of displaying the data.\x3c\/p\x3e\n\n\x3cp\x3eThe built-in Zenoss renderers and source code can be found in \x3ccode\x3e$ZENHOME\/Products\/ZenUI3\/browser\/resources\/js\/zenoss\/Renderers.js\x3c\/code\x3e\x3c\/p\x3e\n\n\x3cp\x3eThey are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the \x3ccode\x3erenderer\x3c\/code\x3e property. For example:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3eHardDisk\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n  label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Hard Disk\n  properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n     location\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Location\n\n     capacity\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Capacity\n\n     raid_name\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Raid Name\n\n     raid_level\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Raid Level\n\n     status\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Status\n        renderer\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Zenoss.render.pingStatus\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3e\x3ccode\x3eZenoss.render.pingStatus\x3c\/code\x3e is one of the default renderers that come built-in within Zenoss Core 4, similar to \x3ccode\x3eZenoss.render.bytesString\x3c\/code\x3e.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eZenoss makes use of some very interesting graphical components called renderers. These are used to manipulate the way data is shown in the Zenoss user interface.\x3c\/p\x3e\n\x3cp\x3eFor example, a value of \x3cem\x3etotal bytes used\x3c\/em\x3e could be 6080626688 in bytes, which is a very high number and doesn\x27t really convey much meaning. However, we can use a built-in Zenoss renderer called \x3ccode\x3ebytesString\x3c\/code\x3e which will convert this value in bytes to the closest representation:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/zenoss-renderers\/zenoss_renderers.png\x22 alt=\x22Zenoss Renderers\x22\x3e\x3c\/p\x3e\n\x3cp\x3eAs we can see, this is a much better and meaningful way of displaying the data.\x3c\/p\x3e\n\x3cp\x3eThe built-in Zenoss renderers and source code can be found in \x3ccode\x3e$ZENHOME\/Products\/ZenUI3\/browser\/resources\/js\/zenoss\/Renderers.js\x3c\/code\x3e\x3c\/p\x3e\n\x3cp\x3eThey are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the \x3ccode\x3erenderer\x3c\/code\x3e property. For example:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3eHardDisk\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n  label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Hard Disk\n  properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n     location\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Location\n\n     capacity\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Capacity\n\n     raid_name\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Raid Name\n\n     raid_level\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Raid Level\n\n     status\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Status\n        renderer\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Zenoss.render.pingStatus\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3e\x3ccode\x3eZenoss.render.pingStatus\x3c\/code\x3e is one of the default renderers that come built-in within Zenoss Core 4, similar to \x3ccode\x3eZenoss.render.bytesString\x3c\/code\x3e.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,15 +136,10 @@ if (!doNotTrack) {
   <time datetime=2016-10-27T00:00:00Z class="post-date">Thu, Oct 27, 2016</time>
 
   <p>Zenoss makes use of some very interesting graphical components called renderers. These are used to manipulate the way data is shown in the Zenoss user interface.</p>
-
-<p>For example, a value of <em>total bytes used</em> could be 6080626688 in bytes, which is a very high number and doesn&rsquo;t really convey much meaning. However, we can use a built-in Zenoss renderer called <code>bytesString</code> which will convert this value in bytes to the closest representation:</p>
-
-<p><img src="https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers.png" alt="Zenoss Renderers" /></p>
-
+<p>For example, a value of <em>total bytes used</em> could be 6080626688 in bytes, which is a very high number and doesn't really convey much meaning. However, we can use a built-in Zenoss renderer called <code>bytesString</code> which will convert this value in bytes to the closest representation:</p>
+<p><img src="https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers.png" alt="Zenoss Renderers"></p>
 <p>As we can see, this is a much better and meaningful way of displaying the data.</p>
-
 <p>The built-in Zenoss renderers and source code can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss/Renderers.js</code></p>
-
 <p>They are a list of registered Javascript functions that can be assigned in our YAML definitions file by adding the <code>renderer</code> property. For example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">HardDisk<span style="color:#111">:</span>
   base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
@@ -164,25 +159,17 @@ if (!doNotTrack) {
 
      status<span style="color:#111">:</span>
         label<span style="color:#111">:</span> Status
-        renderer<span style="color:#111">:</span> Zenoss.render.pingStatus</code></pre></div>
-<p><code>Zenoss.render.pingStatus</code> is one of the default renderers that come built-in within Zenoss Core 4, similar to <code>Zenoss.render.bytesString</code>.</p>
-
+        renderer<span style="color:#111">:</span> Zenoss.render.pingStatus
+</code></pre></div><p><code>Zenoss.render.pingStatus</code> is one of the default renderers that come built-in within Zenoss Core 4, similar to <code>Zenoss.render.bytesString</code>.</p>
 <h2 id="creating-custom-renderers">Creating Custom Renderers</h2>
-
 <p>It is also possible to create our own custom renderers that our classes can use. To do this, we create a new directory called <code>resources</code> within our ZenPack. Under this directory we will create a new Javascript file where we will register our new renderer(s) for our ZenPack.</p>
-
-<p>For example, let&rsquo;s assume our ZenPack has a <code>ApiService</code> class that has a property called <code>status</code>. The value returned for this property is an integer that represents that status of the service. These are the possible statuses and their value-meaning:</p>
-
+<p>For example, let's assume our ZenPack has a <code>ApiService</code> class that has a property called <code>status</code>. The value returned for this property is an integer that represents that status of the service. These are the possible statuses and their value-meaning:</p>
 <pre><code>UP: 0
 DEGRADED: 1
 DOWN: 2
 INIT: 3
-</code></pre>
-
-<p>Showing the integer values for the status property in the user interface is not very meaningful to the user. To solve this, we can create a custom renderer that will evaluate the value and simply return a string for each possible value, this string will be a better and much more meaningful representation for this property.</p>
-
+</code></pre><p>Showing the integer values for the status property in the user interface is not very meaningful to the user. To solve this, we can create a custom renderer that will evaluate the value and simply return a string for each possible value, this string will be a better and much more meaningful representation for this property.</p>
 <p>In our <code>resources</code> directory, we create a new Javascript file called <code>Service.js</code> (can be any name)</p>
-
 <p>Here we create and register our new renderer as follows:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">apply</span><span style="color:#111">(</span><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">,</span> <span style="color:#111">{</span>
   <span style="color:#75af00">api_ServiceStatus</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">n</span><span style="color:#111">)</span> <span style="color:#111">{</span>
@@ -201,19 +188,17 @@ INIT: 3
               <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;UNKNOWN&#34;</span>
       <span style="color:#111">}</span>
   <span style="color:#111">}</span>
-<span style="color:#111">});</span>
-</code></pre></div>
-<p>Now we can assign this new renderer in our YAML file:</p>
+<span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
+</code></pre></div><p>Now we can assign this new renderer in our YAML file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ApiService<span style="color:#111">:</span>
   base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
   label<span style="color:#111">:</span> API Service
   properties<span style="color:#111">:</span>
     status<span style="color:#111">:</span>
       label<span style="color:#111">:</span> Service Status
-      renderer<span style="color:#111">:</span> Zenoss.render.api_ServiceStatus</code></pre></div>
-<p>We re-install the ZenPack, restart <em>zopectl</em> and <em>zenhub</em> services, and check our interface for the new results:</p>
-
-<p><img src="https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers2.png" alt="Custom Renderer" /></p>
+      renderer<span style="color:#111">:</span> Zenoss.render.api_ServiceStatus
+</code></pre></div><p>We re-install the ZenPack, restart <em>zopectl</em> and <em>zenhub</em> services, and check our interface for the new results:</p>
+<p><img src="https://aalvarez.me/posts/zenoss-renderers/zenoss_renderers2.png" alt="Custom Renderer"></p>
 </div>
 
 

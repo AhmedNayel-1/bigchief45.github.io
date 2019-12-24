@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tdd on Andrés Álvarez</title>
@@ -18,10 +18,8 @@
       
       <guid>https://aalvarez.me/posts/python-functional-testing-for-aws-lambda/</guid>
       <description>&lt;p&gt;In this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.&lt;/p&gt;
-
 &lt;p&gt;For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s get started!&lt;/p&gt;</description>
+&lt;p&gt;Let&#39;s get started!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -31,13 +29,9 @@
       
       <guid>https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://pytest.org/&#34;&gt;Pytest&lt;/a&gt; is my Python testing framework of choice. Very easy to use, and makes tests look much better.&lt;/p&gt;
-
-&lt;p&gt;In this article I&amp;rsquo;ll show you some cool tricks I have incorporated into my test suites using Pytest.&lt;/p&gt;
-
+&lt;p&gt;In this article I&#39;ll show you some cool tricks I have incorporated into my test suites using Pytest.&lt;/p&gt;
 &lt;h2 id=&#34;environment-variables&#34;&gt;Environment Variables&lt;/h2&gt;
-
 &lt;p&gt;When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.&lt;/p&gt;
-
 &lt;p&gt;With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in &lt;code&gt;conftest.py&lt;/code&gt; that will be loaded automatically:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# conftest.py&lt;/span&gt;
 
@@ -45,10 +39,10 @@
 
 
 &lt;span style=&#34;color:#75af00&#34;&gt;@pytest.fixture&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;autouse&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;True&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;env_setup&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;MY_SETTING&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;some-value&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ANOTHER_SETTING&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;some-value&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/monkeypatch.html&#34;&gt;&lt;code&gt;monkeypatch&lt;/code&gt;&lt;/a&gt; is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the &lt;code&gt;autouse&lt;/code&gt; option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.&lt;/p&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;env_setup&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;MY_SETTING&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;some-value&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;ANOTHER_SETTING&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;some-value&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/monkeypatch.html&#34;&gt;&lt;code&gt;monkeypatch&lt;/code&gt;&lt;/a&gt; is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the &lt;code&gt;autouse&lt;/code&gt; option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -58,11 +52,8 @@
       
       <guid>https://aalvarez.me/posts/python-functional-http-testing-with-gabbi/</guid>
       <description>&lt;p&gt;Continuing with my journey in contributing to &lt;a href=&#34;http://gnocchi.xyz/index.html&#34;&gt;Gnocchi&lt;/a&gt;, I have learned of an excellent tool which Gnocchi uses to test its API from a HTTP request approach. The tool is called &lt;a href=&#34;https://github.com/cdent/gabbi&#34;&gt;&lt;strong&gt;Gabbi&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&amp;rsquo;s DSL when making &lt;a href=&#34;https://github.com/rspec/rspec-rails#request-specs&#34;&gt;request specs&lt;/a&gt;.&lt;/p&gt;
-
+&lt;p&gt;Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&#39;s DSL when making &lt;a href=&#34;https://github.com/rspec/rspec-rails#request-specs&#34;&gt;request specs&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;For my latest contribution to Gnocchi, I was working on an &lt;a href=&#34;https://github.com/gnocchixyz/gnocchi/issues/12&#34;&gt;issue&lt;/a&gt; where newly created metrics were not being returned in the response from &lt;code&gt;/v1/resource/generic/:id/metric&lt;/code&gt;. After applying the fixes and submitting the patch, it was also necessary to update some of the functional Gabbi tests that belong to this specific use case.&lt;/p&gt;
-
 &lt;p&gt;One of these original tests is shown below:&lt;/p&gt;</description>
     </item>
     
@@ -72,20 +63,16 @@
       <pubDate>Thu, 25 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/</guid>
-      <description>&lt;p&gt;Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&amp;rsquo;s factory, and then add the corresponding model and request specs.&lt;/p&gt;
-
-&lt;p&gt;The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&amp;rsquo;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.&lt;/p&gt;
-
+      <description>&lt;p&gt;Recently I was experiencing a problem with a Rails API where I would update a model with new attributes, and then proceeded to add the new attributes to the model&#39;s factory, and then add the corresponding model and request specs.&lt;/p&gt;
+&lt;p&gt;The problem was that I would forget to whitelist the new attributes in the controller. Then running the request specs would not detect the error since I only test against one updated attribute that was whitelisted long ago. This became really annoying since I had no way to know if the new attributes were being whitelisted or not, and my tests weren&#39;t saying anything about it. This problem becomes even more apparent when the list of whitelisted attributes starts becoming very long.&lt;/p&gt;
 &lt;p&gt;In an API following the &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API&lt;/a&gt; specification, here is an example of how the strong parameters method would look like:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;thing_params&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;thing_params&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:data&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:attributes&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;permit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:color&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:size&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:age&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
       &lt;span style=&#34;color:#d88200&#34;&gt;:owner&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:origin&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:location&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:purpose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:price&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:alive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;As you can see, the list of attributes is getting pretty long. And we &lt;strong&gt;do not&lt;/strong&gt; want to explicitly keep adding more attributes to the test.&lt;/p&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;As you can see, the list of attributes is getting pretty long. And we &lt;strong&gt;do not&lt;/strong&gt; want to explicitly keep adding more attributes to the test.&lt;/p&gt;
 &lt;h2 id=&#34;testing-strong-parameters-in-controller-specs&#34;&gt;Testing Strong Parameters in Controller Specs&lt;/h2&gt;
-
-&lt;p&gt;After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&amp;rsquo;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that &lt;strong&gt;all&lt;/strong&gt; attributes of importance are whitelisted in the controller.&lt;/p&gt;</description>
+&lt;p&gt;After the release of Rails 5 I started ditching controller specs in favor of request specs. I like this approach and I think it&#39;s great, but I think it would be too much unecessary work to test that all the necessary attributes are whitelisted, in the request spec. Therefore I proceeded to create very simple controller specs that would test that &lt;strong&gt;all&lt;/strong&gt; attributes of importance are whitelisted in the controller.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -95,20 +82,15 @@
       
       <guid>https://aalvarez.me/posts/testing-a-rails-api-with-rspec/</guid>
       <description>&lt;p&gt;As I continue to improve me API testing skills in Rails, I have come to point where I really feel comfortable with all the tools I need to correctly add useful tests to my API. This post explains how I usually test my Rails APIs using RSpec.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-the-necessary-tools&#34;&gt;Setting Up the Necessary Tools&lt;/h2&gt;
-
 &lt;p&gt;In addition to RSpec, there are a few tools that make my testing experience much easier. These are:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/thoughtbot/factory_girl_rails&#34;&gt;Factory Girl&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/stympy/faker&#34;&gt;Faker&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/thoughtbot/shoulda-matchers&#34;&gt;Shoulda Matchers&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/DatabaseCleaner/database_cleaner&#34;&gt;Database Cleaner&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;After Adding these gems to the Gemfile. I proceed to create a &lt;code&gt;/support&lt;/code&gt; directory under the &lt;code&gt;/spec&lt;/code&gt; directory. This directory will contain the additional configuration of the above tools, as well as some helper definitions that our specs will use.&lt;/p&gt;
-
 &lt;p&gt;&lt;strong&gt;/spec/support/shoulda.rb&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;Shoulda&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;Matchers&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;integrate&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
@@ -118,7 +100,8 @@
     &lt;span style=&#34;color:#75715e&#34;&gt;# Or, choose the following (which implies all of the above):&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;library&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:rails&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

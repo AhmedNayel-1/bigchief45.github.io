@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Understanding Ceilometer Transformers",
     "headline" : "Understanding Ceilometer Transformers",
-    "description" : "\x3cp\x3eCeilometer \x3cstrong\x3etransformers\x3c\/strong\x3e are part of the Ceilometer \x3cstrong\x3epipeline\x3c\/strong\x3e, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for \x3cstrong\x3esamples\x3c\/strong\x3e and a pipeline for \x3cstrong\x3eevents\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eConfigurations for these pipelines can be found in \x3ccode\x3e\/etc\/ceilometer\/pipeline.yaml\x3c\/code\x3e and \x3ccode\x3e\/etc\/ceilometer\/event_pipeline.yaml\x3c\/code\x3e.\x3c\/p\x3e\n\n\x3cp\x3eTransformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22https:\/\/docs.openstack.org\/developer\/ceilometer\/_images\/3-Pipeline.png\x22 alt=\x22Ceilometer Pipeline\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eDifferent types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:\x3c\/p\x3e\n\n\x3ctable\x3e\n\x3cthead\x3e\n\x3ctr\x3e\n\x3cth align=\x22left\x22\x3eName of transformer\x3c\/th\x3e\n\x3cth align=\x22center\x22\x3eReference name for configuration\x3c\/th\x3e\n\x3c\/tr\x3e\n\x3c\/thead\x3e\n\n\x3ctbody\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eAccumulator\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eaccumulator\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eAggregator\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eaggregator\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eArithmetic\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3earithmetic\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eRate of change\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3erate_of_change\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eUnit conversion\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eunit_conversion\x3c\/td\x3e\n\x3c\/tr\x3e\n\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eDelta\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3edelta\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3c\/tbody\x3e\n\x3c\/table\x3e\n\n\x3cp\x3eLet\x26rsquo;s take a more detailed look into the accumulator transformer.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eCeilometer \x3cstrong\x3etransformers\x3c\/strong\x3e are part of the Ceilometer \x3cstrong\x3epipeline\x3c\/strong\x3e, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for \x3cstrong\x3esamples\x3c\/strong\x3e and a pipeline for \x3cstrong\x3eevents\x3c\/strong\x3e.\x3c\/p\x3e\n\x3cp\x3eConfigurations for these pipelines can be found in \x3ccode\x3e\/etc\/ceilometer\/pipeline.yaml\x3c\/code\x3e and \x3ccode\x3e\/etc\/ceilometer\/event_pipeline.yaml\x3c\/code\x3e.\x3c\/p\x3e\n\x3cp\x3eTransformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22https:\/\/docs.openstack.org\/developer\/ceilometer\/_images\/3-Pipeline.png\x22 alt=\x22Ceilometer Pipeline\x22\x3e\x3c\/p\x3e\n\x3cp\x3eDifferent types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:\x3c\/p\x3e\n\x3ctable\x3e\n\x3cthead\x3e\n\x3ctr\x3e\n\x3cth align=\x22left\x22\x3eName of transformer\x3c\/th\x3e\n\x3cth align=\x22center\x22\x3eReference name for configuration\x3c\/th\x3e\n\x3c\/tr\x3e\n\x3c\/thead\x3e\n\x3ctbody\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eAccumulator\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eaccumulator\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eAggregator\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eaggregator\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eArithmetic\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3earithmetic\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eRate of change\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3erate_of_change\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eUnit conversion\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3eunit_conversion\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3ctr\x3e\n\x3ctd align=\x22left\x22\x3eDelta\x3c\/td\x3e\n\x3ctd align=\x22center\x22\x3edelta\x3c\/td\x3e\n\x3c\/tr\x3e\n\x3c\/tbody\x3e\n\x3c\/table\x3e\n\x3cp\x3eLet\x27s take a more detailed look into the accumulator transformer.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-04-07 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-04-07 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/understanding-ceilometer-transformers\/",
-    "wordCount" : "482",
+    "wordCount" : "472",
     "keywords" : [ "ceilometer","openstack","cloudcomputing","python","Blog" ]
 }
 </script>
@@ -136,15 +136,10 @@ if (!doNotTrack) {
   <time datetime=2017-04-07T00:00:00Z class="post-date">Fri, Apr 7, 2017</time>
 
   <p>Ceilometer <strong>transformers</strong> are part of the Ceilometer <strong>pipeline</strong>, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for <strong>samples</strong> and a pipeline for <strong>events</strong>.</p>
-
 <p>Configurations for these pipelines can be found in <code>/etc/ceilometer/pipeline.yaml</code> and <code>/etc/ceilometer/event_pipeline.yaml</code>.</p>
-
 <p>Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline" /></p>
-
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png" alt="Ceilometer Pipeline"></p>
 <p>Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:</p>
-
 <table>
 <thead>
 <tr>
@@ -152,119 +147,104 @@ if (!doNotTrack) {
 <th align="center">Reference name for configuration</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">Accumulator</td>
 <td align="center">accumulator</td>
 </tr>
-
 <tr>
 <td align="left">Aggregator</td>
 <td align="center">aggregator</td>
 </tr>
-
 <tr>
 <td align="left">Arithmetic</td>
 <td align="center">arithmetic</td>
 </tr>
-
 <tr>
 <td align="left">Rate of change</td>
 <td align="center">rate_of_change</td>
 </tr>
-
 <tr>
 <td align="left">Unit conversion</td>
 <td align="center">unit_conversion</td>
 </tr>
-
 <tr>
 <td align="left">Delta</td>
 <td align="center">delta</td>
 </tr>
 </tbody>
 </table>
-
-<p>Let&rsquo;s take a more detailed look into the accumulator transformer.</p>
-
+<p>Let's take a more detailed look into the accumulator transformer.</p>
 <h3 id="accumulator-transformer">Accumulator Transformer</h3>
-
 <p>This transformer simply caches the samples until enough samples have arrived and then flushes them all down the pipeline at once:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">transformers<span style="color:#111">:</span>
     - name<span style="color:#111">:</span> <span style="color:#d88200">&#34;accumulator&#34;</span>
       parameters<span style="color:#111">:</span>
-          size<span style="color:#111">:</span> <span style="color:#ae81ff">15</span></code></pre></div>
-<h2 id="the-source-code">The Source Code</h2>
-
+          size<span style="color:#111">:</span> <span style="color:#ae81ff">15</span>
+</code></pre></div><h2 id="the-source-code">The Source Code</h2>
 <p>Source code for transfomers is found in <a href="https://github.com/openstack/ceilometer/tree/master/ceilometer/transformer"><code>ceilometer/transformers</code></a>. Base classes are found in the <code>__init__.py</code> file:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">TransformerBase</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;Base class for plugins that transform the sample.&#34;&#34;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">TransformerBase</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Base class for plugins that transform the sample.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Setup transformer.
-</span><span style="color:#d88200">        Each time a transformed is involved in a pipeline, a new transformer
-</span><span style="color:#d88200">        instance is created and chained into the pipeline. i.e. transformer
-</span><span style="color:#d88200">        instance is per pipeline. This helps if transformer need keep some
-</span><span style="color:#d88200">        cache and per-pipeline information.
-</span><span style="color:#d88200">        :param kwargs: The parameters that are defined in pipeline config file.
-</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
-        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">TransformerBase</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">()</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Setup transformer.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        Each time a transformed is involved in a pipeline, a new transformer</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        instance is created and chained into the pipeline. i.e. transformer</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        instance is per pipeline. This helps if transformer need keep some</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        cache and per-pipeline information.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        :param kwargs: The parameters that are defined in pipeline config file.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        </span><span style="color:#d88200">&#34;&#34;&#34;</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">TransformerBase</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">)</span>
 
     <span style="color:#75af00">@abc.abstractmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">handle_sample</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">sample</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Transform a sample.
-</span><span style="color:#d88200">        :param sample: A sample.
-</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">handle_sample</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">sample</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Transform a sample.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        :param sample: A sample.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        </span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
     <span style="color:#75af00">@abc.abstractproperty</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">grouping_keys</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Keys used to group transformer.&#34;&#34;&#34;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">grouping_keys</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Keys used to group transformer.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
     <span style="color:#75af00">@staticmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">flush</span><span style="color:#111">():</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Flush samples cached previously.&#34;&#34;&#34;</span>
-<span style="color:#00a8c8">return</span> <span style="color:#111">[]</span></code></pre></div>
-<p>All the methods above are abstract methods (with the exception of <code>flush()</code>) that specific transformer classes must implement. For example, note the abstract method <code>handle_sample</code>. This is where the transformation of the sample will take place. It&rsquo;s implementation will differ depending on the transformer type.</p>
-
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">flush</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Flush samples cached previously.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
+<span style="color:#00a8c8">return</span> <span style="color:#111">[</span><span style="color:#111">]</span>
+</code></pre></div><p>All the methods above are abstract methods (with the exception of <code>flush()</code>) that specific transformer classes must implement. For example, note the abstract method <code>handle_sample</code>. This is where the transformation of the sample will take place. It's implementation will differ depending on the transformer type.</p>
 <p>For example, the class defintion of the accumulator transformer can be found in <code>accumulator.py</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">ceilometer</span> <span style="color:#f92672">import</span> <span style="color:#111">transformer</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">TransformerAccumulator</span><span style="color:#111">(</span><span style="color:#111">transformer</span><span style="color:#f92672">.</span><span style="color:#111">TransformerBase</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;Transformer that accumulates samples until a threshold.
-</span><span style="color:#d88200">    And then flushes them out into the wild.
-</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">TransformerAccumulator</span><span style="color:#111">(</span><span style="color:#111">transformer</span><span style="color:#f92672">.</span><span style="color:#111">TransformerBase</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Transformer that accumulates samples until a threshold.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    And then flushes them out into the wild.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    </span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
-    <span style="color:#111">grouping_keys</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;resource_id&#39;</span><span style="color:#111">]</span>
+    <span style="color:#111">grouping_keys</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">resource_id</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">size</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">size</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span>
-            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">size</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">size</span> <span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">]</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span> <span style="color:#f92672">=</span> <span style="color:#111">size</span>
-        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">TransformerAccumulator</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">)</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">TransformerAccumulator</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">handle_sample</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">sample</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">handle_sample</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">sample</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span> <span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span>
             <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">sample</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
             <span style="color:#00a8c8">return</span> <span style="color:#111">sample</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">flush</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span><span style="color:#111">)</span> <span style="color:#f92672">&gt;=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">flush</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span><span style="color:#111">)</span> <span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">size</span><span style="color:#111">:</span>
             <span style="color:#111">x</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span>
-            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+            <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">samples</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">]</span>
             <span style="color:#00a8c8">return</span> <span style="color:#111">x</span>
-<span style="color:#00a8c8">return</span> <span style="color:#111">[]</span></code></pre></div>
-<p>Notice how it implements <code>handle_sample</code>. It is a very simple transformer which keeps appending samples into an array. Once a threshold condition is met (in this case <code>self.size &gt;= 1</code>), it will simply return all the samples in the array.</p>
-
-<p>Remember that this <code>size</code> variable&rsquo;s value is defined and obtained from the <code>pipeline.yaml</code> configuration file in the transformer&rsquo;s definition.</p>
-
-<p>The <code>flush()</code> method returns the transformed samples and then empties the transformer&rsquo;s array containing the samples.</p>
-
+<span style="color:#00a8c8">return</span> <span style="color:#111">[</span><span style="color:#111">]</span>
+</code></pre></div><p>Notice how it implements <code>handle_sample</code>. It is a very simple transformer which keeps appending samples into an array. Once a threshold condition is met (in this case <code>self.size &gt;= 1</code>), it will simply return all the samples in the array.</p>
+<p>Remember that this <code>size</code> variable's value is defined and obtained from the <code>pipeline.yaml</code> configuration file in the transformer's definition.</p>
+<p>The <code>flush()</code> method returns the transformed samples and then empties the transformer's array containing the samples.</p>
 <p>After the transformers are done mutating the data, they pass this data to the <strong>publishers</strong>, also part of the Ceilometer pipeline.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/4-Transformer.png" alt="Ceilometer Transformers" /></p>
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/4-Transformer.png" alt="Ceilometer Transformers"></p>
 </div>
 
 

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Easy Notification System in Rails Part 2",
     "headline" : "Easy Notification System in Rails Part 2",
-    "description" : "\x3cp\x3e\x3cem\x3eRead Part 1 of this series \x3ca href=\x22\/posts\/easy-notification-system-in-rails.html\x22\x3ehere\x3c\/a\x3e\x3c\/em\x3e\x3c\/p\x3e\n\n\x3cp\x3eIn Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.\x3c\/p\x3e\n\n\x3cp\x3eIn this post we will be adding more functionality to our notification system.s\x3c\/p\x3e\n\n\x3ch2 id=\x22mark-as-read-feature\x22\x3eMark as Read Feature\x3c\/h2\x3e\n\n\x3cp\x3eWe will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3eFor a single notification, it should be marked \x3cem\x3eas read\x3c\/em\x3e when it is clicked from the list of notifications.\x3c\/li\x3e\n\x3cli\x3eFor all notifications, they should be marked as read when a specific button is pressed.\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3ch3 id=\x22setting-up-the-routes\x22\x3eSetting up the Routes\x3c\/h3\x3e\n\n\x3cp\x3eLet\x26rsquo;s begin adding the necessary routes. In part 1 we defined a \x3ccode\x3enotifications\x3c\/code\x3e resource. We will add a \x3ca href=\x22http:\/\/guides.rubyonrails.org\/routing.html#adding-more-restful-actions\x22\x3ecollection\x3c\/a\x3e POST route and a \x3ca href=\x22http:\/\/guides.rubyonrails.org\/routing.html#adding-more-restful-actions\x22\x3emember\x3c\/a\x3e POST route of the same name:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# config\/routes.rb\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRails\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eapplication\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eroutes\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3edraw\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n  \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:notifications\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eonly\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:index\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3epost\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:mark_as_read\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eon\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:collection\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3epost\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:mark_as_read\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eon\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:member\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3e\x3cem\x3eRead Part 1 of this series \x3ca href=\x22\/posts\/easy-notification-system-in-rails.html\x22\x3ehere\x3c\/a\x3e\x3c\/em\x3e\x3c\/p\x3e\n\x3cp\x3eIn Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.\x3c\/p\x3e\n\x3cp\x3eIn this post we will be adding more functionality to our notification system.s\x3c\/p\x3e\n\x3ch2 id=\x22mark-as-read-feature\x22\x3eMark as Read Feature\x3c\/h2\x3e\n\x3cp\x3eWe will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:\x3c\/p\x3e\n\x3cul\x3e\n\x3cli\x3eFor a single notification, it should be marked \x3cem\x3eas read\x3c\/em\x3e when it is clicked from the list of notifications.\x3c\/li\x3e\n\x3cli\x3eFor all notifications, they should be marked as read when a specific button is pressed.\x3c\/li\x3e\n\x3c\/ul\x3e\n\x3ch3 id=\x22setting-up-the-routes\x22\x3eSetting up the Routes\x3c\/h3\x3e\n\x3cp\x3eLet\x27s begin adding the necessary routes. In part 1 we defined a \x3ccode\x3enotifications\x3c\/code\x3e resource. We will add a \x3ca href=\x22http:\/\/guides.rubyonrails.org\/routing.html#adding-more-restful-actions\x22\x3ecollection\x3c\/a\x3e POST route and a \x3ca href=\x22http:\/\/guides.rubyonrails.org\/routing.html#adding-more-restful-actions\x22\x3emember\x3c\/a\x3e POST route of the same name:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# config\/routes.rb\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRails\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eapplication\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eroutes\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3edraw\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n  \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:notifications\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eonly\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:index\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3epost\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:mark_as_read\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eon\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:collection\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3epost\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:mark_as_read\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eon\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:member\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,23 +136,16 @@ if (!doNotTrack) {
   <time datetime=2017-09-05T00:00:00Z class="post-date">Tue, Sep 5, 2017</time>
 
   <p><em>Read Part 1 of this series <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">here</a></em></p>
-
 <p>In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.</p>
-
 <p>In this post we will be adding more functionality to our notification system.s</p>
-
 <h2 id="mark-as-read-feature">Mark as Read Feature</h2>
-
 <p>We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:</p>
-
 <ul>
 <li>For a single notification, it should be marked <em>as read</em> when it is clicked from the list of notifications.</li>
 <li>For all notifications, they should be marked as read when a specific button is pressed.</li>
 </ul>
-
 <h3 id="setting-up-the-routes">Setting up the Routes</h3>
-
-<p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
+<p>Let's begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
 <span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
   <span style="color:#75715e"># ...</span>
@@ -162,24 +155,19 @@ if (!doNotTrack) {
     <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:member</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>These routes will create the following endpoints:</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>These routes will create the following endpoints:</p>
 <pre><code>mark_as_read_notifications POST   /notifications/mark_as_read(.:format)                    notifications#mark_as_read
 mark_as_read_notification POST   /notifications/:id/mark_as_read(.:format)               notifications#mark_as_read
-</code></pre>
-
-<p>The <strong>collection</strong> creates <code>/notifications/mark_as_read</code>, to be used for <em>all</em> notifications. The <strong>member</strong> route creates <code>/notifications/:id/mark_as_read</code>, to be used for a <em>single</em> notification, with the notification ID being passed in the parameters to the controller.</p>
-
+</code></pre><p>The <strong>collection</strong> creates <code>/notifications/mark_as_read</code>, to be used for <em>all</em> notifications. The <strong>member</strong> route creates <code>/notifications/:id/mark_as_read</code>, to be used for a <em>single</em> notification, with the notification ID being passed in the parameters to the controller.</p>
 <h3 id="the-controller">The Controller</h3>
-
-<p>In Part 1 the notifications controller would fetch the current user&rsquo;s unread notifications. We will also mark notifications as read in the notifications controller. Let&rsquo;s go ahead and create the <code>mark_as_read</code> action:</p>
+<p>In Part 1 the notifications controller would fetch the current user's unread notifications. We will also mark notifications as read in the notifications controller. Let's go ahead and create the <code>mark_as_read</code> action:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/controllers/notifications_controller.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">NotificationsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationController</span>
 
   <span style="color:#75715e"># ...</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">mark_as_read</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">mark_as_read</span>
     <span style="color:#00a8c8">if</span> <span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:id</span><span style="color:#f92672">]</span>
       <span style="color:#111">@notification</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Notification</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:id</span><span style="color:#f92672">]</span><span style="color:#111">)</span>
       <span style="color:#111">@notification</span><span style="color:#f92672">.</span><span style="color:#111">update_attribute</span><span style="color:#111">(</span><span style="color:#d88200">:read_at</span><span style="color:#111">,</span> <span style="color:#00a8c8">Time</span><span style="color:#f92672">.</span><span style="color:#111">zone</span><span style="color:#f92672">.</span><span style="color:#111">now</span><span style="color:#111">)</span>
@@ -192,30 +180,25 @@ mark_as_read_notification POST   /notifications/:id/mark_as_read(.:format)      
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>This <code>mark_as_read</code> action will work for <em>both</em>, the collection and the member endpoints. The way the action itself will <em>know</em> which one is which is by checking for <code>params[:id]</code>. This ID will only be passed for the <strong>member</strong> route.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>This <code>mark_as_read</code> action will work for <em>both</em>, the collection and the member endpoints. The way the action itself will <em>know</em> which one is which is by checking for <code>params[:id]</code>. This ID will only be passed for the <strong>member</strong> route.</p>
 <p>To mark the notification(s) as read, we simply give a value to the <code>read_at</code> attribute which was initially <code>nil</code>.</p>
-
 <h3 id="marking-notifications-using-jquery">Marking Notifications Using JQuery</h3>
-
 <p>Now that the endpoints are ready, we will be making AJAX requests to these endpoints to mark the notifications as read.</p>
-
 <h4 id="marking-single-notifications">Marking Single Notifications</h4>
-
 <p>If you recall the notifications HTML template we made in Part 1, we gave the <code>link_to</code> tag a data attribute:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">#- app/views/notifications/comments/_posted.html.haml
+<pre><code class="language-haml" data-lang="haml">#- app/views/notifications/comments/_posted.html.haml
 
-= link_to notification.notifiable, &#39;data-behavior&#39;: &#39;notification-link&#39;, id: notification.id do
-  / ...</code></pre></div>
-<p>We can use this data attribute in JQuery to assign a click event when the link elements with these attributes are clicked, inside the <code>handleSuccess</code> function, at the end:</p>
+= link_to notification.notifiable, 'data-behavior': 'notification-link', id: notification.id do
+  / ...
+</code></pre><p>We can use this data attribute in JQuery to assign a click event when the link elements with these attributes are clicked, inside the <code>handleSuccess</code> function, at the end:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-coffeescript" data-lang="coffeescript"><span style="color:#75715e"># app/assets/javascripts/notifications.coffee
 </span><span style="color:#75715e"></span>
 <span style="color:#111">handleSuccess: </span><span style="color:#75af00">(data) =&gt;</span>
   <span style="color:#75715e"># ...
 </span><span style="color:#75715e"></span>
-  <span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;[data-behavior=&#39;notification-link&#39;]&#34;</span><span style="color:#111">).</span><span style="color:#00a8c8">on</span> <span style="color:#d88200">&#39;click&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">@notificationClick</span></code></pre></div>
-<p>Now we can define this <code>notificationClick</code> function as follows:</p>
+  <span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">[data-behavior=</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">notification-link</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">]</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">on</span> <span style="color:#d88200">&#39;</span><span style="color:#d88200">click</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">@</span><span style="color:#75af00">notificationClick</span>
+</code></pre></div><p>Now we can define this <code>notificationClick</code> function as follows:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-coffeescript" data-lang="coffeescript"><span style="color:#75715e"># app/assets/javascripts/notifications.coffee
 </span><span style="color:#75715e"></span>
 <span style="color:#75af00">$</span> <span style="color:#75af00">-&gt;</span>
@@ -224,45 +207,39 @@ mark_as_read_notification POST   /notifications/:id/mark_as_read(.:format)      
 </span><span style="color:#75715e"></span>
     <span style="color:#111">notificationClick: </span><span style="color:#75af00">(e) =&gt;</span>
       <span style="color:#75af00">$</span><span style="color:#111">.</span><span style="color:#75af00">ajax</span><span style="color:#111">(</span>
-        <span style="color:#111">url: </span><span style="color:#d88200">&#34;/notifications/</span><span style="color:#d88200">#{</span><span style="color:#75af00">e</span><span style="color:#111">.</span><span style="color:#75af00">currentTarget</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#d88200">}</span><span style="color:#d88200">/mark_as_read&#34;</span>
-        <span style="color:#111">dataType: </span><span style="color:#d88200">&#39;JSON&#39;</span>
-        <span style="color:#111">method: </span><span style="color:#d88200">&#39;POST&#39;</span>
-      <span style="color:#111">)</span></code></pre></div>
-<p>When the notification&rsquo;s <code>&lt;a&gt;</code> element is clicked, the AJAX requet will be fired to the <strong>member</strong> endpoint, hitting the controller&rsquo;s action. At the same time, the user should be redirected to the actual <code>notification.notifiable</code> object, specified in the template&rsquo;s <code>link_to</code> tag.</p>
-
+        <span style="color:#111">url: </span><span style="color:#d88200">&#34;</span><span style="color:#d88200">/notifications/</span><span style="color:#d88200">#{</span><span style="color:#75af00">e</span><span style="color:#111">.</span><span style="color:#75af00">currentTarget</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#d88200">}</span><span style="color:#d88200">/mark_as_read</span><span style="color:#d88200">&#34;</span>
+        <span style="color:#111">dataType: </span><span style="color:#d88200">&#39;</span><span style="color:#d88200">JSON</span><span style="color:#d88200">&#39;</span>
+        <span style="color:#111">method: </span><span style="color:#d88200">&#39;</span><span style="color:#d88200">POST</span><span style="color:#d88200">&#39;</span>
+      <span style="color:#111">)</span>
+</code></pre></div><p>When the notification's <code>&lt;a&gt;</code> element is clicked, the AJAX requet will be fired to the <strong>member</strong> endpoint, hitting the controller's action. At the same time, the user should be redirected to the actual <code>notification.notifiable</code> object, specified in the template's <code>link_to</code> tag.</p>
 <h4 id="marking-all-notifications">Marking All Notifications</h4>
-
 <p>For this feature, we will change a bit our navbar markup and add a button to the navbar dropdown:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">#- app/views/shared/_navbar.html.haml
+<pre><code class="language-haml" data-lang="haml">#- app/views/shared/_navbar.html.haml
 
-            %ul#notifications.dropdown-menu{ &#39;data-behavior&#39;: &#39;notification-items&#39; }
+            %ul#notifications.dropdown-menu{ 'data-behavior': 'notification-items' }
               %li.dropdown-header.text-uppercase Notifications
               - unless current_user.notifications.unread.empty?
                 %li
                   .container-fluid
-                    = link_to mark_as_read_notifications_path, method: :post, remote: true, class: &#39;btn btn-default btn-xs pull-right&#39; do
+                    = link_to mark_as_read_notifications_path, method: :post, remote: true, class: 'btn btn-default btn-xs pull-right' do
                       %span.glyphicon.glyphicon-ok
                       Mark all as read
                 %li.divider
               - else
                 %li
                   .container-fluid
-                    %p.text-center.small No new notifications</code></pre></div>
-<p>The button is a link to <code>mark_as_read_notifications_path</code>, which is the <strong>collection</strong> route. We are specifying a <code>POST</code> method, and also (very important) a <code>remote: true</code> option which tells rails to handle this request using AJAX. Again, this request will hit the notification controller&rsquo;s <code>mark_as_read</code> action to mark <strong>all</strong> notifications as read.</p>
-
+                    %p.text-center.small No new notifications
+</code></pre><p>The button is a link to <code>mark_as_read_notifications_path</code>, which is the <strong>collection</strong> route. We are specifying a <code>POST</code> method, and also (very important) a <code>remote: true</code> option which tells rails to handle this request using AJAX. Again, this request will hit the notification controller's <code>mark_as_read</code> action to mark <strong>all</strong> notifications as read.</p>
 <p>Here is an example of how the notifications dropdown would look with this button:</p>
-
-<p><img src="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/mark_as_read.png" alt="Mark as read button" /></p>
-
-<p>If you press the button, all the current user&rsquo;s notifications should indeed be marked as read. But the dropdown still remains open, and the notification count badge still shows the same number. We can fix this behavior by creating a &ldquo;JavaScript view&rdquo;. This is basically just some JavaScript code that we can execute when the controller action is hit.</p>
-
+<p><img src="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/mark_as_read.png" alt="Mark as read button"></p>
+<p>If you press the button, all the current user's notifications should indeed be marked as read. But the dropdown still remains open, and the notification count badge still shows the same number. We can fix this behavior by creating a &ldquo;JavaScript view&rdquo;. This is basically just some JavaScript code that we can execute when the controller action is hit.</p>
 <p>Before we write the JavaScript however, we must also allow the controller action to respond to JavaScript:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/controllers/notifications_controller.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">NotificationsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationController</span>
 
   <span style="color:#75715e"># ...</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">mark_as_read</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">mark_as_read</span>
     <span style="color:#75715e"># ...</span>
 
     <span style="color:#111">respond_to</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">format</span><span style="color:#f92672">|</span>
@@ -271,19 +248,14 @@ mark_as_read_notification POST   /notifications/:id/mark_as_read(.:format)      
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The JSON format was added previously, so you just need to add <code>format.js</code>.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The JSON format was added previously, so you just need to add <code>format.js</code>.</p>
 <p>Once this is done, we can go ahead and create a &ldquo;view&rdquo; in <code>app/views/notifications/mark_as_read.js.erb</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#39;#notifications&#39;</span><span style="color:#111">).</span><span style="color:#75af00">dropdown</span><span style="color:#111">(</span><span style="color:#d88200">&#39;toggle&#39;</span><span style="color:#111">);</span>
-<span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;[data-behavior=&#39;unread-count&#39;]&#34;</span><span style="color:#111">).</span><span style="color:#75af00">text</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">);</span>
-</code></pre></div>
-<p>With this JavaScript we simply toggle the dropdown and set the notification count badge to zero. Easy!</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#39;#notifications&#39;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">dropdown</span><span style="color:#111">(</span><span style="color:#d88200">&#39;toggle&#39;</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;[data-behavior=&#39;unread-count&#39;]&#34;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">text</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span><span style="color:#111">;</span>
+</code></pre></div><p>With this JavaScript we simply toggle the dropdown and set the notification count badge to zero. Easy!</p>
 <p>Stay tuned for <strong>Part 3</strong> which I will go over how to test this notification system using RSpec.</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">Easy Notification System in Rails Part 2</a></li>
 <li><a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">In-App Navbar Notifications</a></li>

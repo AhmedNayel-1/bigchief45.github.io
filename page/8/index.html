@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,23 +139,16 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-09-05T00:00:00Z" class="post-date">Tue, Sep 5, 2017</time>
   <p><em>Read Part 1 of this series <a href="https://aalvarez.me/posts/easy-notification-system-in-rails.html">here</a></em></p>
-
 <p>In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.</p>
-
 <p>In this post we will be adding more functionality to our notification system.s</p>
-
 <h2 id="mark-as-read-feature">Mark as Read Feature</h2>
-
 <p>We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:</p>
-
 <ul>
 <li>For a single notification, it should be marked <em>as read</em> when it is clicked from the list of notifications.</li>
 <li>For all notifications, they should be marked as read when a specific button is pressed.</li>
 </ul>
-
 <h3 id="setting-up-the-routes">Setting up the Routes</h3>
-
-<p>Let&rsquo;s begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
+<p>Let's begin adding the necessary routes. In part 1 we defined a <code>notifications</code> resource. We will add a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">collection</a> POST route and a <a href="http://guides.rubyonrails.org/routing.html#adding-more-restful-actions">member</a> POST route of the same name:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
 <span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
   <span style="color:#75715e"># ...</span>
@@ -165,7 +158,8 @@ if (!doNotTrack) {
     <span style="color:#111">post</span> <span style="color:#d88200">:mark_as_read</span><span style="color:#111">,</span> <span style="color:#d88200">on</span><span style="color:#111">:</span> <span style="color:#d88200">:member</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span>
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -195,13 +189,9 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-09-04T00:00:00Z" class="post-date">Mon, Sep 4, 2017</time>
   <p>Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.</p>
-
-<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver&rsquo;s In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
-
+<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver's In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
 <p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
-
 <h2 id="models-and-routes">Models and Routes</h2>
-
 <p>Before starting with the models, lets quickly define the application resources in our routes:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
 <span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
@@ -214,22 +204,17 @@ if (!doNotTrack) {
 
   <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<h3 id="the-notification-model">The Notification Model</h3>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><h3 id="the-notification-model">The Notification Model</h3>
 <p>We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:</p>
-
 <pre><code>rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
-</code></pre>
-
-<p>Here is an explanation for some of the fields for the above model:</p>
-
+</code></pre><p>Here is an explanation for some of the fields for the above model:</p>
 <ul>
 <li><code>recipient_id</code>: Represents the user in your application which will receive the notification.</li>
 <li><code>actor_id</code>: Represents the user in your application which <em>triggered</em> the notification.</li>
 <li><code>read_at</code>: The time when the notification was read. A value of <code>nil</code> is used for unread notifications.</li>
 <li><code>notifiable_id</code>: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.</li>
-<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&rsquo;s class.</li>
+<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object's class.</li>
 </ul>
 
   
@@ -260,20 +245,18 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-08-24T00:00:00Z" class="post-date">Thu, Aug 24, 2017</time>
   <p>I have searched through tons of StackOverflow questions and blog posts on how to <strong>properly</strong> integrate Rolify with Devise when <strong>registering as a new user</strong> through the registration view provided by Devise. All proposed solutions and half-solutions seemed very messy to me, but I found a very simple way to achieve this.</p>
-
 <h2 id="preparing-the-roles">Preparing the Roles</h2>
-
 <p>Assuming you already have initialized a Devise <code>User</code> model along with a Rolify <code>Role</code> model, a very common question I see is how should the roles be prepared so that the <em>new</em> users can have a list of already created roles to choose from when registering? In the <a href="https://github.com/RolifyCommunity/rolify">Rolify documentation</a>, most (if not all) examples involve implicitely creating roles by adding roles to user in the Rails console:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">User</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span>
-<span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span> <span style="color:#d88200">:admin</span></code></pre></div>
-<p>A new <code>admin</code> role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">User</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#111">)</span>
+<span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">add_role</span> <span style="color:#d88200">:admin</span>
+</code></pre></div><p>A new <code>admin</code> role will be created if it does not exist already. But in a fresh application, with no users, a list of existing roles should be available in order to register.</p>
 <p>Answers to this dilemma involve different approaches. I personally prefer creating them when seeding the database:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># db/seeds.rb</span>
 
 <span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">)</span>
 <span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;doctor&#39;</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;nurse&#39;</span><span style="color:#111">)</span></code></pre></div>
+<span style="color:#00a8c8">Role</span><span style="color:#f92672">.</span><span style="color:#111">create!</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;nurse&#39;</span><span style="color:#111">)</span>
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -299,20 +282,18 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-08-14T00:00:00Z" class="post-date">Mon, Aug 14, 2017</time>
   <p><a href="https://select2.github.io/">Select2</a> is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.</p>
-
 <p>Recently while working on a Rails project, I was experiencing some problems when using Select2 and <a href="https://github.com/plataformatec/simple_form">Simple Form</a> in my view.</p>
-
-<p>In the view, I want to use Select2 to search for people in a <code>Person</code> table in the application&rsquo;s database. Select2 should use AJAX to hit a controller&rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).</p>
-
+<p>In the view, I want to use Select2 to search for people in a <code>Person</code> table in the application's database. Select2 should use AJAX to hit a controller's action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).</p>
 <p>The controller action looks something like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">search</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">search</span>
   <span style="color:#111">@people</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Person</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#f92672">.</span><span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">&#39;name LIKE ? OR last_name LIKE ?&#39;</span><span style="color:#111">,</span>
-    <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%&#34;</span><span style="color:#111">)</span>
+    <span style="color:#d88200">&#34;</span><span style="color:#d88200">%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">%</span><span style="color:#d88200">#{</span><span style="color:#111">params</span><span style="color:#f92672">[</span><span style="color:#d88200">:q</span><span style="color:#f92672">]</span><span style="color:#d88200">}</span><span style="color:#d88200">%</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
   <span style="color:#111">respond_to</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">format</span><span style="color:#f92672">|</span>
     <span style="color:#111">format</span><span style="color:#f92672">.</span><span style="color:#111">json</span> <span style="color:#111">{</span> <span style="color:#111">render</span> <span style="color:#d88200">json</span><span style="color:#111">:</span> <span style="color:#111">@people</span><span style="color:#f92672">.</span><span style="color:#111">map</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">p</span><span style="color:#f92672">|</span> <span style="color:#111">{</span> <span style="color:#111">id</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span> <span style="color:#d88200">full_name</span><span style="color:#111">:</span> <span style="color:#111">p</span><span style="color:#f92672">.</span><span style="color:#111">full_name</span> <span style="color:#111">}</span> <span style="color:#111">}</span> <span style="color:#111">}</span>
   <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
+<span style="color:#00a8c8">end</span>
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -342,15 +323,10 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-07-27T00:00:00Z" class="post-date">Thu, Jul 27, 2017</time>
   <p>After going through countless blog and video tutorials on getting started with Love2D, I found it sad that most people would not take the approach of implementing <strong>game states</strong> right from the start, or would try to mimick this functionality in a &ldquo;dirty&rdquo; way.</p>
-
 <p>After lots of time of reading many forum posts and library documentations. I found a way to implement game states in my games that I am very satisfied with.</p>
-
 <p>In this post I will go over how to implement game states and some of the most common game states seen in games, in such a way that your code is remains organized and neat.</p>
-
-<h2 id="game-states-with-stateful-lua">Game States With Stateful.lua</h2>
-
+<h2 id="game-states-with-statefullua">Game States With Stateful.lua</h2>
 <p>We will be using a simple but great Lua library called <a href="https://github.com/kikito/stateful.lua">Stateful</a>, made by <a href="https://github.com/kikito">kikito</a>. This library will allow us to easily implement and work with game states inside our game.</p>
-
 <p>This library also depends on the <a href="https://github.com/kikito/middleclass">Middleclass</a> library (also by kikito). Middleclass will allow us to construct and develop our game in a OOP (Object Oriented Programing) fashion. If you are familiar with OOP then you will love this approach.</p>
 
   

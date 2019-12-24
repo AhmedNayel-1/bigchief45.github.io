@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,17 +139,15 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-02-14T00:00:00Z" class="post-date">Tue, Feb 14, 2017</time>
   <p>The <a href="http://wiki.zenoss.org/Category:ZenDMD">Zenoss Zendmd Tips Wiki</a> page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.</p>
-
 <h2 id="removing-device-classes">Removing Device Classes</h2>
-
 <p>We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &ldquo;KVM&rdquo; device class:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">manage_deleteOrganizer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;/zport/dmd/Devices/KVM&#34;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-<h2 id="change-zenoss-user-s-password">Change Zenoss User&rsquo;s Password</h2>
-
-<p>Let&rsquo;s say we want to change the default <em>admin</em> user&rsquo;s password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;newpassword&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">manage_deleteOrganizer</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">/zport/dmd/Devices/KVM</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="change-zenoss-users-password">Change Zenoss User's Password</h2>
+<p>Let's say we want to change the default <em>admin</em> user's password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">admin</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">newpassword</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -179,37 +177,21 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-02-10T00:00:00Z" class="post-date">Fri, Feb 10, 2017</time>
   <p><a href="https://jujucharms.com/">Juju</a> is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.</p>
-
 <p>In this post I will explain how easy it is to get started with Juju in a <strong>local</strong> environment.</p>
-
 <h2 id="installation">Installation</h2>
-
 <p>To start we will need to add the necessary repository from where we will retrieve the Juju packages:</p>
-
 <pre><code>sudo add-apt-repository ppa:juju/stable
 sudo apt-get update
-</code></pre>
-
-<p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
-
+</code></pre><p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
 <pre><code>sudo apt-get install juju-core
 sudo apt-get install juju-local
-</code></pre>
-
-<h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
-
-<p>Before we set up the local environment, let&rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
-
+</code></pre><h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
+<p>Before we set up the local environment, let's first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
 <pre><code>juju generate-config
 juju switch local
-</code></pre>
-
-<p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
-
+</code></pre><p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
 <pre><code>juju bootstrap
-</code></pre>
-
-<p>After the process is complete, we are now ready to start using Juju.</p>
+</code></pre><p>After the process is complete, we are now ready to start using Juju.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -239,28 +221,24 @@ juju switch local
   </h1>
   <time datetime="2017-02-07T00:00:00Z" class="post-date">Tue, Feb 7, 2017</time>
   <p>Similar to <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners.html">my post</a> on some must-know concepts about JavaScript for beginners, this is a list of concepts that show how C differs from other programming languages. These are concepts that you <strong>must</strong> know if you are to become a good C programmer.</p>
-
 <h2 id="boolean-types">Boolean Types</h2>
-
 <p>C actually does not have a boolean type. They are usually defined like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define BOOL char
-</span><span style="color:#75715e">#define FALSE 0
-</span><span style="color:#75715e">#define TRUE 1</span></code></pre></div>
-<p>However it is argued that it is a better practice to simply use integers instead (<code>0</code> and <code>1</code>).</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#</span><span style="color:#75715e">define BOOL char</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">define FALSE 0</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">define TRUE 1</span><span style="color:#75715e">
+</span></code></pre></div><p>However it is argued that it is a better practice to simply use integers instead (<code>0</code> and <code>1</code>).</p>
 <h2 id="memory-address-of-array-elements">Memory Address of Array Elements</h2>
-
 <p>In C, arrays have a contiguous memory allocation. We can verify this by printing the memory addresses of each element of an array. We can do so using <code>&amp;</code> to access the memory location of the array element:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#00a8c8">int</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-  <span style="color:#00a8c8">char</span> <span style="color:#111">vowels</span><span style="color:#111">[]</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;a&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;e&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;i&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;o&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;u&#39;</span><span style="color:#111">};</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#00a8c8">int</span> <span style="color:#75af00">main</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">char</span> <span style="color:#111">vowels</span><span style="color:#111">[</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">a</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">e</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">i</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">o</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">u</span><span style="color:#d88200">&#39;</span><span style="color:#111">}</span><span style="color:#111">;</span>
 
-  <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span><span style="color:#111">;</span> <span style="color:#111">i</span><span style="color:#f92672">++</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#111">printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Address of vowel [%d]: %u</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#111">vowels</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]);</span>
+  <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span><span style="color:#111">;</span> <span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">printf</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">Address of vowel [%d]: %u</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#111">vowels</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]</span><span style="color:#111">)</span><span style="color:#111">;</span>
   <span style="color:#111">}</span>
 
   <span style="color:#00a8c8">return</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
-<span style="color:#111">}</span></code></pre></div>
-<p>The above code will produces the following output for me:</p>
+<span style="color:#111">}</span>
+</code></pre></div><p>The above code will produces the following output for me:</p>
 
   
   <div style="margin: 20px 0px;">
@@ -284,21 +262,15 @@ juju switch local
   </h1>
   <time datetime="2017-01-23T00:00:00Z" class="post-date">Mon, Jan 23, 2017</time>
   <p>When monitoring OpenStack using the OpenStack Infrastructure ZenPack integrated with Ceilometer, it is possible to get fast virtual machine state changes (on/off powering, etc.) by receiving events sent from Ceilometer to Zenoss.</p>
-
 <p>However I discovered that when trying to get the same effect for <strong>live migration</strong> (live migrating a virtual machine from one compute node to another) scenarios, this would not work. I proceeded to investigate why.</p>
-
 <h2 id="ceilometer-dispatcher-live-migration-events">Ceilometer Dispatcher Live Migration Events</h2>
-
 <p>I decided that the first thing to check was if the <a href="https://github.com/zenoss/ceilometer_zenoss">Zenoss Ceilometer dispatcher</a> was <strong>capturing</strong> and <strong>sending</strong> the live migration events to Zenoss. Indeed, the logs can be found in Ceilometer under <code>/var/log/ceilometer/ceilometer-collector.log</code>:</p>
-
 <pre><code>2017-01-23 14:22:02.593 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 3538a01c-ab8d-4e64-b0ff-6e8fe270e06a, compute.instance.live_migration.post.dest.start, 2017-01-23 06:22:02.584049, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
 
 2017-01-23 14:22:02.771 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 8db64329-606c-4184-9b5b-eb815166cb17, compute.instance.live_migration.post.dest.end, 2017-01-23 06:22:02.761138, &lt;Trait: state_description 1 &gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
 
 2017-01-23 14:22:02.782 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: d0dc4f4a-454a-42c5-b767-386dc3e0d1f3, compute.instance.live_migration._post.end, 2017-01-23 06:22:02.776665, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3205&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
-</code></pre>
-
-<p>Notice the <code>live_migration.post.dest.start</code> and <code>live_migration.post.dest.end</code> logs.</p>
+</code></pre><p>Notice the <code>live_migration.post.dest.start</code> and <code>live_migration.post.dest.end</code> logs.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -331,12 +303,9 @@ juju switch local
     <a href="https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/">Appending Modeler Plugins in ZenPacks</a>
   </h1>
   <time datetime="2017-01-20T00:00:00Z" class="post-date">Fri, Jan 20, 2017</time>
-  <p>When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class&rsquo;s modeler plugins to be <strong>replaced</strong> by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply <em>added</em> to the device class&rsquo;s list of modeler plugins.</p>
-
+  <p>When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class's modeler plugins to be <strong>replaced</strong> by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply <em>added</em> to the device class's list of modeler plugins.</p>
 <p>In a previous post I explained how we can <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process.html">customize the ZenPacks installation process</a> to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.</p>
-
-<p>Let&rsquo;s assume that we have the <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a> installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the <code>/Server/SSH/Linux/NovaHost</code> device class. We want our custom ZenPack to add <em>new</em> modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.</p>
-
+<p>Let's assume that we have the <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a> installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the <code>/Server/SSH/Linux/NovaHost</code> device class. We want our custom ZenPack to add <em>new</em> modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.</p>
 <p>This will be done upon installation (like in the previous post) inside the <code>__init__.py</code> file in the ZenPack top directory. This is how the code looks like:</p>
 
   

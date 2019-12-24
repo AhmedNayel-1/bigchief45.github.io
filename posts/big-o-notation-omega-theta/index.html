@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Big O Notation - Omega \x26 Theta",
     "headline" : "Big O Notation - Omega \x26 Theta",
-    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/ruby-benchmarking-and-big-o-notation.html\x22\x3eprevious post\x3c\/a\x3e I went over the basic and most common Big O notations along with respective common algorithms, and finally adding some Ruby benchmarks for each.\x3c\/p\x3e\n\n\x3cp\x3eHowever I did not cover some other very important concepts in Big O notation: \x3cstrong\x3eOmega\x3c\/strong\x3e and \x3cstrong\x3eTheta\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3ch2 id=\x22understanding-omega\x22\x3eUnderstanding Omega\x3c\/h2\x3e\n\n\x3cp\x3eThe Omega symbol (Ω) represents a certain algorithm\x26rsquo;s \x3cem\x3ebest-case\x3c\/em\x3e asymptotic complexity. For example, let\x26rsquo;s take again a look at the \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Binary_search_algorithm\x22\x3ebinary search algorithm\x3c\/a\x3e:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22https:\/\/blog.penjee.com\/wp-content\/uploads\/2015\/04\/binary-and-linear-search-animations.gif\x22 alt=\x22Binary Search vs Linear Search\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3ePreviously we determined that the Big O notation for this algorithm is \x3cem\x3eO(log n)\x3c\/em\x3e. This represent the \x3cstrong\x3eworst\x3c\/strong\x3e asymptotic complexity that the algorithm can possibly have.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/ruby-benchmarking-and-big-o-notation.html\x22\x3eprevious post\x3c\/a\x3e I went over the basic and most common Big O notations along with respective common algorithms, and finally adding some Ruby benchmarks for each.\x3c\/p\x3e\n\x3cp\x3eHowever I did not cover some other very important concepts in Big O notation: \x3cstrong\x3eOmega\x3c\/strong\x3e and \x3cstrong\x3eTheta\x3c\/strong\x3e.\x3c\/p\x3e\n\x3ch2 id=\x22understanding-omega\x22\x3eUnderstanding Omega\x3c\/h2\x3e\n\x3cp\x3eThe Omega symbol (Ω) represents a certain algorithm\x27s \x3cem\x3ebest-case\x3c\/em\x3e asymptotic complexity. For example, let\x27s take again a look at the \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Binary_search_algorithm\x22\x3ebinary search algorithm\x3c\/a\x3e:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22https:\/\/blog.penjee.com\/wp-content\/uploads\/2015\/04\/binary-and-linear-search-animations.gif\x22 alt=\x22Binary Search vs Linear Search\x22\x3e\x3c\/p\x3e\n\x3cp\x3ePreviously we determined that the Big O notation for this algorithm is \x3cem\x3eO(log n)\x3c\/em\x3e. This represent the \x3cstrong\x3eworst\x3c\/strong\x3e asymptotic complexity that the algorithm can possibly have.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,42 +136,25 @@ if (!doNotTrack) {
   <time datetime=2016-11-16T00:00:00Z class="post-date">Wed, Nov 16, 2016</time>
 
   <p>In a <a href="https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation.html">previous post</a> I went over the basic and most common Big O notations along with respective common algorithms, and finally adding some Ruby benchmarks for each.</p>
-
 <p>However I did not cover some other very important concepts in Big O notation: <strong>Omega</strong> and <strong>Theta</strong>.</p>
-
 <h2 id="understanding-omega">Understanding Omega</h2>
-
-<p>The Omega symbol (Ω) represents a certain algorithm&rsquo;s <em>best-case</em> asymptotic complexity. For example, let&rsquo;s take again a look at the <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">binary search algorithm</a>:</p>
-
-<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search" /></p>
-
+<p>The Omega symbol (Ω) represents a certain algorithm's <em>best-case</em> asymptotic complexity. For example, let's take again a look at the <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">binary search algorithm</a>:</p>
+<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search"></p>
 <p>Previously we determined that the Big O notation for this algorithm is <em>O(log n)</em>. This represent the <strong>worst</strong> asymptotic complexity that the algorithm can possibly have.</p>
-
 <p>However, if the element we are looking for is in the middle position of the array, binary search would find it in <strong>constant time</strong>. Thus, giving the binary search algorithm a complexity of Ω(1).</p>
-
 <p>Similarly, <strong>linear search</strong> (also shown above) has an Omega complexity of Ω(1) because if the element we are looking for is the first element in the array, we would find it in constant time as well.</p>
-
 <h2 id="understanding-theta">Understanding Theta</h2>
-
 <p>Theta (Θ) describes algorithms where the best and worst cases are the same.</p>
-
 <p>For example, if we have previously stored the length of a string in a variable, the only instruction necessary to get this value is to look at the variable. The best case would of course be in constant time, therefore the omega complexity would be Ω(1). For the worst case, it would <strong><em>still</em></strong> be constant time because we still need to only look at the variable, hence <em>O(1)</em>. This means that this particular &ldquo;algorithm&rdquo; has a theta complexity of Θ(1).</p>
-
 <h2 id="putting-it-together">Putting it Together</h2>
-
 <p>Because the O-complexity of an algorithm gives an <strong>upper bound</strong> for the actual complexity of an algorithm, while Θ gives the actual complexity of an algorithm, we sometimes say that the Θ gives us a <strong>tight bound</strong>.</p>
-
 <p>From <em><a href="http://discrete.gr/complexity/">A Gentle Introduction to Algorithm Complexity Analysis</a></em>:</p>
-
 <blockquote>
-<p><em>If we know that we&rsquo;ve found a complexity bound that is not tight, we can also use <strong>small o</strong> to denote that. For example, if an algorithm is Θ( n ), then its tight complexity is n. Then this algorithm is both O( n ) and O( n^2 ). As the algorithm is Θ( n ), the O( n ) bound is a tight one. But the O( n^2 ) bound is not tight, and so we can write that the algorithm is o( n^2 ), which is pronounced &ldquo;small o of n squared&rdquo; to illustrate that we know our bound is not tight.</em></p>
+<p><em>If we know that we've found a complexity bound that is not tight, we can also use <strong>small o</strong> to denote that. For example, if an algorithm is Θ( n ), then its tight complexity is n. Then this algorithm is both O( n ) and O( n^2 ). As the algorithm is Θ( n ), the O( n ) bound is a tight one. But the O( n^2 ) bound is not tight, and so we can write that the algorithm is o( n^2 ), which is pronounced &ldquo;small o of n squared&rdquo; to illustrate that we know our bound is not tight.</em></p>
 </blockquote>
-
-<p>Therefore, we can say that it&rsquo;s better if we can find tight bounds for our algorithms, as these give us more information about how our algorithm behaves. However, this is not always easy to do.</p>
-
+<p>Therefore, we can say that it's better if we can find tight bounds for our algorithms, as these give us more information about how our algorithm behaves. However, this is not always easy to do.</p>
 <p>Basically we can say that Ω is used to specify lower bounds, and Θ is used to give a tight asymptotic bound on a function.</p>
-
-<p>-&gt; While all the symbols O, o, Ω, ω and Θ are useful at times, O is the one used more commonly, as it&rsquo;s easier to determine than Θ and more practically useful than Ω.</p>
+<p>-&gt; While all the symbols O, o, Ω, ω and Θ are useful at times, O is the one used more commonly, as it's easier to determine than Θ and more practically useful than Ω.</p>
 </div>
 
 

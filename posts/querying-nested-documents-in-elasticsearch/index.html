@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Querying Nested Documents in ElasticSearch",
     "headline" : "Querying Nested Documents in ElasticSearch",
-    "description" : "\x3cp\x3eThe other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.\x3c\/p\x3e\n\n\x3cp\x3eI wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its \x3ccode\x3etext\x3c\/code\x3e field.\x3c\/p\x3e\n\n\x3ch2 id=\x22nested-documents\x22\x3eNested Documents\x3c\/h2\x3e\n\n\x3cp\x3eElasticSearch 5 supports [nested documents](). These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a \x3ca href=\x22https:\/\/www.elastic.co\/guide\/en\/elasticsearch\/guide\/current\/nested-mapping.html\x22\x3enested object mapping\x3c\/a\x3e for the index:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ePUT \/my_index\n\n{\n  \x26quot;mappings\x26quot;: {\n    \x26quot;book\x26quot;: {\n      \x26quot;properties\x26quot;: {\n        \x26quot;pages\x26quot;: {\n          \x26quot;type\x26quot;: \x26quot;nested\x26quot;,\n          \x26quot;properties\x26quot;: {\n            \x26quot;id\x26quot;:    { \x26quot;type\x26quot;: \x26quot;integer\x26quot;  },\n            \x26quot;text\x26quot;: { \x26quot;type\x26quot;: \x26quot;text\x26quot;  },\n          }\n        }\n      }\n    }\n  }\n}\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eNotice how the mapping is created using a \x3ccode\x3ePUT\x3c\/code\x3e request at the \x3cstrong\x3eindex\x3c\/strong\x3e level.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eThe other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.\x3c\/p\x3e\n\x3cp\x3eI wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its \x3ccode\x3etext\x3c\/code\x3e field.\x3c\/p\x3e\n\x3ch2 id=\x22nested-documents\x22\x3eNested Documents\x3c\/h2\x3e\n\x3cp\x3eElasticSearch 5 supports \x3ca href=\x22\x22\x3enested documents\x3c\/a\x3e. These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a \x3ca href=\x22https:\/\/www.elastic.co\/guide\/en\/elasticsearch\/guide\/current\/nested-mapping.html\x22\x3enested object mapping\x3c\/a\x3e for the index:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3ePUT \/my_index\n\n{\n  \x26quot;mappings\x26quot;: {\n    \x26quot;book\x26quot;: {\n      \x26quot;properties\x26quot;: {\n        \x26quot;pages\x26quot;: {\n          \x26quot;type\x26quot;: \x26quot;nested\x26quot;,\n          \x26quot;properties\x26quot;: {\n            \x26quot;id\x26quot;:    { \x26quot;type\x26quot;: \x26quot;integer\x26quot;  },\n            \x26quot;text\x26quot;: { \x26quot;type\x26quot;: \x26quot;text\x26quot;  },\n          }\n        }\n      }\n    }\n  }\n}\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eNotice how the mapping is created using a \x3ccode\x3ePUT\x3c\/code\x3e request at the \x3cstrong\x3eindex\x3c\/strong\x3e level.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,13 +136,9 @@ if (!doNotTrack) {
   <time datetime=2017-10-23T00:00:00Z class="post-date">Mon, Oct 23, 2017</time>
 
   <p>The other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.</p>
-
 <p>I wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its <code>text</code> field.</p>
-
 <h2 id="nested-documents">Nested Documents</h2>
-
-<p>ElasticSearch 5 supports [nested documents](). These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-mapping.html">nested object mapping</a> for the index:</p>
-
+<p>ElasticSearch 5 supports <a href="">nested documents</a>. These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-mapping.html">nested object mapping</a> for the index:</p>
 <pre><code>PUT /my_index
 
 {
@@ -160,16 +156,10 @@ if (!doNotTrack) {
     }
   }
 }
-</code></pre>
-
-<p>Notice how the mapping is created using a <code>PUT</code> request at the <strong>index</strong> level.</p>
-
+</code></pre><p>Notice how the mapping is created using a <code>PUT</code> request at the <strong>index</strong> level.</p>
 <p>-&gt; We can get the current mapping of the index by doing a <code>GET</code> request to <code>/&lt;index&gt;/_mapping</code></p>
-
 <h3 id="creating-the-books">Creating the Books</h3>
-
 <p>We can now start creating books along with their own collections of pages (nested documents) with dummy data. Here is an example of one book with a few pages:</p>
-
 <pre><code>PUT /my_index/book/1
 
 {
@@ -185,14 +175,9 @@ if (!doNotTrack) {
     }
   ]
 }
-</code></pre>
-
-<p>Notice that the nested documents are defined as a JSON array. In this example we are using the page&rsquo;s <code>id</code> to refer to its page number in the book.</p>
-
+</code></pre><p>Notice that the nested documents are defined as a JSON array. In this example we are using the page's <code>id</code> to refer to its page number in the book.</p>
 <h3 id="querying-book-pages-for-ocurrences">Querying Book Pages for Ocurrences</h3>
-
 <p>Suppose we want to query all pages from a certain book (meaning we already know which book we are working with), we want to find <strong>all pages and only pages</strong> in the book where a certain word or phrase exists.</p>
-
 <p>To do this, we will have to make use of <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-query.html">nested queries</a>. These will allow us to query the nested documents (pages) in the book. Additionally, we will also have to make use of a <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html">query string</a> in order to try to find the substring <em>inside</em> the text, rather than comparing the whole text to the query string:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
   <span style="color:#f92672">&#34;_source&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">false</span><span style="color:#111">,</span>
@@ -203,7 +188,7 @@ if (!doNotTrack) {
           <span style="color:#f92672">&#34;term&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
             <span style="color:#f92672">&#34;_id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;1&#34;</span>
           <span style="color:#111">}</span>
-        <span style="color:#111">},</span>
+        <span style="color:#111">}</span><span style="color:#111">,</span>
         <span style="color:#111">{</span>
           <span style="color:#f92672">&#34;nested&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
             <span style="color:#f92672">&#34;path&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pages&#34;</span><span style="color:#111">,</span>
@@ -214,7 +199,7 @@ if (!doNotTrack) {
                   <span style="color:#d88200">&#34;pages.text&#34;</span>
                 <span style="color:#111">]</span>
               <span style="color:#111">}</span>
-            <span style="color:#111">},</span>
+            <span style="color:#111">}</span><span style="color:#111">,</span>
             <span style="color:#f92672">&#34;inner_hits&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
               <span style="color:#f92672">&#34;_source&#34;</span><span style="color:#111">:</span> <span style="color:#111">[</span>
                 <span style="color:#d88200">&#34;pages.number&#34;</span>
@@ -225,19 +210,13 @@ if (!doNotTrack) {
       <span style="color:#111">]</span>
     <span style="color:#111">}</span>
   <span style="color:#111">}</span>
-<span style="color:#111">}</span></code></pre></div>
-<p>The query above should only return the 2nd page (page with <code>id</code> of <code>2</code>), since the 1st page does not contain the <code>luctus</code> word.</p>
-
+<span style="color:#111">}</span>
+</code></pre></div><p>The query above should only return the 2nd page (page with <code>id</code> of <code>2</code>), since the 1st page does not contain the <code>luctus</code> word.</p>
 <p>The <code>&quot;_source&quot;: false</code> field tells ElasticSearch that we only want the pages in the response, since we do not want the book data in it.</p>
-
 <p>The query is composed of a <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html">Bool Query</a> that first filters out all books except the book we want to search in (ID of <code>1</code>). After the bool query we are inserting a nested query that will search inside the nested documents (pages) for the word <code>luctus</code> ocurrences in each page. Notice how we are using a &ldquo;full path&rdquo; approach to specify the <code>text</code> field in the <code>page</code> document.</p>
-
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-inner-hits.html">Inner_hits</a> returns per search hit in the search response additional nested hits that caused a search hit to match in a different scope. In this case we are only interested in the found pages&rsquo;s IDs, since these will represent the page numbers in the book where the word was found.</p>
-
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-inner-hits.html">Inner_hits</a> returns per search hit in the search response additional nested hits that caused a search hit to match in a different scope. In this case we are only interested in the found pages's IDs, since these will represent the page numbers in the book where the word was found.</p>
 <p>~&gt; The maximum number of hits returned in <code>inner_hits</code> is <strong>3</strong>. By default, the top three matching hits are returned. To retrieve more results, you can specify a <code>size</code> option inside the <code>inner_hits</code> object of the query. <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-inner-hits.html#_options">Read more</a></p>
-
 <h2 id="references">References:</h2>
-
 <ol>
 <li><a href="https://www.spacevatican.org/2012/6/3/fun-with-elasticsearch-s-children-and-nested-documents/">https://www.spacevatican.org/2012/6/3/fun-with-elasticsearch-s-children-and-nested-documents/</a></li>
 <li><a href="https://stackoverflow.com/questions/40779957/elasticsearch-get-only-matching-nested-objects-with-all-top-level-fields-in-se">https://stackoverflow.com/questions/40779957/elasticsearch-get-only-matching-nested-objects-with-all-top-level-fields-in-se</a></li>

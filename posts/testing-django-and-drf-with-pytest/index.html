@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Testing Django and DRF With Pytest",
     "headline" : "Testing Django and DRF With Pytest",
-    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/docs.pytest.org\/en\/latest\/contents.html\x22\x3ePytest\x3c\/a\x3e has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and \x3ca href=\x22http:\/\/www.django-rest-framework.org\/\x22\x3eDjango REST Framework\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3cp\x3eWe will be using the following tools:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/docs.pytest.org\/en\/latest\/contents.html\x22\x3ePytest\x3c\/a\x3e: Python testing framework\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/pytest-django.readthedocs.io\/\x22\x3epytest-django\x3c\/a\x3e: Pytest extensions for Django\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/factoryboy.readthedocs.io\/\x22\x3efactoryboy\x3c\/a\x3e: Factories for easy test data generation.\x3c\/li\x3e\n\x3c\/ul\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/docs.pytest.org\/en\/latest\/contents.html\x22\x3ePytest\x3c\/a\x3e has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and \x3ca href=\x22http:\/\/www.django-rest-framework.org\/\x22\x3eDjango REST Framework\x3c\/a\x3e.\x3c\/p\x3e\n\x3cp\x3eWe will be using the following tools:\x3c\/p\x3e\n\x3cul\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/docs.pytest.org\/en\/latest\/contents.html\x22\x3ePytest\x3c\/a\x3e: Python testing framework\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/pytest-django.readthedocs.io\/\x22\x3epytest-django\x3c\/a\x3e: Pytest extensions for Django\x3c\/li\x3e\n\x3cli\x3e\x3ca href=\x22https:\/\/factoryboy.readthedocs.io\/\x22\x3efactoryboy\x3c\/a\x3e: Factories for easy test data generation.\x3c\/li\x3e\n\x3c\/ul\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,76 +136,59 @@ if (!doNotTrack) {
   <time datetime=2018-02-09T00:00:00Z class="post-date">Fri, Feb 9, 2018</time>
 
   <p><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a> has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and <a href="http://www.django-rest-framework.org/">Django REST Framework</a>.</p>
-
 <p>We will be using the following tools:</p>
-
 <ul>
 <li><a href="https://docs.pytest.org/en/latest/contents.html">Pytest</a>: Python testing framework</li>
 <li><a href="https://pytest-django.readthedocs.io/">pytest-django</a>: Pytest extensions for Django</li>
 <li><a href="https://factoryboy.readthedocs.io/">factoryboy</a>: Factories for easy test data generation.</li>
 </ul>
-
 <h2 id="setting-up-pytest-in-a-django-project">Setting Up Pytest in a Django Project</h2>
-
 <p>There are different ways you can setup pytest in a Django project:</p>
-
 <ul>
 <li>Use a <code>pytest.ini</code> config file at the root of your project.</li>
 <li>Use a <code>conftest.py</code> file in your tests directory where you can use Python to define configuration and fixtures.</li>
 </ul>
-
 <p>I will be using the first and simplest approach. You can create a <code>pytest.ini</code> file at the root of your project and define where your Django settings module is:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[pytest]</span>
-<span style="color:#75af00">DJANGO_SETTINGS_MODULE</span> <span style="color:#f92672">=</span> <span style="color:#d88200">myproject.settings.dev</span></code></pre></div>
-<h2 id="testing-django">Testing Django</h2>
-
-<p>I&rsquo;ll first start with Django and then we&rsquo;ll take a look at Django REST Framework. To start, we will want to add some unit tests for our models and integration tests for our views. After that we can take a look on how to test other stuff such as middleware and custom commands.</p>
-
+<span style="color:#75af00">DJANGO_SETTINGS_MODULE</span> <span style="color:#f92672">=</span> <span style="color:#d88200">myproject.settings.dev</span>
+</code></pre></div><h2 id="testing-django">Testing Django</h2>
+<p>I'll first start with Django and then we'll take a look at Django REST Framework. To start, we will want to add some unit tests for our models and integration tests for our views. After that we can take a look on how to test other stuff such as middleware and custom commands.</p>
 <h3 id="django-tests-structure">Django Tests Structure</h3>
-
 <p>Your Django application comes with a default <code>test.py</code> file. I usually remove this file and create a <code>tests/</code> directory inside every app of my project.</p>
-
 <p>Inside this directory I will place all the different tests I write, in different subdirectories depending on the type of test. This is what I usually use as reference:</p>
-
 <ul>
 <li><code>unit</code>: The most basic and fastest tests. Usually for models and pieces of code that can be interacted with directly.</li>
 <li><code>integration</code>: Usually for views. These tests usually consists of a factory or client that will perform the request or interaction to the view.</li>
 </ul>
-
 <h3 id="model-unit-tests">Model Unit Tests</h3>
-
 <p>These are the easiest tests. For illustrative purposes, supppose I have the following model:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Bank</span><span style="color:#111">:</span>
-    <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">_</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Name&#39;</span><span style="color:#111">),</span> <span style="color:#111">max_length</span><span style="color:#f92672">=</span><span style="color:#ae81ff">20</span><span style="color:#111">,</span> <span style="color:#111">unique</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
+    <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">CharField</span><span style="color:#111">(</span><span style="color:#111">_</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Name</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span> <span style="color:#111">max_length</span><span style="color:#f92672">=</span><span style="color:#ae81ff">20</span><span style="color:#111">,</span> <span style="color:#111">unique</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
     <span style="color:#111">managers</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ManyToManyField</span><span style="color:#111">(</span><span style="color:#111">Manager</span><span style="color:#111">,</span> <span style="color:#111">blank</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
     <span style="color:#111">employees</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ManyToManyField</span><span style="color:#111">(</span><span style="color:#111">Employee</span><span style="color:#111">,</span> <span style="color:#111">blank</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
     <span style="color:#111">interns</span> <span style="color:#f92672">=</span> <span style="color:#111">models</span><span style="color:#f92672">.</span><span style="color:#111">ManyToManyField</span><span style="color:#111">(</span><span style="color:#111">Intern</span><span style="color:#111">,</span> <span style="color:#111">blank</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
 
     <span style="color:#75af00">@property</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">people</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">managers</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">()</span> <span style="color:#f92672">|</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">employees</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">()</span> <span style="color:#f92672">|</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">interns</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">()</span></code></pre></div>
-<p>I want to test that this model property method indeed returns all the objects from those 3 ManyToMany fields. We will write a unit test that does so.</p>
-
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">people</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">managers</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#f92672">|</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">employees</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#f92672">|</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">interns</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>I want to test that this model property method indeed returns all the objects from those 3 ManyToMany fields. We will write a unit test that does so.</p>
 <h4 id="factories">Factories</h4>
-
-<p>Before we begin writing the test, let&rsquo;s understand what factories are and how they can help us write better tests.</p>
-
+<p>Before we begin writing the test, let's understand what factories are and how they can help us write better tests.</p>
 <p>Factories are defined objects that represent a model in our application. Factories can help us generate an infinite amount of test data and instances that our tests can use.</p>
-
 <p>From the <code>Bank</code> model example above, I can go ahead and make a factory for this model. I usually put my factories in a <code>/tests/factories.py</code> module:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">factory</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">myapp.models</span> <span style="color:#f92672">import</span> <span style="color:#111">Bank</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">BankFactory</span><span style="color:#111">(</span><span style="color:#111">factory</span><span style="color:#f92672">.</span><span style="color:#111">django</span><span style="color:#f92672">.</span><span style="color:#111">DjangoModelFactory</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BankFactory</span><span style="color:#111">(</span><span style="color:#111">factory</span><span style="color:#f92672">.</span><span style="color:#111">django</span><span style="color:#f92672">.</span><span style="color:#111">DjangoModelFactory</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">class</span> <span style="color:#75af00">Meta</span><span style="color:#111">:</span>
         <span style="color:#111">model</span> <span style="color:#f92672">=</span> <span style="color:#111">Bank</span>
 
-    <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">factory</span><span style="color:#f92672">.</span><span style="color:#111">Sequence</span><span style="color:#111">(</span><span style="color:#00a8c8">lambda</span> <span style="color:#111">n</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;bank_</span><span style="color:#d88200">%d</span><span style="color:#d88200">&#39;</span> <span style="color:#f92672">%</span> <span style="color:#111">n</span><span style="color:#111">)</span>
+    <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">factory</span><span style="color:#f92672">.</span><span style="color:#111">Sequence</span><span style="color:#111">(</span><span style="color:#00a8c8">lambda</span> <span style="color:#111">n</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">bank_</span><span style="color:#d88200">%d</span><span style="color:#d88200">&#39;</span> <span style="color:#f92672">%</span> <span style="color:#111">n</span><span style="color:#111">)</span>
 
     <span style="color:#75af00">@factory.post_generation</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">managers</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">create</span><span style="color:#111">,</span> <span style="color:#111">extracted</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">managers</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">create</span><span style="color:#111">,</span> <span style="color:#111">extracted</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">create</span><span style="color:#111">:</span>
             <span style="color:#00a8c8">return</span>
 
@@ -214,14 +197,14 @@ if (!doNotTrack) {
                 <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">managers</span><span style="color:#f92672">.</span><span style="color:#111">add</span><span style="color:#111">(</span><span style="color:#111">manager</span><span style="color:#111">)</span>
 
     <span style="color:#75715e"># Same for interns and employees</span>
-    <span style="color:#75715e"># ...</span></code></pre></div>
-<p>The <code>@factory.post_generation</code> allows us to add more objects to the ManyToMany relation. Assuming we also have factories for those models, we could create a test bank object like this:</p>
+    <span style="color:#75715e"># ...</span>
+</code></pre></div><p>The <code>@factory.post_generation</code> allows us to add more objects to the ManyToMany relation. Assuming we also have factories for those models, we could create a test bank object like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">bank</span> <span style="color:#f92672">=</span> <span style="color:#111">BankFactory</span><span style="color:#111">(</span>
-    <span style="color:#111">managers</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">ManagerFactory</span><span style="color:#111">()],</span>
-    <span style="color:#111">employees</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">EmployeeFactory</span><span style="color:#111">()],</span>
-    <span style="color:#111">interns</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">InternFactory</span><span style="color:#111">()]</span>
-<span style="color:#111">)</span></code></pre></div>
-<p>And now we can finally use that in our test:</p>
+    <span style="color:#111">managers</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">ManagerFactory</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">]</span><span style="color:#111">,</span>
+    <span style="color:#111">employees</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">EmployeeFactory</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">]</span><span style="color:#111">,</span>
+    <span style="color:#111">interns</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">InternFactory</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">]</span>
+<span style="color:#111">)</span>
+</code></pre></div><p>And now we can finally use that in our test:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># tests/unit/test_banks.py</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">pytest</span>
@@ -237,44 +220,38 @@ if (!doNotTrack) {
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">TestBanks</span><span style="color:#111">:</span>
 
     <span style="color:#75af00">@pytest.mark.django_db</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_bank_people</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Tests that we can obtain all people associated with this bank.&#34;&#34;&#34;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_bank_people</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Tests that we can obtain all people associated with this bank.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
         <span style="color:#111">bank</span> <span style="color:#f92672">=</span> <span style="color:#111">BankFactory</span><span style="color:#111">(</span>
-            <span style="color:#111">managers</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">ManagerFactory</span><span style="color:#111">()],</span>
-            <span style="color:#111">employees</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">EmployeeFactory</span><span style="color:#111">()],</span>
-            <span style="color:#111">interns</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">InternFactory</span><span style="color:#111">()]</span>
+            <span style="color:#111">managers</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">ManagerFactory</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">]</span><span style="color:#111">,</span>
+            <span style="color:#111">employees</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">EmployeeFactory</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">]</span><span style="color:#111">,</span>
+            <span style="color:#111">interns</span><span style="color:#f92672">=</span><span style="color:#111">[</span><span style="color:#111">InternFactory</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">]</span>
         <span style="color:#111">)</span>
 
-      <span style="color:#00a8c8">assert</span> <span style="color:#111">bank</span><span style="color:#f92672">.</span><span style="color:#111">people</span><span style="color:#f92672">.</span><span style="color:#111">count</span><span style="color:#111">()</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span></code></pre></div>
-<p>Since we are creating 3 people of different type each in our test, this test should pass.</p>
-
+      <span style="color:#00a8c8">assert</span> <span style="color:#111">bank</span><span style="color:#f92672">.</span><span style="color:#111">people</span><span style="color:#f92672">.</span><span style="color:#111">count</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>
+</code></pre></div><p>Since we are creating 3 people of different type each in our test, this test should pass.</p>
 <p>-&gt; <code>@pytest.mark.django_db</code> is a decorator provided by pytest-django that gives the test write access to the database.</p>
-
 <h3 id="view-tests">View Tests</h3>
-
-<p>Now let&rsquo;s take a look at how we can test our views. I will show an example of a <strong>Class Based View</strong>:</p>
+<p>Now let's take a look at how we can test our views. I will show an example of a <strong>Class Based View</strong>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">django.http</span> <span style="color:#f92672">import</span> <span style="color:#111">JsonResponse</span>
 <span style="color:#f92672">from</span> <span style="color:#111">django.views</span> <span style="color:#f92672">import</span> <span style="color:#111">View</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyView</span><span style="color:#111">(</span><span style="color:#111">View</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyView</span><span style="color:#111">(</span><span style="color:#111">View</span><span style="color:#111">)</span><span style="color:#111">:</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">request</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">request</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#75715e"># Some complex processing here.</span>
 
-        <span style="color:#00a8c8">return</span> <span style="color:#111">JsonResponse</span><span style="color:#111">({</span><span style="color:#d88200">&#39;result&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;FINISHED&#39;</span><span style="color:#111">})</span></code></pre></div>
-<p>And it&rsquo;s URL:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">url</span><span style="color:#111">(</span><span style="color:#d88200">r</span><span style="color:#d88200">&#39;^(?i)myview/$&#39;</span><span style="color:#111">,</span> <span style="color:#111">views</span><span style="color:#f92672">.</span><span style="color:#111">MyView</span><span style="color:#f92672">.</span><span style="color:#111">as_view</span><span style="color:#111">(),</span> <span style="color:#111">name</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;myview&#39;</span><span style="color:#111">),</span></code></pre></div>
-<p>A very simple view. We are going to test 2 things:</p>
-
+        <span style="color:#00a8c8">return</span> <span style="color:#111">JsonResponse</span><span style="color:#111">(</span><span style="color:#111">{</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">result</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">FINISHED</span><span style="color:#d88200">&#39;</span><span style="color:#111">}</span><span style="color:#111">)</span>
+</code></pre></div><p>And it's URL:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">url</span><span style="color:#111">(</span><span style="color:#d88200">r</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">^(?i)myview/$</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#111">views</span><span style="color:#f92672">.</span><span style="color:#111">MyView</span><span style="color:#f92672">.</span><span style="color:#111">as_view</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">myview</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
+</code></pre></div><p>A very simple view. We are going to test 2 things:</p>
 <ol>
 <li>The response status code</li>
 <li>The response content</li>
 </ol>
-
 <p>Of course, depending on the complexity of your view you can (and should) test more things, like objects created/remove in the database, etc. etc.</p>
-
-<p>To test this view we will be using the <code>rf</code> request factory pytest fixture provided by pytest-django. We only need to add it to the test function&rsquo;s parameters:</p>
+<p>To test this view we will be using the <code>rf</code> request factory pytest fixture provided by pytest-django. We only need to add it to the test function's parameters:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># tests/integration/test_myview.py</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">json</span>
@@ -286,57 +263,46 @@ if (!doNotTrack) {
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">TestMyView</span><span style="color:#111">:</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_result_finished</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">rf</span><span style="color:#111">):</span>
-        <span style="color:#111">request</span> <span style="color:#f92672">=</span> <span style="color:#111">rf</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">reverse</span><span style="color:#111">(</span><span style="color:#d88200">&#39;myview&#39;</span><span style="color:#111">))</span>
-        <span style="color:#111">response</span> <span style="color:#f92672">=</span> <span style="color:#111">MyView</span><span style="color:#f92672">.</span><span style="color:#111">as_view</span><span style="color:#111">()(</span><span style="color:#111">request</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_result_finished</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">rf</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">request</span> <span style="color:#f92672">=</span> <span style="color:#111">rf</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">reverse</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">myview</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">)</span>
+        <span style="color:#111">response</span> <span style="color:#f92672">=</span> <span style="color:#111">MyView</span><span style="color:#f92672">.</span><span style="color:#111">as_view</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">)</span>
 
         <span style="color:#00a8c8">assert</span> <span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#111">status_code</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>
 
         <span style="color:#111">content</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#111">content</span><span style="color:#111">)</span>
-        <span style="color:#00a8c8">assert</span> <span style="color:#111">content</span><span style="color:#111">[</span><span style="color:#d88200">&#39;result&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;FINISHED&#39;</span></code></pre></div>
-<p>And that&rsquo;s it. Keep in mind that this view is not interacting with the database, so I did not include the decorator we saw before. Also, we are not taking into account any authentication in this view. If you need to, then you can assign a user to the <code>request</code> object:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#111">my_user</span></code></pre></div>
-<p>In this case <code>my_user</code> can be a user generated by a factory (if you have custom user auth models in your application), or you can use another user fixture provided by pytest-django.</p>
-
+        <span style="color:#00a8c8">assert</span> <span style="color:#111">content</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">result</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">==</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">FINISHED</span><span style="color:#d88200">&#39;</span>
+</code></pre></div><p>And that's it. Keep in mind that this view is not interacting with the database, so I did not include the decorator we saw before. Also, we are not taking into account any authentication in this view. If you need to, then you can assign a user to the <code>request</code> object:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#111">my_user</span>
+</code></pre></div><p>In this case <code>my_user</code> can be a user generated by a factory (if you have custom user auth models in your application), or you can use another user fixture provided by pytest-django.</p>
 <h4 id="testing-view-context-data">Testing View Context Data</h4>
+<p>If you ever need to test the view's context data you can do so by accessing <code>response.context_data</code> dictionary. However if you are like me and prefer setting a CBV's context data using <a href="https://reinout.vanrees.org/weblog/2014/05/19/context.html">this method</a> (just to show an example):</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyView</span><span style="color:#111">(</span><span style="color:#111">TemplateView</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">template_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">mytemplate.html</span><span style="color:#d88200">&#39;</span>
 
-<p>If you ever need to test the view&rsquo;s context data you can do so by accessing <code>response.context_data</code> dictionary. However if you are like me and prefer setting a CBV&rsquo;s context data using <a href="https://reinout.vanrees.org/weblog/2014/05/19/context.html">this method</a> (just to show an example):</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyView</span><span style="color:#111">(</span><span style="color:#111">TemplateView</span><span style="color:#111">):</span>
-    <span style="color:#111">template_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;mytemplate.html&#39;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">books</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">filter</span><span style="color:#111">(</span><span style="color:#111">library__name</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">kwargs</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">library_name</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">books</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">filter</span><span style="color:#111">(</span><span style="color:#111">library__name</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">kwargs</span><span style="color:#111">[</span><span style="color:#d88200">&#39;library_name&#39;</span><span style="color:#111">])</span></code></pre></div>
-<p>You can make the assertion by accessing the <code>view</code> object in the dictionary, just like it is done in the template. Like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">assert</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#111">context_data</span><span style="color:#111">[</span><span style="color:#d88200">&#39;view&#39;</span><span style="color:#111">]</span><span style="color:#f92672">.</span><span style="color:#111">titulos</span><span style="color:#111">())</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span></code></pre></div>
-<h4 id="setting-cookies">Setting Cookies</h4>
-
+</code></pre></div><p>You can make the assertion by accessing the <code>view</code> object in the dictionary, just like it is done in the template. Like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">assert</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#111">context_data</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">view</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#f92672">.</span><span style="color:#111">titulos</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">)</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>
+</code></pre></div><h4 id="setting-cookies">Setting Cookies</h4>
 <p>If you need to set special cookies in your tests to test a view. You can do it using a request factory easily :</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">COOKIES</span><span style="color:#111">[</span><span style="color:#d88200">&#39;mycookie&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;akdasd090190239091290013asd;&#39;</span></code></pre></div>
-<h2 id="testing-django-rest-framework">Testing Django REST Framework</h2>
-
-<p>Testing DRF is very similar to testing Django views. However, DRF&rsquo;s views extend Django&rsquo;s class based views and therefore are more complex. Additionally, DRF comes with its own set of test <a href="http://www.django-rest-framework.org/api-guide/testing/">classes and utilities</a> that we can use to make the process easier.</p>
-
-<p>The <code>APITestCase</code> class is a very neat class to use for DRF tests, it comes with its own instance of <code>APIClient</code>. However, since <code>APITestCase</code> subclasses Django&rsquo;s <code>TestCase</code> class, we won&rsquo;t be able to pass Pytest fixtures to our tests. This means that we will have to force authenticate the client and assign it a user in <em>each</em> of the tests. Very cumbersome.</p>
-
-<p>This is why I prefer not using <code>APITestCase</code> and create a custom fixture that returns a <code>APIClient</code> instead. We&rsquo;ll see how this works in the next section.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">COOKIES</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">mycookie</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">akdasd090190239091290013asd;</span><span style="color:#d88200">&#39;</span>
+</code></pre></div><h2 id="testing-django-rest-framework">Testing Django REST Framework</h2>
+<p>Testing DRF is very similar to testing Django views. However, DRF's views extend Django's class based views and therefore are more complex. Additionally, DRF comes with its own set of test <a href="http://www.django-rest-framework.org/api-guide/testing/">classes and utilities</a> that we can use to make the process easier.</p>
+<p>The <code>APITestCase</code> class is a very neat class to use for DRF tests, it comes with its own instance of <code>APIClient</code>. However, since <code>APITestCase</code> subclasses Django's <code>TestCase</code> class, we won't be able to pass Pytest fixtures to our tests. This means that we will have to force authenticate the client and assign it a user in <em>each</em> of the tests. Very cumbersome.</p>
+<p>This is why I prefer not using <code>APITestCase</code> and create a custom fixture that returns a <code>APIClient</code> instead. We'll see how this works in the next section.</p>
 <h3 id="testing-viewsets">Testing Viewsets</h3>
-
 <p><a href="http://www.django-rest-framework.org/api-guide/viewsets/">DRF Viewsets</a> are extremely handy. Unfortunately the documentation to test them is not very straightforward.</p>
-
 <p>Since Viewsets can handle the usual REST requests (GET, POST, PUT, PATCH, DELETE) in a single viewset class, it is necessary that we understand how to specify which action we want to target in our tests.</p>
-
 <p>For these examples I am going to use the following viewset:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">viewsets</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">BankViewSet</span><span style="color:#111">(</span><span style="color:#111">viewsets</span><span style="color:#f92672">.</span><span style="color:#111">ModelViewSet</span><span style="color:#111">):</span>
-    <span style="color:#111">queryset</span> <span style="color:#f92672">=</span> <span style="color:#111">Bank</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">()</span>
-    <span style="color:#111">serializer_class</span> <span style="color:#f92672">=</span> <span style="color:#111">BankSerializer</span></code></pre></div>
-<h4 id="get">GET</h4>
-
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BankViewSet</span><span style="color:#111">(</span><span style="color:#111">viewsets</span><span style="color:#f92672">.</span><span style="color:#111">ModelViewSet</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">queryset</span> <span style="color:#f92672">=</span> <span style="color:#111">Bank</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">(</span><span style="color:#111">)</span>
+    <span style="color:#111">serializer_class</span> <span style="color:#f92672">=</span> <span style="color:#111">BankSerializer</span>
+</code></pre></div><h4 id="get">GET</h4>
 <p>Like I mentioned previously, we will use a custom fixture that returns an <code>APIClient</code> object. We can assign a user and force authentication in the fixture.</p>
-
 <h2 id="references">References</h2>
 </div>
 

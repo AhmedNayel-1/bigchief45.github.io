@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Media-Type Based Responses With Django REST Framework",
     "headline" : "Media-Type Based Responses With Django REST Framework",
-    "description" : "\x3cp\x3eNowadays a typical REST API responds with data in JSON format. But what if you wanted to serve data in a different format (and not just a serialization format) using the \x3cstrong\x3esame\x3c\/strong\x3e endpoint, but specified by the client?\x3c\/p\x3e\n\n\x3cp\x3eDjango REST Framework \x3ca href=\x22https:\/\/www.django-rest-framework.org\/api-guide\/renderers\/\x22\x3erenderers\x3c\/a\x3e can help us achieve this nice feature.\x3c\/p\x3e\n\n\x3ch2 id=\x22use-case-onix-for-books-compatible-api\x22\x3eUse Case: ONIX For Books Compatible API\x3c\/h2\x3e\n\n\x3cp\x3e\x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/ONIX_for_Books\x22\x3eONIX for books\x3c\/a\x3e is an XML format for sharing bibliographic data pertaining to both traditional books and eBooks.\x3c\/p\x3e\n\n\x3cp\x3eLet\x26rsquo;s say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in \x3ca href=\x22https:\/\/www.editeur.org\/83\/Overview\/\x22\x3eONIX\x3c\/a\x3e format, which is an XML standard that defines how the metadata should be described and put together for consumption.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eNowadays a typical REST API responds with data in JSON format. But what if you wanted to serve data in a different format (and not just a serialization format) using the \x3cstrong\x3esame\x3c\/strong\x3e endpoint, but specified by the client?\x3c\/p\x3e\n\x3cp\x3eDjango REST Framework \x3ca href=\x22https:\/\/www.django-rest-framework.org\/api-guide\/renderers\/\x22\x3erenderers\x3c\/a\x3e can help us achieve this nice feature.\x3c\/p\x3e\n\x3ch2 id=\x22use-case-onix-for-books-compatible-api\x22\x3eUse Case: ONIX For Books Compatible API\x3c\/h2\x3e\n\x3cp\x3e\x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/ONIX_for_Books\x22\x3eONIX for books\x3c\/a\x3e is an XML format for sharing bibliographic data pertaining to both traditional books and eBooks.\x3c\/p\x3e\n\x3cp\x3eLet\x27s say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in \x3ca href=\x22https:\/\/www.editeur.org\/83\/Overview\/\x22\x3eONIX\x3c\/a\x3e format, which is an XML standard that defines how the metadata should be described and put together for consumption.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2019-01-09 17:28:17 \x2b0000 UTC",
     "dateModified" : "2019-01-09 17:28:17 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/media-type-based-responses-with-django-rest-framework\/",
-    "wordCount" : "901",
+    "wordCount" : "900",
     "keywords" : [ "django","Blog" ]
 }
 </script>
@@ -136,74 +136,64 @@ if (!doNotTrack) {
   <time datetime=2019-01-09T17:28:17Z class="post-date">Wed, Jan 9, 2019</time>
 
   <p>Nowadays a typical REST API responds with data in JSON format. But what if you wanted to serve data in a different format (and not just a serialization format) using the <strong>same</strong> endpoint, but specified by the client?</p>
-
 <p>Django REST Framework <a href="https://www.django-rest-framework.org/api-guide/renderers/">renderers</a> can help us achieve this nice feature.</p>
-
 <h2 id="use-case-onix-for-books-compatible-api">Use Case: ONIX For Books Compatible API</h2>
-
 <p><a href="https://en.wikipedia.org/wiki/ONIX_for_Books">ONIX for books</a> is an XML format for sharing bibliographic data pertaining to both traditional books and eBooks.</p>
-
-<p>Let&rsquo;s say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in <a href="https://www.editeur.org/83/Overview/">ONIX</a> format, which is an XML standard that defines how the metadata should be described and put together for consumption.</p>
-
+<p>Let's say our application serves metadata about books (title, author, etc.) in the usual JSON format, but we also want to provide data in <a href="https://www.editeur.org/83/Overview/">ONIX</a> format, which is an XML standard that defines how the metadata should be described and put together for consumption.</p>
 <p>Here is an example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
 <span style="color:#75715e">&lt;!DOCTYPE ONIXMessage SYSTEM &#34;http://www.editeur.org/onix/2.1/02/reference/onix-international.dtd&#34;&gt;</span>
-<span style="color:#f92672">&lt;ONIXMessage&gt;</span>
-  <span style="color:#f92672">&lt;Header&gt;</span>
-    <span style="color:#f92672">&lt;FromCompany&gt;</span>Broadview Press<span style="color:#f92672">&lt;/FromCompany&gt;</span>
-    <span style="color:#f92672">&lt;FromEmail&gt;</span>support@booksonix.com<span style="color:#f92672">&lt;/FromEmail&gt;</span>
-    <span style="color:#f92672">&lt;SentDate&gt;</span>201311091423<span style="color:#f92672">&lt;/SentDate&gt;</span>
-    <span style="color:#f92672">&lt;MessageNote&gt;</span>Generated by BooksoniX<span style="color:#f92672">&lt;/MessageNote&gt;</span>
-    <span style="color:#f92672">&lt;DefaultLanguageOfText&gt;</span>eng<span style="color:#f92672">&lt;/DefaultLanguageOfText&gt;</span>
+<span style="color:#f92672">&lt;ONIXMessage</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;Header</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;FromCompany</span><span style="color:#f92672">&gt;</span>Broadview Press<span style="color:#f92672">&lt;/FromCompany&gt;</span>
+    <span style="color:#f92672">&lt;FromEmail</span><span style="color:#f92672">&gt;</span>support@booksonix.com<span style="color:#f92672">&lt;/FromEmail&gt;</span>
+    <span style="color:#f92672">&lt;SentDate</span><span style="color:#f92672">&gt;</span>201311091423<span style="color:#f92672">&lt;/SentDate&gt;</span>
+    <span style="color:#f92672">&lt;MessageNote</span><span style="color:#f92672">&gt;</span>Generated by BooksoniX<span style="color:#f92672">&lt;/MessageNote&gt;</span>
+    <span style="color:#f92672">&lt;DefaultLanguageOfText</span><span style="color:#f92672">&gt;</span>eng<span style="color:#f92672">&lt;/DefaultLanguageOfText&gt;</span>
   <span style="color:#f92672">&lt;/Header&gt;</span>
-  <span style="color:#f92672">&lt;Product&gt;</span>
-    <span style="color:#f92672">&lt;RecordReference&gt;</span>9781551116853<span style="color:#f92672">&lt;/RecordReference&gt;</span>
-    <span style="color:#f92672">&lt;NotificationType&gt;</span>03<span style="color:#f92672">&lt;/NotificationType&gt;</span>
-    <span style="color:#f92672">&lt;ProductIdentifier&gt;</span>
-      <span style="color:#f92672">&lt;ProductIDType&gt;</span>02<span style="color:#f92672">&lt;/ProductIDType&gt;</span>
-      <span style="color:#f92672">&lt;IDValue&gt;</span>1551116855<span style="color:#f92672">&lt;/IDValue&gt;</span>
+  <span style="color:#f92672">&lt;Product</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;RecordReference</span><span style="color:#f92672">&gt;</span>9781551116853<span style="color:#f92672">&lt;/RecordReference&gt;</span>
+    <span style="color:#f92672">&lt;NotificationType</span><span style="color:#f92672">&gt;</span>03<span style="color:#f92672">&lt;/NotificationType&gt;</span>
+    <span style="color:#f92672">&lt;ProductIdentifier</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ProductIDType</span><span style="color:#f92672">&gt;</span>02<span style="color:#f92672">&lt;/ProductIDType&gt;</span>
+      <span style="color:#f92672">&lt;IDValue</span><span style="color:#f92672">&gt;</span>1551116855<span style="color:#f92672">&lt;/IDValue&gt;</span>
     <span style="color:#f92672">&lt;/ProductIdentifier&gt;</span>
-    <span style="color:#f92672">&lt;ProductIdentifier&gt;</span>
-      <span style="color:#f92672">&lt;ProductIDType&gt;</span>03<span style="color:#f92672">&lt;/ProductIDType&gt;</span>
-      <span style="color:#f92672">&lt;IDValue&gt;</span>9781551116853<span style="color:#f92672">&lt;/IDValue&gt;</span>
+    <span style="color:#f92672">&lt;ProductIdentifier</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ProductIDType</span><span style="color:#f92672">&gt;</span>03<span style="color:#f92672">&lt;/ProductIDType&gt;</span>
+      <span style="color:#f92672">&lt;IDValue</span><span style="color:#f92672">&gt;</span>9781551116853<span style="color:#f92672">&lt;/IDValue&gt;</span>
     <span style="color:#f92672">&lt;/ProductIdentifier&gt;</span>
-    <span style="color:#f92672">&lt;ProductIdentifier&gt;</span>
-      <span style="color:#f92672">&lt;ProductIDType&gt;</span>15<span style="color:#f92672">&lt;/ProductIDType&gt;</span>
-      <span style="color:#f92672">&lt;IDValue&gt;</span>9781551116853<span style="color:#f92672">&lt;/IDValue&gt;</span>
+    <span style="color:#f92672">&lt;ProductIdentifier</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ProductIDType</span><span style="color:#f92672">&gt;</span>15<span style="color:#f92672">&lt;/ProductIDType&gt;</span>
+      <span style="color:#f92672">&lt;IDValue</span><span style="color:#f92672">&gt;</span>9781551116853<span style="color:#f92672">&lt;/IDValue&gt;</span>
     <span style="color:#f92672">&lt;/ProductIdentifier&gt;</span>
-    <span style="color:#f92672">&lt;Barcode&gt;</span>10<span style="color:#f92672">&lt;/Barcode&gt;</span>
-    <span style="color:#f92672">&lt;ProductForm&gt;</span>BC<span style="color:#f92672">&lt;/ProductForm&gt;</span>
-    <span style="color:#f92672">&lt;ProductFormDetail&gt;</span>B102<span style="color:#f92672">&lt;/ProductFormDetail&gt;</span>
-    <span style="color:#f92672">&lt;Title&gt;</span>
-      <span style="color:#f92672">&lt;TitleType&gt;</span>01<span style="color:#f92672">&lt;/TitleType&gt;</span>
-      <span style="color:#f92672">&lt;TitleText&gt;</span>The Aesthetics Of Human Environments<span style="color:#f92672">&lt;/TitleText&gt;</span>
+    <span style="color:#f92672">&lt;Barcode</span><span style="color:#f92672">&gt;</span>10<span style="color:#f92672">&lt;/Barcode&gt;</span>
+    <span style="color:#f92672">&lt;ProductForm</span><span style="color:#f92672">&gt;</span>BC<span style="color:#f92672">&lt;/ProductForm&gt;</span>
+    <span style="color:#f92672">&lt;ProductFormDetail</span><span style="color:#f92672">&gt;</span>B102<span style="color:#f92672">&lt;/ProductFormDetail&gt;</span>
+    <span style="color:#f92672">&lt;Title</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;TitleType</span><span style="color:#f92672">&gt;</span>01<span style="color:#f92672">&lt;/TitleType&gt;</span>
+      <span style="color:#f92672">&lt;TitleText</span><span style="color:#f92672">&gt;</span>The Aesthetics Of Human Environments<span style="color:#f92672">&lt;/TitleText&gt;</span>
     <span style="color:#f92672">&lt;/Title&gt;</span>
 
-    <span style="color:#75715e">&lt;!-- Omitted --&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Omitted </span><span style="color:#75715e">--&gt;</span>
   <span style="color:#f92672">&lt;/Product&gt;</span>
-<span style="color:#f92672">&lt;/ONIXMessage&gt;</span></code></pre></div>
-<p>As you can see, the format follows a certain structure. For example, it uses a custom DTD, everything is contained within a <code>&lt;ONIXMessage&gt;</code> element, there is a <code>&lt;Header&gt;</code> element before the book&rsquo;s metadata section, etc.</p>
-
+<span style="color:#f92672">&lt;/ONIXMessage&gt;</span>
+</code></pre></div><p>As you can see, the format follows a certain structure. For example, it uses a custom DTD, everything is contained within a <code>&lt;ONIXMessage&gt;</code> element, there is a <code>&lt;Header&gt;</code> element before the book's metadata section, etc.</p>
 <p>This is the kind of response we want our API to be able to serve, using the same endpoint that would return a JSON response like the following:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
   <span style="color:#f92672">&#34;title&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;The Aesthetics Of Human Environments&#34;</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;9781551116853&#34;</span>
-<span style="color:#111">}</span></code></pre></div>
-<h2 id="the-api-view">The API View</h2>
-
+<span style="color:#111">}</span>
+</code></pre></div><h2 id="the-api-view">The API View</h2>
 <p>Assuming we have a <code>Book</code> model and <code>BookSerializer</code> already defined in our application, we can initally define our view like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">rest_framework</span> <span style="color:#f92672">import</span> <span style="color:#111">viewsets</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookViewSet</span><span style="color:#111">(</span><span style="color:#111">viewsets</span><span style="color:#f92672">.</span><span style="color:#111">ModelViewSet</span><span style="color:#111">):</span>
-    <span style="color:#111">queryset</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">()</span>
-    <span style="color:#111">serializer_class</span> <span style="color:#f92672">=</span> <span style="color:#111">BookSerializer</span></code></pre></div>
-<p>This will create an endpoint where we can perform <code>GET</code> requests (as well as other types of requests) to obtain the book&rsquo;s data in JSON format as I described earlier.</p>
-
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookViewSet</span><span style="color:#111">(</span><span style="color:#111">viewsets</span><span style="color:#f92672">.</span><span style="color:#111">ModelViewSet</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">queryset</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">(</span><span style="color:#111">)</span>
+    <span style="color:#111">serializer_class</span> <span style="color:#f92672">=</span> <span style="color:#111">BookSerializer</span>
+</code></pre></div><p>This will create an endpoint where we can perform <code>GET</code> requests (as well as other types of requests) to obtain the book's data in JSON format as I described earlier.</p>
 <h2 id="adding-a-custom-renderer-for-onix">Adding a Custom Renderer For ONIX</h2>
-
-<p>Let&rsquo;s go ahead and create a custom renderer that will display the data in the ONIX format the client wants. The client will specify this by using the <code>Accept</code> HTTP header.</p>
-
+<p>Let's go ahead and create a custom renderer that will display the data in the ONIX format the client wants. The client will specify this by using the <code>Accept</code> HTTP header.</p>
 <p>We can create a new directory for ONIX related stuff and add our renderers there:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># onix/renderers.py</span>
 <span style="color:#f92672">from</span> <span style="color:#111">rest_framework.renderers</span> <span style="color:#f92672">import</span> <span style="color:#111">BaseRenderer</span>
@@ -212,73 +202,69 @@ if (!doNotTrack) {
 <span style="color:#f92672">from</span> <span style="color:#111">api.onix.builders</span> <span style="color:#f92672">import</span> <span style="color:#111">OnixV2XMLBuilder</span><span style="color:#111">,</span> <span style="color:#111">OnixV3XMLBuilder</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">OnixV2Renderer</span><span style="color:#111">(</span><span style="color:#111">BaseRenderer</span><span style="color:#111">):</span>
-    <span style="color:#111">media_type</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;application/onix2+xml&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">OnixV2Renderer</span><span style="color:#111">(</span><span style="color:#111">BaseRenderer</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">media_type</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">application/onix2+xml</span><span style="color:#d88200">&#34;</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">render</span><span style="color:#111">(</span>
         <span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">accepted_media_type</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">renderer_context</span><span style="color:#f92672">=</span><span style="color:#111">None</span>
-    <span style="color:#111">):</span>
+    <span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">data</span> <span style="color:#f92672">is</span> <span style="color:#111">None</span><span style="color:#111">:</span>
-            <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;&#34;</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">&#34;</span>
 
         <span style="color:#111">builder</span> <span style="color:#f92672">=</span> <span style="color:#111">OnixV2XMLBuilder</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#f92672">=</span><span style="color:#111">data</span><span style="color:#111">)</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">builder</span><span style="color:#f92672">.</span><span style="color:#111">build_xml</span><span style="color:#111">()</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">builder</span><span style="color:#f92672">.</span><span style="color:#111">build_xml</span><span style="color:#111">(</span><span style="color:#111">)</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">OnixV3Renderer</span><span style="color:#111">(</span><span style="color:#111">BaseRenderer</span><span style="color:#111">):</span>
-    <span style="color:#111">media_type</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;application/onix3+xml&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">OnixV3Renderer</span><span style="color:#111">(</span><span style="color:#111">BaseRenderer</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">media_type</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">application/onix3+xml</span><span style="color:#d88200">&#34;</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">render</span><span style="color:#111">(</span>
         <span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">accepted_media_type</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">renderer_context</span><span style="color:#f92672">=</span><span style="color:#111">None</span>
-    <span style="color:#111">):</span>
+    <span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">data</span> <span style="color:#f92672">is</span> <span style="color:#111">None</span><span style="color:#111">:</span>
-            <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;&#34;</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">&#34;</span>
 
         <span style="color:#111">builder</span> <span style="color:#f92672">=</span> <span style="color:#111">OnixV3XMLBuilder</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#f92672">=</span><span style="color:#111">data</span><span style="color:#111">)</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">builder</span><span style="color:#f92672">.</span><span style="color:#111">build_xml</span><span style="color:#111">()</span></code></pre></div>
-<p>There is some repetition here that can be cleaned up, but basically what we have here is a renderer for each ONIX version we want to serve, in this case version 2 and version 3. The way the XML data is built varies between these versions.</p>
-
+        <span style="color:#00a8c8">return</span> <span style="color:#111">builder</span><span style="color:#f92672">.</span><span style="color:#111">build_xml</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>There is some repetition here that can be cleaned up, but basically what we have here is a renderer for each ONIX version we want to serve, in this case version 2 and version 3. The way the XML data is built varies between these versions.</p>
 <p>Pay attention to the <code>media_type</code> attribute of each renderer. This specifies which renderer will be used when the <code>Accept</code> header matches any of these media types. So if we want the data in ONIX v2, we can use <code>Accept: application/onix2+xml</code>, and if we want the data in ONIX v3 we can use <code>Accept: application/onix3+xml</code>.</p>
-
 <p>I came up with these media types myself so you can actually name them however you like. However, the <code>+xml</code> suffix at the end is important since this makes HTTP clients such as <a href="https://www.getpostman.com/">Postman</a> to automatically format and highlight the response. In this case, an XML response.</p>
-
 <h2 id="creating-the-builders">Creating The Builders</h2>
-
-<p>If you noticed, the renderers import some builders and leave all the responsibility of constructing the XML response to them. Let&rsquo;s describe a simple example of the interface:</p>
+<p>If you noticed, the renderers import some builders and leave all the responsibility of constructing the XML response to them. Let's describe a simple example of the interface:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># onix/builders.py</span>
 <span style="color:#f92672">import</span> <span style="color:#111">abc</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">lxml</span> <span style="color:#f92672">import</span> <span style="color:#111">etree</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">BaseOnixXMLBuilder</span><span style="color:#111">(</span><span style="color:#111">abc</span><span style="color:#f92672">.</span><span style="color:#111">ABC</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">encoding</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;UTF-8&#34;</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BaseOnixXMLBuilder</span><span style="color:#111">(</span><span style="color:#111">abc</span><span style="color:#f92672">.</span><span style="color:#111">ABC</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">encoding</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">UTF-8</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_data</span> <span style="color:#f92672">=</span> <span style="color:#111">data</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_encoding</span> <span style="color:#f92672">=</span> <span style="color:#111">encoding</span>
 
     <span style="color:#75af00">@abc.abstractmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">build_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">build_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">pass</span>
 
     <span style="color:#75af00">@abc.abstractmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_header_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_header_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">pass</span>
 
     <span style="color:#75af00">@abc.abstractmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_product_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">pass</span></code></pre></div>
-<p>All ONIX version-specific builders will follow this interface. So we can implement a v2 builder like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">OnixV2XMLBuilder</span><span style="color:#111">(</span><span style="color:#111">BaseOnixXMLBuilder</span><span style="color:#111">):</span>
-    <span style="color:#111">DTD</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;&lt;!DOCTYPE ONIXMessage SYSTEM &#34;http://www.editeur.org/onix/2.1/02/reference/onix-international.dtd&#34;&gt;&#39;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_product_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">pass</span>
+</code></pre></div><p>All ONIX version-specific builders will follow this interface. So we can implement a v2 builder like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">OnixV2XMLBuilder</span><span style="color:#111">(</span><span style="color:#111">BaseOnixXMLBuilder</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">DTD</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">&lt;!DOCTYPE ONIXMessage SYSTEM </span><span style="color:#d88200">&#34;</span><span style="color:#d88200">http://www.editeur.org/onix/2.1/02/reference/onix-international.dtd</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">&gt;</span><span style="color:#d88200">&#39;</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">):</span>
-        <span style="color:#111">super</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">build_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#111">onix_message</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200">&#34;ONIXMessage&#34;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">build_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">onix_message</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">ONIXMessage</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
-        <span style="color:#111">onix_message</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_header_xml</span><span style="color:#111">())</span>
-        <span style="color:#111">onix_message</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_product_xml</span><span style="color:#111">())</span>
+        <span style="color:#111">onix_message</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_header_xml</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">)</span>
+        <span style="color:#111">onix_message</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_build_product_xml</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">)</span>
 
         <span style="color:#00a8c8">return</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">tostring</span><span style="color:#111">(</span>
             <span style="color:#111">onix_message</span><span style="color:#111">,</span>
@@ -288,53 +274,47 @@ if (!doNotTrack) {
             <span style="color:#111">xml_declaration</span><span style="color:#f92672">=</span><span style="color:#111">True</span>
         <span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_header_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#111">header</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Header&#34;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_header_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">header</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">Header</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
         <span style="color:#75715e"># How and where you pull or provide this data is up to you</span>
-        <span style="color:#111">from_company</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200">&#34;FromCompany&#34;</span><span style="color:#111">)</span>
-        <span style="color:#111">from_company</span><span style="color:#f92672">.</span><span style="color:#111">text</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;MyCompany&#34;</span>
+        <span style="color:#111">from_company</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">FromCompany</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">from_company</span><span style="color:#f92672">.</span><span style="color:#111">text</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">MyCompany</span><span style="color:#d88200">&#34;</span>
         <span style="color:#111">header</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">from_company</span><span style="color:#111">)</span>
 
-        <span style="color:#111">from_email</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200">&#34;FromEmail&#34;</span><span style="color:#111">)</span>
-        <span style="color:#111">from_email</span><span style="color:#f92672">.</span><span style="color:#111">text</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;Myemail&#34;</span>
+        <span style="color:#111">from_email</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">FromEmail</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">from_email</span><span style="color:#f92672">.</span><span style="color:#111">text</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">Myemail</span><span style="color:#d88200">&#34;</span>
         <span style="color:#111">header</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">from_email</span><span style="color:#111">)</span>
 
         <span style="color:#00a8c8">return</span> <span style="color:#111">header</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_product_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#111">product</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Product&#34;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_build_product_xml</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">product</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">Product</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
-        <span style="color:#111">record_reference</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200">&#34;RecordReference&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">record_reference</span> <span style="color:#f92672">=</span> <span style="color:#111">etree</span><span style="color:#f92672">.</span><span style="color:#111">Element</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">RecordReference</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
         <span style="color:#111">product</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">record_reference</span><span style="color:#111">)</span>
 
         <span style="color:#75715e"># Create the structure based on the book&#39;s data</span>
 
-        <span style="color:#00a8c8">return</span> <span style="color:#111">product</span></code></pre></div>
-<p>Each method in the interface is responsible for building a certain section of the XML structure. The renderers will call and use these builders and pass in the <code>Book</code> object or its data, which the builder can then use to build the actual XML that will be served in the response.</p>
-
+        <span style="color:#00a8c8">return</span> <span style="color:#111">product</span>
+</code></pre></div><p>Each method in the interface is responsible for building a certain section of the XML structure. The renderers will call and use these builders and pass in the <code>Book</code> object or its data, which the builder can then use to build the actual XML that will be served in the response.</p>
 <h2 id="integrating-it-into-the-view">Integrating It Into The View</h2>
-
 <p>Now we only need to include our new renderers into our view:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">rest_framework.renderers</span> <span style="color:#f92672">import</span> <span style="color:#111">JSONRenderer</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">api.onix.renderers</span> <span style="color:#f92672">import</span> <span style="color:#111">OnixV3Renderer</span><span style="color:#111">,</span> <span style="color:#111">OnixV2Renderer</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookViewSet</span><span style="color:#111">(</span><span style="color:#111">viewsets</span><span style="color:#f92672">.</span><span style="color:#111">ModelViewSet</span><span style="color:#111">):</span>
-    <span style="color:#111">queryset</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">()</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BookViewSet</span><span style="color:#111">(</span><span style="color:#111">viewsets</span><span style="color:#f92672">.</span><span style="color:#111">ModelViewSet</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">queryset</span> <span style="color:#f92672">=</span> <span style="color:#111">Book</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">all</span><span style="color:#111">(</span><span style="color:#111">)</span>
     <span style="color:#111">serializer_class</span> <span style="color:#f92672">=</span> <span style="color:#111">BookSerializer</span>
-    <span style="color:#111">renderer_classes</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#111">JSONRenderer</span><span style="color:#111">,</span> <span style="color:#111">OnixV3Renderer</span><span style="color:#111">,</span> <span style="color:#111">OnixV2Renderer</span><span style="color:#111">)</span></code></pre></div>
-<p>We still include <code>JSONRenderer</code> since we still want our endpoint to serve data in JSON format.</p>
-
+    <span style="color:#111">renderer_classes</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#111">JSONRenderer</span><span style="color:#111">,</span> <span style="color:#111">OnixV3Renderer</span><span style="color:#111">,</span> <span style="color:#111">OnixV2Renderer</span><span style="color:#111">)</span>
+</code></pre></div><p>We still include <code>JSONRenderer</code> since we still want our endpoint to serve data in JSON format.</p>
 <p>And with this you are all set! 🎉 Now try sending a request using <code>Accept: application/onix2+xml</code> header and your response will be the XML that was put together by our builder.</p>
-
 <p>If you ommit the <code>Accept</code> header, the usual JSON response will be served!</p>
-
 <h2 id="references">References</h2>
-
 <ol>
-<li><a href="https://www.slideshare.net/eBOUNDCanada/onix-for-people-who-dont-really-work-with-metadata">ONIX: For People Who Don&rsquo;t Really Work With Metadata</a></li>
+<li><a href="https://www.slideshare.net/eBOUNDCanada/onix-for-people-who-dont-really-work-with-metadata">ONIX: For People Who Don't Really Work With Metadata</a></li>
 </ol>
 </div>
 

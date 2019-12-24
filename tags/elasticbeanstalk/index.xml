@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>elasticbeanstalk on Andrés Álvarez</title>
@@ -18,9 +18,7 @@
       
       <guid>https://aalvarez.me/posts/custom-log-files-with-django-and-elastic-beanstalk/</guid>
       <description>&lt;p&gt;With Amazon ElasticBeanstalk it is possible to view log files of your deployed application. However, ElasticBeanstalk by default only returns certain logs like &lt;code&gt;/var/log/httpd/error_log&lt;/code&gt; or &lt;code&gt;/var/log/httpd/access_log&lt;/code&gt; if you are using Apache httpd.&lt;/p&gt;
-
 &lt;p&gt;If you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk console.&lt;/p&gt;
-
 &lt;p&gt;In this post I will show you how to achieve this, using Django as our backend framework.&lt;/p&gt;</description>
     </item>
     
@@ -31,11 +29,8 @@
       
       <guid>https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/</guid>
       <description>&lt;p&gt;I was having an issue the past few days with Django and Elastic Beanstalk in a production environment that was driving me nuts.&lt;/p&gt;
-
 &lt;p&gt;Basically the Elastic Beanstalk environment was in a permament Severe/Degraded state. The health monitoring was reporting that 100% of the requests to the load balancer were &lt;code&gt;4xx&lt;/code&gt; requests:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png&#34; alt=&#34;Elastic Beanstalk 4xx requests&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/setting-up-elastic-beanstalk-health-checks-with-a-django-application/eb_unhealthy_400_requests.png&#34; alt=&#34;Elastic Beanstalk 4xx requests&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This issue was probably caused by several reasons. In this post I will go over the possible causes, and how I managed to resolve this issue.&lt;/p&gt;</description>
     </item>
     
@@ -46,17 +41,13 @@
       
       <guid>https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/</guid>
       <description>&lt;p&gt;Building a CI/CD (Continuous Integration / Continuous Delivery) flow for your web application is a must nowadays. With so many things that can go wrong, and the amount of time and effort the deployment process of an application takes, a flow like this will give you peace of mind that your application is running without (or with less) errors and that your application will be production ready on every new commit to its source code.&lt;/p&gt;
-
 &lt;p&gt;In this post I want to talk about building such a pipeline, with emphasis on deploying a Django 1.11 application to AWS ElasticBeanstalk, which is an Amazon service very similar to &lt;a href=&#34;https://www.heroku.com/&#34;&gt;Heroku&lt;/a&gt;. Additionally I will talk about how to include other services to the delivery flow, such as Amazon S3 for storage of static files and Amazon RDS (Relational Database Service) for a relational database that will be connected to our application.&lt;/p&gt;
-
 &lt;p&gt;The pipeline will work as follows:&lt;/p&gt;
-
 &lt;ol&gt;
 &lt;li&gt;Code will be pushed to source control repository. For this article, I will use Github.&lt;/li&gt;
 &lt;li&gt;Project will be built and tested in a CI job at &lt;a href=&#34;https://travis-ci.com/&#34;&gt;TravisCI&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;TravisCI will perform a deployment to ElasticBeanstalk once the build passes successfully.&lt;/li&gt;
 &lt;/ol&gt;
-
 &lt;p&gt;We will be using both the &lt;strong&gt;&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html&#34;&gt;ElasticBeanstalk CLI (ebcli)&lt;/a&gt;&lt;/strong&gt; and the &lt;strong&gt;AWS ElasticBeanstalk Console&lt;/strong&gt; to achieve this.&lt;/p&gt;</description>
     </item>
     

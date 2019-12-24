@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Creating an Upload Progress Dialog in Java",
     "headline" : "Creating an Upload Progress Dialog in Java",
-    "description" : "\x3cp\x3eMany Java file upload \x3ca href=\x22http:\/\/www.codejava.net\/coding\/swing-application-to-upload-files-to-ftp-server-with-progress-bar\x22\x3etutorials\x3c\/a\x3e teach you how to show the current progress of a file upload using a JProgressBar in the user interface, usually placed in the main JFrame.\x3c\/p\x3e\n\n\x3cp\x3eHowever I was trying make this much more visually appealing, like the way \x3ca href=\x22https:\/\/winscp.net\/eng\/index.php\x22\x3eWinSCP\x3c\/a\x3e does it:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/creating-an-upload-progress-dialog-in-java\/scp_file_upload.png\x22 alt=\x22SCP File Upload\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eThis will require the use of another Swing class: JDialog. Basically the flow of the program will be like this:\x3c\/p\x3e\n\n\x3col\x3e\n\x3cli\x3eMain class with main method calls \x3ccode\x3eSwingWorker\x3c\/code\x3e class.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eSwingWorker\x3c\/code\x3e is in charge of doing the \x3cem\x3eactual\x3c\/em\x3e upload. It will also create an instance of a \x3ccode\x3eJDialog\x3c\/code\x3e to show the current upload progress.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eJDialog\x3c\/code\x3e class will contain the progress bar and other useful upload information.\x3c\/li\x3e\n\x3c\/ol\x3e",
+    "description" : "\x3cp\x3eMany Java file upload \x3ca href=\x22http:\/\/www.codejava.net\/coding\/swing-application-to-upload-files-to-ftp-server-with-progress-bar\x22\x3etutorials\x3c\/a\x3e teach you how to show the current progress of a file upload using a JProgressBar in the user interface, usually placed in the main JFrame.\x3c\/p\x3e\n\x3cp\x3eHowever I was trying make this much more visually appealing, like the way \x3ca href=\x22https:\/\/winscp.net\/eng\/index.php\x22\x3eWinSCP\x3c\/a\x3e does it:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/creating-an-upload-progress-dialog-in-java\/scp_file_upload.png\x22 alt=\x22SCP File Upload\x22\x3e\x3c\/p\x3e\n\x3cp\x3eThis will require the use of another Swing class: JDialog. Basically the flow of the program will be like this:\x3c\/p\x3e\n\x3col\x3e\n\x3cli\x3eMain class with main method calls \x3ccode\x3eSwingWorker\x3c\/code\x3e class.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eSwingWorker\x3c\/code\x3e is in charge of doing the \x3cem\x3eactual\x3c\/em\x3e upload. It will also create an instance of a \x3ccode\x3eJDialog\x3c\/code\x3e to show the current upload progress.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eJDialog\x3c\/code\x3e class will contain the progress bar and other useful upload information.\x3c\/li\x3e\n\x3c\/ol\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,28 +136,20 @@ if (!doNotTrack) {
   <time datetime=2017-11-16T00:00:00Z class="post-date">Thu, Nov 16, 2017</time>
 
   <p>Many Java file upload <a href="http://www.codejava.net/coding/swing-application-to-upload-files-to-ftp-server-with-progress-bar">tutorials</a> teach you how to show the current progress of a file upload using a JProgressBar in the user interface, usually placed in the main JFrame.</p>
-
 <p>However I was trying make this much more visually appealing, like the way <a href="https://winscp.net/eng/index.php">WinSCP</a> does it:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/scp_file_upload.png" alt="SCP File Upload" /></p>
-
+<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/scp_file_upload.png" alt="SCP File Upload"></p>
 <p>This will require the use of another Swing class: JDialog. Basically the flow of the program will be like this:</p>
-
 <ol>
 <li>Main class with main method calls <code>SwingWorker</code> class.</li>
 <li><code>SwingWorker</code> is in charge of doing the <em>actual</em> upload. It will also create an instance of a <code>JDialog</code> to show the current upload progress.</li>
 <li><code>JDialog</code> class will contain the progress bar and other useful upload information.</li>
 </ol>
-
 <h2 id="main-method">Main Method</h2>
-
 <p>First things first. Our main method (or any method where you want to trigger the upload) will start the upload task:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#111">UploadTask</span> <span style="color:#111">uploadTask</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UploadTask</span><span style="color:#f92672">(</span><span style="color:#111">fileToUpload</span><span style="color:#f92672">);</span>
-<span style="color:#111">uploadTask</span><span style="color:#f92672">.</span><span style="color:#75af00">execute</span><span style="color:#f92672">();</span></code></pre></div>
-<p>In the example above we are passing an array of files (<code>File</code>) we want to upload, to the constructor.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#111">UploadTask</span> <span style="color:#111">uploadTask</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UploadTask</span><span style="color:#f92672">(</span><span style="color:#111">fileToUpload</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+<span style="color:#111">uploadTask</span><span style="color:#f92672">.</span><span style="color:#75af00">execute</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+</code></pre></div><p>In the example above we are passing an array of files (<code>File</code>) we want to upload, to the constructor.</p>
 <h2 id="upload-task-class">Upload Task Class</h2>
-
 <p>We will create the <code>UploadTask</code> class which will be in charge of performing the Upload. For this example, I am going to simulate an upload to S3 using the Java AWS SDK, but this should work with any kind of upload (FTP, SFTP, etc. etc.):</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">javax.swing.SwingWorker</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> <span style="color:#111">java.beans.PropertyChangeEvent</span><span style="color:#f92672">;</span>
@@ -166,100 +158,87 @@ if (!doNotTrack) {
 
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UploadTask</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">SwingWorker</span><span style="color:#f92672">&lt;</span><span style="color:#111">Void</span><span style="color:#f92672">,</span> <span style="color:#111">Void</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 
-    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">File</span><span style="color:#f92672">[]</span> <span style="color:#111">filesToUpload</span><span style="color:#f92672">;</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">File</span><span style="color:#f92672">[</span><span style="color:#f92672">]</span> <span style="color:#111">filesToUpload</span><span style="color:#f92672">;</span>
     <span style="color:#00a8c8">private</span> <span style="color:#111">UploadProgressDialog</span> <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">;</span>
 
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">UploadTask</span><span style="color:#f92672">(</span><span style="color:#111">File</span><span style="color:#f92672">[]</span> <span style="color:#111">files</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">UploadTask</span><span style="color:#f92672">(</span><span style="color:#111">File</span><span style="color:#f92672">[</span><span style="color:#f92672">]</span> <span style="color:#111">files</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
         <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">filesToUpload</span> <span style="color:#f92672">=</span> <span style="color:#111">files</span><span style="color:#f92672">;</span>
 
-        <span style="color:#111">addPropertyChangeListener</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">PropertyChangeListener</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">addPropertyChangeListener</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">PropertyChangeListener</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
             <span style="color:#75af00">@Override</span>
             <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">PropertyChange</span><span style="color:#f92672">(</span><span style="color:#111">PropertyChangeEvent</span> <span style="color:#111">evt</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#d88200">&#34;progress&#34;</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#75af00">getPropertyName</span><span style="color:#f92672">()))</span> <span style="color:#f92672">{</span>
-                    <span style="color:#00a8c8">int</span> <span style="color:#111">progress</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">Integer</span><span style="color:#f92672">)</span> <span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#75af00">getNewValue</span><span style="color:#f92672">();</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#d88200">&#34;progress&#34;</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#75af00">getPropertyName</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#00a8c8">int</span> <span style="color:#111">progress</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">Integer</span><span style="color:#f92672">)</span> <span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#75af00">getNewValue</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
-                    <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">setProgress</span><span style="color:#f92672">(</span><span style="color:#111">progress</span><span style="color:#f92672">);</span>
+                    <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">setProgress</span><span style="color:#f92672">(</span><span style="color:#111">progress</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
                 <span style="color:#f92672">}</span>
             <span style="color:#f92672">}</span>
-        <span style="color:#f92672">});</span>
+        <span style="color:#f92672">}</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>This class will contain the array of files to upload, passed from the main method. Additionally, it will contain an instance of a <code>UploadProgressDialog</code> object (which we will soon define), this is the <code>JDialog</code> object where we will show our nice upload progress.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>This class will contain the array of files to upload, passed from the main method. Additionally, it will contain an instance of a <code>UploadProgressDialog</code> object (which we will soon define), this is the <code>JDialog</code> object where we will show our nice upload progress.</p>
 <p>Moreover, notice how the class extends <code>SwingWorker</code>. This allows the class to perform a concurrent operation without making the GUI freeze when it is executing.</p>
-
 <p>Also very important is the <code>PropertyChangeListener</code> that we are adding in the constructor. This listener will allow us to periodically receive the current progress of the upload, represented by an integer ranging from <code>0</code> to <code>100</code>.</p>
-
 <h3 id="the-upload-process">The Upload Process</h3>
-
 <p>Classes that extend <code>SwingWorker</code> will implement a method called <code>doInBackground()</code>, where the actual processing of the worker will take place. In this case, the file upload:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Override</span>
-<span style="color:#00a8c8">protected</span> <span style="color:#111">Void</span> <span style="color:#75af00">doInBackground</span><span style="color:#f92672">()</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">IOException</span> <span style="color:#f92672">{</span>
+<span style="color:#00a8c8">protected</span> <span style="color:#111">Void</span> <span style="color:#75af00">doInBackground</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">IOException</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e">// Initialize the progress dialog
-</span><span style="color:#75715e"></span>    <span style="color:#111">uploadProgressDialog</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UploadProgressDialog</span><span style="color:#f92672">(</span><span style="color:#111">someFrame</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">);</span>
-    <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">setVisible</span><span style="color:#f92672">(</span><span style="color:#00a8c8">true</span><span style="color:#f92672">);</span>
+</span><span style="color:#75715e"></span>    <span style="color:#111">uploadProgressDialog</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UploadProgressDialog</span><span style="color:#f92672">(</span><span style="color:#111">someFrame</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">setVisible</span><span style="color:#f92672">(</span><span style="color:#00a8c8">true</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
     <span style="color:#75715e">// Upload each file in the array
 </span><span style="color:#75715e"></span>    <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#111">File</span> <span style="color:#111">f</span> <span style="color:#f92672">:</span> <span style="color:#111">filesToUpload</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">setCurrentUploadingFile</span><span style="color:#f92672">(</span><span style="color:#111">f</span><span style="color:#f92672">);</span>
+        <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">setCurrentUploadingFile</span><span style="color:#f92672">(</span><span style="color:#111">f</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
         <span style="color:#75715e">// Upload to S3, using AWS SDK
 </span><span style="color:#75715e"></span>        <span style="color:#111">PutObjectRequest</span> <span style="color:#111">request</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">PutObjectRequest</span><span style="color:#f92672">(</span>
             <span style="color:#111">S3_BUCKET_NAME</span><span style="color:#f92672">,</span>
-            <span style="color:#111">String</span><span style="color:#f92672">.</span><span style="color:#75af00">format</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;%s&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">()),</span>
+            <span style="color:#111">String</span><span style="color:#f92672">.</span><span style="color:#75af00">format</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;%s&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">,</span>
             <span style="color:#111">f</span>
-        <span style="color:#f92672">);</span>
+        <span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
         <span style="color:#75715e">// The SDK comes with a Progress Listener as well, I am going to be
 </span><span style="color:#75715e"></span>        <span style="color:#75715e">// using it here to get the actual bytes being transferred
-</span><span style="color:#75715e"></span>        <span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#75af00">withGeneralProgressListener</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">ProgressListener</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-            <span style="color:#00a8c8">long</span> <span style="color:#111">totalFileSize</span> <span style="color:#f92672">=</span> <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#75af00">length</span><span style="color:#f92672">();</span>
+</span><span style="color:#75715e"></span>        <span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#75af00">withGeneralProgressListener</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">ProgressListener</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">long</span> <span style="color:#111">totalFileSize</span> <span style="color:#f92672">=</span> <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#75af00">length</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
             <span style="color:#00a8c8">long</span> <span style="color:#111">totalBytesTransferred</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
             <span style="color:#00a8c8">int</span> <span style="color:#111">percentageCompleted</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
 
             <span style="color:#75af00">@Override</span>
             <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">progressChanged</span><span style="color:#f92672">(</span><span style="color:#111">ProgressEvent</span> <span style="color:#111">event</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-                <span style="color:#111">totalBytesTransferred</span> <span style="color:#f92672">+=</span> <span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#75af00">getBytesTransferred</span><span style="color:#f92672">();</span>
-                <span style="color:#111">percentageCompleted</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span><span style="color:#111">totalBytesTransferred</span> <span style="color:#f92672">*</span> <span style="color:#111">100</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span> <span style="color:#f92672">/</span> <span style="color:#111">totalFileSize</span><span style="color:#f92672">);</span>
+                <span style="color:#111">totalBytesTransferred</span> <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#75af00">getBytesTransferred</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+                <span style="color:#111">percentageCompleted</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span><span style="color:#111">totalBytesTransferred</span> <span style="color:#f92672">*</span> <span style="color:#111">100</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span> <span style="color:#f92672">/</span> <span style="color:#111">totalFileSize</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
                 <span style="color:#75715e">// This is a specific method of a SwingWorker class, it will
 </span><span style="color:#75715e"></span>                <span style="color:#75715e">// set the current progress which is an integer from 0 to 100
-</span><span style="color:#75715e"></span>                <span style="color:#111">setProgress</span><span style="color:#f92672">(</span><span style="color:#111">percentageCompleted</span><span style="color:#f92672">);</span>
+</span><span style="color:#75715e"></span>                <span style="color:#111">setProgress</span><span style="color:#f92672">(</span><span style="color:#111">percentageCompleted</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
                 <span style="color:#75715e">// Convenience method of our progress dialog class
-</span><span style="color:#75715e"></span>                <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">addBytesTransferred</span><span style="color:#f92672">(</span><span style="color:#111">totalBytesTransferred</span><span style="color:#f92672">);</span>
+</span><span style="color:#75715e"></span>                <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">addBytesTransferred</span><span style="color:#f92672">(</span><span style="color:#111">totalBytesTransferred</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
             <span style="color:#f92672">}</span>
-        <span style="color:#f92672">});</span>
+        <span style="color:#f92672">}</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>The two key things to understand here is how we are using the <code>SwingWorker</code> class&rsquo;s <code>setProgress()</code> method with the current calculated progress. This is the exact value that the listener in the constructor receives.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The two key things to understand here is how we are using the <code>SwingWorker</code> class's <code>setProgress()</code> method with the current calculated progress. This is the exact value that the listener in the constructor receives.</p>
 <p>Additionally we are also using the instance of the <code>UploadProgressDialog</code> class. If you remember well, we also call a <code>uploadProgressDialog.setProgress()</code> method from the listener so that the dialog knows the current progress as well.</p>
-
 <p>Pay attention to the parameters passed to the <code>JDialog</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JDialog.html#JDialog(java.awt.Frame,%20boolean)">constructor</a>:</p>
-
 <ul>
 <li><code>someFrame</code>: Could represent a <code>JFrame</code> from your program. This is the frame from where the dialog is displayed.</li>
 <li><code>false</code>: Whether dialog blocks user input to other top-level windows when shown. <strong>Very important</strong> to set this to false.</li>
 </ul>
-
-<p>Let&rsquo;s not forget to dispose the dialog once the <code>SwingWorker</code> finishes:</p>
+<p>Let's not forget to dispose the dialog once the <code>SwingWorker</code> finishes:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Override</span>
-<span style="color:#00a8c8">protected</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">done</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">dispose</span><span style="color:#f92672">();</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<h2 id="the-progress-dialog-class">The Progress Dialog Class</h2>
-
-<p>Lastly, let&rsquo;s design and implement the dialog which will show the upload progress similar to the SCP example I showed you.</p>
-
+<span style="color:#00a8c8">protected</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">done</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">uploadProgressDialog</span><span style="color:#f92672">.</span><span style="color:#75af00">dispose</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="the-progress-dialog-class">The Progress Dialog Class</h2>
+<p>Lastly, let's design and implement the dialog which will show the upload progress similar to the SCP example I showed you.</p>
 <p>We can easily design this dialog using <a href="https://netbeans.org/">Netbeans IDE</a> and creating a new <em>JDialog Form</em> file, set the class name to <code>UploadProgressDialog</code> (as per the example in this article) and then proceed to add the necessary labels and progress bars. This is an example from an application I am developing:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/progress_dialog_gui.png" alt="Progress Dialog GUI" /></p>
-
-<p>If you are wondering why it looks like that, it&rsquo;s because I am using the <a href="http://plugins.netbeans.org/plugin/62424/darcula-laf-for-netbeans">Dracula Theme and Look &amp; Feel for Netbeans</a>.</p>
-
-<p>Now let&rsquo;s take a brief look into the source of this class:</p>
+<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/progress_dialog_gui.png" alt="Progress Dialog GUI"></p>
+<p>If you are wondering why it looks like that, it's because I am using the <a href="http://plugins.netbeans.org/plugin/62424/darcula-laf-for-netbeans">Dracula Theme and Look &amp; Feel for Netbeans</a>.</p>
+<p>Now let's take a brief look into the source of this class:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
 
 
@@ -269,30 +248,27 @@ if (!doNotTrack) {
 
 
     <span style="color:#00a8c8">public</span> <span style="color:#75af00">UploadProgressDialog</span><span style="color:#f92672">(</span><span style="color:#111">java</span><span style="color:#f92672">.</span><span style="color:#75af00">awt</span><span style="color:#f92672">.</span><span style="color:#75af00">Frame</span> <span style="color:#111">parent</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">boolean</span> <span style="color:#111">modal</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#00a8c8">super</span><span style="color:#f92672">(</span><span style="color:#111">parent</span><span style="color:#f92672">,</span> <span style="color:#111">modal</span><span style="color:#f92672">);</span>
-        <span style="color:#111">initComponents</span><span style="color:#f92672">();</span>
+        <span style="color:#00a8c8">super</span><span style="color:#f92672">(</span><span style="color:#111">parent</span><span style="color:#f92672">,</span> <span style="color:#111">modal</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+        <span style="color:#111">initComponents</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
         <span style="color:#75715e">// Centers the dialog in the screen
-</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">setLocationRelativeTo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">null</span><span style="color:#f92672">);</span>
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">setLocationRelativeTo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">null</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setCurrentUploadingFile</span><span style="color:#f92672">(</span><span style="color:#111">File</span> <span style="color:#111">f</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
         <span style="color:#111">currentUploadingFile</span> <span style="color:#f92672">=</span> <span style="color:#111">f</span><span style="color:#f92672">;</span>
 
-        <span style="color:#111">lblFileName</span><span style="color:#f92672">.</span><span style="color:#75af00">setText</span><span style="color:#f92672">(</span><span style="color:#111">currentUploadingFile</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">());</span>
+        <span style="color:#111">lblFileName</span><span style="color:#f92672">.</span><span style="color:#75af00">setText</span><span style="color:#f92672">(</span><span style="color:#111">currentUploadingFile</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setProgress</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">p</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#111">pgrsbrPartProgress</span><span style="color:#f92672">.</span><span style="color:#75af00">setValue</span><span style="color:#f92672">(</span><span style="color:#111">p</span><span style="color:#f92672">);</span>
-        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">setTitle</span><span style="color:#f92672">(</span><span style="color:#111">p</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;% Uploading&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#111">pgrsbrPartProgress</span><span style="color:#f92672">.</span><span style="color:#75af00">setValue</span><span style="color:#f92672">(</span><span style="color:#111">p</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">setTitle</span><span style="color:#f92672">(</span><span style="color:#111">p</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;% Uploading&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>Simple enough. Here is an example of how all this would look when the application is running and file upload is taking place:</p>
-
-<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/upload_progress_example.png" alt="Progress Dialog Working Example" /></p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Simple enough. Here is an example of how all this would look when the application is running and file upload is taking place:</p>
+<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/upload_progress_example.png" alt="Progress Dialog Working Example"></p>
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="http://www.codejava.net/coding/swing-application-to-upload-files-to-ftp-server-with-progress-bar">http://www.codejava.net/coding/swing-application-to-upload-files-to-ftp-server-with-progress-bar</a></li>
 </ol>

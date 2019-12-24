@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Getting Started With Juju Locally",
     "headline" : "Getting Started With Juju Locally",
-    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/jujucharms.com\/\x22\x3eJuju\x3c\/a\x3e is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will explain how easy it is to get started with Juju in a \x3cstrong\x3elocal\x3c\/strong\x3e environment.\x3c\/p\x3e\n\n\x3ch2 id=\x22installation\x22\x3eInstallation\x3c\/h2\x3e\n\n\x3cp\x3eTo start we will need to add the necessary repository from where we will retrieve the Juju packages:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3esudo add-apt-repository ppa:juju\/stable\nsudo apt-get update\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eNext we will download and install the Juju core package \x3cstrong\x3eand\x3c\/strong\x3e the package for local deployment:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3esudo apt-get install juju-core\nsudo apt-get install juju-local\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3ch2 id=\x22setting-up-the-local-environment\x22\x3eSetting Up the Local Environment\x3c\/h2\x3e\n\n\x3cp\x3eBefore we set up the local environment, let\x26rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ejuju generate-config\njuju switch local\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eOnce we have switched to the local environment, we can simply bootstrap the environment with the following command:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3ejuju bootstrap\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eAfter the process is complete, we are now ready to start using Juju.\x3c\/p\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/jujucharms.com\/\x22\x3eJuju\x3c\/a\x3e is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.\x3c\/p\x3e\n\x3cp\x3eIn this post I will explain how easy it is to get started with Juju in a \x3cstrong\x3elocal\x3c\/strong\x3e environment.\x3c\/p\x3e\n\x3ch2 id=\x22installation\x22\x3eInstallation\x3c\/h2\x3e\n\x3cp\x3eTo start we will need to add the necessary repository from where we will retrieve the Juju packages:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3esudo add-apt-repository ppa:juju\/stable\nsudo apt-get update\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eNext we will download and install the Juju core package \x3cstrong\x3eand\x3c\/strong\x3e the package for local deployment:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3esudo apt-get install juju-core\nsudo apt-get install juju-local\n\x3c\/code\x3e\x3c\/pre\x3e\x3ch2 id=\x22setting-up-the-local-environment\x22\x3eSetting Up the Local Environment\x3c\/h2\x3e\n\x3cp\x3eBefore we set up the local environment, let\x27s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3ejuju generate-config\njuju switch local\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eOnce we have switched to the local environment, we can simply bootstrap the environment with the following command:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3ejuju bootstrap\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eAfter the process is complete, we are now ready to start using Juju.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,84 +136,44 @@ if (!doNotTrack) {
   <time datetime=2017-02-10T00:00:00Z class="post-date">Fri, Feb 10, 2017</time>
 
   <p><a href="https://jujucharms.com/">Juju</a> is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.</p>
-
 <p>In this post I will explain how easy it is to get started with Juju in a <strong>local</strong> environment.</p>
-
 <h2 id="installation">Installation</h2>
-
 <p>To start we will need to add the necessary repository from where we will retrieve the Juju packages:</p>
-
 <pre><code>sudo add-apt-repository ppa:juju/stable
 sudo apt-get update
-</code></pre>
-
-<p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
-
+</code></pre><p>Next we will download and install the Juju core package <strong>and</strong> the package for local deployment:</p>
 <pre><code>sudo apt-get install juju-core
 sudo apt-get install juju-local
-</code></pre>
-
-<h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
-
-<p>Before we set up the local environment, let&rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
-
+</code></pre><h2 id="setting-up-the-local-environment">Setting Up the Local Environment</h2>
+<p>Before we set up the local environment, let's first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:</p>
 <pre><code>juju generate-config
 juju switch local
-</code></pre>
-
-<p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
-
+</code></pre><p>Once we have switched to the local environment, we can simply bootstrap the environment with the following command:</p>
 <pre><code>juju bootstrap
-</code></pre>
-
-<p>After the process is complete, we are now ready to start using Juju.</p>
-
+</code></pre><p>After the process is complete, we are now ready to start using Juju.</p>
 <h2 id="deploying-services">Deploying Services</h2>
-
 <p>We can now start deploying our services. For example you can deploy the typical Wordpress service:</p>
-
 <pre><code>juju deploy wordpress
-</code></pre>
-
-<p>However, we want to focus on deploying our custom services from our custom local charms. Let&rsquo;s create a directory for our local charms:</p>
-
+</code></pre><p>However, we want to focus on deploying our custom services from our custom local charms. Let's create a directory for our local charms:</p>
 <pre><code>mkdir -p /home/$USER/charms/trusty/
-</code></pre>
-
-<p>We will place the Juju charm directories inside that directory. For example, I can clone my <a href="https://github.com/BigChief45/zenoss-charm">Zenoss Core 4 charm</a> into that directory and then Zenoss Core:</p>
-
+</code></pre><p>We will place the Juju charm directories inside that directory. For example, I can clone my <a href="https://github.com/BigChief45/zenoss-charm">Zenoss Core 4 charm</a> into that directory and then Zenoss Core:</p>
 <pre><code>cd $/home/$USER/charms/trusty/
 git clone https://github.com/BigChief45/zenoss-charm.git
 
 juju deploy --repository=/home/$USER/charms/ local:trusty/zenoss
-</code></pre>
-
-<p>Juju will fetch for the charm under that directory and begin deploying the service. I can then monitor the status of the deployment using:</p>
-
+</code></pre><p>Juju will fetch for the charm under that directory and begin deploying the service. I can then monitor the status of the deployment using:</p>
 <pre><code>watch -n 0.5 juju status zenoss --format tabular
-</code></pre>
-
-<p>As well as tracking the logs generated by Juju:</p>
-
+</code></pre><p>As well as tracking the logs generated by Juju:</p>
 <pre><code>juju debug-log | grep zenoss
-</code></pre>
-
-<h2 id="enabling-ip-tables-for-local-services">Enabling IP Tables for Local Services</h2>
-
+</code></pre><h2 id="enabling-ip-tables-for-local-services">Enabling IP Tables for Local Services</h2>
 <p>Juju will create a container for a deployed service. When the deployment is finished, we can access that service using the address shown in the <code>public-address</code> field (use <code>juju status</code>). However, when navigating to that address using a web browser, it is very possible that we will not be able to access the service due to IP tables.</p>
-
 <p>We can add a rule to enable the service:</p>
-
 <pre><code>iptables -t nat -A PREROUTING -i eth0 -p tcp -d $FORWARD_IP --dport 80 -j DNAT --to-destination $DEST_IP:8080
-</code></pre>
-
-<p>Where:</p>
-
+</code></pre><p>Where:</p>
 <ul>
 <li><code>$FORWARD_IP</code> stands for the IP address of the server where Juju is installed.</li>
-<li><code>$DEST_IP</code> stands for the service&rsquo;s public address IP.</li>
+<li><code>$DEST_IP</code> stands for the service's public address IP.</li>
 </ul>
-
 <p>Note that I appended the port used by Zenoss (8080) to the <code>$DEST_IP</code> field.</p>
 </div>
 

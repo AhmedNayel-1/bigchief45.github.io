@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Getting Started on Contributing to OpenStack",
     "headline" : "Getting Started on Contributing to OpenStack",
-    "description" : "\x3cp\x3e\x3cimg src=\x22http:\/\/seeklogo.com\/images\/O\/openstack-logo-4A37C6FB5B-seeklogo.com.png\x22 alt=\x22OpenStack\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eI have started to become interested in contributing to the \x3ca href=\x22https:\/\/www.openstack.org\/\x22\x3eOpenStack\x3c\/a\x3e project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.\x3c\/p\x3e\n\n\x3ch2 id=\x22picking-a-project\x22\x3ePicking a Project\x3c\/h2\x3e\n\n\x3cp\x3eOpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the \x3ca href=\x22https:\/\/wiki.openstack.org\/wiki\/Telemetry\x22\x3eTelemetry\x3c\/a\x3e part, more specifically on \x3cstrong\x3eCeilometer\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eAfter you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The \x3ca href=\x22https:\/\/docs.openstack.org\/developer\/ceilometer\/\x22\x3eCeilometer developer documentation\x3c\/a\x3e offers good explanations and diagrams of its architecture and components.\x3c\/p\x3e\n\n\x3cp\x3e\x3ca href=\x22https:\/\/wiki.openstack.org\/wiki\/Ceilometer\/Contributing\x22\x3eHere\x3c\/a\x3e is another nice guide on contributing to Ceilometer.\x3c\/p\x3e",
+    "description" : "\x3cp\x3e\x3cimg src=\x22http:\/\/seeklogo.com\/images\/O\/openstack-logo-4A37C6FB5B-seeklogo.com.png\x22 alt=\x22OpenStack\x22\x3e\x3c\/p\x3e\n\x3cp\x3eI have started to become interested in contributing to the \x3ca href=\x22https:\/\/www.openstack.org\/\x22\x3eOpenStack\x3c\/a\x3e project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.\x3c\/p\x3e\n\x3ch2 id=\x22picking-a-project\x22\x3ePicking a Project\x3c\/h2\x3e\n\x3cp\x3eOpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the \x3ca href=\x22https:\/\/wiki.openstack.org\/wiki\/Telemetry\x22\x3eTelemetry\x3c\/a\x3e part, more specifically on \x3cstrong\x3eCeilometer\x3c\/strong\x3e.\x3c\/p\x3e\n\x3cp\x3eAfter you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The \x3ca href=\x22https:\/\/docs.openstack.org\/developer\/ceilometer\/\x22\x3eCeilometer developer documentation\x3c\/a\x3e offers good explanations and diagrams of its architecture and components.\x3c\/p\x3e\n\x3cp\x3e\x3ca href=\x22https:\/\/wiki.openstack.org\/wiki\/Ceilometer\/Contributing\x22\x3eHere\x3c\/a\x3e is another nice guide on contributing to Ceilometer.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,50 +135,36 @@ if (!doNotTrack) {
   <h1>Getting Started on Contributing to OpenStack</h1>
   <time datetime=2017-03-14T00:00:00Z class="post-date">Tue, Mar 14, 2017</time>
 
-  <p><img src="http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png" alt="OpenStack" /></p>
-
+  <p><img src="http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png" alt="OpenStack"></p>
 <p>I have started to become interested in contributing to the <a href="https://www.openstack.org/">OpenStack</a> project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.</p>
-
 <h2 id="picking-a-project">Picking a Project</h2>
-
 <p>OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the <a href="https://wiki.openstack.org/wiki/Telemetry">Telemetry</a> part, more specifically on <strong>Ceilometer</strong>.</p>
-
 <p>After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The <a href="https://docs.openstack.org/developer/ceilometer/">Ceilometer developer documentation</a> offers good explanations and diagrams of its architecture and components.</p>
-
 <p><a href="https://wiki.openstack.org/wiki/Ceilometer/Contributing">Here</a> is another nice guide on contributing to Ceilometer.</p>
-
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/ceilo-arch.png" alt="Ceilometer Architecture" /></p>
-
+<p><img src="https://docs.openstack.org/developer/ceilometer/_images/ceilo-arch.png" alt="Ceilometer Architecture"></p>
 <h2 id="understanding-the-development-workflow">Understanding the Development Workflow</h2>
-
 <p>Development of OpenStack follows a <a href="https://docs.openstack.org/infra/manual/developers.html">strict workflow</a>. It is imperative that you understand and become familiar on how this process works. Before you even begin coding, there are some &ldquo;paperwork&rdquo; that you must do first:</p>
-
 <ol>
-<li>Setup a <a href="https://launchpad.net/">Launchpad</a> account. Launchpad is Canonical&rsquo;s software collaboration platform.</li>
+<li>Setup a <a href="https://launchpad.net/">Launchpad</a> account. Launchpad is Canonical's software collaboration platform.</li>
 <li>Join the <a href="https://www.openstack.org/join/">OpenStack Foundation</a> as a Foundation Member.</li>
-<li>Sign the <a href="https://review.openstack.org/#/settings/agreements">Individual Contributor License Agreement</a>
-
+<li>Sign the <a href="https://review.openstack.org/#/settings/agreements">Individual Contributor License Agreement</a></li>
+</ol>
 <ul>
 <li><strong>If you are contributing on behalf of a company, you (or someone at your company) needs to additionally sign a <a href="https://secure.echosign.com/public/hostedForm?formid=56JUVGT95E78X5">Corporate Contributor License Agreement</a> providing a list of people authorized to commit to code to OpenStack.</strong></li>
-</ul></li>
-</ol>
-
+</ul>
 <h3 id="understanding-gerrit">Understanding Gerrit</h3>
-
 <p>From <em><a href="https://julien.danjou.info/blog/2013/rant-about-github-pull-request-workflow-implementation">Rant about Github pull-request workflow implementation</a></em>:</p>
-
 <blockquote>
-<p>To send a contribution to any OpenStack project, you need to pass via Gerrit. This is way simpler than doing a pull-request on Github actually, all you have to do is do your commit(s), and type git review. That&rsquo;s it. Your patch will be pushed to Gerrit and available for review.</p>
-
-<p>Gerrit allows other developers to review your patch, add comments anywhere on it, and score your patch up or down. You can build any rule you want for the score needed for a patch to be merged; OpenStack requires one positive scoring from two core developers before the patch is merged.</p>
-
-<p>Until a patch is validated, it can be reworked and amended locally using Git, and then resent using git review again. That simple. The historic and the different version of the patches are available, with the whole comments. Gerrit doesn&rsquo;t lose any historic information on your workflow.</p>
+<p>To send a contribution to any OpenStack project, you need to pass via Gerrit. This is way simpler than doing a pull-request on Github actually, all you have to do is do your commit(s), and type git review. That's it. Your patch will be pushed to Gerrit and available for review.</p>
 </blockquote>
-
+<blockquote>
+<p>Gerrit allows other developers to review your patch, add comments anywhere on it, and score your patch up or down. You can build any rule you want for the score needed for a patch to be merged; OpenStack requires one positive scoring from two core developers before the patch is merged.</p>
+</blockquote>
+<blockquote>
+<p>Until a patch is validated, it can be reworked and amended locally using Git, and then resent using git review again. That simple. The historic and the different version of the patches are available, with the whole comments. Gerrit doesn't lose any historic information on your workflow.</p>
+</blockquote>
 <h3 id="following-rules-for-proper-commits">Following Rules for Proper Commits</h3>
-
 <p>In order for your contributions to be accepted into OpenStack, your commits must follow certain rules. For example:</p>
-
 <ul>
 <li>Use smaller and more commits instead of a single big commit.</li>
 <li>Make a separate commit for whitespace fixes.</li>
@@ -188,43 +174,28 @@ if (!doNotTrack) {
 <li>Provide a detailed description of the change in the following lines, breaking paragraphs where needed.</li>
 <li>First line should be limited to 50 characters and not end with a period.</li>
 </ul>
-
 <p>You can read the complete document <a href="https://wiki.openstack.org/wiki/GitCommitMessages">here</a>. If your commits do not follow these rules, your patches will be rejected.</p>
-
 <h3 id="providing-appropriate-tests">Providing Appropriate Tests</h3>
-
 <p>You must test your changes first before submitting them. Project repositories generally have several categories of tests:</p>
-
 <ul>
 <li>Style Checks – Check source code for style issues</li>
 <li>Unit Tests – Self contained in each repository</li>
 <li>Integration Tests – Require a running OpenStack environment</li>
 </ul>
-
 <p>Tests are run through <a href="http://tox.testrun.org/latest/">tox</a>. You can see how to run Ceilometer tests <a href="https://docs.openstack.org/developer/ceilometer/testing.html">here</a>.</p>
-
 <h3 id="coding-style-guidelines">Coding Style Guidelines</h3>
-
 <p>Besides following the <a href="http://www.python.org/dev/peps/pep-0008/">Python PEP8</a> Guidelines. OpenStack also enforces some additional guidelines which you may read <a href="https://docs.openstack.org/developer/hacking/">here</a>.</p>
-
 <h2 id="openstack-upstream-training">OpenStack Upstream Training</h2>
-
 <p>OpenStack has designed a <a href="https://docs.openstack.org/upstream-training/">training program</a> to share the knowledge about the different ways you can contribute to OpenStack and getting familiar with open source. They provide a nice <a href="https://github.com/kmARC/openstack-training-virtual-environment/">Vagrant development environment</a> for this training which you can install in a virtual machine.</p>
-
 <h2 id="reaching-to-the-community">Reaching to the Community</h2>
-
-<p>Reaching to the OpenStack community in a <strong>smart</strong> way is important if you want your contributions to OpenStack to be noticed and accepted. Before you start trying to contribute to a specific project, I recommend you first spend some time <strong>observing</strong> and <strong>learning</strong> how the community interacts and how the project&rsquo;s development process occurs.</p>
-
+<p>Reaching to the OpenStack community in a <strong>smart</strong> way is important if you want your contributions to OpenStack to be noticed and accepted. Before you start trying to contribute to a specific project, I recommend you first spend some time <strong>observing</strong> and <strong>learning</strong> how the community interacts and how the project's development process occurs.</p>
 <p>Some ways to begin interacting with the community:</p>
-
 <ul>
 <li>Subscribing to the OpenStack <a href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-dev">mailing list</a></li>
 <li>Join the OpenStack IRC channels for a particular project and <a href="https://wiki.openstack.org/wiki/Meetings">IRC meetings</a>.</li>
-<li>Submit and review bugs in a project&rsquo;s bug tracker (Launchpad).</li>
+<li>Submit and review bugs in a project's bug tracker (Launchpad).</li>
 </ul>
-
 <h2 id="further-reading">Further Reading</h2>
-
 <ul>
 <li><a href="https://julien.danjou.info/blog/2016/foss-projects-management-bad-practice">The bad practice in FOSS projects management</a></li>
 <li><a href="https://julien.danjou.info/blog/2013/rant-about-github-pull-request-workflow-implementation">Rant about Github pull-request workflow implementation</a></li>

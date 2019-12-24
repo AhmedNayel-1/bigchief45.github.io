@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Python Tricks for Better Code",
     "headline" : "Python Tricks for Better Code",
-    "description" : "\x3cp\x3eA compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.\x3c\/p\x3e\n\n\x3ch2 id=\x22enumerate\x22\x3eEnumerate\x3c\/h2\x3e\n\n\x3cp\x3eWhen working with items in a list and we want to print or handle each item\x26rsquo;s index, instead of using a counter variable:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# Bad way\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e0\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplaces\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3eprint\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e\x2b=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eWe can use \x3ccode\x3eenumerate\x3c\/code\x3e to improve our code:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eenumerate\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eplaces\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e):\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3eprint\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3e\x3ccode\x3eenumerate\x3c\/code\x3e returns a list of indexes along with each item in the list.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eA compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.\x3c\/p\x3e\n\x3ch2 id=\x22enumerate\x22\x3eEnumerate\x3c\/h2\x3e\n\x3cp\x3eWhen working with items in a list and we want to print or handle each item\x27s index, instead of using a counter variable:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# Bad way\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e0\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplaces\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3eprint\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e\x2b\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eWe can use \x3ccode\x3eenumerate\x3c\/code\x3e to improve our code:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3efor\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eenumerate\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eplaces\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    \x3cspan style=\x22color:#00a8c8\x22\x3eprint\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ei\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eplace\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3e\x3ccode\x3eenumerate\x3c\/code\x3e returns a list of indexes along with each item in the list.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,38 +136,32 @@ if (!doNotTrack) {
   <time datetime=2017-03-08T00:00:00Z class="post-date">Wed, Mar 8, 2017</time>
 
   <p>A compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.</p>
-
 <h2 id="enumerate">Enumerate</h2>
-
-<p>When working with items in a list and we want to print or handle each item&rsquo;s index, instead of using a counter variable:</p>
+<p>When working with items in a list and we want to print or handle each item's index, instead of using a counter variable:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Bad way</span>
 <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 <span style="color:#00a8c8">for</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">places</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span>
-    <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span></code></pre></div>
-<p>We can use <code>enumerate</code> to improve our code:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">enumerate</span><span style="color:#111">(</span><span style="color:#111">places</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span></code></pre></div>
-<p><code>enumerate</code> returns a list of indexes along with each item in the list.</p>
-
+    <span style="color:#111">i</span> <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>We can use <code>enumerate</code> to improve our code:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span> <span style="color:#f92672">in</span> <span style="color:#111">enumerate</span><span style="color:#111">(</span><span style="color:#111">places</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">place</span><span style="color:#111">)</span>
+</code></pre></div><p><code>enumerate</code> returns a list of indexes along with each item in the list.</p>
 <h2 id="using-zip">Using zip</h2>
-
 <p>Sometimes it happens that we have two different lists and we want to iterate through <strong>both</strong> of these two lists <strong>at the same time</strong>. An ugly approach to this situation is  to obtain the length of one of the lists first and then iterate through one of them, while handling the other list inside the loop:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Bad way</span>
-<span style="color:#111">list_1</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;123&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;KSQR&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;12GKAL&#39;</span><span style="color:#111">]</span>
-<span style="color:#111">list_2</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;65DD&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;12DD&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;123HGH&#39;</span><span style="color:#111">]</span>
+<span style="color:#111">list_1</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">123</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">KSQR</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">12GKAL</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
+<span style="color:#111">list_2</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">65DD</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">12DD</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">123HGH</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
 
-<span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">list_1</span><span style="color:#111">)):</span>
+<span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">list_1</span><span style="color:#111">)</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#111">a</span> <span style="color:#f92672">=</span> <span style="color:#111">list_1</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]</span>
     <span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">list_2</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span><span style="color:#111">)</span></code></pre></div>
-<p>Instead, we can use <code>zip</code> for more concise and better looking code:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span> <span style="color:#f92672">in</span> <span style="color:#111">zip</span><span style="color:#111">(</span><span style="color:#111">list_1</span><span style="color:#111">,</span> <span style="color:#111">list_2</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span><span style="color:#111">)</span></code></pre></div>
-<p><code>zip</code> will take two or more lists and zip them together. This means that the resulting list will have pairs of each item from each list as a single item.</p>
-
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span><span style="color:#111">)</span>
+</code></pre></div><p>Instead, we can use <code>zip</code> for more concise and better looking code:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span> <span style="color:#f92672">in</span> <span style="color:#111">zip</span><span style="color:#111">(</span><span style="color:#111">list_1</span><span style="color:#111">,</span> <span style="color:#111">list_2</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span><span style="color:#111">)</span>
+</code></pre></div><p><code>zip</code> will take two or more lists and zip them together. This means that the resulting list will have pairs of each item from each list as a single item.</p>
 <h2 id="swapping-variable-values">Swapping Variable Values</h2>
-
 <p>When we want to swap the values between two variables, a common and unpractical approach is to create a third temporary variable to help with the swapping:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">a</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
 <span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>
@@ -175,67 +169,57 @@ if (!doNotTrack) {
 <span style="color:#75715e"># Bad way</span>
 <span style="color:#111">tmp</span> <span style="color:#f92672">=</span> <span style="color:#111">a</span>
 <span style="color:#111">a</span> <span style="color:#f92672">=</span> <span style="color:#111">b</span>
-<span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">tmp</span></code></pre></div>
-<p>We can improve this by using a technique called <strong>tuple unpacking</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">b</span><span style="color:#111">,</span> <span style="color:#111">a</span></code></pre></div>
-<h2 id="default-dictionary-values">Default Dictionary Values</h2>
-
+<span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">tmp</span>
+</code></pre></div><p>We can improve this by using a technique called <strong>tuple unpacking</strong>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">b</span><span style="color:#111">,</span> <span style="color:#111">a</span>
+</code></pre></div><h2 id="default-dictionary-values">Default Dictionary Values</h2>
 <p>When trying to obtain a value from a dictionary, is necessary to check first if the dictionary already has the key we are using to obtain the value, otherwise we will get a <code>KeyError</code> error.</p>
-
 <p>Usually checks like these are done like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Bad way</span>
-<span style="color:#00a8c8">if</span> <span style="color:#d88200">&#39;John&#39;</span> <span style="color:#f92672">in</span> <span style="color:#111">salaries</span><span style="color:#111">:</span>
-    <span style="color:#111">salary_john</span> <span style="color:#f92672">=</span> <span style="color:#111">salaries</span><span style="color:#111">[</span><span style="color:#d88200">&#39;John&#39;</span><span style="color:#111">]</span></code></pre></div>
-<p>However there is a better way using a dictionary&rsquo;s <code>get</code> function:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">salary_john</span> <span style="color:#f92672">=</span> <span style="color:#111">salaries</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;John&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span></code></pre></div>
-<p>With the <code>get</code> function we can immediately get the value for the <code>'John'</code> key if it exists, while also providing a fallback value of <code>0</code> if the key is not in the dictionary.</p>
-
-<h2 id="for-else">For &hellip; else</h2>
-
+<span style="color:#00a8c8">if</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">John</span><span style="color:#d88200">&#39;</span> <span style="color:#f92672">in</span> <span style="color:#111">salaries</span><span style="color:#111">:</span>
+    <span style="color:#111">salary_john</span> <span style="color:#f92672">=</span> <span style="color:#111">salaries</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">John</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
+</code></pre></div><p>However there is a better way using a dictionary's <code>get</code> function:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">salary_john</span> <span style="color:#f92672">=</span> <span style="color:#111">salaries</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">John</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+</code></pre></div><p>With the <code>get</code> function we can immediately get the value for the <code>'John'</code> key if it exists, while also providing a fallback value of <code>0</code> if the key is not in the dictionary.</p>
+<h2 id="for--else">For &hellip; else</h2>
 <p>Python <code>for</code> loops have a very useful <code>else</code> statement. In the context of loops in Python, the <code>else</code> statement means that if no break occurs, the code inside the <code>else</code> will be executed.</p>
-
 <p>The main use case for this behaviour is to implement search loops, where you’re performing a search for an item that meets a particular condition, and need to perform additional processing or raise an informative error if no acceptable value is found:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">data</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">if</span> <span style="color:#111">acceptable</span><span style="color:#111">(</span><span style="color:#111">x</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">acceptable</span><span style="color:#111">(</span><span style="color:#111">x</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">break</span>
 <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">raise</span> <span style="color:#75af00">ValueError</span><span style="color:#111">(</span><span style="color:#d88200">&#34;No acceptable value in {!r:100}&#34;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#111">))</span>
+    <span style="color:#00a8c8">raise</span> <span style="color:#75af00">ValueError</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">No acceptable value in {!r:100}</span><span style="color:#d88200">&#34;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#111">)</span><span style="color:#111">)</span>
 
-    <span style="color:#75715e"># Continue calculations with x</span></code></pre></div>
-<h2 id="file-reading">File Reading</h2>
-
+    <span style="color:#75715e"># Continue calculations with x</span>
+</code></pre></div><h2 id="file-reading">File Reading</h2>
 <p>When opening files, it is very common to see a variable assigned with <code>open()</code> and reading the contents with another assignment and <code>read()</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Bad way</span>
-<span style="color:#111">f</span> <span style="color:#f92672">=</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#d88200">&#39;todo.txt&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">content</span> <span style="color:#f92672">=</span> <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#111">read</span><span style="color:#111">()</span>
+<span style="color:#111">f</span> <span style="color:#f92672">=</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">todo.txt</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">content</span> <span style="color:#f92672">=</span> <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#111">read</span><span style="color:#111">(</span><span style="color:#111">)</span>
 
-<span style="color:#00a8c8">for</span> <span style="color:#111">line</span> <span style="color:#f92672">in</span> <span style="color:#111">content</span><span style="color:#f92672">.</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#39;</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">for</span> <span style="color:#111">line</span> <span style="color:#f92672">in</span> <span style="color:#111">content</span><span style="color:#f92672">.</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">line</span><span style="color:#111">)</span>
 
-<span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#111">close</span><span style="color:#111">()</span></code></pre></div>
-<p>A better way is to use the <code>with</code> statement. The file object also adds support for iteration for more concise code:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">with</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#d88200">&#39;todo.txt&#39;</span><span style="color:#111">)</span> <span style="color:#00a8c8">as</span> <span style="color:#111">f</span><span style="color:#111">:</span>
+<span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>A better way is to use the <code>with</code> statement. The file object also adds support for iteration for more concise code:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">with</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">todo.txt</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span> <span style="color:#00a8c8">as</span> <span style="color:#111">f</span><span style="color:#111">:</span>
   <span style="color:#00a8c8">for</span> <span style="color:#111">line</span> <span style="color:#f92672">in</span> <span style="color:#111">f</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">print</span> <span style="color:#111">line</span></code></pre></div>
-<p>Everything that is inside the <code>with</code> &ldquo;block&rdquo; will be executed while the file is open. When this is finished, the file will be closed automatically.</p>
-
+    <span style="color:#00a8c8">print</span> <span style="color:#111">line</span>
+</code></pre></div><p>Everything that is inside the <code>with</code> &ldquo;block&rdquo; will be executed while the file is open. When this is finished, the file will be closed automatically.</p>
 <h2 id="list-comprehensions">List Comprehensions</h2>
-
-<p>List comprehensions allow us to define a list&rsquo;s contents in-line without its declaration. Here is an example <strong>without</strong> using list comprehension:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
-<span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">):</span>
-    <span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">)</span></code></pre></div>
-<p>And here is the same example using a list comprehension:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">i</span> <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">)]</span></code></pre></div>
-<p>Neat! We can use multiple <code>for</code> statements together and <code>if</code> statements to filter out items. Using list comprehensions instead of <code>for</code> loops is a nice way to quickly define lists.</p>
-
+<p>List comprehensions allow us to define a list's contents in-line without its declaration. Here is an example <strong>without</strong> using list comprehension:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">]</span>
+<span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">)</span>
+</code></pre></div><p>And here is the same example using a list comprehension:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">i</span> <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">)</span><span style="color:#111">]</span>
+</code></pre></div><p>Neat! We can use multiple <code>for</code> statements together and <code>if</code> statements to filter out items. Using list comprehensions instead of <code>for</code> loops is a nice way to quickly define lists.</p>
 <h2 id="advanced-unpacking">Advanced Unpacking</h2>
-
 <p>Similar to the tuple unpacking trick shown before, in Python 2 we can use advanced unpacking in the following way:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">2</span><span style="color:#111">)</span>
 <span style="color:#75715e"># a =&gt; 0</span>
-<span style="color:#75715e"># b =&gt; 1</span></code></pre></div>
-<p>With <strong>Python 3</strong> we can also obtain the remainder of the sequence. We can actually obtain the remainder from anywhere in the list:</p>
+<span style="color:#75715e"># b =&gt; 1</span>
+</code></pre></div><p>With <strong>Python 3</strong> we can also obtain the remainder of the sequence. We can actually obtain the remainder from anywhere in the list:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#111">rest</span><span style="color:#111">,</span> <span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">10</span><span style="color:#111">)</span>
 <span style="color:#75715e"># a =&gt; 0</span>
 <span style="color:#75715e"># *rest =&gt; [2, 3, 4, 5, 6, 7, 8, 9]</span>
@@ -244,25 +228,23 @@ if (!doNotTrack) {
 <span style="color:#111">a</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#111">rest</span><span style="color:#111">,</span> <span style="color:#111">b</span> <span style="color:#f92672">=</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">10</span><span style="color:#111">)</span>
 <span style="color:#75715e"># a =&gt; 0</span>
 <span style="color:#75715e"># b =&gt; 9</span>
-<span style="color:#75715e"># rest =&gt; [1, 2, 3, 4, 5, 6, 7, 8]</span></code></pre></div>
-<h2 id="enum-classes">Enum Classes</h2>
-
+<span style="color:#75715e"># rest =&gt; [1, 2, 3, 4, 5, 6, 7, 8]</span>
+</code></pre></div><h2 id="enum-classes">Enum Classes</h2>
 <p>Enumerated types were added to the standard library in <strong>Python 3.4+</strong>, allowing us to do the following:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">enum</span> <span style="color:#f92672">import</span> <span style="color:#111">Enum</span>
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">Color</span><span style="color:#111">(</span><span style="color:#111">Enum</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">Color</span><span style="color:#111">(</span><span style="color:#111">Enum</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#111">red</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
     <span style="color:#111">blue</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
     <span style="color:#111">green</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
 
-<span style="color:#111">red</span> <span style="color:#f92672">=</span> <span style="color:#111">Color</span><span style="color:#f92672">.</span><span style="color:#111">red</span></code></pre></div>
-<h2 id="references">References</h2>
-
+<span style="color:#111">red</span> <span style="color:#f92672">=</span> <span style="color:#111">Color</span><span style="color:#f92672">.</span><span style="color:#111">red</span>
+</code></pre></div><h2 id="references">References</h2>
 <ol>
 <li><a href="https://www.youtube.com/watch?v=VBokjWj_cEA">7 Simple Tricks to Write Better Python Code - Sebastiaan Mathôt</a></li>
 <li><a href="http://python-notes.curiousefficiency.org/en/latest/python_concepts/break_else.html">Else Clauses on Loop Statements</a></li>
-<li><a href="https://thehackerguidetopython.com/">The Hacker&rsquo;s Guide to Python by Julien Danjou</a></li>
-<li><a href="http://www.asmeurer.com/python3-presentation/slides.html#1">10 awesome features of Python that you can&rsquo;t use because you refuse to upgrade to Python 3</a></li>
+<li><a href="https://thehackerguidetopython.com/">The Hacker's Guide to Python by Julien Danjou</a></li>
+<li><a href="http://www.asmeurer.com/python3-presentation/slides.html#1">10 awesome features of Python that you can't use because you refuse to upgrade to Python 3</a></li>
 </ol>
 </div>
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>benchmarking on Andrés Álvarez</title>
@@ -18,11 +18,8 @@
       
       <guid>https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation/</guid>
       <description>&lt;p&gt;The Ruby &lt;a href=&#34;http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html&#34;&gt;Benchmark&lt;/a&gt; library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.&lt;/p&gt;
-
 &lt;p&gt;I was doing some &lt;a href=&#34;https://en.wikipedia.org/wiki/Big_O_notation&#34;&gt;Big O Notation&lt;/a&gt; reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.&lt;/p&gt;
-
 &lt;h2 id=&#34;using-benchmark&#34;&gt;Using Benchmark&lt;/h2&gt;
-
 &lt;p&gt;To start benchmarking our code, we simply need to require &lt;code&gt;benchmark&lt;/code&gt; and use the methods provided by the &lt;code&gt;Benchmark&lt;/code&gt; module. For me, the most practical way is to use &lt;code&gt;Benchmark#bm&lt;/code&gt; method, where we pass a block of code we want to measure:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
 
@@ -31,18 +28,17 @@
     &lt;span style=&#34;color:#75715e&#34;&gt;# our code here&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Inside the block we are using the &lt;code&gt;report&lt;/code&gt; method of the block&amp;rsquo;s variable, which will basically do a separate benchmark for each report.&lt;/p&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Inside the block we are using the &lt;code&gt;report&lt;/code&gt; method of the block&#39;s variable, which will basically do a separate benchmark for each report.&lt;/p&gt;
 &lt;p&gt;However, we can improve this even more by adding a label to &lt;code&gt;report&lt;/code&gt; and a label width to &lt;code&gt;bm&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;benchmark&amp;#39;&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;bm&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;report&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;my_algorithm&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;Benchmark&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;bm&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;report&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;my_algorithm&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
     &lt;span style=&#34;color:#75715e&#34;&gt;# our code here&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Let&amp;rsquo;s see it in action with some common algorithms.&lt;/p&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Let&#39;s see it in action with some common algorithms.&lt;/p&gt;</description>
     </item>
     
   </channel>

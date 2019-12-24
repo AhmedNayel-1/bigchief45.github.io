@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>devops on Andrés Álvarez</title>
@@ -18,17 +18,15 @@
       
       <guid>https://aalvarez.me/posts/useful-zendmd-tricks/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Category:ZenDMD&#34;&gt;Zenoss Zendmd Tips Wiki&lt;/a&gt; page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.&lt;/p&gt;
-
 &lt;h2 id=&#34;removing-device-classes&#34;&gt;Removing Device Classes&lt;/h2&gt;
-
 &lt;p&gt;We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &amp;ldquo;KVM&amp;rdquo; device class:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;dmd&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Devices&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;manage_deleteOrganizer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;/zport/dmd/Devices/KVM&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&#34;change-zenoss-user-s-password&#34;&gt;Change Zenoss User&amp;rsquo;s Password&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s say we want to change the default &lt;em&gt;admin&lt;/em&gt; user&amp;rsquo;s password (&lt;code&gt;zenoss&lt;/code&gt;) in the Ubuntu auto deploy:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;acl_users&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;userManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;updateUserPassword&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;newpassword&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;dmd&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Devices&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;manage_deleteOrganizer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/zport/dmd/Devices/KVM&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;change-zenoss-users-password&#34;&gt;Change Zenoss User&#39;s Password&lt;/h2&gt;
+&lt;p&gt;Let&#39;s say we want to change the default &lt;em&gt;admin&lt;/em&gt; user&#39;s password (&lt;code&gt;zenoss&lt;/code&gt;) in the Ubuntu auto deploy:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;acl_users&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;userManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;updateUserPassword&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;admin&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;newpassword&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -38,37 +36,21 @@
       
       <guid>https://aalvarez.me/posts/getting-started-with-juju-locally/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/&#34;&gt;Juju&lt;/a&gt; is a great tool that allows us to deploy many services in a local or cloud environment. Services are deployed into virtual containers and can be removed and re-deployed at any time. It is perfect for creating sandbox and test environments for specific kind of services that you develop for.&lt;/p&gt;
-
 &lt;p&gt;In this post I will explain how easy it is to get started with Juju in a &lt;strong&gt;local&lt;/strong&gt; environment.&lt;/p&gt;
-
 &lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
-
 &lt;p&gt;To start we will need to add the necessary repository from where we will retrieve the Juju packages:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo add-apt-repository ppa:juju/stable
 sudo apt-get update
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Next we will download and install the Juju core package &lt;strong&gt;and&lt;/strong&gt; the package for local deployment:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Next we will download and install the Juju core package &lt;strong&gt;and&lt;/strong&gt; the package for local deployment:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get install juju-core
 sudo apt-get install juju-local
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;setting-up-the-local-environment&#34;&gt;Setting Up the Local Environment&lt;/h2&gt;
-
-&lt;p&gt;Before we set up the local environment, let&amp;rsquo;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;setting-up-the-local-environment&#34;&gt;Setting Up the Local Environment&lt;/h2&gt;
+&lt;p&gt;Before we set up the local environment, let&#39;s first generate a configuration file. This file will contain the configuration for many kinds of environments (OpenStack, AWS, MaaS, etc.), including a local environment configuration. We will generate the file and then switch to the local environment:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;juju generate-config
 juju switch local
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Once we have switched to the local environment, we can simply bootstrap the environment with the following command:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Once we have switched to the local environment, we can simply bootstrap the environment with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;juju bootstrap
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;After the process is complete, we are now ready to start using Juju.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After the process is complete, we are now ready to start using Juju.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -77,53 +59,34 @@ juju switch local
       <pubDate>Mon, 07 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</guid>
-      <description>&lt;p&gt;ZenPacks are powerful custom add-ons that can help us extend Zenoss&amp;rsquo;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using &lt;a href=&#34;http://zenpacklib.zenoss.com/en/latest/index.html&#34;&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt;&lt;/a&gt;, but it is also possible to create it from the Zenoss user interface.&lt;/p&gt;
-
+      <description>&lt;p&gt;ZenPacks are powerful custom add-ons that can help us extend Zenoss&#39;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using &lt;a href=&#34;http://zenpacklib.zenoss.com/en/latest/index.html&#34;&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt;&lt;/a&gt;, but it is also possible to create it from the Zenoss user interface.&lt;/p&gt;
 &lt;h2 id=&#34;about-zenpacklib&#34;&gt;About zenpacklib&lt;/h2&gt;
-
 &lt;p&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt; is a Python library developed by the Zenoss team to facilitate the process of creating ZenPacks, specially ZenPacks that deal with modeling and monitoring devices and components. Most of the newer ZenPacks that are being released are now being built with zenpacklib.&lt;/p&gt;
-
 &lt;p&gt;We can obtain zenpacklib by running the following commands:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;wget http://zenpacklib.zenoss.com/zenpacklib.py
 chmod 755 zenpacklib.py
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will download the zenpacklib Python library and give it executable permissions.&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will download the zenpacklib Python library and give it executable permissions.&lt;/p&gt;
 &lt;h2 id=&#34;creating-the-zenpack&#34;&gt;Creating the ZenPack&lt;/h2&gt;
-
 &lt;p&gt;Using the zenpacklib file we just downloaded, we proceed to create a new fresh ZenPack:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;./zenpacklib.py create ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will create the ZenPack base directory with the necessary base files.&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will create the ZenPack base directory with the necessary base files.&lt;/p&gt;
 &lt;p&gt;Now we go into this directory to begin.&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;cd ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;creating-the-zenpack-daemon&#34;&gt;Creating the ZenPack Daemon&lt;/h2&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;creating-the-zenpack-daemon&#34;&gt;Creating the ZenPack Daemon&lt;/h2&gt;
 &lt;p&gt;Our custom daemon declaration will be located in a directory named &lt;code&gt;daemons&lt;/code&gt;, inside our ZenPack directory:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;mkdir ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;/&amp;lt;your_namespace&amp;gt;/&amp;lt;zenpack_name&amp;gt;/daemons
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here we will create a new Bashscript file with the name of our daemon. In this case we will name it &lt;code&gt;mydaemon&lt;/code&gt;:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here we will create a new Bashscript file with the name of our daemon. In this case we will name it &lt;code&gt;mydaemon&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#! /usr/bin/env bash
 &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;DAEMON_NAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mydaemon&amp;#34;&lt;/span&gt;
 
 . &lt;span style=&#34;color:#111&#34;&gt;$ZENHOME&lt;/span&gt;/bin/zenfunctions
 
-&lt;span style=&#34;color:#111&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#111&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
+&lt;span style=&#34;color:#111&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#111&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
 
-generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Once the ZenPack is installed, files under this &lt;code&gt;daemons&lt;/code&gt; directory will become executable (&lt;code&gt;chmod 0755&lt;/code&gt;), a symlink to the file will be created in &lt;code&gt;$ZENHOME/bin&lt;/code&gt;, and a configuration file will be generated in &lt;code&gt;$ZENHOME/etc/&amp;lt;daemon_name&amp;gt;.conf&lt;/code&gt;&lt;/p&gt;
+generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;
 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Once the ZenPack is installed, files under this &lt;code&gt;daemons&lt;/code&gt; directory will become executable (&lt;code&gt;chmod 0755&lt;/code&gt;), a symlink to the file will be created in &lt;code&gt;$ZENHOME/bin&lt;/code&gt;, and a configuration file will be generated in &lt;code&gt;$ZENHOME/etc/&amp;lt;daemon_name&amp;gt;.conf&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; If you created your ZenPack using the Zenoss user interface, the &lt;code&gt;daemons&lt;/code&gt; directory will also be automatically created, and will contain an example daemon file named &lt;code&gt;zenexample&lt;/code&gt; with code similar to the one above. In this case you should simply replace the necessary values.&lt;/p&gt;</description>
     </item>
     
@@ -133,11 +96,9 @@ generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/</guid>
-      <description>&lt;p&gt;While taking a look at the CPU Utilization graphs offered Zenoss Core&amp;rsquo;s &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;Linux Monitor ZenPack&lt;/a&gt; (v1.2.1), I noticed that the percentage values for &lt;em&gt;Idle&lt;/em&gt; were ridiculously high:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg&#34; alt=&#34;High Idle CPU Utilization&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&amp;rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.&lt;/p&gt;</description>
+      <description>&lt;p&gt;While taking a look at the CPU Utilization graphs offered Zenoss Core&#39;s &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;Linux Monitor ZenPack&lt;/a&gt; (v1.2.1), I noticed that the percentage values for &lt;em&gt;Idle&lt;/em&gt; were ridiculously high:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg&#34; alt=&#34;High Idle CPU Utilization&#34;&gt;&lt;/p&gt;
+&lt;p&gt;This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&#39;t really taking this into consideration, and instead just spits out the total value from all cores.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -147,30 +108,22 @@ generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span
       
       <guid>https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/</guid>
       <description>&lt;p&gt;In Zenoss Core 4, we can configure some &lt;strong&gt;&lt;em&gt;email&lt;/em&gt;&lt;/strong&gt; notifications that produce and send emails based on conditions defined in a trigger, when an event is created.&lt;/p&gt;
-
 &lt;p&gt;Additionally, Zenoss Core 4 also provides &lt;strong&gt;&lt;em&gt;command&lt;/em&gt;&lt;/strong&gt; type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.&lt;/p&gt;
-
-&lt;p&gt;For example, let&amp;rsquo;s say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:&lt;/p&gt;
-
+&lt;p&gt;For example, let&#39;s say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The device is suddenly down.&lt;/li&gt;
 &lt;li&gt;Zenoss pings the device and gets no response.&lt;/li&gt;
 &lt;li&gt;The device status is then changed to &lt;em&gt;DOWN&lt;/em&gt;.&lt;/li&gt;
 &lt;li&gt;An Event with an event class of &lt;code&gt;/Status/Ping&lt;/code&gt; and a severity of &lt;em&gt;Critical&lt;/em&gt; is created.&lt;/li&gt;
 &lt;/ol&gt;
-
 &lt;p&gt;With this information, we can create a trigger that will represent this exact scenario. Moreover, we can configure a command notification to be executed when this trigger is fired.&lt;/p&gt;
-
 &lt;h2 id=&#34;configuring-a-trigger&#34;&gt;Configuring a Trigger&lt;/h2&gt;
-
 &lt;ol&gt;
 &lt;li&gt;Navigate to Events &amp;gt; Triggers&lt;/li&gt;
 &lt;li&gt;Create a new trigger.&lt;/li&gt;
 &lt;li&gt;Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png&#34; alt=&#34;Edit Trigger&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png&#34; alt=&#34;Edit Trigger&#34;&gt;&lt;/p&gt;
 &lt;p&gt;=&amp;gt; Because we want to make sure the device is truly &lt;em&gt;DOWN&lt;/em&gt;, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.&lt;/p&gt;</description>
     </item>
     
@@ -181,20 +134,16 @@ generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span
       
       <guid>https://aalvarez.me/posts/keystone-interface-in-juju-charms/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/docs/1.18/authors-interfaces&#34;&gt;Juju Charms interfaces&lt;/a&gt; make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.&lt;/p&gt;
-
 &lt;p&gt;In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:&lt;/p&gt;
-
 &lt;p&gt;&lt;code&gt;juju add-relation keystone myservice&lt;/code&gt;&lt;/p&gt;
-
 &lt;h2 id=&#34;juju-relations&#34;&gt;Juju Relations&lt;/h2&gt;
-
 &lt;p&gt;Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an &lt;strong&gt;interface&lt;/strong&gt;. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the &lt;em&gt;keystone Identity data&lt;/em&gt;. For this, we use the &lt;strong&gt;&lt;a href=&#34;https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin&#34;&gt;keystone-admin interface&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;With this in mind, we configure our charm to require this relation and interface in &lt;code&gt;metadata.yaml&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
 requires&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
   identity-admin&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-    interface&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; keystone-admin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    interface&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; keystone-admin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Understanding SNMP and Net-SNMP",
     "headline" : "Understanding SNMP and Net-SNMP",
-    "description" : "\x3cp\x3e\x3ca href=\x22http:\/\/net-snmp.sourceforge.net\/\x22\x3eNet-SNMP\x3c\/a\x3e is a suite of tools used to implement SNMP (Simple Network Management Protocol). SNMP is a widely used protocol for monitoring the health and welfare of network equipment (eg. routers), computer equipment and even devices like UPSs. Net-SNMP includes tools with capabilities such as:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3eAn extensible agent\x3c\/li\x3e\n\x3cli\x3eAn SNMP library\x3c\/li\x3e\n\x3cli\x3eTools to request or set information from SNMP agents\x3c\/li\x3e\n\x3cli\x3eTools to generate and handle SNMP traps\x3c\/li\x3e\n\x3cli\x3eA version of the unix \x26lsquo;netstat\x26rsquo; command using SNMP\x3c\/li\x3e\n\x3cli\x3eA graphical Perl\/Tk\/SNMP based mib browser\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3ch2 id=\x22how-snmp-works\x22\x3eHow SNMP Works\x3c\/h2\x3e\n\n\x3cp\x3eSNMP allows a management station to treat its network as a distributed database of health and configuration information. SNMP contains a small set of operations:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3eGET: Retrieve data from a network node\x3c\/li\x3e\n\x3cli\x3eGETNEXT: Retrieve the next element from a network node\x3c\/li\x3e\n\x3cli\x3eSET: Send configuration or control commands to a network node\x3c\/li\x3e\n\x3cli\x3eTRAP: A network node can send a notification to the management station\x3c\/li\x3e\n\x3cli\x3eINFORM: An acknowledged trap (network nodes can try and send it again if no acknowledgement is received)\x3c\/li\x3e\n\x3c\/ul\x3e\n\n\x3cp\x3e\x3cimg src=\x22http:\/\/computernetworkingsimplified.com\/wp-content\/uploads\/2014\/02\/snmparchitecture1.jpg\x22 alt=\x22SNMP Architecture\x22 \/\x3e\x3c\/p\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22http:\/\/net-snmp.sourceforge.net\/\x22\x3eNet-SNMP\x3c\/a\x3e is a suite of tools used to implement SNMP (Simple Network Management Protocol). SNMP is a widely used protocol for monitoring the health and welfare of network equipment (eg. routers), computer equipment and even devices like UPSs. Net-SNMP includes tools with capabilities such as:\x3c\/p\x3e\n\x3cul\x3e\n\x3cli\x3eAn extensible agent\x3c\/li\x3e\n\x3cli\x3eAn SNMP library\x3c\/li\x3e\n\x3cli\x3eTools to request or set information from SNMP agents\x3c\/li\x3e\n\x3cli\x3eTools to generate and handle SNMP traps\x3c\/li\x3e\n\x3cli\x3eA version of the unix \x26lsquo;netstat\x26rsquo; command using SNMP\x3c\/li\x3e\n\x3cli\x3eA graphical Perl\/Tk\/SNMP based mib browser\x3c\/li\x3e\n\x3c\/ul\x3e\n\x3ch2 id=\x22how-snmp-works\x22\x3eHow SNMP Works\x3c\/h2\x3e\n\x3cp\x3eSNMP allows a management station to treat its network as a distributed database of health and configuration information. SNMP contains a small set of operations:\x3c\/p\x3e\n\x3cul\x3e\n\x3cli\x3eGET: Retrieve data from a network node\x3c\/li\x3e\n\x3cli\x3eGETNEXT: Retrieve the next element from a network node\x3c\/li\x3e\n\x3cli\x3eSET: Send configuration or control commands to a network node\x3c\/li\x3e\n\x3cli\x3eTRAP: A network node can send a notification to the management station\x3c\/li\x3e\n\x3cli\x3eINFORM: An acknowledged trap (network nodes can try and send it again if no acknowledgement is received)\x3c\/li\x3e\n\x3c\/ul\x3e\n\x3cp\x3e\x3cimg src=\x22http:\/\/computernetworkingsimplified.com\/wp-content\/uploads\/2014\/02\/snmparchitecture1.jpg\x22 alt=\x22SNMP Architecture\x22\x3e\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,7 +136,6 @@ if (!doNotTrack) {
   <time datetime=2017-01-16T00:00:00Z class="post-date">Mon, Jan 16, 2017</time>
 
   <p><a href="http://net-snmp.sourceforge.net/">Net-SNMP</a> is a suite of tools used to implement SNMP (Simple Network Management Protocol). SNMP is a widely used protocol for monitoring the health and welfare of network equipment (eg. routers), computer equipment and even devices like UPSs. Net-SNMP includes tools with capabilities such as:</p>
-
 <ul>
 <li>An extensible agent</li>
 <li>An SNMP library</li>
@@ -145,11 +144,8 @@ if (!doNotTrack) {
 <li>A version of the unix &lsquo;netstat&rsquo; command using SNMP</li>
 <li>A graphical Perl/Tk/SNMP based mib browser</li>
 </ul>
-
 <h2 id="how-snmp-works">How SNMP Works</h2>
-
 <p>SNMP allows a management station to treat its network as a distributed database of health and configuration information. SNMP contains a small set of operations:</p>
-
 <ul>
 <li>GET: Retrieve data from a network node</li>
 <li>GETNEXT: Retrieve the next element from a network node</li>
@@ -157,27 +153,16 @@ if (!doNotTrack) {
 <li>TRAP: A network node can send a notification to the management station</li>
 <li>INFORM: An acknowledged trap (network nodes can try and send it again if no acknowledgement is received)</li>
 </ul>
-
-<p><img src="http://computernetworkingsimplified.com/wp-content/uploads/2014/02/snmparchitecture1.jpg" alt="SNMP Architecture" /></p>
-
+<p><img src="http://computernetworkingsimplified.com/wp-content/uploads/2014/02/snmparchitecture1.jpg" alt="SNMP Architecture"></p>
 <h2 id="snmp-agents-and-snmpd">SNMP Agents and snmpd</h2>
-
 <p>SNMP agents are responsible for delivering requested data through SNMP. Devices that are being polled for SNMP data must have a SNMP agent installed, configured, and running.</p>
-
 <p>Net-SNMP comes with a daemon called <em>snmpd</em> which works as an SNMP agent. This agent is responsible for listening and responding to requests. Its configuration can be found in <code>/etc/snmp/snmpd.conf</code>.</p>
-
 <h2 id="understanding-oids-and-mibs">Understanding OIDs and MIBs</h2>
-
 <p>MIBs stand for <strong>Management Information Base</strong>. They represent a collection of information that is accessed hierarchically by protocols such as SNMP. <strong>Scalar</strong> MIBs define a single object instance. <strong>Tabular</strong> MIBs define multiple related object instances grouped in MIB tables.</p>
-
 <p>OIDs stand for <strong>Object Identifiers</strong> and they uniquely identified managed objects in a MIB hierarchy. They can be depicted as trees whose nodes are assigned by different organizations. Generally, an OID is a long sequence of numbers, coding the nodes, separated by dots. Top level MIB object IDs (OIDs) belong to different standard organizations. Vendors define private branches including managed objects for their own products.</p>
-
 <p>Basically a MIB is like a translator that helps a Management Station to understand SNMP responses obtained from your network devices</p>
-
-<p><img src="http://www.networkmanagementsoftware.com/wp-content/uploads/SNMP_OID_MIB_Tree.png" alt="OID Tree" /></p>
-
+<p><img src="http://www.networkmanagementsoftware.com/wp-content/uploads/SNMP_OID_MIB_Tree.png" alt="OID Tree"></p>
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://kb.paessler.com/en/topic/653-how-do-snmp-mibs-and-oids-work">How SNMP, MIBs and OIDs work</a></li>
 <li><a href="http://www.networkmanagementsoftware.com/snmp-tutorial-part-2-rounding-out-the-basics/">http://www.networkmanagementsoftware.com/snmp-tutorial-part-2-rounding-out-the-basics/</a></li>

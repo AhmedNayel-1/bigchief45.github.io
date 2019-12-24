@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,16 +139,15 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2019-08-04T12:35:00-0600" class="post-date">Sun, Aug 4, 2019</time>
   <p>Django allows using the OR bitwise operator <code>|</code> with <code>Q</code> objects for more complex lookups:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">question__startswith</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Who&#39;</span><span style="color:#111">)</span> <span style="color:#f92672">|</span> <span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">question__startswith</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;What&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>However this requires explicitely typing each <code>Q</code> object. How can we apply this OR opperation to all the <code>Q</code> objects in a list?</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">question__startswith</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Who</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span> <span style="color:#f92672">|</span> <span style="color:#111">Q</span><span style="color:#111">(</span><span style="color:#111">question__startswith</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">What</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>However this requires explicitely typing each <code>Q</code> object. How can we apply this OR opperation to all the <code>Q</code> objects in a list?</p>
 <p>In Python 3 we can do so like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">functools</span> <span style="color:#f92672">import</span> <span style="color:#111">reduce</span>
 <span style="color:#f92672">from</span> <span style="color:#111">operator</span> <span style="color:#f92672">import</span> <span style="color:#111">__or__</span>
 
 
-<span style="color:#111">qs</span> <span style="color:#f92672">=</span> <span style="color:#111">MyModel</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">filter</span><span style="color:#111">(</span><span style="color:#111">reduce</span><span style="color:#111">(</span><span style="color:#111">__or__</span><span style="color:#111">,</span> <span style="color:#111">filters</span><span style="color:#111">))</span></code></pre></div>
-<p>Where <code>filters</code> is a list containing multiple <code>Q</code> objects like the ones shown in the first example.</p>
+<span style="color:#111">qs</span> <span style="color:#f92672">=</span> <span style="color:#111">MyModel</span><span style="color:#f92672">.</span><span style="color:#111">objects</span><span style="color:#f92672">.</span><span style="color:#111">filter</span><span style="color:#111">(</span><span style="color:#111">reduce</span><span style="color:#111">(</span><span style="color:#111">__or__</span><span style="color:#111">,</span> <span style="color:#111">filters</span><span style="color:#111">)</span><span style="color:#111">)</span>
+</code></pre></div><p>Where <code>filters</code> is a list containing multiple <code>Q</code> objects like the ones shown in the first example.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -170,22 +169,15 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2019-04-09T18:07:34Z" class="post-date">Tue, Apr 9, 2019</time>
   <p><strong>Difficulty:</strong> Medium</p>
-
 <h2 id="problem">Problem</h2>
-
 <p>Given two rectangles, write a function that can find the rectangular intersection between the two rectangles. The rectangles are always straight and never diagonal (each side is parallel with either the x axis or the y axis). Consider only positive axis.</p>
-
-<p><img src="https://aalvarez.me/posts/coding-challenge-rectangular-intersection/rectangular_intersection.png" alt="Rectangular Intersection" /></p>
-
+<p><img src="https://aalvarez.me/posts/coding-challenge-rectangular-intersection/rectangular_intersection.png" alt="Rectangular Intersection"></p>
 <p>The rectangles are defined as a <code>Rectangle</code> class as shown below:</p>
-
 <pre><code>Rectangle(left_x, bottom_y, width, height)
 
 # Example
 r = Rectangle(2, 7, 30 8)
-</code></pre>
-
-<p>Your output rectangle should be returned using this format.</p>
+</code></pre><p>Your output rectangle should be returned using this format.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -207,13 +199,9 @@ r = Rectangle(2, 7, 30 8)
   </h1>
   <time datetime="2019-04-08T15:09:13Z" class="post-date">Mon, Apr 8, 2019</time>
   <p><strong>Difficulty:</strong> Easy</p>
-
 <h2 id="problem">Problem</h2>
-
 <p>Given a string, find the length of the longest substring without repeating characters.</p>
-
 <p>Examples:</p>
-
 <ul>
 <li>Given <code>abcabcbb</code>, the answer is <code>abc</code>, which the length is 3.</li>
 <li>Given <code>bbbbb</code>, the answer is <code>b</code>, with the length of 1.</li>
@@ -240,9 +228,7 @@ r = Rectangle(2, 7, 30 8)
   </h1>
   <time datetime="2019-02-22T17:49:21Z" class="post-date">Fri, Feb 22, 2019</time>
   <p>With Amazon ElasticBeanstalk it is possible to view log files of your deployed application. However, ElasticBeanstalk by default only returns certain logs like <code>/var/log/httpd/error_log</code> or <code>/var/log/httpd/access_log</code> if you are using Apache httpd.</p>
-
 <p>If you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk console.</p>
-
 <p>In this post I will show you how to achieve this, using Django as our backend framework.</p>
 
   
@@ -267,11 +253,8 @@ r = Rectangle(2, 7, 30 8)
   </h1>
   <time datetime="2019-02-06T16:02:35Z" class="post-date">Wed, Feb 6, 2019</time>
   <p>Sometimes you need to execute a function that can take a lot of time to finish. You are not sure exactly when the function will finish, but you do not want to wait too long, or let your program &ldquo;hang&rdquo; waiting for a response.</p>
-
-<p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&rsquo;s execution.</p>
-
+<p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program's execution.</p>
 <p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the Python standard library.</p>
-
 <p>Here is a complete example:</p>
 
   

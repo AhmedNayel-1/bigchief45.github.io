@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>packaging on Andrés Álvarez</title>
@@ -18,11 +18,8 @@
       
       <guid>https://aalvarez.me/posts/managing-debian-package-dependencies/</guid>
       <description>&lt;p&gt;In a previous post, I talked about &lt;a href=&#34;2016-10-11-debian-packaging-in-ubuntu.html&#34;&gt;building a simple Debian package in Ubuntu&lt;/a&gt;, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.&lt;/p&gt;
-
 &lt;h2 id=&#34;dpkg-and-dependencies&#34;&gt;dpkg and Dependencies&lt;/h2&gt;
-
-&lt;p&gt;Previously we installed our package using the &lt;kbd&gt;dpkg -i&lt;/kbd&gt; command. However, the problem with &lt;code&gt;dpkg&lt;/code&gt; is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as &lt;code&gt;apt-get&lt;/code&gt;) are required to fetch dependencies from repositories.&lt;/p&gt;
-
+&lt;p&gt;Previously we installed our package using the &lt;!-- raw HTML omitted --&gt;dpkg -i&lt;!-- raw HTML omitted --&gt; command. However, the problem with &lt;code&gt;dpkg&lt;/code&gt; is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as &lt;code&gt;apt-get&lt;/code&gt;) are required to fetch dependencies from repositories.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
@@ -35,18 +32,13 @@
       
       <guid>https://aalvarez.me/posts/creating-python-packages/</guid>
       <description>&lt;p&gt;For a project involving Zenoss Core 4 and a HaaS solution maintained by another team, we needed a module to interact with the &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; to get the list of events for specific devices. Browsing around I found this &lt;a href=&#34;https://github.com/iamseth/python-zenoss&#34;&gt;python-zenoss&lt;/a&gt; module to work with the Zenoss JSON API. However I was experiencing some issues when installing it, so I decided to create my own Python package to provide a different way to interact with the Zenoss JSON API according to our specific needs.&lt;/p&gt;
-
 &lt;p&gt;The package would be installed locally using &lt;code&gt;pip&lt;/code&gt;, and all its functionality should be easily accessible using &lt;code&gt;from&lt;/code&gt; and &lt;code&gt;import&lt;/code&gt; commands in Python.&lt;/p&gt;
-
-&lt;p&gt;To start working in our package we will create a base directory. The directory&amp;rsquo;s name will resemble our package&amp;rsquo;s name. For naming, we should following these guidelines:&lt;/p&gt;
-
+&lt;p&gt;To start working in our package we will create a base directory. The directory&#39;s name will resemble our package&#39;s name. For naming, we should following these guidelines:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;All lowercase&lt;/li&gt;
 &lt;li&gt;Underscore-separated or no word separators at all (don’t use hyphens)&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;The package contents are the following:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;my_api/
 ├── __init__.py
 ├── api.py
@@ -61,23 +53,14 @@
       
       <guid>https://aalvarez.me/posts/debian-packaging-in-ubuntu/</guid>
       <description>&lt;p&gt;Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.&lt;/p&gt;
-
-&lt;h2 id=&#34;package-source-structure&#34;&gt;Package Source &amp;amp; Structure&lt;/h2&gt;
-
-&lt;p&gt;We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&amp;rsquo;s title:&lt;/p&gt;
-
+&lt;h2 id=&#34;package-source--structure&#34;&gt;Package Source &amp;amp; Structure&lt;/h2&gt;
+&lt;p&gt;We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&#39;s title:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mkdir mypackage-1.0.0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;cd mypackage-1.0.0
 mkdir DEBIAN
 touch DEBIAN/control
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This &lt;code&gt;control&lt;/code&gt; file will describe our package to the Debian package manager (&lt;code&gt;dpkg&lt;/code&gt;). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This &lt;code&gt;control&lt;/code&gt; file will describe our package to the Debian package manager (&lt;code&gt;dpkg&lt;/code&gt;). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Package: mypackage
 Version: 1.0-0
 Section: base
@@ -86,9 +69,7 @@ Architecture: all
 Depends: python2.7
 Maintainer: Andres Alvarez &amp;lt;myemail@gmail.com&amp;gt;
 Description: A new and improved C++ Compiler
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>python on Andrés Álvarez</title>
@@ -18,11 +18,8 @@
       
       <guid>https://aalvarez.me/posts/making-functions-timeout-in-python/</guid>
       <description>&lt;p&gt;Sometimes you need to execute a function that can take a lot of time to finish. You are not sure exactly when the function will finish, but you do not want to wait too long, or let your program &amp;ldquo;hang&amp;rdquo; waiting for a response.&lt;/p&gt;
-
-&lt;p&gt;We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&amp;rsquo;s execution.&lt;/p&gt;
-
+&lt;p&gt;We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&#39;s execution.&lt;/p&gt;
 &lt;p&gt;We can achieve this by using a custom &lt;a href=&#34;http://book.pythontips.com/en/latest/context_managers.html&#34;&gt;context manager&lt;/a&gt; and the &lt;a href=&#34;https://docs.python.org/2/library/signal.html&#34;&gt;&lt;code&gt;signal&lt;/code&gt;&lt;/a&gt; module from the Python standard library.&lt;/p&gt;
-
 &lt;p&gt;Here is a complete example:&lt;/p&gt;</description>
     </item>
     
@@ -33,10 +30,8 @@
       
       <guid>https://aalvarez.me/posts/python-functional-testing-for-aws-lambda/</guid>
       <description>&lt;p&gt;In this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.&lt;/p&gt;
-
 &lt;p&gt;For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s get started!&lt;/p&gt;</description>
+&lt;p&gt;Let&#39;s get started!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -46,13 +41,9 @@
       
       <guid>https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://pytest.org/&#34;&gt;Pytest&lt;/a&gt; is my Python testing framework of choice. Very easy to use, and makes tests look much better.&lt;/p&gt;
-
-&lt;p&gt;In this article I&amp;rsquo;ll show you some cool tricks I have incorporated into my test suites using Pytest.&lt;/p&gt;
-
+&lt;p&gt;In this article I&#39;ll show you some cool tricks I have incorporated into my test suites using Pytest.&lt;/p&gt;
 &lt;h2 id=&#34;environment-variables&#34;&gt;Environment Variables&lt;/h2&gt;
-
 &lt;p&gt;When your application must work with defined environment variables, the testing environment must have these variables defined as well, even if the values are not real.&lt;/p&gt;
-
 &lt;p&gt;With Pytest we can easily configure any necessary environment variables in our test environment. We simply create a fixture in &lt;code&gt;conftest.py&lt;/code&gt; that will be loaded automatically:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# conftest.py&lt;/span&gt;
 
@@ -60,10 +51,10 @@
 
 
 &lt;span style=&#34;color:#75af00&#34;&gt;@pytest.fixture&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;autouse&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;True&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;env_setup&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;MY_SETTING&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;some-value&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ANOTHER_SETTING&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;some-value&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/monkeypatch.html&#34;&gt;&lt;code&gt;monkeypatch&lt;/code&gt;&lt;/a&gt; is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the &lt;code&gt;autouse&lt;/code&gt; option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.&lt;/p&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;env_setup&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;MY_SETTING&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;some-value&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;monkeypatch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setenv&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;ANOTHER_SETTING&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;some-value&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/monkeypatch.html&#34;&gt;&lt;code&gt;monkeypatch&lt;/code&gt;&lt;/a&gt; is a built-in pytest fixture that allows us to set environment variables in the test runs. By enabling the &lt;code&gt;autouse&lt;/code&gt; option, our custom environment setup fixture will be automatically called in every test without having to include it explicitly using the usual dependency injection mechanism.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -73,7 +64,6 @@
       
       <guid>https://aalvarez.me/posts/recursive-python-aws-lambda-functions/</guid>
       <description>&lt;p&gt;There are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.&lt;/p&gt;
-
 &lt;p&gt;Basically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.&lt;/p&gt;</description>
     </item>
     
@@ -83,14 +73,13 @@
       <pubDate>Tue, 26 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/bytesio-file-uploads-to-django-using-requests/</guid>
-      <description>&lt;p&gt;It&amp;rsquo;s very easy to post file data to Django using requests:&lt;/p&gt;
+      <description>&lt;p&gt;It&#39;s very easy to post file data to Django using requests:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;requests&lt;/span&gt;
 
 
-&lt;span style=&#34;color:#111&#34;&gt;requests&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;post&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;url&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;files&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;cover&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;imgpath.jpg&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;However I was having a hard time getting that to work using &lt;a href=&#34;https://wiki.python.org/moin/BytesIO&#34;&gt;BytesIO&lt;/a&gt;. The reason I wanted to use BytesIO was because I was reading the file binary data located in S3, from AWS Lambda. I didn&amp;rsquo;t want to write the file to disk first and then do something like the code shown above.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s how to achieve that:&lt;/p&gt;</description>
+&lt;span style=&#34;color:#111&#34;&gt;requests&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;post&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;url&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;files&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;cover&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;imgpath.jpg&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;rb&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;However I was having a hard time getting that to work using &lt;a href=&#34;https://wiki.python.org/moin/BytesIO&#34;&gt;BytesIO&lt;/a&gt;. The reason I wanted to use BytesIO was because I was reading the file binary data located in S3, from AWS Lambda. I didn&#39;t want to write the file to disk first and then do something like the code shown above.&lt;/p&gt;
+&lt;p&gt;Here&#39;s how to achieve that:&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -100,9 +89,7 @@
       
       <guid>https://aalvarez.me/posts/testing-django-and-drf-with-pytest/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt; has become my favorite Python testing framework. And in this article I want to go over on how I learned to write nice tests for Django and &lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt;.&lt;/p&gt;
-
 &lt;p&gt;We will be using the following tools:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.pytest.org/en/latest/contents.html&#34;&gt;Pytest&lt;/a&gt;: Python testing framework&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://pytest-django.readthedocs.io/&#34;&gt;pytest-django&lt;/a&gt;: Pytest extensions for Django&lt;/li&gt;
@@ -116,19 +103,16 @@
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/</guid>
-      <description>&lt;p&gt;In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&amp;rsquo;s get started!&lt;/p&gt;
-
+      <description>&lt;p&gt;In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&#39;s get started!&lt;/p&gt;
 &lt;h2 id=&#34;the-search-template&#34;&gt;The Search Template&lt;/h2&gt;
-
 &lt;p&gt;The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.&lt;/p&gt;
-
 &lt;p&gt;This template is extremely simple and does not need a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; tag. I will create it as a partial under &lt;code&gt;templates/search.html&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
-&amp;lt;input id=&amp;#34;search&amp;#34; name=&amp;#34;q&amp;#34; placeholder=&amp;#34;Search...&amp;#34;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Notice how we have given the input a &lt;code&gt;name&lt;/code&gt; with the value of &lt;code&gt;q&lt;/code&gt;. This will be important when our view receives the query from this input field.&lt;/p&gt;
-
+&lt;pre&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
+&amp;lt;input id=&amp;quot;search&amp;quot; name=&amp;quot;q&amp;quot; placeholder=&amp;quot;Search...&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Notice how we have given the input a &lt;code&gt;name&lt;/code&gt; with the value of &lt;code&gt;q&lt;/code&gt;. This will be important when our view receives the query from this input field.&lt;/p&gt;
 &lt;p&gt;I can then render this partial in the main template like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &amp;#39;search.html&amp;#39; %}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &#39;search.html&#39; %}
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -138,20 +122,18 @@
       
       <guid>https://aalvarez.me/posts/bulk-create-with-django-rest-framework/</guid>
       <description>&lt;p&gt;In this quick post I will go over how to create an endpoint that allows bulk creation of a resource using &lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt;.&lt;/p&gt;
-
 &lt;h2 id=&#34;the-serializer&#34;&gt;The Serializer&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s assume that we will be working with an existing &lt;code&gt;Book&lt;/code&gt; model in our Django application. We will create a serializer for this model using Django REST&amp;rsquo;s &lt;a href=&#34;http://www.django-rest-framework.org/api-guide/serializers/#modelserializer&#34;&gt;ModelSerializer&lt;/a&gt; helper class:&lt;/p&gt;
+&lt;p&gt;Let&#39;s assume that we will be working with an existing &lt;code&gt;Book&lt;/code&gt; model in our Django application. We will create a serializer for this model using Django REST&#39;s &lt;a href=&#34;http://www.django-rest-framework.org/api-guide/serializers/#modelserializer&#34;&gt;ModelSerializer&lt;/a&gt; helper class:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# serializers.py&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;myapp.models&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Book&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rest_framework&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;serializers&lt;/span&gt;
 
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;BookSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;serializers&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ModelSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;BookSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;serializers&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ModelSerializer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Meta&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;model&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Book&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;fields&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;__all__&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The &lt;code&gt;&amp;quot;__all__&amp;quot;&lt;/code&gt; string indicates that we want to serialize &lt;strong&gt;all&lt;/strong&gt; of the model&amp;rsquo;s fields.&lt;/p&gt;</description>
+        &lt;span style=&#34;color:#111&#34;&gt;fields&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;__all__&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The &lt;code&gt;&amp;quot;__all__&amp;quot;&lt;/code&gt; string indicates that we want to serialize &lt;strong&gt;all&lt;/strong&gt; of the model&#39;s fields.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -161,7 +143,6 @@
       
       <guid>https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/</guid>
       <description>&lt;p&gt;Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from &lt;code&gt;Device&lt;/code&gt;. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a &lt;a href=&#34;https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html&#34;&gt;Python data source&lt;/a&gt;.&lt;/p&gt;
-
 &lt;p&gt;The &lt;code&gt;zenpack.yaml&lt;/code&gt; file for the first and main ZenPack would look something like this:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ZenPack1&lt;/span&gt;
 
@@ -184,7 +165,8 @@ classes&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
 
 class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
   - SpecialServer &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;MC SpecialComponent
-  - SpecialServer &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;MC AmazingComponent&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+  - SpecialServer &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;MC AmazingComponent
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -193,16 +175,11 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       <pubDate>Wed, 07 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create custom notifications actions in Zenoss. Like a &lt;em&gt;SMS&lt;/em&gt; notification, for example. In that post we required a valid cellphone number using a text field in the notification&amp;rsquo;s content pane, as shown below:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg&#34; alt=&#34;Notification Content&#34; /&gt;&lt;/p&gt;
-
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create custom notifications actions in Zenoss. Like a &lt;em&gt;SMS&lt;/em&gt; notification, for example. In that post we required a valid cellphone number using a text field in the notification&#39;s content pane, as shown below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg&#34; alt=&#34;Notification Content&#34;&gt;&lt;/p&gt;
 &lt;p&gt;In this post I want to change and improve this by using &lt;em&gt;&lt;strong&gt;subscribers&lt;/strong&gt;&lt;/em&gt; functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the &lt;em&gt;Pager&lt;/em&gt; field instead.&lt;/p&gt;
-
 &lt;h2 id=&#34;the-pager-action&#34;&gt;The Pager Action&lt;/h2&gt;
-
-&lt;p&gt;Using Zenoss Core 4&amp;rsquo;s pager action&amp;rsquo;s &lt;a href=&#34;https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449&#34;&gt;source code&lt;/a&gt; as reference is a good starting point, since we are going to use the pager field for SMS.&lt;/p&gt;
-
+&lt;p&gt;Using Zenoss Core 4&#39;s pager action&#39;s &lt;a href=&#34;https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449&#34;&gt;source code&lt;/a&gt; as reference is a good starting point, since we are going to use the pager field for SMS.&lt;/p&gt;
 &lt;p&gt;We can see that this action class implements a &lt;code&gt;executeOnTarget&lt;/code&gt; method instead of a &lt;code&gt;execute&lt;/code&gt; method we used in the previous post.&lt;/p&gt;</description>
     </item>
     
@@ -213,11 +190,8 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/python-functional-http-testing-with-gabbi/</guid>
       <description>&lt;p&gt;Continuing with my journey in contributing to &lt;a href=&#34;http://gnocchi.xyz/index.html&#34;&gt;Gnocchi&lt;/a&gt;, I have learned of an excellent tool which Gnocchi uses to test its API from a HTTP request approach. The tool is called &lt;a href=&#34;https://github.com/cdent/gabbi&#34;&gt;&lt;strong&gt;Gabbi&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&amp;rsquo;s DSL when making &lt;a href=&#34;https://github.com/rspec/rspec-rails#request-specs&#34;&gt;request specs&lt;/a&gt;.&lt;/p&gt;
-
+&lt;p&gt;Coming from a Ruby, Rails, and Rspec background, I was very pleased on learning how Gabbi works and how to use it. Gabbi uses YAML to construct the tests that will hit the API endpoints, in a similar way to using Rspec&#39;s DSL when making &lt;a href=&#34;https://github.com/rspec/rspec-rails#request-specs&#34;&gt;request specs&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;For my latest contribution to Gnocchi, I was working on an &lt;a href=&#34;https://github.com/gnocchixyz/gnocchi/issues/12&#34;&gt;issue&lt;/a&gt; where newly created metrics were not being returned in the response from &lt;code&gt;/v1/resource/generic/:id/metric&lt;/code&gt;. After applying the fixes and submitting the patch, it was also necessary to update some of the functional Gabbi tests that belong to this specific use case.&lt;/p&gt;
-
 &lt;p&gt;One of these original tests is shown below:&lt;/p&gt;</description>
     </item>
     
@@ -228,28 +202,13 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/understanding-gnocchi-measures/</guid>
       <description>&lt;p&gt;Measures are simple objects that represent the timeseries data. They simply contain a &lt;strong&gt;timestamp&lt;/strong&gt; and a &lt;strong&gt;value&lt;/strong&gt;, and they belong to &lt;a href=&#34;https://aalvarez.me/posts/understanding-gnocchi-metrics.html&#34;&gt;metrics&lt;/a&gt;. You could say that a measure &lt;em&gt;has many&lt;/em&gt; metrics.&lt;/p&gt;
-
 &lt;h2 id=&#34;adding-measures-to-a-metric&#34;&gt;Adding Measures to a Metric&lt;/h2&gt;
-
 &lt;p&gt;Using the REST API, we can easily add measures to a metric:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;POST&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.1&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;Content-Type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;application/json&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;Content-Length&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;198&lt;/span&gt;
 
-&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;2014-10-06T14:33:57&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;43.1&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;2014-10-06T14:34:12&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;2014-10-06T14:34:20&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
-  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -259,11 +218,8 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/understanding-gnocchi-metrics/</guid>
       <description>&lt;p&gt;Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store &lt;strong&gt;measures&lt;/strong&gt;, and the way they do this is defined by &lt;strong&gt;archive policies&lt;/strong&gt;. These are concepts that I will cover in future articles.&lt;/p&gt;
-
 &lt;p&gt;Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/architecture.png&#34; alt=&#34;Gnocchi Architecture&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/architecture.png&#34; alt=&#34;Gnocchi Architecture&#34;&gt;&lt;/p&gt;
 &lt;p&gt;In the Gnocchi architecture, the &lt;strong&gt;storage&lt;/strong&gt; back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.&lt;/p&gt;</description>
     </item>
     
@@ -274,30 +230,21 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/</guid>
       <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how we could create &lt;em&gt;command&lt;/em&gt; type notifications to execute shell scripts when a trigger is fired by an event in Zenoss. Also, in a &lt;a href=&#34;https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack.html&#34;&gt;more recent post&lt;/a&gt; I explained how a ZenPack could automatically create these triggers and notifications when installed by defining them in JSON format.&lt;/p&gt;
-
 &lt;p&gt;In this post I will explain how to create additional custom action types that can be used by notifications for different purposes.&lt;/p&gt;
-
 &lt;h2 id=&#34;zenoss-default-notification-actions&#34;&gt;Zenoss Default Notification Actions&lt;/h2&gt;
-
 &lt;p&gt;By default, Zenoss comes with a built-in notification action types. You can see them when creating a new notification from the user interface:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/default_notifications.jpg&#34; alt=&#34;Zenoss Default Actions&#34;&gt;&lt;/p&gt;
 &lt;p&gt;These action types are:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Command&lt;/strong&gt;: Runs an executable script. Discussed in one of my &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous posts&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: Sends an e-mail to a user.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Page&lt;/strong&gt;: Sends a message to a user&amp;rsquo;s &lt;a href=&#34;https://en.wikipedia.org/wiki/Pager&#34;&gt;pager&lt;/a&gt;, also known as &lt;em&gt;beeper&lt;/em&gt;. Probably safe to say that this is not used by anyone anymore.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Page&lt;/strong&gt;: Sends a message to a user&#39;s &lt;a href=&#34;https://en.wikipedia.org/wiki/Pager&#34;&gt;pager&lt;/a&gt;, also known as &lt;em&gt;beeper&lt;/em&gt;. Probably safe to say that this is not used by anyone anymore.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Syslog&lt;/strong&gt;: Logs a message to &lt;a href=&#34;https://en.wikipedia.org/wiki/Syslog&#34;&gt;syslog&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;SNMP Trap&lt;/strong&gt;: Sends an SNMP trap.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;All these notifications are sent when an event matches a trigger rule.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-the-new-action&#34;&gt;Creating the New Action&lt;/h2&gt;
-
-&lt;p&gt;Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&amp;rsquo;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!&lt;/p&gt;</description>
+&lt;p&gt;Next, we are going to learn how we can create and add a new fully functional custom action to this list, using a ZenPack. For this example, let&#39;s assume that we want to create a new SMS action to send SMS messages. Surely something more modern and useful than a Pager!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -307,46 +254,43 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/</guid>
       <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html&#34;&gt;previous post&lt;/a&gt; I talked about how to use &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;command notifications&lt;/strong&gt; in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.&lt;/p&gt;
-
 &lt;p&gt;In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.&lt;/p&gt;
-
-&lt;h2 id=&#34;defining-zenpack-triggers-notifications&#34;&gt;Defining ZenPack Triggers &amp;amp; Notifications&lt;/h2&gt;
-
-&lt;p&gt;Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named &lt;code&gt;actions.json&lt;/code&gt; in a directory called &lt;code&gt;zep&lt;/code&gt; (create it if it doesn&amp;rsquo;t exist), within the ZenPack&amp;rsquo;s top directory.&lt;/p&gt;
-
+&lt;h2 id=&#34;defining-zenpack-triggers--notifications&#34;&gt;Defining ZenPack Triggers &amp;amp; Notifications&lt;/h2&gt;
+&lt;p&gt;Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named &lt;code&gt;actions.json&lt;/code&gt; in a directory called &lt;code&gt;zep&lt;/code&gt; (create it if it doesn&#39;t exist), within the ZenPack&#39;s top directory.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;actions.json&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
-  &amp;#34;triggers&amp;#34;: [
+&lt;pre&gt;&lt;code class=&#34;language-json?line_numbers=false&#34; data-lang=&#34;json?line_numbers=false&#34;&gt;{
+  &amp;quot;triggers&amp;quot;: [
     {
-      &amp;#34;name&amp;#34;: &amp;#34;Critical_death_event&amp;#34;,
-      &amp;#34;uuid&amp;#34;: &amp;#34;4c055067-98b7-483e-8f49-2820b4f2f721&amp;#34;,
-      &amp;#34;enabled&amp;#34;: false,
-      &amp;#34;rule&amp;#34;: {
-        &amp;#34;api_version&amp;#34;: 1,
-        &amp;#34;type&amp;#34;: 1,
-        &amp;#34;source&amp;#34;: &amp;#34;(evt.event_class.startswith(\&amp;#34;/Status/Ping\&amp;#34;)) and (evt.status == 0) and (evt.severity &amp;gt; 2)&amp;#34;
+      &amp;quot;name&amp;quot;: &amp;quot;Critical_death_event&amp;quot;,
+      &amp;quot;uuid&amp;quot;: &amp;quot;4c055067-98b7-483e-8f49-2820b4f2f721&amp;quot;,
+      &amp;quot;enabled&amp;quot;: false,
+      &amp;quot;rule&amp;quot;: {
+        &amp;quot;api_version&amp;quot;: 1,
+        &amp;quot;type&amp;quot;: 1,
+        &amp;quot;source&amp;quot;: &amp;quot;(evt.event_class.startswith(\&amp;quot;/Status/Ping\&amp;quot;)) and (evt.status == 0) and (evt.severity &amp;gt; 2)&amp;quot;
       }
     }
   ],
 
-  &amp;#34;notifications&amp;#34;: [
+  &amp;quot;notifications&amp;quot;: [
     {
-      &amp;#34;id&amp;#34;: &amp;#34;send_sms_message&amp;#34;,
-      &amp;#34;description&amp;#34;: &amp;#34;Send SMS using Twilio&amp;#34;,
-      &amp;#34;action&amp;#34;: &amp;#34;command&amp;#34;,
-      &amp;#34;guid&amp;#34;: &amp;#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&amp;#34;,
-      &amp;#34;enabled&amp;#34;: false,
-      &amp;#34;action_timeout&amp;#34;: 60,
-      &amp;#34;delay_seconds&amp;#34;: 0,
-      &amp;#34;repeat_seconds&amp;#34;: 0,
-      &amp;#34;send_initial_occurrence&amp;#34;: false,
-      &amp;#34;send_clear&amp;#34;: false,
-      &amp;#34;body_format&amp;#34;: &amp;#34;echo \&amp;#34;Hello World!\&amp;#34;&amp;#34;,
-      &amp;#34;clear_body_format&amp;#34;: &amp;#34;&amp;#34;,
-      &amp;#34;subscriptions&amp;#34;: [&amp;#34;4c055067-98b7-483e-8f49-2820b4f2f721&amp;#34;]
+      &amp;quot;id&amp;quot;: &amp;quot;send_sms_message&amp;quot;,
+      &amp;quot;description&amp;quot;: &amp;quot;Send SMS using Twilio&amp;quot;,
+      &amp;quot;action&amp;quot;: &amp;quot;command&amp;quot;,
+      &amp;quot;guid&amp;quot;: &amp;quot;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&amp;quot;,
+      &amp;quot;enabled&amp;quot;: false,
+      &amp;quot;action_timeout&amp;quot;: 60,
+      &amp;quot;delay_seconds&amp;quot;: 0,
+      &amp;quot;repeat_seconds&amp;quot;: 0,
+      &amp;quot;send_initial_occurrence&amp;quot;: false,
+      &amp;quot;send_clear&amp;quot;: false,
+      &amp;quot;body_format&amp;quot;: &amp;quot;echo \&amp;quot;Hello World!\&amp;quot;&amp;quot;,
+      &amp;quot;clear_body_format&amp;quot;: &amp;quot;&amp;quot;,
+      &amp;quot;subscriptions&amp;quot;: [&amp;quot;4c055067-98b7-483e-8f49-2820b4f2f721&amp;quot;]
     }
   ]
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -356,14 +300,10 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/diving-into-openstack-gnocchi/</guid>
       <description>&lt;p&gt;Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.&lt;/p&gt;
-
 &lt;p&gt;It is the preferred storage method for metrics in Ceilometer, as of OpenStack Ocata.&lt;/p&gt;
-
 &lt;p&gt;In this post I want to dive into Gnocchi specifics such as its configuration, supported backends, APIs, daemons, and source code.&lt;/p&gt;
-
 &lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
-
-&lt;p&gt;Gnocchi&amp;rsquo;s configuration is stored in a file called &lt;code&gt;gnocchi.conf&lt;/code&gt;. Ideally, this file would be in &lt;code&gt;~/gnocchi.conf&lt;/code&gt; or &lt;code&gt;/etc/gnocchi/gnocchi.conf&lt;/code&gt;. Let&amp;rsquo;s take a look at a basic Gnocchi configuration:&lt;/p&gt;
+&lt;p&gt;Gnocchi&#39;s configuration is stored in a file called &lt;code&gt;gnocchi.conf&lt;/code&gt;. Ideally, this file would be in &lt;code&gt;~/gnocchi.conf&lt;/code&gt; or &lt;code&gt;/etc/gnocchi/gnocchi.conf&lt;/code&gt;. Let&#39;s take a look at a basic Gnocchi configuration:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;[DEFAULT]&lt;/span&gt;
 &lt;span style=&#34;color:#75af00&#34;&gt;debug&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;true&lt;/span&gt;
 &lt;span style=&#34;color:#75af00&#34;&gt;verbose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;true&lt;/span&gt;
@@ -384,81 +324,55 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
 
 &lt;span style=&#34;color:#00a8c8&#34;&gt;[cors]&lt;/span&gt;
 &lt;span style=&#34;color:#75af00&#34;&gt;allowed_origin&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;*&lt;/span&gt;
-&lt;span style=&#34;color:#75af00&#34;&gt;allow_credentials&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.&lt;/p&gt;
-
+&lt;span style=&#34;color:#75af00&#34;&gt;allow_credentials&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.&lt;/p&gt;
 &lt;h3 id=&#34;database-setup&#34;&gt;Database Setup&lt;/h3&gt;
-
 &lt;p&gt;For this example, we are going to use &lt;a href=&#34;www.c9.io&#34;&gt;Cloud 9&lt;/a&gt; as our environment, and Postgresql as the database. This means that we need to first setup the database before we start using Gnocchi.&lt;/p&gt;
-
 &lt;p&gt;Make sure the Postgresql service is running:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo service postgresql start
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We can enter the Postgresql command line using:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We can enter the Postgresql command line using:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo sudo -u postgres psql
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s create a new Postgresql user:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Now let&#39;s create a new Postgresql user:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;CREATE USER gnocchi SUPERUSER PASSWORD &#39;gnocchi&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then create the database:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then create the database:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;CREATE DATABASE gnocchi WITH TEMPLATE = template0 ENCODING = &#39;UNICODE&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;gnocchi-upgrade
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You should see the following output logs:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You should see the following output logs:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;2017-05-17 05:28:50.917 3895 INFO gnocchi.cli [-] Upgrading indexer &amp;lt;gnocchi.indexer.sqlalchemy.SQLAlchemyIndexer object at 0x7ff76cff6190&amp;gt;
 2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
 2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
 2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
 2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
 2017-05-17 05:28:51.154 3895 INFO gnocchi.cli [-] Upgrading storage &amp;lt;gnocchi.storage.file.FileStorage object at 0x7ff7688f9710&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;gnocchi-rest-api&#34;&gt;Gnocchi REST API&lt;/h2&gt;
-
-&lt;p&gt;Gnocchi&amp;rsquo;s REST API is based on &lt;a href=&#34;http://www.pecanpy.org/index.html&#34;&gt;Pecan&lt;/a&gt;, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&amp;rsquo;s &lt;code&gt;rest/__init__.py&lt;/code&gt; file:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;gnocchi-rest-api&#34;&gt;Gnocchi REST API&lt;/h2&gt;
+&lt;p&gt;Gnocchi&#39;s REST API is based on &lt;a href=&#34;http://www.pecanpy.org/index.html&#34;&gt;Pecan&lt;/a&gt;, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&#39;s &lt;code&gt;rest/__init__.py&lt;/code&gt; file:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&#34;metrics&#34;&gt;Metrics&lt;/h3&gt;
-
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;metrics&#34;&gt;Metrics&lt;/h3&gt;
 &lt;p&gt;Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.&lt;/p&gt;
-
 &lt;p&gt;A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.&lt;/p&gt;
-
 &lt;p&gt;Farther down the code in &lt;code&gt;rest/__init__.py&lt;/code&gt;, we can find a metric controller which inherits from a Pecan REST controller:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MetricController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RestController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MetricController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RestController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;_custom_actions&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;measures&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;measures&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;POST&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;GET&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;extension&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ExtensionManager&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;gnocchi.aggregates&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;extension&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ExtensionManager&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;gnocchi.aggregates&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
                                          &lt;span style=&#34;color:#111&#34;&gt;invoke_on_load&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;True&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;custom_agg&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;dict&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;obj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;custom_agg&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;dict&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;obj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;enforce&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;to_primitive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;enforce&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;to_primitive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
-    &lt;span style=&#34;color:#75af00&#34;&gt;@pecan.expose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;json&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;get_all&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get metric&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;From the &lt;a href=&#34;http://pecan.readthedocs.io/en/latest/routing.html&#34;&gt;Pecan documentation&lt;/a&gt;, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.&lt;/p&gt;
-
-&lt;p&gt;We can tell Pecan which methods in a class are publically-visible via &lt;code&gt;expose()&lt;/code&gt;. If a method is not decorated with &lt;code&gt;expose()&lt;/code&gt;, Pecan will never route a request to it. In the example above, the &lt;code&gt;get_all()&lt;/code&gt; method is exposed to Pecan. Additionally, it makes use of Pecan&amp;rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.&lt;/p&gt;</description>
+    &lt;span style=&#34;color:#75af00&#34;&gt;@pecan.expose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;get_all&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;get metric&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;From the &lt;a href=&#34;http://pecan.readthedocs.io/en/latest/routing.html&#34;&gt;Pecan documentation&lt;/a&gt;, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.&lt;/p&gt;
+&lt;p&gt;We can tell Pecan which methods in a class are publically-visible via &lt;code&gt;expose()&lt;/code&gt;. If a method is not decorated with &lt;code&gt;expose()&lt;/code&gt;, Pecan will never route a request to it. In the example above, the &lt;code&gt;get_all()&lt;/code&gt; method is exposed to Pecan. Additionally, it makes use of Pecan&#39;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -468,24 +382,21 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/understanding-oslo_config-in-openstack/</guid>
       <description>&lt;p&gt;The OpenStack &lt;a href=&#34;https://wiki.openstack.org/wiki/Oslo&#34;&gt;Oslo&lt;/a&gt; library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.&lt;/p&gt;
-
 &lt;p&gt;In this post I want to go over &lt;a href=&#34;https://wiki.openstack.org/wiki/Oslo/Config&#34;&gt;oslo_config&lt;/a&gt;. This library helps with parsing of &lt;strong&gt;options&lt;/strong&gt; found in configuration files or command line arguments.&lt;/p&gt;
-
 &lt;h2 id=&#34;understanding-options&#34;&gt;Understanding Options&lt;/h2&gt;
-
 &lt;p&gt;An option is defined using the &lt;code&gt;Opt&lt;/code&gt; class or one of its sub-classes, from the &lt;code&gt;cfg&lt;/code&gt; module:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;oslo_config&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;
 
 &lt;span style=&#34;color:#111&#34;&gt;common_opts&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;StrOpt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;bind_host&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-               &lt;span style=&#34;color:#111&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;0.0.0.0&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-               &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;IP address to listen on.&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Opt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;bind_port&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;StrOpt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;bind_host&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+               &lt;span style=&#34;color:#111&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;0.0.0.0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+               &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;IP address to listen on.&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Opt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;bind_port&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
             &lt;span style=&#34;color:#111&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;PortType&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
             &lt;span style=&#34;color:#111&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;9292&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-            &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Port number to listen on.&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;In the example above we can see that we are using &lt;code&gt;Opt&lt;/code&gt; and &lt;code&gt;StrOpt&lt;/code&gt;, one of its sub-classes. You might notice that the second option&amp;rsquo;s constructor has a &lt;code&gt;type=PortType&lt;/code&gt; argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises &lt;code&gt;ValueError&lt;/code&gt; if the value cannot be converted. The different types available can be found in the &lt;code&gt;types&lt;/code&gt; module:&lt;/p&gt;</description>
+            &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;Port number to listen on.&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In the example above we can see that we are using &lt;code&gt;Opt&lt;/code&gt; and &lt;code&gt;StrOpt&lt;/code&gt;, one of its sub-classes. You might notice that the second option&#39;s constructor has a &lt;code&gt;type=PortType&lt;/code&gt; argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises &lt;code&gt;ValueError&lt;/code&gt; if the value cannot be converted. The different types available can be found in the &lt;code&gt;types&lt;/code&gt; module:&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -495,15 +406,10 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/understanding-ceilometer-publishers/</guid>
       <description>&lt;p&gt;Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer &lt;strong&gt;publishers&lt;/strong&gt;. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.&lt;/p&gt;
-
 &lt;p&gt;Publishers are specified in the &lt;code&gt;publishers&lt;/code&gt; section for each pipeline that is defined in the &lt;code&gt;pipeline.yaml&lt;/code&gt; and the &lt;code&gt;event_pipeline.yaml&lt;/code&gt; files.&lt;/p&gt;
-
 &lt;p&gt;Many different publishers are available. The following are the most common and important publishers:&lt;/p&gt;
-
 &lt;h3 id=&#34;gnocchi&#34;&gt;Gnocchi&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/gnocchi-logo.jpg&#34; alt=&#34;Gnocchi Logo&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/gnocchi-logo.jpg&#34; alt=&#34;Gnocchi Logo&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.&lt;/p&gt;</description>
     </item>
     
@@ -514,15 +420,10 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/understanding-ceilometer-transformers/</guid>
       <description>&lt;p&gt;Ceilometer &lt;strong&gt;transformers&lt;/strong&gt; are part of the Ceilometer &lt;strong&gt;pipeline&lt;/strong&gt;, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for &lt;strong&gt;samples&lt;/strong&gt; and a pipeline for &lt;strong&gt;events&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;Configurations for these pipelines can be found in &lt;code&gt;/etc/ceilometer/pipeline.yaml&lt;/code&gt; and &lt;code&gt;/etc/ceilometer/event_pipeline.yaml&lt;/code&gt;.&lt;/p&gt;
-
 &lt;p&gt;Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png&#34; alt=&#34;Ceilometer Pipeline&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png&#34; alt=&#34;Ceilometer Pipeline&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:&lt;/p&gt;
-
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -530,41 +431,34 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
 &lt;th align=&#34;center&#34;&gt;Reference name for configuration&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Accumulator&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;accumulator&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Aggregator&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;aggregator&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Arithmetic&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;arithmetic&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Rate of change&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;rate_of_change&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Unit conversion&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;unit_conversion&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Delta&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;delta&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
-&lt;p&gt;Let&amp;rsquo;s take a more detailed look into the accumulator transformer.&lt;/p&gt;</description>
+&lt;p&gt;Let&#39;s take a more detailed look into the accumulator transformer.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -574,17 +468,11 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</guid>
       <description>&lt;p&gt;Before beginning to &lt;a href=&#34;https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html&#34;&gt;contribute to OpenStack&lt;/a&gt;, it is necessary that we setup an ideal development environment for a smoother workflow.&lt;/p&gt;
-
 &lt;p&gt;In this post I will cover how to setup a Devstack development environment in a &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt; virtual machine using &lt;a href=&#34;http://www.vmware.com/&#34;&gt;VMware Player&lt;/a&gt;.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-the-ubuntu-virtual-machine&#34;&gt;Setting Up the Ubuntu Virtual Machine&lt;/h2&gt;
-
 &lt;p&gt;Make sure you have &lt;a href=&#34;http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html&#34;&gt;VMware Player&lt;/a&gt; installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a &lt;a href=&#34;http://releases.ubuntu.com/xenial/&#34;&gt;Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)&lt;/a&gt; for &lt;strong&gt;32-bit PC i836&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu &lt;code&gt;.iso&lt;/code&gt; image file when prompted. Proceed with the installation and select the &lt;em&gt;Erase Disk and Install Ubuntu&lt;/em&gt; option when prompted.&lt;/p&gt;
-
 &lt;p&gt;~&amp;gt; I tried using &lt;a href=&#34;https://www.virtualbox.org/&#34;&gt;VirtualBox&lt;/a&gt; for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;Once the installation is finished, restart the virtual machine.&lt;/p&gt;</description>
     </item>
     
@@ -594,16 +482,11 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       <pubDate>Tue, 14 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png&#34; alt=&#34;OpenStack&#34; /&gt;&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;img src=&#34;http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png&#34; alt=&#34;OpenStack&#34;&gt;&lt;/p&gt;
 &lt;p&gt;I have started to become interested in contributing to the &lt;a href=&#34;https://www.openstack.org/&#34;&gt;OpenStack&lt;/a&gt; project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.&lt;/p&gt;
-
 &lt;h2 id=&#34;picking-a-project&#34;&gt;Picking a Project&lt;/h2&gt;
-
 &lt;p&gt;OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the &lt;a href=&#34;https://wiki.openstack.org/wiki/Telemetry&#34;&gt;Telemetry&lt;/a&gt; part, more specifically on &lt;strong&gt;Ceilometer&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The &lt;a href=&#34;https://docs.openstack.org/developer/ceilometer/&#34;&gt;Ceilometer developer documentation&lt;/a&gt; offers good explanations and diagrams of its architecture and components.&lt;/p&gt;
-
 &lt;p&gt;&lt;a href=&#34;https://wiki.openstack.org/wiki/Ceilometer/Contributing&#34;&gt;Here&lt;/a&gt; is another nice guide on contributing to Ceilometer.&lt;/p&gt;</description>
     </item>
     
@@ -614,19 +497,17 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/python-tricks-for-better-code/</guid>
       <description>&lt;p&gt;A compilation of very useful Python tricks for better code. All examples are Python 2.7 and Python 3 compatible unless stated otherwise.&lt;/p&gt;
-
 &lt;h2 id=&#34;enumerate&#34;&gt;Enumerate&lt;/h2&gt;
-
-&lt;p&gt;When working with items in a list and we want to print or handle each item&amp;rsquo;s index, instead of using a counter variable:&lt;/p&gt;
+&lt;p&gt;When working with items in a list and we want to print or handle each item&#39;s index, instead of using a counter variable:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Bad way&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;place&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;places&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     &lt;span style=&#34;color:#00a8c8&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;place&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;We can use &lt;code&gt;enumerate&lt;/code&gt; to improve our code:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;place&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enumerate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;places&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;place&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;enumerate&lt;/code&gt; returns a list of indexes along with each item in the list.&lt;/p&gt;</description>
+    &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We can use &lt;code&gt;enumerate&lt;/code&gt; to improve our code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;place&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enumerate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;places&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;place&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;enumerate&lt;/code&gt; returns a list of indexes along with each item in the list.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -636,32 +517,20 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/working-with-zenoss-python-data-sources/</guid>
       <description>&lt;p&gt;Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using &lt;a href=&#34;https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html&#34;&gt;command datasources&lt;/a&gt;. Python data sources come with the introduction of the &lt;a href=&#34;https://www.zenoss.com/product/zenpacks/pythoncollector&#34;&gt;PythonCollector ZenPack&lt;/a&gt;, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.&lt;/p&gt;
-
-&lt;p&gt;Python data source plugins work exceptionally great in replacing data collection logic in &lt;a href=&#34;https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html&#34;&gt;custom daemons&lt;/a&gt; written in Python. This means that the ZenPacks&amp;rsquo;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.&lt;/p&gt;
-
+&lt;p&gt;Python data source plugins work exceptionally great in replacing data collection logic in &lt;a href=&#34;https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html&#34;&gt;custom daemons&lt;/a&gt; written in Python. This means that the ZenPacks&#39;s code is greatly reduced because we do not have to create configuration service, and custom daemon code.&lt;/p&gt;
 &lt;p&gt;Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.&lt;/p&gt;
-
 &lt;h2 id=&#34;example-scenario-bmc-power-status&#34;&gt;Example Scenario: BMC Power Status&lt;/h2&gt;
-
 &lt;p&gt;For this post, I will be using an example where we will be executing an &lt;a href=&#34;https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html&#34;&gt;ipmitool command&lt;/a&gt; to check the power chassis status of a &lt;a href=&#34;https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html&#34;&gt;BMC device&lt;/a&gt;.&lt;/p&gt;
-
 &lt;p&gt;If I run the following command from my shell:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;ipmitool -H $BMC_IP -I lanplus -U admin -P admin power status
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I get the following output:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I get the following output:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Chassis Power is on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Map the value into a boolean property of a custon zenpacklib class.&lt;/li&gt;
 &lt;li&gt;Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.&lt;/li&gt;
 &lt;li&gt;Update the device model with the new property value.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;Display the property&amp;rsquo;s value in the device detail bar using JavaScript&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;Display the property&#39;s value in the device detail bar using JavaScript&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;</description>
     </item>
     
@@ -672,17 +541,15 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/useful-zendmd-tricks/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Category:ZenDMD&#34;&gt;Zenoss Zendmd Tips Wiki&lt;/a&gt; page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.&lt;/p&gt;
-
 &lt;h2 id=&#34;removing-device-classes&#34;&gt;Removing Device Classes&lt;/h2&gt;
-
 &lt;p&gt;We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &amp;ldquo;KVM&amp;rdquo; device class:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;dmd&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Devices&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;manage_deleteOrganizer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;/zport/dmd/Devices/KVM&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&#34;change-zenoss-user-s-password&#34;&gt;Change Zenoss User&amp;rsquo;s Password&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s say we want to change the default &lt;em&gt;admin&lt;/em&gt; user&amp;rsquo;s password (&lt;code&gt;zenoss&lt;/code&gt;) in the Ubuntu auto deploy:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;acl_users&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;userManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;updateUserPassword&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;newpassword&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;dmd&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Devices&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;manage_deleteOrganizer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/zport/dmd/Devices/KVM&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;change-zenoss-users-password&#34;&gt;Change Zenoss User&#39;s Password&lt;/h2&gt;
+&lt;p&gt;Let&#39;s say we want to change the default &lt;em&gt;admin&lt;/em&gt; user&#39;s password (&lt;code&gt;zenoss&lt;/code&gt;) in the Ubuntu auto deploy:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;acl_users&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;userManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;updateUserPassword&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;admin&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;newpassword&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;commit&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -691,12 +558,9 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       <pubDate>Fri, 20 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/</guid>
-      <description>&lt;p&gt;When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class&amp;rsquo;s modeler plugins to be &lt;strong&gt;replaced&lt;/strong&gt; by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply &lt;em&gt;added&lt;/em&gt; to the device class&amp;rsquo;s list of modeler plugins.&lt;/p&gt;
-
+      <description>&lt;p&gt;When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class&#39;s modeler plugins to be &lt;strong&gt;replaced&lt;/strong&gt; by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply &lt;em&gt;added&lt;/em&gt; to the device class&#39;s list of modeler plugins.&lt;/p&gt;
 &lt;p&gt;In a previous post I explained how we can &lt;a href=&#34;https://aalvarez.me/posts/customizing-the-zenpack-installation-process.html&#34;&gt;customize the ZenPacks installation process&lt;/a&gt; to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s assume that we have the &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)&#34;&gt;OpenStack Infrastructure ZenPack&lt;/a&gt; installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the &lt;code&gt;/Server/SSH/Linux/NovaHost&lt;/code&gt; device class. We want our custom ZenPack to add &lt;em&gt;new&lt;/em&gt; modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.&lt;/p&gt;
-
+&lt;p&gt;Let&#39;s assume that we have the &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)&#34;&gt;OpenStack Infrastructure ZenPack&lt;/a&gt; installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the &lt;code&gt;/Server/SSH/Linux/NovaHost&lt;/code&gt; device class. We want our custom ZenPack to add &lt;em&gt;new&lt;/em&gt; modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.&lt;/p&gt;
 &lt;p&gt;This will be done upon installation (like in the previous post) inside the &lt;code&gt;__init__.py&lt;/code&gt; file in the ZenPack top directory. This is how the code looks like:&lt;/p&gt;</description>
     </item>
     
@@ -706,20 +570,18 @@ class_relationships&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/customizing-the-zenpack-installation-process/</guid>
-      <description>&lt;p&gt;There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&amp;rsquo;s top directory&amp;rsquo;s &lt;code&gt;__init__.py&lt;/code&gt; file. When creating a fresh ZenPack using &lt;strong&gt;zenpacklib&lt;/strong&gt;, this &lt;code&gt;__init__.py&lt;/code&gt; file will contain the following contents:&lt;/p&gt;
+      <description>&lt;p&gt;There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&#39;s top directory&#39;s &lt;code&gt;__init__.py&lt;/code&gt; file. When creating a fresh ZenPack using &lt;strong&gt;zenpacklib&lt;/strong&gt;, this &lt;code&gt;__init__.py&lt;/code&gt; file will contain the following contents:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenpacklib&lt;/span&gt;
 
-&lt;span style=&#34;color:#111&#34;&gt;CFG&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenpacklib&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;load_yaml&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;To add custom functionality that gets executed when the ZenPack is installed, we need to extend the &lt;code&gt;install&lt;/code&gt; method of the &lt;code&gt;ZenPack&lt;/code&gt; class. Below the original code, we can proceed to do so:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;install&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;CFG&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenpacklib&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;load_yaml&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To add custom functionality that gets executed when the ZenPack is installed, we need to extend the &lt;code&gt;install&lt;/code&gt; method of the &lt;code&gt;ZenPack&lt;/code&gt; class. Below the original code, we can proceed to do so:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;install&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
         &lt;span style=&#34;color:#75715e&#34;&gt;# Our custom logic here&lt;/span&gt;
 
-        &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;install&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;No other imports are necessary. Notice the last line of the &lt;code&gt;install&lt;/code&gt; method, this is where the ZenPack gets installed.&lt;/p&gt;
-
-&lt;p&gt;For the purpuse of giving an example, Let&amp;rsquo;s say that our ZenPack creates two new &lt;a href=&#34;https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html&#34;&gt;zProperties&lt;/a&gt;, one property to store an API key, and the other one to store a URL. Moreover let&amp;rsquo;s say that we obtain these values from somewhere and we want to assign them &lt;strong&gt;automatically&lt;/strong&gt; to the properties upon the installation of the ZenPack.&lt;/p&gt;
-
+        &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ZenPack&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;install&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;No other imports are necessary. Notice the last line of the &lt;code&gt;install&lt;/code&gt; method, this is where the ZenPack gets installed.&lt;/p&gt;
+&lt;p&gt;For the purpuse of giving an example, Let&#39;s say that our ZenPack creates two new &lt;a href=&#34;https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html&#34;&gt;zProperties&lt;/a&gt;, one property to store an API key, and the other one to store a URL. Moreover let&#39;s say that we obtain these values from somewhere and we want to assign them &lt;strong&gt;automatically&lt;/strong&gt; to the properties upon the installation of the ZenPack.&lt;/p&gt;
 &lt;p&gt;These two new properties are defined in &lt;code&gt;zenpack.yaml&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;name&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; ZenPacks.aalvarez.MyZenPack
 
@@ -730,7 +592,8 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
 
   zMyApiKey&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     category&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; MyApi
-    type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; string&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; string
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -740,9 +603,7 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/</guid>
       <description>&lt;p&gt;When testing the monitoring of the OpenStack compute node devices in Zenoss (using &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)&#34;&gt;OpenStack Infrastructure ZenPack&lt;/a&gt;), I noticed that I could not get any graphs for the &lt;strong&gt;network interfaces&lt;/strong&gt; of the device, although we could still get and model all the available interfaces:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png&#34; alt=&#34;Network Interfaces&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png&#34; alt=&#34;Network Interfaces&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.&lt;/p&gt;</description>
     </item>
     
@@ -753,14 +614,10 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
       <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-an-endpoint&#34;&gt;Creating an Endpoint&lt;/h2&gt;
-
 &lt;p&gt;Assuming that we are starting with a new and fresh ZenPack created with &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, we will proceed to create a simple endpoint.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
-
-&lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
+&lt;p&gt;Let&#39;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&#39;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&#39;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
+&lt;p&gt;First, let&#39;s take a quick look at the imports:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;os.path&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;subprocess&lt;/span&gt;
@@ -775,8 +632,8 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulFacade&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IFacade&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulMessageFactory&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_t&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenPath&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenPath&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -786,16 +643,11 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/</guid>
       <description>&lt;p&gt;Zenoss usually monitors and collects information using &lt;strong&gt;SNMP&lt;/strong&gt; and &lt;strong&gt;SSH&lt;/strong&gt; methods. A good example of is the &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Linux_Monitor&#34;&gt;linux monitor ZenPack&lt;/a&gt; which can collect information such as hard disks, interfaces, and file systems using &lt;strong&gt;both&lt;/strong&gt; methods.&lt;/p&gt;
-
 &lt;p&gt;SNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using &lt;strong&gt;&lt;a href=&#34;http://www.net-snmp.org/&#34;&gt;net-snmp&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;On the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.&lt;/p&gt;
-
 &lt;p&gt;When developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/tutorial-snmp-device/index.html&#34;&gt;SNMP monitoring using zenpacklib&lt;/a&gt;. When using SNMP, the modeler plugins are &lt;code&gt;SnmpPlugin&lt;/code&gt; plugins that typically work using a set of &lt;a href=&#34;http://www.dpstele.com/snmp/what-does-oid-network-elements.php&#34;&gt;OIDs&lt;/a&gt; to determine exactly which data is to be modeled.&lt;/p&gt;
-
 &lt;h2 id=&#34;ssh-in-modeler-plugins&#34;&gt;SSH in Modeler Plugins&lt;/h2&gt;
-
-&lt;p&gt;In order to make a modeler plugin utilize SSH as it&amp;rsquo;s polling method we need to use a different type of plugin, the &lt;code&gt;CommandPlugin&lt;/code&gt; plugin. The structure of this type of plugin is very similar to the &lt;code&gt;SnmpPlugin&lt;/code&gt;, however there is one critical variable that must be implemented.&lt;/p&gt;</description>
+&lt;p&gt;In order to make a modeler plugin utilize SSH as it&#39;s polling method we need to use a different type of plugin, the &lt;code&gt;CommandPlugin&lt;/code&gt; plugin. The structure of this type of plugin is very similar to the &lt;code&gt;SnmpPlugin&lt;/code&gt;, however there is one critical variable that must be implemented.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -805,18 +657,12 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/working-with-zenoss-events/</guid>
       <description>&lt;p&gt;Zenoss Events are among the most powerful and useful monitoring features that Zenoss Core provides. Many different types of events are &lt;strong&gt;automatically&lt;/strong&gt; generated by Zenoss when important scenarios occur for the devices being monitored.&lt;/p&gt;
-
 &lt;h2 id=&#34;zenoss-event-architecture&#34;&gt;Zenoss Event Architecture&lt;/h2&gt;
-
 &lt;p&gt;When an event arrives at Zenoss, it is parsed, associated with an event classification and then typically (but not always), it is inserted into the status table of the events database. Events can then be viewed by users using the Event Console of the Zenoss Graphical User Interface (GUI).&lt;/p&gt;
-
 &lt;p&gt;The events system has the concept of active status events and historical events (two different database tables in the MySQL events database).&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/working-with-zenoss-events/event_console.jpg&#34; alt=&#34;!Zenoss Core 4 Event Console&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/working-with-zenoss-events/event_console.jpg&#34; alt=&#34;!Zenoss Core 4 Event Console&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;understanding-event-classes&#34;&gt;Understanding Event Classes&lt;/h3&gt;
-
-&lt;p&gt;Zenoss event classes are a simple organizational structure for the different types of events that Zenoss generates and receives. This organization is useful for driving alerting and reporting. You can, for example, create an alerting rule that sends you an email or pages you when the availability of a Web site or page is affected by filtering on the &lt;code&gt;/Status/Web&lt;/code&gt; event class&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;</description>
+&lt;p&gt;Zenoss event classes are a simple organizational structure for the different types of events that Zenoss generates and receives. This organization is useful for driving alerting and reporting. You can, for example, create an alerting rule that sends you an email or pages you when the availability of a Web site or page is affected by filtering on the &lt;code&gt;/Status/Web&lt;/code&gt; event class^[2].&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -826,21 +672,14 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/the-zenoss-json-api/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using &lt;a href=&#34;https://curl.haxx.se/&#34;&gt;cURL&lt;/a&gt; or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.&lt;/p&gt;
-
 &lt;p&gt;The API documentation can be downloaded &lt;a href=&#34;https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip&#34;&gt;here&lt;/a&gt;. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.&lt;/p&gt;
-
-&lt;p&gt;In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&amp;rsquo;s front-end (made using &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;ExtJS&lt;/a&gt;) interacts with it.&lt;/p&gt;
-
+&lt;p&gt;In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&#39;s front-end (made using &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;ExtJS&lt;/a&gt;) interacts with it.&lt;/p&gt;
 &lt;p&gt;~&amp;gt; Even though Zenoss calls its API a &lt;em&gt;JSON API&lt;/em&gt; (Simply because it returns data in JSON format), the API &lt;strong&gt;is not&lt;/strong&gt; &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API specification&lt;/a&gt; compliant.&lt;/p&gt;
-
 &lt;h2 id=&#34;querying-the-api&#34;&gt;Querying the API&lt;/h2&gt;
-
-&lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&amp;rsquo;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#111&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
-
+&lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&#39;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#111&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
 &lt;p&gt;This is all fine if all we need is querying the API and nothing else. But what if we really want to know &lt;strong&gt;&lt;em&gt;how&lt;/em&gt;&lt;/strong&gt; the API back-end works? How the endpoints are created? What are routers?&lt;/p&gt;
-
 &lt;p&gt;This is what we are gonna learn next.&lt;/p&gt;</description>
     </item>
     
@@ -851,17 +690,13 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       
       <guid>https://aalvarez.me/posts/using-rrdtool-in-zenoss/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;http://oss.oetiker.ch/rrdtool/&#34;&gt;rrdtool&lt;/a&gt; is an awesome high performance data logging and graphing tool for time series data. Zenoss Core uses RRDTool to collect, monitor, and graph peformance data for devices.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://oss.oetiker.ch/rrdtool/stream-pop.png&#34; alt=&#34;RRD Tool&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;http://oss.oetiker.ch/rrdtool/stream-pop.png&#34; alt=&#34;RRD Tool&#34;&gt;&lt;/p&gt;
 &lt;p&gt;However Zenoss Core comes with built-in helper wrappers around RRDTool that makes using it within Zenoss much easier. These source code files can be found in &lt;code&gt;$ZENHOME/Products/ZenRRD/&lt;/code&gt;.&lt;/p&gt;
-
 &lt;h2 id=&#34;rrdutil&#34;&gt;RRDUtil&lt;/h2&gt;
-
 &lt;p&gt;Located in &lt;code&gt;$ZENHOME/Products/ZenRRD/RRDUtil.py&lt;/code&gt;, this Python module contains many wrapper methods around the rrdtool library. These methods can help us write to, create new, and read &lt;code&gt;.rrd&lt;/code&gt; files using Python.&lt;/p&gt;
-
 &lt;p&gt;We can easily import this module into our code, using the following import statement:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RRDUtil&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenRRD.RRDUtil&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RRDUtil&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -870,53 +705,34 @@ zProperties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       <pubDate>Mon, 07 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/</guid>
-      <description>&lt;p&gt;ZenPacks are powerful custom add-ons that can help us extend Zenoss&amp;rsquo;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using &lt;a href=&#34;http://zenpacklib.zenoss.com/en/latest/index.html&#34;&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt;&lt;/a&gt;, but it is also possible to create it from the Zenoss user interface.&lt;/p&gt;
-
+      <description>&lt;p&gt;ZenPacks are powerful custom add-ons that can help us extend Zenoss&#39;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using &lt;a href=&#34;http://zenpacklib.zenoss.com/en/latest/index.html&#34;&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt;&lt;/a&gt;, but it is also possible to create it from the Zenoss user interface.&lt;/p&gt;
 &lt;h2 id=&#34;about-zenpacklib&#34;&gt;About zenpacklib&lt;/h2&gt;
-
 &lt;p&gt;&lt;strong&gt;zenpacklib&lt;/strong&gt; is a Python library developed by the Zenoss team to facilitate the process of creating ZenPacks, specially ZenPacks that deal with modeling and monitoring devices and components. Most of the newer ZenPacks that are being released are now being built with zenpacklib.&lt;/p&gt;
-
 &lt;p&gt;We can obtain zenpacklib by running the following commands:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;wget http://zenpacklib.zenoss.com/zenpacklib.py
 chmod 755 zenpacklib.py
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will download the zenpacklib Python library and give it executable permissions.&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will download the zenpacklib Python library and give it executable permissions.&lt;/p&gt;
 &lt;h2 id=&#34;creating-the-zenpack&#34;&gt;Creating the ZenPack&lt;/h2&gt;
-
 &lt;p&gt;Using the zenpacklib file we just downloaded, we proceed to create a new fresh ZenPack:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;./zenpacklib.py create ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will create the ZenPack base directory with the necessary base files.&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will create the ZenPack base directory with the necessary base files.&lt;/p&gt;
 &lt;p&gt;Now we go into this directory to begin.&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;cd ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;creating-the-zenpack-daemon&#34;&gt;Creating the ZenPack Daemon&lt;/h2&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;creating-the-zenpack-daemon&#34;&gt;Creating the ZenPack Daemon&lt;/h2&gt;
 &lt;p&gt;Our custom daemon declaration will be located in a directory named &lt;code&gt;daemons&lt;/code&gt;, inside our ZenPack directory:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;mkdir ZenPacks.&amp;lt;your_namespace&amp;gt;.&amp;lt;zenpack_name&amp;gt;/&amp;lt;your_namespace&amp;gt;/&amp;lt;zenpack_name&amp;gt;/daemons
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here we will create a new Bashscript file with the name of our daemon. In this case we will name it &lt;code&gt;mydaemon&lt;/code&gt;:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here we will create a new Bashscript file with the name of our daemon. In this case we will name it &lt;code&gt;mydaemon&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#! /usr/bin/env bash
 &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;DAEMON_NAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mydaemon&amp;#34;&lt;/span&gt;
 
 . &lt;span style=&#34;color:#111&#34;&gt;$ZENHOME&lt;/span&gt;/bin/zenfunctions
 
-&lt;span style=&#34;color:#111&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#111&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
+&lt;span style=&#34;color:#111&#34;&gt;MYPATH&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;python -c &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;import os.path; print os.path.realpath(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;THISDIR&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$MYPATH&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGHOME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt;dirname &lt;span style=&#34;color:#111&#34;&gt;$THISDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PRGNAME&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.py &lt;span style=&#34;color:#111&#34;&gt;CFGFILE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$CFGDIR&lt;/span&gt;/&lt;span style=&#34;color:#111&#34;&gt;$DAEMON_NAME&lt;/span&gt;.conf
 
-generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Once the ZenPack is installed, files under this &lt;code&gt;daemons&lt;/code&gt; directory will become executable (&lt;code&gt;chmod 0755&lt;/code&gt;), a symlink to the file will be created in &lt;code&gt;$ZENHOME/bin&lt;/code&gt;, and a configuration file will be generated in &lt;code&gt;$ZENHOME/etc/&amp;lt;daemon_name&amp;gt;.conf&lt;/code&gt;&lt;/p&gt;
+generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;
 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Once the ZenPack is installed, files under this &lt;code&gt;daemons&lt;/code&gt; directory will become executable (&lt;code&gt;chmod 0755&lt;/code&gt;), a symlink to the file will be created in &lt;code&gt;$ZENHOME/bin&lt;/code&gt;, and a configuration file will be generated in &lt;code&gt;$ZENHOME/etc/&amp;lt;daemon_name&amp;gt;.conf&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; If you created your ZenPack using the Zenoss user interface, the &lt;code&gt;daemons&lt;/code&gt; directory will also be automatically created, and will contain an example daemon file named &lt;code&gt;zenexample&lt;/code&gt; with code similar to the one above. In this case you should simply replace the necessary values.&lt;/p&gt;</description>
     </item>
     
@@ -927,50 +743,52 @@ generic &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span
       
       <guid>https://aalvarez.me/posts/zenoss-monitoring-template-data-points/</guid>
       <description>&lt;p&gt;&lt;em&gt;Content from this post is mostly obtained from &lt;strong&gt;Zenoss Core Administration guide&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;In Zenoss Core &lt;strong&gt;monitoring templates&lt;/strong&gt;, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented
 by a &lt;strong&gt;data point&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;When creating a data point, there are some important fields that we can define for our data point:&lt;/p&gt;
-
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; Displays the name you entered in the &lt;em&gt;Add a New DataPoint&lt;/em&gt; dialog.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Type:&lt;/strong&gt; Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:&lt;/p&gt;
-
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; Displays the name you entered in the &lt;em&gt;Add a New DataPoint&lt;/em&gt; dialog.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;RRD Type:&lt;/strong&gt; Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;COUNTER:&lt;/strong&gt; Saves the rate of change of the value over a step period. This assumes that the value is always
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;COUNTER:&lt;/strong&gt; Saves the rate of change of the value over a step period. This assumes that the value is always
 increasing (the difference between the current and the previous value is greater than 0). Traffic counters on a
-router are an ideal candidate for using COUNTER.&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;GAUGE:&lt;/strong&gt; Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
-To see memory consumption in a server, for example, you might want to select this value.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;DERIVE:&lt;/strong&gt; Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
-in free disk space on your server, for example, then you might want to select this value.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;ABSOLUTE:&lt;/strong&gt; Saves the rate of change, but assumes that the previous value is set to 0. The difference between
+router are an ideal candidate for using COUNTER.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;GAUGE:&lt;/strong&gt; Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
+To see memory consumption in a server, for example, you might want to select this value.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;DERIVE:&lt;/strong&gt; Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
+in free disk space on your server, for example, then you might want to select this value.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;ABSOLUTE:&lt;/strong&gt; Saves the rate of change, but assumes that the previous value is set to 0. The difference between
 the current and the previous value is always equal to the current value. Thus, ABSOLUTE stores the current
-value, divided by the step interval.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create Command:&lt;/strong&gt; Enter an RRD expression used to create the database for this data point. If you do not enter
-a value, then the system uses a default applicable to most situations. For details about the &lt;kbd&gt;rrdcreate&lt;/kbd&gt; command, go &lt;a href=&#34;http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Minimum:&lt;/strong&gt; Enter a value. Any value received that is less than this number is ignored.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;RRD Maximum:&lt;/strong&gt; Enter a value. Any value received that is greater than this number is ignored.&lt;/p&gt;&lt;/li&gt;
+value, divided by the step interval.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create Command:&lt;/strong&gt; Enter an RRD expression used to create the database for this data point. If you do not enter
+a value, then the system uses a default applicable to most situations. For details about the &lt;!-- raw HTML omitted --&gt;rrdcreate&lt;!-- raw HTML omitted --&gt; command, go &lt;a href=&#34;http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;RRD Minimum:&lt;/strong&gt; Enter a value. Any value received that is less than this number is ignored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;RRD Maximum:&lt;/strong&gt; Enter a value. Any value received that is greater than this number is ignored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;data-point-aliases&#34;&gt;Data Point Aliases&lt;/h2&gt;
-
 &lt;p&gt;Performance reports pull information from various data points that represent a metric. The report itself knows which
 data points it requires, and which modifications are needed, if any, to put the data in its proper units and format.&lt;/p&gt;
-
 &lt;p&gt;The addition of a data point requires changing the report.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg&#34; alt=&#34;CPU Utilization Report&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg&#34; alt=&#34;CPU Utilization Report&#34;&gt;&lt;/p&gt;
 &lt;p&gt;To allow for more flexibility in changes, some reports use &lt;em&gt;data point aliases&lt;/em&gt;. Data point aliases group data points so
 they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
 can normalize that data into a common unit.&lt;/p&gt;</description>
@@ -983,8 +801,7 @@ can normalize that data into a common unit.&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/</guid>
       <description>&lt;p&gt;The Zenoss &lt;a href=&#34;http://wiki.zenoss.org/ZenPack:Dashboard&#34;&gt;ZenPacks.zenoss.Dashboard&lt;/a&gt; ZenPack adds a very nice and new dashboard to our Zenoss Core 4 deployment, replacing the old default dashboard that comes with the installation.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://wiki.zenoss.org/images/0/01/Separate_dashboard.png&#34; alt=&#34;ZenPack Dashboard&#34; /&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;img src=&#34;http://wiki.zenoss.org/images/0/01/Separate_dashboard.png&#34; alt=&#34;ZenPack Dashboard&#34;&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -994,18 +811,13 @@ can normalize that data into a common unit.&lt;/p&gt;</description>
       
       <guid>https://aalvarez.me/posts/creating-python-packages/</guid>
       <description>&lt;p&gt;For a project involving Zenoss Core 4 and a HaaS solution maintained by another team, we needed a module to interact with the &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; to get the list of events for specific devices. Browsing around I found this &lt;a href=&#34;https://github.com/iamseth/python-zenoss&#34;&gt;python-zenoss&lt;/a&gt; module to work with the Zenoss JSON API. However I was experiencing some issues when installing it, so I decided to create my own Python package to provide a different way to interact with the Zenoss JSON API according to our specific needs.&lt;/p&gt;
-
 &lt;p&gt;The package would be installed locally using &lt;code&gt;pip&lt;/code&gt;, and all its functionality should be easily accessible using &lt;code&gt;from&lt;/code&gt; and &lt;code&gt;import&lt;/code&gt; commands in Python.&lt;/p&gt;
-
-&lt;p&gt;To start working in our package we will create a base directory. The directory&amp;rsquo;s name will resemble our package&amp;rsquo;s name. For naming, we should following these guidelines:&lt;/p&gt;
-
+&lt;p&gt;To start working in our package we will create a base directory. The directory&#39;s name will resemble our package&#39;s name. For naming, we should following these guidelines:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;All lowercase&lt;/li&gt;
 &lt;li&gt;Underscore-separated or no word separators at all (don’t use hyphens)&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;The package contents are the following:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;my_api/
 ├── __init__.py
 ├── api.py

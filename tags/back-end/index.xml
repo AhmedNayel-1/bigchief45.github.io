@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>back-end on Andrés Álvarez</title>
@@ -17,16 +17,11 @@
       <pubDate>Mon, 08 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/rails-api-with-nested-resources/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&amp;rsquo;s form and create all objects at once when the form is saved.&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/nathanvda/cocoon&#34;&gt;Cocoon&lt;/a&gt; is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &amp;ldquo;mini forms&amp;rdquo; of another model into a main model&#39;s form and create all objects at once when the form is saved.&lt;/p&gt;
 &lt;p&gt;I was recently finding myself trying to implement a similar functionality using only Rails 5 API and &lt;a href=&#34;http://jsonapi.org&#34;&gt;JSON API specification&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&amp;rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;As an example, we will try to implement the commonly seen &lt;em&gt;Work Experience&lt;/em&gt; and &lt;em&gt;Educational Background&lt;/em&gt; features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&#39;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg&#34; alt=&#34;Education&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;accepts-nested-attributes-for&#34;&gt;accepts_nested_attributes_for&lt;/h2&gt;
-
 &lt;p&gt;&lt;a href=&#34;http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html&#34;&gt;&lt;code&gt;accepts_nested_attributes_for&lt;/code&gt; &lt;/a&gt; allows us to save attributes on &lt;strong&gt;associated&lt;/strong&gt; records (work experience, educational background) through a parent record (user). By default nested attribute updating is turned off and you can enable it using the &lt;code&gt;#accepts_nested_attributes_for&lt;/code&gt; class method.&lt;/p&gt;</description>
     </item>
     

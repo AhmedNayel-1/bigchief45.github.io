@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Coding Challenge: Longest Substring Without Repeating Characters",
     "headline" : "Coding Challenge: Longest Substring Without Repeating Characters",
-    "description" : "\x3cp\x3e\x3cstrong\x3eDifficulty:\x3c\/strong\x3e Easy\x3c\/p\x3e\n\n\x3ch2 id=\x22problem\x22\x3eProblem\x3c\/h2\x3e\n\n\x3cp\x3eGiven a string, find the length of the longest substring without repeating characters.\x3c\/p\x3e\n\n\x3cp\x3eExamples:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3eGiven \x3ccode\x3eabcabcbb\x3c\/code\x3e, the answer is \x3ccode\x3eabc\x3c\/code\x3e, which the length is 3.\x3c\/li\x3e\n\x3cli\x3eGiven \x3ccode\x3ebbbbb\x3c\/code\x3e, the answer is \x3ccode\x3eb\x3c\/code\x3e, with the length of 1.\x3c\/li\x3e\n\x3cli\x3eGiven \x3ccode\x3epwwkew\x3c\/code\x3e, the answer is \x3ccode\x3ewke\x3c\/code\x3e, with the length of 3. Note that the answer must be a \x3cstrong\x3esubstring\x3c\/strong\x3e, \x3ccode\x3epwke\x3c\/code\x3e is a \x3cem\x3esubsequence\x3c\/em\x3e and not a substring.\x3c\/li\x3e\n\x3c\/ul\x3e",
+    "description" : "\x3cp\x3e\x3cstrong\x3eDifficulty:\x3c\/strong\x3e Easy\x3c\/p\x3e\n\x3ch2 id=\x22problem\x22\x3eProblem\x3c\/h2\x3e\n\x3cp\x3eGiven a string, find the length of the longest substring without repeating characters.\x3c\/p\x3e\n\x3cp\x3eExamples:\x3c\/p\x3e\n\x3cul\x3e\n\x3cli\x3eGiven \x3ccode\x3eabcabcbb\x3c\/code\x3e, the answer is \x3ccode\x3eabc\x3c\/code\x3e, which the length is 3.\x3c\/li\x3e\n\x3cli\x3eGiven \x3ccode\x3ebbbbb\x3c\/code\x3e, the answer is \x3ccode\x3eb\x3c\/code\x3e, with the length of 1.\x3c\/li\x3e\n\x3cli\x3eGiven \x3ccode\x3epwwkew\x3c\/code\x3e, the answer is \x3ccode\x3ewke\x3c\/code\x3e, with the length of 3. Note that the answer must be a \x3cstrong\x3esubstring\x3c\/strong\x3e, \x3ccode\x3epwke\x3c\/code\x3e is a \x3cem\x3esubsequence\x3c\/em\x3e and not a substring.\x3c\/li\x3e\n\x3c\/ul\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2019-04-08 15:09:13 \x2b0000 UTC",
     "dateModified" : "2019-04-08 15:09:13 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/coding-challenge-longest-substring-without-repeating-characters\/",
-    "wordCount" : "430",
+    "wordCount" : "427",
     "keywords" : [ "codingchallenges","Blog" ]
 }
 </script>
@@ -136,67 +136,54 @@ if (!doNotTrack) {
   <time datetime=2019-04-08T15:09:13Z class="post-date">Mon, Apr 8, 2019</time>
 
   <p><strong>Difficulty:</strong> Easy</p>
-
 <h2 id="problem">Problem</h2>
-
 <p>Given a string, find the length of the longest substring without repeating characters.</p>
-
 <p>Examples:</p>
-
 <ul>
 <li>Given <code>abcabcbb</code>, the answer is <code>abc</code>, which the length is 3.</li>
 <li>Given <code>bbbbb</code>, the answer is <code>b</code>, with the length of 1.</li>
 <li>Given <code>pwwkew</code>, the answer is <code>wke</code>, with the length of 3. Note that the answer must be a <strong>substring</strong>, <code>pwke</code> is a <em>subsequence</em> and not a substring.</li>
 </ul>
-
 <h2 id="analysis">Analysis</h2>
-
 <p><em>Note: In the 3rd example, another possible solution is also <code>kew</code></em>.</p>
-
 <p>A possible approach to solve this problem is to separate the string into substring groups. We can start with a big group (length - 1) so that we might find the answer earlier.</p>
-
 <p>For example, using the 3rd example given, we can split the string initially like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">[</span><span style="color:#d88200">&#39;pwwkew&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;w&#39;</span><span style="color:#111">]</span></code></pre></div>
-<p>At the beginning, the right part of the split will be smaller than the left one. But with each iteration, the left part will become smaller and the right part will become bigger until they are of equal size.</p>
-
-<p>Here&rsquo;s an example of how that looks:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">[</span><span style="color:#d88200">&#39;pwwkew&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;w&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 1st iteration</span>
-<span style="color:#111">[</span><span style="color:#d88200">&#39;pwwk&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;ew&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 2nd iteration</span>
-<span style="color:#111">[</span><span style="color:#d88200">&#39;pww&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;kew&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 3rd iteration, answer: &#39;kew&#39;</span>
-<span style="color:#111">[</span><span style="color:#d88200">&#39;pw&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;wk&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;ew&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 4th iteration (not reached)</span>
-<span style="color:#111">[</span><span style="color:#d88200">&#39;p&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;w&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;w&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;k&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;e&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;w&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 5th iteration (not reached)</span></code></pre></div>
-<p>Then on each group, we simply need to check if it contains unique characters.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">pwwkew</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">w</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
+</code></pre></div><p>At the beginning, the right part of the split will be smaller than the left one. But with each iteration, the left part will become smaller and the right part will become bigger until they are of equal size.</p>
+<p>Here's an example of how that looks:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">pwwkew</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">w</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 1st iteration</span>
+<span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">pwwk</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ew</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 2nd iteration</span>
+<span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">pww</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">kew</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 3rd iteration, answer: &#39;kew&#39;</span>
+<span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">pw</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">wk</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ew</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 4th iteration (not reached)</span>
+<span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">p</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">w</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">w</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">k</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">e</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">w</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>  <span style="color:#75715e"># 5th iteration (not reached)</span>
+</code></pre></div><p>Then on each group, we simply need to check if it contains unique characters.</p>
 <h2 id="solution-python">Solution (Python)</h2>
-
 <p>Here is my solution using Python 3:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">longest_substring</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">:</span> <span style="color:#111">str</span><span style="color:#111">)</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">int</span><span style="color:#111">:</span>
-    <span style="color:#d88200">&#34;&#34;&#34;
-</span><span style="color:#d88200">    Returns the length of the longest substring with unique
-</span><span style="color:#d88200">    chracters in a string &#39;s&#39;.
-</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">longest_substring</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">:</span> <span style="color:#111">str</span><span style="color:#111">)</span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> <span style="color:#111">int</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    Returns the length of the longest substring with unique</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    chracters in a string </span><span style="color:#d88200">&#39;</span><span style="color:#d88200">s</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">.</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    </span><span style="color:#d88200">&#34;&#34;&#34;</span>
     <span style="color:#111">n</span> <span style="color:#f92672">=</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">)</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
     <span style="color:#00a8c8">while</span> <span style="color:#111">n</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">:</span>
         <span style="color:#75715e"># Split the string into groups of size n</span>
-        <span style="color:#111">groups</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">s</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">:</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#111">n</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">),</span> <span style="color:#111">n</span><span style="color:#111">)]</span>
+        <span style="color:#111">groups</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">s</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">:</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#111">n</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">)</span><span style="color:#111">,</span> <span style="color:#111">n</span><span style="color:#111">)</span><span style="color:#111">]</span>
 
         <span style="color:#00a8c8">for</span> <span style="color:#111">g</span> <span style="color:#f92672">in</span> <span style="color:#111">groups</span><span style="color:#111">:</span>
             <span style="color:#75715e"># Ignore the small substring groups</span>
             <span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span> <span style="color:#f92672">==</span> <span style="color:#111">n</span><span style="color:#111">:</span>
                 <span style="color:#75715e"># Check if they have unique characters</span>
                 <span style="color:#75715e"># using a set</span>
-                <span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">set</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">))</span> <span style="color:#f92672">==</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">):</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">set</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span><span style="color:#111">)</span> <span style="color:#f92672">==</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span><span style="color:#111">:</span>
                     <span style="color:#00a8c8">return</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span>
 
-        <span style="color:#111">n</span> <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span></code></pre></div>
-<h2 id="takeaways">Takeaways</h2>
-
-<p>A very common task also present in other coding challenges is creating substring groups of size n from a string, as shown in this challenge. In Python we can do this in one line, although I feel it&rsquo;s a bit hard to remember it:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">groups</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">s</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">:</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#111">n</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">),</span> <span style="color:#111">n</span><span style="color:#111">)]</span></code></pre></div>
-<p>Another very simple concept is the checking of unique characters in a string. To achieve this we simply conver the string to a set, which will remove all the duplicate characters, and then compare its length to the original string&rsquo;s length. No need to loop through the string:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">unique</span> <span style="color:#f92672">=</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">set</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">))</span> <span style="color:#f92672">==</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span></code></pre></div>
-<h2 id="references">References</h2>
-
+        <span style="color:#111">n</span> <span style="color:#f92672">-</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><h2 id="takeaways">Takeaways</h2>
+<p>A very common task also present in other coding challenges is creating substring groups of size n from a string, as shown in this challenge. In Python we can do this in one line, although I feel it's a bit hard to remember it:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">groups</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">s</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">:</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#111">n</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">)</span><span style="color:#111">,</span> <span style="color:#111">n</span><span style="color:#111">)</span><span style="color:#111">]</span>
+</code></pre></div><p>Another very simple concept is the checking of unique characters in a string. To achieve this we simply conver the string to a set, which will remove all the duplicate characters, and then compare its length to the original string's length. No need to loop through the string:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">unique</span> <span style="color:#f92672">=</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">set</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span><span style="color:#111">)</span> <span style="color:#f92672">==</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">g</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="references">References</h2>
 <ul>
 <li><a href="https://stackoverflow.com/questions/9475241/split-string-every-nth-character/51256966">Stack Overflow: Split string every nth character?</a></li>
 </ul>

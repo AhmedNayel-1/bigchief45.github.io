@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ubuntu on Andrés Álvarez</title>
@@ -18,22 +18,13 @@
       
       <guid>https://aalvarez.me/posts/debian-package-versioning/</guid>
       <description>&lt;p&gt;In a previous post I talked about &lt;a href=&#34;https://aalvarez.me/posts/managing-debian-package-dependencies.html&#34;&gt;managing Debian package dependencies&lt;/a&gt;. However I did not go into detail about the structure the versioning of packages must have.&lt;/p&gt;
-
-&lt;p&gt;To recap, let&amp;rsquo;s see how we can specify a specific package version of a dependency that our package needs:&lt;/p&gt;
-
+&lt;p&gt;To recap, let&#39;s see how we can specify a specific package version of a dependency that our package needs:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Depends: erlang (&amp;gt;= 1.2)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;In the example above, the required version for erlang is simply &lt;code&gt;1.2&lt;/code&gt; or greater. A package&amp;rsquo;s version format however, can be a bit more complex than this.&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In the example above, the required version for erlang is simply &lt;code&gt;1.2&lt;/code&gt; or greater. A package&#39;s version format however, can be a bit more complex than this.&lt;/p&gt;
 &lt;h2 id=&#34;version-format-and-components&#34;&gt;Version Format and Components&lt;/h2&gt;
-
-&lt;p&gt;The official format of a Debian package&amp;rsquo;s version is:&lt;/p&gt;
-
+&lt;p&gt;The official format of a Debian package&#39;s version is:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[epoch:]upstream_version[-debian_revision]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Let&amp;rsquo;s go into detail about each of the components in that format.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Let&#39;s go into detail about each of the components in that format.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -43,17 +34,11 @@
       
       <guid>https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</guid>
       <description>&lt;p&gt;Before beginning to &lt;a href=&#34;https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html&#34;&gt;contribute to OpenStack&lt;/a&gt;, it is necessary that we setup an ideal development environment for a smoother workflow.&lt;/p&gt;
-
 &lt;p&gt;In this post I will cover how to setup a Devstack development environment in a &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt; virtual machine using &lt;a href=&#34;http://www.vmware.com/&#34;&gt;VMware Player&lt;/a&gt;.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-the-ubuntu-virtual-machine&#34;&gt;Setting Up the Ubuntu Virtual Machine&lt;/h2&gt;
-
 &lt;p&gt;Make sure you have &lt;a href=&#34;http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html&#34;&gt;VMware Player&lt;/a&gt; installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a &lt;a href=&#34;http://releases.ubuntu.com/xenial/&#34;&gt;Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)&lt;/a&gt; for &lt;strong&gt;32-bit PC i836&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu &lt;code&gt;.iso&lt;/code&gt; image file when prompted. Proceed with the installation and select the &lt;em&gt;Erase Disk and Install Ubuntu&lt;/em&gt; option when prompted.&lt;/p&gt;
-
 &lt;p&gt;~&amp;gt; I tried using &lt;a href=&#34;https://www.virtualbox.org/&#34;&gt;VirtualBox&lt;/a&gt; for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;Once the installation is finished, restart the virtual machine.&lt;/p&gt;</description>
     </item>
     
@@ -64,11 +49,8 @@
       
       <guid>https://aalvarez.me/posts/managing-debian-package-dependencies/</guid>
       <description>&lt;p&gt;In a previous post, I talked about &lt;a href=&#34;2016-10-11-debian-packaging-in-ubuntu.html&#34;&gt;building a simple Debian package in Ubuntu&lt;/a&gt;, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.&lt;/p&gt;
-
 &lt;h2 id=&#34;dpkg-and-dependencies&#34;&gt;dpkg and Dependencies&lt;/h2&gt;
-
-&lt;p&gt;Previously we installed our package using the &lt;kbd&gt;dpkg -i&lt;/kbd&gt; command. However, the problem with &lt;code&gt;dpkg&lt;/code&gt; is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as &lt;code&gt;apt-get&lt;/code&gt;) are required to fetch dependencies from repositories.&lt;/p&gt;
-
+&lt;p&gt;Previously we installed our package using the &lt;!-- raw HTML omitted --&gt;dpkg -i&lt;!-- raw HTML omitted --&gt; command. However, the problem with &lt;code&gt;dpkg&lt;/code&gt; is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as &lt;code&gt;apt-get&lt;/code&gt;) are required to fetch dependencies from repositories.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
@@ -81,23 +63,14 @@
       
       <guid>https://aalvarez.me/posts/debian-packaging-in-ubuntu/</guid>
       <description>&lt;p&gt;Debian packaging is a nice way to organize our software so that it can be installed and uninstalled with more ease. In this post we will go through the basics of creating a simple Debian package in Ubuntu 14.04 LTS.&lt;/p&gt;
-
-&lt;h2 id=&#34;package-source-structure&#34;&gt;Package Source &amp;amp; Structure&lt;/h2&gt;
-
-&lt;p&gt;We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&amp;rsquo;s title:&lt;/p&gt;
-
+&lt;h2 id=&#34;package-source--structure&#34;&gt;Package Source &amp;amp; Structure&lt;/h2&gt;
+&lt;p&gt;We will first create our working space for our package along with the necessary basic structure needed. For this example, we will create a directory for our package source, using the package title and 3 digit versioning in the directory&#39;s title:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mkdir mypackage-1.0.0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Inside our package, we will need a directory where we will hold the control files that give the Debian package the desired behavior:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;cd mypackage-1.0.0
 mkdir DEBIAN
 touch DEBIAN/control
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This &lt;code&gt;control&lt;/code&gt; file will describe our package to the Debian package manager (&lt;code&gt;dpkg&lt;/code&gt;). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This &lt;code&gt;control&lt;/code&gt; file will describe our package to the Debian package manager (&lt;code&gt;dpkg&lt;/code&gt;). Inside, we can specify information about the package such as version, architecture, dependencies, maintainer, etc, as shown below:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Package: mypackage
 Version: 1.0-0
 Section: base
@@ -106,9 +79,7 @@ Architecture: all
 Depends: python2.7
 Maintainer: Andres Alvarez &amp;lt;myemail@gmail.com&amp;gt;
 Description: A new and improved C++ Compiler
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;With this basic setup, we now have a basic working package that can be handled by the Debian package manager, albeit, with no contents.&lt;/p&gt;</description>
     </item>
     
   </channel>

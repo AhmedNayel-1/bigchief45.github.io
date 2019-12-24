@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Using Listeners in Custom Netbeans Platform Wizards",
     "headline" : "Using Listeners in Custom Netbeans Platform Wizards",
-    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/platform.netbeans.org\/tutorials\/nbm-wizard.html#validate\x22\x3eThis tutorial\x3c\/a\x3e explains how you can add validation to your custom wizards in the Netbeans Platform. This works by setting a boolean variable to \x3ccode\x3efalse\x3c\/code\x3e and then throwing a \x3ccode\x3eWizardValidationException\x3c\/code\x3e which will show an error message in the wizard, disabling the ability to click the \x3cem\x3eNext\x3c\/em\x3e or \x3cem\x3eFinish\x3c\/em\x3e buttons.\x3c\/p\x3e\n\n\x3cp\x3eThe problem with this is that after the above happens, there is no way to enable these buttons again. And the way to achieve this is not covered in that tutorial.\x3c\/p\x3e\n\n\x3cp\x3eTherefore, in this blog post I will explain just how to do that.\x3c\/p\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/platform.netbeans.org\/tutorials\/nbm-wizard.html#validate\x22\x3eThis tutorial\x3c\/a\x3e explains how you can add validation to your custom wizards in the Netbeans Platform. This works by setting a boolean variable to \x3ccode\x3efalse\x3c\/code\x3e and then throwing a \x3ccode\x3eWizardValidationException\x3c\/code\x3e which will show an error message in the wizard, disabling the ability to click the \x3cem\x3eNext\x3c\/em\x3e or \x3cem\x3eFinish\x3c\/em\x3e buttons.\x3c\/p\x3e\n\x3cp\x3eThe problem with this is that after the above happens, there is no way to enable these buttons again. And the way to achieve this is not covered in that tutorial.\x3c\/p\x3e\n\x3cp\x3eTherefore, in this blog post I will explain just how to do that.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,85 +136,78 @@ if (!doNotTrack) {
   <time datetime=2018-05-22T00:00:00Z class="post-date">Tue, May 22, 2018</time>
 
   <p><a href="https://platform.netbeans.org/tutorials/nbm-wizard.html#validate">This tutorial</a> explains how you can add validation to your custom wizards in the Netbeans Platform. This works by setting a boolean variable to <code>false</code> and then throwing a <code>WizardValidationException</code> which will show an error message in the wizard, disabling the ability to click the <em>Next</em> or <em>Finish</em> buttons.</p>
-
 <p>The problem with this is that after the above happens, there is no way to enable these buttons again. And the way to achieve this is not covered in that tutorial.</p>
-
 <p>Therefore, in this blog post I will explain just how to do that.</p>
-
 <p>We will be working only with the controller class of each panel. When using the wizard to generate your wizard, these classes will typically have a class suffix like <code>WizardPanel1</code>.</p>
+<p>Let's begin by first implementing the <code>DocumentListener</code> interface and add a Set of <code>ChangeListener</code>s:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">DoSomethingWizardPanel1</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">WizardDescriptor</span><span style="color:#f92672">.</span><span style="color:#75af00">ValidatingPanel</span><span style="color:#f92672">&lt;</span><span style="color:#111">WizardDescriptor</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">,</span> <span style="color:#111">DocumentListener</span> <span style="color:#f92672">{</span>
 
-<p>Let&rsquo;s begin by first implementing the <code>DocumentListener</code> interface and add a Set of <code>ChangeListener</code>s:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">DoSomethingWizardPanel1</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">WizardDescriptor</span><span style="color:#f92672">.</span><span style="color:#75af00">ValidatingPanel</span><span style="color:#f92672">&lt;</span><span style="color:#111">WizardDescriptor</span><span style="color:#f92672">&gt;,</span> <span style="color:#111">DocumentListener</span> <span style="color:#f92672">{</span>
-
-  <span style="color:#00a8c8">private</span> <span style="color:#111">Set</span><span style="color:#f92672">&lt;</span><span style="color:#111">ChangeListener</span><span style="color:#f92672">&gt;</span> <span style="color:#111">listeners</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashSet</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+  <span style="color:#00a8c8">private</span> <span style="color:#111">Set</span><span style="color:#f92672">&lt;</span><span style="color:#111">ChangeListener</span><span style="color:#f92672">&gt;</span> <span style="color:#111">listeners</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashSet</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
   <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span><span style="color:#f92672">}</span></code></pre></div>
-<p>Second, in the <code>getComponent()</code> method we will need to add the <code>DocumentListener</code> to each of the fields we want to trigger the change. For this example I will use a single text field:</p>
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><p>Second, in the <code>getComponent()</code> method we will need to add the <code>DocumentListener</code> to each of the fields we want to trigger the change. For this example I will use a single text field:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Override</span>
-<span style="color:#00a8c8">public</span> <span style="color:#111">DoSomethingVisualPanel1</span> <span style="color:#75af00">getComponent</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">component</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#111">component</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">DoSomethingVisualPanel1</span><span style="color:#f92672">();</span>
-        <span style="color:#111">component</span><span style="color:#f92672">.</span><span style="color:#75af00">getNameField</span><span style="color:#f92672">().</span><span style="color:#75af00">getDocument</span><span style="color:#f92672">().</span><span style="color:#75af00">addDocumentListener</span><span style="color:#f92672">(</span><span style="color:#00a8c8">this</span><span style="color:#f92672">);</span>
+<span style="color:#00a8c8">public</span> <span style="color:#111">DoSomethingVisualPanel1</span> <span style="color:#75af00">getComponent</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">component</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">component</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">DoSomethingVisualPanel1</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+        <span style="color:#111">component</span><span style="color:#f92672">.</span><span style="color:#75af00">getNameField</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#75af00">getDocument</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#75af00">addDocumentListener</span><span style="color:#f92672">(</span><span style="color:#00a8c8">this</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
     <span style="color:#00a8c8">return</span> <span style="color:#111">component</span><span style="color:#f92672">;</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>With the above implementation you will need to define a getter method <code>getNameField()</code> that returns the text field, inside the actual panel class that was also generated.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>With the above implementation you will need to define a getter method <code>getNameField()</code> that returns the text field, inside the actual panel class that was also generated.</p>
 <p>Next we will need to include some listener implementations:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Override</span>
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">addChangeListener</span><span style="color:#f92672">(</span><span style="color:#111">ChangeListener</span> <span style="color:#111">l</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">listeners</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#111">listeners</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">l</span><span style="color:#f92672">);</span>
+        <span style="color:#111">listeners</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">l</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 
 <span style="color:#75af00">@Override</span>
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">removeChangeListener</span><span style="color:#f92672">(</span><span style="color:#111">ChangeListener</span> <span style="color:#111">l</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">listeners</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#111">listeners</span><span style="color:#f92672">.</span><span style="color:#75af00">remove</span><span style="color:#f92672">(</span><span style="color:#111">l</span><span style="color:#f92672">);</span>
+        <span style="color:#111">listeners</span><span style="color:#f92672">.</span><span style="color:#75af00">remove</span><span style="color:#f92672">(</span><span style="color:#111">l</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 
-<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">fireChangeEvent</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">fireChangeEvent</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#111">Set</span><span style="color:#f92672">&lt;</span><span style="color:#111">ChangeListener</span><span style="color:#f92672">&gt;</span> <span style="color:#111">ls</span><span style="color:#f92672">;</span>
     <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">listeners</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#111">ls</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashSet</span><span style="color:#f92672">(</span><span style="color:#111">listeners</span><span style="color:#f92672">);</span>
+        <span style="color:#111">ls</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashSet</span><span style="color:#f92672">(</span><span style="color:#111">listeners</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 
-    <span style="color:#111">ChangeEvent</span> <span style="color:#111">ev</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ChangeEvent</span><span style="color:#f92672">(</span><span style="color:#00a8c8">this</span><span style="color:#f92672">);</span>
+    <span style="color:#111">ChangeEvent</span> <span style="color:#111">ev</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ChangeEvent</span><span style="color:#f92672">(</span><span style="color:#00a8c8">this</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#111">ChangeListener</span> <span style="color:#111">l</span> <span style="color:#f92672">:</span> <span style="color:#111">ls</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#111">l</span><span style="color:#f92672">.</span><span style="color:#75af00">stateChanged</span><span style="color:#f92672">(</span><span style="color:#111">ev</span><span style="color:#f92672">);</span>
+        <span style="color:#111">l</span><span style="color:#f92672">.</span><span style="color:#75af00">stateChanged</span><span style="color:#f92672">(</span><span style="color:#111">ev</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>Next, the <code>DocumentListener</code> implementation:</p>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Next, the <code>DocumentListener</code> implementation:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Override</span>
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">insertUpdate</span><span style="color:#f92672">(</span><span style="color:#111">DocumentEvent</span> <span style="color:#111">de</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">change</span><span style="color:#f92672">();</span>
+    <span style="color:#111">change</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
 
 <span style="color:#75af00">@Override</span>
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">removeUpdate</span><span style="color:#f92672">(</span><span style="color:#111">DocumentEvent</span> <span style="color:#111">de</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">change</span><span style="color:#f92672">();</span>
+    <span style="color:#111">change</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
 
 <span style="color:#75af00">@Override</span>
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">changedUpdate</span><span style="color:#f92672">(</span><span style="color:#111">DocumentEvent</span> <span style="color:#111">de</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">change</span><span style="color:#f92672">();</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>The <code>change()</code> method is as follows:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">private</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">change</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">setValid</span><span style="color:#f92672">(</span><span style="color:#00a8c8">true</span><span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>And lastly the <code>setValid</code> method that will re-enable the buttons:</p>
+    <span style="color:#111">change</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The <code>change()</code> method is as follows:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">private</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">change</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">setValid</span><span style="color:#f92672">(</span><span style="color:#00a8c8">true</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>And lastly the <code>setValid</code> method that will re-enable the buttons:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">private</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setValid</span><span style="color:#f92672">(</span><span style="color:#00a8c8">boolean</span> <span style="color:#111">val</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#111">isValid</span> <span style="color:#f92672">=</span> <span style="color:#111">val</span><span style="color:#f92672">;</span>
-    <span style="color:#111">fireChangeEvent</span><span style="color:#f92672">();</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>If the user input fails validation when the next/finish buttons are clicked again, the exception will be thrown again and the buttons will be disabled again. When the user types in the text field again, the listeners will work their magic, enabling the buttons once again.</p>
-
+    <span style="color:#111">fireChangeEvent</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>If the user input fails validation when the next/finish buttons are clicked again, the exception will be thrown again and the buttons will be disabled again. When the user types in the text field again, the listeners will work their magic, enabling the buttons once again.</p>
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://platform.netbeans.org/tutorials/nbm-wizard.html">https://platform.netbeans.org/tutorials/nbm-wizard.html</a></li>
 <li><a href="https://blogs.oracle.com/geertjan/disablingenabling-a-wizard-panels-finish-button">https://blogs.oracle.com/geertjan/disablingenabling-a-wizard-panels-finish-button</a></li>

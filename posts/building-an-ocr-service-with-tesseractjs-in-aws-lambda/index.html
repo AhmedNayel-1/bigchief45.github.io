@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Building an OCR Service With TesseractJS in AWS Lambda",
     "headline" : "Building an OCR Service With TesseractJS in AWS Lambda",
-    "description" : "\x3cp\x3eThe past few days I was trying to make \x3ca href=\x22https:\/\/github.com\/naptha\/tesseract.js\x22\x3eTesseractJS\x3c\/a\x3e work in \x3ca href=\x22https:\/\/aws.amazon.com\/lambda\/\x22\x3eAWS Lambda\x3c\/a\x3e so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.\x3c\/p\x3e\n\n\x3cp\x3eTesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.\x3c\/p\x3e\n\n\x3cp\x3eWe will be using a \x3cstrong\x3eNodeJS 6.10\x3c\/strong\x3e runtime in AWS Lambda. And I will be deploying the service with \x3ca href=\x22https:\/\/claudiajs.com\/\x22\x3eClaudiaJS\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3ch2 id=\x22downloading-the-tesseractjs-files\x22\x3eDownloading the TesseractJS Files\x3c\/h2\x3e\n\n\x3cp\x3eWhen running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.\x3c\/p\x3e\n\n\x3cp\x3eThe problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the \x3ccode\x3e\/tmp\/\x3c\/code\x3e directory, you will get an error like this in your logs:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3eError: EROFS: read-only file system, open \x27eng.traineddata\x27\n\x3c\/code\x3e\x3c\/pre\x3e",
+    "description" : "\x3cp\x3eThe past few days I was trying to make \x3ca href=\x22https:\/\/github.com\/naptha\/tesseract.js\x22\x3eTesseractJS\x3c\/a\x3e work in \x3ca href=\x22https:\/\/aws.amazon.com\/lambda\/\x22\x3eAWS Lambda\x3c\/a\x3e so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.\x3c\/p\x3e\n\x3cp\x3eTesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.\x3c\/p\x3e\n\x3cp\x3eWe will be using a \x3cstrong\x3eNodeJS 6.10\x3c\/strong\x3e runtime in AWS Lambda. And I will be deploying the service with \x3ca href=\x22https:\/\/claudiajs.com\/\x22\x3eClaudiaJS\x3c\/a\x3e.\x3c\/p\x3e\n\x3ch2 id=\x22downloading-the-tesseractjs-files\x22\x3eDownloading the TesseractJS Files\x3c\/h2\x3e\n\x3cp\x3eWhen running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.\x3c\/p\x3e\n\x3cp\x3eThe problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the \x3ccode\x3e\/tmp\/\x3c\/code\x3e directory, you will get an error like this in your logs:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3eError: EROFS: read-only file system, open \x27eng.traineddata\x27\n\x3c\/code\x3e\x3c\/pre\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,26 +136,15 @@ if (!doNotTrack) {
   <time datetime=2017-11-21T00:00:00Z class="post-date">Tue, Nov 21, 2017</time>
 
   <p>The past few days I was trying to make <a href="https://github.com/naptha/tesseract.js">TesseractJS</a> work in <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.</p>
-
 <p>TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.</p>
-
 <p>We will be using a <strong>NodeJS 6.10</strong> runtime in AWS Lambda. And I will be deploying the service with <a href="https://claudiajs.com/">ClaudiaJS</a>.</p>
-
 <h2 id="downloading-the-tesseractjs-files">Downloading the TesseractJS Files</h2>
-
 <p>When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.</p>
-
 <p>The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the <code>/tmp/</code> directory, you will get an error like this in your logs:</p>
-
 <pre><code>Error: EROFS: read-only file system, open 'eng.traineddata'
-</code></pre>
-
-<p>To solve this issue, we will need to download the TesseractJS <a href="https://github.com/naptha/tesseract.js">repository</a>, unzip it and place it inside our ClaudiaJS project. There are some files that are not needed, such as <code>examples</code> and <code>docs</code> directories, as well as other documentation files.</p>
-
+</code></pre><p>To solve this issue, we will need to download the TesseractJS <a href="https://github.com/naptha/tesseract.js">repository</a>, unzip it and place it inside our ClaudiaJS project. There are some files that are not needed, such as <code>examples</code> and <code>docs</code> directories, as well as other documentation files.</p>
 <p>Additionally, we will need to package the language files along with our ClaudiaJS deployment package. Simply download the necessary language files from the <a href="https://github.com/naptha/tessdata/tree/gh-pages/3.02">repository</a>, use something like <strong>gunzip</strong> to extract the contents, and then place them somewhere inside the TesseractJS repository directory we just added inside our ClaudiaJS project, such as a <code>/lang</code> directory.</p>
-
 <p>After this, you should have something like this:</p>
-
 <pre><code>├── claudia.json
 ├── lambda.js
 ├── node_modules
@@ -164,166 +153,127 @@ if (!doNotTrack) {
     ├── dist
     ├── lang
     └── src
-</code></pre>
+</code></pre><p>Then, when requiring TesseractJS in your Lambda function, you will have to specify path parameters for the language files, worker, and core library to TesseractJS, as described in the <a href="https://github.com/naptha/tesseract.js#local-installation">local installation</a> part of the documentation.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">const</span> <span style="color:#75af00">path</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;path&#39;</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
-<p>Then, when requiring TesseractJS in your Lambda function, you will have to specify path parameters for the language files, worker, and core library to TesseractJS, as described in the <a href="https://github.com/naptha/tesseract.js#local-installation">local installation</a> part of the documentation.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">const</span> <span style="color:#75af00">path</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;path&#39;</span><span style="color:#111">);</span>
-
-<span style="color:#00a8c8">const</span> <span style="color:#75af00">Tesseract</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;tesseract.js&#39;</span><span style="color:#111">).</span><span style="color:#75af00">create</span><span style="color:#111">({</span>
-    <span style="color:#75af00">workerPath</span><span style="color:#f92672">:</span> <span style="color:#75af00">path</span><span style="color:#111">.</span><span style="color:#75af00">join</span><span style="color:#111">(</span><span style="color:#75af00">__dirname</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;tesseract/src/node/worker.js&#39;</span><span style="color:#111">),</span>
-    <span style="color:#75af00">langPath</span><span style="color:#f92672">:</span> <span style="color:#75af00">path</span><span style="color:#111">.</span><span style="color:#75af00">join</span><span style="color:#111">(</span><span style="color:#75af00">__dirname</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;tesseract/lang/&#39;</span><span style="color:#111">),</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">Tesseract</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;tesseract.js&#39;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#111">{</span>
+    <span style="color:#75af00">workerPath</span><span style="color:#f92672">:</span> <span style="color:#75af00">path</span><span style="color:#111">.</span><span style="color:#75af00">join</span><span style="color:#111">(</span><span style="color:#75af00">__dirname</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;tesseract/src/node/worker.js&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
+    <span style="color:#75af00">langPath</span><span style="color:#f92672">:</span> <span style="color:#75af00">path</span><span style="color:#111">.</span><span style="color:#75af00">join</span><span style="color:#111">(</span><span style="color:#75af00">__dirname</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;tesseract/lang/&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
     <span style="color:#75af00">corePath</span><span style="color:#f92672">:</span> <span style="color:#75af00">path</span><span style="color:#111">.</span><span style="color:#75af00">join</span><span style="color:#111">(</span><span style="color:#75af00">__dirname</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;tesseract/src/index.js&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">});</span>
-</code></pre></div>
-<p>The <code>__dirname</code> variable is what makes it all work. It will point to the package&rsquo;s absolute path inside Lambda (which is something like <code>/var/task</code>) and then will find our language files and load them for TesseractJS.</p>
-
+<span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
+</code></pre></div><p>The <code>__dirname</code> variable is what makes it all work. It will point to the package's absolute path inside Lambda (which is something like <code>/var/task</code>) and then will find our language files and load them for TesseractJS.</p>
 <p>-&gt; In Node.js, <code>__dirname</code> is always the directory in which the currently executing script resides. <a href="https://nodejs.org/api/globals.html#globals_dirname">Read more</a></p>
-
 <h2 id="integrating-with-sns-simple-notification-service">Integrating With SNS (Simple Notification Service)</h2>
-
 <p>We want our Lambda function to be triggered as soon as an image file (i.e <code>jpg</code> file) is uploaded to our S3 bucket. You can configure an S3 event to the Lambda function from the AWS console, but I find a better and more scalable way is to subscribe the function to a SNS topic instead, and make S3 send events to this topic.</p>
-
 <h3 id="creating-the-sns-topic">Creating the SNS Topic</h3>
-
 <p>Head over to the <a href="https://us-west-2.console.aws.amazon.com/sns">SNS</a> service &gt; topics, and create a new topic and enter a name for it.</p>
-
 <p>Once created, select the <em>Edit topic policy</em> option for the topic and go to <em>Advanced view</em>. Change the policy to something like the following:</p>
-
-<p><img src="https://s3.amazonaws.com/awscomputeblogmedia/fanout-topic-policy-json.png" alt="SNS Topic Policy" /></p>
-
+<p><img src="https://s3.amazonaws.com/awscomputeblogmedia/fanout-topic-policy-json.png" alt="SNS Topic Policy"></p>
 <p>The policy above will allow the bucket to publish S3 events to it.</p>
-
 <h3 id="configure-s3-bucket-to-publish-events">Configure S3 Bucket to Publish Events</h3>
-
 <p>Now go to S3 &gt; your bucket &gt; Properties &gt; Events and add a new notification. We are going to check the <em>ObjectCreate (All)</em> event and add a <em>jpg</em> suffix for the event. Lastly we will configure it to send it to the SNS topic we just created.</p>
-
 <h3 id="processing-the-sns-event-in-the-lambda-function">Processing the SNS Event In The Lambda Function</h3>
-
 <p>Now when the JPG file is uploaded, S3 will publish the event to the SNS topic, which will send it to the Lambda function under the <code>event</code> parameter. We need to parse the JSON data of this event, and we can do so by creating a helper function in our main <code>lambda.js</code> file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">getSNSMessageObject</span><span style="color:#111">(</span><span style="color:#75af00">msg</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">var</span> <span style="color:#75af00">x</span> <span style="color:#f92672">=</span> <span style="color:#75af00">msg</span><span style="color:#111">.</span><span style="color:#75af00">replace</span><span style="color:#111">(</span><span style="color:#d88200">/\\/g</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;&#39;</span><span style="color:#111">);</span>
-    <span style="color:#00a8c8">var</span> <span style="color:#75af00">y</span> <span style="color:#f92672">=</span> <span style="color:#75af00">x</span><span style="color:#111">.</span><span style="color:#75af00">substring</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#75af00">x</span><span style="color:#111">.</span><span style="color:#75af00">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#111">);</span>
-    <span style="color:#00a8c8">var</span> <span style="color:#75af00">z</span> <span style="color:#f92672">=</span> <span style="color:#75af00">JSON</span><span style="color:#111">.</span><span style="color:#75af00">parse</span><span style="color:#111">(</span><span style="color:#75af00">y</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">x</span> <span style="color:#f92672">=</span> <span style="color:#75af00">msg</span><span style="color:#111">.</span><span style="color:#75af00">replace</span><span style="color:#111">(</span><span style="color:#d88200">/\\/g</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;&#39;</span><span style="color:#111">)</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">y</span> <span style="color:#f92672">=</span> <span style="color:#75af00">x</span><span style="color:#111">.</span><span style="color:#75af00">substring</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#75af00">x</span><span style="color:#111">.</span><span style="color:#75af00">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#111">)</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">z</span> <span style="color:#f92672">=</span> <span style="color:#75af00">JSON</span><span style="color:#111">.</span><span style="color:#75af00">parse</span><span style="color:#111">(</span><span style="color:#75af00">y</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
     <span style="color:#00a8c8">return</span> <span style="color:#75af00">z</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
-</code></pre></div>
-<p>With this function, we can obtain the corresponding bucket and key of the file that was just uploaded:</p>
+</code></pre></div><p>With this function, we can obtain the corresponding bucket and key of the file that was just uploaded:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">exports</span><span style="color:#111">.</span><span style="color:#75af00">handler</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">event</span><span style="color:#111">,</span> <span style="color:#75af00">context</span><span style="color:#111">,</span> <span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">let</span> <span style="color:#75af00">snsMessage</span> <span style="color:#f92672">=</span> <span style="color:#75af00">getSNSMessageObject</span><span style="color:#111">(</span>
-        <span style="color:#75af00">JSON</span><span style="color:#111">.</span><span style="color:#75af00">stringify</span><span style="color:#111">(</span><span style="color:#75af00">event</span><span style="color:#111">.</span><span style="color:#75af00">Records</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">].</span><span style="color:#75af00">Sns</span><span style="color:#111">.</span><span style="color:#75af00">Message</span><span style="color:#111">));</span>
-    <span style="color:#00a8c8">let</span> <span style="color:#75af00">bucket</span> <span style="color:#f92672">=</span> <span style="color:#75af00">snsMessage</span><span style="color:#111">.</span><span style="color:#75af00">Records</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">].</span><span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">bucket</span><span style="color:#111">.</span><span style="color:#75af00">name</span><span style="color:#111">;</span>
-    <span style="color:#00a8c8">let</span> <span style="color:#75af00">key</span> <span style="color:#f92672">=</span> <span style="color:#75af00">snsMessage</span><span style="color:#111">.</span><span style="color:#75af00">Records</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">].</span><span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">object</span><span style="color:#111">.</span><span style="color:#75af00">key</span><span style="color:#111">;</span>
+        <span style="color:#75af00">JSON</span><span style="color:#111">.</span><span style="color:#75af00">stringify</span><span style="color:#111">(</span><span style="color:#75af00">event</span><span style="color:#111">.</span><span style="color:#75af00">Records</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span><span style="color:#111">.</span><span style="color:#75af00">Sns</span><span style="color:#111">.</span><span style="color:#75af00">Message</span><span style="color:#111">)</span><span style="color:#111">)</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">let</span> <span style="color:#75af00">bucket</span> <span style="color:#f92672">=</span> <span style="color:#75af00">snsMessage</span><span style="color:#111">.</span><span style="color:#75af00">Records</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span><span style="color:#111">.</span><span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">bucket</span><span style="color:#111">.</span><span style="color:#75af00">name</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">let</span> <span style="color:#75af00">key</span> <span style="color:#f92672">=</span> <span style="color:#75af00">snsMessage</span><span style="color:#111">.</span><span style="color:#75af00">Records</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span><span style="color:#111">.</span><span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">object</span><span style="color:#111">.</span><span style="color:#75af00">key</span><span style="color:#111">;</span>
 
     <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span><span style="color:#111">};</span>
-</code></pre></div>
-<p>We will use this information to obtain the image from S3 within our Lamdba function and proceed to process it with TesseractJS.</p>
-
+</span><span style="color:#75715e"></span><span style="color:#111">}</span><span style="color:#111">;</span>
+</code></pre></div><p>We will use this information to obtain the image from S3 within our Lamdba function and proceed to process it with TesseractJS.</p>
 <h2 id="processing-the-image-memory-issues">Processing the Image: Memory Issues</h2>
-
-<p>I was experiencing a strange behavior when calling <code>Tesseract.recognize()</code> on an image, the Lambda function would terminate very quickly. No logs from the <code>progress()</code> callback where being shown, yet Lambda reported a full memory use. I thought this was a not-enough memory issue, so I increased the function&rsquo;s memory to 1GB, but no luck:</p>
+<p>I was experiencing a strange behavior when calling <code>Tesseract.recognize()</code> on an image, the Lambda function would terminate very quickly. No logs from the <code>progress()</code> callback where being shown, yet Lambda reported a full memory use. I thought this was a not-enough memory issue, so I increased the function's memory to 1GB, but no luck:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Tesseract</span><span style="color:#111">.</span><span style="color:#75af00">recognize</span><span style="color:#111">(</span><span style="color:#75af00">img</span><span style="color:#111">)</span>
-  <span style="color:#111">.</span><span style="color:#75af00">progress</span><span style="color:#111">(</span><span style="color:#75af00">msg</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">msg</span><span style="color:#111">))</span>
-  <span style="color:#111">.</span><span style="color:#00a8c8">catch</span><span style="color:#111">(</span><span style="color:#75af00">err</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Tesseract error: &#39;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">))</span>
+  <span style="color:#111">.</span><span style="color:#75af00">progress</span><span style="color:#111">(</span><span style="color:#75af00">msg</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">msg</span><span style="color:#111">)</span><span style="color:#111">)</span>
+  <span style="color:#111">.</span><span style="color:#00a8c8">catch</span><span style="color:#111">(</span><span style="color:#75af00">err</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Tesseract error: &#39;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span><span style="color:#111">)</span>
   <span style="color:#111">.</span><span style="color:#75af00">then</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-      <span style="color:#75af00">Tesseract</span><span style="color:#111">.</span><span style="color:#75af00">terminate</span><span style="color:#111">();</span>
-      <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">);</span>
-  <span style="color:#111">});</span>
-</code></pre></div>
-<pre><code>REPORT Duration: 29059.34 ms	Billed Duration: 29100 ms Memory Size: 1024 MB	Max Memory Used: 1024 MB
-</code></pre>
-
-<p>This was very strange. I could perfectly process the image in my development environment which has merely 512MB of RAM.</p>
-
-<p>Anyways, I decided to ramp up the function&rsquo;s memory to the max (1536 MB), and lo and behold, it managed to run successfully, still <em>almost</em> reaching the memory limit.</p>
-
+      <span style="color:#75af00">Tesseract</span><span style="color:#111">.</span><span style="color:#75af00">terminate</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">;</span>
+      <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
+</code></pre></div><pre><code>REPORT Duration: 29059.34 ms	Billed Duration: 29100 ms Memory Size: 1024 MB	Max Memory Used: 1024 MB
+</code></pre><p>This was very strange. I could perfectly process the image in my development environment which has merely 512MB of RAM.</p>
+<p>Anyways, I decided to ramp up the function's memory to the max (1536 MB), and lo and behold, it managed to run successfully, still <em>almost</em> reaching the memory limit.</p>
 <p>TODO: WHY DOES THIS HAPPEN?</p>
-
 <h2 id="asynchronous-processing">Asynchronous Processing</h2>
-
 <p>This part had more to do with me being a NodeJS noob than with TesseractJS.</p>
-
 <p>Initially, I was first downloading the image file from my S3 bucket like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">imgFile</span> <span style="color:#f92672">=</span> <span style="color:#75af00">fs</span><span style="color:#111">.</span><span style="color:#75af00">createWriteStream</span><span style="color:#111">(</span><span style="color:#d88200">&#39;/tmp/&#39;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">key</span><span style="color:#111">);</span>
-<span style="color:#00a8c8">var</span> <span style="color:#75af00">params</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">Bucket</span><span style="color:#f92672">:</span> <span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">Key</span><span style="color:#f92672">:</span> <span style="color:#75af00">key</span><span style="color:#111">};</span>
-<span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">getObject</span><span style="color:#111">(</span><span style="color:#75af00">params</span><span style="color:#111">).</span><span style="color:#75af00">createReadStream</span><span style="color:#111">().</span><span style="color:#75af00">pipe</span><span style="color:#111">(</span><span style="color:#75af00">imgFile</span><span style="color:#111">);</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">imgFile</span> <span style="color:#f92672">=</span> <span style="color:#75af00">fs</span><span style="color:#111">.</span><span style="color:#75af00">createWriteStream</span><span style="color:#111">(</span><span style="color:#d88200">&#39;/tmp/&#39;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">key</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">var</span> <span style="color:#75af00">params</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">Bucket</span><span style="color:#f92672">:</span> <span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">Key</span><span style="color:#f92672">:</span> <span style="color:#75af00">key</span><span style="color:#111">}</span><span style="color:#111">;</span>
+<span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">getObject</span><span style="color:#111">(</span><span style="color:#75af00">params</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">createReadStream</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">pipe</span><span style="color:#111">(</span><span style="color:#75af00">imgFile</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
 <span style="color:#75715e">// Process with Tesseract
-</span><span style="color:#75715e">// ...
-</span></code></pre></div>
-<p>This was not working, I was getting an error like the following:</p>
-
+</span><span style="color:#75715e"></span><span style="color:#75715e">// ...
+</span></code></pre></div><p>This was not working, I was getting an error like the following:</p>
 <pre><code>/var/task/tesseract/src/common/desaturate.js:22
 } else { throw 'Invalid ImageData' }
 
 Invalid ImageData
-</code></pre>
-
-<p>This was happeing due to NodeJS asynchronous nature and how JavaScript and NodeJS works with callbacks. The code that proceeded to process the image with TesseractJS was probably being executed and the image wasn&rsquo;t fully obtained from S3 yet. I come from a Ruby &amp; Python background so this was a bit difficult for me to grasp. I changed the above logic to implement <a href="https://javascript.info/promise-basics">JavaScript native Promises</a>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">const</span> <span style="color:#75af00">s3</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;./s3&#39;</span><span style="color:#111">);</span>
-<span style="color:#00a8c8">const</span> <span style="color:#75af00">ocr</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;./ocr&#39;</span><span style="color:#111">);</span>
+</code></pre><p>This was happeing due to NodeJS asynchronous nature and how JavaScript and NodeJS works with callbacks. The code that proceeded to process the image with TesseractJS was probably being executed and the image wasn't fully obtained from S3 yet. I come from a Ruby &amp; Python background so this was a bit difficult for me to grasp. I changed the above logic to implement <a href="https://javascript.info/promise-basics">JavaScript native Promises</a>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">const</span> <span style="color:#75af00">s3</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;./s3&#39;</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">ocr</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;./ocr&#39;</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
 
 <span style="color:#75af00">exports</span><span style="color:#111">.</span><span style="color:#75af00">handler</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">event</span><span style="color:#111">,</span> <span style="color:#75af00">context</span><span style="color:#111">,</span> <span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#111">{</span>
   <span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">getImage</span><span style="color:#111">(</span><span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">key</span><span style="color:#111">)</span>
     <span style="color:#111">.</span><span style="color:#75af00">then</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">data</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#75af00">ocr</span><span style="color:#111">.</span><span style="color:#75af00">recognizeImage</span><span style="color:#111">(</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">Body</span><span style="color:#111">);</span>
-    <span style="color:#111">})</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#75af00">ocr</span><span style="color:#111">.</span><span style="color:#75af00">recognizeImage</span><span style="color:#111">(</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">Body</span><span style="color:#111">)</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span><span style="color:#111">)</span>
     <span style="color:#111">.</span><span style="color:#75af00">then</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">uploadOCR</span><span style="color:#111">(</span><span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">bookId</span><span style="color:#111">,</span> <span style="color:#75af00">pageNum</span><span style="color:#111">,</span> <span style="color:#75af00">result</span><span style="color:#111">);</span>
-    <span style="color:#111">})</span>
-    <span style="color:#111">.</span><span style="color:#75af00">then</span><span style="color:#111">(</span><span style="color:#75af00">fulfilled</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">callback</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">))</span>
-    <span style="color:#111">.</span><span style="color:#00a8c8">catch</span><span style="color:#111">(</span><span style="color:#75af00">error</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">callback</span><span style="color:#111">(</span><span style="color:#75af00">error</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Error&#39;</span><span style="color:#111">));</span>
-<span style="color:#111">};</span>
-</code></pre></div>
-<p>Looks much better. The respective functions for obtaining the image and uploading the JSON to S3 are located inside the <code>s3.js</code> module in my project:</p>
+        <span style="color:#00a8c8">return</span> <span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">uploadOCR</span><span style="color:#111">(</span><span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">bookId</span><span style="color:#111">,</span> <span style="color:#75af00">pageNum</span><span style="color:#111">,</span> <span style="color:#75af00">result</span><span style="color:#111">)</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span><span style="color:#111">)</span>
+    <span style="color:#111">.</span><span style="color:#75af00">then</span><span style="color:#111">(</span><span style="color:#75af00">fulfilled</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">callback</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">)</span><span style="color:#111">)</span>
+    <span style="color:#111">.</span><span style="color:#00a8c8">catch</span><span style="color:#111">(</span><span style="color:#75af00">error</span> <span style="color:#111">=&gt;</span> <span style="color:#75af00">callback</span><span style="color:#111">(</span><span style="color:#75af00">error</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Error&#39;</span><span style="color:#111">)</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#111">}</span><span style="color:#111">;</span>
+</code></pre></div><p>Looks much better. The respective functions for obtaining the image and uploading the JSON to S3 are located inside the <code>s3.js</code> module in my project:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#d88200">&#39;use strict&#39;</span><span style="color:#111">;</span>
 
-<span style="color:#00a8c8">const</span> <span style="color:#75af00">AWS</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;aws-sdk&#39;</span><span style="color:#111">);</span>
-<span style="color:#00a8c8">const</span> <span style="color:#75af00">s3</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">AWS</span><span style="color:#111">.</span><span style="color:#75af00">S3</span><span style="color:#111">({</span><span style="color:#75af00">region</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;us-west-1&#39;</span><span style="color:#111">});</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">AWS</span> <span style="color:#f92672">=</span> <span style="color:#75af00">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;aws-sdk&#39;</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">s3</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">AWS</span><span style="color:#111">.</span><span style="color:#75af00">S3</span><span style="color:#111">(</span><span style="color:#111">{</span><span style="color:#75af00">region</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;us-west-1&#39;</span><span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
 
 <span style="color:#75af00">module</span><span style="color:#111">.</span><span style="color:#75af00">exports</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
     <span style="color:#75af00">getImage</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span> <span style="color:#75af00">getImage</span><span style="color:#111">(</span><span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">key</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">let</span> <span style="color:#75af00">params</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">Bucket</span><span style="color:#f92672">:</span> <span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">Key</span><span style="color:#f92672">:</span> <span style="color:#75af00">key</span><span style="color:#111">};</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">getObject</span><span style="color:#111">(</span><span style="color:#75af00">params</span><span style="color:#111">).</span><span style="color:#75af00">promise</span><span style="color:#111">();</span>
-    <span style="color:#111">},</span>
+        <span style="color:#00a8c8">let</span> <span style="color:#75af00">params</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">Bucket</span><span style="color:#f92672">:</span> <span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">Key</span><span style="color:#f92672">:</span> <span style="color:#75af00">key</span><span style="color:#111">}</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">getObject</span><span style="color:#111">(</span><span style="color:#75af00">params</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">promise</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span><span style="color:#111">,</span>
 
     <span style="color:#75af00">uploadOCR</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span> <span style="color:#75af00">uploadOCR</span><span style="color:#111">(</span><span style="color:#75af00">bucket</span><span style="color:#111">,</span> <span style="color:#75af00">bookId</span><span style="color:#111">,</span> <span style="color:#75af00">pageNum</span><span style="color:#111">,</span> <span style="color:#75af00">ocr</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">params</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
             <span style="color:#75af00">Bucket</span><span style="color:#f92672">:</span> <span style="color:#75af00">bucket</span><span style="color:#111">,</span>
-            <span style="color:#75af00">Key</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">bookId</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;/&#39;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">pageNum</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;.json&#39;</span><span style="color:#111">),</span>
+            <span style="color:#75af00">Key</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">bookId</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;/&#39;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">pageNum</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;.json&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
             <span style="color:#75af00">Body</span><span style="color:#f92672">:</span> <span style="color:#75af00">ocr</span><span style="color:#111">,</span>
             <span style="color:#75af00">ContentType</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;application/json&#39;</span>
-        <span style="color:#111">};</span>
+        <span style="color:#111">}</span><span style="color:#111">;</span>
 
-        <span style="color:#00a8c8">return</span> <span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">putObject</span><span style="color:#111">(</span><span style="color:#75af00">params</span><span style="color:#111">).</span><span style="color:#75af00">promise</span><span style="color:#111">();</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#75af00">s3</span><span style="color:#111">.</span><span style="color:#75af00">putObject</span><span style="color:#111">(</span><span style="color:#75af00">params</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">promise</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
-<span style="color:#111">};</span>
-</code></pre></div>
-<p>As you can see, the AWS SDK provides a <code>promise()</code> object for requests to Amazon services.</p>
-
+<span style="color:#111">}</span><span style="color:#111">;</span>
+</code></pre></div><p>As you can see, the AWS SDK provides a <code>promise()</code> object for requests to Amazon services.</p>
 <p>Likewise, the function that calls TesseractJS is located inside the <code>ocr.js</code> module inside my project, and I wrap the process in a promise (Thanks <a href="https://stackoverflow.com/users/1048572/bergi">Bergi</a> for suggestion against <a href="https://stackoverflow.com/q/23803743/1048572?What-is-the-promise-construction-antipattern-and-how-to-avoid-it">Promise constructor antipattern</a>):</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">recognizeImage</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">function</span> <span style="color:#75af00">recognizeImage</span><span style="color:#111">(</span><span style="color:#75af00">img</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">return</span> <span style="color:#111">Promise</span><span style="color:#111">.</span><span style="color:#75af00">resolve</span><span style="color:#111">(</span><span style="color:#75af00">Tesseract</span><span style="color:#111">.</span><span style="color:#75af00">recognize</span><span style="color:#111">(</span><span style="color:#75af00">img</span><span style="color:#111">))</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">Promise</span><span style="color:#111">.</span><span style="color:#75af00">resolve</span><span style="color:#111">(</span><span style="color:#75af00">Tesseract</span><span style="color:#111">.</span><span style="color:#75af00">recognize</span><span style="color:#111">(</span><span style="color:#75af00">img</span><span style="color:#111">)</span><span style="color:#111">)</span>
         <span style="color:#111">.</span><span style="color:#75af00">then</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-            <span style="color:#75af00">Tesseract</span><span style="color:#111">.</span><span style="color:#75af00">terminate</span><span style="color:#111">();</span>
+            <span style="color:#75af00">Tesseract</span><span style="color:#111">.</span><span style="color:#75af00">terminate</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
             <span style="color:#75715e">// Do some extra processing on the result
 </span><span style="color:#75715e"></span>
-            <span style="color:#00a8c8">return</span> <span style="color:#75af00">JSON</span><span style="color:#111">.</span><span style="color:#75af00">stringify</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">);</span>
-        <span style="color:#111">});</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#75af00">JSON</span><span style="color:#111">.</span><span style="color:#75af00">stringify</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
-</code></pre></div>
-<p>The <code>data</code> object from <code>s3.getObject()</code> is the de-serialized data returned from the request to S3 (docs <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property">here</a>). The <code>data.Body</code> is the raw binary image data and can be passed directly to TesseractJS.</p>
-
+</code></pre></div><p>The <code>data</code> object from <code>s3.getObject()</code> is the de-serialized data returned from the request to S3 (docs <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property">here</a>). The <code>data.Body</code> is the raw binary image data and can be passed directly to TesseractJS.</p>
 <p>-&gt; The Node.js runtimes v4.3 and v6.10 support the optional <code>callback</code> parameter. You can use it to explicitly return information back to the caller. <a href="http://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html">Read more</a></p>
-
 <p>We can then proceed to do more processing on the data returned by TesseractJS, and then later store it in something like ElasticSearch or S3.</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://stackoverflow.com/questions/41063214/reading-a-packaged-file-in-aws-lambda-package">https://stackoverflow.com/questions/41063214/reading-a-packaged-file-in-aws-lambda-package</a></li>
 <li><a href="https://aws.amazon.com/blogs/compute/fanout-s3-event-notifications-to-multiple-endpoints/">https://aws.amazon.com/blogs/compute/fanout-s3-event-notifications-to-multiple-endpoints/</a></li>

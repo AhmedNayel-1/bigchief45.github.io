@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Understanding Ceilometer Publishers",
     "headline" : "Understanding Ceilometer Publishers",
-    "description" : "\x3cp\x3eContinuing with my study of the Ceilometer pipeline, this post now covers Ceilometer \x3cstrong\x3epublishers\x3c\/strong\x3e. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.\x3c\/p\x3e\n\n\x3cp\x3ePublishers are specified in the \x3ccode\x3epublishers\x3c\/code\x3e section for each pipeline that is defined in the \x3ccode\x3epipeline.yaml\x3c\/code\x3e and the \x3ccode\x3eevent_pipeline.yaml\x3c\/code\x3e files.\x3c\/p\x3e\n\n\x3cp\x3eMany different publishers are available. The following are the most common and important publishers:\x3c\/p\x3e\n\n\x3ch3 id=\x22gnocchi\x22\x3eGnocchi\x3c\/h3\x3e\n\n\x3cp\x3e\x3cimg src=\x22http:\/\/gnocchi.xyz\/_images\/gnocchi-logo.jpg\x22 alt=\x22Gnocchi Logo\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eGnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eContinuing with my study of the Ceilometer pipeline, this post now covers Ceilometer \x3cstrong\x3epublishers\x3c\/strong\x3e. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.\x3c\/p\x3e\n\x3cp\x3ePublishers are specified in the \x3ccode\x3epublishers\x3c\/code\x3e section for each pipeline that is defined in the \x3ccode\x3epipeline.yaml\x3c\/code\x3e and the \x3ccode\x3eevent_pipeline.yaml\x3c\/code\x3e files.\x3c\/p\x3e\n\x3cp\x3eMany different publishers are available. The following are the most common and important publishers:\x3c\/p\x3e\n\x3ch3 id=\x22gnocchi\x22\x3eGnocchi\x3c\/h3\x3e\n\x3cp\x3e\x3cimg src=\x22http:\/\/gnocchi.xyz\/_images\/gnocchi-logo.jpg\x22 alt=\x22Gnocchi Logo\x22\x3e\x3c\/p\x3e\n\x3cp\x3eGnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-04-11 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-04-11 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/understanding-ceilometer-publishers\/",
-    "wordCount" : "679",
+    "wordCount" : "675",
     "keywords" : [ "ceilometer","openstack","gnocchi","panko","python","Blog" ]
 }
 </script>
@@ -136,102 +136,78 @@ if (!doNotTrack) {
   <time datetime=2017-04-11T00:00:00Z class="post-date">Tue, Apr 11, 2017</time>
 
   <p>Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer <strong>publishers</strong>. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.</p>
-
 <p>Publishers are specified in the <code>publishers</code> section for each pipeline that is defined in the <code>pipeline.yaml</code> and the <code>event_pipeline.yaml</code> files.</p>
-
 <p>Many different publishers are available. The following are the most common and important publishers:</p>
-
 <h3 id="gnocchi">Gnocchi</h3>
-
-<p><img src="http://gnocchi.xyz/_images/gnocchi-logo.jpg" alt="Gnocchi Logo" /></p>
-
+<p><img src="http://gnocchi.xyz/_images/gnocchi-logo.jpg" alt="Gnocchi Logo"></p>
 <p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
-
 <p>Gnocchi was created to fulfill the need of a time series database usable in the context of cloud computing: providing the ability to store large quantities of metrics. It has been designed to handle large amount of measures being stored, while being performant, scalable and fault-tolerant. While doing this, the goal was to be sure to not build any hard dependency on any complex storage system.</p>
-
 <p>The project was started in 2014 as a spin-off of the OpenStack Ceilometer project to address the performance issues that Ceilometer encountered while using standard databases as a storage backends for metrics.</p>
-
 <p>=&gt; The recommended workflow is to push data to Gnocchi for efficient time-series storage and resource lifecycle tracking.</p>
-
 <p>~&gt; Gnocchi must be registered in the Identity service as Ceilometer discovers the exact path via the Identity service.</p>
-
 <h3 id="panko">Panko</h3>
-
 <p>The Panko publisher is for storing <strong>event</strong> data. It provides a REST HTTP interface to query system events in OpenStack. A Panko publisher can be set with <code>panko://</code>.</p>
-
 <h3 id="notifier">Notifier</h3>
-
 <p>This publisher emits data over AMQP using <code>oslo.messaging</code> library.</p>
-
 <h3 id="http">HTTP</h3>
-
 <p>Samples can be sent using HTTP to an external target. For example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">http<span style="color:#111">:</span>//localhost<span style="color:#111">:</span><span style="color:#ae81ff">80</span>/<span style="color:#111">?</span>option1=value1<span style="color:#75715e">&amp;option2=value2</span></code></pre></div>
-<p><img src="https://docs.openstack.org/developer/ceilometer/_images/5-multi-publish.png" alt="Ceilometer Publishers" /></p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">http<span style="color:#111">:</span>//localhost<span style="color:#111">:</span><span style="color:#ae81ff">80</span>/<span style="color:#111">?</span>option1=value1<span style="color:#75715e">&amp;option2=value2</span>
+</code></pre></div><p><img src="https://docs.openstack.org/developer/ceilometer/_images/5-multi-publish.png" alt="Ceilometer Publishers"></p>
 <h2 id="difference-between-publishers-and-dispatchers">Difference Between Publishers and Dispatchers</h2>
-
 <p>The documentation does a decent job at explaining publishers. However, it does not say much about dispatchers. When looking at the source code, it also seems that dispatchers send metering data for storage in an external location such as Gnocchi (see <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/dispatcher/gnocchi.py">Gnocchi dispatcher</a>) or a database.</p>
-
 <p>Being confused about this, I decided to <a href="http://openstack.10931.n7.nabble.com/telemetry-ceilometer-Difference-between-publishers-and-dispatchers-td133396.html">ask</a> in the <a href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-dev">OpenStack dev mailing list</a>. I managed to obtain a very quick response from Julien Danjou:</p>
-
 <blockquote>
 <p>Publishers are configured into the pipeline to indicate where to push
 samples data (e.g. to Gnocchi).
 One of the publisher is <code>notifier://</code> which sends the samples to the (now
 deprecated) ceilometer-collector process.</p>
-
 <p>Ceilometer collector stores data into other system via a dispatcher
-mechanism (e.g. to Gnocchi). It&rsquo;s now deprecated as it&rsquo;s just, with
+mechanism (e.g. to Gnocchi). It's now deprecated as it's just, with
 current architecture, a unnecessary step: publishers can do the job
 directly.</p>
 </blockquote>
-
 <p>And another one from Hanxi Liu:</p>
-
 <blockquote>
 <p>Ceilometer has deprecated collector from Pike, so dispatchers will be no longer used in the future. Data should be pushed from publisher to storage backend(e.g. Gnocchi) and/or other outer system. Some dispatchers were deprecated because there are corresponding developed publisher, for example, file dispatcher to file publisher. Of course, If you still want to use previous version, you could use dispatcher behind collector.</p>
 </blockquote>
-
 <h2 id="the-source-code">The Source Code</h2>
-
-<p>In Ceilometer&rsquo;s source code, publisher logic can be found in <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/publisher"><code>ceilometer/publisher</code></a>. A publisher base class can be found in the `<code>__init__.py</code> file:</p>
+<p>In Ceilometer's source code, publisher logic can be found in <a href="https://github.com/openstack/ceilometer/blob/master/ceilometer/publisher"><code>ceilometer/publisher</code></a>. A publisher base class can be found in the ``__init__.py` file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75af00">@six.add_metaclass</span><span style="color:#111">(</span><span style="color:#111">abc</span><span style="color:#f92672">.</span><span style="color:#111">ABCMeta</span><span style="color:#111">)</span>
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">ConfigPublisherBase</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;Base class for plugins that publish data.&#34;&#34;&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">ConfigPublisherBase</span><span style="color:#111">(</span><span style="color:#111">object</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Base class for plugins that publish data.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">parsed_url</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">conf</span><span style="color:#111">,</span> <span style="color:#111">parsed_url</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">conf</span> <span style="color:#f92672">=</span> <span style="color:#111">conf</span>
 
     <span style="color:#75af00">@abc.abstractmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_samples</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">samples</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Publish samples into final conduit.&#34;&#34;&#34;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_samples</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">samples</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Publish samples into final conduit.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
     <span style="color:#75af00">@abc.abstractmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_events</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">events</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Publish events into final conduit.&#34;&#34;&#34;</span></code></pre></div>
-<p>We can see the abstract methods to be implemented by each publisher. The <code>publish_samples</code> method is of particular interest.</p>
-
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_events</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">events</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Publish events into final conduit.</span><span style="color:#d88200">&#34;&#34;&#34;</span>
+</code></pre></div><p>We can see the abstract methods to be implemented by each publisher. The <code>publish_samples</code> method is of particular interest.</p>
 <p>If we take a look at the HTTP publisher source code, we can see how it implements these methods:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">HttpPublisher</span><span style="color:#111">(</span><span style="color:#111">publisher</span><span style="color:#f92672">.</span><span style="color:#111">ConfigPublisherBase</span><span style="color:#111">):</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">HttpPublisher</span><span style="color:#111">(</span><span style="color:#111">publisher</span><span style="color:#f92672">.</span><span style="color:#111">ConfigPublisherBase</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#75715e"># ...</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_samples</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">samples</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Send a metering message for publishing
-</span><span style="color:#d88200">        :param samples: Samples from pipeline after transformation
-</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">poster</span><span style="color:#111">([</span><span style="color:#111">sample</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">()</span> <span style="color:#00a8c8">for</span> <span style="color:#111">sample</span> <span style="color:#f92672">in</span> <span style="color:#111">samples</span><span style="color:#111">])</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_samples</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">samples</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Send a metering message for publishing</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        :param samples: Samples from pipeline after transformation</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        </span><span style="color:#d88200">&#34;&#34;&#34;</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">poster</span><span style="color:#111">(</span><span style="color:#111">[</span><span style="color:#111">sample</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#00a8c8">for</span> <span style="color:#111">sample</span> <span style="color:#f92672">in</span> <span style="color:#111">samples</span><span style="color:#111">]</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_events</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">events</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;Send an event message for publishing
-</span><span style="color:#d88200">        :param events: events from pipeline after transformation
-</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">publish_events</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">events</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Send an event message for publishing</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        :param events: events from pipeline after transformation</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        </span><span style="color:#d88200">&#34;&#34;&#34;</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">raw_only</span><span style="color:#111">:</span>
-            <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">()[</span><span style="color:#d88200">&#39;raw&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;payload&#39;</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">evt</span> <span style="color:#f92672">in</span> <span style="color:#111">events</span>
-                    <span style="color:#00a8c8">if</span> <span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;raw&#39;</span><span style="color:#111">,</span> <span style="color:#111">{})</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;payload&#39;</span><span style="color:#111">)]</span>
+            <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">raw</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">payload</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span> <span style="color:#00a8c8">for</span> <span style="color:#111">evt</span> <span style="color:#f92672">in</span> <span style="color:#111">events</span>
+                    <span style="color:#00a8c8">if</span> <span style="color:#111">evt</span><span style="color:#f92672">.</span><span style="color:#111">as_dict</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">raw</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#111">{</span><span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">payload</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">]</span>
         <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
-            <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#111">serialize</span><span style="color:#111">()</span> <span style="color:#00a8c8">for</span> <span style="color:#111">event</span> <span style="color:#f92672">in</span> <span style="color:#111">events</span><span style="color:#111">]</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">poster</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#111">)</span></code></pre></div>
+            <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#111">event</span><span style="color:#f92672">.</span><span style="color:#111">serialize</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#00a8c8">for</span> <span style="color:#111">event</span> <span style="color:#f92672">in</span> <span style="color:#111">events</span><span style="color:#111">]</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">poster</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#111">)</span>
+</code></pre></div>
 </div>
 
 

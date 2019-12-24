@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>lua on Andrés Álvarez</title>
@@ -18,15 +18,10 @@
       
       <guid>https://aalvarez.me/posts/an-introduction-to-game-states-in-love2d/</guid>
       <description>&lt;p&gt;After going through countless blog and video tutorials on getting started with Love2D, I found it sad that most people would not take the approach of implementing &lt;strong&gt;game states&lt;/strong&gt; right from the start, or would try to mimick this functionality in a &amp;ldquo;dirty&amp;rdquo; way.&lt;/p&gt;
-
 &lt;p&gt;After lots of time of reading many forum posts and library documentations. I found a way to implement game states in my games that I am very satisfied with.&lt;/p&gt;
-
 &lt;p&gt;In this post I will go over how to implement game states and some of the most common game states seen in games, in such a way that your code is remains organized and neat.&lt;/p&gt;
-
-&lt;h2 id=&#34;game-states-with-stateful-lua&#34;&gt;Game States With Stateful.lua&lt;/h2&gt;
-
+&lt;h2 id=&#34;game-states-with-statefullua&#34;&gt;Game States With Stateful.lua&lt;/h2&gt;
 &lt;p&gt;We will be using a simple but great Lua library called &lt;a href=&#34;https://github.com/kikito/stateful.lua&#34;&gt;Stateful&lt;/a&gt;, made by &lt;a href=&#34;https://github.com/kikito&#34;&gt;kikito&lt;/a&gt;. This library will allow us to easily implement and work with game states inside our game.&lt;/p&gt;
-
 &lt;p&gt;This library also depends on the &lt;a href=&#34;https://github.com/kikito/middleclass&#34;&gt;Middleclass&lt;/a&gt; library (also by kikito). Middleclass will allow us to construct and develop our game in a OOP (Object Oriented Programing) fashion. If you are familiar with OOP then you will love this approach.&lt;/p&gt;</description>
     </item>
     
@@ -36,32 +31,21 @@
       <pubDate>Wed, 19 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/getting-started-with-love2d-basics/</guid>
-      <description>&lt;p&gt;I recently started playing around with &lt;a href=&#34;https://love2d.org/&#34;&gt;Love2D&lt;/a&gt; for game development. Although I am completely new to Lua, so far it&amp;rsquo;s been pretty fun and I really like it.&lt;/p&gt;
-
+      <description>&lt;p&gt;I recently started playing around with &lt;a href=&#34;https://love2d.org/&#34;&gt;Love2D&lt;/a&gt; for game development. Although I am completely new to Lua, so far it&#39;s been pretty fun and I really like it.&lt;/p&gt;
 &lt;p&gt;I created this post to write down the most important basic concepts that I have encountered so far, so that I can use as quick reference later.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-a-basic-ide&#34;&gt;Setting Up a Basic IDE&lt;/h2&gt;
-
-&lt;p&gt;So far I&amp;rsquo;ve been using Love2D in Windows. Initially I started using Sublime Text 2 as my editor, but then figured out how to make my Love2D development experience much better using &lt;a href=&#34;https://atom.io/&#34;&gt;Atom&lt;/a&gt; combined with Github for Windows.&lt;/p&gt;
-
+&lt;p&gt;So far I&#39;ve been using Love2D in Windows. Initially I started using Sublime Text 2 as my editor, but then figured out how to make my Love2D development experience much better using &lt;a href=&#34;https://atom.io/&#34;&gt;Atom&lt;/a&gt; combined with Github for Windows.&lt;/p&gt;
 &lt;p&gt;In Atom there is a great package called &lt;a href=&#34;https://github.com/rameshvarun/love-ide&#34;&gt;&lt;strong&gt;love-ide&lt;/strong&gt;&lt;/a&gt; which has many great tools and features for developming with Love.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide.jpg&#34; alt=&#34;Love Atom IDE&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide.jpg&#34; alt=&#34;Love Atom IDE&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Some of these features include Lua linting, autocomplete, and being able to run the Love application right from Atom.&lt;/p&gt;
-
-&lt;p&gt;Additionally, we will want to use Window&amp;rsquo;s console for debugging. To do so, enable these options:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide_windows.jpg&#34; alt=&#34;Love in Windows&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;Additionally, we will want to use Window&#39;s console for debugging. To do so, enable these options:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/getting-started-with-love2d-basics/love_ide_windows.jpg&#34; alt=&#34;Love in Windows&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;working-with-keyboard-keys&#34;&gt;Working With Keyboard Keys&lt;/h2&gt;
-
 &lt;p&gt;We can interact with user input through the keyboard by determining if a certain key has been pressed. This is done like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-lua&#34; data-lang=&#34;lua&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;love.keyboard&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;isDown&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;right&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;then&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-lua&#34; data-lang=&#34;lua&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;love.keyboard&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;isDown&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;then&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;-- ...&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The &lt;a href=&#34;https://love2d.org/wiki/love.keyboard.isDown&#34;&gt;&lt;code&gt;love.keyboard.isDown&lt;/code&gt;&lt;/a&gt; function receives a &lt;code&gt;KeyConstant&lt;/code&gt; string argument to indicate which key we want to test for. The complete list can be found &lt;a href=&#34;https://love2d.org/wiki/KeyConstant&#34;&gt;here&lt;/a&gt;. Here are some examples:&lt;/p&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The &lt;a href=&#34;https://love2d.org/wiki/love.keyboard.isDown&#34;&gt;&lt;code&gt;love.keyboard.isDown&lt;/code&gt;&lt;/a&gt; function receives a &lt;code&gt;KeyConstant&lt;/code&gt; string argument to indicate which key we want to test for. The complete list can be found &lt;a href=&#34;https://love2d.org/wiki/KeyConstant&#34;&gt;here&lt;/a&gt;. Here are some examples:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -69,18 +53,15 @@
 &lt;th align=&#34;center&#34;&gt;Description&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;code&gt;space&lt;/code&gt;&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;Space key&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;code&gt;backspace&lt;/code&gt;&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;Backspace key&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;code&gt;down&lt;/code&gt;&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;Down arrow key&lt;/td&gt;

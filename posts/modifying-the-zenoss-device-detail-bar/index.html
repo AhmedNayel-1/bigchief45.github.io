@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Modifying the Zenoss Device Detail Bar",
     "headline" : "Modifying the Zenoss Device Detail Bar",
-    "description" : "\x3cp\x3eThe Zenoss Core \x3ca href=\x22https:\/\/www.sencha.com\/products\/extjs\/\x22\x3e\x3cstrong\x3eExtJS\x3c\/strong\x3e\x3c\/a\x3e graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.\x3c\/p\x3e\n\n\x3cp\x3eZenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in \x3ccode\x3e$ZENHOME\/Products\/ZenUI3\/browser\/resources\/js\/zenoss\x3c\/code\x3e, and as you would expect, the device detail bar component is also located there.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-device-detail-bar\x22\x3eThe Device Detail Bar\x3c\/h2\x3e\n\n\x3cp\x3eThis is the detail bar located on the device view page which shows the device\x26rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in \x3ccode\x3eDeviceDetailBar.js\x3c\/code\x3e\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/modifying-the-zenoss-device-detail-bar\/device_detail_bar.png\x22 alt=\x22Device Detail Bar\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eHowever since we are going to \x3cstrong\x3e\x3cem\x3eextend\x3c\/em\x3e\x3c\/strong\x3e this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.\x3c\/p\x3e\n\n\x3ch2 id=\x22extending-the-component-through-zenpacks\x22\x3eExtending The Component, Through ZenPacks\x3c\/h2\x3e\n\n\x3cp\x3eLet\x26rsquo;s assume we are starting with a freshly created ZenPack, which adds a new \x3ccode\x3epower_status\x3c\/code\x3e integer field to certain devices, according to its \x3ccode\x3ezenpack.yaml\x3c\/code\x3e file:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\nclasses\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  CustomDevice\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Device\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Custom Device\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      power_status\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        type\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e boolean\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eWhat we want is to display this value in the device\x26rsquo;s detail bar, similar to the device\x26rsquo;s ping status display.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eThe Zenoss Core \x3ca href=\x22https:\/\/www.sencha.com\/products\/extjs\/\x22\x3e\x3cstrong\x3eExtJS\x3c\/strong\x3e\x3c\/a\x3e graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.\x3c\/p\x3e\n\x3cp\x3eZenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in \x3ccode\x3e$ZENHOME\/Products\/ZenUI3\/browser\/resources\/js\/zenoss\x3c\/code\x3e, and as you would expect, the device detail bar component is also located there.\x3c\/p\x3e\n\x3ch2 id=\x22the-device-detail-bar\x22\x3eThe Device Detail Bar\x3c\/h2\x3e\n\x3cp\x3eThis is the detail bar located on the device view page which shows the device\x27s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in \x3ccode\x3eDeviceDetailBar.js\x3c\/code\x3e\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/modifying-the-zenoss-device-detail-bar\/device_detail_bar.png\x22 alt=\x22Device Detail Bar\x22\x3e\x3c\/p\x3e\n\x3cp\x3eHowever since we are going to \x3cstrong\x3e\x3cem\x3eextend\x3c\/em\x3e\x3c\/strong\x3e this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.\x3c\/p\x3e\n\x3ch2 id=\x22extending-the-component-through-zenpacks\x22\x3eExtending The Component, Through ZenPacks\x3c\/h2\x3e\n\x3cp\x3eLet\x27s assume we are starting with a freshly created ZenPack, which adds a new \x3ccode\x3epower_status\x3c\/code\x3e integer field to certain devices, according to its \x3ccode\x3ezenpack.yaml\x3c\/code\x3e file:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\nclasses\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  CustomDevice\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Device\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Custom Device\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      power_status\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n        type\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e boolean\n\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eWhat we want is to display this value in the device\x27s detail bar, similar to the device\x27s ping status display.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,20 +136,13 @@ if (!doNotTrack) {
   <time datetime=2016-11-08T00:00:00Z class="post-date">Tue, Nov 8, 2016</time>
 
   <p>The Zenoss Core <a href="https://www.sencha.com/products/extjs/"><strong>ExtJS</strong></a> graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.</p>
-
 <p>Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss</code>, and as you would expect, the device detail bar component is also located there.</p>
-
 <h2 id="the-device-detail-bar">The Device Detail Bar</h2>
-
-<p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
-
+<p>This is the detail bar located on the device view page which shows the device's icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar"></p>
 <p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
-
 <h2 id="extending-the-component-through-zenpacks">Extending The Component, Through ZenPacks</h2>
-
-<p>Let&rsquo;s assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
+<p>Let's assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
 
 classes<span style="color:#111">:</span>
@@ -158,81 +151,64 @@ classes<span style="color:#111">:</span>
     label<span style="color:#111">:</span> Custom Device
     properties<span style="color:#111">:</span>
       power_status<span style="color:#111">:</span>
-        type<span style="color:#111">:</span> boolean</code></pre></div>
-<p>What we want is to display this value in the device&rsquo;s detail bar, similar to the device&rsquo;s ping status display.</p>
+        type<span style="color:#111">:</span> boolean
 
+</code></pre></div><p>What we want is to display this value in the device's detail bar, similar to the device's ping status display.</p>
 <p>We will proceed to create a new directory inside the ZenPack, where UI modifications will be placed, and create a new <code>resources/device.js</code> (in this case, the <code>device</code> file name specifies that the JavaScript will be loaded for a custom device type) JavaScript file that will use ExtJS to extend the user interface:</p>
-
 <p>-&gt; If you want to have your JavaScript loaded for all Zenoss pages, put it in <code>resources/global.js</code>, and if you want it to only apply to your custom device type(s), put it in <code>resources/device.js</code>. If zenpacklib detects the presence of either of these files it will wire up the ZCML stuff for you automatically. See <a href="https://github.com/zenoss/ZenPacks.zenoss.ZenPackLib/issues/56">this issue</a> on Github for more information.</p>
-
 <p><strong>device.js</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">onReady</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">onReady</span><span style="color:#111">(</span><span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">var</span> <span style="color:#75af00">DEVICE_DETAIL_BAR_ID</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;devdetailbar&#39;</span><span style="color:#111">;</span>
 
-  <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">ComponentMgr</span><span style="color:#111">.</span><span style="color:#75af00">onAvailable</span><span style="color:#111">(</span><span style="color:#75af00">DEVICE_DETAIL_BAR_ID</span><span style="color:#111">,</span> <span style="color:#00a8c8">function</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">var</span> <span style="color:#75af00">detailBar</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#75af00">DEVICE_DETAIL_BAR_ID</span><span style="color:#111">);</span>
+  <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">ComponentMgr</span><span style="color:#111">.</span><span style="color:#75af00">onAvailable</span><span style="color:#111">(</span><span style="color:#75af00">DEVICE_DETAIL_BAR_ID</span><span style="color:#111">,</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">detailBar</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#75af00">DEVICE_DETAIL_BAR_ID</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
     <span style="color:#75715e">// First, we create the new Power Status item
-</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">var</span> <span style="color:#75af00">powerStatusItem</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">DeviceDetailItem</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">({</span>
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">var</span> <span style="color:#75af00">powerStatusItem</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">DeviceDetailItem</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#111">{</span>
         <span style="color:#75af00">ref</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;pstatusitem&#39;</span><span style="color:#111">,</span>
         <span style="color:#75af00">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">98</span><span style="color:#111">,</span>
-        <span style="color:#75af00">label</span><span style="color:#f92672">:</span> <span style="color:#75af00">_t</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Power Status&#39;</span><span style="color:#111">),</span>
+        <span style="color:#75af00">label</span><span style="color:#f92672">:</span> <span style="color:#75af00">_t</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Power Status&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
         <span style="color:#75af00">id</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;pstatusitem&#39;</span>
-    <span style="color:#111">});</span>
+    <span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
     <span style="color:#75af00">detailBar</span><span style="color:#111">.</span><span style="color:#75af00">addDeviceDetailBarItem</span><span style="color:#111">(</span><span style="color:#75af00">powerStatusItem</span><span style="color:#111">,</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">bar</span><span style="color:#111">,</span> <span style="color:#75af00">data</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#75af00">detailBar</span><span style="color:#111">.</span><span style="color:#75af00">pstatusitem</span><span style="color:#111">.</span><span style="color:#75af00">setText</span><span style="color:#111">(</span><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">.</span><span style="color:#75af00">pingStatusLarge</span><span style="color:#111">(</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">power_status</span><span style="color:#111">));</span>
-    <span style="color:#111">},</span>
-    <span style="color:#111">[</span><span style="color:#d88200">&#39;power_status&#39;</span><span style="color:#111">]);</span>
+        <span style="color:#75af00">detailBar</span><span style="color:#111">.</span><span style="color:#75af00">pstatusitem</span><span style="color:#111">.</span><span style="color:#75af00">setText</span><span style="color:#111">(</span><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">.</span><span style="color:#75af00">pingStatusLarge</span><span style="color:#111">(</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">power_status</span><span style="color:#111">)</span><span style="color:#111">)</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span><span style="color:#111">,</span>
+    <span style="color:#111">[</span><span style="color:#d88200">&#39;power_status&#39;</span><span style="color:#111">]</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
-  <span style="color:#111">});</span>
-<span style="color:#111">});</span>
-</code></pre></div>
-<p>Very simple. After installing the ZenPack, restarting <em>zenhub</em> and <em>zopectl</em> services, you should be able to see the changes.</p>
+  <span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
 
-<p>Now let&rsquo;s go over the code and understand what&rsquo;s going on.</p>
-
+</code></pre></div><p>Very simple. After installing the ZenPack, restarting <em>zenhub</em> and <em>zopectl</em> services, you should be able to see the changes.</p>
+<p>Now let's go over the code and understand what's going on.</p>
 <h2 id="the-devicedetailitem">The DeviceDetailItem</h2>
-
 <p>Basically every item in the bar separated by the &ldquo;|&rdquo; character is actually an instance of the <code>Zenoss.DeviceDetailItem</code> class, which is also defined in <code>DeviceDetailBar.js</code>. In the code above, we are defining a new instance of this class and adding it to the detail bar. In particular, we are interested in these fields:</p>
-
 <p><strong>ref:</strong> The reference string for this <code>DeviceDetailItem</code>. Once set, it is possible to get this item using JavaScript in this way:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">detailBar</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#d88200">&#39;devdetailbar&#39;</span><span style="color:#111">);</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">detailBar</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Ext</span><span style="color:#111">.</span><span style="color:#75af00">getCmp</span><span style="color:#111">(</span><span style="color:#d88200">&#39;devdetailbar&#39;</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">var</span> <span style="color:#75af00">item</span> <span style="color:#f92672">=</span> <span style="color:#75af00">detailBar</span><span style="color:#111">.</span><span style="color:#f92672">&lt;</span><span style="color:#75af00">ref</span><span style="color:#f92672">&gt;</span><span style="color:#111">;</span>
 
 <span style="color:#75715e">// Other existing items can also by obtained by their reference string,
-</span><span style="color:#75715e">// Available in the DeviceDetailBar.js source code:
+</span><span style="color:#75715e"></span><span style="color:#75715e">// Available in the DeviceDetailBar.js source code:
 </span><span style="color:#75715e"></span><span style="color:#00a8c8">var</span> <span style="color:#75af00">status</span> <span style="color:#f92672">=</span> <span style="color:#75af00">detailBar</span><span style="color:#111">.</span><span style="color:#75af00">statusitem</span><span style="color:#111">;</span>
-</code></pre></div>
-<p><strong>id:</strong> The id of this <code>DeviceDetailItem</code> instance.</p>
-
+</code></pre></div><p><strong>id:</strong> The id of this <code>DeviceDetailItem</code> instance.</p>
 <h2 id="adding-the-item">Adding The Item</h2>
-
-<p>Next, we call the detail bar&rsquo;s <code>addDeviceDetailBarItem</code> method to add our freshly instanced item. This method will receive 3 arguments:</p>
-
+<p>Next, we call the detail bar's <code>addDeviceDetailBarItem</code> method to add our freshly instanced item. This method will receive 3 arguments:</p>
 <ol>
 <li><strong>item</strong>: A <code>DeviceDetailItem</code> object to add to the detail bar.</li>
 <li><strong>fn</strong>: A function that will be called when the item is added.</li>
-<li><strong>added_keys</strong>: And array of <em>string</em> keys, to be added to the detail bar&rsquo;s <code>contextKeys</code> array.</li>
+<li><strong>added_keys</strong>: And array of <em>string</em> keys, to be added to the detail bar's <code>contextKeys</code> array.</li>
 </ol>
-
 <p>In our case, we should simply add a new key resembling the device attribute in <code>zenpack.yaml</code>, hence why we pass an array with only one key (<code>power_status</code>) to <em>added_keys</em>.</p>
-
-<p>The function parameter is where things get interesting, and what took my a bit of time and effort to understand everything that goes behind it. As you can see, I passed in a function <code>function(bar, data)</code>. I named the 1st parameter this way after extensive inspection and playing with the web console, however we don&rsquo;t really this parameter. The 2nd one (<code>data</code>) however, is what we will use to obtain the value of our <code>power_status</code> attribute.</p>
-
-<p>Once we have this value, we are then setting it as the <code>DeviceDetailItem</code>&rsquo;s text, but we are first passing it through a <a href="https://aalvarez.me/posts/zenoss-monitoring-template-data-points.html">Zenoss renderer</a>. This what will change the display from a simple <code>True</code> or <code>False</code> value, to the UP or DOWN status with icon that you can already see with the ping status.</p>
-
+<p>The function parameter is where things get interesting, and what took my a bit of time and effort to understand everything that goes behind it. As you can see, I passed in a function <code>function(bar, data)</code>. I named the 1st parameter this way after extensive inspection and playing with the web console, however we don't really this parameter. The 2nd one (<code>data</code>) however, is what we will use to obtain the value of our <code>power_status</code> attribute.</p>
+<p>Once we have this value, we are then setting it as the <code>DeviceDetailItem</code>'s text, but we are first passing it through a <a href="https://aalvarez.me/posts/zenoss-monitoring-template-data-points.html">Zenoss renderer</a>. This what will change the display from a simple <code>True</code> or <code>False</code> value, to the UP or DOWN status with icon that you can already see with the ping status.</p>
 <h2 id="testing-the-item">Testing the Item</h2>
-
-<p>For quick testing, we can quickly open up a <em>zendmd</em> console as the <code>zenoss</code> user, and assign a boolean value to a device&rsquo;s <code>power_status</code> attribute.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">device</span> <span style="color:#f92672">=</span> <span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&lt;hostname&gt;&#34;</span><span style="color:#111">)</span>
+<p>For quick testing, we can quickly open up a <em>zendmd</em> console as the <code>zenoss</code> user, and assign a boolean value to a device's <code>power_status</code> attribute.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">device</span> <span style="color:#f92672">=</span> <span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">&lt;hostname&gt;</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 <span style="color:#111">device</span><span style="color:#f92672">.</span><span style="color:#111">power_status</span> <span style="color:#f92672">=</span> <span style="color:#111">False</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-<p>The result should appear immediately after refreshing:</p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/detail_bar_power_down.jpg" alt="Power Status" /></p>
-
-<p>Don&rsquo;t mind the white background on the detail bar shown above, I am using a different skin in my Zenoss UI.</p>
+<span style="color:#111">commit</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>The result should appear immediately after refreshing:</p>
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/detail_bar_power_down.jpg" alt="Power Status"></p>
+<p>Don't mind the white background on the detail bar shown above, I am using a different skin in my Zenoss UI.</p>
 </div>
 
 

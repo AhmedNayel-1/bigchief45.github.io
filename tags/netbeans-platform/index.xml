@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>netbeans platform on Andrés Álvarez</title>
@@ -18,11 +18,8 @@
       
       <guid>https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/</guid>
       <description>&lt;p&gt;It is possible to add buttons that toggle a dropdown menu to the main toolbar in your Netbeans Platform application.&lt;/p&gt;
-
 &lt;p&gt;For example, the Netbeans IDE &lt;em&gt;Run Project&lt;/em&gt;, &lt;em&gt;Debug Project&lt;/em&gt;, and &lt;em&gt;Profile Project&lt;/em&gt; buttons have a small arrow next to them. When clicked, a dropdown menu with more related actions is shown:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png&#34; alt=&#34;Netbeans IDE Dropdown Buttons&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/dropdown-toolbar-buttons-in-netbeans-platform/netbeans_ide_dropdown_actions.png&#34; alt=&#34;Netbeans IDE Dropdown Buttons&#34;&gt;&lt;/p&gt;
 &lt;p&gt;In this article, I will teach you how to implement this behavior.&lt;/p&gt;</description>
     </item>
     
@@ -33,9 +30,7 @@
       
       <guid>https://aalvarez.me/posts/cancellable-tasks-in-netbeans-platform/</guid>
       <description>&lt;p&gt;I was trying to implement cancellable tasks in Netbeans Platform using &lt;a href=&#34;https://rubenlaguna.com/post/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform/&#34;&gt;this blog post&lt;/a&gt; as reference.&lt;/p&gt;
-
-&lt;p&gt;However I never managed to make it work. The tasks&amp;rsquo;s thread would never get interrupted even after the confirmation dialog, the task would just keep running.&lt;/p&gt;
-
+&lt;p&gt;However I never managed to make it work. The tasks&#39;s thread would never get interrupted even after the confirmation dialog, the task would just keep running.&lt;/p&gt;
 &lt;p&gt;After some digging on the Netbeans Platform and IDE &lt;a href=&#34;https://github.com/apache/incubator-netbeans&#34;&gt;source code&lt;/a&gt;, I think I managed to find a way to properly and &lt;strong&gt;easily&lt;/strong&gt; implement cancellable tasks.&lt;/p&gt;</description>
     </item>
     
@@ -45,11 +40,9 @@
       <pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/displaying-images-in-netbeans-platform-node-tooltips/</guid>
-      <description>&lt;p&gt;Netbeans Platform allows you to display HTML inside a node&amp;rsquo;s tooltip text. Naturally this means you can display images. For example, project nodes in the Netbeans IDE display icons related to errors (if there are any) and version control:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/displaying-images-in-netbeans-platform-node-tooltips/node_tooltip_images.png&#34; alt=&#34;Netbeans Node Tooltip Images&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Achieving this is not very straight forward, since the documentation doesn&amp;rsquo;t really say much on how to load this image. Fortunately it is very simple.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Netbeans Platform allows you to display HTML inside a node&#39;s tooltip text. Naturally this means you can display images. For example, project nodes in the Netbeans IDE display icons related to errors (if there are any) and version control:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/displaying-images-in-netbeans-platform-node-tooltips/node_tooltip_images.png&#34; alt=&#34;Netbeans Node Tooltip Images&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Achieving this is not very straight forward, since the documentation doesn&#39;t really say much on how to load this image. Fortunately it is very simple.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -59,22 +52,16 @@
       
       <guid>https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/</guid>
       <description>&lt;p&gt;Nodes in Netbeans Platform can possess actions that can be executed with the node object as context. For example, the Project, Package, and Class nodes in the Netbeans IDE have a set of actions which can be seen by right clicking on the nodes:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/netbeans_ide_node_actions.png&#34; alt=&#34;Netbeans IDE Node Actions&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/netbeans_ide_node_actions.png&#34; alt=&#34;Netbeans IDE Node Actions&#34;&gt;&lt;/p&gt;
 &lt;p&gt;In the Netbeans Platform tutorials I found &lt;a href=&#34;https://platform.netbeans.org/tutorials/nbm-nodesapi2.html#actions&#34;&gt;a tutorial&lt;/a&gt; that explains how to add these actions to nodes. The problem is that in that tutorial the action class was created as an &lt;strong&gt;inner class&lt;/strong&gt; of the node class. Making the action &lt;strong&gt;tightly coupled&lt;/strong&gt; with the node.&lt;/p&gt;
-
 &lt;p&gt;I managed to implement a more modular and loosely coupled approach, which is what I will explain in this post.&lt;/p&gt;
-
 &lt;p&gt;Our loosely coupled approach will basically allow us to:&lt;/p&gt;
-
 &lt;ol&gt;
 &lt;li&gt;Keep the domain logic (Java Beans and POJOs) in its own domain module.&lt;/li&gt;
 &lt;li&gt;Keep the view logic (nodes that represent beans) in another module.&lt;/li&gt;
-&lt;li&gt;Keep the node actions logic in yet another module. This allows us to plug and unplug different action&amp;rsquo;s that belong to separate modules. Making our application&amp;rsquo;s node actions very modular.&lt;/li&gt;
+&lt;li&gt;Keep the node actions logic in yet another module. This allows us to plug and unplug different action&#39;s that belong to separate modules. Making our application&#39;s node actions very modular.&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;Let&amp;rsquo;s begin!&lt;/p&gt;</description>
+&lt;p&gt;Let&#39;s begin!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -84,16 +71,14 @@
       
       <guid>https://aalvarez.me/posts/netbeans-platform-status-bars/</guid>
       <description>&lt;p&gt;In desktop applications, status bars are a great way to convey information to the user about the current status of certain items in the application, such as connection status, total amount of items, current mode, current row and column number in an editor, etc.&lt;/p&gt;
-
 &lt;p&gt;Implementing custom status bars to a Netbeans Platform application is extremely easy. In this article I will go over how we can achieve really cool things with status bars and lookups.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-and-registering-a-new-status-bar&#34;&gt;Creating and Registering a New Status Bar&lt;/h2&gt;
-
 &lt;p&gt;To create a new status bar, create a new Java class that implements the &lt;code&gt;StatusLineElementProvider&lt;/code&gt; interface. To register it as a status bar, we use the &lt;code&gt;@ServiceProvider&lt;/code&gt; annotation:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;@ServiceProvider&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;StatusLineElementProvider&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;position&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyStatusBar&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;StatusLineElementProvider&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
 
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -103,16 +88,11 @@
       
       <guid>https://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/</guid>
       <description>&lt;p&gt;Being able to update an application when a new version is released is something of critical importance for desktop applications. Otherwise, the process of updating the application is extremely tedious since you have to download more installers all the time.&lt;/p&gt;
-
 &lt;p&gt;Luckily, Netbeans Platform comes with integrated support for enabling your custom applications to be able to be updated when a new version is released.&lt;/p&gt;
-
 &lt;p&gt;In this post I will go over how to implement this on a &lt;strong&gt;Maven&lt;/strong&gt; based Netbeans Platform application.&lt;/p&gt;
-
 &lt;h2 id=&#34;how-netbeans-update-center-works&#34;&gt;How Netbeans Update Center Works&lt;/h2&gt;
-
-&lt;p&gt;The &lt;strong&gt;Update Center&lt;/strong&gt; is how we can achieve this functionality. The way it works is that you publish your module&amp;rsquo;s NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.&lt;/p&gt;
-
-&lt;p&gt;When you configure an update center in your application, you will configure this web server&amp;rsquo;s URL so that the update center client knows where to poll and where to download the new module files to install.&lt;/p&gt;</description>
+&lt;p&gt;The &lt;strong&gt;Update Center&lt;/strong&gt; is how we can achieve this functionality. The way it works is that you publish your module&#39;s NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.&lt;/p&gt;
+&lt;p&gt;When you configure an update center in your application, you will configure this web server&#39;s URL so that the update center client knows where to poll and where to download the new module files to install.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -122,9 +102,7 @@
       
       <guid>https://aalvarez.me/posts/using-listeners-in-custom-netbeans-platform-wizards/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://platform.netbeans.org/tutorials/nbm-wizard.html#validate&#34;&gt;This tutorial&lt;/a&gt; explains how you can add validation to your custom wizards in the Netbeans Platform. This works by setting a boolean variable to &lt;code&gt;false&lt;/code&gt; and then throwing a &lt;code&gt;WizardValidationException&lt;/code&gt; which will show an error message in the wizard, disabling the ability to click the &lt;em&gt;Next&lt;/em&gt; or &lt;em&gt;Finish&lt;/em&gt; buttons.&lt;/p&gt;
-
 &lt;p&gt;The problem with this is that after the above happens, there is no way to enable these buttons again. And the way to achieve this is not covered in that tutorial.&lt;/p&gt;
-
 &lt;p&gt;Therefore, in this blog post I will explain just how to do that.&lt;/p&gt;</description>
     </item>
     
@@ -135,17 +113,11 @@
       
       <guid>https://aalvarez.me/posts/netbeans-platform-node-icon-badges/</guid>
       <description>&lt;p&gt;The Netbeans IDE has some very cool way of letting users know when a certain file contains errors. For example, if you are editing a Java file and the file contains syntax errors, Netbeans will change the file icons with a new icon indicating errors:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png&#34; alt=&#34;Netbeans Error Icons&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/netbeans-platform-node-icon-badges/netbeans_error_icons.png&#34; alt=&#34;Netbeans Error Icons&#34;&gt;&lt;/p&gt;
 &lt;p&gt;You can see that the error icons propagate all the way up to the top-most parent, the project itself.&lt;/p&gt;
-
 &lt;h2 id=&#34;netbeans-platform-icon-badges&#34;&gt;Netbeans Platform Icon Badges&lt;/h2&gt;
-
 &lt;p&gt;As a user of the Netbeans IDE and before even knowing what the Netbeans Platform was, I always assumed that the normal state of the icon and the error state of the icon were two completely different icons handled by Netbeans. A few days ago I learned that this is not the case.&lt;/p&gt;
-
 &lt;p&gt;Netbeans uses the concept of &lt;strong&gt;icon badges&lt;/strong&gt; to display these kind of error icons. Icon badges are basically multiple images merged together &lt;em&gt;at runtime&lt;/em&gt; into a single &lt;code&gt;Image&lt;/code&gt; object.&lt;/p&gt;
-
 &lt;p&gt;In this article I want to quickly go over how you can apply this concept in your Netbeans Platform application when using the Nodes API.&lt;/p&gt;</description>
     </item>
     
@@ -155,16 +127,11 @@
       <pubDate>Mon, 23 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/</guid>
-      <description>&lt;p&gt;On a &lt;a href=&#34;https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html&#34;&gt;previous post&lt;/a&gt; I talked about creating a new file type that Netbeans Platform can recognize and display the file&amp;rsquo;s data in different ways by creating different visual editors that implement the &lt;code&gt;MultiViewElement&lt;/code&gt; interface.&lt;/p&gt;
-
+      <description>&lt;p&gt;On a &lt;a href=&#34;https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html&#34;&gt;previous post&lt;/a&gt; I talked about creating a new file type that Netbeans Platform can recognize and display the file&#39;s data in different ways by creating different visual editors that implement the &lt;code&gt;MultiViewElement&lt;/code&gt; interface.&lt;/p&gt;
 &lt;p&gt;However, that tutorial did not cover how to add a custom toolbar to each multi view. Like the one Netbeans already provides when editing source code:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png&#34; alt=&#34;Netbeans MultiView Toolbar&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png&#34; alt=&#34;Netbeans MultiView Toolbar&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This is a very handy toolbar that can be used to add buttons that perform different kinds of actions with the current active file.&lt;/p&gt;
-
 &lt;h2 id=&#34;a-deeper-look-into-the-multiviewelement-object&#34;&gt;A Deeper Look Into the MultiViewElement Object&lt;/h2&gt;
-
 &lt;p&gt;If you recall from the previous post, a &lt;code&gt;JPanel&lt;/code&gt; that implements &lt;code&gt;MultiViewElement&lt;/code&gt; was created after finishing the wizard. This &lt;code&gt;MultiViewElement&lt;/code&gt; object has some very important characteristics that are key to this tutorial:&lt;/p&gt;</description>
     </item>
     
@@ -174,16 +141,11 @@
       <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/custom-file-types-in-netbeans-platform/</guid>
-      <description>&lt;p&gt;If your desktop Java application needs to deal with very particular or special kinds of files, we can make use of Netbeans Platform&amp;rsquo;s custom File Type feature to define a file that our application can recognize, and display visual and editing components to view and edit the file&amp;rsquo;s data.&lt;/p&gt;
-
-&lt;p&gt;Moreover, we can also make use of Netbeans Platform&amp;rsquo;s &lt;em&gt;Favorites&lt;/em&gt; pane, which displays a tree view of a file system, where we can open the special files we need to work with.&lt;/p&gt;
-
+      <description>&lt;p&gt;If your desktop Java application needs to deal with very particular or special kinds of files, we can make use of Netbeans Platform&#39;s custom File Type feature to define a file that our application can recognize, and display visual and editing components to view and edit the file&#39;s data.&lt;/p&gt;
+&lt;p&gt;Moreover, we can also make use of Netbeans Platform&#39;s &lt;em&gt;Favorites&lt;/em&gt; pane, which displays a tree view of a file system, where we can open the special files we need to work with.&lt;/p&gt;
 &lt;h2 id=&#34;creating-a-new-module&#34;&gt;Creating a New Module&lt;/h2&gt;
-
 &lt;p&gt;For this article, we are going to create a new file type for CSV (Comma Separated Value) files. When we open these files, our application will display a visual representation in the form of an editable JTable.&lt;/p&gt;
-
 &lt;p&gt;All this functionaltiy will live in its own Netbeans Platform Module. Meaning that it can be plugged in into different applications in a modular fashion.&lt;/p&gt;
-
 &lt;p&gt;We are going to create the module and build it using &lt;a href=&#34;https://maven.apache.org/&#34;&gt;Maven&lt;/a&gt;, since we are also going to be adding some functionalities that depend on external libraries that we can easily include in our project with Maven. But you can also just create the module without Maven as well. To create the module go to &lt;em&gt;New Project &amp;gt; Maven &amp;gt; Netbeans Module&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     

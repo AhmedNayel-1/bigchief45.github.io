@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Making Functions Timeout in Python",
     "headline" : "Making Functions Timeout in Python",
-    "description" : "\x3cp\x3eSometimes you need to execute a function that can take a lot of time to finish. You are not sure exactly when the function will finish, but you do not want to wait too long, or let your program \x26ldquo;hang\x26rdquo; waiting for a response.\x3c\/p\x3e\n\n\x3cp\x3eWe want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program\x26rsquo;s execution.\x3c\/p\x3e\n\n\x3cp\x3eWe can achieve this by using a custom \x3ca href=\x22http:\/\/book.pythontips.com\/en\/latest\/context_managers.html\x22\x3econtext manager\x3c\/a\x3e and the \x3ca href=\x22https:\/\/docs.python.org\/2\/library\/signal.html\x22\x3e\x3ccode\x3esignal\x3c\/code\x3e\x3c\/a\x3e module from the Python standard library.\x3c\/p\x3e\n\n\x3cp\x3eHere is a complete example:\x3c\/p\x3e",
+    "description" : "\x3cp\x3eSometimes you need to execute a function that can take a lot of time to finish. You are not sure exactly when the function will finish, but you do not want to wait too long, or let your program \x26ldquo;hang\x26rdquo; waiting for a response.\x3c\/p\x3e\n\x3cp\x3eWe want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program\x27s execution.\x3c\/p\x3e\n\x3cp\x3eWe can achieve this by using a custom \x3ca href=\x22http:\/\/book.pythontips.com\/en\/latest\/context_managers.html\x22\x3econtext manager\x3c\/a\x3e and the \x3ca href=\x22https:\/\/docs.python.org\/2\/library\/signal.html\x22\x3e\x3ccode\x3esignal\x3c\/code\x3e\x3c\/a\x3e module from the Python standard library.\x3c\/p\x3e\n\x3cp\x3eHere is a complete example:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,52 +136,45 @@ if (!doNotTrack) {
   <time datetime=2019-02-06T16:02:35Z class="post-date">Wed, Feb 6, 2019</time>
 
   <p>Sometimes you need to execute a function that can take a lot of time to finish. You are not sure exactly when the function will finish, but you do not want to wait too long, or let your program &ldquo;hang&rdquo; waiting for a response.</p>
-
-<p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program&rsquo;s execution.</p>
-
+<p>We want our function to run for a certain period of time, and if this time limit is exceeded, we want to regain control of the program's execution.</p>
 <p>We can achieve this by using a custom <a href="http://book.pythontips.com/en/latest/context_managers.html">context manager</a> and the <a href="https://docs.python.org/2/library/signal.html"><code>signal</code></a> module from the Python standard library.</p>
-
 <p>Here is a complete example:</p>
-
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">signal</span>
 
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">timeout</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">seconds</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">seconds</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_seconds</span> <span style="color:#f92672">=</span> <span style="color:#111">seconds</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__enter__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__enter__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#75715e"># Register and schedule the signal with the specified time</span>
         <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">signal</span><span style="color:#111">(</span><span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">SIGALRM</span><span style="color:#111">,</span> <span style="color:#111">timeout</span><span style="color:#f92672">.</span><span style="color:#111">_raise_timeout</span><span style="color:#111">)</span>
         <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">alarm</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_seconds</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">return</span> <span style="color:#111">self</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__exit__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">exc_type</span><span style="color:#111">,</span> <span style="color:#111">exc_value</span><span style="color:#111">,</span> <span style="color:#111">traceback</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__exit__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">exc_type</span><span style="color:#111">,</span> <span style="color:#111">exc_value</span><span style="color:#111">,</span> <span style="color:#111">traceback</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#75715e"># Unregister the signal so it won&#39;t be triggered if there is</span>
         <span style="color:#75715e"># no timeout</span>
         <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">signal</span><span style="color:#111">(</span><span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">SIGALRM</span><span style="color:#111">,</span> <span style="color:#111">signal</span><span style="color:#f92672">.</span><span style="color:#111">SIG_IGN</span><span style="color:#111">)</span>
 
     <span style="color:#75af00">@staticmethod</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_raise_timeout</span><span style="color:#111">(</span><span style="color:#111">signum</span><span style="color:#111">,</span> <span style="color:#111">frame</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">raise</span> <span style="color:#111">TimeoutError</span></code></pre></div>
-<p>Most implementations I found in StackOverflow place the <code>raise_timeout</code> function outside. However, I prefer to have it nicely encapsulated by implementing it as a static method of the context manager 👍</p>
-
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_raise_timeout</span><span style="color:#111">(</span><span style="color:#111">signum</span><span style="color:#111">,</span> <span style="color:#111">frame</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">raise</span> <span style="color:#111">TimeoutError</span>
+</code></pre></div><p>Most implementations I found in StackOverflow place the <code>raise_timeout</code> function outside. However, I prefer to have it nicely encapsulated by implementing it as a static method of the context manager 👍</p>
 <p>Now we can use our context manager like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">time</span>
 
 
-<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">__main__</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
-        <span style="color:#00a8c8">with</span> <span style="color:#111">timeout</span><span style="color:#111">(</span><span style="color:#111">seconds</span><span style="color:#f92672">=</span><span style="color:#ae81ff">5</span><span style="color:#111">):</span>
+        <span style="color:#00a8c8">with</span> <span style="color:#111">timeout</span><span style="color:#111">(</span><span style="color:#111">seconds</span><span style="color:#f92672">=</span><span style="color:#ae81ff">5</span><span style="color:#111">)</span><span style="color:#111">:</span>
             <span style="color:#111">time</span><span style="color:#f92672">.</span><span style="color:#111">sleep</span><span style="color:#111">(</span><span style="color:#ae81ff">10</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">except</span> <span style="color:#111">TimeoutError</span><span style="color:#111">:</span>
-        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;The function timed out&#39;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">The function timed out</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Done.&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>Since we are sleeping for 10 seconds (which exceeds the 5 second timeout limit), the code above will timeout and raise the <code>TimeoutError</code> error.</p>
-
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Done.</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>Since we are sleeping for 10 seconds (which exceeds the 5 second timeout limit), the code above will timeout and raise the <code>TimeoutError</code> error.</p>
 <p>If you reduce the sleep time, or increase the timeout time, the function should be able to reach the last print statement.</p>
-
 <p>There we have it! A simple way to timeout or long running functions in Python 🎉</p>
 </div>
 

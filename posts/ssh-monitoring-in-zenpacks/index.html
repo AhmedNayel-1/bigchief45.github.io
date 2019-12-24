@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "SSH Monitoring in ZenPacks",
     "headline" : "SSH Monitoring in ZenPacks",
-    "description" : "\x3cp\x3eZenoss usually monitors and collects information using \x3cstrong\x3eSNMP\x3c\/strong\x3e and \x3cstrong\x3eSSH\x3c\/strong\x3e methods. A good example of is the \x3ca href=\x22http:\/\/wiki.zenoss.org\/ZenPack:Linux_Monitor\x22\x3elinux monitor ZenPack\x3c\/a\x3e which can collect information such as hard disks, interfaces, and file systems using \x3cstrong\x3eboth\x3c\/strong\x3e methods.\x3c\/p\x3e\n\n\x3cp\x3eSNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using \x3cstrong\x3e\x3ca href=\x22http:\/\/www.net-snmp.org\/\x22\x3enet-snmp\x3c\/a\x3e\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eOn the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.\x3c\/p\x3e\n\n\x3cp\x3eWhen developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on \x3ca href=\x22https:\/\/zenpacklib.zenoss.com\/en\/latest\/tutorial-snmp-device\/index.html\x22\x3eSNMP monitoring using zenpacklib\x3c\/a\x3e. When using SNMP, the modeler plugins are \x3ccode\x3eSnmpPlugin\x3c\/code\x3e plugins that typically work using a set of \x3ca href=\x22http:\/\/www.dpstele.com\/snmp\/what-does-oid-network-elements.php\x22\x3eOIDs\x3c\/a\x3e to determine exactly which data is to be modeled.\x3c\/p\x3e\n\n\x3ch2 id=\x22ssh-in-modeler-plugins\x22\x3eSSH in Modeler Plugins\x3c\/h2\x3e\n\n\x3cp\x3eIn order to make a modeler plugin utilize SSH as it\x26rsquo;s polling method we need to use a different type of plugin, the \x3ccode\x3eCommandPlugin\x3c\/code\x3e plugin. The structure of this type of plugin is very similar to the \x3ccode\x3eSnmpPlugin\x3c\/code\x3e, however there is one critical variable that must be implemented.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eZenoss usually monitors and collects information using \x3cstrong\x3eSNMP\x3c\/strong\x3e and \x3cstrong\x3eSSH\x3c\/strong\x3e methods. A good example of is the \x3ca href=\x22http:\/\/wiki.zenoss.org\/ZenPack:Linux_Monitor\x22\x3elinux monitor ZenPack\x3c\/a\x3e which can collect information such as hard disks, interfaces, and file systems using \x3cstrong\x3eboth\x3c\/strong\x3e methods.\x3c\/p\x3e\n\x3cp\x3eSNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using \x3cstrong\x3e\x3ca href=\x22http:\/\/www.net-snmp.org\/\x22\x3enet-snmp\x3c\/a\x3e\x3c\/strong\x3e.\x3c\/p\x3e\n\x3cp\x3eOn the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.\x3c\/p\x3e\n\x3cp\x3eWhen developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on \x3ca href=\x22https:\/\/zenpacklib.zenoss.com\/en\/latest\/tutorial-snmp-device\/index.html\x22\x3eSNMP monitoring using zenpacklib\x3c\/a\x3e. When using SNMP, the modeler plugins are \x3ccode\x3eSnmpPlugin\x3c\/code\x3e plugins that typically work using a set of \x3ca href=\x22http:\/\/www.dpstele.com\/snmp\/what-does-oid-network-elements.php\x22\x3eOIDs\x3c\/a\x3e to determine exactly which data is to be modeled.\x3c\/p\x3e\n\x3ch2 id=\x22ssh-in-modeler-plugins\x22\x3eSSH in Modeler Plugins\x3c\/h2\x3e\n\x3cp\x3eIn order to make a modeler plugin utilize SSH as it\x27s polling method we need to use a different type of plugin, the \x3ccode\x3eCommandPlugin\x3c\/code\x3e plugin. The structure of this type of plugin is very similar to the \x3ccode\x3eSnmpPlugin\x3c\/code\x3e, however there is one critical variable that must be implemented.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,21 +136,14 @@ if (!doNotTrack) {
   <time datetime=2016-12-14T00:00:00Z class="post-date">Wed, Dec 14, 2016</time>
 
   <p>Zenoss usually monitors and collects information using <strong>SNMP</strong> and <strong>SSH</strong> methods. A good example of is the <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">linux monitor ZenPack</a> which can collect information such as hard disks, interfaces, and file systems using <strong>both</strong> methods.</p>
-
 <p>SNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using <strong><a href="http://www.net-snmp.org/">net-snmp</a></strong>.</p>
-
 <p>On the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.</p>
-
 <p>When developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on <a href="https://zenpacklib.zenoss.com/en/latest/tutorial-snmp-device/index.html">SNMP monitoring using zenpacklib</a>. When using SNMP, the modeler plugins are <code>SnmpPlugin</code> plugins that typically work using a set of <a href="http://www.dpstele.com/snmp/what-does-oid-network-elements.php">OIDs</a> to determine exactly which data is to be modeled.</p>
-
 <h2 id="ssh-in-modeler-plugins">SSH in Modeler Plugins</h2>
-
-<p>In order to make a modeler plugin utilize SSH as it&rsquo;s polling method we need to use a different type of plugin, the <code>CommandPlugin</code> plugin. The structure of this type of plugin is very similar to the <code>SnmpPlugin</code>, however there is one critical variable that must be implemented.</p>
-
+<p>In order to make a modeler plugin utilize SSH as it's polling method we need to use a different type of plugin, the <code>CommandPlugin</code> plugin. The structure of this type of plugin is very similar to the <code>SnmpPlugin</code>, however there is one critical variable that must be implemented.</p>
 <p>A variable named <code>command</code> must be initialized and it must contain a string that exactly represents the command to be executed in a remote host Bash shell. The output will then be processed into a <code>results</code> variable that can be processed in the <code>process</code> method.</p>
-
-<p>Let&rsquo;s take a look at a basic skeleton of this kind of plugin:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#d88200">&#34;&#34;&#34;Modeler plugin&#39;s description&#34;&#34;&#34;</span>
+<p>Let's take a look at a basic skeleton of this kind of plugin:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">Modeler plugin</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">s description</span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">Products.DataCollector.plugins.CollectorPlugin</span> <span style="color:#f92672">import</span> <span style="color:#111">CommandPlugin</span>
 <span style="color:#f92672">from</span> <span style="color:#111">Products.DataCollector.plugins.DataMaps</span> <span style="color:#f92672">import</span> <span style="color:#111">ObjectMap</span><span style="color:#111">,</span> <span style="color:#111">RelationshipMap</span>
@@ -158,24 +151,20 @@ if (!doNotTrack) {
 
 <span style="color:#f92672">import</span> <span style="color:#111">json</span>
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyPlugin</span><span style="color:#111">(</span><span style="color:#111">CommandPlugin</span><span style="color:#111">):</span>
-    <span style="color:#111">command</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;sudo ceph -s -f json&#39;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyPlugin</span><span style="color:#111">(</span><span style="color:#111">CommandPlugin</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">command</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">sudo ceph -s -f json</span><span style="color:#d88200">&#39;</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">process</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">,</span> <span style="color:#111">results</span><span style="color:#111">,</span> <span style="color:#111">log</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">process</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#111">,</span> <span style="color:#111">results</span><span style="color:#111">,</span> <span style="color:#111">log</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">results</span> <span style="color:#f92672">=</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">loads</span><span style="color:#111">(</span><span style="color:#111">results</span><span style="color:#111">)</span>
 
-        <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Modeler {0} processing data for device {1}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">(),</span> <span style="color:#111">device</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">))</span>
+        <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Modeler {0} processing data for device {1}</span><span style="color:#d88200">&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">,</span> <span style="color:#111">device</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">)</span><span style="color:#111">)</span>
 
-        <span style="color:#00a8c8">return</span> <span style="color:#111">None</span></code></pre></div>
-<p>Notice where the <code>CommandPlugin</code> class is imported from. Other types of plugins can also be imported from nearby locations.</p>
-
+        <span style="color:#00a8c8">return</span> <span style="color:#111">None</span>
+</code></pre></div><p>Notice where the <code>CommandPlugin</code> class is imported from. Other types of plugins can also be imported from nearby locations.</p>
 <p>The importing of <code>ObjectMap</code> and <code>RelationshipMap</code> is for returning the processed results. These are objects that Zenoss can understand when modeling devices. They represent the corresponding attributes of devices and components, and the corresponding relationships between them. For example, a <em>linux device</em> has many <em>network interfaces</em>.</p>
-
 <p>As mentioned before, the <code>command</code> variable is what tells the plugin which command should be executed through SSH. In this case I am using a command that returns some status data for <a href="http://ceph.com/">Ceph</a> in JSON. I can then process this JSON data inside the <code>process</code> method, and finally return an <code>ObjectMap</code> or <code>RelationshipMap</code>, instead of returning <code>None</code>.</p>
-
 <p>If the data is mapped correctly and all relationships are correctly defined (in <code>zenpack.yaml</code> if you are using zenpacklib), we should be able to see it in the user interface once we model the device:</p>
-
-<p><img src="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/ceph_monitors.jpg" alt="Ceph Monitors" /></p>
+<p><img src="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/ceph_monitors.jpg" alt="Ceph Monitors"></p>
 </div>
 
 

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Useful Zendmd Tricks",
     "headline" : "Useful Zendmd Tricks",
-    "description" : "\x3cp\x3eThe \x3ca href=\x22http:\/\/wiki.zenoss.org\/Category:ZenDMD\x22\x3eZenoss Zendmd Tips Wiki\x3c\/a\x3e page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.\x3c\/p\x3e\n\n\x3ch2 id=\x22removing-device-classes\x22\x3eRemoving Device Classes\x3c\/h2\x3e\n\n\x3cp\x3eWe can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default \x26ldquo;KVM\x26rdquo; device class:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#111\x22\x3edmd\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eDevices\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emanage_deleteOrganizer\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;\/zport\/dmd\/Devices\/KVM\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3ecommit\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3ch2 id=\x22change-zenoss-user-s-password\x22\x3eChange Zenoss User\x26rsquo;s Password\x3c\/h2\x3e\n\n\x3cp\x3eLet\x26rsquo;s say we want to change the default \x3cem\x3eadmin\x3c\/em\x3e user\x26rsquo;s password (\x3ccode\x3ezenoss\x3c\/code\x3e) in the Ubuntu auto deploy:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#111\x22\x3eapp\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eacl_users\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3euserManager\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eupdateUserPassword\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;admin\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;newpassword\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3ecommit\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e()\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3eThe \x3ca href=\x22http:\/\/wiki.zenoss.org\/Category:ZenDMD\x22\x3eZenoss Zendmd Tips Wiki\x3c\/a\x3e page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.\x3c\/p\x3e\n\x3ch2 id=\x22removing-device-classes\x22\x3eRemoving Device Classes\x3c\/h2\x3e\n\x3cp\x3eWe can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default \x26ldquo;KVM\x26rdquo; device class:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#111\x22\x3edmd\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eDevices\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3emanage_deleteOrganizer\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\/zport\/dmd\/Devices\/KVM\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3ecommit\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3ch2 id=\x22change-zenoss-users-password\x22\x3eChange Zenoss User\x27s Password\x3c\/h2\x3e\n\x3cp\x3eLet\x27s say we want to change the default \x3cem\x3eadmin\x3c\/em\x3e user\x27s password (\x3ccode\x3ezenoss\x3c\/code\x3e) in the Ubuntu auto deploy:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-python\x22 data-lang=\x22python\x22\x3e\x3cspan style=\x22color:#111\x22\x3eapp\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eacl_users\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3euserManager\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eupdateUserPassword\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3eadmin\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3enewpassword\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#39;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3cspan style=\x22color:#111\x22\x3ecommit\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,47 +136,36 @@ if (!doNotTrack) {
   <time datetime=2017-02-14T00:00:00Z class="post-date">Tue, Feb 14, 2017</time>
 
   <p>The <a href="http://wiki.zenoss.org/Category:ZenDMD">Zenoss Zendmd Tips Wiki</a> page contains a few useful tricks using zendmd to perform tasks. In this post I am adding more tricks that I discover and learn along the way.</p>
-
 <h2 id="removing-device-classes">Removing Device Classes</h2>
-
 <p>We can easily remove device classes within zendmd with a simple command. Assuming we want to remove the default &ldquo;KVM&rdquo; device class:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">manage_deleteOrganizer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;/zport/dmd/Devices/KVM&#34;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-<h2 id="change-zenoss-user-s-password">Change Zenoss User&rsquo;s Password</h2>
-
-<p>Let&rsquo;s say we want to change the default <em>admin</em> user&rsquo;s password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;newpassword&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-<h2 id="creating-zendmd-scripts">Creating Zendmd Scripts</h2>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">manage_deleteOrganizer</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">/zport/dmd/Devices/KVM</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="change-zenoss-users-password">Change Zenoss User's Password</h2>
+<p>Let's say we want to change the default <em>admin</em> user's password (<code>zenoss</code>) in the Ubuntu auto deploy:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">admin</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">newpassword</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="creating-zendmd-scripts">Creating Zendmd Scripts</h2>
 <p>We can create zendmd scripts that can be run in a zendmd environment when called. For example we can take one of the scripts above and place it in a file called <code>change_password.zendmd</code> (The <em>zendmd</em> extension is just good practice for identifying this script as a zendmd script):</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env zendmd</span>
 
-<span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;newpassword&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">commit</span><span style="color:#111">()</span></code></pre></div>
-<p>Next we should give it executable permissions:</p>
-
+<span style="color:#111">app</span><span style="color:#f92672">.</span><span style="color:#111">acl_users</span><span style="color:#f92672">.</span><span style="color:#111">userManager</span><span style="color:#f92672">.</span><span style="color:#111">updateUserPassword</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">admin</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">newpassword</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">commit</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>Next we should give it executable permissions:</p>
 <pre><code>chmod 0755 change_password.zendmd
-</code></pre>
-
-<p>Finally we can execute the script:</p>
-
+</code></pre><p>Finally we can execute the script:</p>
 <pre><code>./change_password.zendmd
-</code></pre>
-
-<h2 id="obtaining-zproperty-values">Obtaining zProperty Values</h2>
-
+</code></pre><h2 id="obtaining-zproperty-values">Obtaining zProperty Values</h2>
 <p>We can easily obtain values from zProperties added by ZenPacks:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">getProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zProp&#39;</span><span style="color:#111">)</span></code></pre></div>
-<h2 id="use-zendmd-as-a-standalone-program">Use zendmd as a Standalone Program</h2>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">dmd</span><span style="color:#f92672">.</span><span style="color:#111">Devices</span><span style="color:#f92672">.</span><span style="color:#111">getProperty</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">zProp</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="use-zendmd-as-a-standalone-program">Use zendmd as a Standalone Program</h2>
 <p>From a simple Python file, we can get access to zendmd by using the right imports. We can then work with the <code>dmd</code> object as usual:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
 <span style="color:#f92672">import</span> <span style="color:#111">Globals</span>
 <span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.ZenScriptBase</span> <span style="color:#f92672">import</span> <span style="color:#111">ZenScriptBase</span>
 <span style="color:#f92672">from</span> <span style="color:#111">transaction</span> <span style="color:#f92672">import</span> <span style="color:#111">commit</span>
 
-<span style="color:#111">dmd</span> <span style="color:#f92672">=</span> <span style="color:#111">ZenScriptBase</span><span style="color:#111">(</span><span style="color:#111">connect</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">dmd</span></code></pre></div>
+<span style="color:#111">dmd</span> <span style="color:#f92672">=</span> <span style="color:#111">ZenScriptBase</span><span style="color:#111">(</span><span style="color:#111">connect</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">dmd</span>
+</code></pre></div>
 </div>
 
 

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Integrating TravisCI With Rails and Heroku",
     "headline" : "Integrating TravisCI With Rails and Heroku",
-    "description" : "\x3cp\x3eAdding \x3ca href=\x22https:\/\/travis-ci.org\/\x22\x3eTravisCI\x3c\/a\x3e to your application\x26rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.\x3c\/p\x3e\n\n\x3ch2 id=\x22setting-up-travisci\x22\x3eSetting up TravisCI\x3c\/h2\x3e\n\n\x3cp\x3eAssuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a \x3ccode\x3e.travis.yml\x3c\/code\x3e file to the application\x26rsquo;s root directory with the following contents:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3elanguage\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Ruby\nrvm\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - \x3cspan style=\x22color:#ae81ff\x22\x3e2.3\x3c\/span\x3e.\x3cspan style=\x22color:#ae81ff\x22\x3e0\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.\x3c\/p\x3e\n\n\x3ch3 id=\x22configure-postgresql\x22\x3eConfigure Postgresql\x3c\/h3\x3e\n\n\x3cp\x3eSeems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to \x3ccode\x3e.travis.yml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3eservices\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - postgresql\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThen we will add another configuration that will make Travis create a Postgresql database with username \x3ccode\x3epostgres\x3c\/code\x3e and blank password for the build:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3ebefore_script\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - psql -c \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;create database travis_ci_test;\x26#39;\x3c\/span\x3e -U postgres\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3eAdding \x3ca href=\x22https:\/\/travis-ci.org\/\x22\x3eTravisCI\x3c\/a\x3e to your application\x27s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.\x3c\/p\x3e\n\x3cp\x3eIn this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.\x3c\/p\x3e\n\x3ch2 id=\x22setting-up-travisci\x22\x3eSetting up TravisCI\x3c\/h2\x3e\n\x3cp\x3eAssuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a \x3ccode\x3e.travis.yml\x3c\/code\x3e file to the application\x27s root directory with the following contents:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3elanguage\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Ruby\nrvm\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - \x3cspan style=\x22color:#ae81ff\x22\x3e2.3\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e.0\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eThe configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.\x3c\/p\x3e\n\x3ch3 id=\x22configure-postgresql\x22\x3eConfigure Postgresql\x3c\/h3\x3e\n\x3cp\x3eSeems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to \x3ccode\x3e.travis.yml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3eservices\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - postgresql\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eThen we will add another configuration that will make Travis create a Postgresql database with username \x3ccode\x3epostgres\x3c\/code\x3e and blank password for the build:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3ebefore_script\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - psql -c \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;create database travis_ci_test;\x26#39;\x3c\/span\x3e -U postgres\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,49 +135,35 @@ if (!doNotTrack) {
   <h1>Integrating TravisCI With Rails and Heroku</h1>
   <time datetime=2017-03-07T00:00:00Z class="post-date">Tue, Mar 7, 2017</time>
 
-  <p>Adding <a href="https://travis-ci.org/">TravisCI</a> to your application&rsquo;s deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.</p>
-
+  <p>Adding <a href="https://travis-ci.org/">TravisCI</a> to your application's deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.</p>
 <p>In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.</p>
-
 <h2 id="setting-up-travisci">Setting up TravisCI</h2>
-
-<p>Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a <code>.travis.yml</code> file to the application&rsquo;s root directory with the following contents:</p>
+<p>Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a <code>.travis.yml</code> file to the application's root directory with the following contents:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language<span style="color:#111">:</span> Ruby
 rvm<span style="color:#111">:</span>
-  - <span style="color:#ae81ff">2.3</span>.<span style="color:#ae81ff">0</span></code></pre></div>
-<p>The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.</p>
-
+  - <span style="color:#ae81ff">2.3</span><span style="color:#ae81ff">.0</span>
+</code></pre></div><p>The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.</p>
 <h3 id="configure-postgresql">Configure Postgresql</h3>
-
 <p>Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to <code>.travis.yml</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">services<span style="color:#111">:</span>
-  - postgresql</code></pre></div>
-<p>Then we will add another configuration that will make Travis create a Postgresql database with username <code>postgres</code> and blank password for the build:</p>
+  - postgresql
+</code></pre></div><p>Then we will add another configuration that will make Travis create a Postgresql database with username <code>postgres</code> and blank password for the build:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before_script<span style="color:#111">:</span>
-  - psql -c <span style="color:#d88200">&#39;create database travis_ci_test;&#39;</span> -U postgres</code></pre></div>
-<p>Now in our Rails application&rsquo;s <code>config/database.yml</code> we configure our test environment database to use this database:</p>
+  - psql -c <span style="color:#d88200">&#39;create database travis_ci_test;&#39;</span> -U postgres
+</code></pre></div><p>Now in our Rails application's <code>config/database.yml</code> we configure our test environment database to use this database:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">test<span style="color:#111">:</span>
   adapter<span style="color:#111">:</span> postgresql
-  database<span style="color:#111">:</span> travis_ci_test</code></pre></div>
-<p>Lastly make sure to tell Travis the version of Postgres we are using (Travis uses version 9.1 by default). To find out, first run the following command in your development environment&rsquo;s terminal:</p>
-
+  database<span style="color:#111">:</span> travis_ci_test
+</code></pre></div><p>Lastly make sure to tell Travis the version of Postgres we are using (Travis uses version 9.1 by default). To find out, first run the following command in your development environment's terminal:</p>
 <pre><code>psql --version
-</code></pre>
-
-<p>In my case I get the following output:</p>
-
+</code></pre><p>In my case I get the following output:</p>
 <pre><code>psql (PostgreSQL) 9.3.11
-</code></pre>
-
-<p>I add it to <code>.travis.yml</code>:</p>
+</code></pre><p>I add it to <code>.travis.yml</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">addons<span style="color:#111">:</span>
-  postgresql<span style="color:#111">:</span> <span style="color:#d88200">&#34;9.3&#34;</span></code></pre></div>
-<p>Commit all the changes above and push it to the repository so that Travis can start running a new build. You should see the build pass.</p>
-
+  postgresql<span style="color:#111">:</span> <span style="color:#d88200">&#34;9.3&#34;</span>
+</code></pre></div><p>Commit all the changes above and push it to the repository so that Travis can start running a new build. You should see the build pass.</p>
 <h2 id="rspec">RSpec</h2>
-
 <p>Assuming that our application uses RSpec and has some passing tests, Travis will craete the <code>travis_ci_test</code> test database (as specified in <code>database.yml</code>) and will then run <code>rake</code> in the build. This will begin to run all the RSpec tests. You should be able to see the tests running and passing in the Travis Job Log:</p>
-
 <pre><code>$ psql -c 'create database travis_ci_test;' -U postgres
 
 $ bundle exec rake
@@ -193,38 +179,22 @@ Finished in 0.11929 seconds (files took 6.09 seconds to load)
 The command &quot;bundle exec rake&quot; exited with 0.
 
 Done. Your build exited with 0.
-</code></pre>
-
-<p>Excellent! However if you now try running <code>rake</code> in your development environment you will run into an error:</p>
-
+</code></pre><p>Excellent! However if you now try running <code>rake</code> in your development environment you will run into an error:</p>
 <pre><code>`rescue in connect': FATAL:  database &quot;travis_ci_test&quot; does not exist (ActiveRecord::NoDatabaseError)
-</code></pre>
-
-<p>This is because we changed the configuration for the test database in <code>database.yml</code>. Rails cannot find this new database since we have not created it. We can easily create it by running the following command:</p>
-
+</code></pre><p>This is because we changed the configuration for the test database in <code>database.yml</code>. Rails cannot find this new database since we have not created it. We can easily create it by running the following command:</p>
 <pre><code>rake db:test:prepare
-</code></pre>
-
-<p>This will create and prepare a test database called <code>travis_ci_test</code>, and while having a development environment test database have this name doesn&rsquo;t really make much sense, it should not interfere with the testing at all. We can go ahead and run <code>rake</code> again and see our tests run and pass nicely.</p>
-
+</code></pre><p>This will create and prepare a test database called <code>travis_ci_test</code>, and while having a development environment test database have this name doesn't really make much sense, it should not interfere with the testing at all. We can go ahead and run <code>rake</code> again and see our tests run and pass nicely.</p>
 <h2 id="integrating-with-heroku">Integrating With Heroku</h2>
-
 <p>Since Travis will automatically run a new build after every new commit or merge in the master branch, it would be nice that our code could get deployed to Heroku automatically if the build passes. We can easily configure this by going to our <a href="www.heroku.com">Heroku</a> dashboard and selecting our application from the list, and selecting the <em>Deploy</em> tab.</p>
-
-<p>In the <em>Deployment method</em> section we will select to use Github, since we are pushing all our changes to our Github repository. Let&rsquo;s go ahead and connect it to Github and find our application&rsquo;s Github repository.</p>
-
-<p><img src="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/heroku_github.jpg" alt="Connect Github to Heroku" /></p>
-
-<p>Once it&rsquo;s connected, we can configure automatic deploys with a repository branch. Additionally we want to check the <strong><em>Wait for CI to pass before deploy</em></strong> option, and voila!</p>
-
+<p>In the <em>Deployment method</em> section we will select to use Github, since we are pushing all our changes to our Github repository. Let's go ahead and connect it to Github and find our application's Github repository.</p>
+<p><img src="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/heroku_github.jpg" alt="Connect Github to Heroku"></p>
+<p>Once it's connected, we can configure automatic deploys with a repository branch. Additionally we want to check the <strong><em>Wait for CI to pass before deploy</em></strong> option, and voila!</p>
 <h2 id="adding-a-build-badge-to-the-repository">Adding a Build Badge to the Repository</h2>
-
-<p>Finally, let&rsquo;s add a nice build badge to the repository&rsquo;s README file. In the Travis repository dashboard we can already see the badge with our build status:</p>
-
-<p><img src="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/build_status.jpg" alt="Build status" /></p>
-
-<p>If we click on it we can get some generated code in different formats. To add to our README file we will choose the Markdown format. We can then copy the snippet and paste it in the repository&rsquo;s <code>README.md</code> file, next to the file&rsquo;s title:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"># Hourglass [<span style="color:#f92672">![Build Status</span>](<span style="color:#75af00">https://travis-ci.org/BigChief45/Hourglass.svg?branch=master</span>)](https://travis-ci.org/BigChief45/Hourglass)</code></pre></div>
+<p>Finally, let's add a nice build badge to the repository's README file. In the Travis repository dashboard we can already see the badge with our build status:</p>
+<p><img src="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/build_status.jpg" alt="Build status"></p>
+<p>If we click on it we can get some generated code in different formats. To add to our README file we will choose the Markdown format. We can then copy the snippet and paste it in the repository's <code>README.md</code> file, next to the file's title:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"># Hourglass [![Build Status](https://travis-ci.org/BigChief45/Hourglass.svg?branch=master)](https://travis-ci.org/BigChief45/Hourglass)
+</code></pre></div>
 </div>
 
 

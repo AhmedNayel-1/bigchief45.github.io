@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "JavaScript Gotchas for Beginners",
     "headline" : "JavaScript Gotchas for Beginners",
-    "description" : "\x3cp\x3eWhen starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.\x3c\/p\x3e\n\n\x3ch2 id=\x22the-global-object\x22\x3eThe Global Object\x3c\/h2\x3e\n\n\x3cp\x3eThe \x3cstrong\x3eglobal scope\x3c\/strong\x3e is the space in which global variables live and it can also be approached as an object. Each global variable is present as a \x3cstrong\x3eproperty\x3c\/strong\x3e of this object. In browsers, the global scope object is stored in the \x3ccode\x3ewindow\x3c\/code\x3e variable:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-javascript\x22 data-lang=\x22javascript\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3evar\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3ev\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e10\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e;\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3econsole\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3elog\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;v\x26#34;\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ewindow\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e);\x3c\/span\x3e\n\x3cspan style=\x22color:#75715e\x22\x3e\/\/ \x26gt; true\n\x3c\/span\x3e\x3cspan style=\x22color:#75715e\x22\x3e\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3econsole\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3elog\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ewindow\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3ev\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e);\x3c\/span\x3e\n\x3cspan style=\x22color:#75715e\x22\x3e\/\/ \x26gt; 10\n\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3eWhen starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.\x3c\/p\x3e\n\x3ch2 id=\x22the-global-object\x22\x3eThe Global Object\x3c\/h2\x3e\n\x3cp\x3eThe \x3cstrong\x3eglobal scope\x3c\/strong\x3e is the space in which global variables live and it can also be approached as an object. Each global variable is present as a \x3cstrong\x3eproperty\x3c\/strong\x3e of this object. In browsers, the global scope object is stored in the \x3ccode\x3ewindow\x3c\/code\x3e variable:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-javascript\x22 data-lang=\x22javascript\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3evar\x3c\/span\x3e \x3cspan style=\x22color:#75af00\x22\x3ev\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e=\x3c\/span\x3e \x3cspan style=\x22color:#ae81ff\x22\x3e10\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e;\x3c\/span\x3e\n\x3cspan style=\x22color:#75af00\x22\x3econsole\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3elog\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;v\x26#34;\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3ein\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3ewindow\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e;\x3c\/span\x3e\n\x3cspan style=\x22color:#75715e\x22\x3e\/\/ \x26gt; true\n\x3c\/span\x3e\x3cspan style=\x22color:#75715e\x22\x3e\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3econsole\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3elog\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ewindow\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#75af00\x22\x3ev\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e;\x3c\/span\x3e\n\x3cspan style=\x22color:#75715e\x22\x3e\/\/ \x26gt; 10\n\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,121 +136,93 @@ if (!doNotTrack) {
   <time datetime=2017-01-06T00:00:00Z class="post-date">Fri, Jan 6, 2017</time>
 
   <p>When starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.</p>
-
 <h2 id="the-global-object">The Global Object</h2>
-
 <p>The <strong>global scope</strong> is the space in which global variables live and it can also be approached as an object. Each global variable is present as a <strong>property</strong> of this object. In browsers, the global scope object is stored in the <code>window</code> variable:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">v</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
-<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v&#34;</span> <span style="color:#00a8c8">in</span> <span style="color:#111">window</span><span style="color:#111">);</span>
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v&#34;</span> <span style="color:#00a8c8">in</span> <span style="color:#111">window</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; true
-</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">v</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">v</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; 10
-</span></code></pre></div>
-<h2 id="objects-and-mutability">Objects and Mutability</h2>
-
+</span></code></pre></div><h2 id="objects-and-mutability">Objects and Mutability</h2>
 <p>With JavaScript objects there is a difference between having two references to the same object and having two different objects that contain the same properties. Consider the following code:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">object1</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">value</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span><span style="color:#111">};</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">object1</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">value</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span><span style="color:#111">}</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">var</span> <span style="color:#75af00">object2</span> <span style="color:#f92672">=</span> <span style="color:#75af00">object1</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">var</span> <span style="color:#75af00">object3</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">value</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span><span style="color:#111">};</span>
+<span style="color:#00a8c8">var</span> <span style="color:#75af00">object3</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#75af00">value</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span><span style="color:#111">}</span><span style="color:#111">;</span>
 
-<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object1</span> <span style="color:#f92672">==</span> <span style="color:#75af00">object2</span><span style="color:#111">);</span>
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object1</span> <span style="color:#f92672">==</span> <span style="color:#75af00">object2</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; true
-</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object1</span> <span style="color:#f92672">==</span> <span style="color:#75af00">object3</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object1</span> <span style="color:#f92672">==</span> <span style="color:#75af00">object3</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; false
 </span><span style="color:#75715e"></span>
 <span style="color:#75af00">object1</span><span style="color:#111">.</span><span style="color:#75af00">value</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span><span style="color:#111">;</span>
-<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object2</span><span style="color:#111">.</span><span style="color:#75af00">value</span><span style="color:#111">);</span>
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object2</span><span style="color:#111">.</span><span style="color:#75af00">value</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; 15
-</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object3</span><span style="color:#111">.</span><span style="color:#75af00">value</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">object3</span><span style="color:#111">.</span><span style="color:#75af00">value</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; 10
-</span></code></pre></div>
-<p>This is why it is important to be careful when trying to &ldquo;copy&rdquo; variables like above, it leaves a lot of room for unexpected results.</p>
-
+</span></code></pre></div><p>This is why it is important to be careful when trying to &ldquo;copy&rdquo; variables like above, it leaves a lot of room for unexpected results.</p>
 <h2 id="prototypes">Prototypes</h2>
-
-<p>In JavaScript, almost all objects have a <strong><em>prototype</em></strong>, in addition to their set of properties. A prototype is another object that is used as a fallback source of properties. When an object gets a request for a property that it does not have, its prototype will be searched for the property, then the prototype&rsquo;s prototype, and so on.</p>
-
+<p>In JavaScript, almost all objects have a <strong><em>prototype</em></strong>, in addition to their set of properties. A prototype is another object that is used as a fallback source of properties. When an object gets a request for a property that it does not have, its prototype will be searched for the property, then the prototype's prototype, and so on.</p>
 <p>The entity behind almost all objects is <code>Object.prototype</code>. The <code>Object.getPrototypeOf</code> function returns the prototype of an object.</p>
-
 <p>A prototype can be used at any time to add new properties and methods to all objects based on it.</p>
-
 <h2 id="function-arguments">Function Arguments</h2>
-
 <p>It is perfectly possible to call a function and pass more or fewer arguments than the number of parameters the function itself declares. When too many arguments are passed, the extra arguments are <strong>ignored</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">noArguments</span><span style="color:#111">()</span> <span style="color:#111">{}</span>
-<span style="color:#75af00">noArguments</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">);</span> <span style="color:#75715e">// all arguments are ignored
-</span></code></pre></div>
-<p>When fewer arguments are passed, the missing parameters simply get assigned the value <code>undefined</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">myFunction</span><span style="color:#111">(</span><span style="color:#75af00">first</span><span style="color:#111">,</span> <span style="color:#75af00">second</span><span style="color:#111">,</span> <span style="color:#75af00">third</span><span style="color:#111">)</span> <span style="color:#111">{}</span>
-<span style="color:#75af00">myFunction</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">);</span> <span style="color:#75715e">// &#39;third&#39; would become undefined
-</span></code></pre></div>
-<p>Using a variable name starting with an underscore or consisting entirely of a single underscore is a way to indicate to human readers that this argument is not going to be used.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">noArguments</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#111">{</span><span style="color:#111">}</span>
+<span style="color:#75af00">noArguments</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">)</span><span style="color:#111">;</span> <span style="color:#75715e">// all arguments are ignored
+</span></code></pre></div><p>When fewer arguments are passed, the missing parameters simply get assigned the value <code>undefined</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">myFunction</span><span style="color:#111">(</span><span style="color:#75af00">first</span><span style="color:#111">,</span> <span style="color:#75af00">second</span><span style="color:#111">,</span> <span style="color:#75af00">third</span><span style="color:#111">)</span> <span style="color:#111">{</span><span style="color:#111">}</span>
+<span style="color:#75af00">myFunction</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">)</span><span style="color:#111">;</span> <span style="color:#75715e">// &#39;third&#39; would become undefined
+</span></code></pre></div><p>Using a variable name starting with an underscore or consisting entirely of a single underscore is a way to indicate to human readers that this argument is not going to be used.</p>
 <h2 id="the-arguments-object">The arguments Object</h2>
-
 <p>In JavaScript, whenever a function is called, a special variable named <code>arguments</code> is added to the environment in which the function body runs. This variable refers to an object that holds all of the arguments passed to the function.</p>
-
 <p>The <code>arguments</code> object has a <code>length</code> property that tells us the number of arguments that were really passed to the function.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">argumentCounter</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-  <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;You gave me&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">arguments</span><span style="color:#111">.</span><span style="color:#75af00">length</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;arguments.&#34;</span><span style="color:#111">);</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">argumentCounter</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;You gave me&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">arguments</span><span style="color:#111">.</span><span style="color:#75af00">length</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;arguments.&#34;</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
 
-<span style="color:#75af00">argumentCounter</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Hello&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Hola&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Ciao&#34;</span><span style="color:#111">);</span>
+<span style="color:#75af00">argumentCounter</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Hello&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Hola&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Ciao&#34;</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// =&gt; You gave me 3 arguments.
-</span></code></pre></div>
-<h2 id="the-instanceof-operator">The instanceof Operator</h2>
-
+</span></code></pre></div><h2 id="the-instanceof-operator">The instanceof Operator</h2>
 <p>JavaScript provides a binary operator called <code>instanceof</code> which determines whether an object was derived from a specific constructor or not:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">TextCell</span><span style="color:#111">(</span><span style="color:#d88200">&#34;A&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">instanceof</span> <span style="color:#75af00">RTextCell</span><span style="color:#111">);</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">TextCell</span><span style="color:#111">(</span><span style="color:#d88200">&#34;A&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">instanceof</span> <span style="color:#75af00">RTextCell</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// =&gt; false
-</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">([</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span> <span style="color:#00a8c8">instanceof</span> <span style="color:#111">Array</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">[</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span> <span style="color:#00a8c8">instanceof</span> <span style="color:#111">Array</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// =&gt; true
-</span></code></pre></div>
-<h2 id="strict-mode-and-debugging">Strict Mode and Debugging</h2>
-
+</span></code></pre></div><h2 id="strict-mode-and-debugging">Strict Mode and Debugging</h2>
 <p>When debugging, we can make use of a special mode in JavaScript called <strong>strict mode</strong>. To use this mode, we can put the string &ldquo;use strict&rdquo; at the top of a file or function body. For example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">canYouSpotTheProblem</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">canYouSpotTheProblem</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#111">{</span>
   <span style="color:#d88200">&#34;use strict&#34;</span><span style="color:#111">;</span>
   <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#75af00">counter</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#75af00">counter</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span> <span style="color:#75af00">counter</span><span style="color:#f92672">++</span><span style="color:#111">)</span>
-    <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Happy happy&#34;</span><span style="color:#111">);</span>
+    <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Happy happy&#34;</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
 
-<span style="color:#75af00">canYouSpotTheProblem</span><span style="color:#111">();</span>
+<span style="color:#75af00">canYouSpotTheProblem</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// =&gt; ReferenceError: counter is not defined.
-</span></code></pre></div>
-<p>In the example above, JavaScript would normally proceed to create a global variable and use that. In strict mode however, an error is reported instead.</p>
-
-<p>We can also use the <code>debugger</code> keyword to set a breakpoint in the program. When using a browser&rsquo;s developer tools, the program will pause whenever it reachers that statement and we can inspect the program&rsquo;s state.</p>
-
+</span></code></pre></div><p>In the example above, JavaScript would normally proceed to create a global variable and use that. In strict mode however, an error is reported instead.</p>
+<p>We can also use the <code>debugger</code> keyword to set a breakpoint in the program. When using a browser's developer tools, the program will pause whenever it reachers that statement and we can inspect the program's state.</p>
 <h2 id="selective-exception-catching">Selective Exception Catching</h2>
-
 <p>When we want to catch specific exceptions in JavaScript, we can do so by first defining a new type of error and use <code>instanceof</code> to identify it. For example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">InputError</span><span style="color:#111">(</span><span style="color:#75af00">message</span><span style="color:#111">)</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">message</span> <span style="color:#f92672">=</span> <span style="color:#75af00">message</span><span style="color:#111">;</span>
-  <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">stack</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">Error</span><span style="color:#111">()).</span><span style="color:#75af00">stack</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">stack</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">Error</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">stack</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
-<span style="color:#75af00">InputError</span><span style="color:#111">.</span><span style="color:#75af00">prototype</span> <span style="color:#f92672">=</span> <span style="color:#111">Object</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#111">Error</span><span style="color:#111">.</span><span style="color:#75af00">prototype</span><span style="color:#111">);</span>
+<span style="color:#75af00">InputError</span><span style="color:#111">.</span><span style="color:#75af00">prototype</span> <span style="color:#f92672">=</span> <span style="color:#111">Object</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#111">Error</span><span style="color:#111">.</span><span style="color:#75af00">prototype</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75af00">InputError</span><span style="color:#111">.</span><span style="color:#75af00">prototype</span><span style="color:#111">.</span><span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;InputError&#34;</span><span style="color:#111">;</span>
-</code></pre></div>
-<p>We can throw the error inside a function:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">throwError</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+</code></pre></div><p>We can throw the error inside a function:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">function</span> <span style="color:#75af00">throwError</span><span style="color:#111">(</span><span style="color:#111">)</span> <span style="color:#111">{</span>
   <span style="color:#75715e">/* ... */</span>
-  <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">InputError</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Invalid Error - InputError&#34;</span><span style="color:#111">);</span>
+  <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">InputError</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Invalid Error - InputError&#34;</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
-</code></pre></div>
-<p>And we can catch it from another place in our code:</p>
+</code></pre></div><p>And we can catch it from another place in our code:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/* ... */</span>
 <span style="color:#00a8c8">try</span> <span style="color:#111">{</span>
-  <span style="color:#00a8c8">var</span> <span style="color:#75af00">a</span> <span style="color:#f92672">=</span> <span style="color:#75af00">throwError</span><span style="color:#111">();</span>
+  <span style="color:#00a8c8">var</span> <span style="color:#75af00">a</span> <span style="color:#f92672">=</span> <span style="color:#75af00">throwError</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#111">}</span> <span style="color:#00a8c8">catch</span><span style="color:#111">(</span><span style="color:#75af00">e</span><span style="color:#111">)</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">e</span> <span style="color:#00a8c8">instanceof</span> <span style="color:#75af00">InputError</span><span style="color:#111">)</span>
-    <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;An input error ocurred&#34;</span><span style="color:#111">);</span>
+    <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;An input error ocurred&#34;</span><span style="color:#111">)</span><span style="color:#111">;</span>
   <span style="color:#00a8c8">else</span>
     <span style="color:#00a8c8">throw</span> <span style="color:#75af00">e</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
-</code></pre></div>
-<h2 id="references">References</h2>
-
+</code></pre></div><h2 id="references">References</h2>
 <ol>
 <li>Eloquent JavaScript - Marijn Haverbeke</li>
 </ol>

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Cancellable Tasks in Netbeans Platform",
     "headline" : "Cancellable Tasks in Netbeans Platform",
-    "description" : "\x3cp\x3eI was trying to implement cancellable tasks in Netbeans Platform using \x3ca href=\x22https:\/\/rubenlaguna.com\/post\/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform\/\x22\x3ethis blog post\x3c\/a\x3e as reference.\x3c\/p\x3e\n\n\x3cp\x3eHowever I never managed to make it work. The tasks\x26rsquo;s thread would never get interrupted even after the confirmation dialog, the task would just keep running.\x3c\/p\x3e\n\n\x3cp\x3eAfter some digging on the Netbeans Platform and IDE \x3ca href=\x22https:\/\/github.com\/apache\/incubator-netbeans\x22\x3esource code\x3c\/a\x3e, I think I managed to find a way to properly and \x3cstrong\x3eeasily\x3c\/strong\x3e implement cancellable tasks.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eI was trying to implement cancellable tasks in Netbeans Platform using \x3ca href=\x22https:\/\/rubenlaguna.com\/post\/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform\/\x22\x3ethis blog post\x3c\/a\x3e as reference.\x3c\/p\x3e\n\x3cp\x3eHowever I never managed to make it work. The tasks\x27s thread would never get interrupted even after the confirmation dialog, the task would just keep running.\x3c\/p\x3e\n\x3cp\x3eAfter some digging on the Netbeans Platform and IDE \x3ca href=\x22https:\/\/github.com\/apache\/incubator-netbeans\x22\x3esource code\x3c\/a\x3e, I think I managed to find a way to properly and \x3cstrong\x3eeasily\x3c\/strong\x3e implement cancellable tasks.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,15 +136,10 @@ if (!doNotTrack) {
   <time datetime=2018-11-28T00:00:00Z class="post-date">Wed, Nov 28, 2018</time>
 
   <p>I was trying to implement cancellable tasks in Netbeans Platform using <a href="https://rubenlaguna.com/post/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform/">this blog post</a> as reference.</p>
-
-<p>However I never managed to make it work. The tasks&rsquo;s thread would never get interrupted even after the confirmation dialog, the task would just keep running.</p>
-
+<p>However I never managed to make it work. The tasks's thread would never get interrupted even after the confirmation dialog, the task would just keep running.</p>
 <p>After some digging on the Netbeans Platform and IDE <a href="https://github.com/apache/incubator-netbeans">source code</a>, I think I managed to find a way to properly and <strong>easily</strong> implement cancellable tasks.</p>
-
 <h2 id="the-cancellable-interface">The <code>Cancellable</code> Interface</h2>
-
-<p>The trick to making your tasks cancellable is by implementing the <code>Cancellable</code> interface and using a <strong>request processor</strong> and <strong>progress handle</strong> that&rsquo;s configured to be able to cancel a given task.</p>
-
+<p>The trick to making your tasks cancellable is by implementing the <code>Cancellable</code> interface and using a <strong>request processor</strong> and <strong>progress handle</strong> that's configured to be able to cancel a given task.</p>
 <p>When the user cancels the task using the GUI, the <code>cancel()</code> method will be called, and this is where we will handle the logic to determine if the task was cancelled or not. Here is an example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">org.openide.util.Cancellable</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> <span style="color:#111">org.netbeans.api.progress.ProgressHandle</span><span style="color:#f92672">;</span>
@@ -154,43 +149,42 @@ if (!doNotTrack) {
   <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">ProgressHandle</span> <span style="color:#111">progress</span><span style="color:#f92672">;</span>
   <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">boolean</span> <span style="color:#111">cancelled</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
 
-  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyCancellableTask</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyCancellableTask</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e">// Notice how we pass this same task as a &#39;Cancellable&#39; object to the progress handle
-</span><span style="color:#75715e"></span>    <span style="color:#111">progress</span> <span style="color:#f92672">=</span> <span style="color:#111">ProgressHandle</span><span style="color:#f92672">.</span><span style="color:#75af00">createHandle</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Executing MyCancellableTask&#34;</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">);</span>
+</span><span style="color:#75715e"></span>    <span style="color:#111">progress</span> <span style="color:#f92672">=</span> <span style="color:#111">ProgressHandle</span><span style="color:#f92672">.</span><span style="color:#75af00">createHandle</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Executing MyCancellableTask&#34;</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
 
   <span style="color:#75af00">@Override</span>
-  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">progress</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">run</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">progress</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
     <span style="color:#75715e">// Do some time consuming task
-</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">Integer</span><span style="color:#f92672">.</span><span style="color:#75af00">MAX_VALUE</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">Integer</span><span style="color:#f92672">.</span><span style="color:#75af00">MAX_VALUE</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
       <span style="color:#75715e">// We still check for interrupted thread just to be safe
-</span><span style="color:#75715e"></span>      <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">interrupted</span><span style="color:#f92672">()</span> <span style="color:#f92672">||</span> <span style="color:#111">cancelled</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span><span style="color:#75715e"></span>      <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">interrupted</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">|</span><span style="color:#f92672">|</span> <span style="color:#111">cancelled</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
         <span style="color:#75715e">// In this case we can use break, but if there is more logic after the loop
 </span><span style="color:#75715e"></span>        <span style="color:#75715e">// then we should finish the progress handle and return
 </span><span style="color:#75715e"></span>        <span style="color:#00a8c8">break</span><span style="color:#f92672">;</span>
       <span style="color:#f92672">}</span>
 
-      <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;i = &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">i</span><span style="color:#f92672">);</span>
+      <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;i = &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">i</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 
-    <span style="color:#111">progress</span><span style="color:#f92672">.</span><span style="color:#75af00">finish</span><span style="color:#f92672">();</span>
+    <span style="color:#111">progress</span><span style="color:#f92672">.</span><span style="color:#75af00">finish</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
 
   <span style="color:#75af00">@Override</span>
-  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">synchronized</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">cancel</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">synchronized</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">cancel</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#111">cancelled</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
     <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
 
-<span style="color:#f92672">}</span></code></pre></div>
-<p>Notice how we are now handling the state of the task (if it&rsquo;s cancelled or not) using a boolean, instead of just relying on <code>Thread.interrupted()</code>.</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Notice how we are now handling the state of the task (if it's cancelled or not) using a boolean, instead of just relying on <code>Thread.interrupted()</code>.</p>
 <p>We can now start this cancellable task like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">StartMyCancellableTaskAction</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">ActionListener</span> <span style="color:#f92672">{</span>
 
-  <span style="color:#00a8c8">public</span> <span style="color:#75af00">StartMyCancellableTaskAction</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#75af00">StartMyCancellableTaskAction</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 
   <span style="color:#f92672">}</span>
 
@@ -198,13 +192,12 @@ if (!doNotTrack) {
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">actionPerformed</span><span style="color:#f92672">(</span><span style="color:#111">ActionEvent</span> <span style="color:#111">evt</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e">// Use a custom RequestProcessor, since we need to specify support for cancellable
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// tasks
-</span><span style="color:#75715e"></span>    <span style="color:#111">RequestProcessor</span> <span style="color:#111">rp</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RequestProcessor</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;MyCancellableTask&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">);</span>
-    <span style="color:#111">MyCancellableTask</span> <span style="color:#111">task</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyCancellableTask</span><span style="color:#f92672">();</span>
-    <span style="color:#111">rp</span><span style="color:#f92672">.</span><span style="color:#75af00">post</span><span style="color:#f92672">(</span><span style="color:#111">task</span><span style="color:#f92672">);</span>
+</span><span style="color:#75715e"></span>    <span style="color:#111">RequestProcessor</span> <span style="color:#111">rp</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RequestProcessor</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;MyCancellableTask&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#111">MyCancellableTask</span> <span style="color:#111">task</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyCancellableTask</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#111">rp</span><span style="color:#f92672">.</span><span style="color:#75af00">post</span><span style="color:#f92672">(</span><span style="color:#111">task</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<h2 id="references">References</h2>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="references">References</h2>
 <ol>
 <li><a href="https://rubenlaguna.com/post/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform/">Cancellable tasks and progress indicators [Netbeans Platform]</a></li>
 <li><a href="https://www.antonioshome.net/kitchen/netbeans/nbms-threads.php">Noodle Threads (threading, progress, console)</a></li>

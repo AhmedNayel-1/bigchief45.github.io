@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -138,53 +138,34 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons/">Creating Zenoss ZenPack Daemons</a>
   </h1>
   <time datetime="2016-11-07T00:00:00Z" class="post-date">Mon, Nov 7, 2016</time>
-  <p>ZenPacks are powerful custom add-ons that can help us extend Zenoss&rsquo;s functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using <a href="http://zenpacklib.zenoss.com/en/latest/index.html"><strong>zenpacklib</strong></a>, but it is also possible to create it from the Zenoss user interface.</p>
-
+  <p>ZenPacks are powerful custom add-ons that can help us extend Zenoss's functionality. In this post I will go over on how to create a ZenPack that adds a custom daemon to the existing Zenoss daemons and runs on a configured cycle time to perform custom tasks. We will achieve this by creating the ZenPack using <a href="http://zenpacklib.zenoss.com/en/latest/index.html"><strong>zenpacklib</strong></a>, but it is also possible to create it from the Zenoss user interface.</p>
 <h2 id="about-zenpacklib">About zenpacklib</h2>
-
 <p><strong>zenpacklib</strong> is a Python library developed by the Zenoss team to facilitate the process of creating ZenPacks, specially ZenPacks that deal with modeling and monitoring devices and components. Most of the newer ZenPacks that are being released are now being built with zenpacklib.</p>
-
 <p>We can obtain zenpacklib by running the following commands:</p>
-
 <pre><code>wget http://zenpacklib.zenoss.com/zenpacklib.py
 chmod 755 zenpacklib.py
-</code></pre>
-
-<p>This will download the zenpacklib Python library and give it executable permissions.</p>
-
+</code></pre><p>This will download the zenpacklib Python library and give it executable permissions.</p>
 <h2 id="creating-the-zenpack">Creating the ZenPack</h2>
-
 <p>Using the zenpacklib file we just downloaded, we proceed to create a new fresh ZenPack:</p>
-
 <pre><code>./zenpacklib.py create ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;
-</code></pre>
-
-<p>This will create the ZenPack base directory with the necessary base files.</p>
-
+</code></pre><p>This will create the ZenPack base directory with the necessary base files.</p>
 <p>Now we go into this directory to begin.</p>
-
 <pre><code>cd ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;
-</code></pre>
-
-<h2 id="creating-the-zenpack-daemon">Creating the ZenPack Daemon</h2>
-
+</code></pre><h2 id="creating-the-zenpack-daemon">Creating the ZenPack Daemon</h2>
 <p>Our custom daemon declaration will be located in a directory named <code>daemons</code>, inside our ZenPack directory:</p>
-
 <pre><code>mkdir ZenPacks.&lt;your_namespace&gt;.&lt;zenpack_name&gt;/&lt;your_namespace&gt;/&lt;zenpack_name&gt;/daemons
-</code></pre>
-
-<p>Here we will create a new Bashscript file with the name of our daemon. In this case we will name it <code>mydaemon</code>:</p>
+</code></pre><p>Here we will create a new Bashscript file with the name of our daemon. In this case we will name it <code>mydaemon</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /usr/bin/env bash
 </span><span style="color:#75715e"></span>
 <span style="color:#111">DAEMON_NAME</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;mydaemon&#34;</span>
 
 . <span style="color:#111">$ZENHOME</span>/bin/zenfunctions
 
-<span style="color:#111">MYPATH</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>python -c <span style="color:#d88200">&#34;import os.path; print os.path.realpath(&#39;</span><span style="color:#111">$0</span><span style="color:#d88200">&#39;)&#34;</span><span style="color:#d88200">`</span> <span style="color:#111">THISDIR</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$MYPATH</span><span style="color:#d88200">`</span> <span style="color:#111">PRGHOME</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$THISDIR</span><span style="color:#d88200">`</span> <span style="color:#111">PRGNAME</span><span style="color:#f92672">=</span><span style="color:#111">$DAEMON_NAME</span>.py <span style="color:#111">CFGFILE</span><span style="color:#f92672">=</span><span style="color:#111">$CFGDIR</span>/<span style="color:#111">$DAEMON_NAME</span>.conf
+<span style="color:#111">MYPATH</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>python -c <span style="color:#d88200">&#34;</span><span style="color:#d88200">import os.path; print os.path.realpath(&#39;</span><span style="color:#111">$0</span><span style="color:#d88200">&#39;)</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">`</span> <span style="color:#111">THISDIR</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$MYPATH</span><span style="color:#d88200">`</span> <span style="color:#111">PRGHOME</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>dirname <span style="color:#111">$THISDIR</span><span style="color:#d88200">`</span> <span style="color:#111">PRGNAME</span><span style="color:#f92672">=</span><span style="color:#111">$DAEMON_NAME</span>.py <span style="color:#111">CFGFILE</span><span style="color:#f92672">=</span><span style="color:#111">$CFGDIR</span>/<span style="color:#111">$DAEMON_NAME</span>.conf
 
-generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</span><span style="color:#d88200">&#34;</span></code></pre></div>
-<p>Once the ZenPack is installed, files under this <code>daemons</code> directory will become executable (<code>chmod 0755</code>), a symlink to the file will be created in <code>$ZENHOME/bin</code>, and a configuration file will be generated in <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code></p>
+generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</span><span style="color:#d88200">&#34;</span>
 
+</code></pre></div><p>Once the ZenPack is installed, files under this <code>daemons</code> directory will become executable (<code>chmod 0755</code>), a symlink to the file will be created in <code>$ZENHOME/bin</code>, and a configuration file will be generated in <code>$ZENHOME/etc/&lt;daemon_name&gt;.conf</code></p>
 <p><strong>NOTE:</strong> If you created your ZenPack using the Zenoss user interface, the <code>daemons</code> directory will also be automatically created, and will contain an example daemon file named <code>zenexample</code> with code similar to the one above. In this case you should simply replace the necessary values.</p>
 
   
@@ -220,11 +201,9 @@ generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</spa
     <a href="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/">Monitoring CPU Utilization in Zenoss</a>
   </h1>
   <time datetime="2016-11-04T00:00:00Z" class="post-date">Fri, Nov 4, 2016</time>
-  <p>While taking a look at the CPU Utilization graphs offered Zenoss Core&rsquo;s <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
-
-<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization" /></p>
-
-<p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn&rsquo;t really taking this into consideration, and instead just spits out the total value from all cores.</p>
+  <p>While taking a look at the CPU Utilization graphs offered Zenoss Core's <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization"></p>
+<p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn't really taking this into consideration, and instead just spits out the total value from all cores.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -260,50 +239,52 @@ generic <span style="color:#d88200">&#34;</span><span style="color:#111">$@</spa
   </h1>
   <time datetime="2016-11-03T00:00:00Z" class="post-date">Thu, Nov 3, 2016</time>
   <p><em>Content from this post is mostly obtained from <strong>Zenoss Core Administration guide</strong>.</em></p>
-
 <p>In Zenoss Core <strong>monitoring templates</strong>, data sources can return data for one or more performance metrics. Each metric retrieved by a data source is represented
 by a <strong>data point</strong>.</p>
-
 <p>When creating a data point, there are some important fields that we can define for our data point:</p>
-
 <ul>
-<li><p><strong>Name:</strong> Displays the name you entered in the <em>Add a New DataPoint</em> dialog.</p></li>
-
-<li><p><strong>RRD Type:</strong> Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:</p>
-
+<li>
+<p><strong>Name:</strong> Displays the name you entered in the <em>Add a New DataPoint</em> dialog.</p>
+</li>
+<li>
+<p><strong>RRD Type:</strong> Specify the RRD data source type to use for storing data for this data point. (Zenoss Core uses RRDTool to store performance data.) Available options are:</p>
 <ul>
-<li><strong>COUNTER:</strong> Saves the rate of change of the value over a step period. This assumes that the value is always
+<li>
+<p><strong>COUNTER:</strong> Saves the rate of change of the value over a step period. This assumes that the value is always
 increasing (the difference between the current and the previous value is greater than 0). Traffic counters on a
-router are an ideal candidate for using COUNTER.</li>
-
-<li><p><strong>GAUGE:</strong> Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
-To see memory consumption in a server, for example, you might want to select this value.</p></li>
-
-<li><p><strong>DERIVE:</strong> Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
-in free disk space on your server, for example, then you might want to select this value.</p></li>
-
-<li><p><strong>ABSOLUTE:</strong> Saves the rate of change, but assumes that the previous value is set to 0. The difference between
+router are an ideal candidate for using COUNTER.</p>
+</li>
+<li>
+<p><strong>GAUGE:</strong> Does not save the rate of change, but saves the actual value. There are no divisions or calculations.
+To see memory consumption in a server, for example, you might want to select this value.</p>
+</li>
+<li>
+<p><strong>DERIVE:</strong> Same as COUNTER, but additionally allows negative values. If you want to see the rate of change
+in free disk space on your server, for example, then you might want to select this value.</p>
+</li>
+<li>
+<p><strong>ABSOLUTE:</strong> Saves the rate of change, but assumes that the previous value is set to 0. The difference between
 the current and the previous value is always equal to the current value. Thus, ABSOLUTE stores the current
-value, divided by the step interval.</p></li>
-</ul></li>
-
-<li><p><strong>Create Command:</strong> Enter an RRD expression used to create the database for this data point. If you do not enter
-a value, then the system uses a default applicable to most situations. For details about the <kbd>rrdcreate</kbd> command, go <a href="http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html">here</a>.</p></li>
-
-<li><p><strong>RRD Minimum:</strong> Enter a value. Any value received that is less than this number is ignored.</p></li>
-
-<li><p><strong>RRD Maximum:</strong> Enter a value. Any value received that is greater than this number is ignored.</p></li>
+value, divided by the step interval.</p>
+</li>
 </ul>
-
+</li>
+<li>
+<p><strong>Create Command:</strong> Enter an RRD expression used to create the database for this data point. If you do not enter
+a value, then the system uses a default applicable to most situations. For details about the <!-- raw HTML omitted -->rrdcreate<!-- raw HTML omitted --> command, go <a href="http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html">here</a>.</p>
+</li>
+<li>
+<p><strong>RRD Minimum:</strong> Enter a value. Any value received that is less than this number is ignored.</p>
+</li>
+<li>
+<p><strong>RRD Maximum:</strong> Enter a value. Any value received that is greater than this number is ignored.</p>
+</li>
+</ul>
 <h2 id="data-point-aliases">Data Point Aliases</h2>
-
 <p>Performance reports pull information from various data points that represent a metric. The report itself knows which
 data points it requires, and which modifications are needed, if any, to put the data in its proper units and format.</p>
-
 <p>The addition of a data point requires changing the report.</p>
-
-<p><img src="https://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg" alt="CPU Utilization Report" /></p>
-
+<p><img src="https://aalvarez.me/posts/zenoss-monitoring-template-data-points/cpu_report.jpg" alt="CPU Utilization Report"></p>
 <p>To allow for more flexibility in changes, some reports use <em>data point aliases</em>. Data point aliases group data points so
 they can be more easily used for reporting. In addition, if the data points return data in different units, then the plugin
 can normalize that data into a common unit.</p>
@@ -344,30 +325,22 @@ can normalize that data into a common unit.</p>
   </h1>
   <time datetime="2016-10-31T00:00:00Z" class="post-date">Mon, Oct 31, 2016</time>
   <p>In Zenoss Core 4, we can configure some <strong><em>email</em></strong> notifications that produce and send emails based on conditions defined in a trigger, when an event is created.</p>
-
 <p>Additionally, Zenoss Core 4 also provides <strong><em>command</em></strong> type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.</p>
-
-<p>For example, let&rsquo;s say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:</p>
-
+<p>For example, let's say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:</p>
 <ol>
 <li>The device is suddenly down.</li>
 <li>Zenoss pings the device and gets no response.</li>
 <li>The device status is then changed to <em>DOWN</em>.</li>
 <li>An Event with an event class of <code>/Status/Ping</code> and a severity of <em>Critical</em> is created.</li>
 </ol>
-
 <p>With this information, we can create a trigger that will represent this exact scenario. Moreover, we can configure a command notification to be executed when this trigger is fired.</p>
-
 <h2 id="configuring-a-trigger">Configuring a Trigger</h2>
-
 <ol>
 <li>Navigate to Events &gt; Triggers</li>
 <li>Create a new trigger.</li>
 <li>Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:</li>
 </ol>
-
-<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger" /></p>
-
+<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger"></p>
 <p>=&gt; Because we want to make sure the device is truly <em>DOWN</em>, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.</p>
 
   
@@ -394,20 +367,16 @@ can normalize that data into a common unit.</p>
   </h1>
   <time datetime="2016-10-28T00:00:00Z" class="post-date">Fri, Oct 28, 2016</time>
   <p><a href="https://jujucharms.com/docs/1.18/authors-interfaces">Juju Charms interfaces</a> make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.</p>
-
 <p>In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:</p>
-
 <p><code>juju add-relation keystone myservice</code></p>
-
 <h2 id="juju-relations">Juju Relations</h2>
-
 <p>Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an <strong>interface</strong>. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the <em>keystone Identity data</em>. For this, we use the <strong><a href="https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin">keystone-admin interface</a></strong>.</p>
-
 <p>With this in mind, we configure our charm to require this relation and interface in <code>metadata.yaml</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
 requires<span style="color:#111">:</span>
   identity-admin<span style="color:#111">:</span>
-    interface<span style="color:#111">:</span> keystone-admin</code></pre></div>
+    interface<span style="color:#111">:</span> keystone-admin
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Keystone Interface in Juju Charms",
     "headline" : "Keystone Interface in Juju Charms",
-    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/jujucharms.com\/docs\/1.18\/authors-interfaces\x22\x3eJuju Charms interfaces\x3c\/a\x3e make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.\x3c\/p\x3e\n\n\x3cp\x3eIn the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:\x3c\/p\x3e\n\n\x3cp\x3e\x3ccode\x3ejuju add-relation keystone myservice\x3c\/code\x3e\x3c\/p\x3e\n\n\x3ch2 id=\x22juju-relations\x22\x3eJuju Relations\x3c\/h2\x3e\n\n\x3cp\x3eJuju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an \x3cstrong\x3einterface\x3c\/strong\x3e. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the \x3cem\x3ekeystone Identity data\x3c\/em\x3e. For this, we use the \x3cstrong\x3e\x3ca href=\x22https:\/\/git.launchpad.net\/~canonical-is\/charms\/\x2bsource\/interface-keystone-admin\x22\x3ekeystone-admin interface\x3c\/a\x3e\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eWith this in mind, we configure our charm to require this relation and interface in \x3ccode\x3emetadata.yaml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\nrequires\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  identity-admin\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    interface\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e keystone-admin\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/jujucharms.com\/docs\/1.18\/authors-interfaces\x22\x3eJuju Charms interfaces\x3c\/a\x3e make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.\x3c\/p\x3e\n\x3cp\x3eIn the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:\x3c\/p\x3e\n\x3cp\x3e\x3ccode\x3ejuju add-relation keystone myservice\x3c\/code\x3e\x3c\/p\x3e\n\x3ch2 id=\x22juju-relations\x22\x3eJuju Relations\x3c\/h2\x3e\n\x3cp\x3eJuju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an \x3cstrong\x3einterface\x3c\/strong\x3e. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the \x3cem\x3ekeystone Identity data\x3c\/em\x3e. For this, we use the \x3cstrong\x3e\x3ca href=\x22https:\/\/git.launchpad.net\/~canonical-is\/charms\/\x2bsource\/interface-keystone-admin\x22\x3ekeystone-admin interface\x3c\/a\x3e\x3c\/strong\x3e.\x3c\/p\x3e\n\x3cp\x3eWith this in mind, we configure our charm to require this relation and interface in \x3ccode\x3emetadata.yaml\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\nrequires\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  identity-admin\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    interface\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e keystone-admin\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2016-10-28 00:00:00 \x2b0000 UTC",
     "dateModified" : "2016-10-28 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/keystone-interface-in-juju-charms\/",
-    "wordCount" : "404",
+    "wordCount" : "408",
     "keywords" : [ "juju","keystone","devops","bash","keystone","openstack","Blog" ]
 }
 </script>
@@ -136,70 +136,53 @@ if (!doNotTrack) {
   <time datetime=2016-10-28T00:00:00Z class="post-date">Fri, Oct 28, 2016</time>
 
   <p><a href="https://jujucharms.com/docs/1.18/authors-interfaces">Juju Charms interfaces</a> make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.</p>
-
 <p>In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:</p>
-
 <p><code>juju add-relation keystone myservice</code></p>
-
 <h2 id="juju-relations">Juju Relations</h2>
-
 <p>Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an <strong>interface</strong>. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the <em>keystone Identity data</em>. For this, we use the <strong><a href="https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin">keystone-admin interface</a></strong>.</p>
-
 <p>With this in mind, we configure our charm to require this relation and interface in <code>metadata.yaml</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
 requires<span style="color:#111">:</span>
   identity-admin<span style="color:#111">:</span>
-    interface<span style="color:#111">:</span> keystone-admin</code></pre></div>
-<h2 id="relation-hooks">Relation Hooks</h2>
-
+    interface<span style="color:#111">:</span> keystone-admin
+</code></pre></div><h2 id="relation-hooks">Relation Hooks</h2>
 <p>Now that the relation and interface is correctly configured, we can use the interface to obtain the necessary data in our hooks.  The hook that we need to implement is the <em>identity-admin-relation-changed</em> hook, which will be triggered when we run the <code>juju add-relation keystone myservice</code>.</p>
-
 <p>From Juju Docs:</p>
-
 <p><strong>name-relation-changed:</strong> <em>Always run once, after -joined, and will subsequently be run whenever that remote unit changes its settings for the relation. It should be the only hook that relies upon remote relation settings from relation-get, and it should not error if the settings are incomplete.</em></p>
-
-<p>Inside the hook we will try to obtain Keystone&rsquo;s hostname address. If we successfully obtain one, then we proceed to use JuJu&rsquo;s <code>relation-get</code> command to retrieve the data provided by the Keystone interface, which can then be used by our service for any particular purpose.</p>
-
+<p>Inside the hook we will try to obtain Keystone's hostname address. If we successfully obtain one, then we proceed to use JuJu's <code>relation-get</code> command to retrieve the data provided by the Keystone interface, which can then be used by our service for any particular purpose.</p>
 <p><strong>identity-admin-relation-changed (Bashscript):</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+<span style="color:#111">set</span> -eux
 
-<p>```bash
-#!/bin/bash</p>
+juju-log <span style="color:#d88200">&#34;</span><span style="color:#d88200">Joining with Keystone at </span><span style="color:#111">$JUJU_REMOTE_UNIT</span><span style="color:#d88200">&#34;</span>
 
-<p>set -eux</p>
+<span style="color:#75715e"># Get the Keystone hostname</span>
+<span style="color:#111">service_hostname</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>relation-get service_hostname<span style="color:#d88200">`</span>
 
-<p>juju-log &ldquo;Joining with Keystone at $JUJU_REMOTE_UNIT&rdquo;</p>
+<span style="color:#75715e"># Check if a valid Keystone hostname value was obtained</span>
+<span style="color:#00a8c8">if</span> <span style="color:#f92672">[</span> -z <span style="color:#d88200">&#34;</span><span style="color:#111">$service_hostname</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#111">;</span> <span style="color:#00a8c8">then</span>
+   juju-log <span style="color:#d88200">&#34;No Keystone service hostname sent yet...&#34;</span>
+   <span style="color:#111">exit</span> <span style="color:#ae81ff">0</span>
+<span style="color:#00a8c8">fi</span>
 
-<h1 id="get-the-keystone-hostname">Get the Keystone hostname</h1>
-
-<p>service_hostname=<code>relation-get service_hostname</code></p>
-
-<h1 id="check-if-a-valid-keystone-hostname-value-was-obtained">Check if a valid Keystone hostname value was obtained</h1>
-
-<p>if [ -z &ldquo;$service_hostname&rdquo; ] ; then
-   juju-log &ldquo;No Keystone service hostname sent yet&hellip;&rdquo;
-   exit 0
-fi</p>
-
-<h1 id="for-our-example-we-will-write-a-keystone-configuration-file">For our example, we will write a Keystone configuration file</h1>
-
-<h1 id="to-the-ubuntu-user-home-directory">to the ubuntu user home directory</h1>
-
-<p>juju-log &ldquo;Creating keystone credentials file in /home/ubuntu&rdquo;
+<span style="color:#75715e"># For our example, we will write a Keystone configuration file</span>
+<span style="color:#75715e"># to the ubuntu user home directory</span>
+juju-log <span style="color:#d88200">&#34;Creating keystone credentials file in /home/ubuntu&#34;</span>
 touch /home/ubuntu/keystone
-echo &ldquo;Keystone Credentials&rdquo; &gt;&gt; /home/ubuntu/keystone
-echo &ldquo;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;&rdquo; &gt;&gt; /home/ubuntu/keystone</p>
+<span style="color:#111">echo</span> <span style="color:#d88200">&#34;Keystone Credentials&#34;</span> &gt;&gt; /home/ubuntu/keystone
+<span style="color:#111">echo</span> <span style="color:#d88200">&#34;--------------------&#34;</span> &gt;&gt; /home/ubuntu/keystone
 
-<p>keystone_creds=<code>relation-get</code> # Retrieves ALL values
-echo &ldquo;$keystone_creds&rdquo; &gt;&gt; /home/ubuntu/keystone</p>
+<span style="color:#111">keystone_creds</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>relation-get<span style="color:#d88200">`</span> <span style="color:#75715e"># Retrieves ALL values</span>
+<span style="color:#111">echo</span> <span style="color:#d88200">&#34;</span><span style="color:#111">$keystone_creds</span><span style="color:#d88200">&#34;</span> &gt;&gt; /home/ubuntu/keystone
 
-<h1 id="we-can-also-retrieve-individual-values">We can also retrieve individual values:</h1>
-
-<p>service_password=<code>relation-get service_password</code>
-service_port=<code>relation-get service_port</code>
-service_region=<code>relation-get service_region</code>
-service_tenant_name=<code>relation-get service_tenant_name</code>
-service_username=<code>relation-get service_username</code>
-auth_url=&ldquo;http://$service_hostname:$service_port/v2.0&rdquo;</p>
+<span style="color:#75715e"># We can also retrieve individual values:</span>
+<span style="color:#111">service_password</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>relation-get service_password<span style="color:#d88200">`</span>
+<span style="color:#111">service_port</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>relation-get service_port<span style="color:#d88200">`</span>
+<span style="color:#111">service_region</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>relation-get service_region<span style="color:#d88200">`</span>
+<span style="color:#111">service_tenant_name</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>relation-get service_tenant_name<span style="color:#d88200">`</span>
+<span style="color:#111">service_username</span><span style="color:#f92672">=</span><span style="color:#d88200">`</span>relation-get service_username<span style="color:#d88200">`</span>
+<span style="color:#111">auth_url</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">http://</span><span style="color:#111">$service_hostname</span><span style="color:#d88200">:</span><span style="color:#111">$service_port</span><span style="color:#d88200">/v2.0</span><span style="color:#d88200">&#34;</span></code></pre></div>
 </div>
 
 

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Python Functional Testing for AWS Lambda",
     "headline" : "Python Functional Testing for AWS Lambda",
-    "description" : "\x3cp\x3eIn this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.\x3c\/p\x3e\n\n\x3cp\x3eFor our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.\x3c\/p\x3e\n\n\x3cp\x3eLet\x26rsquo;s get started!\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.\x3c\/p\x3e\n\x3cp\x3eFor our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.\x3c\/p\x3e\n\x3cp\x3eLet\x27s get started!\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,13 +136,9 @@ if (!doNotTrack) {
   <time datetime=2018-12-26T17:17:28Z class="post-date">Wed, Dec 26, 2018</time>
 
   <p>In this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.</p>
-
 <p>For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.</p>
-
-<p>Let&rsquo;s get started!</p>
-
+<p>Let's get started!</p>
 <h2 id="a-look-into-our-lambda-function">A Look Into Our Lambda Function</h2>
-
 <p>Keeping in mind the characteristics I just mentioned, our Lambda funtion will more or less look like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os</span>
 <span style="color:#f92672">import</span> <span style="color:#111">subprocess</span>
@@ -150,32 +146,32 @@ if (!doNotTrack) {
 <span style="color:#f92672">import</span> <span style="color:#111">boto3</span>
 
 
-<span style="color:#111">s3_client</span> <span style="color:#f92672">=</span> <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">client</span><span style="color:#111">(</span><span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">s3_client</span> <span style="color:#f92672">=</span> <span style="color:#111">boto3</span><span style="color:#f92672">.</span><span style="color:#111">client</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">s3</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
 
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">handler</span><span style="color:#111">(</span><span style="color:#111">event</span><span style="color:#111">,</span> <span style="color:#111">context</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#75715e"># Pickup the record from the SQS Event</span>
-    <span style="color:#00a8c8">for</span> <span style="color:#111">record</span> <span style="color:#f92672">in</span> <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">]:</span>
+    <span style="color:#00a8c8">for</span> <span style="color:#111">record</span> <span style="color:#f92672">in</span> <span style="color:#111">event</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Records</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">:</span>
         <span style="color:#75715e"># Some convenience method for parsing the</span>
         <span style="color:#75715e"># record object</span>
         <span style="color:#111">sqs_msg</span> <span style="color:#f92672">=</span> <span style="color:#111">_get_sqs_message_obj</span><span style="color:#111">(</span><span style="color:#111">record</span><span style="color:#111">)</span>
 
         <span style="color:#75715e"># Let&#39;s assume the event is triggered from a</span>
         <span style="color:#75715e"># file uploaded to S3</span>
-        <span style="color:#111">bucket_name</span> <span style="color:#f92672">=</span> <span style="color:#111">sqs_msg</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;bucket&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">]</span>
-        <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">sqs_msg</span><span style="color:#111">[</span><span style="color:#d88200">&#39;Records&#39;</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#d88200">&#39;s3&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;object&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;key&#39;</span><span style="color:#111">]</span>
+        <span style="color:#111">bucket_name</span> <span style="color:#f92672">=</span> <span style="color:#111">sqs_msg</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Records</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">s3</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">bucket</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">name</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
+        <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">sqs_msg</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Records</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">s3</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">object</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">key</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
 
         <span style="color:#75715e"># Download the file</span>
         <span style="color:#111">s3_client</span><span style="color:#f92672">.</span><span style="color:#111">download_file</span><span style="color:#111">(</span>
             <span style="color:#111">Bucket</span><span style="color:#f92672">=</span><span style="color:#111">bucket_name</span><span style="color:#111">,</span>
             <span style="color:#111">Key</span><span style="color:#f92672">=</span><span style="color:#111">key</span><span style="color:#111">,</span>
-            <span style="color:#111">Filename</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;somepath&#39;</span>
+            <span style="color:#111">Filename</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">somepath</span><span style="color:#d88200">&#39;</span>
         <span style="color:#111">)</span>
 
         <span style="color:#75715e"># Some processing is done with this file.</span>
         <span style="color:#75715e"># Let&#39;s assume we call some native program to process this</span>
         <span style="color:#75715e"># file, using subprocess.check_call</span>
-        <span style="color:#111">cmd</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;some&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;command&#39;</span><span style="color:#111">]</span>
+        <span style="color:#111">cmd</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">some</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">command</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
 
         <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
             <span style="color:#111">subprocess</span><span style="color:#f92672">.</span><span style="color:#111">check_call</span><span style="color:#111">(</span><span style="color:#111">cmd</span><span style="color:#111">)</span>
@@ -184,29 +180,23 @@ if (!doNotTrack) {
         <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
             <span style="color:#75715e"># After the processing is done, the result is uploaded to</span>
             <span style="color:#75715e"># S3</span>
-            <span style="color:#111">s3_client</span><span style="color:#f92672">.</span><span style="color:#111">put_object</span><span style="color:#111">()</span>
+            <span style="color:#111">s3_client</span><span style="color:#f92672">.</span><span style="color:#111">put_object</span><span style="color:#111">(</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">finally</span><span style="color:#111">:</span>
             <span style="color:#75715e"># Some cleanup of the container could be done here.</span>
             <span style="color:#75715e"># We can also assert this in our tests</span>
-            <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#d88200">&#39;somefile.json&#39;</span><span style="color:#111">)</span>
-            <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#d88200">&#39;somefileother.xml&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>Now that we understand more or less the elements and instructions that compose our function. Let&rsquo;s take a look on how we can write a functional test for it.</p>
-
+            <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">somefile.json</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+            <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">remove</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">somefileother.xml</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>Now that we understand more or less the elements and instructions that compose our function. Let's take a look on how we can write a functional test for it.</p>
 <h2 id="a-functional-test-for-our-function">A Functional Test For Our Function</h2>
-
 <p>The test should be very simple. Basically it should just call the <code>handler</code> and assert the necessary changes. The hard part is actually mocking everything that happens inside the function.</p>
-
 <p>Basically we need to mock the following things:</p>
-
 <ul>
 <li>SQS event payload</li>
 <li>S3 Bucket</li>
 <li>File that is uploaded to the bucket</li>
-<li>The subprocess call (optional, I&rsquo;ll discuss this later)</li>
+<li>The subprocess call (optional, I'll discuss this later)</li>
 </ul>
-
 <p>I discuss how to mock all the above things (except the last one) in my previous post, <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/"><em>Pytest Tricks for Better Python Tests</em></a>.</p>
-
 <p>This is how our functional test looks like:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os</span>
 
@@ -214,9 +204,9 @@ if (!doNotTrack) {
 
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">LambdaTest</span><span style="color:#111">:</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_function</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">s3_bucket</span><span style="color:#111">,</span> <span style="color:#111">file_mock</span><span style="color:#111">,</span> <span style="color:#111">sqs_event</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">test_function</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">s3_bucket</span><span style="color:#111">,</span> <span style="color:#111">file_mock</span><span style="color:#111">,</span> <span style="color:#111">sqs_event</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#75715e"># We will first place the file manually in the bucket</span>
-        <span style="color:#111">file_key</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;myfile.txt&#39;</span>
+        <span style="color:#111">file_key</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">myfile.txt</span><span style="color:#d88200">&#39;</span>
         <span style="color:#111">s3_bucket</span><span style="color:#f92672">.</span><span style="color:#111">put_object</span><span style="color:#111">(</span><span style="color:#111">Key</span><span style="color:#f92672">=</span><span style="color:#111">file_key</span><span style="color:#111">,</span> <span style="color:#111">Body</span><span style="color:#f92672">=</span><span style="color:#111">file_mock</span><span style="color:#111">)</span>
 
         <span style="color:#75715e"># Use the mocked payload so that we can send it to the</span>
@@ -227,30 +217,24 @@ if (!doNotTrack) {
 
         <span style="color:#75715e"># Now comes the good stuff. First let&#39;s assert that the</span>
         <span style="color:#75715e"># result was uploaded successfully to the bucket</span>
-        <span style="color:#111">result_key</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;result.json&#39;</span>
-        <span style="color:#111">r</span> <span style="color:#f92672">=</span> <span style="color:#111">s3_bucket</span><span style="color:#f92672">.</span><span style="color:#111">Object</span><span style="color:#111">(</span><span style="color:#111">result_key</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">()</span>
+        <span style="color:#111">result_key</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">result.json</span><span style="color:#d88200">&#39;</span>
+        <span style="color:#111">r</span> <span style="color:#f92672">=</span> <span style="color:#111">s3_bucket</span><span style="color:#f92672">.</span><span style="color:#111">Object</span><span style="color:#111">(</span><span style="color:#111">result_key</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">)</span>
 
         <span style="color:#75715e"># If the result file isn&#39;t in the bucket, an exception</span>
         <span style="color:#75715e"># will be raised.</span>
-        <span style="color:#00a8c8">assert</span> <span style="color:#111">r</span><span style="color:#111">[</span><span style="color:#d88200">&#39;ResponseMetadata&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;HTTPStatusCode&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>
+        <span style="color:#00a8c8">assert</span> <span style="color:#111">r</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ResponseMetadata</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">HTTPStatusCode</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>
 
         <span style="color:#75715e"># As I mentioned in the Lambda function, we will probably</span>
         <span style="color:#75715e"># want to assert that cleanups (i.e deleted files) made to</span>
         <span style="color:#75715e"># the environment were made successfully</span>
-        <span style="color:#00a8c8">assert</span> <span style="color:#f92672">not</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#d88200">&#39;somefile.json&#39;</span><span style="color:#111">)</span>
-        <span style="color:#00a8c8">assert</span> <span style="color:#f92672">not</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#d88200">&#39;someotherfile.xml&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>As you can see, the test is quite simple. Mostly it&rsquo;s just manually calling the <code>handler()</code> function and asserting the necessary stuff. The heavy loading is done with all the fixtures we created, as explained in <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/"><em>Pytest Tricks for Better Python Tests</em></a>.</p>
-
+        <span style="color:#00a8c8">assert</span> <span style="color:#f92672">not</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">somefile.json</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">assert</span> <span style="color:#f92672">not</span> <span style="color:#111">os</span><span style="color:#f92672">.</span><span style="color:#111">path</span><span style="color:#f92672">.</span><span style="color:#111">exists</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">someotherfile.xml</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>As you can see, the test is quite simple. Mostly it's just manually calling the <code>handler()</code> function and asserting the necessary stuff. The heavy loading is done with all the fixtures we created, as explained in <a href="https://aalvarez.me/posts/pytest-tricks-for-better-python-tests/"><em>Pytest Tricks for Better Python Tests</em></a>.</p>
 <h3 id="should-i-mock-the-subprocess-call">Should I Mock the Subprocess Call?</h3>
-
 <p>Previously I mentioned that mocking <code>subprocess.check_call</code> was optional. The reason for this is because if we only mock the call without providing any side effect that our Lambda Function can use, the test will obviously fail.</p>
-
 <p>As you can tell from our example, the subprocess call probably calls some program that generates a result file from our downloaded file. In the test, this will be done automatically because the call is not mocked.</p>
-
 <h2 id="closing-thoughts">Closing Thoughts</h2>
-
 <p>🎉 🎉 🎉 There you have it! A nice functional test for an AWS Lambda function that we can call and run <strong>locally</strong>.</p>
-
 <p>If you have any questions please feel free to ask in the comments section.</p>
 </div>
 

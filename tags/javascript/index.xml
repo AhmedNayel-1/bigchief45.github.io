@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>javascript on Andrés Álvarez</title>
@@ -17,19 +17,16 @@
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/</guid>
-      <description>&lt;p&gt;In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&amp;rsquo;s get started!&lt;/p&gt;
-
+      <description>&lt;p&gt;In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let&#39;s get started!&lt;/p&gt;
 &lt;h2 id=&#34;the-search-template&#34;&gt;The Search Template&lt;/h2&gt;
-
 &lt;p&gt;The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.&lt;/p&gt;
-
 &lt;p&gt;This template is extremely simple and does not need a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; tag. I will create it as a partial under &lt;code&gt;templates/search.html&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
-&amp;lt;input id=&amp;#34;search&amp;#34; name=&amp;#34;q&amp;#34; placeholder=&amp;#34;Search...&amp;#34;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Notice how we have given the input a &lt;code&gt;name&lt;/code&gt; with the value of &lt;code&gt;q&lt;/code&gt;. This will be important when our view receives the query from this input field.&lt;/p&gt;
-
+&lt;pre&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% csrf_token %}
+&amp;lt;input id=&amp;quot;search&amp;quot; name=&amp;quot;q&amp;quot; placeholder=&amp;quot;Search...&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Notice how we have given the input a &lt;code&gt;name&lt;/code&gt; with the value of &lt;code&gt;q&lt;/code&gt;. This will be important when our view receives the query from this input field.&lt;/p&gt;
 &lt;p&gt;I can then render this partial in the main template like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &amp;#39;search.html&amp;#39; %}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-liquid&#34; data-lang=&#34;liquid&#34;&gt;{% include &#39;search.html&#39; %}
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -39,17 +36,11 @@
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails-part-3/</guid>
       <description>&lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;part 1&lt;/a&gt; and &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;In this post, we will be sending automatic e-emails every time notifications are created.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-the-mailer&#34;&gt;Creating the Mailer&lt;/h2&gt;
-
 &lt;p&gt;We will work with one &lt;a href=&#34;http://guides.rubyonrails.org/action_mailer_basics.html&#34;&gt;mailer&lt;/a&gt; that will send e-mails for every notification that is created. We can generate our mailer with this command:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails g mailer NotificationsMailer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&amp;rsquo;ve been using &lt;strong&gt;comments&lt;/strong&gt; and &lt;strong&gt;posts&lt;/strong&gt; as examples.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Our mailer will contain an action for each notifiable type that works with notifications in our application. In this series, we&#39;ve been using &lt;strong&gt;comments&lt;/strong&gt; and &lt;strong&gt;posts&lt;/strong&gt; as examples.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -59,23 +50,16 @@
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/</guid>
       <description>&lt;p&gt;&lt;em&gt;Read Part 1 of this series &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails.html&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;In Part 1 we learned how to setup our models and controllers to create notifications using callbacks in our application. Then we displayed these notifications in a Bootstrap 3 navbar using JQuery written in CoffeeScript.&lt;/p&gt;
-
 &lt;p&gt;In this post we will be adding more functionality to our notification system.s&lt;/p&gt;
-
 &lt;h2 id=&#34;mark-as-read-feature&#34;&gt;Mark as Read Feature&lt;/h2&gt;
-
 &lt;p&gt;We will be adding a feature that allows the current user to mark a notification as read as well as all notifications, in the following manner:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;For a single notification, it should be marked &lt;em&gt;as read&lt;/em&gt; when it is clicked from the list of notifications.&lt;/li&gt;
 &lt;li&gt;For all notifications, they should be marked as read when a specific button is pressed.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h3 id=&#34;setting-up-the-routes&#34;&gt;Setting up the Routes&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
+&lt;p&gt;Let&#39;s begin adding the necessary routes. In part 1 we defined a &lt;code&gt;notifications&lt;/code&gt; resource. We will add a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;collection&lt;/a&gt; POST route and a &lt;a href=&#34;http://guides.rubyonrails.org/routing.html#adding-more-restful-actions&#34;&gt;member&lt;/a&gt; POST route of the same name:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
@@ -85,7 +69,8 @@
     &lt;span style=&#34;color:#111&#34;&gt;post&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:mark_as_read&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:member&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -95,13 +80,9 @@
       
       <guid>https://aalvarez.me/posts/easy-notification-system-in-rails/</guid>
       <description>&lt;p&gt;Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.&lt;/p&gt;
-
-&lt;p&gt;This post is heavily inspired by &lt;a href=&#34;https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1&#34;&gt;Chris Oliver&amp;rsquo;s In-App Navbar Notifications tutorial&lt;/a&gt;, with a few personal changes and additions.&lt;/p&gt;
-
+&lt;p&gt;This post is heavily inspired by &lt;a href=&#34;https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1&#34;&gt;Chris Oliver&#39;s In-App Navbar Notifications tutorial&lt;/a&gt;, with a few personal changes and additions.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Read &lt;a href=&#34;https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html&#34;&gt;part 2&lt;/a&gt; of this series.&lt;/em&gt;&lt;/p&gt;
-
 &lt;h2 id=&#34;models-and-routes&#34;&gt;Models and Routes&lt;/h2&gt;
-
 &lt;p&gt;Before starting with the models, lets quickly define the application resources in our routes:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;draw&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt;
@@ -114,22 +95,17 @@
 
   &lt;span style=&#34;color:#111&#34;&gt;resources&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;:notifications&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;only&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:index&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
-
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;the-notification-model&#34;&gt;The Notification Model&lt;/h3&gt;
 &lt;p&gt;We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is an explanation for some of the fields for the above model:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here is an explanation for some of the fields for the above model:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;recipient_id&lt;/code&gt;: Represents the user in your application which will receive the notification.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;actor_id&lt;/code&gt;: Represents the user in your application which &lt;em&gt;triggered&lt;/em&gt; the notification.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;read_at&lt;/code&gt;: The time when the notification was read. A value of &lt;code&gt;nil&lt;/code&gt; is used for unread notifications.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;notifiable_id&lt;/code&gt;: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;notifiable_type&lt;/code&gt;: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&amp;rsquo;s class.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;notifiable_type&lt;/code&gt;: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&#39;s class.&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
@@ -140,20 +116,18 @@
       
       <guid>https://aalvarez.me/posts/select2-with-simple-form-in-rails/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://select2.github.io/&#34;&gt;Select2&lt;/a&gt; is a great JQuery plugin that customizes your select boxes to give a better user interface and experience.&lt;/p&gt;
-
 &lt;p&gt;Recently while working on a Rails project, I was experiencing some problems when using Select2 and &lt;a href=&#34;https://github.com/plataformatec/simple_form&#34;&gt;Simple Form&lt;/a&gt; in my view.&lt;/p&gt;
-
-&lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&amp;rsquo;s database. Select2 should use AJAX to hit a controller&amp;rsquo;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
-
+&lt;p&gt;In the view, I want to use Select2 to search for people in a &lt;code&gt;Person&lt;/code&gt; table in the application&#39;s database. Select2 should use AJAX to hit a controller&#39;s action that performs the search. The user can then select one of the results found and it will be added to the field as a token (this is a multiple select field).&lt;/p&gt;
 &lt;p&gt;The controller action looks something like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;where&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;name LIKE ? OR last_name LIKE ?&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
   &lt;span style=&#34;color:#111&#34;&gt;respond_to&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;render&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;@people&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;map&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;full_name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;full_name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
   &lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#00a8c8&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -162,18 +136,12 @@
       <pubDate>Mon, 10 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ajaxorg/ace&#34;&gt;Ace&lt;/a&gt; is a great web text editor and the default editor for &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9 IDE&lt;/a&gt;. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn&amp;rsquo;t support correct highlighting of some HAML stuff such as HAML comments (which begin with &lt;code&gt;-#&lt;/code&gt;) or block comments.&lt;/p&gt;
-
-&lt;p&gt;This is how Ace&amp;rsquo;s HAML syntax highlighting issues look like:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg&#34; alt=&#34;HAML Highlighting Issues&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;I proceeded to study Ace&amp;rsquo;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a &lt;a href=&#34;https://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;state machine&lt;/a&gt;. The source where this happens is found in &lt;a href=&#34;https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js&#34;&gt;&lt;code&gt;lib/ace/mode/haml_highlight_rules.js&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ajaxorg/ace&#34;&gt;Ace&lt;/a&gt; is a great web text editor and the default editor for &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9 IDE&lt;/a&gt;. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn&#39;t support correct highlighting of some HAML stuff such as HAML comments (which begin with &lt;code&gt;-#&lt;/code&gt;) or block comments.&lt;/p&gt;
+&lt;p&gt;This is how Ace&#39;s HAML syntax highlighting issues look like:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg&#34; alt=&#34;HAML Highlighting Issues&#34;&gt;&lt;/p&gt;
+&lt;p&gt;I proceeded to study Ace&#39;s logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a &lt;a href=&#34;https://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;state machine&lt;/a&gt;. The source where this happens is found in &lt;a href=&#34;https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js&#34;&gt;&lt;code&gt;lib/ace/mode/haml_highlight_rules.js&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;defining-states&#34;&gt;Defining States&lt;/h2&gt;
-
 &lt;p&gt;A few states have to be defined to represent where the lexer currently &amp;ldquo;stands&amp;rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.&lt;/p&gt;
-
 &lt;p&gt;In Ace, all syntax highlighting lexers must begin with a &lt;code&gt;start&lt;/code&gt; state. From this state we can switch to other defined states. The example below shows how we begin from the &lt;code&gt;start&lt;/code&gt; state and can jump to a comment block state when the code matches a regular expression that represents this:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;$rules&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;start&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;
@@ -181,16 +149,15 @@
             &lt;span style=&#34;color:#75af00&#34;&gt;token&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// multiline HTML comment
 &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#75af00&#34;&gt;regex&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;/^\/$/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
             &lt;span style=&#34;color:#75af00&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
             &lt;span style=&#34;color:#75af00&#34;&gt;token&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment.block&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// multiline HAML comment
 &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#75af00&#34;&gt;regex&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;/^\-#$/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
             &lt;span style=&#34;color:#75af00&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;comment&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
 
 &lt;span style=&#34;color:#75715e&#34;&gt;/* ... */&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Notice that we define 2 different comment types, since HAML &lt;a href=&#34;http://haml.info/docs/yardoc/file.REFERENCE.html&#34;&gt;supports&lt;/a&gt; HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as &lt;code&gt;comment.block&lt;/code&gt; &lt;strong&gt;tokens&lt;/strong&gt;, and will also make the lexer jump to a &lt;code&gt;comment&lt;/code&gt; state, denoted by the &lt;code&gt;next&lt;/code&gt; keyword.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Notice that we define 2 different comment types, since HAML &lt;a href=&#34;http://haml.info/docs/yardoc/file.REFERENCE.html&#34;&gt;supports&lt;/a&gt; HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as &lt;code&gt;comment.block&lt;/code&gt; &lt;strong&gt;tokens&lt;/strong&gt;, and will also make the lexer jump to a &lt;code&gt;comment&lt;/code&gt; state, denoted by the &lt;code&gt;next&lt;/code&gt; keyword.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -200,20 +167,14 @@
       
       <guid>https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/rails/webpacker&#34;&gt;rails/webpacker&lt;/a&gt; project allows integration of &lt;a href=&#34;https://webpack.github.io/&#34;&gt;Webpack&lt;/a&gt; with a Rails application. However, setting this up in a &lt;a href=&#34;https://c9.io&#34;&gt;Cloud 9&lt;/a&gt; development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-the-application&#34;&gt;Creating the Application&lt;/h2&gt;
-
 &lt;p&gt;We will first create a regular Rails application and then use the webpacker gem to install Webpack.&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;rails new webpack-app
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Add the gem to &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Add the gem to &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Gemfile&lt;/span&gt;
 
-&lt;span style=&#34;color:#111&#34;&gt;gem&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;github&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Install Webpacker&lt;/p&gt;
-
+&lt;span style=&#34;color:#111&#34;&gt;gem&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;webpacker&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;github&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;rails/webpacker&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Install Webpacker&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;rails webpacker:install
 &lt;/code&gt;&lt;/pre&gt;</description>
     </item>
@@ -225,14 +186,12 @@
       
       <guid>https://aalvarez.me/posts/javascript-gotchas-for-beginners/</guid>
       <description>&lt;p&gt;When starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.&lt;/p&gt;
-
 &lt;h2 id=&#34;the-global-object&#34;&gt;The Global Object&lt;/h2&gt;
-
 &lt;p&gt;The &lt;strong&gt;global scope&lt;/strong&gt; is the space in which global variables live and it can also be approached as an object. Each global variable is present as a &lt;strong&gt;property&lt;/strong&gt; of this object. In browsers, the global scope object is stored in the &lt;code&gt;window&lt;/code&gt; variable:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#75af00&#34;&gt;console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;v&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;v&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#75715e&#34;&gt;// &amp;gt; true
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;v&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;v&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#75715e&#34;&gt;// &amp;gt; 10
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
@@ -243,21 +202,17 @@
       <pubDate>Mon, 26 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/custom-pages-in-zenoss/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/extending-zenoss-navigations.html&#34;&gt;previous post&lt;/a&gt; I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&amp;rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.&lt;/p&gt;
-
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/extending-zenoss-navigations.html&#34;&gt;previous post&lt;/a&gt; I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&#39;t get to creating the custom pages that these links would link to. This is what we will learn today.&lt;/p&gt;
 &lt;h2 id=&#34;page-viewlets&#34;&gt;Page Viewlets&lt;/h2&gt;
-
 &lt;p&gt;Previously we created navigation item viewlets, this time we will be creating &lt;strong&gt;page&lt;/strong&gt; viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to &lt;code&gt;browser/configure.zcml&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;browser:page&lt;/span&gt;
   &lt;span style=&#34;color:#75af00&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;secondaryPage&amp;#34;&lt;/span&gt;
   &lt;span style=&#34;color:#75af00&#34;&gt;for=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;
   &lt;span style=&#34;color:#75af00&#34;&gt;permission=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;zenoss.View&amp;#34;&lt;/span&gt;
   &lt;span style=&#34;color:#75af00&#34;&gt;template=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;templates/my_template.pt&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;It is important that the &lt;strong&gt;name&lt;/strong&gt; attribute matches the URL of the navigation link we created previously. Another important attribute is the &lt;strong&gt;template&lt;/strong&gt; attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and &lt;a href=&#34;http://old.zope.org/Members/tone/METAL&#34;&gt;METAL&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Also let&amp;rsquo;s not forget to create a necessary python init file:&lt;/p&gt;
-
+  &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;It is important that the &lt;strong&gt;name&lt;/strong&gt; attribute matches the URL of the navigation link we created previously. Another important attribute is the &lt;strong&gt;template&lt;/strong&gt; attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and &lt;a href=&#34;http://old.zope.org/Members/tone/METAL&#34;&gt;METAL&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Also let&#39;s not forget to create a necessary python init file:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;touch browser/__init__.py
 &lt;/code&gt;&lt;/pre&gt;</description>
     </item>
@@ -268,18 +223,12 @@
       <pubDate>Wed, 21 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/extending-zenoss-navigations/</guid>
-      <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&amp;rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
-
-&lt;h2 id=&#34;configure-zcml&#34;&gt;configure.zcml&lt;/h2&gt;
-
-&lt;p&gt;Zenoss ZenPacks can contain a file in the ZenPack top directory called &lt;code&gt;configure.zcml&lt;/code&gt;. I&amp;rsquo;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.&lt;/p&gt;
-
+      <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&#39;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
+&lt;h2 id=&#34;configurezcml&#34;&gt;configure.zcml&lt;/h2&gt;
+&lt;p&gt;Zenoss ZenPacks can contain a file in the ZenPack top directory called &lt;code&gt;configure.zcml&lt;/code&gt;. I&#39;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.&lt;/p&gt;
 &lt;p&gt;It is in this file where we will declare and create new navigational links from our ZenPack.&lt;/p&gt;
-
 &lt;p&gt;~&amp;gt; In this post we assume that the ZenPack is created using &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.&lt;/p&gt;
-
 &lt;p&gt;Usually this file begins with some required boilerplate code:&lt;/p&gt;
-
 &lt;p&gt;&lt;strong&gt;configure.zcml&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;configure&lt;/span&gt;
@@ -287,9 +236,10 @@
   &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
   &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
 
-  &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; Our custom code here &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;--&amp;gt;&lt;/span&gt;
   &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -299,14 +249,10 @@
       
       <guid>https://aalvarez.me/posts/custom-zenoss-api-endpoints/</guid>
       <description>&lt;p&gt;In a &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;previous post&lt;/a&gt; I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, &lt;em&gt;curl&lt;/em&gt;, API clients, etc. All this new functionality added from a basic ZenPack.&lt;/p&gt;
-
 &lt;h2 id=&#34;creating-an-endpoint&#34;&gt;Creating an Endpoint&lt;/h2&gt;
-
 &lt;p&gt;Assuming that we are starting with a new and fresh ZenPack created with &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, we will proceed to create a simple endpoint.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&amp;rsquo;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&amp;rsquo;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
-
-&lt;p&gt;First, let&amp;rsquo;s take a quick look at the imports:&lt;/p&gt;
+&lt;p&gt;Let&#39;s go ahead and create a file named &lt;code&gt;api.py&lt;/code&gt; (can be any name) under the ZenPack&#39;s top directory. In this file we will import necessary modules, implement interfaces, and define our &lt;strong&gt;routers&lt;/strong&gt; and &lt;strong&gt;facades&lt;/strong&gt;. If you still don&#39;t know what routers and facades are and what they do, I suggest you first take a look at &lt;a href=&#34;https://aalvarez.me/posts/the-zenoss-json-api.html&#34;&gt;The Zenoss JSON API&lt;/a&gt; post.&lt;/p&gt;
+&lt;p&gt;First, let&#39;s take a quick look at the imports:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;os.path&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;urlparse&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;subprocess&lt;/span&gt;
@@ -321,8 +267,8 @@
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.facades&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulFacade&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.interfaces&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IFacade&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.Zuul.utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ZuulMessageFactory&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_t&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenPath&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Products.ZenUtils.Utils&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;zenPath&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Some imports are probably not needed, but the ones that are of our interest are imports such as &lt;code&gt;DirectRouter&lt;/code&gt; and &lt;code&gt;DirectResponse&lt;/code&gt;, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -332,21 +278,14 @@
       
       <guid>https://aalvarez.me/posts/the-zenoss-json-api/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;http://wiki.zenoss.org/Working_with_the_JSON_API&#34;&gt;Zenoss JSON API&lt;/a&gt; allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using &lt;a href=&#34;https://curl.haxx.se/&#34;&gt;cURL&lt;/a&gt; or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.&lt;/p&gt;
-
 &lt;p&gt;The API documentation can be downloaded &lt;a href=&#34;https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip&#34;&gt;here&lt;/a&gt;. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.&lt;/p&gt;
-
-&lt;p&gt;In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&amp;rsquo;s front-end (made using &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;ExtJS&lt;/a&gt;) interacts with it.&lt;/p&gt;
-
+&lt;p&gt;In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&#39;s front-end (made using &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;ExtJS&lt;/a&gt;) interacts with it.&lt;/p&gt;
 &lt;p&gt;~&amp;gt; Even though Zenoss calls its API a &lt;em&gt;JSON API&lt;/em&gt; (Simply because it returns data in JSON format), the API &lt;strong&gt;is not&lt;/strong&gt; &lt;a href=&#34;http://jsonapi.org/&#34;&gt;JSON API specification&lt;/a&gt; compliant.&lt;/p&gt;
-
 &lt;h2 id=&#34;querying-the-api&#34;&gt;Querying the API&lt;/h2&gt;
-
-&lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&amp;rsquo;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#111&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
-
+&lt;p&gt;To see the API in action, we can begin by making a simple query using &lt;code&gt;cURL&lt;/code&gt;. Let&#39;s say we want to obtain all the available information of a specific device:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -u &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;admin:zenoss&amp;#34;&lt;/span&gt; -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;{&amp;#34;action&amp;#34;: &amp;#34;DeviceRouter&amp;#34;, &amp;#34;method&amp;#34;: &amp;#34;getInfo&amp;#34;, &amp;#34;data&amp;#34;: [{&amp;#34;uid&amp;#34;: &amp;#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&amp;#34;}], &amp;#34;tid&amp;#34;: 1}&amp;#39;&lt;/span&gt; http://&lt;span style=&#34;color:#111&#34;&gt;$ZENOSS_HOST&lt;/span&gt;:8080/zport/dmd/device_router
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The above request will return the information of the device in JSON format, assuming that we replace &lt;code&gt;$ZENOSS_HOST&lt;/code&gt; with the IP address of our Zenoss server, and &lt;code&gt;$DEVICE_IP&lt;/code&gt; with the IP address of the device we want to query.&lt;/p&gt;
 &lt;p&gt;This is all fine if all we need is querying the API and nothing else. But what if we really want to know &lt;strong&gt;&lt;em&gt;how&lt;/em&gt;&lt;/strong&gt; the API back-end works? How the endpoints are created? What are routers?&lt;/p&gt;
-
 &lt;p&gt;This is what we are gonna learn next.&lt;/p&gt;</description>
     </item>
     
@@ -357,17 +296,11 @@
       
       <guid>https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/</guid>
       <description>&lt;p&gt;Continuing from my previous post, where I explained &lt;a href=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html&#34;&gt;how to modify the device detail bar from a ZenPack using ExtJS&lt;/a&gt;, in this post I will explain how we can modify the device list grid shown in the infrastructure page.&lt;/p&gt;
-
 &lt;h2 id=&#34;the-infrastructure-grid&#34;&gt;The Infrastructure Grid&lt;/h2&gt;
-
 &lt;p&gt;This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include &lt;em&gt;device name&lt;/em&gt;, &lt;em&gt;device class&lt;/em&gt;, &lt;em&gt;IP address&lt;/em&gt;, &lt;em&gt;production state&lt;/em&gt;, and &lt;em&gt;events&lt;/em&gt;, as shown in the image below:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&amp;rsquo;t do this by default is beyond me).&lt;/p&gt;
-
-&lt;h2 id=&#34;devicepanels-js&#34;&gt;DevicePanels.js&lt;/h2&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png&#34; alt=&#34;Zenoss Infrastructure Grid&#34;&gt;&lt;/p&gt;
+&lt;p&gt;However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&#39;t do this by default is beyond me).&lt;/p&gt;
+&lt;h2 id=&#34;devicepanelsjs&#34;&gt;DevicePanels.js&lt;/h2&gt;
 &lt;p&gt;The source code for the grid is found in &lt;code&gt;$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js&lt;/code&gt;. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called &lt;code&gt;deviceColumns&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
     
@@ -378,20 +311,13 @@
       
       <guid>https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/</guid>
       <description>&lt;p&gt;The Zenoss Core &lt;a href=&#34;https://www.sencha.com/products/extjs/&#34;&gt;&lt;strong&gt;ExtJS&lt;/strong&gt;&lt;/a&gt; graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.&lt;/p&gt;
-
 &lt;p&gt;Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in &lt;code&gt;$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss&lt;/code&gt;, and as you would expect, the device detail bar component is also located there.&lt;/p&gt;
-
 &lt;h2 id=&#34;the-device-detail-bar&#34;&gt;The Device Detail Bar&lt;/h2&gt;
-
-&lt;p&gt;This is the detail bar located on the device view page which shows the device&amp;rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in &lt;code&gt;DeviceDetailBar.js&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;This is the detail bar located on the device view page which shows the device&#39;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in &lt;code&gt;DeviceDetailBar.js&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png&#34; alt=&#34;Device Detail Bar&#34;&gt;&lt;/p&gt;
 &lt;p&gt;However since we are going to &lt;strong&gt;&lt;em&gt;extend&lt;/em&gt;&lt;/strong&gt; this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.&lt;/p&gt;
-
 &lt;h2 id=&#34;extending-the-component-through-zenpacks&#34;&gt;Extending The Component, Through ZenPacks&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s assume we are starting with a freshly created ZenPack, which adds a new &lt;code&gt;power_status&lt;/code&gt; integer field to certain devices, according to its &lt;code&gt;zenpack.yaml&lt;/code&gt; file:&lt;/p&gt;
+&lt;p&gt;Let&#39;s assume we are starting with a freshly created ZenPack, which adds a new &lt;code&gt;power_status&lt;/code&gt; integer field to certain devices, according to its &lt;code&gt;zenpack.yaml&lt;/code&gt; file:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
 
 classes&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
@@ -400,8 +326,9 @@ classes&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     label&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; Custom Device
     properties&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
       power_status&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-        type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; boolean&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;What we want is to display this value in the device&amp;rsquo;s detail bar, similar to the device&amp;rsquo;s ping status display.&lt;/p&gt;</description>
+        type&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; boolean
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;What we want is to display this value in the device&#39;s detail bar, similar to the device&#39;s ping status display.&lt;/p&gt;</description>
     </item>
     
   </channel>

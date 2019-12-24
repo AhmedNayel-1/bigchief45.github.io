@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Displaying Images in Netbeans Platform Node Tooltips",
     "headline" : "Displaying Images in Netbeans Platform Node Tooltips",
-    "description" : "\x3cp\x3eNetbeans Platform allows you to display HTML inside a node\x26rsquo;s tooltip text. Naturally this means you can display images. For example, project nodes in the Netbeans IDE display icons related to errors (if there are any) and version control:\x3c\/p\x3e\n\n\x3cp\x3e\x3cimg src=\x22\/posts\/displaying-images-in-netbeans-platform-node-tooltips\/node_tooltip_images.png\x22 alt=\x22Netbeans Node Tooltip Images\x22 \/\x3e\x3c\/p\x3e\n\n\x3cp\x3eAchieving this is not very straight forward, since the documentation doesn\x26rsquo;t really say much on how to load this image. Fortunately it is very simple.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eNetbeans Platform allows you to display HTML inside a node\x27s tooltip text. Naturally this means you can display images. For example, project nodes in the Netbeans IDE display icons related to errors (if there are any) and version control:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/displaying-images-in-netbeans-platform-node-tooltips\/node_tooltip_images.png\x22 alt=\x22Netbeans Node Tooltip Images\x22\x3e\x3c\/p\x3e\n\x3cp\x3eAchieving this is not very straight forward, since the documentation doesn\x27t really say much on how to load this image. Fortunately it is very simple.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,14 +135,10 @@ if (!doNotTrack) {
   <h1>Displaying Images in Netbeans Platform Node Tooltips</h1>
   <time datetime=2018-08-14T00:00:00Z class="post-date">Tue, Aug 14, 2018</time>
 
-  <p>Netbeans Platform allows you to display HTML inside a node&rsquo;s tooltip text. Naturally this means you can display images. For example, project nodes in the Netbeans IDE display icons related to errors (if there are any) and version control:</p>
-
-<p><img src="https://aalvarez.me/posts/displaying-images-in-netbeans-platform-node-tooltips/node_tooltip_images.png" alt="Netbeans Node Tooltip Images" /></p>
-
-<p>Achieving this is not very straight forward, since the documentation doesn&rsquo;t really say much on how to load this image. Fortunately it is very simple.</p>
-
-<p>All the work will be done inside the node&rsquo;s <code>getShortDescription()</code> method. We will build a string in HTML format that contains a <code>&lt;img&gt;</code> tag that points to our image.  The image&rsquo;s location will be handled using a <code>URL</code> object.</p>
-
+  <p>Netbeans Platform allows you to display HTML inside a node's tooltip text. Naturally this means you can display images. For example, project nodes in the Netbeans IDE display icons related to errors (if there are any) and version control:</p>
+<p><img src="https://aalvarez.me/posts/displaying-images-in-netbeans-platform-node-tooltips/node_tooltip_images.png" alt="Netbeans Node Tooltip Images"></p>
+<p>Achieving this is not very straight forward, since the documentation doesn't really say much on how to load this image. Fortunately it is very simple.</p>
+<p>All the work will be done inside the node's <code>getShortDescription()</code> method. We will build a string in HTML format that contains a <code>&lt;img&gt;</code> tag that points to our image.  The image's location will be handled using a <code>URL</code> object.</p>
 <p>Here is a complete example of how we can achieve is:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">final</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyNode</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">BeanNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyObject</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 
@@ -153,17 +149,17 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
 
   <span style="color:#75af00">@Override</span>
-  <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getShortDescription</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    <span style="color:#111">URL</span> <span style="color:#111">iconUrl</span> <span style="color:#f92672">=</span> <span style="color:#111">getClass</span><span style="color:#f92672">().</span><span style="color:#75af00">getClassLoader</span><span style="color:#f92672">().</span><span style="color:#75af00">getResource</span><span style="color:#f92672">(</span><span style="color:#111">MY_ICON</span><span style="color:#f92672">);</span>
+  <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getShortDescription</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#111">URL</span> <span style="color:#111">iconUrl</span> <span style="color:#f92672">=</span> <span style="color:#111">getClass</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#75af00">getClassLoader</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#75af00">getResource</span><span style="color:#f92672">(</span><span style="color:#111">MY_ICON</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 
     <span style="color:#111">String</span> <span style="color:#111">s</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;&lt;html&gt;&#34;</span><span style="color:#f92672">;</span>
-    <span style="color:#111">s</span> <span style="color:#f92672">+=</span> <span style="color:#d88200">&#34;&lt;p&gt;&lt;img src=\&#34;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">iconUrl</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;\&#34;&gt; Custom message&lt;/p&gt;&#34;</span><span style="color:#f92672">;</span>
-    <span style="color:#111">s</span> <span style="color:#f92672">+=</span> <span style="color:#d88200">&#34;&lt;/html&gt;&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#111">s</span> <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#d88200">&#34;&lt;p&gt;&lt;img src=\&#34;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">iconUrl</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;\&#34;&gt; Custom message&lt;/p&gt;&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#111">s</span> <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#d88200">&#34;&lt;/html&gt;&#34;</span><span style="color:#f92672">;</span>
 
     <span style="color:#00a8c8">return</span> <span style="color:#111">s</span><span style="color:#f92672">;</span>
   <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>Notice how we escape double quotes.</p>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Notice how we escape double quotes.</p>
 </div>
 
 

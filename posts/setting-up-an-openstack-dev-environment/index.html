@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Setting Up an OpenStack Dev Environment",
     "headline" : "Setting Up an OpenStack Dev Environment",
-    "description" : "\x3cp\x3eBefore beginning to \x3ca href=\x22\/posts\/getting-started-on-contributing-to-openstack.html\x22\x3econtribute to OpenStack\x3c\/a\x3e, it is necessary that we setup an ideal development environment for a smoother workflow.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will cover how to setup a Devstack development environment in a \x3cstrong\x3eUbuntu 16.04\x3c\/strong\x3e virtual machine using \x3ca href=\x22http:\/\/www.vmware.com\/\x22\x3eVMware Player\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3ch2 id=\x22setting-up-the-ubuntu-virtual-machine\x22\x3eSetting Up the Ubuntu Virtual Machine\x3c\/h2\x3e\n\n\x3cp\x3eMake sure you have \x3ca href=\x22http:\/\/download.cnet.com\/VMware-Player\/3000-2094_4-10470784.html\x22\x3eVMware Player\x3c\/a\x3e installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a \x3ca href=\x22http:\/\/releases.ubuntu.com\/xenial\/\x22\x3eUbuntu Desktop 16.04.2 LTS (Xenial Xerus)\x3c\/a\x3e for \x3cstrong\x3e32-bit PC i836\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eIn VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu \x3ccode\x3e.iso\x3c\/code\x3e image file when prompted. Proceed with the installation and select the \x3cem\x3eErase Disk and Install Ubuntu\x3c\/em\x3e option when prompted.\x3c\/p\x3e\n\n\x3cp\x3e~\x26gt; I tried using \x3ca href=\x22https:\/\/www.virtualbox.org\/\x22\x3eVirtualBox\x3c\/a\x3e for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend \x3cstrong\x3eUbuntu 16.04\x3c\/strong\x3e.\x3c\/p\x3e\n\n\x3cp\x3eOnce the installation is finished, restart the virtual machine.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eBefore beginning to \x3ca href=\x22\/posts\/getting-started-on-contributing-to-openstack.html\x22\x3econtribute to OpenStack\x3c\/a\x3e, it is necessary that we setup an ideal development environment for a smoother workflow.\x3c\/p\x3e\n\x3cp\x3eIn this post I will cover how to setup a Devstack development environment in a \x3cstrong\x3eUbuntu 16.04\x3c\/strong\x3e virtual machine using \x3ca href=\x22http:\/\/www.vmware.com\/\x22\x3eVMware Player\x3c\/a\x3e.\x3c\/p\x3e\n\x3ch2 id=\x22setting-up-the-ubuntu-virtual-machine\x22\x3eSetting Up the Ubuntu Virtual Machine\x3c\/h2\x3e\n\x3cp\x3eMake sure you have \x3ca href=\x22http:\/\/download.cnet.com\/VMware-Player\/3000-2094_4-10470784.html\x22\x3eVMware Player\x3c\/a\x3e installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a \x3ca href=\x22http:\/\/releases.ubuntu.com\/xenial\/\x22\x3eUbuntu Desktop 16.04.2 LTS (Xenial Xerus)\x3c\/a\x3e for \x3cstrong\x3e32-bit PC i836\x3c\/strong\x3e.\x3c\/p\x3e\n\x3cp\x3eIn VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu \x3ccode\x3e.iso\x3c\/code\x3e image file when prompted. Proceed with the installation and select the \x3cem\x3eErase Disk and Install Ubuntu\x3c\/em\x3e option when prompted.\x3c\/p\x3e\n\x3cp\x3e~\x26gt; I tried using \x3ca href=\x22https:\/\/www.virtualbox.org\/\x22\x3eVirtualBox\x3c\/a\x3e for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend \x3cstrong\x3eUbuntu 16.04\x3c\/strong\x3e.\x3c\/p\x3e\n\x3cp\x3eOnce the installation is finished, restart the virtual machine.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-03-22 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-03-22 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/setting-up-an-openstack-dev-environment\/",
-    "wordCount" : "1304",
+    "wordCount" : "1301",
     "keywords" : [ "openstack","devstack","ceilometer","python","ubuntu","linux","Blog" ]
 }
 </script>
@@ -136,167 +136,110 @@ if (!doNotTrack) {
   <time datetime=2017-03-22T00:00:00Z class="post-date">Wed, Mar 22, 2017</time>
 
   <p>Before beginning to <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html">contribute to OpenStack</a>, it is necessary that we setup an ideal development environment for a smoother workflow.</p>
-
 <p>In this post I will cover how to setup a Devstack development environment in a <strong>Ubuntu 16.04</strong> virtual machine using <a href="http://www.vmware.com/">VMware Player</a>.</p>
-
 <h2 id="setting-up-the-ubuntu-virtual-machine">Setting Up the Ubuntu Virtual Machine</h2>
-
 <p>Make sure you have <a href="http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html">VMware Player</a> installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a <a href="http://releases.ubuntu.com/xenial/">Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)</a> for <strong>32-bit PC i836</strong>.</p>
-
 <p>In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu <code>.iso</code> image file when prompted. Proceed with the installation and select the <em>Erase Disk and Install Ubuntu</em> option when prompted.</p>
-
 <p>~&gt; I tried using <a href="https://www.virtualbox.org/">VirtualBox</a> for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend <strong>Ubuntu 16.04</strong>.</p>
-
 <p>Once the installation is finished, restart the virtual machine.</p>
-
 <h3 id="preliminary-setup">Preliminary Setup</h3>
-
-<p>Before anything, let&rsquo;s go ahead and make sure that aptitude is up to date:</p>
-
+<p>Before anything, let's go ahead and make sure that aptitude is up to date:</p>
 <pre><code>sudo apt-get update
-</code></pre>
-
-<p>Then let&rsquo;s make sure that <code>pip</code> is installed and up to date:</p>
-
+</code></pre><p>Then let's make sure that <code>pip</code> is installed and up to date:</p>
 <pre><code>sudo apt-get install python-pip
 sudo pip install --upgrade pip
-</code></pre>
-
-<h2 id="setting-up-the-stack-user">Setting Up the Stack User</h2>
-
-<p>We need to create a special user to work with Devstack. Devstack is a series of extensible scripts used to quickly bring up a complete OpenStack environment based on the latest versions of everything from git master. It is used interactively as a development environment and as the basis for much of the OpenStack project&rsquo;s functional testing.</p>
-
+</code></pre><h2 id="setting-up-the-stack-user">Setting Up the Stack User</h2>
+<p>We need to create a special user to work with Devstack. Devstack is a series of extensible scripts used to quickly bring up a complete OpenStack environment based on the latest versions of everything from git master. It is used interactively as a development environment and as the basis for much of the OpenStack project's functional testing.</p>
 <p>Devstack should be run as a non-root user with sudo enabled. Since this user will be making many changes to your system, it will need to have sudo privileges.</p>
-
 <p>Create the group <code>stack</code> and add the user <code>stack</code> in it:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo groupadd stack
-sudo useradd -g stack -s /bin/bash -d /opt/stack -m stack</code></pre></div>
-<p>Grant super user permissions to the <code>stack</code> user:</p>
+sudo useradd -g stack -s /bin/bash -d /opt/stack -m stack
+</code></pre></div><p>Grant super user permissions to the <code>stack</code> user:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo su
-<span style="color:#111">echo</span> <span style="color:#d88200">&#34;stack ALL=(ALL) NOPASSWD: ALL&#34;</span> &gt;&gt; /etc/sudoers</code></pre></div>
-<p>Logout from <code>root</code> by pressing <kbd>Ctrl + D</kbd></p>
-
+<span style="color:#111">echo</span> <span style="color:#d88200">&#34;stack ALL=(ALL) NOPASSWD: ALL&#34;</span> &gt;&gt; /etc/sudoers
+</code></pre></div><p>Logout from <code>root</code> by pressing <!-- raw HTML omitted -->Ctrl + D<!-- raw HTML omitted --></p>
 <p>Create a password for the <code>stack</code> user:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo passwd stack</code></pre></div>
-<p>Now to login as the stack user and go to the home directory of the stack user:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo passwd stack
+</code></pre></div><p>Now to login as the stack user and go to the home directory of the stack user:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">su stack
-<span style="color:#111">cd</span> ~</code></pre></div>
-<p>Check that the present working directory is <code>/opt/stack</code> by using the <code>pwd</code> command.</p>
-
+<span style="color:#111">cd</span> ~
+</code></pre></div><p>Check that the present working directory is <code>/opt/stack</code> by using the <code>pwd</code> command.</p>
 <h2 id="setting-up-git">Setting Up Git</h2>
-
-<p>We will be using <a href="https://git-scm.com/">git</a> for version control. Let&rsquo;s install it using apt-get:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git</code></pre></div>
-<p>Now let&rsquo;s configure our credentials:</p>
+<p>We will be using <a href="https://git-scm.com/">git</a> for version control. Let's install it using apt-get:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git
+</code></pre></div><p>Now let's configure our credentials:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git config --global user.name <span style="color:#d88200">&#34;YOUR_FIRSTNAME YOUR_LASTNAME&#34;</span>
-git config --global user.email YOUR_EMAIL@EMAIL_ADDRESS.com</code></pre></div>
-<p>We can check and confirm our git configuration using the <code>git config --list</code> command.</p>
-
+git config --global user.email YOUR_EMAIL@EMAIL_ADDRESS.com
+</code></pre></div><p>We can check and confirm our git configuration using the <code>git config --list</code> command.</p>
 <h2 id="setting-up-devstack">Setting Up DevStack</h2>
-
-<p><img src="https://docs.openstack.org/developer/devstack/_images/logo-blue.png" alt="Devstack" /></p>
-
-<p>Now we are ready to download Devstack from OpenStack&rsquo;s git repository by cloning the repository:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://git.openstack.org/openstack-dev/devstack</code></pre></div>
-<p>Now let&rsquo;s enter the <code>devstack</code> directory (<code>cd devstack</code>) and copy a sample configuration into the devstack directory:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp samples/local.conf .</code></pre></div>
-<h3 id="configuring-devstack">Configuring DevStack</h3>
-
+<p><img src="https://docs.openstack.org/developer/devstack/_images/logo-blue.png" alt="Devstack"></p>
+<p>Now we are ready to download Devstack from OpenStack's git repository by cloning the repository:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://git.openstack.org/openstack-dev/devstack
+</code></pre></div><p>Now let's enter the <code>devstack</code> directory (<code>cd devstack</code>) and copy a sample configuration into the devstack directory:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp samples/local.conf .
+</code></pre></div><h3 id="configuring-devstack">Configuring DevStack</h3>
 <p>The <code>local.conf</code> file allows us to specify the preferred configuration for devstack before deploying it. In this file we can configure passwords, logging, projects we want to download (such as Ceilometer), etc.</p>
-
 <p>We can add some simple password configuration for a few services:</p>
-
 <pre><code>ADMIN_PASSWORD=openstack
 DATABASE_PASSWORD=openstack
 RABBIT_PASSWORD=openstack
 SERVICE_PASSWORD=openstack
-</code></pre>
-
-<p>For my case, I also want to include Ceilometer in the devstack deployment, so I add the following to <code>local.conf</code>:</p>
-
+</code></pre><p>For my case, I also want to include Ceilometer in the devstack deployment, so I add the following to <code>local.conf</code>:</p>
 <pre><code># Enable the Ceilometer devstack plugin
 enable_plugin ceilometer https://git.openstack.org/openstack/ceilometer.git
-</code></pre>
-
-<p>Once everything is configured, we can run the <code>script.sh</code> file to begin the installation, this should take around 30-60 minutes. Once Devstack is installed. You should get a message like the following:</p>
-
+</code></pre><p>Once everything is configured, we can run the <code>script.sh</code> file to begin the installation, this should take around 30-60 minutes. Once Devstack is installed. You should get a message like the following:</p>
 <pre><code>This is your host IP address: 182.168.21.133
 This is your host IPv6 address: ::1
 Horizon is now available at http://192.168.21.133/dashboard
 Keystone is serving at http://192.168.21.133/identity
 The default users are: admin and demo
 The password: openstack
-</code></pre>
-
-<p>Obviously the values might be different for your case.</p>
-
+</code></pre><p>Obviously the values might be different for your case.</p>
 <h2 id="setting-up-ssh-keys">Setting Up SSH Keys</h2>
-
-<p>Let&rsquo;s create a new SSH key, using the provided email as a label. We can save the key in the default prompted location, we can also leave the secure passphrase blank.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -C <span style="color:#d88200">&#34;YOUR_EMAIL@EMAIL_ADDRESS.com&#34;</span></code></pre></div>
-<p>Start the ssh-agent in the background:</p>
-
+<p>Let's create a new SSH key, using the provided email as a label. We can save the key in the default prompted location, we can also leave the secure passphrase blank.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -C <span style="color:#d88200">&#34;YOUR_EMAIL@EMAIL_ADDRESS.com&#34;</span>
+</code></pre></div><p>Start the ssh-agent in the background:</p>
 <pre><code>eval &quot;$(ssh-agent -s)&quot;
-</code></pre>
-
-<p>-&gt; In shell terminology, <code>eval</code> is a built-in, not a function. It will take an argument and construct a command of it, which will be executed by the shell.</p>
-
+</code></pre><p>-&gt; In shell terminology, <code>eval</code> is a built-in, not a function. It will take an argument and construct a command of it, which will be executed by the shell.</p>
 <p>Add the SSH key to ssh-agent:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-add ~/.ssh/id_rsa</code></pre></div>
-<p>Let&rsquo;s download and install xclip. This is a utility for copying content to a clipboard in Linux. At the same time let&rsquo;s copy the contents of the SSH key (<code>id_rsa.pub</code>):</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-add ~/.ssh/id_rsa
+</code></pre></div><p>Let's download and install xclip. This is a utility for copying content to a clipboard in Linux. At the same time let's copy the contents of the SSH key (<code>id_rsa.pub</code>):</p>
 <pre><code>sudo apt-get install xclip
 sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub
-</code></pre>
-
-<p>Now you can login into your <a href="www.github.com">Github</a> account, go to <em>Settings</em>, click <em>SSH and GPG keys</em> then select <em>new SSH key</em>. Write a description in “Title” and paste your key into the “Key” field. Finally press <em>Add SSH Key</em>.</p>
-
-<p>Let&rsquo;s test the connection using SSH:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -T git@github.com</code></pre></div>
-<h2 id="setting-up-gerrit">Setting Up Gerrit</h2>
-
+</code></pre><p>Now you can login into your <a href="www.github.com">Github</a> account, go to <em>Settings</em>, click <em>SSH and GPG keys</em> then select <em>new SSH key</em>. Write a description in “Title” and paste your key into the “Key” field. Finally press <em>Add SSH Key</em>.</p>
+<p>Let's test the connection using SSH:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -T git@github.com
+</code></pre></div><h2 id="setting-up-gerrit">Setting Up Gerrit</h2>
 <p><a href="https://www.gerritcodereview.com/">Gerrit</a> is the code review system used in OpenStack development.</p>
-
 <p>Before setting up Gerrit, make sure that you have followed the <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html">preliminary steps</a> for preparing to contribute to OpenStack.</p>
-
-<p>Let&rsquo;s copy our SSH again using xclip:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub</code></pre></div>
-<p>Now sign in to <a href="https://review.openstack.org/">https://review.openstack.org/</a> using your Launchpad ID. Click on <em>Settings</em> then select <em>SSH Public Keys</em> and press <em>Add Key</em>. Press <kbd>Ctrl+V</kbd> to paste the key and then click <em>Add</em>.</p>
-
-<p>Now let&rsquo;s proceed to install git review. Git-review tool is a git subcommand that handles all the details of working with Gerrit.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git-review</code></pre></div>
-<p>Check if git review works inside Keystone (or any other project) directory of OpenStack:</p>
+<p>Let's copy our SSH again using xclip:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo xclip -sel clip &lt; ~/.ssh/id_rsa.pub
+</code></pre></div><p>Now sign in to <a href="https://review.openstack.org/">https://review.openstack.org/</a> using your Launchpad ID. Click on <em>Settings</em> then select <em>SSH Public Keys</em> and press <em>Add Key</em>. Press <!-- raw HTML omitted -->Ctrl+V<!-- raw HTML omitted --> to paste the key and then click <em>Add</em>.</p>
+<p>Now let's proceed to install git review. Git-review tool is a git subcommand that handles all the details of working with Gerrit.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git-review
+</code></pre></div><p>Check if git review works inside Keystone (or any other project) directory of OpenStack:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">cd</span> keystone
 
-git review -s</code></pre></div>
-<p>You will be prompted for your gerrit username, which can be configured in the OpenStack gerrit settings. A remote will now be set up and will match to the project&rsquo;s git repository.</p>
-
+git review -s
+</code></pre></div><p>You will be prompted for your gerrit username, which can be configured in the OpenStack gerrit settings. A remote will now be set up and will match to the project's git repository.</p>
 <p>=&gt; OpenStack has a sandbox repository for learning and testing purposes. This is a great repository to begin your OpenStack learning. It allows you to experiment with the workflow and try different options so you can learn what they do. Read more about it <a href="https://docs.openstack.org/infra/manual/sandbox.html#sandbox">here</a>.</p>
-
 <h2 id="running-tox">Running Tox</h2>
-
 <p><a href="https://tox.readthedocs.io/en/latest/">Tox</a> is a generic virtualenv management and test command line tool.</p>
-
 <p>Each project like Keystone, Nova, Cinder etc. has a <code>tox.ini</code> file defined in it. It defines the tox environment and the commands to run for each environment. Subsequent runs of tox will be faster because everything fetched will be in <code>.tox</code> already.</p>
-
 <p>-&gt; There are two types of OpenStack tests: the OpenStack integration test suite, called Tempest, and unit tests in each particular project (Nova, Neutron, Swift and so forth).</p>
-
 <p>Install tox and pbr:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install python-tox
-sudo pip install pbr</code></pre></div>
-<p>Update and upgrade:</p>
+sudo pip install pbr
+</code></pre></div><p>Update and upgrade:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update
-sudo apt-get upgrade</code></pre></div>
-<p>Go inside any project directory like Keystone, Cinder or Nova and run tox:</p>
+sudo apt-get upgrade
+</code></pre></div><p>Go inside any project directory like Keystone, Cinder or Nova and run tox:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">cd</span> ceilometer
-tox -e py27,pep8</code></pre></div>
-<p>You can run a single test or let tox run the full suite. At the end of the test, you’ll get a nice printout of what exactly was run. Note that you don’t have to specify the full file path.</p>
-
-<p>~&gt; Depending on the project, you might need to install additional dependencies to be able to run the tests. Consult the developer documentation for a specific project on how to run its tests.<br><br>
+tox -e py27,pep8
+</code></pre></div><p>You can run a single test or let tox run the full suite. At the end of the test, you’ll get a nice printout of what exactly was run. Note that you don’t have to specify the full file path.</p>
+<p>~&gt; Depending on the project, you might need to install additional dependencies to be able to run the tests. Consult the developer documentation for a specific project on how to run its tests.<!-- raw HTML omitted --><!-- raw HTML omitted -->
 For Ceilometer, it is necessary to install <code>mongodb</code> and <code>libmysqlclient-dev</code>.</p>
-
 <p>If you get the following output on the terminal after entering the command, then tox has installed successfully:</p>
-
 <pre><code>======
 Totals
 ======
@@ -307,9 +250,7 @@ Ran: 1019 tests in 90.0000 sec.
  - Unexpected Success: 0
  - Failed: 0
 Sum of execute time for each test: 79.0575 sec.
-</code></pre>
-
-<p>At this point your OpenStack development is ready and you can begin to contribute. Happy coding!</p>
+</code></pre><p>At this point your OpenStack development is ready and you can begin to contribute. Happy coding!</p>
 </div>
 
 

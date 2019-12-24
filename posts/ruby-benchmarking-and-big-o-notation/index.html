@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Ruby Benchmarking \x26 Big O Notation",
     "headline" : "Ruby Benchmarking \x26 Big O Notation",
-    "description" : "\x3cp\x3eThe Ruby \x3ca href=\x22http:\/\/ruby-doc.org\/stdlib-2.0.0\/libdoc\/benchmark\/rdoc\/Benchmark.html\x22\x3eBenchmark\x3c\/a\x3e library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.\x3c\/p\x3e\n\n\x3cp\x3eI was doing some \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Big_O_notation\x22\x3eBig O Notation\x3c\/a\x3e reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.\x3c\/p\x3e\n\n\x3ch2 id=\x22using-benchmark\x22\x3eUsing Benchmark\x3c\/h2\x3e\n\n\x3cp\x3eTo start benchmarking our code, we simply need to require \x3ccode\x3ebenchmark\x3c\/code\x3e and use the methods provided by the \x3ccode\x3eBenchmark\x3c\/code\x3e module. For me, the most practical way is to use \x3ccode\x3eBenchmark#bm\x3c\/code\x3e method, where we pass a block of code we want to measure:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;benchmark\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eBenchmark\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ebm\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ereport\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#75715e\x22\x3e# our code here\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eInside the block we are using the \x3ccode\x3ereport\x3c\/code\x3e method of the block\x26rsquo;s variable, which will basically do a separate benchmark for each report.\x3c\/p\x3e\n\n\x3cp\x3eHowever, we can improve this even more by adding a label to \x3ccode\x3ereport\x3c\/code\x3e and a label width to \x3ccode\x3ebm\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;benchmark\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eBenchmark\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ebm\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e20\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ereport\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;my_algorithm\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#75715e\x22\x3e# our code here\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eLet\x26rsquo;s see it in action with some common algorithms.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eThe Ruby \x3ca href=\x22http:\/\/ruby-doc.org\/stdlib-2.0.0\/libdoc\/benchmark\/rdoc\/Benchmark.html\x22\x3eBenchmark\x3c\/a\x3e library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.\x3c\/p\x3e\n\x3cp\x3eI was doing some \x3ca href=\x22https:\/\/en.wikipedia.org\/wiki\/Big_O_notation\x22\x3eBig O Notation\x3c\/a\x3e reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.\x3c\/p\x3e\n\x3ch2 id=\x22using-benchmark\x22\x3eUsing Benchmark\x3c\/h2\x3e\n\x3cp\x3eTo start benchmarking our code, we simply need to require \x3ccode\x3ebenchmark\x3c\/code\x3e and use the methods provided by the \x3ccode\x3eBenchmark\x3c\/code\x3e module. For me, the most practical way is to use \x3ccode\x3eBenchmark#bm\x3c\/code\x3e method, where we pass a block of code we want to measure:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;benchmark\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eBenchmark\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ebm\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ereport\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#75715e\x22\x3e# our code here\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eInside the block we are using the \x3ccode\x3ereport\x3c\/code\x3e method of the block\x27s variable, which will basically do a separate benchmark for each report.\x3c\/p\x3e\n\x3cp\x3eHowever, we can improve this even more by adding a label to \x3ccode\x3ereport\x3c\/code\x3e and a label width to \x3ccode\x3ebm\x3c\/code\x3e:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;benchmark\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eBenchmark\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ebm\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#ae81ff\x22\x3e20\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e|\x3c\/span\x3e\n  \x3cspan style=\x22color:#111\x22\x3ex\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3ereport\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e(\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3emy_algorithm\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e\x26#34;\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e)\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#75715e\x22\x3e# our code here\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eLet\x27s see it in action with some common algorithms.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,11 +136,8 @@ if (!doNotTrack) {
   <time datetime=2016-11-15T00:00:00Z class="post-date">Tue, Nov 15, 2016</time>
 
   <p>The Ruby <a href="http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html">Benchmark</a> library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.</p>
-
 <p>I was doing some <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O Notation</a> reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.</p>
-
 <h2 id="using-benchmark">Using Benchmark</h2>
-
 <p>To start benchmarking our code, we simply need to require <code>benchmark</code> and use the methods provided by the <code>Benchmark</code> module. For me, the most practical way is to use <code>Benchmark#bm</code> method, where we pass a block of code we want to measure:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
 
@@ -149,84 +146,65 @@ if (!doNotTrack) {
     <span style="color:#75715e"># our code here</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Inside the block we are using the <code>report</code> method of the block&rsquo;s variable, which will basically do a separate benchmark for each report.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Inside the block we are using the <code>report</code> method of the block's variable, which will basically do a separate benchmark for each report.</p>
 <p>However, we can improve this even more by adding a label to <code>report</code> and a label width to <code>bm</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
 
-<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;my_algorithm&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">my_algorithm</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
     <span style="color:#75715e"># our code here</span>
   <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Let&rsquo;s see it in action with some common algorithms.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Let's see it in action with some common algorithms.</p>
 <h2 id="what-is-big-o-notation">What is Big O Notation?</h2>
-
 <p>Big O notation is a special notation that measures how well a computer algorithm scales, as the amount of data involved increases (becomes closer to infinity). It is not necessarily a measurement of <em>speed</em>, but of how well the algorithm <em>scales</em>.</p>
-
 <p>The following are some of the most common Big O notations, with algorithms and benchmarks.</p>
-
-<h3 id="o-1"><em>O(1)</em></h3>
-
+<h3 id="-o1-"><em>O(1)</em></h3>
 <p><em>O(1)</em> represents <strong>constant</strong> time. This means that the algorithm will execute in the same amount of time <strong>regardless</strong> of the amount of data or input. This is an ideal time complexity, and in algorithms with a time complexity greater than <em>O(1)</em> it can still be achieved by using techniques such as <a href="https://en.wikipedia.org/wiki/Memoization">memoization</a>.</p>
+<p>An example of <em>O(1)</em> would be simply adding an element to an array. The size of the array won't matter when simply adding a new element at the end:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">10</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">a</span> <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672"></span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672"></span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672"></span><span style="color:#111">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672"></span><span style="color:#f92672">]</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">add_element</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">a</span><span style="color:#f92672">.</span><span style="color:#111">push</span><span style="color:#111">(</span><span style="color:#ae81ff">6</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#111">}</span>
 
-<p>An example of <em>O(1)</em> would be simply adding an element to an array. The size of the array won&rsquo;t matter when simply adding a new element at the end:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">10</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">a</span> <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">]</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;add_element&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">a</span><span style="color:#f92672">.</span><span style="color:#111">push</span><span style="color:#111">(</span><span style="color:#ae81ff">6</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-
-  <span style="color:#111">a</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">9_000_000</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;add_element&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">a</span><span style="color:#f92672">.</span><span style="color:#111">push</span><span style="color:#111">(</span><span style="color:#ae81ff">6</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The benchmark results are:</p>
-
+  <span style="color:#111">a</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#ae81ff">9_000_000</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">add_element</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">a</span><span style="color:#f92672">.</span><span style="color:#111">push</span><span style="color:#111">(</span><span style="color:#ae81ff">6</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The benchmark results are:</p>
 <pre><code>                 user     system      total        real
 add_element  0.000000   0.000000   0.000000 (  0.000003)
 add_element  0.000000   0.000000   0.000000 (  0.000012)
-</code></pre>
-
-<p>We can clearly see that there is practically no difference between adding to the 5 element array and adding to the 9 million element array.</p>
-
-<h3 id="o-n"><em>O(n)</em></h3>
-
+</code></pre><p>We can clearly see that there is practically no difference between adding to the 5 element array and adding to the 9 million element array.</p>
+<h3 id="-on-"><em>O(n)</em></h3>
 <p><em>O(n)</em> represents <strong>linear</strong> time. This means that the time to complete the algorithm is proportional to the amount of data. A good example of this is <strong>linear search</strong>, simply because looking for an element in a 9 million size array will take a lot longer than looking in a 10 size element array.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># O(N)</span>
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">linear_search</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">,</span> <span style="color:#111">value</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">linear_search</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">,</span> <span style="color:#111">value</span><span style="color:#111">)</span>
   <span style="color:#111">array</span><span style="color:#f92672">.</span><span style="color:#111">each</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">i</span><span style="color:#f92672">|</span> <span style="color:#00a8c8">return</span> <span style="color:#111">i</span> <span style="color:#00a8c8">if</span> <span style="color:#111">i</span> <span style="color:#f92672">==</span> <span style="color:#111">value</span> <span style="color:#111">}</span>
 <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;linear_search(1,000)&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">linear_search</span><span style="color:#111">(</span><span style="color:#ae81ff">1000</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;linear_search(10,000,000)&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">linear_search</span><span style="color:#111">(</span><span style="color:#ae81ff">10_000_000</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The benchmark results are:</p>
-
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">linear_search(1,000)</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">linear_search</span><span style="color:#111">(</span><span style="color:#ae81ff">1000</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#111">}</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">linear_search(10,000,000)</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">linear_search</span><span style="color:#111">(</span><span style="color:#ae81ff">10_000_000</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The benchmark results are:</p>
 <pre><code>                                                         user     system      total        real
 linear_search(1,000)                                 0.000000   0.000000   0.000000 (  0.000102)
 linear_search(10,000,000)                             0.700000   0.000000   0.700000 (  0.722858)
-</code></pre>
-
-<p>Still pretty fast, but the difference is very noticeable.</p>
-
-<h3 id="o-n-2"><em>O(n^2)</em></h3>
-
+</code></pre><p>Still pretty fast, but the difference is very noticeable.</p>
+<h3 id="-on2-"><em>O(n^2)</em></h3>
 <p><em>O(n^2)</em> indicates that the amount to complete will be proportional to the <strong>square</strong> of the amount of data. This usually happens with algorithms that have nested loops. A good example of this notation is the <a href="https://en.wikipedia.org/wiki/Bubble_sort">bubble sort algorithm</a>.</p>
-
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="Bubble Sort" /></p>
-
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="Bubble Sort"></p>
 <p>Here is a simple implementation in Ruby, with its corresponding benchmarks:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># O(N^2)</span>
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">bubble_sort</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">bubble_sort</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">)</span>
   <span style="color:#111">n</span> <span style="color:#f92672">=</span> <span style="color:#111">array</span><span style="color:#f92672">.</span><span style="color:#111">length</span>
 
   <span style="color:#00a8c8">loop</span> <span style="color:#00a8c8">do</span>
     <span style="color:#111">swapped</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span>
 
-    <span style="color:#111">(</span><span style="color:#111">n</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">times</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">i</span><span style="color:#f92672">|</span>
-      <span style="color:#00a8c8">if</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">]</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>
-        <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">]</span><span style="color:#111">,</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span><span style="color:#111">,</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">]</span>
+    <span style="color:#111">(</span><span style="color:#111">n</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">times</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">i</span><span style="color:#f92672">|</span>
+      <span style="color:#00a8c8">if</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">]</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span>
+        <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">]</span><span style="color:#111">,</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span><span style="color:#111">,</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">i</span><span style="color:#f92672">]</span>
         <span style="color:#111">swapped</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">true</span>
       <span style="color:#00a8c8">end</span>
     <span style="color:#00a8c8">end</span>
@@ -236,106 +214,79 @@ linear_search(10,000,000)                             0.700000   0.000000   0.70
   <span style="color:#111">array</span>
 <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;bubble_sort([1..10])&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">bubble_sort</span><span style="color:#111">((</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">10</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;bubble_sort([1..10,000])&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">bubble_sort</span><span style="color:#111">((</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">10_000</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The benchmark results are:</p>
-
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">bubble_sort([1..10])</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">bubble_sort</span><span style="color:#111">(</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#ae81ff">10</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">bubble_sort([1..10,000])</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">bubble_sort</span><span style="color:#111">(</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#ae81ff">10_000</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The benchmark results are:</p>
 <pre><code>                                                         user     system      total        real
 bubble_sort([1..10])                                 0.000000   0.000000   0.000000 (  0.000039)
 bubble_sort([1..10,000])                            13.990000   0.010000  14.000000 ( 14.028724)
-</code></pre>
-
-<p>Now we are starting to see a lot more difference. This is because we initially have to loop through the whole array, and for <strong><em>each</em></strong> element in the iteration, we loop through the whole array <strong><em>again</em></strong>. Hence resulting in: <em>O(n) x O(n) = O(n^2)</em>.</p>
-
-<p>When the amount of input is relatively small, <em>O(n^2)</em> algorithm&rsquo;s bad performance will not be that obvious. But as the input size grows, it will become more evident, and that is why <em>O(n^2)</em> algorithms are generally avoided for big inputs.</p>
-
-<h3 id="o-log-n"><em>O(log n)</em></h3>
-
+</code></pre><p>Now we are starting to see a lot more difference. This is because we initially have to loop through the whole array, and for <strong><em>each</em></strong> element in the iteration, we loop through the whole array <strong><em>again</em></strong>. Hence resulting in: <em>O(n) x O(n) = O(n^2)</em>.</p>
+<p>When the amount of input is relatively small, <em>O(n^2)</em> algorithm's bad performance will not be that obvious. But as the input size grows, it will become more evident, and that is why <em>O(n^2)</em> algorithms are generally avoided for big inputs.</p>
+<h3 id="-olog-n-"><em>O(log n)</em></h3>
 <p><em>O(log n)</em> is a much more efficient algorithm. This is because the input used is decreased by around 50% each time through the algorithm. These kind of algorithms are very fast and efficient because increases in the amount of data have little to no effect at some point early on because the amount of data is half each time.</p>
-
 <p>A good example of an <em>O(log n)</em> algorithm is the <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">binary search algorithm</a>:</p>
-
-<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search" /></p>
-
+<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search"></p>
 <p>In Ruby, we can implement a binary search in the following way (<em><strong>NOTE:</strong> The array must be initially sorted for the algorithm to work.</em>):</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># O( log N )</span>
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">binary_search</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">,</span> <span style="color:#111">element</span><span style="color:#111">,</span> <span style="color:#111">low</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">high</span><span style="color:#f92672">=</span><span style="color:#111">array</span><span style="color:#f92672">.</span><span style="color:#111">length</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">binary_search</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">,</span> <span style="color:#111">element</span><span style="color:#111">,</span> <span style="color:#111">low</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span><span style="color:#f92672"></span><span style="color:#111">,</span> <span style="color:#111">high</span><span style="color:#f92672">=</span><span style="color:#111">array</span><span style="color:#f92672">.</span><span style="color:#111">length</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#111">)</span>
   <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span> <span style="color:#00a8c8">if</span> <span style="color:#111">high</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">low</span>
 
-  <span style="color:#111">mid</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span> <span style="color:#111">low</span> <span style="color:#f92672">+</span> <span style="color:#111">high</span> <span style="color:#111">)</span> <span style="color:#d88200">/ 2
-</span><span style="color:#d88200">
-</span><span style="color:#d88200">  if array[mid] &gt; element
-</span><span style="color:#d88200">    return binary_search(array, element, low, mid - 1)
-</span><span style="color:#d88200">  elsif array[mid] &lt; element
-</span><span style="color:#d88200">    return binary_search(array, element, mid + 1, high)
-</span><span style="color:#d88200">  else
-</span><span style="color:#d88200">    return mid
-</span><span style="color:#d88200">  end
-</span><span style="color:#d88200">end
-</span><span style="color:#d88200">
-</span><span style="color:#d88200">Benchmark.bm(50) do |x|
-</span><span style="color:#d88200">  x.report(&#34;binary_search([1..10])&#34;) { binary_search((1..10).to_a, 4) }
-</span><span style="color:#d88200">  x.report(&#34;binary_search([1..5,000,000])&#34;) { binary_search((1..5_000_000).to_a, 4_999_999) }
-</span><span style="color:#d88200">end</span></code></pre></div>
-<p>The benchmark results are:</p>
+  <span style="color:#111">mid</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span> <span style="color:#111">low</span> <span style="color:#f92672">+</span> <span style="color:#111">high</span> <span style="color:#111">)</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
 
+  <span style="color:#f92672"></span><span style="color:#00a8c8">if</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">mid</span><span style="color:#f92672">]</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">element</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">binary_search</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">,</span> <span style="color:#111">element</span><span style="color:#111">,</span> <span style="color:#111">low</span><span style="color:#111">,</span> <span style="color:#111">mid</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">elsif</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#111">mid</span><span style="color:#f92672">]</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">element</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">binary_search</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">,</span> <span style="color:#111">element</span><span style="color:#111">,</span> <span style="color:#111">mid</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#111">,</span> <span style="color:#111">high</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">else</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">mid</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span>
+
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">binary_search([1..10])</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">binary_search</span><span style="color:#111">(</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#ae81ff">10</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#111">}</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">binary_search([1..5,000,000])</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">binary_search</span><span style="color:#111">(</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#ae81ff">5_000_000</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#111">,</span> <span style="color:#ae81ff">4_999_999</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The benchmark results are:</p>
 <pre><code>                                                         user     system      total        real
 binary_search([1..10])                               0.000000   0.000000   0.000000 (  0.000011)
 binary_search([1..5,000,000])                        0.190000   0.000000   0.190000 (  0.192921)
-</code></pre>
-
-<p>It is clearly obvious that the performance difference of the algorithm with an array of size 10 compared to that of with an array of size <strong>5,000,000</strong> is almost non-existent, even when using a &ldquo;worst case&rdquo; (in this case, the element before the last one).</p>
-
-<h3 id="o-n-log-n"><em>O(n log n)</em></h3>
-
+</code></pre><p>It is clearly obvious that the performance difference of the algorithm with an array of size 10 compared to that of with an array of size <strong>5,000,000</strong> is almost non-existent, even when using a &ldquo;worst case&rdquo; (in this case, the element before the last one).</p>
+<h3 id="-on-log-n-"><em>O(n log n)</em></h3>
 <p>In sorting algorithms, a time complexity of <strong>at least</strong> <em>O(n)</em> is unavoidable (at least in theory). This is because we have to look at each element in the array at least once in order to properly sort it. At the same time, an order of <em>O(n^2)</em> is to be avoided.</p>
-
 <p><em>O(n log n)</em> sorting algorithms are more efficient because values are only compared <strong>once</strong>, instead of being compared to each other repeatedly. This means that each comparison will reduce the possible final sorted list in half.</p>
-
 <p>In other words, we can calculate the number of comparisons like this:</p>
-
 <pre><code>number_comparisons = log(n!)
       log(n) + log(n-1) + ... + log(1)
       nlog(n)
       log n + log (n-1) + ... + log (n/2)
       n/2 * log (n/2)
   =&gt;  nlog(n)
-</code></pre>
-
-<p>A good example of a <em>O(n log n)</em> algorithm is the <a href="https://en.wikipedia.org/wiki/Quicksort">quick sort algorithm</a>:</p>
-
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif" alt="Quicksort" /></p>
-
+</code></pre><p>A good example of a <em>O(n log n)</em> algorithm is the <a href="https://en.wikipedia.org/wiki/Quicksort">quick sort algorithm</a>:</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif" alt="Quicksort"></p>
 <p>In Ruby, we can implement Quicksort like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># O( N log N )</span>
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">quick_sort</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">)</span>
-  <span style="color:#00a8c8">return</span> <span style="color:#111">array</span> <span style="color:#00a8c8">if</span> <span style="color:#111">array</span><span style="color:#f92672">.</span><span style="color:#111">length</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">quick_sort</span><span style="color:#111">(</span><span style="color:#111">array</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">return</span> <span style="color:#111">array</span> <span style="color:#00a8c8">if</span> <span style="color:#111">array</span><span style="color:#f92672">.</span><span style="color:#111">length</span> <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-  <span style="color:#111">pivot</span> <span style="color:#f92672">=</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+  <span style="color:#f92672"></span><span style="color:#111">pivot</span> <span style="color:#f92672">=</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672"></span><span style="color:#f92672">]</span>
 
-  <span style="color:#111">less</span><span style="color:#111">,</span> <span style="color:#111">greatereq</span> <span style="color:#f92672">=</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">].</span><span style="color:#111">partition</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span> <span style="color:#111">x</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">pivot</span> <span style="color:#111">}</span>
+  <span style="color:#111">less</span><span style="color:#111">,</span> <span style="color:#111">greatereq</span> <span style="color:#f92672">=</span> <span style="color:#111">array</span><span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span><span style="color:#f92672">.</span><span style="color:#111">partition</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span> <span style="color:#111">x</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">pivot</span> <span style="color:#111">}</span>
   <span style="color:#111">quick_sort</span><span style="color:#111">(</span><span style="color:#111">less</span><span style="color:#111">)</span> <span style="color:#f92672">+</span> <span style="color:#f92672">[</span><span style="color:#111">pivot</span><span style="color:#f92672">]</span> <span style="color:#f92672">+</span> <span style="color:#111">quick_sort</span><span style="color:#111">(</span><span style="color:#111">greatereq</span><span style="color:#111">)</span>
 <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;quick_sort([1..20])&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">quick_sort</span><span style="color:#111">((</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">20</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;quick_sort([1..400,000])&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">quick_sort</span><span style="color:#111">((</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">400_000</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Notice how multiple assignment and the <a href="https://ruby-doc.org/core-2.3.1/Enumerable.html#method-i-partition">partition</a> method from <code>Enumerable</code> is used. This method will return two arrays: the first array will contain elements for which the block evaluates to <code>true</code>, and the second one containing the rest.</p>
-
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">50</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">quick_sort([1..20])</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">quick_sort</span><span style="color:#111">(</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#ae81ff">20</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">quick_sort([1..400,000])</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#111">quick_sort</span><span style="color:#111">(</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#ae81ff">400_000</span><span style="color:#f92672"></span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">to_a</span><span style="color:#f92672">.</span><span style="color:#111">shuffle</span><span style="color:#111">)</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Notice how multiple assignment and the <a href="https://ruby-doc.org/core-2.3.1/Enumerable.html#method-i-partition">partition</a> method from <code>Enumerable</code> is used. This method will return two arrays: the first array will contain elements for which the block evaluates to <code>true</code>, and the second one containing the rest.</p>
 <p>The benchmark yields the following results:</p>
-
 <pre><code>                                                         user     system      total        real
 quick_sort([1..20])                                  0.000000   0.000000   0.000000 (  0.000048)
 quick_sort([1..400,000])                             1.400000   0.020000   1.420000 (  1.430095)
-</code></pre>
-
-<h2 id="closing-thoughts">Closing Thoughts</h2>
-
+</code></pre><h2 id="closing-thoughts">Closing Thoughts</h2>
 <p>Even though those are the most common Big O time complexity notations, there are even more complicated complexities (lol?) out there.</p>
-
 <p>Moreover, there are also other asymptotic notations that use different symbols to describe different kinds of bounds. I hope to cover these sometime in the future.</p>
 </div>
 

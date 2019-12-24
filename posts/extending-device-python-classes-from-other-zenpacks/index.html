@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Extending Device Python Classes From Other ZenPacks",
     "headline" : "Extending Device Python Classes From Other ZenPacks",
-    "description" : "\x3cp\x3eRecently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from \x3ccode\x3eDevice\x3c\/code\x3e. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a \x3ca href=\x22\/posts\/working-with-zenoss-python-data-sources.html\x22\x3ePython data source\x3c\/a\x3e.\x3c\/p\x3e\n\n\x3cp\x3eThe \x3ccode\x3ezenpack.yaml\x3c\/code\x3e file for the first and main ZenPack would look something like this:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ZenPack1\x3c\/span\x3e\n\nclasses\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  SpecialServer\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Device\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Special Server\n\n  SpecialComponent\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Special Component\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\n  AmazingComponent\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Amazing Component\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\nclass_relationships\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - SpecialServer \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3eMC SpecialComponent\n  - SpecialServer \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3eMC AmazingComponent\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
+    "description" : "\x3cp\x3eRecently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from \x3ccode\x3eDevice\x3c\/code\x3e. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a \x3ca href=\x22\/posts\/working-with-zenoss-python-data-sources.html\x22\x3ePython data source\x3c\/a\x3e.\x3c\/p\x3e\n\x3cp\x3eThe \x3ccode\x3ezenpack.yaml\x3c\/code\x3e file for the first and main ZenPack would look something like this:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-yaml\x22 data-lang=\x22yaml\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# ZenPack1\x3c\/span\x3e\n\nclasses\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  SpecialServer\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Device\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Special Server\n\n  SpecialComponent\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Special Component\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\n  AmazingComponent\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n    base\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3e[\x3c\/span\x3ezenpacklib.Component\x3cspan style=\x22color:#111\x22\x3e]\x3c\/span\x3e\n    label\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e Amazing Component\n    properties\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n      \x3cspan style=\x22color:#75715e\x22\x3e# ...\x3c\/span\x3e\n\nclass_relationships\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e\n  - SpecialServer \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3eMC SpecialComponent\n  - SpecialServer \x3cspan style=\x22color:#ae81ff\x22\x3e1\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3eMC AmazingComponent\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,7 +136,6 @@ if (!doNotTrack) {
   <time datetime=2017-06-27T00:00:00Z class="post-date">Tue, Jun 27, 2017</time>
 
   <p>Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from <code>Device</code>. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html">Python data source</a>.</p>
-
 <p>The <code>zenpack.yaml</code> file for the first and main ZenPack would look something like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ZenPack1</span>
 
@@ -159,8 +158,8 @@ classes<span style="color:#111">:</span>
 
 class_relationships<span style="color:#111">:</span>
   - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC SpecialComponent
-  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent</code></pre></div>
-<p>So what I wanted was to somehow be able to extend this <code>SpecialServer</code> class and add a new property to it, all of this done from the <strong>second</strong> ZenPack. Initially I tried doing this using ZenPackLib, doing something along the lines of:</p>
+  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent
+</code></pre></div><p>So what I wanted was to somehow be able to extend this <code>SpecialServer</code> class and add a new property to it, all of this done from the <strong>second</strong> ZenPack. Initially I tried doing this using ZenPackLib, doing something along the lines of:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ZenPack2</span>
 
 classes<span style="color:#111">:</span>
@@ -168,27 +167,21 @@ classes<span style="color:#111">:</span>
     properties<span style="color:#111">:</span>
       my_new_property<span style="color:#111">:</span>
         type<span style="color:#111">:</span> boolean
-        default<span style="color:#111">:</span> <span style="color:#00a8c8">false</span></code></pre></div>
-<p>Hoping that zenpacklib would somehow be smart enough to just append this additional attribute. The above however did not work.</p>
-
+        default<span style="color:#111">:</span> <span style="color:#00a8c8">false</span>
+</code></pre></div><p>Hoping that zenpacklib would somehow be smart enough to just append this additional attribute. The above however did not work.</p>
 <h2 id="zenpack-monkey-patching">ZenPack Monkey Patching</h2>
-
 <p>It turns out that the way to do this is to perform some <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> from the ZenPack. Monkey patching is the dynamic replacement of attributes at runtime.</p>
-
 <p>When developing ZenPacks that perform monkey patching, there are some <a href="http://zenpackers.readthedocs.io/en/latest/monkeypatching.html">guidelines</a> that can be followed for more organized code.</p>
-
 <h3 id="zenpack-patches-directory">ZenPack Patches Directory</h3>
-
-<p>First we must create a directory called <code>patches</code> in the ZenPack&rsquo;s main directory (where <code>zenpack.yaml</code> resides). Inside the <code>patches</code> directory, we will place a Python init file that will take the responsibility of validating that everything that will be monkey patched can be correctly imported when the ZenPack is installed:</p>
-
+<p>First we must create a directory called <code>patches</code> in the ZenPack's main directory (where <code>zenpack.yaml</code> resides). Inside the <code>patches</code> directory, we will place a Python init file that will take the responsibility of validating that everything that will be monkey patched can be correctly imported when the ZenPack is installed:</p>
 <p><strong>patches/<strong>init</strong>.py</strong>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
 <span style="color:#f92672">from</span> <span style="color:#111">importlib</span> <span style="color:#f92672">import</span> <span style="color:#111">import_module</span>
 
-<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zen.ZenPack2&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">zen.ZenPack2</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
 
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">optional_import</span><span style="color:#111">(</span><span style="color:#111">module_name</span><span style="color:#111">,</span> <span style="color:#111">patch_module_name</span><span style="color:#111">):</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">optional_import</span><span style="color:#111">(</span><span style="color:#111">module_name</span><span style="color:#111">,</span> <span style="color:#111">patch_module_name</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
         <span style="color:#111">import_module</span><span style="color:#111">(</span><span style="color:#111">module_name</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">except</span> <span style="color:#75af00">ImportError</span><span style="color:#111">:</span>
@@ -196,22 +189,19 @@ classes<span style="color:#111">:</span>
     <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
             <span style="color:#111">import_module</span><span style="color:#111">(</span>
-                <span style="color:#d88200">&#39;.{0}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">patch_module_name</span><span style="color:#111">),</span>
-                <span style="color:#d88200">&#39;ZenPacks.aalvarez.ZenPack2.patches&#39;</span><span style="color:#111">)</span>
+                <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">.{0}</span><span style="color:#d88200">&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">patch_module_name</span><span style="color:#111">)</span><span style="color:#111">,</span>
+                <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ZenPacks.aalvarez.ZenPack2.patches</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
         <span style="color:#00a8c8">except</span> <span style="color:#75af00">ImportError</span><span style="color:#111">:</span>
-            <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">exception</span><span style="color:#111">(</span><span style="color:#d88200">&#39;failed to apply </span><span style="color:#d88200">%s</span><span style="color:#d88200"> patches&#39;</span><span style="color:#111">,</span> <span style="color:#111">patch_module_name</span><span style="color:#111">)</span>
+            <span style="color:#111">log</span><span style="color:#f92672">.</span><span style="color:#111">exception</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">failed to apply </span><span style="color:#d88200">%s</span><span style="color:#d88200"> patches</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#111">patch_module_name</span><span style="color:#111">)</span>
 
 
-<span style="color:#111">optional_import</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ZenPacks.aalvarez.ZenPack1&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;ZenPack1&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>For everything that we want to monkey patch, we will call the <code>optional_import</code> function with two arguments: The required import (in this case, the first ZenPack), and the name of the file that will contain the monkey patches (in this case <code>ZenPack1</code>). This will be created later and will reside in the same location as <code>__init__.py</code>.</p>
-
+<span style="color:#111">optional_import</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ZenPacks.aalvarez.ZenPack1</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">ZenPack1</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>For everything that we want to monkey patch, we will call the <code>optional_import</code> function with two arguments: The required import (in this case, the first ZenPack), and the name of the file that will contain the monkey patches (in this case <code>ZenPack1</code>). This will be created later and will reside in the same location as <code>__init__.py</code>.</p>
 <p>=&gt; After taking a look at official Zenoss ZenPacks that contain monkey patching, I discovered that monkey patches to the Zenoss Core source code should be placed inside a file called <code>platform.py</code>.</p>
-
 <p>Since we used <code>ZenPack1</code> as the name (you can use any name), we will created a new file called <code>ZenPack1.py</code>:</p>
-
 <p><strong>patches/ZenPack1.py</strong>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
-<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200">&#39;zen.ZenPack2&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">log</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">zen.ZenPack2</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.infos</span> <span style="color:#f92672">import</span> <span style="color:#111">ProxyProperty</span>
 
@@ -220,37 +210,32 @@ classes<span style="color:#111">:</span>
 
 <span style="color:#75715e"># Add new property</span>
 <span style="color:#111">SpecialServer</span><span style="color:#f92672">.</span><span style="color:#111">my_new_property</span> <span style="color:#f92672">=</span> <span style="color:#111">False</span>
-<span style="color:#111">SpecialServer</span><span style="color:#f92672">.</span><span style="color:#111">_properties</span> <span style="color:#f92672">+=</span> <span style="color:#111">(</span>
-    <span style="color:#111">{</span><span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;my_new_property&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;type&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;boolean&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;mode&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;w&#39;</span><span style="color:#111">},</span>
+<span style="color:#111">SpecialServer</span><span style="color:#f92672">.</span><span style="color:#111">_properties</span> <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#111">(</span>
+    <span style="color:#111">{</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">id</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">my_new_property</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">type</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">boolean</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">mode</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">w</span><span style="color:#d88200">&#39;</span><span style="color:#111">}</span><span style="color:#111">,</span>
     <span style="color:#111">)</span>
 
 <span style="color:#75715e"># Make the property available through the API</span>
-<span style="color:#111">SpcialServerInfo</span><span style="color:#f92672">.</span><span style="color:#111">my_new_property</span> <span style="color:#f92672">=</span> <span style="color:#111">ProxyProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#39;my_new_property&#39;</span><span style="color:#111">)</span></code></pre></div>
-<p>This file is directly monkeypatching the <code>SpecialServer</code> class from the ZenPack. To understand how these classes are constructed, you can take a look at the main parent class found at <code>$ZENHOME/Products/ZenModel/Device.py</code>.</p>
-
+<span style="color:#111">SpcialServerInfo</span><span style="color:#f92672">.</span><span style="color:#111">my_new_property</span> <span style="color:#f92672">=</span> <span style="color:#111">ProxyProperty</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">my_new_property</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>This file is directly monkeypatching the <code>SpecialServer</code> class from the ZenPack. To understand how these classes are constructed, you can take a look at the main parent class found at <code>$ZENHOME/Products/ZenModel/Device.py</code>.</p>
 <p>Apart from the <code>SpecialServer</code> class, we are also importing its Info class to also assign the new property. This will make the property available through the API. Meaning that you can use the Zenoss JSON API to query the device information. This new property will be included in the JSON response results.</p>
-
 <p>-&gt; Info classes define a mapping between object attributes and interface classes for display in the GUI.
-<br><br>
+<!-- raw HTML omitted --><!-- raw HTML omitted -->
 In ZenPacks, Info classes are located in <code>info.py</code> file. However when using ZenPackLib this is no longer necessary since ZenPackLib takes care of generating the necessary Info code from the YAML file.
-<br><br>
+<!-- raw HTML omitted --><!-- raw HTML omitted -->
 The info.py file abstracts object attribute information saved in the Zope Object Database
 (ZODB), that will be displayed to the user.</p>
-
-<p>Lastly we need to add all this monkey patching logic to the installation process. This is done at the end of the ZenPack&rsquo;s main <code>__init__.py</code> file:</p>
+<p>Lastly we need to add all this monkey patching logic to the installation process. This is done at the end of the ZenPack's main <code>__init__.py</code> file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># YAML loading here ...</span>
 
 <span style="color:#75715e"># ...</span>
 
 <span style="color:#75715e"># Patch last to avoid import recursion problems</span>
-<span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">patches</span></code></pre></div>
-<p>And now our monkey patching is completed. When the ZenPack is installed, the new property will be added to <code>ZenPack1</code>&rsquo;s <code>SpecialServer</code> class.</p>
-
+<span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">patches</span>
+</code></pre></div><p>And now our monkey patching is completed. When the ZenPack is installed, the new property will be added to <code>ZenPack1</code>'s <code>SpecialServer</code> class.</p>
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="http://zenpackers.readthedocs.io/en/latest/monkeypatching.html">Monkey Patching in ZenPacks</a></li>
-<li>ZenPack Developer&rsquo;s Guide v1.0.1 - Jane Curry, page 176</li>
+<li>ZenPack Developer's Guide v1.0.1 - Jane Curry, page 176</li>
 </ol>
 </div>
 

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Managing Debian Package Dependencies",
     "headline" : "Managing Debian Package Dependencies",
-    "description" : "\x3cp\x3eIn a previous post, I talked about \x3ca href=\x222016-10-11-debian-packaging-in-ubuntu.html\x22\x3ebuilding a simple Debian package in Ubuntu\x3c\/a\x3e, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.\x3c\/p\x3e\n\n\x3ch2 id=\x22dpkg-and-dependencies\x22\x3edpkg and Dependencies\x3c\/h2\x3e\n\n\x3cp\x3ePreviously we installed our package using the \x3ckbd\x3edpkg -i\x3c\/kbd\x3e command. However, the problem with \x3ccode\x3edpkg\x3c\/code\x3e is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as \x3ccode\x3eapt-get\x3c\/code\x3e) are required to fetch dependencies from repositories.\x3c\/p\x3e\n\n\x3cblockquote\x3e\n\x3cp\x3edkpg is only the core tool that installs\/removes\/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install\/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.\x3c\/p\x3e\n\x3c\/blockquote\x3e",
+    "description" : "\x3cp\x3eIn a previous post, I talked about \x3ca href=\x222016-10-11-debian-packaging-in-ubuntu.html\x22\x3ebuilding a simple Debian package in Ubuntu\x3c\/a\x3e, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.\x3c\/p\x3e\n\x3ch2 id=\x22dpkg-and-dependencies\x22\x3edpkg and Dependencies\x3c\/h2\x3e\n\x3cp\x3ePreviously we installed our package using the \x3c!-- raw HTML omitted --\x3edpkg -i\x3c!-- raw HTML omitted --\x3e command. However, the problem with \x3ccode\x3edpkg\x3c\/code\x3e is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as \x3ccode\x3eapt-get\x3c\/code\x3e) are required to fetch dependencies from repositories.\x3c\/p\x3e\n\x3cblockquote\x3e\n\x3cp\x3edkpg is only the core tool that installs\/removes\/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install\/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.\x3c\/p\x3e\n\x3c\/blockquote\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2016-10-14 00:00:00 \x2b0000 UTC",
     "dateModified" : "2016-10-14 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/managing-debian-package-dependencies\/",
-    "wordCount" : "493",
+    "wordCount" : "491",
     "keywords" : [ "linux","ubuntu","debian","packaging","Blog" ]
 }
 </script>
@@ -136,19 +136,13 @@ if (!doNotTrack) {
   <time datetime=2016-10-14T00:00:00Z class="post-date">Fri, Oct 14, 2016</time>
 
   <p>In a previous post, I talked about <a href="2016-10-11-debian-packaging-in-ubuntu.html">building a simple Debian package in Ubuntu</a>, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.</p>
-
 <h2 id="dpkg-and-dependencies">dpkg and Dependencies</h2>
-
-<p>Previously we installed our package using the <kbd>dpkg -i</kbd> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
-
+<p>Previously we installed our package using the <!-- raw HTML omitted -->dpkg -i<!-- raw HTML omitted --> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
 <blockquote>
 <p>dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.</p>
 </blockquote>
-
 <h2 id="specifying-dependencies">Specifying Dependencies</h2>
-
-<p>We can specify the required dependencies of our package in our package&rsquo;s control file (located in <code>DEBIAN/control</code>) by listing them as a list of package names separated by commas in the <code>Depends</code> field:</p>
-
+<p>We can specify the required dependencies of our package in our package's control file (located in <code>DEBIAN/control</code>) by listing them as a list of package names separated by commas in the <code>Depends</code> field:</p>
 <pre><code>Package: mypackage
 Version: 1.0-0
 Section: base
@@ -157,48 +151,24 @@ Architecture: all
 Depends: erlang-nox, erlang
 Maintainer: Andres Alvarez &lt;myemail@gmail.com&gt;
 Description: A new and improved C++ Compiler
-</code></pre>
-
-<p>We can see that the package depends on <code>erlang</code> and <code>erlang-nox</code>. We could also be more specific and specify an exact version of the dependency:</p>
-
+</code></pre><p>We can see that the package depends on <code>erlang</code> and <code>erlang-nox</code>. We could also be more specific and specify an exact version of the dependency:</p>
 <pre><code>Depends: erlang (&gt;= 1.2)
-</code></pre>
-
-<p>Additionally, we can use pipe symbols (<code>|</code>) to specify alternative package names, similar to saying &ldquo;or&rdquo; in conditional operations:</p>
-
+</code></pre><p>Additionally, we can use pipe symbols (<code>|</code>) to specify alternative package names, similar to saying &ldquo;or&rdquo; in conditional operations:</p>
 <pre><code>Depends: erlang-nox | erlang, maven, rrdtool
-</code></pre>
-
-<h2 id="installing-dependencies">Installing Dependencies</h2>
-
-<p>What we want is to install the package&rsquo;s dependencies the momment we begin to install the package, <strong>NOT</strong> after it has finished installing (which can be done with <kbd>apt-get -f install</kbd>)</p>
-
+</code></pre><h2 id="installing-dependencies">Installing Dependencies</h2>
+<p>What we want is to install the package's dependencies the momment we begin to install the package, <strong>NOT</strong> after it has finished installing (which can be done with <!-- raw HTML omitted -->apt-get -f install<!-- raw HTML omitted -->)</p>
 <h3 id="introducing-gdebi">Introducing Gdebi</h3>
-
-<p>Gdebi is a tool that can install a Debian package along with its dependencies. However in newer versions of Ubuntu it is not installed by default, so you need to install it using <kbd>apt-get install gdebi-core</kbd>.</p>
-
+<p>Gdebi is a tool that can install a Debian package along with its dependencies. However in newer versions of Ubuntu it is not installed by default, so you need to install it using <!-- raw HTML omitted -->apt-get install gdebi-core<!-- raw HTML omitted -->.</p>
 <p>Once installed, we can install our package using the following command:</p>
-
 <pre><code>gdebi install my-package.deb
-</code></pre>
-
-<p>This will proceed to install to install the package as well as the dependencies listed in the <code>control</code> file.</p>
-
+</code></pre><p>This will proceed to install to install the package as well as the dependencies listed in the <code>control</code> file.</p>
 <p>Unfortuntely for some reason, <code>gdebi</code> does not provide a <code>-y</code> option like <code>apt-get</code> does. This makes it unappropriate for using it inside shell scripts.</p>
-
 <h3 id="enter-apt-get">Enter apt-get</h3>
-
 <p><code>apt-get</code> is a better choice if you want to install your package with its dependencies from shell scripts, since we can pass the <code>-y</code> option to the <code>install</code> command. Moreover, this approach is more optimal when you <a href="2016-10-17-configuring-a-local-apt-repository.html">set up and use a local apt repository</a>.</p>
-
 <p>Assuming we have added our package to our local apt repository, we can proceed to install it like this:</p>
-
 <pre><code>apt-get install mypackage
-</code></pre>
-
-<p>apt will search our repository for the package, and once it finds it it will proceed to install the listed dependencies, and then install the package. It is worth mentioning that <kbd>apt-get install</kbd> also uses <code>dpkg</code> internally.</p>
-
+</code></pre><p>apt will search our repository for the package, and once it finds it it will proceed to install the listed dependencies, and then install the package. It is worth mentioning that <!-- raw HTML omitted -->apt-get install<!-- raw HTML omitted --> also uses <code>dpkg</code> internally.</p>
 <h2 id="references">References</h2>
-
 <ul>
 <li><a href="http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control">http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control</a></li>
 </ul>

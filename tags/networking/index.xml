@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>networking on Andrés Álvarez</title>
@@ -18,17 +18,11 @@
       
       <guid>https://aalvarez.me/posts/ip-addresses-a-review/</guid>
       <description>&lt;p&gt;&lt;em&gt;A review of IP addresses, as part of my Computer Networking Fundamentals series.&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;A lot of people know what IP addresses are, and a lot of people also probably know that each device that is connected to the Internet must have a &lt;strong&gt;&lt;em&gt;unique&lt;/em&gt;&lt;/strong&gt; IP Address, like &lt;em&gt;108.161.228.70&lt;/em&gt;&lt;/p&gt;
-
 &lt;p&gt;However, in this article I want to do a more in-depth review about IP addresses and how the work.&lt;/p&gt;
-
 &lt;p&gt;From a technical point of view and for reviewing purposes, it is worth remembering that IP Addresses (at least IPv4) are &lt;strong&gt;32-bit&lt;/strong&gt; addresses, because each number separated by each dot (called &lt;em&gt;octet&lt;/em&gt;) is an 8-bit number. Since IP Addresses have 4 octets, these together make a sum of 32-bits.&lt;/p&gt;
-
-&lt;p class=&#34;lead&#34;&gt;Another very important detail of IP Addresses is that the &lt;strong&gt;first two&lt;/strong&gt; octets represent a &lt;strong&gt;destination network&lt;/strong&gt;, while the &lt;strong&gt;last two&lt;/strong&gt; octets represent a &lt;strong&gt;destination host&lt;/strong&gt; within that destination network.&lt;/p&gt;
-
+&lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;Since the first two octets make a sum of 16 bits, 2^16 yields a total of 65,536 networks. At the same time, the remaining 16 bits also yield a total of 65,536 different hosts. &lt;strong&gt;&lt;em&gt;But&lt;/em&gt;&lt;/strong&gt; these are 65,536 different hosts &lt;strong&gt;&lt;em&gt;per each&lt;/em&gt;&lt;/strong&gt; network.&lt;/p&gt;
-
 &lt;p&gt;This raises a big issue because it makes it hard to decide how many bits in the IP address should be allocated to the network and how many bits should be allocated for the hosts, without wasting IP addresses. This is where &lt;strong&gt;subnet masks&lt;/strong&gt; come in.&lt;/p&gt;</description>
     </item>
     

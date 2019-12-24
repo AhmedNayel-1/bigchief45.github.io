@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>repository on Andrés Álvarez</title>
@@ -18,24 +18,14 @@
       
       <guid>https://aalvarez.me/posts/configuring-a-local-apt-repository/</guid>
       <description>&lt;p&gt;Setting up a local apt repository can allow you to use &lt;code&gt;apt-get install&lt;/code&gt; command to install your own packages. This is a better approach than using &lt;code&gt;dpkg -i&lt;/code&gt; because apt will fetch and install the required dependencies (which should also be located in your local repository) in an &lt;strong&gt;offline&lt;/strong&gt; fashion.&lt;/p&gt;
-
 &lt;h2 id=&#34;add-local-repository-to-sources&#34;&gt;Add Local Repository to Sources&lt;/h2&gt;
-
-&lt;p&gt;First we need to add our local repository to &lt;code&gt;apt&lt;/code&gt;&amp;rsquo;s list of source repositories, this can be found in &lt;code&gt;/etc/apt/sources.list&lt;/code&gt;. To add our local repository, we add the following line at the top of the file:&lt;/p&gt;
-
+&lt;p&gt;First we need to add our local repository to &lt;code&gt;apt&lt;/code&gt;&#39;s list of source repositories, this can be found in &lt;code&gt;/etc/apt/sources.list&lt;/code&gt;. To add our local repository, we add the following line at the top of the file:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;/path/to/local-deb-repo/ ./
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Where &lt;em&gt;local-deb-repo&lt;/em&gt; is the name of our local repository directory.&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Where &lt;em&gt;local-deb-repo&lt;/em&gt; is the name of our local repository directory.&lt;/p&gt;
 &lt;h2 id=&#34;add-debian-packages&#34;&gt;Add Debian Packages&lt;/h2&gt;
-
-&lt;p&gt;Now we create local repository&amp;rsquo;s directory just like we specified it in the previous step:&lt;/p&gt;
-
+&lt;p&gt;Now we create local repository&#39;s directory just like we specified it in the previous step:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mkdir /path/to/local-deb-repo/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Once we&amp;rsquo;ve done that, we can proceed to put the Debian package files (&lt;code&gt;.deb&lt;/code&gt;) and their dependencies inside the directory.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Once we&#39;ve done that, we can proceed to put the Debian package files (&lt;code&gt;.deb&lt;/code&gt;) and their dependencies inside the directory.&lt;/p&gt;</description>
     </item>
     
   </channel>

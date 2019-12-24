@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -138,16 +138,11 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/rails-api-with-nested-resources/">Rails API With Nested Resources</a>
   </h1>
   <time datetime="2017-05-08T00:00:00Z" class="post-date">Mon, May 8, 2017</time>
-  <p><a href="https://github.com/nathanvda/cocoon">Cocoon</a> is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &ldquo;mini forms&rdquo; of another model into a main model&rsquo;s form and create all objects at once when the form is saved.</p>
-
+  <p><a href="https://github.com/nathanvda/cocoon">Cocoon</a> is a very popular gem to add nested resources functionality in Rails. It allows you to add or remove &ldquo;mini forms&rdquo; of another model into a main model's form and create all objects at once when the form is saved.</p>
 <p>I was recently finding myself trying to implement a similar functionality using only Rails 5 API and <a href="http://jsonapi.org">JSON API specification</a>.</p>
-
-<p>As an example, we will try to implement the commonly seen <em>Work Experience</em> and <em>Educational Background</em> features seen in sites such as LinkedIn, where the user can add many items for these categories. The user&rsquo;s profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.</p>
-
-<p><img src="https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg" alt="Education" /></p>
-
+<p>As an example, we will try to implement the commonly seen <em>Work Experience</em> and <em>Educational Background</em> features seen in sites such as LinkedIn, where the user can add many items for these categories. The user's profile and all items for those categories (which are separate models) should all be saved at once, once the form is submitted.</p>
+<p><img src="https://aalvarez.me/posts/rails-api-with-nested-resources/education.jpg" alt="Education"></p>
 <h2 id="accepts-nested-attributes-for">accepts_nested_attributes_for</h2>
-
 <p><a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html"><code>accepts_nested_attributes_for</code> </a> allows us to save attributes on <strong>associated</strong> records (work experience, educational background) through a parent record (user). By default nested attribute updating is turned off and you can enable it using the <code>#accepts_nested_attributes_for</code> class method.</p>
 
   
@@ -178,46 +173,43 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-05-04T00:00:00Z" class="post-date">Thu, May 4, 2017</time>
   <p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
-
 <p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
-
-<h2 id="defining-zenpack-triggers-notifications">Defining ZenPack Triggers &amp; Notifications</h2>
-
-<p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn&rsquo;t exist), within the ZenPack&rsquo;s top directory.</p>
-
+<h2 id="defining-zenpack-triggers--notifications">Defining ZenPack Triggers &amp; Notifications</h2>
+<p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn't exist), within the ZenPack's top directory.</p>
 <p><strong>actions.json</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
-  &#34;triggers&#34;: [
+<pre><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
+  &quot;triggers&quot;: [
     {
-      &#34;name&#34;: &#34;Critical_death_event&#34;,
-      &#34;uuid&#34;: &#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;,
-      &#34;enabled&#34;: false,
-      &#34;rule&#34;: {
-        &#34;api_version&#34;: 1,
-        &#34;type&#34;: 1,
-        &#34;source&#34;: &#34;(evt.event_class.startswith(\&#34;/Status/Ping\&#34;)) and (evt.status == 0) and (evt.severity &gt; 2)&#34;
+      &quot;name&quot;: &quot;Critical_death_event&quot;,
+      &quot;uuid&quot;: &quot;4c055067-98b7-483e-8f49-2820b4f2f721&quot;,
+      &quot;enabled&quot;: false,
+      &quot;rule&quot;: {
+        &quot;api_version&quot;: 1,
+        &quot;type&quot;: 1,
+        &quot;source&quot;: &quot;(evt.event_class.startswith(\&quot;/Status/Ping\&quot;)) and (evt.status == 0) and (evt.severity &gt; 2)&quot;
       }
     }
   ],
 
-  &#34;notifications&#34;: [
+  &quot;notifications&quot;: [
     {
-      &#34;id&#34;: &#34;send_sms_message&#34;,
-      &#34;description&#34;: &#34;Send SMS using Twilio&#34;,
-      &#34;action&#34;: &#34;command&#34;,
-      &#34;guid&#34;: &#34;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&#34;,
-      &#34;enabled&#34;: false,
-      &#34;action_timeout&#34;: 60,
-      &#34;delay_seconds&#34;: 0,
-      &#34;repeat_seconds&#34;: 0,
-      &#34;send_initial_occurrence&#34;: false,
-      &#34;send_clear&#34;: false,
-      &#34;body_format&#34;: &#34;echo \&#34;Hello World!\&#34;&#34;,
-      &#34;clear_body_format&#34;: &#34;&#34;,
-      &#34;subscriptions&#34;: [&#34;4c055067-98b7-483e-8f49-2820b4f2f721&#34;]
+      &quot;id&quot;: &quot;send_sms_message&quot;,
+      &quot;description&quot;: &quot;Send SMS using Twilio&quot;,
+      &quot;action&quot;: &quot;command&quot;,
+      &quot;guid&quot;: &quot;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&quot;,
+      &quot;enabled&quot;: false,
+      &quot;action_timeout&quot;: 60,
+      &quot;delay_seconds&quot;: 0,
+      &quot;repeat_seconds&quot;: 0,
+      &quot;send_initial_occurrence&quot;: false,
+      &quot;send_clear&quot;: false,
+      &quot;body_format&quot;: &quot;echo \&quot;Hello World!\&quot;&quot;,
+      &quot;clear_body_format&quot;: &quot;&quot;,
+      &quot;subscriptions&quot;: [&quot;4c055067-98b7-483e-8f49-2820b4f2f721&quot;]
     }
   ]
-}</code></pre></div>
+}
+</code></pre>
 
   
   <div style="margin: 20px 0px;">
@@ -251,24 +243,14 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-05-02T00:00:00Z" class="post-date">Tue, May 2, 2017</time>
   <p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="https://aalvarez.me/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
-
 <h2 id="round-robin-databases">Round Robin Databases</h2>
-
 <p>RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing <strong>time series</strong> data.</p>
-
-<p>Moreover, rrdtool also <strong>doesn&rsquo;t</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
-
+<p>Moreover, rrdtool also <strong>doesn't</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
 <p>This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the <code>03</code> minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.</p>
-
 <p>In rrdtool, each database table is stored in a separate <code>.rrd</code> file. This means that one file represents one table.</p>
-
 <p>We can create a database using the following command:</p>
-
 <pre><code>rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
-</code></pre>
-
-<h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
-
+</code></pre><h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
 <p>One important parameter here is the <code>step</code> parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. <strong>This means that it only stores data every 300 seconds</strong>. Because of this re-sampling, rrdtool will not accept data from the past.</p>
 
   
@@ -295,14 +277,10 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-04-25T00:00:00Z" class="post-date">Tue, Apr 25, 2017</time>
   <p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
-
 <p>It is the preferred storage method for metrics in Ceilometer, as of OpenStack Ocata.</p>
-
 <p>In this post I want to dive into Gnocchi specifics such as its configuration, supported backends, APIs, daemons, and source code.</p>
-
 <h2 id="configuration">Configuration</h2>
-
-<p>Gnocchi&rsquo;s configuration is stored in a file called <code>gnocchi.conf</code>. Ideally, this file would be in <code>~/gnocchi.conf</code> or <code>/etc/gnocchi/gnocchi.conf</code>. Let&rsquo;s take a look at a basic Gnocchi configuration:</p>
+<p>Gnocchi's configuration is stored in a file called <code>gnocchi.conf</code>. Ideally, this file would be in <code>~/gnocchi.conf</code> or <code>/etc/gnocchi/gnocchi.conf</code>. Let's take a look at a basic Gnocchi configuration:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#00a8c8">[DEFAULT]</span>
 <span style="color:#75af00">debug</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
 <span style="color:#75af00">verbose</span> <span style="color:#f92672">=</span> <span style="color:#d88200">true</span>
@@ -323,81 +301,55 @@ if (!doNotTrack) {
 
 <span style="color:#00a8c8">[cors]</span>
 <span style="color:#75af00">allowed_origin</span> <span style="color:#f92672">=</span> <span style="color:#d88200">*</span>
-<span style="color:#75af00">allow_credentials</span> <span style="color:#f92672">=</span> <span style="color:#d88200">false</span></code></pre></div>
-<p>The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.</p>
-
+<span style="color:#75af00">allow_credentials</span> <span style="color:#f92672">=</span> <span style="color:#d88200">false</span>
+</code></pre></div><p>The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.</p>
 <h3 id="database-setup">Database Setup</h3>
-
 <p>For this example, we are going to use <a href="www.c9.io">Cloud 9</a> as our environment, and Postgresql as the database. This means that we need to first setup the database before we start using Gnocchi.</p>
-
 <p>Make sure the Postgresql service is running:</p>
-
 <pre><code>sudo service postgresql start
-</code></pre>
-
-<p>We can enter the Postgresql command line using:</p>
-
+</code></pre><p>We can enter the Postgresql command line using:</p>
 <pre><code>sudo sudo -u postgres psql
-</code></pre>
-
-<p>Now let&rsquo;s create a new Postgresql user:</p>
-
+</code></pre><p>Now let's create a new Postgresql user:</p>
 <pre><code>CREATE USER gnocchi SUPERUSER PASSWORD 'gnocchi';
-</code></pre>
-
-<p>Then create the database:</p>
-
+</code></pre><p>Then create the database:</p>
 <pre><code>CREATE DATABASE gnocchi WITH TEMPLATE = template0 ENCODING = 'UNICODE';
-</code></pre>
-
-<p>When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:</p>
-
+</code></pre><p>When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:</p>
 <pre><code>gnocchi-upgrade
-</code></pre>
-
-<p>You should see the following output logs:</p>
-
+</code></pre><p>You should see the following output logs:</p>
 <pre><code>2017-05-17 05:28:50.917 3895 INFO gnocchi.cli [-] Upgrading indexer &lt;gnocchi.indexer.sqlalchemy.SQLAlchemyIndexer object at 0x7ff76cff6190&gt;
 2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
 2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
 2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
 2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
 2017-05-17 05:28:51.154 3895 INFO gnocchi.cli [-] Upgrading storage &lt;gnocchi.storage.file.FileStorage object at 0x7ff7688f9710&gt;
-</code></pre>
-
-<h2 id="gnocchi-rest-api">Gnocchi REST API</h2>
-
-<p>Gnocchi&rsquo;s REST API is based on <a href="http://www.pecanpy.org/index.html">Pecan</a>, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&rsquo;s <code>rest/__init__.py</code> file:</p>
+</code></pre><h2 id="gnocchi-rest-api">Gnocchi REST API</h2>
+<p>Gnocchi's REST API is based on <a href="http://www.pecanpy.org/index.html">Pecan</a>, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi's <code>rest/__init__.py</code> file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">pecan</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pecan</span> <span style="color:#f92672">import</span> <span style="color:#111">rest</span></code></pre></div>
-<h3 id="metrics">Metrics</h3>
-
+<span style="color:#f92672">from</span> <span style="color:#111">pecan</span> <span style="color:#f92672">import</span> <span style="color:#111">rest</span>
+</code></pre></div><h3 id="metrics">Metrics</h3>
 <p>Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
-
 <p>A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.</p>
-
 <p>Farther down the code in <code>rest/__init__.py</code>, we can find a metric controller which inherits from a Pecan REST controller:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MetricController</span><span style="color:#111">(</span><span style="color:#111">rest</span><span style="color:#f92672">.</span><span style="color:#111">RestController</span><span style="color:#111">):</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MetricController</span><span style="color:#111">(</span><span style="color:#111">rest</span><span style="color:#f92672">.</span><span style="color:#111">RestController</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#111">_custom_actions</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
-        <span style="color:#d88200">&#39;measures&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;POST&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;GET&#39;</span><span style="color:#111">]</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">measures</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">POST</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">GET</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span>
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">):</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">metric</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span> <span style="color:#f92672">=</span> <span style="color:#111">metric</span>
-        <span style="color:#111">mgr</span> <span style="color:#f92672">=</span> <span style="color:#111">extension</span><span style="color:#f92672">.</span><span style="color:#111">ExtensionManager</span><span style="color:#111">(</span><span style="color:#111">namespace</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;gnocchi.aggregates&#39;</span><span style="color:#111">,</span>
+        <span style="color:#111">mgr</span> <span style="color:#f92672">=</span> <span style="color:#111">extension</span><span style="color:#f92672">.</span><span style="color:#111">ExtensionManager</span><span style="color:#111">(</span><span style="color:#111">namespace</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">gnocchi.aggregates</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
                                          <span style="color:#111">invoke_on_load</span><span style="color:#f92672">=</span><span style="color:#111">True</span><span style="color:#111">)</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">custom_agg</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">obj</span><span style="color:#111">)</span> <span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">mgr</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">custom_agg</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">(</span><span style="color:#111">(</span><span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">obj</span><span style="color:#111">)</span> <span style="color:#00a8c8">for</span> <span style="color:#111">x</span> <span style="color:#f92672">in</span> <span style="color:#111">mgr</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">enforce_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">rule</span><span style="color:#111">):</span>
-        <span style="color:#111">enforce</span><span style="color:#111">(</span><span style="color:#111">rule</span><span style="color:#111">,</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">to_primitive</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#111">))</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">enforce_metric</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">rule</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">enforce</span><span style="color:#111">(</span><span style="color:#111">rule</span><span style="color:#111">,</span> <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">to_primitive</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span><span style="color:#111">)</span><span style="color:#111">)</span>
 
-    <span style="color:#75af00">@pecan.expose</span><span style="color:#111">(</span><span style="color:#d88200">&#39;json&#39;</span><span style="color:#111">)</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_all</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">enforce_metric</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get metric&#34;</span><span style="color:#111">)</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span></code></pre></div>
-<p>From the <a href="http://pecan.readthedocs.io/en/latest/routing.html">Pecan documentation</a>, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.</p>
-
-<p>We can tell Pecan which methods in a class are publically-visible via <code>expose()</code>. If a method is not decorated with <code>expose()</code>, Pecan will never route a request to it. In the example above, the <code>get_all()</code> method is exposed to Pecan. Additionally, it makes use of Pecan&rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.</p>
+    <span style="color:#75af00">@pecan.expose</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">json</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_all</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">enforce_metric</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">get metric</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">metric</span>
+</code></pre></div><p>From the <a href="http://pecan.readthedocs.io/en/latest/routing.html">Pecan documentation</a>, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.</p>
+<p>We can tell Pecan which methods in a class are publically-visible via <code>expose()</code>. If a method is not decorated with <code>expose()</code>, Pecan will never route a request to it. In the example above, the <code>get_all()</code> method is exposed to Pecan. Additionally, it makes use of Pecan's built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -429,24 +381,21 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2017-04-18T00:00:00Z" class="post-date">Tue, Apr 18, 2017</time>
   <p>The OpenStack <a href="https://wiki.openstack.org/wiki/Oslo">Oslo</a> library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.</p>
-
 <p>In this post I want to go over <a href="https://wiki.openstack.org/wiki/Oslo/Config">oslo_config</a>. This library helps with parsing of <strong>options</strong> found in configuration files or command line arguments.</p>
-
 <h2 id="understanding-options">Understanding Options</h2>
-
 <p>An option is defined using the <code>Opt</code> class or one of its sub-classes, from the <code>cfg</code> module:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">oslo_config</span> <span style="color:#f92672">import</span> <span style="color:#111">cfg</span>
 
 <span style="color:#111">common_opts</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
-    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_host&#39;</span><span style="color:#111">,</span>
-               <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;0.0.0.0&#39;</span><span style="color:#111">,</span>
-               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;IP address to listen on.&#39;</span><span style="color:#111">),</span>
-    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">Opt</span><span style="color:#111">(</span><span style="color:#d88200">&#39;bind_port&#39;</span><span style="color:#111">,</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">StrOpt</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">bind_host</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">0.0.0.0</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+               <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">IP address to listen on.</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span><span style="color:#111">,</span>
+    <span style="color:#111">cfg</span><span style="color:#f92672">.</span><span style="color:#111">Opt</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">bind_port</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
             <span style="color:#111">type</span><span style="color:#f92672">=</span><span style="color:#111">PortType</span><span style="color:#111">,</span>
             <span style="color:#111">default</span><span style="color:#f92672">=</span><span style="color:#ae81ff">9292</span><span style="color:#111">,</span>
-            <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;Port number to listen on.&#39;</span><span style="color:#111">)</span>
-<span style="color:#111">]</span></code></pre></div>
-<p>In the example above we can see that we are using <code>Opt</code> and <code>StrOpt</code>, one of its sub-classes. You might notice that the second option&rsquo;s constructor has a <code>type=PortType</code> argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises <code>ValueError</code> if the value cannot be converted. The different types available can be found in the <code>types</code> module:</p>
+            <span style="color:#111">help</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Port number to listen on.</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+<span style="color:#111">]</span>
+</code></pre></div><p>In the example above we can see that we are using <code>Opt</code> and <code>StrOpt</code>, one of its sub-classes. You might notice that the second option's constructor has a <code>type=PortType</code> argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises <code>ValueError</code> if the value cannot be converted. The different types available can be found in the <code>types</code> module:</p>
 
   
   <div style="margin: 20px 0px;">

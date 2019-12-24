@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>xml on Andrés Álvarez</title>
@@ -17,18 +17,12 @@
       <pubDate>Wed, 21 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/extending-zenoss-navigations/</guid>
-      <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&amp;rsquo;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
-
-&lt;h2 id=&#34;configure-zcml&#34;&gt;configure.zcml&lt;/h2&gt;
-
-&lt;p&gt;Zenoss ZenPacks can contain a file in the ZenPack top directory called &lt;code&gt;configure.zcml&lt;/code&gt;. I&amp;rsquo;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.&lt;/p&gt;
-
+      <description>&lt;p&gt;It is possible to extend the functionality of Zenoss&#39;s navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.&lt;/p&gt;
+&lt;h2 id=&#34;configurezcml&#34;&gt;configure.zcml&lt;/h2&gt;
+&lt;p&gt;Zenoss ZenPacks can contain a file in the ZenPack top directory called &lt;code&gt;configure.zcml&lt;/code&gt;. I&#39;ve mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.&lt;/p&gt;
 &lt;p&gt;It is in this file where we will declare and create new navigational links from our ZenPack.&lt;/p&gt;
-
 &lt;p&gt;~&amp;gt; In this post we assume that the ZenPack is created using &lt;a href=&#34;https://zenpacklib.zenoss.com/en/latest/&#34;&gt;zenpacklib&lt;/a&gt;, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.&lt;/p&gt;
-
 &lt;p&gt;Usually this file begins with some required boilerplate code:&lt;/p&gt;
-
 &lt;p&gt;&lt;strong&gt;configure.zcml&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;configure&lt;/span&gt;
@@ -36,9 +30,10 @@
   &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:browser=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/browser&amp;#34;&lt;/span&gt;
   &lt;span style=&#34;color:#75af00&#34;&gt;xmlns:zcml=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http://namespaces.zope.org/zcml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
 
-  &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!-- Our custom code here --&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; Our custom code here &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;--&amp;gt;&lt;/span&gt;
   &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;include&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;package=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;.browser&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configure&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

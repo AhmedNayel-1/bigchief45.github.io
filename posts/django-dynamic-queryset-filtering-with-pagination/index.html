@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Django Dynamic Queryset Filtering With Pagination",
     "headline" : "Django Dynamic Queryset Filtering With Pagination",
-    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/simpleisbetterthancomplex.com\/tutorial\/2016\/11\/28\/how-to-filter-querysets-dynamically.html\x22\x3eThis blog article\x3c\/a\x3e does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn\x26rsquo;t go into paginating the filtered queryset results.\x3c\/p\x3e\n\n\x3cp\x3eI had a very hard time trying to implement this pagination feature using \x3cstrong\x3eclass based views\x3c\/strong\x3e. More specifically, using the \x3ccode\x3eFilterView\x3c\/code\x3e that comes with the \x3ca href=\x22https:\/\/github.com\/carltongibson\/django-filter\x22\x3edjango-filter\x3c\/a\x3e package.\x3c\/p\x3e\n\n\x3cp\x3eIn the end it turned out to be very simple. The \x3ca href=\x22https:\/\/django-filter.readthedocs.io\/en\/master\/guide\/usage.html#generic-view-configuration\x22\x3edocumentation\x3c\/a\x3e was a bit misleading on this so it took a while to understand and find the solution.\x3c\/p\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/simpleisbetterthancomplex.com\/tutorial\/2016\/11\/28\/how-to-filter-querysets-dynamically.html\x22\x3eThis blog article\x3c\/a\x3e does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn\x27t go into paginating the filtered queryset results.\x3c\/p\x3e\n\x3cp\x3eI had a very hard time trying to implement this pagination feature using \x3cstrong\x3eclass based views\x3c\/strong\x3e. More specifically, using the \x3ccode\x3eFilterView\x3c\/code\x3e that comes with the \x3ca href=\x22https:\/\/github.com\/carltongibson\/django-filter\x22\x3edjango-filter\x3c\/a\x3e package.\x3c\/p\x3e\n\x3cp\x3eIn the end it turned out to be very simple. The \x3ca href=\x22https:\/\/django-filter.readthedocs.io\/en\/master\/guide\/usage.html#generic-view-configuration\x22\x3edocumentation\x3c\/a\x3e was a bit misleading on this so it took a while to understand and find the solution.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,66 +135,57 @@ if (!doNotTrack) {
   <h1>Django Dynamic Queryset Filtering With Pagination</h1>
   <time datetime=2018-01-17T00:00:00Z class="post-date">Wed, Jan 17, 2018</time>
 
-  <p><a href="https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html">This blog article</a> does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn&rsquo;t go into paginating the filtered queryset results.</p>
-
+  <p><a href="https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html">This blog article</a> does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn't go into paginating the filtered queryset results.</p>
 <p>I had a very hard time trying to implement this pagination feature using <strong>class based views</strong>. More specifically, using the <code>FilterView</code> that comes with the <a href="https://github.com/carltongibson/django-filter">django-filter</a> package.</p>
-
 <p>In the end it turned out to be very simple. The <a href="https://django-filter.readthedocs.io/en/master/guide/usage.html#generic-view-configuration">documentation</a> was a bit misleading on this so it took a while to understand and find the solution.</p>
-
 <h2 id="enabling-pagination">Enabling Pagination</h2>
-
 <p>We can enable pagination by adding a <code>paginate_by</code> attribute in a <code>FilterView</code>, just like when we do so in a Django <code>ListView</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">CanalAdvancedSearch</span><span style="color:#111">(</span><span style="color:#111">FilterView</span><span style="color:#111">):</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">CanalAdvancedSearch</span><span style="color:#111">(</span><span style="color:#111">FilterView</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#111">filterset_class</span> <span style="color:#f92672">=</span> <span style="color:#111">BookFilter</span>
-    <span style="color:#111">template_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;advanced_search.html&#39;</span>
-    <span style="color:#111">paginate_by</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span></code></pre></div>
-<p>This is because <code>FilterView</code> inherits from a <code>BaseFilterView</code>, which in turn inherits from Django&rsquo;s <code>MultipleObjectMixin</code> which <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/mixins-multiple-object/#multipleobjectmixin">allows pagination</a> capabilities. <a href="https://github.com/carltongibson/django-filter/blob/master/django_filters/views.py#L82">See source code</a></p>
-
+    <span style="color:#111">template_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">advanced_search.html</span><span style="color:#d88200">&#39;</span>
+    <span style="color:#111">paginate_by</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+</code></pre></div><p>This is because <code>FilterView</code> inherits from a <code>BaseFilterView</code>, which in turn inherits from Django's <code>MultipleObjectMixin</code> which <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/mixins-multiple-object/#multipleobjectmixin">allows pagination</a> capabilities. <a href="https://github.com/carltongibson/django-filter/blob/master/django_filters/views.py#L82">See source code</a></p>
 <p>The trick though is that in the template we no longer iterate over <code>form.qs</code> as <a href="https://django-filter.readthedocs.io/en/master/guide/usage.html#the-template">specified in the documentation</a>, as this will make the template show the <em>whole</em> queryset.</p>
-
 <p>Instead, we must iterate over <code>object_list</code> in the template, like so:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% for book in object_list %}
+<pre><code class="language-liquid" data-lang="liquid">{% for book in object_list %}
   &lt;h4&gt;{{ book.title }}&lt;/h4&gt;
 {% empty %}
   &lt;p&gt;No results!&lt;/p&gt;
 {% endfor %}
 
-{% include &#39;_partials/_pagination.html&#39; %}</code></pre></div>
-<p>And we can include the typical pagination partial at the end. For completeness, here is a snippet of that:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-liquid" data-lang="liquid">{% if is_paginated %}
-  &lt;div class=&#34;row&#34;&gt;
-    &lt;div class=&#34;col-md-12&#34;&gt;
+{% include '_partials/_pagination.html' %}
+</code></pre><p>And we can include the typical pagination partial at the end. For completeness, here is a snippet of that:</p>
+<pre><code class="language-liquid" data-lang="liquid">{% if is_paginated %}
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-md-12&quot;&gt;
       &lt;div&gt;
         {% if page_obj.has_previous %}
-          &lt;a href=&#34;?page={{ page_obj.previous_page_number }}&#34;&gt;&lt;span class=&#34;pg-arrow_left&#34;&gt;&lt;/span&gt;&lt;/a&gt;
+          &lt;a href=&quot;?page={{ page_obj.previous_page_number }}&quot;&gt;&lt;span class=&quot;pg-arrow_left&quot;&gt;&lt;/span&gt;&lt;/a&gt;
         {% endif %}
 
-        &lt;span class=&#34;small&#34;&gt;Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}&lt;/span&gt;
+        &lt;span class=&quot;small&quot;&gt;Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}&lt;/span&gt;
 
         {% if page_obj.has_next %}
-          &lt;a href=&#34;?page={{ page_obj.next_page_number }}&#34;&gt;&lt;span class=&#34;pg-arrow_right&#34;&gt;&lt;/span&gt;&lt;/a&gt;
+          &lt;a href=&quot;?page={{ page_obj.next_page_number }}&quot;&gt;&lt;span class=&quot;pg-arrow_right&quot;&gt;&lt;/span&gt;&lt;/a&gt;
         {% endif %}
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-{% endif %}</code></pre></div>
-<p>With this we are now able to show the <em><strong>filtered</strong></em> results paginated nicely.</p>
-
+{% endif %}
+</code></pre><p>With this we are now able to show the <em><strong>filtered</strong></em> results paginated nicely.</p>
 <h2 id="filter-form-widgets">Filter Form Widgets</h2>
-
 <p>If we wanted to show each field in the template separately instead of using <code>{{ filter.form.as_p }}</code>, so that we can add CSS classes and layouting to the form, we can specify a widget to each filter inside the <code>FilterSet</code> object:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BookFilter</span><span style="color:#111">(</span><span style="color:#111">django_filters</span><span style="color:#f92672">.</span><span style="color:#111">FilterSet</span><span style="color:#111">):</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BookFilter</span><span style="color:#111">(</span><span style="color:#111">django_filters</span><span style="color:#f92672">.</span><span style="color:#111">FilterSet</span><span style="color:#111">)</span><span style="color:#111">:</span>
   <span style="color:#111">title</span> <span style="color:#f92672">=</span> <span style="color:#111">django_filters</span><span style="color:#f92672">.</span><span style="color:#111">CharFilter</span><span style="color:#111">(</span>
-      <span style="color:#111">lookup_expr</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;icontains&#39;</span><span style="color:#111">,</span>
-      <span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">TextInput</span><span style="color:#111">(</span><span style="color:#111">attrs</span><span style="color:#f92672">=</span><span style="color:#111">{</span><span style="color:#d88200">&#39;class&#39;</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;form-control&#39;</span><span style="color:#111">})</span>
-  <span style="color:#111">)</span></code></pre></div>
-<p>In the template we can then show it like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">div</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;form-group&#34;</span><span style="color:#111">&gt;</span>
-  <span style="color:#111">&lt;</span><span style="color:#f92672">label</span><span style="color:#111">&gt;</span>{{ filter.form.title.label_tag }}<span style="color:#111">&lt;/</span><span style="color:#f92672">label</span><span style="color:#111">&gt;</span>
+      <span style="color:#111">lookup_expr</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">icontains</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+      <span style="color:#111">widget</span><span style="color:#f92672">=</span><span style="color:#111">forms</span><span style="color:#f92672">.</span><span style="color:#111">TextInput</span><span style="color:#111">(</span><span style="color:#111">attrs</span><span style="color:#f92672">=</span><span style="color:#111">{</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">class</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">form-control</span><span style="color:#d88200">&#39;</span><span style="color:#111">}</span><span style="color:#111">)</span>
+  <span style="color:#111">)</span>
+</code></pre></div><p>In the template we can then show it like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#111">&lt;</span><span style="color:#f92672">div</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;form-group&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+  <span style="color:#111">&lt;</span><span style="color:#f92672">label</span><span style="color:#111"></span><span style="color:#111">&gt;</span>{{ filter.form.title.label_tag }}<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">label</span><span style="color:#111">&gt;</span>
   {{ filter.form.title }}
-<span style="color:#111">&lt;/</span><span style="color:#f92672">div</span><span style="color:#111">&gt;</span></code></pre></div>
-<h2 id="references">References</h2>
-
+<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">div</span><span style="color:#111">&gt;</span>
+</code></pre></div><h2 id="references">References</h2>
 <ol>
 <li><a href="https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html">How to Filter QuerySets Dynamically</a></li>
 <li><a href="https://stackoverflow.com/questions/46961826/how-to-add-pagination-to-filterview">https://stackoverflow.com/questions/46961826/how-to-add-pagination-to-filterview</a></li>

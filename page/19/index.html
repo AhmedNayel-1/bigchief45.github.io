@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,15 +139,10 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-11-16T00:00:00Z" class="post-date">Wed, Nov 16, 2016</time>
   <p>In a <a href="https://aalvarez.me/posts/ruby-benchmarking-and-big-o-notation.html">previous post</a> I went over the basic and most common Big O notations along with respective common algorithms, and finally adding some Ruby benchmarks for each.</p>
-
 <p>However I did not cover some other very important concepts in Big O notation: <strong>Omega</strong> and <strong>Theta</strong>.</p>
-
 <h2 id="understanding-omega">Understanding Omega</h2>
-
-<p>The Omega symbol (Ω) represents a certain algorithm&rsquo;s <em>best-case</em> asymptotic complexity. For example, let&rsquo;s take again a look at the <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">binary search algorithm</a>:</p>
-
-<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search" /></p>
-
+<p>The Omega symbol (Ω) represents a certain algorithm's <em>best-case</em> asymptotic complexity. For example, let's take again a look at the <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">binary search algorithm</a>:</p>
+<p><img src="https://blog.penjee.com/wp-content/uploads/2015/04/binary-and-linear-search-animations.gif" alt="Binary Search vs Linear Search"></p>
 <p>Previously we determined that the Big O notation for this algorithm is <em>O(log n)</em>. This represent the <strong>worst</strong> asymptotic complexity that the algorithm can possibly have.</p>
 
   
@@ -176,11 +171,8 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-11-15T00:00:00Z" class="post-date">Tue, Nov 15, 2016</time>
   <p>The Ruby <a href="http://ruby-doc.org/stdlib-2.0.0/libdoc/benchmark/rdoc/Benchmark.html">Benchmark</a> library helps us to measure how long it takes for a block of code to run. Similar to when you subtract starting time and ending time in other languages such as Java.</p>
-
 <p>I was doing some <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O Notation</a> reviewing with Ruby the other day and did some common algorithm implementations for each of the most common Big O notations, just for fun.</p>
-
 <h2 id="using-benchmark">Using Benchmark</h2>
-
 <p>To start benchmarking our code, we simply need to require <code>benchmark</code> and use the methods provided by the <code>Benchmark</code> module. For me, the most practical way is to use <code>Benchmark#bm</code> method, where we pass a block of code we want to measure:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
 
@@ -189,18 +181,17 @@ if (!doNotTrack) {
     <span style="color:#75715e"># our code here</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Inside the block we are using the <code>report</code> method of the block&rsquo;s variable, which will basically do a separate benchmark for each report.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Inside the block we are using the <code>report</code> method of the block's variable, which will basically do a separate benchmark for each report.</p>
 <p>However, we can improve this even more by adding a label to <code>report</code> and a label width to <code>bm</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">require</span> <span style="color:#d88200">&#39;benchmark&#39;</span>
 
-<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
-  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;my_algorithm&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
+<span style="color:#00a8c8">Benchmark</span><span style="color:#f92672">.</span><span style="color:#111">bm</span><span style="color:#111">(</span><span style="color:#ae81ff">20</span><span style="color:#f92672"></span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">x</span><span style="color:#f92672">|</span>
+  <span style="color:#111">x</span><span style="color:#f92672">.</span><span style="color:#111">report</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">my_algorithm</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span> <span style="color:#00a8c8">do</span>
     <span style="color:#75715e"># our code here</span>
   <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Let&rsquo;s see it in action with some common algorithms.</p>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Let's see it in action with some common algorithms.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -232,7 +223,6 @@ if (!doNotTrack) {
   </h1>
   <time datetime="2016-11-14T00:00:00Z" class="post-date">Mon, Nov 14, 2016</time>
   <p>The <a href="http://ruby-doc.org/core-2.3.1/Enumerator.html">Enumerator</a> class in Ruby allows us to generate some very smooth and useful infinite sequences. For example, in some <a href="https://projecteuler.net/">Project Euler</a> problems it is required to generate sequences without a specific limit. A good example of this is the <em>Highly Divisible Triangular Number</em> problem:</p>
-
 <pre><code>The sequence of triangle numbers is generated by adding the natural numbers. So the 7th triangle number would be 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28. The first ten terms would be:
 
 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
@@ -250,9 +240,7 @@ Let us list the factors of the first seven triangle numbers:
 We can see that 28 is the first triangle number to have over five divisors.
 
 What is the value of the first triangle number to have over five hundred divisors?
-</code></pre>
-
-<p>So first we would want to be able to generate a (infinite) sequence of <a href="https://en.wikipedia.org/wiki/Triangular_number">triangular numbers</a> that we can use to do many programming operations, such as iterating over the sequence.</p>
+</code></pre><p>So first we would want to be able to generate a (infinite) sequence of <a href="https://en.wikipedia.org/wiki/Triangular_number">triangular numbers</a> that we can use to do many programming operations, such as iterating over the sequence.</p>
 
   
   <div style="margin: 20px 0px;">
@@ -282,17 +270,11 @@ What is the value of the first triangle number to have over five hundred divisor
   </h1>
   <time datetime="2016-11-10T00:00:00Z" class="post-date">Thu, Nov 10, 2016</time>
   <p>Continuing from my previous post, where I explained <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">how to modify the device detail bar from a ZenPack using ExtJS</a>, in this post I will explain how we can modify the device list grid shown in the infrastructure page.</p>
-
 <h2 id="the-infrastructure-grid">The Infrastructure Grid</h2>
-
 <p>This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include <em>device name</em>, <em>device class</em>, <em>IP address</em>, <em>production state</em>, and <em>events</em>, as shown in the image below:</p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png" alt="Zenoss Infrastructure Grid" /></p>
-
-<p>However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn&rsquo;t do this by default is beyond me).</p>
-
-<h2 id="devicepanels-js">DevicePanels.js</h2>
-
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png" alt="Zenoss Infrastructure Grid"></p>
+<p>However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn't do this by default is beyond me).</p>
+<h2 id="devicepanelsjs">DevicePanels.js</h2>
 <p>The source code for the grid is found in <code>$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js</code>. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called <code>deviceColumns</code>.</p>
 
   
@@ -327,20 +309,13 @@ What is the value of the first triangle number to have over five hundred divisor
   </h1>
   <time datetime="2016-11-08T00:00:00Z" class="post-date">Tue, Nov 8, 2016</time>
   <p>The Zenoss Core <a href="https://www.sencha.com/products/extjs/"><strong>ExtJS</strong></a> graphic user interface is divided into many different components. In this post I will go over on how we can modify the device detail bar to display additional custom information for devices, by creating a custom ZenPack.</p>
-
 <p>Zenoss Core 4 uses ExtJS 4 JavaScript framework to manage all the user interface components. These components can be found in <code>$ZENHOME/Products/ZenUI3/browser/resources/js/zenoss</code>, and as you would expect, the device detail bar component is also located there.</p>
-
 <h2 id="the-device-detail-bar">The Device Detail Bar</h2>
-
-<p>This is the detail bar located on the device view page which shows the device&rsquo;s icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
-
-<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar" /></p>
-
+<p>This is the detail bar located on the device view page which shows the device's icon, name, events, status, production state, and priority. The JavaScript source code for this component can be found in <code>DeviceDetailBar.js</code></p>
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/device_detail_bar.png" alt="Device Detail Bar"></p>
 <p>However since we are going to <strong><em>extend</em></strong> this component through a ZenPack, we will not modify that source. Instead, we will add new code to use ExtJS to add our custom data displays.</p>
-
 <h2 id="extending-the-component-through-zenpacks">Extending The Component, Through ZenPacks</h2>
-
-<p>Let&rsquo;s assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
+<p>Let's assume we are starting with a freshly created ZenPack, which adds a new <code>power_status</code> integer field to certain devices, according to its <code>zenpack.yaml</code> file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
 
 classes<span style="color:#111">:</span>
@@ -349,8 +324,9 @@ classes<span style="color:#111">:</span>
     label<span style="color:#111">:</span> Custom Device
     properties<span style="color:#111">:</span>
       power_status<span style="color:#111">:</span>
-        type<span style="color:#111">:</span> boolean</code></pre></div>
-<p>What we want is to display this value in the device&rsquo;s detail bar, similar to the device&rsquo;s ping status display.</p>
+        type<span style="color:#111">:</span> boolean
+
+</code></pre></div><p>What we want is to display this value in the device's detail bar, similar to the device's ping status display.</p>
 
   
   <div style="margin: 20px 0px;">

@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -138,20 +138,18 @@ if (!doNotTrack) {
     <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process/">Customizing the ZenPack Installation Process</a>
   </h1>
   <time datetime="2017-01-17T00:00:00Z" class="post-date">Tue, Jan 17, 2017</time>
-  <p>There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack&rsquo;s top directory&rsquo;s <code>__init__.py</code> file. When creating a fresh ZenPack using <strong>zenpacklib</strong>, this <code>__init__.py</code> file will contain the following contents:</p>
+  <p>There are some circumstances where we need to perform certain tasks in our ZenPack the moment it is installed. We can achieve this using Python by placing this logic inside the ZenPack's top directory's <code>__init__.py</code> file. When creating a fresh ZenPack using <strong>zenpacklib</strong>, this <code>__init__.py</code> file will contain the following contents:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">zenpacklib</span>
 
-<span style="color:#111">CFG</span> <span style="color:#f92672">=</span> <span style="color:#111">zenpacklib</span><span style="color:#f92672">.</span><span style="color:#111">load_yaml</span><span style="color:#111">()</span></code></pre></div>
-<p>To add custom functionality that gets executed when the ZenPack is installed, we need to extend the <code>install</code> method of the <code>ZenPack</code> class. Below the original code, we can proceed to do so:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">):</span>
+<span style="color:#111">CFG</span> <span style="color:#f92672">=</span> <span style="color:#111">zenpacklib</span><span style="color:#f92672">.</span><span style="color:#111">load_yaml</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>To add custom functionality that gets executed when the ZenPack is installed, we need to extend the <code>install</code> method of the <code>ZenPack</code> class. Below the original code, we can proceed to do so:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZenPack</span><span style="color:#111">(</span><span style="color:#111">schema</span><span style="color:#f92672">.</span><span style="color:#111">ZenPack</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">install</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">app</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#75715e"># Our custom logic here</span>
 
-        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span></code></pre></div>
-<p>No other imports are necessary. Notice the last line of the <code>install</code> method, this is where the ZenPack gets installed.</p>
-
-<p>For the purpuse of giving an example, Let&rsquo;s say that our ZenPack creates two new <a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html">zProperties</a>, one property to store an API key, and the other one to store a URL. Moreover let&rsquo;s say that we obtain these values from somewhere and we want to assign them <strong>automatically</strong> to the properties upon the installation of the ZenPack.</p>
-
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">ZenPack</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">install</span><span style="color:#111">(</span><span style="color:#111">app</span><span style="color:#111">)</span>
+</code></pre></div><p>No other imports are necessary. Notice the last line of the <code>install</code> method, this is where the ZenPack gets installed.</p>
+<p>For the purpuse of giving an example, Let's say that our ZenPack creates two new <a href="https://zenpack-sdk.zenoss.com/en/latest/yaml-zProperties.html">zProperties</a>, one property to store an API key, and the other one to store a URL. Moreover let's say that we obtain these values from somewhere and we want to assign them <strong>automatically</strong> to the properties upon the installation of the ZenPack.</p>
 <p>These two new properties are defined in <code>zenpack.yaml</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">name<span style="color:#111">:</span> ZenPacks.aalvarez.MyZenPack
 
@@ -162,7 +160,8 @@ zProperties<span style="color:#111">:</span>
 
   zMyApiKey<span style="color:#111">:</span>
     category<span style="color:#111">:</span> MyApi
-    type<span style="color:#111">:</span> string</code></pre></div>
+    type<span style="color:#111">:</span> string
+</code></pre></div>
 
   
   <div style="margin: 20px 0px;">
@@ -190,7 +189,6 @@ zProperties<span style="color:#111">:</span>
   </h1>
   <time datetime="2017-01-16T00:00:00Z" class="post-date">Mon, Jan 16, 2017</time>
   <p><a href="http://net-snmp.sourceforge.net/">Net-SNMP</a> is a suite of tools used to implement SNMP (Simple Network Management Protocol). SNMP is a widely used protocol for monitoring the health and welfare of network equipment (eg. routers), computer equipment and even devices like UPSs. Net-SNMP includes tools with capabilities such as:</p>
-
 <ul>
 <li>An extensible agent</li>
 <li>An SNMP library</li>
@@ -199,11 +197,8 @@ zProperties<span style="color:#111">:</span>
 <li>A version of the unix &lsquo;netstat&rsquo; command using SNMP</li>
 <li>A graphical Perl/Tk/SNMP based mib browser</li>
 </ul>
-
 <h2 id="how-snmp-works">How SNMP Works</h2>
-
 <p>SNMP allows a management station to treat its network as a distributed database of health and configuration information. SNMP contains a small set of operations:</p>
-
 <ul>
 <li>GET: Retrieve data from a network node</li>
 <li>GETNEXT: Retrieve the next element from a network node</li>
@@ -211,8 +206,7 @@ zProperties<span style="color:#111">:</span>
 <li>TRAP: A network node can send a notification to the management station</li>
 <li>INFORM: An acknowledged trap (network nodes can try and send it again if no acknowledgement is received)</li>
 </ul>
-
-<p><img src="http://computernetworkingsimplified.com/wp-content/uploads/2014/02/snmparchitecture1.jpg" alt="SNMP Architecture" /></p>
+<p><img src="http://computernetworkingsimplified.com/wp-content/uploads/2014/02/snmparchitecture1.jpg" alt="SNMP Architecture"></p>
 
   
   <div style="margin: 20px 0px;">
@@ -238,9 +232,7 @@ zProperties<span style="color:#111">:</span>
   </h1>
   <time datetime="2017-01-13T00:00:00Z" class="post-date">Fri, Jan 13, 2017</time>
   <p>When testing the monitoring of the OpenStack compute node devices in Zenoss (using <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a>), I noticed that I could not get any graphs for the <strong>network interfaces</strong> of the device, although we could still get and model all the available interfaces:</p>
-
-<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces" /></p>
-
+<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces"></p>
 <p>This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.</p>
 
   
@@ -271,14 +263,12 @@ zProperties<span style="color:#111">:</span>
   </h1>
   <time datetime="2017-01-06T00:00:00Z" class="post-date">Fri, Jan 6, 2017</time>
   <p>When starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.</p>
-
 <h2 id="the-global-object">The Global Object</h2>
-
 <p>The <strong>global scope</strong> is the space in which global variables live and it can also be approached as an object. Each global variable is present as a <strong>property</strong> of this object. In browsers, the global scope object is stored in the <code>window</code> variable:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">v</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
-<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v&#34;</span> <span style="color:#00a8c8">in</span> <span style="color:#111">window</span><span style="color:#111">);</span>
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v&#34;</span> <span style="color:#00a8c8">in</span> <span style="color:#111">window</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; true
-</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">v</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">v</span><span style="color:#111">)</span><span style="color:#111">;</span>
 <span style="color:#75715e">// &gt; 10
 </span></code></pre></div>
 
@@ -303,21 +293,17 @@ zProperties<span style="color:#111">:</span>
     <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Custom Pages in Zenoss</a>
   </h1>
   <time datetime="2016-12-26T00:00:00Z" class="post-date">Mon, Dec 26, 2016</time>
-  <p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn&rsquo;t get to creating the custom pages that these links would link to. This is what we will learn today.</p>
-
+  <p>In a <a href="https://aalvarez.me/posts/extending-zenoss-navigations.html">previous post</a> I talked about how to create custom navigation links in Zenoss using a ZenPack. However we didn't get to creating the custom pages that these links would link to. This is what we will learn today.</p>
 <h2 id="page-viewlets">Page Viewlets</h2>
-
 <p>Previously we created navigation item viewlets, this time we will be creating <strong>page</strong> viewlets. These type of viewlets allow us to create and insert new custom pages into Zenoss where we can display custom content. To create a new page, we add the following code to <code>browser/configure.zcml</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;browser:page</span>
   <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;secondaryPage&#34;</span>
   <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
   <span style="color:#75af00">permission=</span><span style="color:#d88200">&#34;zenoss.View&#34;</span>
   <span style="color:#75af00">template=</span><span style="color:#d88200">&#34;templates/my_template.pt&#34;</span>
-  <span style="color:#f92672">/&gt;</span></code></pre></div>
-<p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
-
-<p>Also let&rsquo;s not forget to create a necessary python init file:</p>
-
+  <span style="color:#f92672">/&gt;</span>
+</code></pre></div><p>It is important that the <strong>name</strong> attribute matches the URL of the navigation link we created previously. Another important attribute is the <strong>template</strong> attribute, this is a special file that will represent the base markup of the page using a combination of HTML, TAL, and <a href="http://old.zope.org/Members/tone/METAL">METAL</a>.</p>
+<p>Also let's not forget to create a necessary python init file:</p>
 <pre><code>touch browser/__init__.py
 </code></pre>
 

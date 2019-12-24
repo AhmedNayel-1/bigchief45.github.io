@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>aws lambda on Andrés Álvarez</title>
@@ -18,10 +18,8 @@
       
       <guid>https://aalvarez.me/posts/python-functional-testing-for-aws-lambda/</guid>
       <description>&lt;p&gt;In this post I will explain and go over how I personally write functional tests for my AWS Lambda functions.&lt;/p&gt;
-
 &lt;p&gt;For our example use case, we will assume that our Lambda function is quite complex, as in that it involves downloading a file, processing it, and uploading a result. Additionally it will be called by an SQS event, and it make use of other non-Python related elements, as we will see later.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s get started!&lt;/p&gt;</description>
+&lt;p&gt;Let&#39;s get started!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -31,7 +29,6 @@
       
       <guid>https://aalvarez.me/posts/recursive-python-aws-lambda-functions/</guid>
       <description>&lt;p&gt;There are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.&lt;/p&gt;
-
 &lt;p&gt;Basically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.&lt;/p&gt;</description>
     </item>
     
@@ -42,17 +39,11 @@
       
       <guid>https://aalvarez.me/posts/building-an-ocr-service-with-tesseractjs-in-aws-lambda/</guid>
       <description>&lt;p&gt;The past few days I was trying to make &lt;a href=&#34;https://github.com/naptha/tesseract.js&#34;&gt;TesseractJS&lt;/a&gt; work in &lt;a href=&#34;https://aws.amazon.com/lambda/&#34;&gt;AWS Lambda&lt;/a&gt; so that I could do some OCR (Optical Character Recognition) on some images I had stored in an S3 bucket. However I am a bit new to NodeJS and I was running into some difficulties getting it to work in the Lambda environment. In this post I am going to go through some of these issues and how I solved them.&lt;/p&gt;
-
 &lt;p&gt;TesseractJS is a OCR library written in pure JavaScript. It can recognize the text in images, as well as provide information about the location of the paragraphs, lines, and words in the document.&lt;/p&gt;
-
 &lt;p&gt;We will be using a &lt;strong&gt;NodeJS 6.10&lt;/strong&gt; runtime in AWS Lambda. And I will be deploying the service with &lt;a href=&#34;https://claudiajs.com/&#34;&gt;ClaudiaJS&lt;/a&gt;.&lt;/p&gt;
-
 &lt;h2 id=&#34;downloading-the-tesseractjs-files&#34;&gt;Downloading the TesseractJS Files&lt;/h2&gt;
-
 &lt;p&gt;When running TesseractJS to recognize an image, TesseractJS will automatically begin downloading some files, which include tesseract language files, a core library file, and a worker file. These are all files that TesseractJS requires in order to correctly run.&lt;/p&gt;
-
 &lt;p&gt;The problem occurs when trying to download these inside AWS Lambda, since Lambda only allows writing to the &lt;code&gt;/tmp/&lt;/code&gt; directory, you will get an error like this in your logs:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;Error: EROFS: read-only file system, open &#39;eng.traineddata&#39;
 &lt;/code&gt;&lt;/pre&gt;</description>
     </item>

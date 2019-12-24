@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "The Zenoss JSON API",
     "headline" : "The Zenoss JSON API",
-    "description" : "\x3cp\x3eThe \x3ca href=\x22http:\/\/wiki.zenoss.org\/Working_with_the_JSON_API\x22\x3eZenoss JSON API\x3c\/a\x3e allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using \x3ca href=\x22https:\/\/curl.haxx.se\/\x22\x3ecURL\x3c\/a\x3e or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.\x3c\/p\x3e\n\n\x3cp\x3eThe API documentation can be downloaded \x3ca href=\x22https:\/\/www.zenoss.com\/sites\/default\/files\/documentation\/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip\x22\x3ehere\x3c\/a\x3e. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss\x26rsquo;s front-end (made using \x3ca href=\x22https:\/\/www.sencha.com\/products\/extjs\/\x22\x3eExtJS\x3c\/a\x3e) interacts with it.\x3c\/p\x3e\n\n\x3cp\x3e~\x26gt; Even though Zenoss calls its API a \x3cem\x3eJSON API\x3c\/em\x3e (Simply because it returns data in JSON format), the API \x3cstrong\x3eis not\x3c\/strong\x3e \x3ca href=\x22http:\/\/jsonapi.org\/\x22\x3eJSON API specification\x3c\/a\x3e compliant.\x3c\/p\x3e\n\n\x3ch2 id=\x22querying-the-api\x22\x3eQuerying the API\x3c\/h2\x3e\n\n\x3cp\x3eTo see the API in action, we can begin by making a simple query using \x3ccode\x3ecURL\x3c\/code\x3e. Let\x26rsquo;s say we want to obtain all the available information of a specific device:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-bash\x22 data-lang=\x22bash\x22\x3ecurl -u \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;admin:zenoss\x26#34;\x3c\/span\x3e -X POST -H \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;Content-Type: application\/json\x26#34;\x3c\/span\x3e -d \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;{\x26#34;action\x26#34;: \x26#34;DeviceRouter\x26#34;, \x26#34;method\x26#34;: \x26#34;getInfo\x26#34;, \x26#34;data\x26#34;: [{\x26#34;uid\x26#34;: \x26#34;\/zport\/dmd\/Devices\/Server\/SSH\/Linux\/NovaHost\/devices\/$DEVICE_IP\x26#34;}], \x26#34;tid\x26#34;: 1}\x26#39;\x3c\/span\x3e http:\/\/\x3cspan style=\x22color:#111\x22\x3e$ZENOSS_HOST\x3c\/span\x3e:8080\/zport\/dmd\/device_router\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe above request will return the information of the device in JSON format, assuming that we replace \x3ccode\x3e$ZENOSS_HOST\x3c\/code\x3e with the IP address of our Zenoss server, and \x3ccode\x3e$DEVICE_IP\x3c\/code\x3e with the IP address of the device we want to query.\x3c\/p\x3e\n\n\x3cp\x3eThis is all fine if all we need is querying the API and nothing else. But what if we really want to know \x3cstrong\x3e\x3cem\x3ehow\x3c\/em\x3e\x3c\/strong\x3e the API back-end works? How the endpoints are created? What are routers?\x3c\/p\x3e\n\n\x3cp\x3eThis is what we are gonna learn next.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eThe \x3ca href=\x22http:\/\/wiki.zenoss.org\/Working_with_the_JSON_API\x22\x3eZenoss JSON API\x3c\/a\x3e allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using \x3ca href=\x22https:\/\/curl.haxx.se\/\x22\x3ecURL\x3c\/a\x3e or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.\x3c\/p\x3e\n\x3cp\x3eThe API documentation can be downloaded \x3ca href=\x22https:\/\/www.zenoss.com\/sites\/default\/files\/documentation\/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip\x22\x3ehere\x3c\/a\x3e. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.\x3c\/p\x3e\n\x3cp\x3eIn this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss\x27s front-end (made using \x3ca href=\x22https:\/\/www.sencha.com\/products\/extjs\/\x22\x3eExtJS\x3c\/a\x3e) interacts with it.\x3c\/p\x3e\n\x3cp\x3e~\x26gt; Even though Zenoss calls its API a \x3cem\x3eJSON API\x3c\/em\x3e (Simply because it returns data in JSON format), the API \x3cstrong\x3eis not\x3c\/strong\x3e \x3ca href=\x22http:\/\/jsonapi.org\/\x22\x3eJSON API specification\x3c\/a\x3e compliant.\x3c\/p\x3e\n\x3ch2 id=\x22querying-the-api\x22\x3eQuerying the API\x3c\/h2\x3e\n\x3cp\x3eTo see the API in action, we can begin by making a simple query using \x3ccode\x3ecURL\x3c\/code\x3e. Let\x27s say we want to obtain all the available information of a specific device:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-bash\x22 data-lang=\x22bash\x22\x3ecurl -u \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;admin:zenoss\x26#34;\x3c\/span\x3e -X POST -H \x3cspan style=\x22color:#d88200\x22\x3e\x26#34;Content-Type: application\/json\x26#34;\x3c\/span\x3e -d \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;{\x26#34;action\x26#34;: \x26#34;DeviceRouter\x26#34;, \x26#34;method\x26#34;: \x26#34;getInfo\x26#34;, \x26#34;data\x26#34;: [{\x26#34;uid\x26#34;: \x26#34;\/zport\/dmd\/Devices\/Server\/SSH\/Linux\/NovaHost\/devices\/$DEVICE_IP\x26#34;}], \x26#34;tid\x26#34;: 1}\x26#39;\x3c\/span\x3e http:\/\/\x3cspan style=\x22color:#111\x22\x3e$ZENOSS_HOST\x3c\/span\x3e:8080\/zport\/dmd\/device_router\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eThe above request will return the information of the device in JSON format, assuming that we replace \x3ccode\x3e$ZENOSS_HOST\x3c\/code\x3e with the IP address of our Zenoss server, and \x3ccode\x3e$DEVICE_IP\x3c\/code\x3e with the IP address of the device we want to query.\x3c\/p\x3e\n\x3cp\x3eThis is all fine if all we need is querying the API and nothing else. But what if we really want to know \x3cstrong\x3e\x3cem\x3ehow\x3c\/em\x3e\x3c\/strong\x3e the API back-end works? How the endpoints are created? What are routers?\x3c\/p\x3e\n\x3cp\x3eThis is what we are gonna learn next.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2016-11-24 00:00:00 \x2b0000 UTC",
     "dateModified" : "2016-11-24 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/the-zenoss-json-api\/",
-    "wordCount" : "1232",
+    "wordCount" : "1216",
     "keywords" : [ "zenoss","json","api","python","extjs","javascript","curl","zope","Blog" ]
 }
 </script>
@@ -136,31 +136,19 @@ if (!doNotTrack) {
   <time datetime=2016-11-24T00:00:00Z class="post-date">Thu, Nov 24, 2016</time>
 
   <p>The <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using <a href="https://curl.haxx.se/">cURL</a> or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.</p>
-
 <p>The API documentation can be downloaded <a href="https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip">here</a>. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.</p>
-
-<p>In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss&rsquo;s front-end (made using <a href="https://www.sencha.com/products/extjs/">ExtJS</a>) interacts with it.</p>
-
+<p>In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss's front-end (made using <a href="https://www.sencha.com/products/extjs/">ExtJS</a>) interacts with it.</p>
 <p>~&gt; Even though Zenoss calls its API a <em>JSON API</em> (Simply because it returns data in JSON format), the API <strong>is not</strong> <a href="http://jsonapi.org/">JSON API specification</a> compliant.</p>
-
 <h2 id="querying-the-api">Querying the API</h2>
-
-<p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let&rsquo;s say we want to obtain all the available information of a specific device:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="color:#d88200">&#34;admin:zenoss&#34;</span> -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#111">$ZENOSS_HOST</span>:8080/zport/dmd/device_router</code></pre></div>
-<p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
-
+<p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let's say we want to obtain all the available information of a specific device:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="color:#d88200">&#34;admin:zenoss&#34;</span> -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#111">$ZENOSS_HOST</span>:8080/zport/dmd/device_router
+</code></pre></div><p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
 <p>This is all fine if all we need is querying the API and nothing else. But what if we really want to know <strong><em>how</em></strong> the API back-end works? How the endpoints are created? What are routers?</p>
-
 <p>This is what we are gonna learn next.</p>
-
-<h2 id="the-api-back-end-routers-facades">The API Back-End: Routers &amp; Facades</h2>
-
+<h2 id="the-api-back-end-routers--facades">The API Back-End: Routers &amp; Facades</h2>
 <p>If you take a look at the previous curl command you will notice that we specify something like <code>{&quot;action&quot;: &quot;DeviceRouter&quot;, &quot;method&quot;: &quot;getInfo&quot;}</code>. This sounds pretty intuitive, but what does it exactly mean?</p>
-
 <h3 id="routers">Routers</h3>
-
 <p>Zenoss Core 4 comes with many different built-in routers. These routers act as the API endpoints for specific things within Zenoss, such as devices, events, templates, etc. In total, Zenoss comes with the following routers:</p>
-
 <ul>
 <li>MessagingRouter</li>
 <li>EventsRouter</li>
@@ -174,92 +162,69 @@ if (!doNotTrack) {
 <li>MibRouter</li>
 <li>ZenPackRouter</li>
 </ul>
-
 <p>Naturally, each router will offer many &ldquo;methods&rdquo; that we can query by passing the necessary parameters. Just like the <code>getInfo</code> method from the <code>DeviceRouter</code> we used previously.</p>
-
 <p>In the Zenoss Core 4 source code, these routers are defined and written in Python, and can be found in <code>$ZENHOME/Products/Zuul/routers/</code>.</p>
-
 <p>A quick glance at the Device Router (<code>$ZENHOME/Products/Zuul/routers/device.py</code>) reveals the following:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ...</span>
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">DeviceRouter</span><span style="color:#111">(</span><span style="color:#111">TreeRouter</span><span style="color:#111">):</span>
-    <span style="color:#d88200">&#34;&#34;&#34;
-</span><span style="color:#d88200">    A JSON/ExtDirect interface to operations on devices
-</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">DeviceRouter</span><span style="color:#111">(</span><span style="color:#111">TreeRouter</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    A JSON/ExtDirect interface to operations on devices</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">    </span><span style="color:#d88200">&#34;&#34;&#34;</span>
 
     <span style="color:#75715e"># ...</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">getInfo</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">uid</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">):</span>
-        <span style="color:#d88200">&#34;&#34;&#34;
-</span><span style="color:#d88200">        Get the properties of a device or device organizer
-</span><span style="color:#d88200">
-</span><span style="color:#d88200">        @type  uid: string
-</span><span style="color:#d88200">        @param uid: Unique identifier of an object
-</span><span style="color:#d88200">        @type  keys: list
-</span><span style="color:#d88200">        @param keys: (optional) List of keys to include in the returned
-</span><span style="color:#d88200">                     dictionary. If None then all keys will be returned
-</span><span style="color:#d88200">                     (default: None)
-</span><span style="color:#d88200">        @rtype:   DirectResponse
-</span><span style="color:#d88200">        @return:  B{Properties}
-</span><span style="color:#d88200">            - data: (dictionary) Object properties
-</span><span style="color:#d88200">            - disabled: (bool) If current user doesn&#39;t have permission to use setInfo
-</span><span style="color:#d88200">        &#34;&#34;&#34;</span>
-        <span style="color:#111">facade</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getFacade</span><span style="color:#111">()</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">getInfo</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">uid</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;&#34;&#34;</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        Get the properties of a device or device organizer</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @type  uid: string</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @param uid: Unique identifier of an object</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @type  keys: list</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @param keys: (optional) List of keys to include in the returned</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">                     dictionary. If None then all keys will be returned</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">                     (default: None)</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @rtype:   DirectResponse</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        @return:  B{Properties}</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">            - data: (dictionary) Object properties</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">            - disabled: (bool) If current user doesn</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">t have permission to use setInfo</span><span style="color:#d88200">
+</span><span style="color:#d88200"></span><span style="color:#d88200">        </span><span style="color:#d88200">&#34;&#34;&#34;</span>
+        <span style="color:#111">facade</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getFacade</span><span style="color:#111">(</span><span style="color:#111">)</span>
         <span style="color:#111">process</span> <span style="color:#f92672">=</span> <span style="color:#111">facade</span><span style="color:#f92672">.</span><span style="color:#111">getInfo</span><span style="color:#111">(</span><span style="color:#111">uid</span><span style="color:#111">)</span>
         <span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">marshal</span><span style="color:#111">(</span><span style="color:#111">process</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#111">)</span>
-        <span style="color:#111">disabled</span> <span style="color:#f92672">=</span> <span style="color:#f92672">not</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">checkPermission</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Manage DMD&#39;</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">context</span><span style="color:#111">)</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">DirectResponse</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#f92672">=</span><span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">disabled</span><span style="color:#f92672">=</span><span style="color:#111">disabled</span><span style="color:#111">)</span></code></pre></div>
-<p>Perfect. We can see the explanation of the method and its parameters written as comments, this is probably how the documentation is generated.</p>
-
-<p>Although it seems that it&rsquo;s pretty obvious what is happening in the method, there are a few things that aren&rsquo;t very clear:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">facade</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getFacade</span><span style="color:#111">()</span>
+        <span style="color:#111">disabled</span> <span style="color:#f92672">=</span> <span style="color:#f92672">not</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">checkPermission</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Manage DMD</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">context</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">DirectResponse</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#f92672">=</span><span style="color:#111">data</span><span style="color:#111">,</span> <span style="color:#111">disabled</span><span style="color:#f92672">=</span><span style="color:#111">disabled</span><span style="color:#111">)</span>
+</code></pre></div><p>Perfect. We can see the explanation of the method and its parameters written as comments, this is probably how the documentation is generated.</p>
+<p>Although it seems that it's pretty obvious what is happening in the method, there are a few things that aren't very clear:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">facade</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_getFacade</span><span style="color:#111">(</span><span style="color:#111">)</span>
 <span style="color:#111">process</span> <span style="color:#f92672">=</span> <span style="color:#111">facade</span><span style="color:#f92672">.</span><span style="color:#111">getInfo</span><span style="color:#111">(</span><span style="color:#111">uid</span><span style="color:#111">)</span>
-<span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">marshal</span><span style="color:#111">(</span><span style="color:#111">process</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#111">)</span></code></pre></div>
-<p><em>Facade</em>? <em>getFacade()</em>? It seems that the router method is actually not the method doing the work. Instead, it is calling a method with the same name, but from a different object, a <strong>Facade</strong> object.</p>
-
+<span style="color:#111">data</span> <span style="color:#f92672">=</span> <span style="color:#111">Zuul</span><span style="color:#f92672">.</span><span style="color:#111">marshal</span><span style="color:#111">(</span><span style="color:#111">process</span><span style="color:#111">,</span> <span style="color:#111">keys</span><span style="color:#111">)</span>
+</code></pre></div><p><em>Facade</em>? <em>getFacade()</em>? It seems that the router method is actually not the method doing the work. Instead, it is calling a method with the same name, but from a different object, a <strong>Facade</strong> object.</p>
 <h3 id="facades">Facades</h3>
-
 <p>Zuul facades are also a part of the Python API. They have two main functions:</p>
-
 <ol>
 <li>Given a unique indentified (UID), retrieve a ZenModel object and return info objects representing objects related to the retrieved object.</li>
 <li>Given an info object, bind its properties to a ZenModel and save it.</li>
 </ol>
-
 <p>So at this point it seems that when we query the API, we are querying a specific router, which then calls the method from a facade. The router then returns the data as a response.</p>
-
 <p>We can find facades under <code>$ZENHOME/Products/Zuul/facades</code>. And just like the device router, there is also a device facade (<code>$ZENHOME/Products/Zuul/facades/devicefacade.py</code>).</p>
-
 <p>-&gt; <strong>Routers</strong> and <strong>facades</strong> provide a mean to handle objects. A facade is code that actually modifies objects; a router provides access to the facade, supplying the correct parameters. The router can be considered as a translation layer between the browser and the facade; thus, provided the name and parameters are mantained by the router, the underlying facade code may be changed.</p>
-
 <p>~&gt; Router names, their functions and their parameters must all match up between the <em>routers.py</em> and <em>facades.py</em> entries and the JavaScript that calls the router.</p>
-
 <h2 id="the-front-end-extjs">The Front-End: ExtJS</h2>
-
 <p>With Zenoss Core 4 having the default routers and facades in place so that the API can correctly serve data, the front-end then queries this API using JavaScript and displays it accordingly in the graphic user interface.</p>
-
 <p>To understand how this works, we need to understand some ExtJS components that are designed for this purpose.</p>
-
-<h3 id="ext-direct">Ext.Direct</h3>
-
+<h3 id="extdirect">Ext.Direct</h3>
 <p><a href="https://docs.sencha.com/extjs/4.1.0/#!/api/Ext.direct.Manager">Ext.Direct</a> aims to streamline communication between the client and server by providing a single interface that reduces the amount of common code typically required to validate data and handle returned data packets (reading data, error conditions, etc).</p>
-
 <p>Remember that the Zenoss routers inherit from The <code>DirectRouter</code> class. This base class parses an <code>Ext.Direct</code> request, which contains the name of the method and any data that should be passed, and routes the data to the appropriate method. It then receives the output of that call and puts it into the data structure expected by <strong>Ext.Direct</strong>. This <code>DirectRouter</code> class definition can be found in <code>$ZENHOME/Products/ZenUtils/extdirect/router.py</code>.</p>
-
 <p>From the Ext.Direct documentation:</p>
-
 <blockquote>
 <p><em>Ext.Direct utilizes a &ldquo;router&rdquo; on the server to direct requests from the client to the appropriate server-side method. Because the Ext.Direct API is completely platform-agnostic, you could completely swap out a Java based server solution and replace it with one that uses C# without changing the client side JavaScript at all.</em></p>
 </blockquote>
-
 <h3 id="zenoss-remotes">Zenoss Remotes</h3>
-
 <p>Zenoss remotes are the front-end representations of the Zenoss back-end routers. We can easily interact with them in the Developer Console of our browser:</p>
-
-<p><img src="https://aalvarez.me/posts/the-zenoss-json-api/zenoss_remotes.jpg" alt="Zenoss Remotes" /></p>
-
+<p><img src="https://aalvarez.me/posts/the-zenoss-json-api/zenoss_remotes.jpg" alt="Zenoss Remotes"></p>
 <p>These default remotes are defined in <code>$ZENHOME/Products/Zuul/routers/configure.zcml</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- ... --&gt;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> ... </span><span style="color:#75715e">--&gt;</span>
 <span style="color:#f92672">&lt;browser:directRouter</span>
   <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;device_router&#34;</span>
   <span style="color:#75af00">for=</span><span style="color:#d88200">&#34;*&#34;</span>
@@ -267,22 +232,16 @@ if (!doNotTrack) {
   <span style="color:#75af00">namespace=</span><span style="color:#d88200">&#34;Zenoss.remote&#34;</span>
   <span style="color:#75af00">timeout=</span><span style="color:#d88200">&#34;180000&#34;</span>
   <span style="color:#f92672">/&gt;</span>
-<span style="color:#75715e">&lt;!-- ... --&gt;</span></code></pre></div>
-<h3 id="querying-the-api-1">Querying the API</h3>
-
+<span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> ... </span><span style="color:#75715e">--&gt;</span>
+</code></pre></div><h3 id="querying-the-api-1">Querying the API</h3>
 <p>We can query the API in JavaScript using the Zenoss remotes. For example, we can do the same cURL query we did at the beginning of this post, but using JavaScript to interact with ExtJS and the Zenoss back-end.</p>
-
 <p>In the browser console:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">remote</span><span style="color:#111">.</span><span style="color:#75af00">DeviceRouter</span><span style="color:#111">.</span><span style="color:#75af00">getDevices</span><span style="color:#111">({</span><span style="color:#75af00">uid</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/&#39;</span><span style="color:#111">},</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-  <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">.</span><span style="color:#75af00">devices</span><span style="color:#111">);</span>
-<span style="color:#111">});</span>
-</code></pre></div>
-<p>The above will output an object to the console for each existing device in the device class speficied for the <code>uid</code>.</p>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75af00">Zenoss</span><span style="color:#111">.</span><span style="color:#75af00">remote</span><span style="color:#111">.</span><span style="color:#75af00">DeviceRouter</span><span style="color:#111">.</span><span style="color:#75af00">getDevices</span><span style="color:#111">(</span><span style="color:#111">{</span><span style="color:#75af00">uid</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/&#39;</span><span style="color:#111">}</span><span style="color:#111">,</span> <span style="color:#00a8c8">function</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">result</span><span style="color:#111">.</span><span style="color:#75af00">devices</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#111">}</span><span style="color:#111">)</span><span style="color:#111">;</span>
+</code></pre></div><p>The above will output an object to the console for each existing device in the device class speficied for the <code>uid</code>.</p>
 <h2 id="final-thoughts">Final Thoughts</h2>
-
 <p>The way the back-end and API works in Zenoss is a bit complicated. With so many components working together both in Zenoss <em>and</em> in ExtJS, it takes some time to digest and understand what does what and how. However I believe this post should give a good primer before going in to more specific and complex scenarios.</p>
-
 <p>It is also possible to create new routers, facades, and remotes from our ZenPacks so that we can add new custom API endpoints to serve custom data. Everything configured from a ZenPack, without having to alter the Zenoss Core source code. I hope I can cover this topic soon.</p>
 </div>
 

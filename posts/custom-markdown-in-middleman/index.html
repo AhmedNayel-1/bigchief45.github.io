@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Custom Markdown in Middleman",
     "headline" : "Custom Markdown in Middleman",
-    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/middlemanapp.com\/\x22\x3eMiddleman\x3c\/a\x3e is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it\x26rsquo;s the framework I am currently using for this blog.\x3c\/p\x3e\n\n\x3cp\x3eUnfortunately Middleman\x26rsquo;s \x3ca href=\x22https:\/\/middlemanapp.com\/basics\/install\/\x22\x3edocumentation\x3c\/a\x3e is a bit unorganized and incomplete. I often find myself browsing through the \x3ca href=\x22https:\/\/github.com\/middleman\/middleman\x22\x3esource code\x3c\/a\x3e to understand how to use or implement some custom features.\x3c\/p\x3e\n\n\x3cp\x3eFor example, using \x3ca href=\x22https:\/\/github.com\/vmg\/redcarpet\x22\x3eredcarpet\x3c\/a\x3e I wanted to be able to create some re-usable \x26ldquo;markdown components\x26rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.\x3c\/p\x3e\n\n\x3cp\x3eAnd this post I am going to explain how to integrate this functionality into your blog using Middleman.\x3c\/p\x3e\n\n\x3ch2 id=\x22creating-a-custom-renderer\x22\x3eCreating a Custom Renderer\x3c\/h2\x3e\n\n\x3cp\x3eMiddleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog\x26rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from \x3ccode\x3eRedcarpet::Render::HTML\x3c\/code\x3e. However, the \x3cstrong\x3ekey\x3c\/strong\x3e thing here is to actually inherit directly from \x3ca href=\x22https:\/\/github.com\/middleman\/middleman\/blob\/master\/middleman-core\/lib\/middleman-core\/renderers\/redcarpet.rb#L65\x22\x3eMiddleman\x26rsquo;s renderer\x3c\/a\x3e (which of course, inherits from \x3ccode\x3eRedcarpet::Render::HTML\x3c\/code\x3e).\x3c\/p\x3e\n\n\x3cp\x3eTo begin, we will create a \x3ccode\x3elib\x3c\/code\x3e (if it doesn\x26rsquo;t exist) under our blog\x26rsquo;s directory and create a file named \x3ccode\x3emarkdown_helper.rb\x3c\/code\x3e inside it. The initial contents of this helper will be:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3emodule\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eMarkdownHelper\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;middleman-core\/renderers\/redcarpet\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3cp\x3eThe required file above is what will allow us to inherit from Middleman\x26rsquo;s renderer.\x3c\/p\x3e",
+    "description" : "\x3cp\x3e\x3ca href=\x22https:\/\/middlemanapp.com\/\x22\x3eMiddleman\x3c\/a\x3e is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it\x27s the framework I am currently using for this blog.\x3c\/p\x3e\n\x3cp\x3eUnfortunately Middleman\x27s \x3ca href=\x22https:\/\/middlemanapp.com\/basics\/install\/\x22\x3edocumentation\x3c\/a\x3e is a bit unorganized and incomplete. I often find myself browsing through the \x3ca href=\x22https:\/\/github.com\/middleman\/middleman\x22\x3esource code\x3c\/a\x3e to understand how to use or implement some custom features.\x3c\/p\x3e\n\x3cp\x3eFor example, using \x3ca href=\x22https:\/\/github.com\/vmg\/redcarpet\x22\x3eredcarpet\x3c\/a\x3e I wanted to be able to create some re-usable \x26ldquo;markdown components\x26rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.\x3c\/p\x3e\n\x3cp\x3eAnd this post I am going to explain how to integrate this functionality into your blog using Middleman.\x3c\/p\x3e\n\x3ch2 id=\x22creating-a-custom-renderer\x22\x3eCreating a Custom Renderer\x3c\/h2\x3e\n\x3cp\x3eMiddleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog\x27s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from \x3ccode\x3eRedcarpet::Render::HTML\x3c\/code\x3e. However, the \x3cstrong\x3ekey\x3c\/strong\x3e thing here is to actually inherit directly from \x3ca href=\x22https:\/\/github.com\/middleman\/middleman\/blob\/master\/middleman-core\/lib\/middleman-core\/renderers\/redcarpet.rb#L65\x22\x3eMiddleman\x27s renderer\x3c\/a\x3e (which of course, inherits from \x3ccode\x3eRedcarpet::Render::HTML\x3c\/code\x3e).\x3c\/p\x3e\n\x3cp\x3eTo begin, we will create a \x3ccode\x3elib\x3c\/code\x3e (if it doesn\x27t exist) under our blog\x27s directory and create a file named \x3ccode\x3emarkdown_helper.rb\x3c\/code\x3e inside it. The initial contents of this helper will be:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#00a8c8\x22\x3emodule\x3c\/span\x3e \x3cspan style=\x22color:#111\x22\x3eMarkdownHelper\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3erequire\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e\x26#39;middleman-core\/renderers\/redcarpet\x26#39;\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3cp\x3eThe required file above is what will allow us to inherit from Middleman\x27s renderer.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,180 +135,153 @@ if (!doNotTrack) {
   <h1>Custom Markdown in Middleman</h1>
   <time datetime=2016-11-17T00:00:00Z class="post-date">Thu, Nov 17, 2016</time>
 
-  <p><a href="https://middlemanapp.com/">Middleman</a> is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it&rsquo;s the framework I am currently using for this blog.</p>
-
-<p>Unfortunately Middleman&rsquo;s <a href="https://middlemanapp.com/basics/install/">documentation</a> is a bit unorganized and incomplete. I often find myself browsing through the <a href="https://github.com/middleman/middleman">source code</a> to understand how to use or implement some custom features.</p>
-
+  <p><a href="https://middlemanapp.com/">Middleman</a> is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it's the framework I am currently using for this blog.</p>
+<p>Unfortunately Middleman's <a href="https://middlemanapp.com/basics/install/">documentation</a> is a bit unorganized and incomplete. I often find myself browsing through the <a href="https://github.com/middleman/middleman">source code</a> to understand how to use or implement some custom features.</p>
 <p>For example, using <a href="https://github.com/vmg/redcarpet">redcarpet</a> I wanted to be able to create some re-usable &ldquo;markdown components&rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.</p>
-
 <p>And this post I am going to explain how to integrate this functionality into your blog using Middleman.</p>
-
 <h2 id="creating-a-custom-renderer">Creating a Custom Renderer</h2>
-
-<p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog&rsquo;s markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman&rsquo;s renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
-
-<p>To begin, we will create a <code>lib</code> (if it doesn&rsquo;t exist) under our blog&rsquo;s directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
+<p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog's markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman's renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
+<p>To begin, we will create a <code>lib</code> (if it doesn't exist) under our blog's directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
 
   <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The required file above is what will allow us to inherit from Middleman&rsquo;s renderer.</p>
-
-<p>=&gt; The reason we want to inherit from middleman&rsquo;s renderer instead of a blank new <code>Redcarpet::Render::HTML</code> is because this way we don&rsquo;t have to re-implement the parsing of images and links, and possibly other things. This will help in keeping the renderer&rsquo;s code as small as possible.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The required file above is what will allow us to inherit from Middleman's renderer.</p>
+<p>=&gt; The reason we want to inherit from middleman's renderer instead of a blank new <code>Redcarpet::Render::HTML</code> is because this way we don't have to re-implement the parsing of images and links, and possibly other things. This will help in keeping the renderer's code as small as possible.</p>
 <p>Now we can define and create our custom renderer:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
 
   <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
 
   <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyRenderer</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">Middleman</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Renderers</span><span style="color:#f92672">::</span><span style="color:#00a8c8">MiddlemanRedcarpetHTML</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">initialize</span><span style="color:#111">(</span><span style="color:#111">options</span><span style="color:#f92672">=</span><span style="color:#111">{})</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">initialize</span><span style="color:#111">(</span><span style="color:#111">options</span><span style="color:#f92672">=</span><span style="color:#111">{</span><span style="color:#111">}</span><span style="color:#111">)</span>
       <span style="color:#00a8c8">super</span>
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Now we are adding an <code>initialize</code> method to our renderer. Calling <code>super</code> with no arguments from inside the initializer will call the parent&rsquo;s (<code>MiddlemanRedcarpetHTML</code>) initializer with the arguments passed to our renderer&rsquo;s initializer.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Now we are adding an <code>initialize</code> method to our renderer. Calling <code>super</code> with no arguments from inside the initializer will call the parent's (<code>MiddlemanRedcarpetHTML</code>) initializer with the arguments passed to our renderer's initializer.</p>
 <p>We are now ready to begin adding custom markdown parsing to our renderer.</p>
-
 <h3 id="automatically-centering-images">Automatically Centering Images</h3>
-
-<p>Another thing I needed was to automatically center and make responsive images in my blog posts. I wanted to do this <strong>without</strong> having to add extra CSS, but I couldn&rsquo;t find a way to do so until I learned about redcarpet renderers. The extra CSS then started conflicting with the Bootstrap CSS and started giving my all sorts of headaches.</p>
-
-<p>This problem can very easily fixed by overriding the Middleman renderer&rsquo;s <code>image</code> method, inside our custom renderer:</p>
+<p>Another thing I needed was to automatically center and make responsive images in my blog posts. I wanted to do this <strong>without</strong> having to add extra CSS, but I couldn't find a way to do so until I learned about redcarpet renderers. The extra CSS then started conflicting with the Bootstrap CSS and started giving my all sorts of headaches.</p>
+<p>This problem can very easily fixed by overriding the Middleman renderer's <code>image</code> method, inside our custom renderer:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
 
   <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
 
   <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyRenderer</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">Middleman</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Renderers</span><span style="color:#f92672">::</span><span style="color:#00a8c8">MiddlemanRedcarpetHTML</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">initialize</span><span style="color:#111">(</span><span style="color:#111">options</span><span style="color:#f92672">=</span><span style="color:#111">{})</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">initialize</span><span style="color:#111">(</span><span style="color:#111">options</span><span style="color:#f92672">=</span><span style="color:#111">{</span><span style="color:#111">}</span><span style="color:#111">)</span>
       <span style="color:#00a8c8">super</span>
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">image</span><span style="color:#111">(</span><span style="color:#111">link</span><span style="color:#111">,</span> <span style="color:#111">title</span><span style="color:#111">,</span> <span style="color:#111">alt_text</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">image</span><span style="color:#111">(</span><span style="color:#111">link</span><span style="color:#111">,</span> <span style="color:#111">title</span><span style="color:#111">,</span> <span style="color:#111">alt_text</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">if</span> <span style="color:#f92672">!</span><span style="color:#111">@local_options</span><span style="color:#f92672">[</span><span style="color:#d88200">:no_images</span><span style="color:#f92672">]</span>
       <span style="color:#75715e"># We add bootstrap centering and responsive class here</span>
       <span style="color:#111">scope</span><span style="color:#f92672">.</span><span style="color:#111">image_tag</span><span style="color:#111">(</span><span style="color:#111">link</span><span style="color:#111">,</span> <span style="color:#d88200">title</span><span style="color:#111">:</span> <span style="color:#111">title</span><span style="color:#111">,</span> <span style="color:#d88200">alt</span><span style="color:#111">:</span> <span style="color:#111">alt_text</span><span style="color:#111">,</span> <span style="color:#d88200">class</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;center-block img-responsive&#39;</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">else</span>
       <span style="color:#111">link_string</span> <span style="color:#f92672">=</span> <span style="color:#111">link</span><span style="color:#f92672">.</span><span style="color:#111">dup</span>
-      <span style="color:#111">link_string</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#d88200">%(&#34;</span><span style="color:#d88200">#{</span><span style="color:#111">title</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;)</span> <span style="color:#00a8c8">if</span> <span style="color:#111">title</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#111">title</span><span style="color:#f92672">.</span><span style="color:#111">empty?</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">title</span> <span style="color:#f92672">!=</span> <span style="color:#111">alt_text</span>
-      <span style="color:#d88200">&#34;![</span><span style="color:#d88200">#{</span><span style="color:#111">alt_text</span><span style="color:#d88200">}</span><span style="color:#d88200">](</span><span style="color:#d88200">#{</span><span style="color:#111">link_string</span><span style="color:#d88200">}</span><span style="color:#d88200">)&#34;</span>
+      <span style="color:#111">link_string</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#d88200">%(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">#{</span><span style="color:#111">title</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">)</span> <span style="color:#00a8c8">if</span> <span style="color:#111">title</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#111">title</span><span style="color:#f92672">.</span><span style="color:#111">empty?</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">title</span> <span style="color:#f92672">!=</span> <span style="color:#111">alt_text</span>
+      <span style="color:#d88200">&#34;</span><span style="color:#d88200">![</span><span style="color:#d88200">#{</span><span style="color:#111">alt_text</span><span style="color:#d88200">}</span><span style="color:#d88200">](</span><span style="color:#d88200">#{</span><span style="color:#111">link_string</span><span style="color:#d88200">}</span><span style="color:#d88200">)</span><span style="color:#d88200">&#34;</span>
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Keep in mind that our renderer inherits from Middleman&rsquo;s renderer. This makes possible the use of variables like <code>scope</code> and <code>@local_options</code>.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Keep in mind that our renderer inherits from Middleman's renderer. This makes possible the use of variables like <code>scope</code> and <code>@local_options</code>.</p>
 <h3 id="automatic-bootstrap-classes-in-tables">Automatic Bootstrap Classes in Tables</h3>
-
 <p>Tables generated from markdown will not have any styles applied to it, you must define these CSS styles yourself. But we want all tables automatically to use <a href="http://getbootstrap.com/css/#tables">Bootstrap 3 table styles</a> instead.</p>
-
 <p>To do this, we will add a <code>table</code> method overwrite in our renderer:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># ...</span>
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">table</span><span style="color:#111">(</span><span style="color:#111">header</span><span style="color:#111">,</span> <span style="color:#111">body</span><span style="color:#111">)</span>
-  <span style="color:#d88200">&#34;&lt;table class=&#39;table table-responsive table-condensed table-striped&#39;&gt;&#34;</span> <span style="color:#111">\</span>
-    <span style="color:#d88200">&#34;&lt;thead&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">header</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;/thead&gt;&#34;</span> <span style="color:#111">\</span>
-    <span style="color:#d88200">&#34;&lt;tbody&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">body</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;/tbody&gt;&#34;</span> <span style="color:#111">\</span>
-  <span style="color:#d88200">&#34;&lt;/table&gt;&#34;</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Also make sure that Redcarpet is configured to render tables using Markdown in <code>config.rb</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">set</span> <span style="color:#d88200">:markdown</span><span style="color:#111">,</span> <span style="color:#d88200">:tables</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span></code></pre></div>
-<h3 id="creating-markdown-alerts">Creating Markdown Alerts</h3>
-
+<span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">table</span><span style="color:#111">(</span><span style="color:#111">header</span><span style="color:#111">,</span> <span style="color:#111">body</span><span style="color:#111">)</span>
+  <span style="color:#d88200">&#34;</span><span style="color:#d88200">&lt;table class=&#39;table table-responsive table-condensed table-striped&#39;&gt;</span><span style="color:#d88200">&#34;</span> <span style="color:#111">\</span>
+    <span style="color:#d88200">&#34;</span><span style="color:#d88200">&lt;thead&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">header</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;/thead&gt;</span><span style="color:#d88200">&#34;</span> <span style="color:#111">\</span>
+    <span style="color:#d88200">&#34;</span><span style="color:#d88200">&lt;tbody&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">body</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;/tbody&gt;</span><span style="color:#d88200">&#34;</span> <span style="color:#111">\</span>
+  <span style="color:#d88200">&#34;</span><span style="color:#d88200">&lt;/table&gt;</span><span style="color:#d88200">&#34;</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Also make sure that Redcarpet is configured to render tables using Markdown in <code>config.rb</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">set</span> <span style="color:#d88200">:markdown</span><span style="color:#111">,</span> <span style="color:#d88200">:tables</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+</code></pre></div><h3 id="creating-markdown-alerts">Creating Markdown Alerts</h3>
 <p>This is where things get more interesting.</p>
-
-<p>I wanted to create components similar to Bootstrap&rsquo;s alerts, using CSS class keywords such as <code>success</code>, <code>warning</code>, <code>info</code>, and <code>danger</code> to convey different types of alerts. Additionally, I wanted to be able to use any type of alert from within markdown using different syntaxes. In the end I settled for the following syntaxes, inspired by <a href="https://github.com/hashicorp/middleman-hashicorp">this repository</a> :</p>
-
+<p>I wanted to create components similar to Bootstrap's alerts, using CSS class keywords such as <code>success</code>, <code>warning</code>, <code>info</code>, and <code>danger</code> to convey different types of alerts. Additionally, I wanted to be able to use any type of alert from within markdown using different syntaxes. In the end I settled for the following syntaxes, inspired by <a href="https://github.com/hashicorp/middleman-hashicorp">this repository</a> :</p>
 <ul>
 <li><code>=&gt;</code>: success</li>
 <li><code>-&gt;</code>: info</li>
 <li><code>~&gt;</code>: warning</li>
 <li><code>!&gt;</code>: danger</li>
 </ul>
-
 <p>Once we are clear on the syntax we want to use, now we need to create the methods. The first thing we have to do is override the <code>paragraph</code> method and make it call a custom method that renders the alerts, based on regular expression (according to the syntax above) parsing:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
 
   <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
 
   <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyRenderer</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">Middleman</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Renderers</span><span style="color:#f92672">::</span><span style="color:#00a8c8">MiddlemanRedcarpetHTML</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">initialize</span><span style="color:#111">(</span><span style="color:#111">options</span><span style="color:#f92672">=</span><span style="color:#111">{})</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">initialize</span><span style="color:#111">(</span><span style="color:#111">options</span><span style="color:#f92672">=</span><span style="color:#111">{</span><span style="color:#111">}</span><span style="color:#111">)</span>
       <span style="color:#00a8c8">super</span>
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">image</span><span style="color:#111">(</span><span style="color:#111">link</span><span style="color:#111">,</span> <span style="color:#111">title</span><span style="color:#111">,</span> <span style="color:#111">alt_text</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">image</span><span style="color:#111">(</span><span style="color:#111">link</span><span style="color:#111">,</span> <span style="color:#111">title</span><span style="color:#111">,</span> <span style="color:#111">alt_text</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">if</span> <span style="color:#f92672">!</span><span style="color:#111">@local_options</span><span style="color:#f92672">[</span><span style="color:#d88200">:no_images</span><span style="color:#f92672">]</span>
       <span style="color:#111">scope</span><span style="color:#f92672">.</span><span style="color:#111">image_tag</span><span style="color:#111">(</span><span style="color:#111">link</span><span style="color:#111">,</span> <span style="color:#d88200">title</span><span style="color:#111">:</span> <span style="color:#111">title</span><span style="color:#111">,</span> <span style="color:#d88200">alt</span><span style="color:#111">:</span> <span style="color:#111">alt_text</span><span style="color:#111">,</span> <span style="color:#d88200">class</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;center-block&#39;</span><span style="color:#111">)</span> <span style="color:#75715e"># We add bootstrap centering class here</span>
     <span style="color:#00a8c8">else</span>
       <span style="color:#111">link_string</span> <span style="color:#f92672">=</span> <span style="color:#111">link</span><span style="color:#f92672">.</span><span style="color:#111">dup</span>
-      <span style="color:#111">link_string</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#d88200">%(&#34;</span><span style="color:#d88200">#{</span><span style="color:#111">title</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;)</span> <span style="color:#00a8c8">if</span> <span style="color:#111">title</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#111">title</span><span style="color:#f92672">.</span><span style="color:#111">empty?</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">title</span> <span style="color:#f92672">!=</span> <span style="color:#111">alt_text</span>
-      <span style="color:#d88200">&#34;![</span><span style="color:#d88200">#{</span><span style="color:#111">alt_text</span><span style="color:#d88200">}</span><span style="color:#d88200">](</span><span style="color:#d88200">#{</span><span style="color:#111">link_string</span><span style="color:#d88200">}</span><span style="color:#d88200">)&#34;</span>
+      <span style="color:#111">link_string</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#d88200">%(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">#{</span><span style="color:#111">title</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">)</span> <span style="color:#00a8c8">if</span> <span style="color:#111">title</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#111">title</span><span style="color:#f92672">.</span><span style="color:#111">empty?</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">title</span> <span style="color:#f92672">!=</span> <span style="color:#111">alt_text</span>
+      <span style="color:#d88200">&#34;</span><span style="color:#d88200">![</span><span style="color:#d88200">#{</span><span style="color:#111">alt_text</span><span style="color:#d88200">}</span><span style="color:#d88200">](</span><span style="color:#d88200">#{</span><span style="color:#111">link_string</span><span style="color:#d88200">}</span><span style="color:#d88200">)</span><span style="color:#d88200">&#34;</span>
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">paragraph</span><span style="color:#111">(</span><span style="color:#111">text</span><span style="color:#111">)</span>
-    <span style="color:#111">add_alerts</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&lt;p&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">text</span><span style="color:#f92672">.</span><span style="color:#111">strip</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;/p&gt;</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">paragraph</span><span style="color:#111">(</span><span style="color:#111">text</span><span style="color:#111">)</span>
+    <span style="color:#111">add_alerts</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">&lt;p&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">text</span><span style="color:#f92672">.</span><span style="color:#111">strip</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;/p&gt;</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Now we can implement our private <code>add_alerts</code> method:</p>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Now we can implement our private <code>add_alerts</code> method:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># ...</span>
 
 <span style="color:#00a8c8">private</span>
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">add_alerts</span><span style="color:#111">(</span><span style="color:#111">text</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">add_alerts</span><span style="color:#111">(</span><span style="color:#111">text</span><span style="color:#111">)</span>
   <span style="color:#111">map</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
-    <span style="color:#d88200">&#34;=&amp;gt;&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#d88200">&#34;success&#34;</span><span style="color:#111">,</span>
-    <span style="color:#d88200">&#34;-&amp;gt;&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#d88200">&#34;info&#34;</span><span style="color:#111">,</span>
-    <span style="color:#d88200">&#34;~&amp;gt;&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#d88200">&#34;warning&#34;</span><span style="color:#111">,</span>
-    <span style="color:#d88200">&#34;!&amp;gt;&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#d88200">&#34;danger&#34;</span><span style="color:#111">,</span>
+    <span style="color:#d88200">&#34;</span><span style="color:#d88200">=&amp;gt;</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">success</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
+    <span style="color:#d88200">&#34;</span><span style="color:#d88200">-&amp;gt;</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">info</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
+    <span style="color:#d88200">&#34;</span><span style="color:#d88200">~&amp;gt;</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">warning</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
+    <span style="color:#d88200">&#34;</span><span style="color:#d88200">!&amp;gt;</span><span style="color:#d88200">&#34;</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">danger</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
   <span style="color:#111">}</span>
 
-  <span style="color:#111">regexp</span> <span style="color:#f92672">=</span> <span style="color:#111">map</span><span style="color:#f92672">.</span><span style="color:#111">map</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">k</span><span style="color:#111">,</span> <span style="color:#111">_</span><span style="color:#f92672">|</span> <span style="color:#00a8c8">Regexp</span><span style="color:#f92672">.</span><span style="color:#111">escape</span><span style="color:#111">(</span><span style="color:#111">k</span><span style="color:#111">)</span> <span style="color:#111">}</span><span style="color:#f92672">.</span><span style="color:#111">join</span><span style="color:#111">(</span><span style="color:#d88200">&#34;|&#34;</span><span style="color:#111">)</span>
+  <span style="color:#111">regexp</span> <span style="color:#f92672">=</span> <span style="color:#111">map</span><span style="color:#f92672">.</span><span style="color:#111">map</span> <span style="color:#111">{</span> <span style="color:#f92672">|</span><span style="color:#111">k</span><span style="color:#111">,</span> <span style="color:#111">_</span><span style="color:#f92672">|</span> <span style="color:#00a8c8">Regexp</span><span style="color:#f92672">.</span><span style="color:#111">escape</span><span style="color:#111">(</span><span style="color:#111">k</span><span style="color:#111">)</span> <span style="color:#111">}</span><span style="color:#f92672">.</span><span style="color:#111">join</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">|</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
-  <span style="color:#00a8c8">if</span> <span style="color:#111">md</span> <span style="color:#f92672">=</span> <span style="color:#111">text</span><span style="color:#f92672">.</span><span style="color:#111">match</span><span style="color:#111">(</span><span style="color:#d88200">/^&lt;p&gt;(</span><span style="color:#d88200">#{</span><span style="color:#111">regexp</span><span style="color:#d88200">}</span><span style="color:#d88200">)/</span><span style="color:#111">)</span>
-    <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">md</span><span style="color:#f92672">.</span><span style="color:#111">captures</span><span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+  <span style="color:#00a8c8">if</span> <span style="color:#111">md</span> <span style="color:#f92672">=</span> <span style="color:#111">text</span><span style="color:#f92672">.</span><span style="color:#111">match</span><span style="color:#111">(</span><span style="color:#d88200">/</span><span style="color:#d88200">^&lt;p&gt;(</span><span style="color:#d88200">#{</span><span style="color:#111">regexp</span><span style="color:#d88200">}</span><span style="color:#d88200">)</span><span style="color:#d88200">/</span><span style="color:#111">)</span>
+    <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">md</span><span style="color:#f92672">.</span><span style="color:#111">captures</span><span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672"></span><span style="color:#f92672">]</span>
     <span style="color:#111">klass</span> <span style="color:#f92672">=</span> <span style="color:#111">map</span><span style="color:#f92672">[</span><span style="color:#111">key</span><span style="color:#f92672">]</span>
-    <span style="color:#111">text</span><span style="color:#f92672">.</span><span style="color:#111">gsub!</span><span style="color:#111">(</span><span style="color:#d88200">/</span><span style="color:#d88200">#{</span><span style="color:#00a8c8">Regexp</span><span style="color:#f92672">.</span><span style="color:#111">escape</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">)</span><span style="color:#d88200">}</span><span style="color:#d88200">\s+?/</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+    <span style="color:#111">text</span><span style="color:#f92672">.</span><span style="color:#111">gsub!</span><span style="color:#111">(</span><span style="color:#d88200">/</span><span style="color:#d88200">#{</span><span style="color:#00a8c8">Regexp</span><span style="color:#f92672">.</span><span style="color:#111">escape</span><span style="color:#111">(</span><span style="color:#111">key</span><span style="color:#111">)</span><span style="color:#d88200">}</span><span style="color:#d88200">\</span><span style="color:#d88200">s+?</span><span style="color:#d88200">/</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
     <span style="color:#00a8c8">return</span> <span style="color:#d88200">&lt;&lt;-EOH
-</span><span style="color:#d88200"></span>      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;panel panel-default&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;panel-body&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;media&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;media-left media-middle&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;</span><span style="color:#111">img</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;media-object&#34;</span> <span style="color:#111">src</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;/images/icons/</span><span style="color:#d88200">#{</span><span style="color:#111">klass</span><span style="color:#d88200">}</span><span style="color:#d88200">_32.png&#34;</span> <span style="color:#111">alt</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;info&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;</span><span style="color:#d88200">/div&gt;
+</span><span style="color:#d88200"></span>      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">panel panel-default</span><span style="color:#d88200">&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">panel-body</span><span style="color:#d88200">&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">media</span><span style="color:#d88200">&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#111">div</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">media-left media-middle</span><span style="color:#d88200">&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#111">img</span> <span style="color:#111">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">media-object</span><span style="color:#d88200">&#34;</span> <span style="color:#111">src</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">/images/icons/</span><span style="color:#d88200">#{</span><span style="color:#111">klass</span><span style="color:#d88200">}</span><span style="color:#d88200">_32.png</span><span style="color:#d88200">&#34;</span> <span style="color:#111">alt</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">info</span><span style="color:#d88200">&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#d88200">/</span><span style="color:#d88200">div&gt;
 </span><span style="color:#d88200">      &lt;div class=&#34;media-body&#34;&gt;
-</span><span style="color:#d88200">      &lt;span class=&#34;small&#34;&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">text</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;/s</span><span style="color:#111">pan</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;</span><span style="color:#d88200">/div&gt;
-</span><span style="color:#d88200">      &lt;/</span><span style="color:#111">div</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;</span><span style="color:#d88200">/div&gt;
-</span><span style="color:#d88200">      &lt;/</span><span style="color:#111">div</span><span style="color:#f92672">&gt;</span>
+</span><span style="color:#d88200">      &lt;span class=&#34;small&#34;&gt;</span><span style="color:#d88200">#{</span><span style="color:#111">text</span><span style="color:#d88200">}</span><span style="color:#d88200">&lt;</span><span style="color:#d88200">/s</span><span style="color:#111">pan</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#d88200">/</span><span style="color:#d88200">div&gt;
+</span><span style="color:#d88200">      &lt;</span><span style="color:#d88200">/</span><span style="color:#111">div</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#d88200">/</span><span style="color:#d88200">div&gt;
+</span><span style="color:#d88200">      &lt;</span><span style="color:#d88200">/</span><span style="color:#111">div</span><span style="color:#f92672">&gt;</span>
     <span style="color:#00a8c8">EOH</span>
   <span style="color:#00a8c8">else</span>
     <span style="color:#00a8c8">return</span> <span style="color:#111">text</span>
   <span style="color:#00a8c8">end</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>The <code>EOH</code> is a <a href="http://rubyquicktips.com/post/4438542511/heredoc-and-indent">Ruby heredoc</a>, a very common structure found in Bashscript. Heredocs let us return big strings without having to escape characters.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>The <code>EOH</code> is a <a href="http://rubyquicktips.com/post/4438542511/heredoc-and-indent">Ruby heredoc</a>, a very common structure found in Bashscript. Heredocs let us return big strings without having to escape characters.</p>
 <p>The method above does not actually render a <a href="http://getbootstrap.com/components/#alerts">Bootstrap alert</a>, but a custom kind of alert I came up with using <strong>Bootstrap 3</strong> panel, media object, and image icon, like the one below:</p>
-
 <p>~&gt; The HTML code returned in the heredoc <strong>must not</strong> have any indentations. Otherwise the HTML will not be rendered.</p>
-
 <p>The above is a custom warning alert, and I can simply use it with the following markdown:</p>
-
 <pre><code>~&gt; The HTML code returned in the heredoc **must not** have any indentations. Otherwise the HTML will not be rendered.
-</code></pre>
-
-<p>For each different kind of syntax, the method simply renders a different icon. Nice!</p>
-
+</code></pre><p>For each different kind of syntax, the method simply renders a different icon. Nice!</p>
 <h3 id="using-the-custom-renderer">Using The Custom Renderer</h3>
-
 <p>The renderer is ready to be used. To do so, we simply override the default Middleman renderer in <code>config.rb</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config.rb</span>
 
@@ -318,16 +291,14 @@ if (!doNotTrack) {
 <span style="color:#111">helpers</span> <span style="color:#00a8c8">MarkdownHelper</span>
 
 <span style="color:#111">set</span> <span style="color:#d88200">:markdown_engine</span><span style="color:#111">,</span> <span style="color:#d88200">:redcarpet</span>
-<span style="color:#111">set</span> <span style="color:#d88200">:markdown</span><span style="color:#111">,</span> <span style="color:#d88200">:fenced_code_blocks</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
-              <span style="color:#d88200">:smartypants</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
-              <span style="color:#d88200">:tables</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
-              <span style="color:#d88200">:highlight</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
-              <span style="color:#d88200">:superscript</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
-              <span style="color:#d88200">:renderer</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">MarkdownHelper</span><span style="color:#f92672">::</span><span style="color:#00a8c8">MyRenderer</span></code></pre></div>
-<p>And that&rsquo;s it.</p>
-
+<span style="color:#111">set</span> <span style="color:#d88200">:markdown</span><span style="color:#111">,</span> <span style="color:#d88200">:fenced_code_blocks</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+              <span style="color:#d88200">:smartypants</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+              <span style="color:#d88200">:tables</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+              <span style="color:#d88200">:highlight</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+              <span style="color:#d88200">:superscript</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+              <span style="color:#d88200">:renderer</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">MarkdownHelper</span><span style="color:#f92672">::</span><span style="color:#00a8c8">MyRenderer</span>
+</code></pre></div><p>And that's it.</p>
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://github.com/hashicorp/middleman-hashicorp">https://github.com/hashicorp/middleman-hashicorp</a></li>
 </ol>

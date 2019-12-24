@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Working With RRDTool",
     "headline" : "Working With RRDTool",
-    "description" : "\x3cp\x3eZenoss makes a lot of use of \x3ca href=\x22http:\/\/oss.oetiker.ch\/rrdtool\/\x22\x3eRRDTool\x3c\/a\x3e for \x3ca href=\x22\/posts\/using-rrdtool-in-zenoss.html\x22\x3estoring monitored performance data and generating graphs\x3c\/a\x3e. In this post I want to go into more detail on the components of RRDTool and how works.\x3c\/p\x3e\n\n\x3ch2 id=\x22round-robin-databases\x22\x3eRound Robin Databases\x3c\/h2\x3e\n\n\x3cp\x3eRRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing \x3cstrong\x3etime series\x3c\/strong\x3e data.\x3c\/p\x3e\n\n\x3cp\x3eMoreover, rrdtool also \x3cstrong\x3edoesn\x26rsquo;t\x3c\/strong\x3e store the data handed to it. Instead, it first \x3cstrong\x3ere-samples\x3c\/strong\x3e the data and \x3cem\x3ethen\x3c\/em\x3e stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.\x3c\/p\x3e\n\n\x3cp\x3eThis means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the \x3ccode\x3e03\x3c\/code\x3e minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.\x3c\/p\x3e\n\n\x3cp\x3eIn rrdtool, each database table is stored in a separate \x3ccode\x3e.rrd\x3c\/code\x3e file. This means that one file represents one table.\x3c\/p\x3e\n\n\x3cp\x3eWe can create a database using the following command:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3errdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3ch3 id=\x22data-re-sampling-step\x22\x3eData Re-sampling: Step\x3c\/h3\x3e\n\n\x3cp\x3eOne important parameter here is the \x3ccode\x3estep\x3c\/code\x3e parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. \x3cstrong\x3eThis means that it only stores data every 300 seconds\x3c\/strong\x3e. Because of this re-sampling, rrdtool will not accept data from the past.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eZenoss makes a lot of use of \x3ca href=\x22http:\/\/oss.oetiker.ch\/rrdtool\/\x22\x3eRRDTool\x3c\/a\x3e for \x3ca href=\x22\/posts\/using-rrdtool-in-zenoss.html\x22\x3estoring monitored performance data and generating graphs\x3c\/a\x3e. In this post I want to go into more detail on the components of RRDTool and how works.\x3c\/p\x3e\n\x3ch2 id=\x22round-robin-databases\x22\x3eRound Robin Databases\x3c\/h2\x3e\n\x3cp\x3eRRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing \x3cstrong\x3etime series\x3c\/strong\x3e data.\x3c\/p\x3e\n\x3cp\x3eMoreover, rrdtool also \x3cstrong\x3edoesn\x27t\x3c\/strong\x3e store the data handed to it. Instead, it first \x3cstrong\x3ere-samples\x3c\/strong\x3e the data and \x3cem\x3ethen\x3c\/em\x3e stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.\x3c\/p\x3e\n\x3cp\x3eThis means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the \x3ccode\x3e03\x3c\/code\x3e minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.\x3c\/p\x3e\n\x3cp\x3eIn rrdtool, each database table is stored in a separate \x3ccode\x3e.rrd\x3c\/code\x3e file. This means that one file represents one table.\x3c\/p\x3e\n\x3cp\x3eWe can create a database using the following command:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3errdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603\n\x3c\/code\x3e\x3c\/pre\x3e\x3ch3 id=\x22data-re-sampling-step\x22\x3eData Re-sampling: Step\x3c\/h3\x3e\n\x3cp\x3eOne important parameter here is the \x3ccode\x3estep\x3c\/code\x3e parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. \x3cstrong\x3eThis means that it only stores data every 300 seconds\x3c\/strong\x3e. Because of this re-sampling, rrdtool will not accept data from the past.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-05-02 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-05-02 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/working-with-rrdtool\/",
-    "wordCount" : "1276",
+    "wordCount" : "1265",
     "keywords" : [ "rrdtool","monitoring","sysadmin","Blog" ]
 }
 </script>
@@ -136,112 +136,74 @@ if (!doNotTrack) {
   <time datetime=2017-05-02T00:00:00Z class="post-date">Tue, May 2, 2017</time>
 
   <p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="https://aalvarez.me/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
-
 <h2 id="round-robin-databases">Round Robin Databases</h2>
-
 <p>RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing <strong>time series</strong> data.</p>
-
-<p>Moreover, rrdtool also <strong>doesn&rsquo;t</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
-
+<p>Moreover, rrdtool also <strong>doesn't</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
 <p>This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the <code>03</code> minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.</p>
-
 <p>In rrdtool, each database table is stored in a separate <code>.rrd</code> file. This means that one file represents one table.</p>
-
 <p>We can create a database using the following command:</p>
-
 <pre><code>rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
-</code></pre>
-
-<h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
-
+</code></pre><h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
 <p>One important parameter here is the <code>step</code> parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. <strong>This means that it only stores data every 300 seconds</strong>. Because of this re-sampling, rrdtool will not accept data from the past.</p>
-
 <h3 id="data-source">Data Source</h3>
-
 <p>The next parameter after the step is the data source definition, which is composed of different parts.</p>
-
 <p>The <code>DS:input</code> part indicates the data source, meaning <em>where</em> the data is obtained from. Data will always be time-series floating point data, but by defining the data source we can give rrdtool some information about the nature of the data. So whenever we refer to that column, we can refer to it using that name (in this case <code>input</code>).</p>
-
-<p>In the next part, we are indicating that the data is of type <code>GAUGE</code>. Gauge basically means that each data point collected in time does not depend on the other (i.e it doesn&rsquo;t matter what the value of the last data point collected was), a piece of information that stands on its own.</p>
-
+<p>In the next part, we are indicating that the data is of type <code>GAUGE</code>. Gauge basically means that each data point collected in time does not depend on the other (i.e it doesn't matter what the value of the last data point collected was), a piece of information that stands on its own.</p>
 <p>Next, we can tell rrdtool how often we insist on updating this data source (known as the <strong>heartbeat</strong>), in this case <code>10</code> seconds. This means that data will <strong>only</strong> be accepted if it arrives within <strong>10 seconds</strong> of the last update. If data fails to arrive within this time, rrdtool will store an <code>Unknown</code> value for this time range.</p>
-
-<p>In the last part of the data source we define some lower and upper bounds for the data, <code>0:1000000</code>. This will make rrdtool check that the incoming data point value is between these bounds. If it&rsquo;s not, rrdtool will store <code>Unknown</code>.</p>
-
+<p>In the last part of the data source we define some lower and upper bounds for the data, <code>0:1000000</code>. This will make rrdtool check that the incoming data point value is between these bounds. If it's not, rrdtool will store <code>Unknown</code>.</p>
 <h3 id="data-storage-round-robin-archives">Data Storage: Round Robin Archives</h3>
-
 <p>One important feature of the Round Robin database is that it does not store sequentially, rather it sets up a file as you create the database, and that file already has enough space to store all the data you would want to store in that database. This space for storing the data is called the <strong>Round Robin Archive (RRA)</strong>, and a database can actually have several of these archives.</p>
-
 <p>Round Robin archives have a special property of jumping back to the beginning when they reach the end. This means that after returning to the beginning, all the data will be overwritten.</p>
-
-<p>In the database creation example above, we created a new RRA using <code>RRA:LAST:0.5:1:603</code>. Let&rsquo;s go over each of the parts belonging to this input:</p>
-
+<p>In the database creation example above, we created a new RRA using <code>RRA:LAST:0.5:1:603</code>. Let's go over each of the parts belonging to this input:</p>
 <p>TODO</p>
-
 <p>The first part represents the consodilation function to use for this archive, in this case <code>AVERAGE</code>. Other available functions are <code>MIN</code>, <code>MAX</code>, and <code>LAST</code>. When data is entered into an RRD, it is first fit into time slots of the length defined with the <code>--step</code> option, thus becoming a <em>primary data point</em>. The data is also processed with the consolidation function of the archive.</p>
-
 <h4 id="rra-structure">RRA Structure</h4>
-
 <p>A RRA contains two parts of information. The first part is called the <strong>preparation area</strong>, and it stores information prior to actually updating the RRA. In the preparation area, data is fed, stored and prepared, and once ready, one item is transferred to the long term storage.</p>
-
 <p>-&gt; Round Robin archives basically live on their own, and do not depend on any data from the other RRAs. It has its own preparation area where data is being stored and prepared, and once ready, it is transferred into the long term storage area.</p>
+<p>This is an example of how an RRA's structure looks like along with the preparation area (<code>cdp_prep</code>) in XML format:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;rra</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;cf</span><span style="color:#f92672">&gt;</span>AVERAGE<span style="color:#f92672">&lt;/cf&gt;</span>
+  <span style="color:#f92672">&lt;pdp_per_row</span><span style="color:#f92672">&gt;</span>1<span style="color:#f92672">&lt;/pdp_per_row&gt;</span> <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 300 seconds </span><span style="color:#75715e">--&gt;</span>
 
-<p>This is an example of how an RRA&rsquo;s structure looks like along with the preparation area (<code>cdp_prep</code>) in XML format:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;rra&gt;</span>
-  <span style="color:#f92672">&lt;cf&gt;</span>AVERAGE<span style="color:#f92672">&lt;/cf&gt;</span>
-  <span style="color:#f92672">&lt;pdp_per_row&gt;</span>1<span style="color:#f92672">&lt;/pdp_per_row&gt;</span> <span style="color:#75715e">&lt;!-- 300 seconds --&gt;</span>
-
-  <span style="color:#f92672">&lt;params&gt;</span>
-  <span style="color:#f92672">&lt;xff&gt;</span>5.0000000000e-01<span style="color:#f92672">&lt;/xff&gt;</span>
+  <span style="color:#f92672">&lt;params</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;xff</span><span style="color:#f92672">&gt;</span>5.0000000000e-01<span style="color:#f92672">&lt;/xff&gt;</span>
   <span style="color:#f92672">&lt;/params&gt;</span>
-  <span style="color:#f92672">&lt;cdp_prep&gt;</span>
-          <span style="color:#f92672">&lt;ds&gt;</span>
-          <span style="color:#f92672">&lt;primary_value&gt;</span>0.0000000000e+00<span style="color:#f92672">&lt;/primary_value&gt;</span>
-          <span style="color:#f92672">&lt;secondary_value&gt;</span>0.0000000000e+00<span style="color:#f92672">&lt;/secondary_value&gt;</span>
-          <span style="color:#f92672">&lt;value&gt;</span>NaN<span style="color:#f92672">&lt;/value&gt;</span>
-          <span style="color:#f92672">&lt;unknown_datapoints&gt;</span>0<span style="color:#f92672">&lt;/unknown_datapoints&gt;</span>
+  <span style="color:#f92672">&lt;cdp_prep</span><span style="color:#f92672">&gt;</span>
+          <span style="color:#f92672">&lt;ds</span><span style="color:#f92672">&gt;</span>
+          <span style="color:#f92672">&lt;primary_value</span><span style="color:#f92672">&gt;</span>0.0000000000e+00<span style="color:#f92672">&lt;/primary_value&gt;</span>
+          <span style="color:#f92672">&lt;secondary_value</span><span style="color:#f92672">&gt;</span>0.0000000000e+00<span style="color:#f92672">&lt;/secondary_value&gt;</span>
+          <span style="color:#f92672">&lt;value</span><span style="color:#f92672">&gt;</span>NaN<span style="color:#f92672">&lt;/value&gt;</span>
+          <span style="color:#f92672">&lt;unknown_datapoints</span><span style="color:#f92672">&gt;</span>0<span style="color:#f92672">&lt;/unknown_datapoints&gt;</span>
           <span style="color:#f92672">&lt;/ds&gt;</span>
   <span style="color:#f92672">&lt;/cdp_prep&gt;</span>
-<span style="color:#f92672">&lt;/rra&gt;</span></code></pre></div>
-<p>If we had a RRA that stores averaged data once a day, how are the averages created before they are put into the RRA? The answer is that they are actually created in the preparation area. The data in the preparation area is getting built up to the time when the archive should be updated.</p>
-
+<span style="color:#f92672">&lt;/rra&gt;</span>
+</code></pre></div><p>If we had a RRA that stores averaged data once a day, how are the averages created before they are put into the RRA? The answer is that they are actually created in the preparation area. The data in the preparation area is getting built up to the time when the archive should be updated.</p>
 <p>Within the <code>.rrd</code> file, the location of where all the data preparation happens is within the <strong>Live Head</strong>, shown in green in the image below.</p>
-
-<p><img src="https://aalvarez.me/posts/working-with-rrdtool/rrd_structure.jpg" alt="RRD File Structure" /></p>
-
+<p><img src="https://aalvarez.me/posts/working-with-rrdtool/rrd_structure.jpg" alt="RRD File Structure"></p>
 <p>This means that as we are updating the database, only this green section of the database needs to be touched. The orange part could be holding possibly one year or even ten years of stored data. This area is not even accessed until data has to be written in the archive.</p>
+<p>Likewise, we can take a look at the structure in XML format of the RRA's orange area (long term storage):</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;rra</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> ... </span><span style="color:#75715e">--&gt;</span>
 
-<p>Likewise, we can take a look at the structure in XML format of the RRA&rsquo;s orange area (long term storage):</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;rra&gt;</span>
-  <span style="color:#75715e">&lt;!-- ... --&gt;</span>
-
-  <span style="color:#f92672">&lt;database&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-04-24 08:00:00 CST / 1492992000 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-04-25 08:00:00 CST / 1493078400 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-04-26 08:00:00 CST / 1493164800 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-04-27 08:00:00 CST / 1493251200 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.6000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-04-28 08:00:00 CST / 1493337600 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-04-29 08:00:00 CST / 1493424000 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-04-30 08:00:00 CST / 1493510400 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-05-01 08:00:00 CST / 1493596800 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
-    <span style="color:#75715e">&lt;!-- 2017-05-02 08:00:00 CST / 1493683200 --&gt;</span> <span style="color:#f92672">&lt;row&gt;&lt;v&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;&lt;/row&gt;</span>
+  <span style="color:#f92672">&lt;database</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">04</span><span style="color:#75715e">-</span><span style="color:#75715e">24 08:00:00 CST / 1492992000 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">04</span><span style="color:#75715e">-</span><span style="color:#75715e">25 08:00:00 CST / 1493078400 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">04</span><span style="color:#75715e">-</span><span style="color:#75715e">26 08:00:00 CST / 1493164800 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">04</span><span style="color:#75715e">-</span><span style="color:#75715e">27 08:00:00 CST / 1493251200 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.6000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">04</span><span style="color:#75715e">-</span><span style="color:#75715e">28 08:00:00 CST / 1493337600 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">04</span><span style="color:#75715e">-</span><span style="color:#75715e">29 08:00:00 CST / 1493424000 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">04</span><span style="color:#75715e">-</span><span style="color:#75715e">30 08:00:00 CST / 1493510400 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">05</span><span style="color:#75715e">-</span><span style="color:#75715e">01 08:00:00 CST / 1493596800 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> 2017</span><span style="color:#75715e">-</span><span style="color:#75715e">05</span><span style="color:#75715e">-</span><span style="color:#75715e">02 08:00:00 CST / 1493683200 </span><span style="color:#75715e">--&gt;</span> <span style="color:#f92672">&lt;row</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&lt;v</span><span style="color:#f92672">&gt;</span>2.5000000000e+01<span style="color:#f92672">&lt;/v&gt;</span><span style="color:#f92672">&lt;/row&gt;</span>
   <span style="color:#f92672">&lt;/database&gt;</span>
-<span style="color:#f92672">&lt;/rra&gt;</span></code></pre></div>
-<h2 id="writing-data">Writing Data</h2>
-
+<span style="color:#f92672">&lt;/rra&gt;</span>
+</code></pre></div><h2 id="writing-data">Writing Data</h2>
 <p>Data can be easily written into the database with the following command:</p>
-
 <pre><code>rrdtool update &lt;file.rrd&gt; &lt;timestamp&gt;:&lt;value&gt;
-</code></pre>
-
-<p>The timestamp is a UNIX timestamp and can either be defined in seconds since 1970-01-01 or by using the letter &lsquo;N&rsquo;, in which case the update time is set to be the current time.</p>
-
+</code></pre><p>The timestamp is a UNIX timestamp and can either be defined in seconds since 1970-01-01 or by using the letter &lsquo;N&rsquo;, in which case the update time is set to be the current time.</p>
 <p>~&gt; The point in time when the data acquisition was made is very important. RRDTool will use it to re-sample the data into its rigid step inverval blocks. If no information of when the data is acquired is given to rrdtool, there will be jitter, as the data is shifted a bit. This is due to processing happening between the point in time where the data is acquired and when it is actually fed to rrdtool.</p>
-
 <p>Whenever you update the RRD database rrdtool will store the point in time when you updated the database into a <code>lastupdate</code> field, so that when the database is updated again, it can use that information to calculate the time difference between the two updates</p>
-
 <h2 id="references">References</h2>
-
 <ol>
 <li><a href="https://www.youtube.com/watch?v=JaK-IctEyWs">OUCE-2013 RRDtool Tutorial &ndash; Part One</a></li>
 </ol>

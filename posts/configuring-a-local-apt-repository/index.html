@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Configuring a local apt repository",
     "headline" : "Configuring a local apt repository",
-    "description" : "\x3cp\x3eSetting up a local apt repository can allow you to use \x3ccode\x3eapt-get install\x3c\/code\x3e command to install your own packages. This is a better approach than using \x3ccode\x3edpkg -i\x3c\/code\x3e because apt will fetch and install the required dependencies (which should also be located in your local repository) in an \x3cstrong\x3eoffline\x3c\/strong\x3e fashion.\x3c\/p\x3e\n\n\x3ch2 id=\x22add-local-repository-to-sources\x22\x3eAdd Local Repository to Sources\x3c\/h2\x3e\n\n\x3cp\x3eFirst we need to add our local repository to \x3ccode\x3eapt\x3c\/code\x3e\x26rsquo;s list of source repositories, this can be found in \x3ccode\x3e\/etc\/apt\/sources.list\x3c\/code\x3e. To add our local repository, we add the following line at the top of the file:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3e\/path\/to\/local-deb-repo\/ .\/\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eWhere \x3cem\x3elocal-deb-repo\x3c\/em\x3e is the name of our local repository directory.\x3c\/p\x3e\n\n\x3ch2 id=\x22add-debian-packages\x22\x3eAdd Debian Packages\x3c\/h2\x3e\n\n\x3cp\x3eNow we create local repository\x26rsquo;s directory just like we specified it in the previous step:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3emkdir \/path\/to\/local-deb-repo\/\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eOnce we\x26rsquo;ve done that, we can proceed to put the Debian package files (\x3ccode\x3e.deb\x3c\/code\x3e) and their dependencies inside the directory.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eSetting up a local apt repository can allow you to use \x3ccode\x3eapt-get install\x3c\/code\x3e command to install your own packages. This is a better approach than using \x3ccode\x3edpkg -i\x3c\/code\x3e because apt will fetch and install the required dependencies (which should also be located in your local repository) in an \x3cstrong\x3eoffline\x3c\/strong\x3e fashion.\x3c\/p\x3e\n\x3ch2 id=\x22add-local-repository-to-sources\x22\x3eAdd Local Repository to Sources\x3c\/h2\x3e\n\x3cp\x3eFirst we need to add our local repository to \x3ccode\x3eapt\x3c\/code\x3e\x27s list of source repositories, this can be found in \x3ccode\x3e\/etc\/apt\/sources.list\x3c\/code\x3e. To add our local repository, we add the following line at the top of the file:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3e\/path\/to\/local-deb-repo\/ .\/\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eWhere \x3cem\x3elocal-deb-repo\x3c\/em\x3e is the name of our local repository directory.\x3c\/p\x3e\n\x3ch2 id=\x22add-debian-packages\x22\x3eAdd Debian Packages\x3c\/h2\x3e\n\x3cp\x3eNow we create local repository\x27s directory just like we specified it in the previous step:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3emkdir \/path\/to\/local-deb-repo\/\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eOnce we\x27ve done that, we can proceed to put the Debian package files (\x3ccode\x3e.deb\x3c\/code\x3e) and their dependencies inside the directory.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -136,40 +136,21 @@ if (!doNotTrack) {
   <time datetime=2016-10-17T00:00:00Z class="post-date">Mon, Oct 17, 2016</time>
 
   <p>Setting up a local apt repository can allow you to use <code>apt-get install</code> command to install your own packages. This is a better approach than using <code>dpkg -i</code> because apt will fetch and install the required dependencies (which should also be located in your local repository) in an <strong>offline</strong> fashion.</p>
-
 <h2 id="add-local-repository-to-sources">Add Local Repository to Sources</h2>
-
-<p>First we need to add our local repository to <code>apt</code>&rsquo;s list of source repositories, this can be found in <code>/etc/apt/sources.list</code>. To add our local repository, we add the following line at the top of the file:</p>
-
+<p>First we need to add our local repository to <code>apt</code>'s list of source repositories, this can be found in <code>/etc/apt/sources.list</code>. To add our local repository, we add the following line at the top of the file:</p>
 <pre><code>/path/to/local-deb-repo/ ./
-</code></pre>
-
-<p>Where <em>local-deb-repo</em> is the name of our local repository directory.</p>
-
+</code></pre><p>Where <em>local-deb-repo</em> is the name of our local repository directory.</p>
 <h2 id="add-debian-packages">Add Debian Packages</h2>
-
-<p>Now we create local repository&rsquo;s directory just like we specified it in the previous step:</p>
-
+<p>Now we create local repository's directory just like we specified it in the previous step:</p>
 <pre><code>mkdir /path/to/local-deb-repo/
-</code></pre>
-
-<p>Once we&rsquo;ve done that, we can proceed to put the Debian package files (<code>.deb</code>) and their dependencies inside the directory.</p>
-
+</code></pre><p>Once we've done that, we can proceed to put the Debian package files (<code>.deb</code>) and their dependencies inside the directory.</p>
 <h2 id="create-package-index-files">Create Package Index Files</h2>
-
 <pre><code>cd /path/to/local-deb-repo/
 sudo bash -c 'dpkg-scanpackages . | gzip &gt; ./Packages.gz'
-</code></pre>
-
-<h2 id="update-repository-source">Update Repository Source</h2>
-
+</code></pre><h2 id="update-repository-source">Update Repository Source</h2>
 <p>Finally we update our repository with:</p>
-
 <pre><code>sudo apt-get update
-</code></pre>
-
-<p>We can now proceed to install the packages located inside our local repository using <code>sudo apt-get install &lt;package-name&gt;</code> command. Aptitude will proceed to install the package&rsquo;s dependencies listed in its control file. Check my post on <a href="2016-10-14-managing-debian-package-dependencies.html">managing Debian package dependencies</a> to learn how to add and specify dependencies to your Debian package.</p>
-
+</code></pre><p>We can now proceed to install the packages located inside our local repository using <code>sudo apt-get install &lt;package-name&gt;</code> command. Aptitude will proceed to install the package's dependencies listed in its control file. Check my post on <a href="2016-10-14-managing-debian-package-dependencies.html">managing Debian package dependencies</a> to learn how to add and specify dependencies to your Debian package.</p>
 <p>If you want to add new packages to your repository, simply place the Debian package files into the directory and re-create the package index files and update <code>apt</code> again.</p>
 </div>
 

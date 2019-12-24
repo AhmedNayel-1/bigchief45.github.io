@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>openstack on Andrés Álvarez</title>
@@ -18,11 +18,8 @@
       
       <guid>https://aalvarez.me/posts/understanding-gnocchi-metrics/</guid>
       <description>&lt;p&gt;Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store &lt;strong&gt;measures&lt;/strong&gt;, and the way they do this is defined by &lt;strong&gt;archive policies&lt;/strong&gt;. These are concepts that I will cover in future articles.&lt;/p&gt;
-
 &lt;p&gt;Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/architecture.png&#34; alt=&#34;Gnocchi Architecture&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/architecture.png&#34; alt=&#34;Gnocchi Architecture&#34;&gt;&lt;/p&gt;
 &lt;p&gt;In the Gnocchi architecture, the &lt;strong&gt;storage&lt;/strong&gt; back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.&lt;/p&gt;</description>
     </item>
     
@@ -33,14 +30,10 @@
       
       <guid>https://aalvarez.me/posts/diving-into-openstack-gnocchi/</guid>
       <description>&lt;p&gt;Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.&lt;/p&gt;
-
 &lt;p&gt;It is the preferred storage method for metrics in Ceilometer, as of OpenStack Ocata.&lt;/p&gt;
-
 &lt;p&gt;In this post I want to dive into Gnocchi specifics such as its configuration, supported backends, APIs, daemons, and source code.&lt;/p&gt;
-
 &lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
-
-&lt;p&gt;Gnocchi&amp;rsquo;s configuration is stored in a file called &lt;code&gt;gnocchi.conf&lt;/code&gt;. Ideally, this file would be in &lt;code&gt;~/gnocchi.conf&lt;/code&gt; or &lt;code&gt;/etc/gnocchi/gnocchi.conf&lt;/code&gt;. Let&amp;rsquo;s take a look at a basic Gnocchi configuration:&lt;/p&gt;
+&lt;p&gt;Gnocchi&#39;s configuration is stored in a file called &lt;code&gt;gnocchi.conf&lt;/code&gt;. Ideally, this file would be in &lt;code&gt;~/gnocchi.conf&lt;/code&gt; or &lt;code&gt;/etc/gnocchi/gnocchi.conf&lt;/code&gt;. Let&#39;s take a look at a basic Gnocchi configuration:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;[DEFAULT]&lt;/span&gt;
 &lt;span style=&#34;color:#75af00&#34;&gt;debug&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;true&lt;/span&gt;
 &lt;span style=&#34;color:#75af00&#34;&gt;verbose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;true&lt;/span&gt;
@@ -61,81 +54,55 @@
 
 &lt;span style=&#34;color:#00a8c8&#34;&gt;[cors]&lt;/span&gt;
 &lt;span style=&#34;color:#75af00&#34;&gt;allowed_origin&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;*&lt;/span&gt;
-&lt;span style=&#34;color:#75af00&#34;&gt;allow_credentials&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.&lt;/p&gt;
-
+&lt;span style=&#34;color:#75af00&#34;&gt;allow_credentials&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The configuration above sets up Gnocchi to use Postgresql as the indexer, and use the file system for storage. Additionally it sets up CORS so that requests from any origin are allowed. You will want to configure CORS in a more secure manner when deploying to a production environment.&lt;/p&gt;
 &lt;h3 id=&#34;database-setup&#34;&gt;Database Setup&lt;/h3&gt;
-
 &lt;p&gt;For this example, we are going to use &lt;a href=&#34;www.c9.io&#34;&gt;Cloud 9&lt;/a&gt; as our environment, and Postgresql as the database. This means that we need to first setup the database before we start using Gnocchi.&lt;/p&gt;
-
 &lt;p&gt;Make sure the Postgresql service is running:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo service postgresql start
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We can enter the Postgresql command line using:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We can enter the Postgresql command line using:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo sudo -u postgres psql
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s create a new Postgresql user:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Now let&#39;s create a new Postgresql user:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;CREATE USER gnocchi SUPERUSER PASSWORD &#39;gnocchi&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then create the database:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then create the database:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;CREATE DATABASE gnocchi WITH TEMPLATE = template0 ENCODING = &#39;UNICODE&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;When the database is finally set up correctly and the configuration file is in place, we can initialize the indexer and storage:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;gnocchi-upgrade
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You should see the following output logs:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You should see the following output logs:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;2017-05-17 05:28:50.917 3895 INFO gnocchi.cli [-] Upgrading indexer &amp;lt;gnocchi.indexer.sqlalchemy.SQLAlchemyIndexer object at 0x7ff76cff6190&amp;gt;
 2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
 2017-05-17 05:28:50.982 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
 2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Context impl PostgresqlImpl.
 2017-05-17 05:28:51.011 3895 INFO alembic.runtime.migration [-] Will assume transactional DDL.
 2017-05-17 05:28:51.154 3895 INFO gnocchi.cli [-] Upgrading storage &amp;lt;gnocchi.storage.file.FileStorage object at 0x7ff7688f9710&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;gnocchi-rest-api&#34;&gt;Gnocchi REST API&lt;/h2&gt;
-
-&lt;p&gt;Gnocchi&amp;rsquo;s REST API is based on &lt;a href=&#34;http://www.pecanpy.org/index.html&#34;&gt;Pecan&lt;/a&gt;, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&amp;rsquo;s &lt;code&gt;rest/__init__.py&lt;/code&gt; file:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;gnocchi-rest-api&#34;&gt;Gnocchi REST API&lt;/h2&gt;
+&lt;p&gt;Gnocchi&#39;s REST API is based on &lt;a href=&#34;http://www.pecanpy.org/index.html&#34;&gt;Pecan&lt;/a&gt;, a very lightweight Python web framework that provides object-dispatch style routing. We can confirm this in Gnocchi&#39;s &lt;code&gt;rest/__init__.py&lt;/code&gt; file:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&#34;metrics&#34;&gt;Metrics&lt;/h3&gt;
-
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pecan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;metrics&#34;&gt;Metrics&lt;/h3&gt;
 &lt;p&gt;Gnocchi provides an object type that is called metric. A metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.&lt;/p&gt;
-
 &lt;p&gt;A metric only has a few properties: a UUID to identify it, a name, the archive policy that will be used to store and aggregate the measures.&lt;/p&gt;
-
 &lt;p&gt;Farther down the code in &lt;code&gt;rest/__init__.py&lt;/code&gt;, we can find a metric controller which inherits from a Pecan REST controller:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MetricController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RestController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MetricController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RestController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;_custom_actions&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;measures&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;measures&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;POST&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;GET&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;extension&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ExtensionManager&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;gnocchi.aggregates&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;extension&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ExtensionManager&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;gnocchi.aggregates&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
                                          &lt;span style=&#34;color:#111&#34;&gt;invoke_on_load&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;True&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;custom_agg&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;dict&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;obj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;custom_agg&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;dict&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;obj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mgr&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;enforce&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;to_primitive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;enforce&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;to_primitive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
-    &lt;span style=&#34;color:#75af00&#34;&gt;@pecan.expose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;json&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;get_all&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get metric&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;From the &lt;a href=&#34;http://pecan.readthedocs.io/en/latest/routing.html&#34;&gt;Pecan documentation&lt;/a&gt;, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.&lt;/p&gt;
-
-&lt;p&gt;We can tell Pecan which methods in a class are publically-visible via &lt;code&gt;expose()&lt;/code&gt;. If a method is not decorated with &lt;code&gt;expose()&lt;/code&gt;, Pecan will never route a request to it. In the example above, the &lt;code&gt;get_all()&lt;/code&gt; method is exposed to Pecan. Additionally, it makes use of Pecan&amp;rsquo;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.&lt;/p&gt;</description>
+    &lt;span style=&#34;color:#75af00&#34;&gt;@pecan.expose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;get_all&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;enforce_metric&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;get metric&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;metric&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;From the &lt;a href=&#34;http://pecan.readthedocs.io/en/latest/routing.html&#34;&gt;Pecan documentation&lt;/a&gt;, we can learn that Pecan uses a routing strategy known as object-dispatch to map an HTTP request to a controller, and then the method to call. Object-dispatch begins by splitting the path into a list of components and then walking an object path, starting at the root controller.&lt;/p&gt;
+&lt;p&gt;We can tell Pecan which methods in a class are publically-visible via &lt;code&gt;expose()&lt;/code&gt;. If a method is not decorated with &lt;code&gt;expose()&lt;/code&gt;, Pecan will never route a request to it. In the example above, the &lt;code&gt;get_all()&lt;/code&gt; method is exposed to Pecan. Additionally, it makes use of Pecan&#39;s built-in support for a special JSON renderer, which translates template namespaces into rendered JSON text. Meaning that the returned content will be rendered as JSON.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -145,24 +112,21 @@
       
       <guid>https://aalvarez.me/posts/understanding-oslo_config-in-openstack/</guid>
       <description>&lt;p&gt;The OpenStack &lt;a href=&#34;https://wiki.openstack.org/wiki/Oslo&#34;&gt;Oslo&lt;/a&gt; library provides a set of Python libraries containing code shared by different OpenStack projects. This helps the many different OpenStack projects to follow a certain standard and convention when being developed.&lt;/p&gt;
-
 &lt;p&gt;In this post I want to go over &lt;a href=&#34;https://wiki.openstack.org/wiki/Oslo/Config&#34;&gt;oslo_config&lt;/a&gt;. This library helps with parsing of &lt;strong&gt;options&lt;/strong&gt; found in configuration files or command line arguments.&lt;/p&gt;
-
 &lt;h2 id=&#34;understanding-options&#34;&gt;Understanding Options&lt;/h2&gt;
-
 &lt;p&gt;An option is defined using the &lt;code&gt;Opt&lt;/code&gt; class or one of its sub-classes, from the &lt;code&gt;cfg&lt;/code&gt; module:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;oslo_config&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;
 
 &lt;span style=&#34;color:#111&#34;&gt;common_opts&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;StrOpt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;bind_host&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-               &lt;span style=&#34;color:#111&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;0.0.0.0&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-               &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;IP address to listen on.&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Opt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;bind_port&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;StrOpt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;bind_host&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+               &lt;span style=&#34;color:#111&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;0.0.0.0&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+               &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;IP address to listen on.&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;cfg&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Opt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;bind_port&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
             &lt;span style=&#34;color:#111&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;PortType&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
             &lt;span style=&#34;color:#111&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;9292&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
-            &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Port number to listen on.&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;In the example above we can see that we are using &lt;code&gt;Opt&lt;/code&gt; and &lt;code&gt;StrOpt&lt;/code&gt;, one of its sub-classes. You might notice that the second option&amp;rsquo;s constructor has a &lt;code&gt;type=PortType&lt;/code&gt; argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises &lt;code&gt;ValueError&lt;/code&gt; if the value cannot be converted. The different types available can be found in the &lt;code&gt;types&lt;/code&gt; module:&lt;/p&gt;</description>
+            &lt;span style=&#34;color:#111&#34;&gt;help&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;Port number to listen on.&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In the example above we can see that we are using &lt;code&gt;Opt&lt;/code&gt; and &lt;code&gt;StrOpt&lt;/code&gt;, one of its sub-classes. You might notice that the second option&#39;s constructor has a &lt;code&gt;type=PortType&lt;/code&gt; argument. This argument is a callable object that takes a string and either returns a value of that particular type, or raises &lt;code&gt;ValueError&lt;/code&gt; if the value cannot be converted. The different types available can be found in the &lt;code&gt;types&lt;/code&gt; module:&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -172,15 +136,10 @@
       
       <guid>https://aalvarez.me/posts/understanding-ceilometer-publishers/</guid>
       <description>&lt;p&gt;Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer &lt;strong&gt;publishers&lt;/strong&gt;. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.&lt;/p&gt;
-
 &lt;p&gt;Publishers are specified in the &lt;code&gt;publishers&lt;/code&gt; section for each pipeline that is defined in the &lt;code&gt;pipeline.yaml&lt;/code&gt; and the &lt;code&gt;event_pipeline.yaml&lt;/code&gt; files.&lt;/p&gt;
-
 &lt;p&gt;Many different publishers are available. The following are the most common and important publishers:&lt;/p&gt;
-
 &lt;h3 id=&#34;gnocchi&#34;&gt;Gnocchi&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/gnocchi-logo.jpg&#34; alt=&#34;Gnocchi Logo&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;http://gnocchi.xyz/_images/gnocchi-logo.jpg&#34; alt=&#34;Gnocchi Logo&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.&lt;/p&gt;</description>
     </item>
     
@@ -191,15 +150,10 @@
       
       <guid>https://aalvarez.me/posts/understanding-ceilometer-transformers/</guid>
       <description>&lt;p&gt;Ceilometer &lt;strong&gt;transformers&lt;/strong&gt; are part of the Ceilometer &lt;strong&gt;pipeline&lt;/strong&gt;, which is the mechanism by which data is processed. In Ceilometer there is a pipeline for &lt;strong&gt;samples&lt;/strong&gt; and a pipeline for &lt;strong&gt;events&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;Configurations for these pipelines can be found in &lt;code&gt;/etc/ceilometer/pipeline.yaml&lt;/code&gt; and &lt;code&gt;/etc/ceilometer/event_pipeline.yaml&lt;/code&gt;.&lt;/p&gt;
-
 &lt;p&gt;Transformers are responsible for mutating data points and passing them to publishers that will send the data to external systems.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png&#34; alt=&#34;Ceilometer Pipeline&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/3-Pipeline.png&#34; alt=&#34;Ceilometer Pipeline&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Different types of transformers exist to mutate different types of data. The following is a table containing all the available transformer types:&lt;/p&gt;
-
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -207,41 +161,34 @@
 &lt;th align=&#34;center&#34;&gt;Reference name for configuration&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Accumulator&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;accumulator&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Aggregator&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;aggregator&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Arithmetic&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;arithmetic&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Rate of change&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;rate_of_change&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Unit conversion&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;unit_conversion&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;left&#34;&gt;Delta&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;delta&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
-&lt;p&gt;Let&amp;rsquo;s take a more detailed look into the accumulator transformer.&lt;/p&gt;</description>
+&lt;p&gt;Let&#39;s take a more detailed look into the accumulator transformer.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -251,15 +198,10 @@
       
       <guid>https://aalvarez.me/posts/ceilometer-and-openstack-notifications/</guid>
       <description>&lt;p&gt;Ceilometer has different mechanisms to collect data from OpenStack. One of these mechanisms, are &lt;strong&gt;notifications&lt;/strong&gt;, which will be explained in this post.&lt;/p&gt;
-
 &lt;h2 id=&#34;openstack-notifications&#34;&gt;OpenStack Notifications&lt;/h2&gt;
-
 &lt;p&gt;All OpenStack services (such as Nova Compute, Neutron, etc.) send notifications about executed operations or the state of the system. Many of these notifications carry information that can be metered such as &lt;strong&gt;CPU time&lt;/strong&gt; of a virtual machine instance created by the compute service.&lt;/p&gt;
-
 &lt;p&gt;OpenStack services send these notifications through an AMQP message queue. However, not all these notifications are consumed by the Telemetry service, as the intention is only to capture the billable events and notifications that can be used for monitoring or profiling purposes. The notification agent filters by the &lt;strong&gt;event type&lt;/strong&gt;. Each notification message contains the event type.&lt;/p&gt;
-
 &lt;p&gt;Here is a table with a few examples:&lt;/p&gt;
-
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -267,23 +209,19 @@
 &lt;th align=&#34;center&#34;&gt;Event types&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td align=&#34;center&#34;&gt;OpenStack Compute&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;code&gt;scheduler.run_instance.scheduled&lt;/code&gt;, &lt;code&gt;scheduler.select_destinations&lt;/code&gt;, &lt;code&gt;compute.instance.*&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
-
 &lt;tr&gt;
 &lt;td align=&#34;center&#34;&gt;OpenStack Image&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;code&gt;image.update&lt;/code&gt;, &lt;code&gt;image.upload&lt;/code&gt;,  &lt;code&gt;image.delete&lt;/code&gt;, &lt;code&gt;image.send&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
 &lt;p&gt;In Ceilometer, the &lt;strong&gt;notification agent&lt;/strong&gt; is reponsible for consuming these notifications from the AMQP message bus, and then transforming them into &lt;strong&gt;events&lt;/strong&gt; and &lt;strong&gt;samples&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/2-1-collection-notification.png&#34; alt=&#34;Notifications Collection&#34; /&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;img src=&#34;https://docs.openstack.org/developer/ceilometer/_images/2-1-collection-notification.png&#34; alt=&#34;Notifications Collection&#34;&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -293,17 +231,11 @@
       
       <guid>https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/</guid>
       <description>&lt;p&gt;Before beginning to &lt;a href=&#34;https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html&#34;&gt;contribute to OpenStack&lt;/a&gt;, it is necessary that we setup an ideal development environment for a smoother workflow.&lt;/p&gt;
-
 &lt;p&gt;In this post I will cover how to setup a Devstack development environment in a &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt; virtual machine using &lt;a href=&#34;http://www.vmware.com/&#34;&gt;VMware Player&lt;/a&gt;.&lt;/p&gt;
-
 &lt;h2 id=&#34;setting-up-the-ubuntu-virtual-machine&#34;&gt;Setting Up the Ubuntu Virtual Machine&lt;/h2&gt;
-
 &lt;p&gt;Make sure you have &lt;a href=&#34;http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html&#34;&gt;VMware Player&lt;/a&gt; installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a &lt;a href=&#34;http://releases.ubuntu.com/xenial/&#34;&gt;Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)&lt;/a&gt; for &lt;strong&gt;32-bit PC i836&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu &lt;code&gt;.iso&lt;/code&gt; image file when prompted. Proceed with the installation and select the &lt;em&gt;Erase Disk and Install Ubuntu&lt;/em&gt; option when prompted.&lt;/p&gt;
-
 &lt;p&gt;~&amp;gt; I tried using &lt;a href=&#34;https://www.virtualbox.org/&#34;&gt;VirtualBox&lt;/a&gt; for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend &lt;strong&gt;Ubuntu 16.04&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;Once the installation is finished, restart the virtual machine.&lt;/p&gt;</description>
     </item>
     
@@ -313,16 +245,11 @@
       <pubDate>Tue, 14 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/getting-started-on-contributing-to-openstack/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png&#34; alt=&#34;OpenStack&#34; /&gt;&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;img src=&#34;http://seeklogo.com/images/O/openstack-logo-4A37C6FB5B-seeklogo.com.png&#34; alt=&#34;OpenStack&#34;&gt;&lt;/p&gt;
 &lt;p&gt;I have started to become interested in contributing to the &lt;a href=&#34;https://www.openstack.org/&#34;&gt;OpenStack&lt;/a&gt; project. Starting to contribute to such a massive project can seem like a daunting task, and it is. It is only by arming yourself with the proper tools and knowledge prior to contributing, that you will have a smoother process. I created this blog post to smooth that process.&lt;/p&gt;
-
 &lt;h2 id=&#34;picking-a-project&#34;&gt;Picking a Project&lt;/h2&gt;
-
 &lt;p&gt;OpenStack is composed of many different projects for different purposes (compute, storage, networking, telemetry, etc.). Before you start contributing, you must have an idea of which project you actually want to contribute to. In my case I have decided on the &lt;a href=&#34;https://wiki.openstack.org/wiki/Telemetry&#34;&gt;Telemetry&lt;/a&gt; part, more specifically on &lt;strong&gt;Ceilometer&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;After you have picked a project, it is time to start reading its documentation and developer documentation to understand how it works. The &lt;a href=&#34;https://docs.openstack.org/developer/ceilometer/&#34;&gt;Ceilometer developer documentation&lt;/a&gt; offers good explanations and diagrams of its architecture and components.&lt;/p&gt;
-
 &lt;p&gt;&lt;a href=&#34;https://wiki.openstack.org/wiki/Ceilometer/Contributing&#34;&gt;Here&lt;/a&gt; is another nice guide on contributing to Ceilometer.&lt;/p&gt;</description>
     </item>
     
@@ -333,21 +260,15 @@
       
       <guid>https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/</guid>
       <description>&lt;p&gt;When monitoring OpenStack using the OpenStack Infrastructure ZenPack integrated with Ceilometer, it is possible to get fast virtual machine state changes (on/off powering, etc.) by receiving events sent from Ceilometer to Zenoss.&lt;/p&gt;
-
 &lt;p&gt;However I discovered that when trying to get the same effect for &lt;strong&gt;live migration&lt;/strong&gt; (live migrating a virtual machine from one compute node to another) scenarios, this would not work. I proceeded to investigate why.&lt;/p&gt;
-
 &lt;h2 id=&#34;ceilometer-dispatcher-live-migration-events&#34;&gt;Ceilometer Dispatcher Live Migration Events&lt;/h2&gt;
-
 &lt;p&gt;I decided that the first thing to check was if the &lt;a href=&#34;https://github.com/zenoss/ceilometer_zenoss&#34;&gt;Zenoss Ceilometer dispatcher&lt;/a&gt; was &lt;strong&gt;capturing&lt;/strong&gt; and &lt;strong&gt;sending&lt;/strong&gt; the live migration events to Zenoss. Indeed, the logs can be found in Ceilometer under &lt;code&gt;/var/log/ceilometer/ceilometer-collector.log&lt;/code&gt;:&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;2017-01-23 14:22:02.593 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&amp;lt;Event: 3538a01c-ab8d-4e64-b0ff-6e8fe270e06a, compute.instance.live_migration.post.dest.start, 2017-01-23 06:22:02.584049, &amp;lt;Trait: state_description 1 migrating&amp;gt; &amp;lt;Trait: memory_mb 2 512&amp;gt; &amp;lt;Trait: ephemeral_gb 2 0&amp;gt; &amp;lt;Trait: fixed_ips 1 [{u&#39;version&#39;: 4, u&#39;vif_mac&#39;: u&#39;fa:16:3e:6e:02:e9&#39;, u&#39;floating_ips&#39;: [], u&#39;label&#39;: u&#39;admin-net&#39;, u&#39;meta&#39;: {}, u&#39;address&#39;: u&#39;192.168.0.15&#39;, u&#39;type&#39;: u&#39;fixed&#39;}]&amp;gt; &amp;lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&amp;gt; &amp;lt;Trait: service 1 compute&amp;gt; &amp;lt;Trait: priority 1 info&amp;gt; &amp;lt;Trait: state 1 active&amp;gt; &amp;lt;Trait: launched_at 4 2017-01-23 05:06:41&amp;gt; &amp;lt;Trait: flavor_name 1 m1.tiny&amp;gt; &amp;lt;Trait: disk_gb 2 1&amp;gt; &amp;lt;Trait: display_name 1 pdcmtest&amp;gt; &amp;lt;Trait: root_gb 2 1&amp;gt; &amp;lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&amp;gt; &amp;lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&amp;gt; &amp;lt;Trait: vcpus 2 1&amp;gt; &amp;lt;Trait: host_name 1 ndc27-3222&amp;gt; &amp;lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&amp;gt;&amp;gt;])
 
 2017-01-23 14:22:02.771 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&amp;lt;Event: 8db64329-606c-4184-9b5b-eb815166cb17, compute.instance.live_migration.post.dest.end, 2017-01-23 06:22:02.761138, &amp;lt;Trait: state_description 1 &amp;gt; &amp;lt;Trait: memory_mb 2 512&amp;gt; &amp;lt;Trait: ephemeral_gb 2 0&amp;gt; &amp;lt;Trait: fixed_ips 1 [{u&#39;version&#39;: 4, u&#39;vif_mac&#39;: u&#39;fa:16:3e:6e:02:e9&#39;, u&#39;floating_ips&#39;: [], u&#39;label&#39;: u&#39;admin-net&#39;, u&#39;meta&#39;: {}, u&#39;address&#39;: u&#39;192.168.0.15&#39;, u&#39;type&#39;: u&#39;fixed&#39;}]&amp;gt; &amp;lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&amp;gt; &amp;lt;Trait: service 1 compute&amp;gt; &amp;lt;Trait: priority 1 info&amp;gt; &amp;lt;Trait: state 1 active&amp;gt; &amp;lt;Trait: launched_at 4 2017-01-23 05:06:41&amp;gt; &amp;lt;Trait: flavor_name 1 m1.tiny&amp;gt; &amp;lt;Trait: disk_gb 2 1&amp;gt; &amp;lt;Trait: display_name 1 pdcmtest&amp;gt; &amp;lt;Trait: root_gb 2 1&amp;gt; &amp;lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&amp;gt; &amp;lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&amp;gt; &amp;lt;Trait: vcpus 2 1&amp;gt; &amp;lt;Trait: host_name 1 ndc27-3222&amp;gt; &amp;lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&amp;gt;&amp;gt;])
 
 2017-01-23 14:22:02.782 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&amp;lt;Event: d0dc4f4a-454a-42c5-b767-386dc3e0d1f3, compute.instance.live_migration._post.end, 2017-01-23 06:22:02.776665, &amp;lt;Trait: state_description 1 migrating&amp;gt; &amp;lt;Trait: memory_mb 2 512&amp;gt; &amp;lt;Trait: ephemeral_gb 2 0&amp;gt; &amp;lt;Trait: fixed_ips 1 [{u&#39;version&#39;: 4, u&#39;vif_mac&#39;: u&#39;fa:16:3e:6e:02:e9&#39;, u&#39;floating_ips&#39;: [], u&#39;label&#39;: u&#39;admin-net&#39;, u&#39;meta&#39;: {}, u&#39;address&#39;: u&#39;192.168.0.15&#39;, u&#39;type&#39;: u&#39;fixed&#39;}]&amp;gt; &amp;lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&amp;gt; &amp;lt;Trait: service 1 compute&amp;gt; &amp;lt;Trait: priority 1 info&amp;gt; &amp;lt;Trait: state 1 active&amp;gt; &amp;lt;Trait: launched_at 4 2017-01-23 05:06:41&amp;gt; &amp;lt;Trait: flavor_name 1 m1.tiny&amp;gt; &amp;lt;Trait: disk_gb 2 1&amp;gt; &amp;lt;Trait: display_name 1 pdcmtest&amp;gt; &amp;lt;Trait: root_gb 2 1&amp;gt; &amp;lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&amp;gt; &amp;lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&amp;gt; &amp;lt;Trait: vcpus 2 1&amp;gt; &amp;lt;Trait: host_name 1 ndc27-3205&amp;gt; &amp;lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&amp;gt;&amp;gt;])
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice the &lt;code&gt;live_migration.post.dest.start&lt;/code&gt; and &lt;code&gt;live_migration.post.dest.end&lt;/code&gt; logs.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Notice the &lt;code&gt;live_migration.post.dest.start&lt;/code&gt; and &lt;code&gt;live_migration.post.dest.end&lt;/code&gt; logs.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -357,20 +278,16 @@
       
       <guid>https://aalvarez.me/posts/keystone-interface-in-juju-charms/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://jujucharms.com/docs/1.18/authors-interfaces&#34;&gt;Juju Charms interfaces&lt;/a&gt; make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.&lt;/p&gt;
-
 &lt;p&gt;In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:&lt;/p&gt;
-
 &lt;p&gt;&lt;code&gt;juju add-relation keystone myservice&lt;/code&gt;&lt;/p&gt;
-
 &lt;h2 id=&#34;juju-relations&#34;&gt;Juju Relations&lt;/h2&gt;
-
 &lt;p&gt;Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an &lt;strong&gt;interface&lt;/strong&gt;. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the &lt;em&gt;keystone Identity data&lt;/em&gt;. For this, we use the &lt;strong&gt;&lt;a href=&#34;https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin&#34;&gt;keystone-admin interface&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;With this in mind, we configure our charm to require this relation and interface in &lt;code&gt;metadata.yaml&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
 requires&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
   identity-admin&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-    interface&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; keystone-admin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    interface&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; keystone-admin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

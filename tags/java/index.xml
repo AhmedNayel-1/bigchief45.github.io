@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>java on Andrés Álvarez</title>
@@ -17,16 +17,11 @@
       <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/custom-file-types-in-netbeans-platform/</guid>
-      <description>&lt;p&gt;If your desktop Java application needs to deal with very particular or special kinds of files, we can make use of Netbeans Platform&amp;rsquo;s custom File Type feature to define a file that our application can recognize, and display visual and editing components to view and edit the file&amp;rsquo;s data.&lt;/p&gt;
-
-&lt;p&gt;Moreover, we can also make use of Netbeans Platform&amp;rsquo;s &lt;em&gt;Favorites&lt;/em&gt; pane, which displays a tree view of a file system, where we can open the special files we need to work with.&lt;/p&gt;
-
+      <description>&lt;p&gt;If your desktop Java application needs to deal with very particular or special kinds of files, we can make use of Netbeans Platform&#39;s custom File Type feature to define a file that our application can recognize, and display visual and editing components to view and edit the file&#39;s data.&lt;/p&gt;
+&lt;p&gt;Moreover, we can also make use of Netbeans Platform&#39;s &lt;em&gt;Favorites&lt;/em&gt; pane, which displays a tree view of a file system, where we can open the special files we need to work with.&lt;/p&gt;
 &lt;h2 id=&#34;creating-a-new-module&#34;&gt;Creating a New Module&lt;/h2&gt;
-
 &lt;p&gt;For this article, we are going to create a new file type for CSV (Comma Separated Value) files. When we open these files, our application will display a visual representation in the form of an editable JTable.&lt;/p&gt;
-
 &lt;p&gt;All this functionaltiy will live in its own Netbeans Platform Module. Meaning that it can be plugged in into different applications in a modular fashion.&lt;/p&gt;
-
 &lt;p&gt;We are going to create the module and build it using &lt;a href=&#34;https://maven.apache.org/&#34;&gt;Maven&lt;/a&gt;, since we are also going to be adding some functionalities that depend on external libraries that we can easily include in our project with Maven. But you can also just create the module without Maven as well. To create the module go to &lt;em&gt;New Project &amp;gt; Maven &amp;gt; Netbeans Module&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
@@ -36,17 +31,15 @@
       <pubDate>Wed, 20 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>https://aalvarez.me/posts/java-jtable-tricks/</guid>
-      <description>&lt;p&gt;Java&amp;rsquo;s JTable is a GUI component that has been around for many many years. While a bit difficult to work with, it&amp;rsquo;s almost a mandatory component in an application that displays a lot of data.&lt;/p&gt;
-
+      <description>&lt;p&gt;Java&#39;s JTable is a GUI component that has been around for many many years. While a bit difficult to work with, it&#39;s almost a mandatory component in an application that displays a lot of data.&lt;/p&gt;
 &lt;p&gt;In this post I share some nice tricks for working with JTables in Java applications.&lt;/p&gt;
-
 &lt;h2 id=&#34;scrolling&#34;&gt;Scrolling&lt;/h2&gt;
-
 &lt;p&gt;A JTable by itself does not provide any scrolling when handling a lot of data. To fix this, we need to place the table inside a &lt;code&gt;JScrollPane&lt;/code&gt; component. Additionally, we can place this &lt;code&gt;JScrollPane&lt;/code&gt; into a &lt;code&gt;JPanel&lt;/code&gt; in our window:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;myPanel&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;JScrollPane&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myTable&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;JScrollPane&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;VERTICAL_SCROLLBAR_AS_NEEDED&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;JScrollPane&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;HORIZONTAL_SCROLLBAR_AS_NEEDED&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -56,13 +49,9 @@
       
       <guid>https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/</guid>
       <description>&lt;p&gt;Many Java file upload &lt;a href=&#34;http://www.codejava.net/coding/swing-application-to-upload-files-to-ftp-server-with-progress-bar&#34;&gt;tutorials&lt;/a&gt; teach you how to show the current progress of a file upload using a JProgressBar in the user interface, usually placed in the main JFrame.&lt;/p&gt;
-
 &lt;p&gt;However I was trying make this much more visually appealing, like the way &lt;a href=&#34;https://winscp.net/eng/index.php&#34;&gt;WinSCP&lt;/a&gt; does it:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/scp_file_upload.png&#34; alt=&#34;SCP File Upload&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/scp_file_upload.png&#34; alt=&#34;SCP File Upload&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This will require the use of another Swing class: JDialog. Basically the flow of the program will be like this:&lt;/p&gt;
-
 &lt;ol&gt;
 &lt;li&gt;Main class with main method calls &lt;code&gt;SwingWorker&lt;/code&gt; class.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;SwingWorker&lt;/code&gt; is in charge of doing the &lt;em&gt;actual&lt;/em&gt; upload. It will also create an instance of a &lt;code&gt;JDialog&lt;/code&gt; to show the current upload progress.&lt;/li&gt;

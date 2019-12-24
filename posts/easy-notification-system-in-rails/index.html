@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Easy Notification System in Rails",
     "headline" : "Easy Notification System in Rails",
-    "description" : "\x3cp\x3eHaving a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.\x3c\/p\x3e\n\n\x3cp\x3eThis post is heavily inspired by \x3ca href=\x22https:\/\/gorails.com\/episodes\/in-app-navbar-notifications?autoplay=1\x22\x3eChris Oliver\x26rsquo;s In-App Navbar Notifications tutorial\x3c\/a\x3e, with a few personal changes and additions.\x3c\/p\x3e\n\n\x3cp\x3e\x3cem\x3eRead \x3ca href=\x22\/posts\/easy-notification-system-in-rails-part-2.html\x22\x3epart 2\x3c\/a\x3e of this series.\x3c\/em\x3e\x3c\/p\x3e\n\n\x3ch2 id=\x22models-and-routes\x22\x3eModels and Routes\x3c\/h2\x3e\n\n\x3cp\x3eBefore starting with the models, lets quickly define the application resources in our routes:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# config\/routes.rb\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRails\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eapplication\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eroutes\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3edraw\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3edevise_for\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:users\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:posts\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:comments\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:notifications\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eonly\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:index\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\n\x3ch3 id=\x22the-notification-model\x22\x3eThe Notification Model\x3c\/h3\x3e\n\n\x3cp\x3eWe will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:\x3c\/p\x3e\n\n\x3cpre\x3e\x3ccode\x3erails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string\n\x3c\/code\x3e\x3c\/pre\x3e\n\n\x3cp\x3eHere is an explanation for some of the fields for the above model:\x3c\/p\x3e\n\n\x3cul\x3e\n\x3cli\x3e\x3ccode\x3erecipient_id\x3c\/code\x3e: Represents the user in your application which will receive the notification.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eactor_id\x3c\/code\x3e: Represents the user in your application which \x3cem\x3etriggered\x3c\/em\x3e the notification.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eread_at\x3c\/code\x3e: The time when the notification was read. A value of \x3ccode\x3enil\x3c\/code\x3e is used for unread notifications.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3enotifiable_id\x3c\/code\x3e: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3enotifiable_type\x3c\/code\x3e: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object\x26rsquo;s class.\x3c\/li\x3e\n\x3c\/ul\x3e",
+    "description" : "\x3cp\x3eHaving a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.\x3c\/p\x3e\n\x3cp\x3eThis post is heavily inspired by \x3ca href=\x22https:\/\/gorails.com\/episodes\/in-app-navbar-notifications?autoplay=1\x22\x3eChris Oliver\x27s In-App Navbar Notifications tutorial\x3c\/a\x3e, with a few personal changes and additions.\x3c\/p\x3e\n\x3cp\x3e\x3cem\x3eRead \x3ca href=\x22\/posts\/easy-notification-system-in-rails-part-2.html\x22\x3epart 2\x3c\/a\x3e of this series.\x3c\/em\x3e\x3c\/p\x3e\n\x3ch2 id=\x22models-and-routes\x22\x3eModels and Routes\x3c\/h2\x3e\n\x3cp\x3eBefore starting with the models, lets quickly define the application resources in our routes:\x3c\/p\x3e\n\x3cdiv class=\x22highlight\x22\x3e\x3cpre style=\x22color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4\x22\x3e\x3ccode class=\x22language-ruby\x22 data-lang=\x22ruby\x22\x3e\x3cspan style=\x22color:#75715e\x22\x3e# config\/routes.rb\x3c\/span\x3e\n\x3cspan style=\x22color:#00a8c8\x22\x3eRails\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eapplication\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3eroutes\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e.\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3edraw\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3edevise_for\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:users\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:posts\x3c\/span\x3e \x3cspan style=\x22color:#00a8c8\x22\x3edo\x3c\/span\x3e\n    \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:comments\x3c\/span\x3e\n  \x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\n  \x3cspan style=\x22color:#111\x22\x3eresources\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3e:notifications\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e,\x3c\/span\x3e \x3cspan style=\x22color:#d88200\x22\x3eonly\x3c\/span\x3e\x3cspan style=\x22color:#111\x22\x3e:\x3c\/span\x3e \x3cspan style=\x22color:#f92672\x22\x3e[\x3c\/span\x3e\x3cspan style=\x22color:#d88200\x22\x3e:index\x3c\/span\x3e\x3cspan style=\x22color:#f92672\x22\x3e]\x3c\/span\x3e\n\n\x3cspan style=\x22color:#00a8c8\x22\x3eend\x3c\/span\x3e\n\x3c\/code\x3e\x3c\/pre\x3e\x3c\/div\x3e\x3ch3 id=\x22the-notification-model\x22\x3eThe Notification Model\x3c\/h3\x3e\n\x3cp\x3eWe will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3erails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eHere is an explanation for some of the fields for the above model:\x3c\/p\x3e\n\x3cul\x3e\n\x3cli\x3e\x3ccode\x3erecipient_id\x3c\/code\x3e: Represents the user in your application which will receive the notification.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eactor_id\x3c\/code\x3e: Represents the user in your application which \x3cem\x3etriggered\x3c\/em\x3e the notification.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3eread_at\x3c\/code\x3e: The time when the notification was read. A value of \x3ccode\x3enil\x3c\/code\x3e is used for unread notifications.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3enotifiable_id\x3c\/code\x3e: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.\x3c\/li\x3e\n\x3cli\x3e\x3ccode\x3enotifiable_type\x3c\/code\x3e: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object\x27s class.\x3c\/li\x3e\n\x3c\/ul\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2017-09-04 00:00:00 \x2b0000 UTC",
     "dateModified" : "2017-09-04 00:00:00 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/easy-notification-system-in-rails\/",
-    "wordCount" : "1303",
+    "wordCount" : "1304",
     "keywords" : [ "ruby","rails","coffeescript","javascript","web dev","Blog" ]
 }
 </script>
@@ -136,13 +136,9 @@ if (!doNotTrack) {
   <time datetime=2017-09-04T00:00:00Z class="post-date">Mon, Sep 4, 2017</time>
 
   <p>Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.</p>
-
-<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver&rsquo;s In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
-
+<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver's In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
 <p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
-
 <h2 id="models-and-routes">Models and Routes</h2>
-
 <p>Before starting with the models, lets quickly define the application resources in our routes:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
 <span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
@@ -155,73 +151,60 @@ if (!doNotTrack) {
 
   <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<h3 id="the-notification-model">The Notification Model</h3>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><h3 id="the-notification-model">The Notification Model</h3>
 <p>We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:</p>
-
 <pre><code>rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
-</code></pre>
-
-<p>Here is an explanation for some of the fields for the above model:</p>
-
+</code></pre><p>Here is an explanation for some of the fields for the above model:</p>
 <ul>
 <li><code>recipient_id</code>: Represents the user in your application which will receive the notification.</li>
 <li><code>actor_id</code>: Represents the user in your application which <em>triggered</em> the notification.</li>
 <li><code>read_at</code>: The time when the notification was read. A value of <code>nil</code> is used for unread notifications.</li>
 <li><code>notifiable_id</code>: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.</li>
-<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object&rsquo;s class.</li>
+<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object's class.</li>
 </ul>
-
-<p>Now let&rsquo;s take a look at how the notification model will interact with the other models through associations:</p>
+<p>Now let's take a look at how the notification model will interact with the other models through associations:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/notification.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">Notification</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationRecord</span>
   <span style="color:#111">belongs_to</span> <span style="color:#d88200">:recipient</span><span style="color:#111">,</span> <span style="color:#d88200">class_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;User&#39;</span>
   <span style="color:#111">belongs_to</span> <span style="color:#d88200">:actor</span><span style="color:#111">,</span> <span style="color:#d88200">class_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;User&#39;</span>
   <span style="color:#111">belongs_to</span> <span style="color:#d88200">:notifiable</span><span style="color:#111">,</span> <span style="color:#d88200">polymorphic</span><span style="color:#111">:</span> <span style="color:#00a8c8">true</span>
 
-  <span style="color:#111">scope</span> <span style="color:#d88200">:unread</span><span style="color:#111">,</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">{</span> <span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">read_at</span><span style="color:#111">:</span> <span style="color:#00a8c8">nil</span><span style="color:#111">)</span> <span style="color:#111">}</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Since the foreign keys for <code>:recipient</code> and <code>:actor</code> do not match the user model, we must specify the <code>User</code> class name to indicate that these objects are user objects.</p>
-
+  <span style="color:#111">scope</span> <span style="color:#d88200">:unread</span><span style="color:#111">,</span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span> <span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">read_at</span><span style="color:#111">:</span> <span style="color:#00a8c8">nil</span><span style="color:#111">)</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Since the foreign keys for <code>:recipient</code> and <code>:actor</code> do not match the user model, we must specify the <code>User</code> class name to indicate that these objects are user objects.</p>
 <p>We also add a scope to retrieve all unread notifications from the database.</p>
-
 <h3 id="the-user-model">The User Model</h3>
-
 <p>For the user model (assuming we are using <a href="https://github.com/plataformatec/devise">Devise</a>), we need to specify that a user has many notifications:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/user.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">User</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationRecord</span>
   <span style="color:#75715e"># ...</span>
   <span style="color:#111">has_many</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">foreign_key</span><span style="color:#111">:</span> <span style="color:#d88200">:recipient_id</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<h3 id="the-notifiable-models">The Notifiable Models</h3>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><h3 id="the-notifiable-models">The Notifiable Models</h3>
 <p>Our application will consist of one or many models that can be <em>notifable</em>. This means that when an action is done with these models by an actor (user), notifications will be generated to the corresponding recipients (users).</p>
-
 <p>In this blog post, I am going to use a <code>Post</code> and <code>Comment</code> model as examples:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/post.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">Post</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationRecord</span>
   <span style="color:#111">belongs_to</span> <span style="color:#d88200">:user</span>
   <span style="color:#111">has_many</span> <span style="color:#d88200">:comments</span><span style="color:#111">,</span> <span style="color:#d88200">dependent</span><span style="color:#111">:</span> <span style="color:#d88200">:destroy</span>
-<span style="color:#00a8c8">end</span></code></pre></div><div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/comment.rb</span>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/comment.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">Comment</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationRecord</span>
   <span style="color:#111">belongs_to</span> <span style="color:#d88200">:user</span>
   <span style="color:#111">belongs_to</span> <span style="color:#d88200">:post</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Also let&rsquo;s not forget to update the user&rsquo;s associations accordingly:</p>
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Also let's not forget to update the user's associations accordingly:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/user.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">User</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationRecord</span>
   <span style="color:#75715e"># ...</span>
   <span style="color:#111">has_many</span> <span style="color:#d88200">:posts</span><span style="color:#111">,</span> <span style="color:#d88200">dependent</span><span style="color:#111">:</span> <span style="color:#d88200">:destroy</span>
   <span style="color:#111">has_many</span> <span style="color:#d88200">:comments</span><span style="color:#111">,</span> <span style="color:#d88200">dependent</span><span style="color:#111">:</span> <span style="color:#d88200">:edestroy</span>
-<span style="color:#00a8c8">end</span></code></pre></div>
-<h2 id="creating-notifications">Creating Notifications</h2>
-
-<p>In Chris Oliver&rsquo;s tutorial, notifications are created in the controller, when the notifiable object is saved in the database.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><h2 id="creating-notifications">Creating Notifications</h2>
+<p>In Chris Oliver's tutorial, notifications are created in the controller, when the notifiable object is saved in the database.</p>
 <p>I prefer creating notifications in the notifiable object model, using <a href="http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html">ActiveRecord Callbacks</a>.</p>
-
-<p>For example, let&rsquo;s say we want to create a notification for all people involved in a <code>Post</code>, every time a <code>Comment</code> is created in this post. We can create a callback method in the <code>Comment</code> model like this:</p>
+<p>For example, let's say we want to create a notification for all people involved in a <code>Post</code>, every time a <code>Comment</code> is created in this post. We can create a callback method in the <code>Comment</code> model like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/comment.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">Comment</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationRecord</span>
   <span style="color:#111">after_create</span> <span style="color:#d88200">:create_notifications</span>
@@ -230,78 +213,66 @@ if (!doNotTrack) {
 
   <span style="color:#00a8c8">private</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">recipients</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">recipients</span>
     <span style="color:#75715e"># Up to your own implementation</span>
   <span style="color:#00a8c8">end</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">create_notifications</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">create_notifications</span>
     <span style="color:#111">recipients</span><span style="color:#f92672">.</span><span style="color:#111">each</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">recipient</span><span style="color:#f92672">|</span>
       <span style="color:#00a8c8">Notification</span><span style="color:#f92672">.</span><span style="color:#111">create</span><span style="color:#111">(</span><span style="color:#d88200">recipient</span><span style="color:#111">:</span> <span style="color:#111">recipient</span><span style="color:#111">,</span> <span style="color:#d88200">actor</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">user</span><span style="color:#111">,</span>
         <span style="color:#d88200">action</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;posted&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">notifiable</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">end</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>You should implement the <code>recipients</code> method in a way that you can obtain an array of all the recipient users you want to send the notifications to.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>You should implement the <code>recipients</code> method in a way that you can obtain an array of all the recipient users you want to send the notifications to.</p>
 <p>Now every time a <code>Comment</code> is successfully created, the <code>create_notifications</code> method will be fired, and notifications will be created for each recipient.</p>
-
 <p>Pay close attention to the notification action. In this case we are using a string with a value of <code>'posted'</code>. We will use this later to nicely render notification templates.</p>
-
 <p>If you would also like to generate notifications for another model (like <code>Post</code>), you can implement again the approach above, modifying the <code>recipients</code> method accordingly.</p>
-
 <h2 id="displaying-notifications">Displaying Notifications</h2>
-
-<p>We will also want to display notifications in our application&rsquo;s navbar, using Bootstrap 3 and JQuery. But before that we need to make it possible for JQuery to send a request to an endpoint to retrieve all the current logged in user&rsquo;s unread notifications.</p>
-
+<p>We will also want to display notifications in our application's navbar, using Bootstrap 3 and JQuery. But before that we need to make it possible for JQuery to send a request to an endpoint to retrieve all the current logged in user's unread notifications.</p>
 <h3 id="the-controller">The Controller</h3>
-
-<p>First, let&rsquo;s set up a notifications controller to gather the notifications for the current user:</p>
+<p>First, let's set up a notifications controller to gather the notifications for the current user:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/controllers/notifications_controller.rb</span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">NotificationsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ApplicationController</span>
   <span style="color:#111">before_action</span> <span style="color:#d88200">:authenticate_user!</span>
   <span style="color:#111">before_action</span> <span style="color:#d88200">:set_notifications</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">index</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">index</span>
   <span style="color:#00a8c8">end</span>
 
   <span style="color:#00a8c8">private</span>
 
-  <span style="color:#00a8c8">def</span> <span style="color:#75af00">set_notifications</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00"></span><span style="color:#f92672"></span><span style="color:#75af00">set_notifications</span>
     <span style="color:#111">@notifications</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Notification</span><span style="color:#f92672">.</span><span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">recipient</span><span style="color:#111">:</span> <span style="color:#111">current_user</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">unread</span>
   <span style="color:#00a8c8">end</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>Notice how we are usign Devise&rsquo;s <code>current_user</code> helper and the <code>unread</code> scope we created in the notification model.</p>
-
-<h3 id="generating-notification-s-json">Generating Notification&rsquo;s JSON</h3>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>Notice how we are usign Devise's <code>current_user</code> helper and the <code>unread</code> scope we created in the notification model.</p>
+<h3 id="generating-notifications-json">Generating Notification's JSON</h3>
 <p>We can use the handy <a href="https://github.com/rails/jbuilder">JBuilder</a> to generate JSON in this endpoint. Create a JBuilder view in <code>app/views/notifications/index.json.jbuilder</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">array!</span> <span style="color:#111">@notifications</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">notification</span><span style="color:#f92672">|</span>
   <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">id</span> <span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">id</span>
-  <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">template</span> <span style="color:#111">render</span> <span style="color:#d88200">partial</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;notifications/</span><span style="color:#d88200">#{</span><span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">notifiable_type</span><span style="color:#f92672">.</span><span style="color:#111">underscore</span><span style="color:#f92672">.</span><span style="color:#111">pluralize</span><span style="color:#d88200">}</span><span style="color:#d88200">/</span><span style="color:#d88200">#{</span><span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">action</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">locals</span><span style="color:#111">:</span> <span style="color:#111">{</span><span style="color:#d88200">notification</span><span style="color:#111">:</span> <span style="color:#111">notification</span><span style="color:#111">},</span> <span style="color:#d88200">formats</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:html</span><span style="color:#f92672">]</span>
+  <span style="color:#111">json</span><span style="color:#f92672">.</span><span style="color:#111">template</span> <span style="color:#111">render</span> <span style="color:#d88200">partial</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">notifications/</span><span style="color:#d88200">#{</span><span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">notifiable_type</span><span style="color:#f92672">.</span><span style="color:#111">underscore</span><span style="color:#f92672">.</span><span style="color:#111">pluralize</span><span style="color:#d88200">}</span><span style="color:#d88200">/</span><span style="color:#d88200">#{</span><span style="color:#111">notification</span><span style="color:#f92672">.</span><span style="color:#111">action</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">locals</span><span style="color:#111">:</span> <span style="color:#111">{</span><span style="color:#d88200">notification</span><span style="color:#111">:</span> <span style="color:#111">notification</span><span style="color:#111">}</span><span style="color:#111">,</span> <span style="color:#d88200">formats</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:html</span><span style="color:#f92672">]</span>
 
-<span style="color:#00a8c8">end</span></code></pre></div>
-<p>With this configuration, JSON will be returned when the <code>/notifications.json</code> endpoint is requested.</p>
-
+<span style="color:#00a8c8">end</span>
+</code></pre></div><p>With this configuration, JSON will be returned when the <code>/notifications.json</code> endpoint is requested.</p>
 <p>In this JSON, the most important thing is how we are returning a HTML <strong>partial</strong> in the <code>template</code> field. Moreover, we are accessing this partial in our views using the notifiable object and the action. Meaning that for the comment notifications we already implemented, the partial should be found in <code>app/views/notifications/comments/_posted.html.erb</code>.</p>
-
 <h3 id="notification-partials">Notification Partials</h3>
-
-<p>Let&rsquo;s go ahead and create this partial. I will be using Bootstrap 3 to create notifications as <a href="https://getbootstrap.com/docs/3.3/components/#media">media objects</a> and <a href="https://getbootstrap.com/docs/3.3/javascript/#dropdowns">dropdown items</a> in the navbar:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">-# app/views/notifications/comments/_posted.html.haml
+<p>Let's go ahead and create this partial. I will be using Bootstrap 3 to create notifications as <a href="https://getbootstrap.com/docs/3.3/components/#media">media objects</a> and <a href="https://getbootstrap.com/docs/3.3/javascript/#dropdowns">dropdown items</a> in the navbar:</p>
+<pre><code class="language-haml" data-lang="haml">-# app/views/notifications/comments/_posted.html.haml
 
 %li
-  = link_to notification.notifiable, &#39;data-behavior&#39;: &#39;notification-link&#39;, id: notification.id do
+  = link_to notification.notifiable, 'data-behavior': 'notification-link', id: notification.id do
     .media
       .media-left.media-middle
-        / Maybe put the actor&#39;s avatar here
-        / = image_tag &#39;...&#39;
+        / Maybe put the actor's avatar here
+        / = image_tag '...'
       .media-body
         %span.small.text-muted= notification.created_at
         %p
           %strong= notification.actor.full_name
-          = t(&#34;notifications.actions.#{notification.action}&#34;)
+          = t(&quot;notifications.actions.#{notification.action}&quot;)
           a new
           = notification.notifiable.class.model_name.human.downcase
           in
@@ -309,73 +280,61 @@ if (!doNotTrack) {
         %p.small.text-muted
           %i= truncate(notification.notifiable.body, length: 100)
 
-%li.divider</code></pre></div>
-<p>Obviously the partial implementation above will depend on you on how you want it to look and what information you want to provide.</p>
-
+%li.divider
+</code></pre><p>Obviously the partial implementation above will depend on you on how you want it to look and what information you want to provide.</p>
 <p>Pay close attention to the data attribute <code>data-behavior</code> we are using inside the <code>link_to</code> tag. Later this will allow us to be able to mark this specific notification as read.</p>
-
 <h3 id="displaying-the-notifications-with-jquery">Displaying the Notifications with JQuery</h3>
-
-<p>With this partial done, its HTML will be passed to our CoffeeScript to be appended into the DOM. Let&rsquo;s take a look at the CoffeeScript code that does this:</p>
+<p>With this partial done, its HTML will be passed to our CoffeeScript to be appended into the DOM. Let's take a look at the CoffeeScript code that does this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-coffeescript" data-lang="coffeescript"><span style="color:#75715e"># app/assets/javascripts/notifications.coffee
 </span><span style="color:#75715e"></span>
 <span style="color:#75af00">$</span> <span style="color:#75af00">-&gt;</span>
   <span style="color:#00a8c8">class</span> <span style="color:#75af00">Notifications</span>
     <span style="color:#111">constructor: </span><span style="color:#75af00">-&gt;</span>
-      <span style="color:#75af00">@getNewNotifications</span><span style="color:#111">()</span>
-      <span style="color:#111">@notifications = </span><span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;[data-behavior=&#39;notifications&#39;]&#34;</span><span style="color:#111">)</span>
+      <span style="color:#75af00">@</span><span style="color:#75af00">getNewNotifications</span><span style="color:#111">(</span><span style="color:#111">)</span>
+      <span style="color:#111">@notifications = </span><span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">[data-behavior=</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">notifications</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">]</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
-      <span style="color:#00a8c8">if</span> <span style="color:#75af00">@notifications</span><span style="color:#111">.</span><span style="color:#75af00">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
-        <span style="color:#75af00">@handleSuccess</span> <span style="color:#75af00">@notifications</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">(</span><span style="color:#d88200">&#39;notifications&#39;</span><span style="color:#111">)</span>
+      <span style="color:#00a8c8">if</span> <span style="color:#75af00">@</span><span style="color:#75af00">notifications</span><span style="color:#111">.</span><span style="color:#75af00">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#75af00">@</span><span style="color:#75af00">handleSuccess</span> <span style="color:#75af00">@</span><span style="color:#75af00">notifications</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">(</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">notifications</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
 
     <span style="color:#111">getNewNotifications: </span><span style="color:#75af00">-&gt;</span>
       <span style="color:#75af00">$</span><span style="color:#111">.</span><span style="color:#75af00">ajax</span><span style="color:#111">(</span>
-        <span style="color:#111">url: </span><span style="color:#d88200">&#39;/notifications.json&#39;</span>
-        <span style="color:#111">dataType: </span><span style="color:#d88200">&#39;JSON&#39;</span>
-        <span style="color:#111">method: </span><span style="color:#d88200">&#39;GET&#39;</span>
-        <span style="color:#111">success: </span><span style="color:#75af00">@handleSuccess</span>
+        <span style="color:#111">url: </span><span style="color:#d88200">&#39;</span><span style="color:#d88200">/notifications.json</span><span style="color:#d88200">&#39;</span>
+        <span style="color:#111">dataType: </span><span style="color:#d88200">&#39;</span><span style="color:#d88200">JSON</span><span style="color:#d88200">&#39;</span>
+        <span style="color:#111">method: </span><span style="color:#d88200">&#39;</span><span style="color:#d88200">GET</span><span style="color:#d88200">&#39;</span>
+        <span style="color:#111">success: </span><span style="color:#75af00">@</span><span style="color:#75af00">handleSuccess</span>
       <span style="color:#111">)</span>
 
     <span style="color:#111">handleSuccess: </span><span style="color:#75af00">(data) =&gt;</span>
       <span style="color:#111">items = </span><span style="color:#75af00">$</span><span style="color:#111">.</span><span style="color:#75af00">map</span> <span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#75af00">(notification) -&gt;</span>
         <span style="color:#75af00">notifications</span><span style="color:#111">.</span><span style="color:#75af00">template</span>
 
-      <span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;[data-behavior=&#39;unread-count&#39;]&#34;</span><span style="color:#111">).</span><span style="color:#75af00">text</span><span style="color:#111">(</span><span style="color:#75af00">items</span><span style="color:#111">.</span><span style="color:#75af00">length</span><span style="color:#111">)</span>
-      <span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;[data-behavior=&#39;notification-items&#39;]&#34;</span><span style="color:#111">).</span><span style="color:#75af00">append</span><span style="color:#111">(</span><span style="color:#75af00">items</span><span style="color:#111">)</span></code></pre></div>
-<p>With this CoffeeScript code, we send a request to <code>/notifications.json</code> and receive a JSON array of notification templates from the JBuilder view. We then insert an array of these templates into the HTML element that has the <code>data-behavior='notification-items</code> attribute.</p>
-
-<p>For our example, this element will be an element inside a Bootstrap navbar. Let&rsquo;s take a look at it:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haml" data-lang="haml">#- app/views/shared/_navbar.html.haml
+      <span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">[data-behavior=</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">unread-count</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">]</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">text</span><span style="color:#111">(</span><span style="color:#75af00">items</span><span style="color:#111">.</span><span style="color:#75af00">length</span><span style="color:#111">)</span>
+      <span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#d88200">[data-behavior=</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">notification-items</span><span style="color:#d88200">&#39;</span><span style="color:#d88200">]</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span><span style="color:#111">.</span><span style="color:#75af00">append</span><span style="color:#111">(</span><span style="color:#75af00">items</span><span style="color:#111">)</span>
+</code></pre></div><p>With this CoffeeScript code, we send a request to <code>/notifications.json</code> and receive a JSON array of notification templates from the JBuilder view. We then insert an array of these templates into the HTML element that has the <code>data-behavior='notification-items</code> attribute.</p>
+<p>For our example, this element will be an element inside a Bootstrap navbar. Let's take a look at it:</p>
+<pre><code class="language-haml" data-lang="haml">#- app/views/shared/_navbar.html.haml
 
           / Notifications
-          %li.dropdown{ &#39;data-behavior&#39;: &#39;notifications&#39; }
-            %a.dropdown-toggle{ &#39;data-toggle&#39;: &#39;dropdown&#39;, role: &#39;button&#39;, &#39;aria-expanded&#39;: false }
+          %li.dropdown{ 'data-behavior': 'notifications' }
+            %a.dropdown-toggle{ 'data-toggle': 'dropdown', role: 'button', 'aria-expanded': false }
               %span.glyphicon.glyphicon-bell
-              %span.badge{ &#39;data-behavior&#39;: &#39;unread-count&#39; }
+              %span.badge{ 'data-behavior': 'unread-count' }
               %span.caret
 
-            %ul#notifications.dropdown-menu{ &#39;data-behavior&#39;: &#39;notification-items&#39; }
+            %ul#notifications.dropdown-menu{ 'data-behavior': 'notification-items' }
               %li.dropdown-header.text-uppercase Notification
               - if current_user.notifications.unread.empty?
                 %li
                   .container-fluid
-                    %p.text-center.small No new notifications</code></pre></div>
-<p>I have skipped some of the Navbar code for readability purposes. The key things in this navbar HTML are the elements with the data attributes. JQuery will recognize these attributes and populate the HTML template of each notification into it.</p>
-
+                    %p.text-center.small No new notifications
+</code></pre><p>I have skipped some of the Navbar code for readability purposes. The key things in this navbar HTML are the elements with the data attributes. JQuery will recognize these attributes and populate the HTML template of each notification into it.</p>
 <p>Here is an example of how this would look like, from a personal project of mine:</p>
-
-<p><img src="https://aalvarez.me/posts/easy-notification-system-in-rails/navbar_notifications.png" alt="Navbar Notifications" /></p>
-
+<p><img src="https://aalvarez.me/posts/easy-notification-system-in-rails/navbar_notifications.png" alt="Navbar Notifications"></p>
 <p>Notice the notification partials in action. You can create different partials for different notifiable models <strong><em>and</em></strong> different actions as well.</p>
-
 <h2 id="closing-thoughts">Closing Thoughts</h2>
-
 <p>So far we managed to create notifications from different models to multiple user recipients in our application. We then managed to display all unread notifications for the current logged in user using JQuery and very handy notification partials.</p>
-
 <p>Stay tuned for <strong>part two</strong> where I will go over on how to mark as read <em>all</em> notifications as well as <em>individual</em> notifications.</p>
-
 <h2 id="references">References</h2>
-
 <ul>
 <li><a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">In-App Navbar Notifications</a></li>
 </ul>

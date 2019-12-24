@@ -3,7 +3,7 @@
 <head>
   <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.61.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Custom Log Files With Django and Elastic Beanstalk",
     "headline" : "Custom Log Files With Django and Elastic Beanstalk",
-    "description" : "\x3cp\x3eWith Amazon ElasticBeanstalk it is possible to view log files of your deployed application. However, ElasticBeanstalk by default only returns certain logs like \x3ccode\x3e\/var\/log\/httpd\/error_log\x3c\/code\x3e or \x3ccode\x3e\/var\/log\/httpd\/access_log\x3c\/code\x3e if you are using Apache httpd.\x3c\/p\x3e\n\n\x3cp\x3eIf you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk console.\x3c\/p\x3e\n\n\x3cp\x3eIn this post I will show you how to achieve this, using Django as our backend framework.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eWith Amazon ElasticBeanstalk it is possible to view log files of your deployed application. However, ElasticBeanstalk by default only returns certain logs like \x3ccode\x3e\/var\/log\/httpd\/error_log\x3c\/code\x3e or \x3ccode\x3e\/var\/log\/httpd\/access_log\x3c\/code\x3e if you are using Apache httpd.\x3c\/p\x3e\n\x3cp\x3eIf you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk console.\x3c\/p\x3e\n\x3cp\x3eIn this post I will show you how to achieve this, using Django as our backend framework.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2019-02-22 17:49:21 \x2b0000 UTC",
     "dateModified" : "2019-02-22 17:49:21 \x2b0000 UTC",
     "url" : "https:\/\/aalvarez.me\/posts\/custom-log-files-with-django-and-elastic-beanstalk\/",
-    "wordCount" : "448",
+    "wordCount" : "447",
     "keywords" : [ "django","elasticbeanstalk","Blog" ]
 }
 </script>
@@ -136,74 +136,59 @@ if (!doNotTrack) {
   <time datetime=2019-02-22T17:49:21Z class="post-date">Fri, Feb 22, 2019</time>
 
   <p>With Amazon ElasticBeanstalk it is possible to view log files of your deployed application. However, ElasticBeanstalk by default only returns certain logs like <code>/var/log/httpd/error_log</code> or <code>/var/log/httpd/access_log</code> if you are using Apache httpd.</p>
-
 <p>If you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk console.</p>
-
 <p>In this post I will show you how to achieve this, using Django as our backend framework.</p>
-
 <h2 id="configuring-logging-in-django">Configuring Logging in Django</h2>
-
-<p>We will use a very simple logging configuration. Basically we will be using a file handler that streams our logs to files in the instance&rsquo;s file system.</p>
-
-<p>Moreover, let&rsquo;s assume that our Django application is acting as a <strong>worker</strong>, not a web server. This means that its responsibility lies in executing background jobs that take time to process.</p>
-
+<p>We will use a very simple logging configuration. Basically we will be using a file handler that streams our logs to files in the instance's file system.</p>
+<p>Moreover, let's assume that our Django application is acting as a <strong>worker</strong>, not a web server. This means that its responsibility lies in executing background jobs that take time to process.</p>
 <p>The configuration in Django looks like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">LOGGING</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
-    <span style="color:#d88200">&#34;version&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span>
-    <span style="color:#d88200">&#34;disable_existing_loggers&#34;</span><span style="color:#111">:</span> <span style="color:#111">False</span><span style="color:#111">,</span>
-    <span style="color:#d88200">&#34;formatters&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
-        <span style="color:#d88200">&#34; verbose&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
-            <span style="color:#d88200">&#34;format&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">%(asctime)s</span><span style="color:#d88200"> </span><span style="color:#d88200">%(levelname)s</span><span style="color:#d88200"> </span><span style="color:#d88200">%(module)s</span><span style="color:#d88200">: </span><span style="color:#d88200">%(message)s</span><span style="color:#d88200">&#34;</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">version</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">disable_existing_loggers</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">False</span><span style="color:#111">,</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">formatters</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200"> verbose</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">format</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">%(asctime)s</span><span style="color:#d88200"> </span><span style="color:#d88200">%(levelname)s</span><span style="color:#d88200"> </span><span style="color:#d88200">%(module)s</span><span style="color:#d88200">: </span><span style="color:#d88200">%(message)s</span><span style="color:#d88200">&#34;</span>
         <span style="color:#111">}</span>
-    <span style="color:#111">},</span>
-    <span style="color:#d88200">&#34;handlers&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
-        <span style="color:#d88200">&#34;analyzer&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
-            <span style="color:#d88200">&#34;level&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;DEBUG&#34;</span><span style="color:#111">,</span>
-            <span style="color:#d88200">&#34;class&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;logging.FileHandler&#34;</span><span style="color:#111">,</span>
-            <span style="color:#d88200">&#34;filename&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;/opt/python/log/analyzer.log&#34;</span><span style="color:#111">,</span>
-            <span style="color:#d88200">&#34;formatter&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;verbose&#34;</span><span style="color:#111">,</span>
-        <span style="color:#111">},</span>
-    <span style="color:#111">},</span>
-    <span style="color:#d88200">&#34;loggers&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
-        <span style="color:#d88200">&#34;analyzer&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
-            <span style="color:#d88200">&#34;handlers&#34;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#34;analyzer&#34;</span><span style="color:#111">],</span> <span style="color:#d88200">&#34;level&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;DEBUG&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;propagate&#34;</span><span style="color:#111">:</span> <span style="color:#111">True</span>
-        <span style="color:#111">},</span>
-    <span style="color:#111">},</span>
-<span style="color:#111">}</span></code></pre></div>
-<p>I have created a log called <code>analyzer</code> that saves log messages to a log file located the path <code>/opt/python/log/analyzer.log</code>. This path is automatically created by ElasticBeanstalk when you are using a Python platform. If you are using another platform, this path will be different.</p>
-
+    <span style="color:#111">}</span><span style="color:#111">,</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">handlers</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">analyzer</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">level</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">DEBUG</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">class</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">logging.FileHandler</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">filename</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">/opt/python/log/analyzer.log</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">formatter</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">verbose</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span>
+        <span style="color:#111">}</span><span style="color:#111">,</span>
+    <span style="color:#111">}</span><span style="color:#111">,</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">loggers</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">analyzer</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">handlers</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">analyzer</span><span style="color:#d88200">&#34;</span><span style="color:#111">]</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">level</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">DEBUG</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">propagate</span><span style="color:#d88200">&#34;</span><span style="color:#111">:</span> <span style="color:#111">True</span>
+        <span style="color:#111">}</span><span style="color:#111">,</span>
+    <span style="color:#111">}</span><span style="color:#111">,</span>
+<span style="color:#111">}</span>
+</code></pre></div><p>I have created a log called <code>analyzer</code> that saves log messages to a log file located the path <code>/opt/python/log/analyzer.log</code>. This path is automatically created by ElasticBeanstalk when you are using a Python platform. If you are using another platform, this path will be different.</p>
 <p>If you separate different tasks for this worker application under different Django apps, you will probably want to create a log file for each, under the same path. To do this, simply add more loggers and handlers to the Django configuration.</p>
-
 <p>Once the Django application starts running, the log handlers will proceed to create these files.</p>
-
 <h2 id="logging-some-messages">Logging Some Messages</h2>
-
 <p>Logging messages to this log file is very easy, we simply use the Python logging module to create a logger with the same name as in the configuration:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
 
 
-<span style="color:#111">logger</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200">&#34;analyzer&#34;</span><span style="color:#111">)</span>
+<span style="color:#111">logger</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">analyzer</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
 
 
-<span style="color:#00a8c8">def</span> <span style="color:#75af00">some_view</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">):</span>
-    <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Hello World&#34;</span><span style="color:#111">)</span></code></pre></div>
-<h2 id="configuring-permissions-in-elasticbeanstalk">Configuring Permissions in ElasticBeanstalk</h2>
-
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">some_view</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#34;</span><span style="color:#d88200">Hello World</span><span style="color:#d88200">&#34;</span><span style="color:#111">)</span>
+</code></pre></div><h2 id="configuring-permissions-in-elasticbeanstalk">Configuring Permissions in ElasticBeanstalk</h2>
 <p>Some permissions must be configured in this path so that Django can successfully write logs to these new custom files. In your <code>.ebextensions</code> directory, create a new file called <code>logging.config</code>:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">commands<span style="color:#111">:</span>
   01_change_permissions<span style="color:#111">:</span>
     command<span style="color:#111">:</span> chmod g+s /opt/python/log
   02_change_owner<span style="color:#111">:</span>
-    command<span style="color:#111">:</span> chown root<span style="color:#111">:</span>wsgi /opt/python/log</code></pre></div>
-<p>And with this we are all set.</p>
-
+    command<span style="color:#111">:</span> chown root<span style="color:#111">:</span>wsgi /opt/python/log
+</code></pre></div><p>And with this we are all set.</p>
 <h2 id="viewing-the-logs">Viewing The Logs</h2>
-
 <p>Finally we can take a quick look at our logs from the ElasticBeanstalk console by navigating to your deployed environment and then <em>Logs &gt; Request Logs &gt; Last 100 Lines</em>.</p>
-
 <p>Aside from the logs that ElasticBeanstalk already outputs, you should be able to see a section of our new
 log file:</p>
-
 <pre><code>-------------------------------------
 /opt/python/log/analyzer.log
 -------------------------------------
