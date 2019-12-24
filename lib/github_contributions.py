@@ -77,7 +77,7 @@ class Repository:
             'commits': self.get_user_commits(username),
             'additions': self.get_user_additions(username),
             'deletions': self.get_user_deletions(username),
-            'image': self.description.split('/')[-1]
+            'image': self.url.split('/')[-1]
         }
 
 
