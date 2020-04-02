@@ -1,7 +1,7 @@
 ---
 title: "Media-Type Based Responses With Django REST Framework"
 date: 2019-01-09T17:28:17Z
-tags: [django]
+tags: [django, djangorestframework]
 ---
 
 Nowadays a typical REST API responds with data in JSON format. But what if you wanted to serve data in a different format (and not just a serialization format) using the **same** endpoint, but specified by the client?
