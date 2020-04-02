@@ -27,9 +27,9 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2019",
-    "datePublished": "2019-08-04 12:35:00 -0600 CST",
-    "dateModified" : "2019-08-04 12:35:00 -0600 CST",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-04-02 16:07:28 -0600 CST",
+    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,35 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/ip-addresses-a-review/">IP Addresses - A Review</a>
+  </h1>
+  <time datetime="2016-12-02T00:00:00Z" class="post-date">Fri, Dec 2, 2016</time>
+  <p><em>A review of IP addresses, as part of my Computer Networking Fundamentals series.</em></p>
+<p>A lot of people know what IP addresses are, and a lot of people also probably know that each device that is connected to the Internet must have a <strong><em>unique</em></strong> IP Address, like <em>108.161.228.70</em></p>
+<p>However, in this article I want to do a more in-depth review about IP addresses and how the work.</p>
+<p>From a technical point of view and for reviewing purposes, it is worth remembering that IP Addresses (at least IPv4) are <strong>32-bit</strong> addresses, because each number separated by each dot (called <em>octet</em>) is an 8-bit number. Since IP Addresses have 4 octets, these together make a sum of 32-bits.</p>
+<!-- raw HTML omitted -->
+<p>Since the first two octets make a sum of 16 bits, 2^16 yields a total of 65,536 networks. At the same time, the remaining 16 bits also yield a total of 65,536 different hosts. <strong><em>But</em></strong> these are 65,536 different hosts <strong><em>per each</em></strong> network.</p>
+<p>This raises a big issue because it makes it hard to decide how many bits in the IP address should be allocated to the network and how many bits should be allocated for the hosts, without wasting IP addresses. This is where <strong>subnet masks</strong> come in.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/networking" class="label label-default">networking</a></li>
+  
+    <a href="https://aalvarez.me/tags/ip" class="label label-default">ip</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/ip-addresses-a-review/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/working-with-zenoss-events/">Working With Zenoss Events</a>
@@ -297,43 +326,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/custom-markdown-in-middleman/">Custom Markdown in Middleman</a>
-  </h1>
-  <time datetime="2016-11-17T00:00:00Z" class="post-date">Thu, Nov 17, 2016</time>
-  <p><a href="https://middlemanapp.com/">Middleman</a> is an excellent static site generator written in Ruby. It is extremely practical for blogging as well, and it's the framework I am currently using for this blog.</p>
-<p>Unfortunately Middleman's <a href="https://middlemanapp.com/basics/install/">documentation</a> is a bit unorganized and incomplete. I often find myself browsing through the <a href="https://github.com/middleman/middleman">source code</a> to understand how to use or implement some custom features.</p>
-<p>For example, using <a href="https://github.com/vmg/redcarpet">redcarpet</a> I wanted to be able to create some re-usable &ldquo;markdown components&rdquo; that I could use in my blog posts. Something like bootstrap alerts, so that I could re-use them without having to add HTML or any code to my markdown.</p>
-<p>And this post I am going to explain how to integrate this functionality into your blog using Middleman.</p>
-<h2 id="creating-a-custom-renderer">Creating a Custom Renderer</h2>
-<p>Middleman comes built in with a custom Redcarpet renderer which Middleman uses to parse the links and images (and possibly other things) in your blog's markdown. To be able to implement our custom markdown we need to create our own custom renderer, which should inherit from <code>Redcarpet::Render::HTML</code>. However, the <strong>key</strong> thing here is to actually inherit directly from <a href="https://github.com/middleman/middleman/blob/master/middleman-core/lib/middleman-core/renderers/redcarpet.rb#L65">Middleman's renderer</a> (which of course, inherits from <code>Redcarpet::Render::HTML</code>).</p>
-<p>To begin, we will create a <code>lib</code> (if it doesn't exist) under our blog's directory and create a file named <code>markdown_helper.rb</code> inside it. The initial contents of this helper will be:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">module</span> <span style="color:#111">MarkdownHelper</span>
-
-  <span style="color:#111">require</span> <span style="color:#d88200">&#39;middleman-core/renderers/redcarpet&#39;</span>
-
-<span style="color:#00a8c8">end</span>
-</code></pre></div><p>The required file above is what will allow us to inherit from Middleman's renderer.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/middleman" class="label label-default">middleman</a></li>
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/markdown" class="label label-default">markdown</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/custom-markdown-in-middleman/">Read More…</a>
     </div>
   
 </article>

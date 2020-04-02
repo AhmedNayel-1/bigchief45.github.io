@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.61.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/aalvarez.me\/"
+    },
+    "articleSection" : "posts",
+    "name" : "Python Log Messages With Dynamic Formatter Variables",
+    "headline" : "Python Log Messages With Dynamic Formatter Variables",
+    "description" : "\x3cp\x3eIn this post I will explain how it is possible to replace logger formats with dynamic values. Take the following log message for example:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3e[2020-04-02 15:37:01] myapp INFO: Logged in successfully.\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eWhat if we wanted to add some additional data after the \x3ccode\x3eINFO\x3c\/code\x3e part, \x3cem\x3ebut\x3c\/em\x3e this data is dynamic, or is only available at runtime. Like a username or an app name for example.\x3c\/p\x3e\n\x3cp\x3eLet\x27s take a look at how to achieve this.\x3c\/p\x3e",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-04-02 16:07:28 -0600 CST",
+    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
+    "url" : "https:\/\/aalvarez.me\/posts\/python-log-messages-with-dynamic-formatter-variables\/",
+    "wordCount" : "527",
+    "keywords" : [ "python","Blog" ]
+}
+</script>
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  <title>Python Log Messages With Dynamic Formatter Variables &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/hyde.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/extra.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/overrides.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://aalvarez.me/"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://aalvarez.me/">Home</a> </li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvarez300" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Python Log Messages With Dynamic Formatter Variables</h1>
+  <time datetime=2020-04-02T16:07:28-0600 class="post-date">Thu, Apr 2, 2020</time>
+
+  <p>In this post I will explain how it is possible to replace logger formats with dynamic values. Take the following log message for example:</p>
+<pre><code>[2020-04-02 15:37:01] myapp INFO: Logged in successfully.
+</code></pre><p>What if we wanted to add some additional data after the <code>INFO</code> part, <em>but</em> this data is dynamic, or is only available at runtime. Like a username or an app name for example.</p>
+<p>Let's take a look at how to achieve this.</p>
+<h2 id="log-filters">Log Filters</h2>
+<p>Let's assume that this data is passed to a class's initialization arguments. For example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Session</span><span style="color:#111">:</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#111">args</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">username</span> <span style="color:#f92672">=</span> <span style="color:#111">username</span>
+</code></pre></div><p>We want to use this <code>username</code> value in the log message's <strong>format</strong>. There are different ways to achieve this in Python, but in this post I will explain how to achieve this using <strong>Log Filters</strong>.</p>
+<p>Log filters are used to add contextual information to log output. We can declare a custom log filter as follows:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyCustomLogFilter</span><span style="color:#111">(</span><span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">Filter</span><span style="color:#111">)</span><span style="color:#111">:</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span><span style="color:#111">:</span> <span style="color:#111">str</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#111">args</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#111">args</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">username</span> <span style="color:#f92672">=</span> <span style="color:#111">username</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">filter</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">record</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">record</span><span style="color:#f92672">.</span><span style="color:#111">username</span> <span style="color:#f92672">=</span> <span style="color:#111">username</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">True</span>
+</code></pre></div><p>We can now add this filter along with the username value to our loggers. The log messages generated by the loggers will automatically place the username value in the specified location of the log formatter.</p>
+<p>Here is an example of a formatter:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+
+
+<span style="color:#111">formatter</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">Formatter</span><span style="color:#111">(</span>
+    <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">[</span><span style="color:#d88200">%(asctime)s</span><span style="color:#d88200">] </span><span style="color:#d88200">%(name)-5s</span><span style="color:#d88200"> </span><span style="color:#d88200">%(levelname)s</span><span style="color:#d88200"> [</span><span style="color:#d88200">%(username)s</span><span style="color:#d88200">]: </span><span style="color:#d88200">%(message)s</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+    <span style="color:#111">datefmt</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">%</span><span style="color:#d88200">Y-</span><span style="color:#d88200">%</span><span style="color:#d88200">m-</span><span style="color:#d88200">%d</span><span style="color:#d88200"> </span><span style="color:#d88200">%</span><span style="color:#d88200">H:</span><span style="color:#d88200">%</span><span style="color:#d88200">M:</span><span style="color:#d88200">%</span><span style="color:#d88200">S</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+<span style="color:#111">)</span>
+</code></pre></div><p>As you can see, the <code>[%(username)s]</code> part will now contain the actual username in the final log messages.</p>
+<p>⚠ Log filters can be added to both <strong>loggers</strong> and <strong>handlers</strong>. However <a href="https://www.saltycrane.com/blog/2014/02/python-logging-filters-do-not-propagate-like-handlers-and-levels-do/">logging filters do not propagate like handlers and levels do</a>. This means that child loggers will not be able to inherit logging filters from the parent if the filter is added to the parent. Therefore we will add our logging filter to the handler(s).</p>
+<h2 id="setting-up-the-loggers">Setting Up The Loggers</h2>
+<p>We need to setup the logger inside our <code>Session</code> class. Because this is the only place where we have access to the <code>username</code> variable:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+
+<span style="color:#111">logger</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">myapp</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">Session</span><span style="color:#111">:</span>
+
+    <span style="color:#75715e"># ...</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_setup_logger</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">setLevel</span><span style="color:#111">(</span><span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">DEBUG</span><span style="color:#111">)</span>
+
+        <span style="color:#111">handler</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">StreamHandler</span><span style="color:#111">(</span><span style="color:#111">)</span>
+        <span style="color:#111">handler</span><span style="color:#f92672">.</span><span style="color:#111">setFormatter</span><span style="color:#111">(</span><span style="color:#111">formatter</span><span style="color:#111">)</span>  <span style="color:#75715e"># See the formatter we defined previously</span>
+
+        <span style="color:#75715e"># Filters attached to the parent logger DO NOT propagate to child</span>
+        <span style="color:#75715e"># loggers, this is why we attach the filter to the handler instead.</span>
+        <span style="color:#111">handler</span><span style="color:#f92672">.</span><span style="color:#111">addFilter</span><span style="color:#111">(</span><span style="color:#111">MyCustomLogFilter</span><span style="color:#111">(</span><span style="color:#111">username</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">username</span><span style="color:#111">)</span><span style="color:#111">)</span>
+        <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">addHandler</span><span style="color:#111">(</span><span style="color:#111">handler</span><span style="color:#111">)</span>
+</code></pre></div><p>With the above setup we are ready to see the magic. In the same module we can try logging a message:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Session</span><span style="color:#111">:</span>
+
+    <span style="color:#75715e"># ...</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">do_something</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">HELLO WORLD</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+
+
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">__main__</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span>
+    <span style="color:#111">s</span> <span style="color:#f92672">=</span> <span style="color:#111">Session</span><span style="color:#111">(</span><span style="color:#111">username</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">madkilla</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+    <span style="color:#111">s</span><span style="color:#f92672">.</span><span style="color:#111">do_something</span><span style="color:#111">(</span><span style="color:#111">)</span>
+</code></pre></div><p>This produces the following message (nevermind the timestamp):</p>
+<pre><code>[2020-04-02 15:37:01] myapp INFO [madkilla]: HELLO WORLD
+</code></pre><p>Success! 🎉 🎉</p>
+<h3 id="logging-accross-different-modules">Logging Accross Different Modules</h3>
+<p>To still be able to log similar messages accross different Python modules we only need to inherit from the parent logger. We do this like so:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># myothermodule.py</span>
+<span style="color:#f92672">import</span> <span style="color:#111">logging</span>
+
+
+<span style="color:#75715e"># Assuming that the parent log was called `myapp`</span>
+<span style="color:#111">logger</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">getLogger</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">myapp.</span><span style="color:#d88200">&#39;</span> <span style="color:#f92672">+</span> <span style="color:#111">__name__</span><span style="color:#111">)</span>
+<span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">This is a log from another module</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>The above will allow us to know in which module exactly the log message was generated:</p>
+<pre><code>[2020-04-02 15:37:01] myapp.myothermodule INFO [madkilla]: This is a log from another module
+</code></pre><p>Hope you found this useful!</p>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://docs.python.org/3.6/howto/logging-cookbook.html">https://docs.python.org/3.6/howto/logging-cookbook.html</a></li>
+<li><a href="https://www.saltycrane.com/blog/2014/02/python-logging-filters-do-not-propagate-like-handlers-and-levels-do/">https://www.saltycrane.com/blog/2014/02/python-logging-filters-do-not-propagate-like-handlers-and-levels-do/</a></li>
+</ol>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

@@ -27,9 +27,9 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2019",
-    "datePublished": "2019-08-04 12:35:00 -0600 CST",
-    "dateModified" : "2019-08-04 12:35:00 -0600 CST",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-04-02 16:07:28 -0600 CST",
+    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,47 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/keystone-interface-in-juju-charms/">Keystone Interface in Juju Charms</a>
+  </h1>
+  <time datetime="2016-10-28T00:00:00Z" class="post-date">Fri, Oct 28, 2016</time>
+  <p><a href="https://jujucharms.com/docs/1.18/authors-interfaces">Juju Charms interfaces</a> make possible the interaction and exchange of data between services deployed by Juju. In this post I will explain how we can use the Keystone interface to make our custom charm service comunicate with the Keystone service within a Juju environment.</p>
+<p>In the end, what we really want to achieve, is to link both services so that they can exchange data, using a Juju command:</p>
+<p><code>juju add-relation keystone myservice</code></p>
+<h2 id="juju-relations">Juju Relations</h2>
+<p>Juju relations operate behind the concept that one service provides something, while another service requires it, and the interaction between the services is done through an <strong>interface</strong>. Since we want to interact with Keystone, this means that we need to use a suitable keystone interface that allows us to get what we need, the <em>keystone Identity data</em>. For this, we use the <strong><a href="https://git.launchpad.net/~canonical-is/charms/+source/interface-keystone-admin">keystone-admin interface</a></strong>.</p>
+<p>With this in mind, we configure our charm to require this relation and interface in <code>metadata.yaml</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ...</span>
+requires<span style="color:#111">:</span>
+  identity-admin<span style="color:#111">:</span>
+    interface<span style="color:#111">:</span> keystone-admin
+</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/juju" class="label label-default">juju</a></li>
+  
+    <a href="https://aalvarez.me/tags/keystone" class="label label-default">keystone</a></li>
+  
+    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="https://aalvarez.me/tags/bash" class="label label-default">bash</a></li>
+  
+    <a href="https://aalvarez.me/tags/keystone" class="label label-default">keystone</a></li>
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/keystone-interface-in-juju-charms/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/zenoss-renderers/">Zenoss Renderers</a>
@@ -271,43 +312,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/managing-debian-package-dependencies/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/creating-python-packages/">Creating Python Packages</a>
-  </h1>
-  <time datetime="2016-10-13T00:00:00Z" class="post-date">Thu, Oct 13, 2016</time>
-  <p>For a project involving Zenoss Core 4 and a HaaS solution maintained by another team, we needed a module to interact with the <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> to get the list of events for specific devices. Browsing around I found this <a href="https://github.com/iamseth/python-zenoss">python-zenoss</a> module to work with the Zenoss JSON API. However I was experiencing some issues when installing it, so I decided to create my own Python package to provide a different way to interact with the Zenoss JSON API according to our specific needs.</p>
-<p>The package would be installed locally using <code>pip</code>, and all its functionality should be easily accessible using <code>from</code> and <code>import</code> commands in Python.</p>
-<p>To start working in our package we will create a base directory. The directory's name will resemble our package's name. For naming, we should following these guidelines:</p>
-<ul>
-<li>All lowercase</li>
-<li>Underscore-separated or no word separators at all (don’t use hyphens)</li>
-</ul>
-<p>The package contents are the following:</p>
-<pre><code>my_api/
-├── __init__.py
-├── api.py
-└── setup.py
-</code></pre>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/creating-python-packages/">Read More…</a>
     </div>
   
 </article>

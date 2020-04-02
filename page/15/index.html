@@ -27,9 +27,9 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2019",
-    "datePublished": "2019-08-04 12:35:00 -0600 CST",
-    "dateModified" : "2019-08-04 12:35:00 -0600 CST",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-04-02 16:07:28 -0600 CST",
+    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,50 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Working With Zenoss Python Data Source Plugins</a>
+  </h1>
+  <time datetime="2017-02-23T00:00:00Z" class="post-date">Thu, Feb 23, 2017</time>
+  <p>Using Python data source plugins in Zenoss is a great way to collect data, and probably a better way than using <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks.html">command datasources</a>. Python data sources come with the introduction of the <a href="https://www.zenoss.com/product/zenpacks/pythoncollector">PythonCollector ZenPack</a>, so this ZenPack is required in order to start using Python data sources in our own ZenPacks.</p>
+<p>Python data source plugins work exceptionally great in replacing data collection logic in <a href="https://aalvarez.me/posts/creating-zenoss-zenpack-daemons.html">custom daemons</a> written in Python. This means that the ZenPacks's code is greatly reduced because we do not have to create configuration service, and custom daemon code.</p>
+<p>Moreover, while Python data source plugins are Python-based, we can still execute shell commands within the plugin.</p>
+<h2 id="example-scenario-bmc-power-status">Example Scenario: BMC Power Status</h2>
+<p>For this post, I will be using an example where we will be executing an <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">ipmitool command</a> to check the power chassis status of a <a href="https://aalvarez.me/posts/ipmi-baseboard-management-controllers.html">BMC device</a>.</p>
+<p>If I run the following command from my shell:</p>
+<pre><code>ipmitool -H $BMC_IP -I lanplus -U admin -P admin power status
+</code></pre><p>I get the following output:</p>
+<pre><code>Chassis Power is on
+</code></pre><p>What we want is our data source plugin to periodically and continuously execute this command and obtain the value. Our ZenPack will then proceed to:</p>
+<ol>
+<li>Map the value into a boolean property of a custon zenpacklib class.</li>
+<li>Create a CRITICAL event if the power status is off or if the command fails. Create a CLEAR event if the power status is on.</li>
+<li>Update the device model with the new property value.</li>
+<li><a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">Display the property's value in the device detail bar using JavaScript</a>.</li>
+</ol>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/useful-zendmd-tricks/">Useful Zendmd Tricks</a>
@@ -295,38 +339,6 @@ juju switch local
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/">Appending Modeler Plugins in ZenPacks</a>
-  </h1>
-  <time datetime="2017-01-20T00:00:00Z" class="post-date">Fri, Jan 20, 2017</time>
-  <p>When creating ZenPacks using zenpacklib, assigning modeler plugins to device classes will cause all the device class's modeler plugins to be <strong>replaced</strong> by the new modeler plugins assigned by the ZenPack. Obviously most of the time this is not the behaviour we want. What we really want is that the new modeler plugins are simply <em>added</em> to the device class's list of modeler plugins.</p>
-<p>In a previous post I explained how we can <a href="https://aalvarez.me/posts/customizing-the-zenpack-installation-process.html">customize the ZenPacks installation process</a> to perform additional tasks. The way to append new modeler plugins to a device class follows this concept.</p>
-<p>Let's assume that we have the <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a> installed in our Zenoss Core. This ZenPack adds some custom modeler plugins to the <code>/Server/SSH/Linux/NovaHost</code> device class. We want our custom ZenPack to add <em>new</em> modeler plugins to this device class without replacing the ones added by the OpenStack ZenPack.</p>
-<p>This will be done upon installation (like in the previous post) inside the <code>__init__.py</code> file in the ZenPack top directory. This is how the code looks like:</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/">Read More…</a>
     </div>
   
 </article>

@@ -27,9 +27,9 @@
     "publisher": "",
     "accountablePerson" : "",
     "copyrightHolder" : "",
-    "copyrightYear" : "2019",
-    "datePublished": "2019-08-04 12:35:00 -0600 CST",
-    "dateModified" : "2019-08-04 12:35:00 -0600 CST",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-04-02 16:07:28 -0600 CST",
+    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,43 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/creating-python-packages/">Creating Python Packages</a>
+  </h1>
+  <time datetime="2016-10-13T00:00:00Z" class="post-date">Thu, Oct 13, 2016</time>
+  <p>For a project involving Zenoss Core 4 and a HaaS solution maintained by another team, we needed a module to interact with the <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> to get the list of events for specific devices. Browsing around I found this <a href="https://github.com/iamseth/python-zenoss">python-zenoss</a> module to work with the Zenoss JSON API. However I was experiencing some issues when installing it, so I decided to create my own Python package to provide a different way to interact with the Zenoss JSON API according to our specific needs.</p>
+<p>The package would be installed locally using <code>pip</code>, and all its functionality should be easily accessible using <code>from</code> and <code>import</code> commands in Python.</p>
+<p>To start working in our package we will create a base directory. The directory's name will resemble our package's name. For naming, we should following these guidelines:</p>
+<ul>
+<li>All lowercase</li>
+<li>Underscore-separated or no word separators at all (don’t use hyphens)</li>
+</ul>
+<p>The package contents are the following:</p>
+<pre><code>my_api/
+├── __init__.py
+├── api.py
+└── setup.py
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/creating-python-packages/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/debian-packaging-in-ubuntu/">Debian Packaging in Ubuntu</a>
