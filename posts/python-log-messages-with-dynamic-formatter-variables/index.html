@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Python Log Messages With Dynamic Formatter Variables",
     "headline" : "Python Log Messages With Dynamic Formatter Variables",
-    "description" : "\x3cp\x3eIn this post I will explain how it is possible to replace logger formats with dynamic values. Take the following log message for example:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3e[2020-04-02 15:37:01] myapp INFO: Logged in successfully.\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eWhat if we wanted to add some additional data after the \x3ccode\x3eINFO\x3c\/code\x3e part, \x3cem\x3ebut\x3c\/em\x3e this data is dynamic, or is only available at runtime. Like a username or an app name for example.\x3c\/p\x3e\n\x3cp\x3eLet\x27s take a look at how to achieve this.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn this post I will explain how it is possible to replace logger formatter variables with dynamic values. Take the following log message for example:\x3c\/p\x3e\n\x3cpre\x3e\x3ccode\x3e[2020-04-02 15:37:01] myapp INFO: Logged in successfully.\n\x3c\/code\x3e\x3c\/pre\x3e\x3cp\x3eWhat if we wanted to add some additional data after the \x3ccode\x3eINFO\x3c\/code\x3e part, \x3cem\x3ebut\x3c\/em\x3e this data is dynamic, or is only available at runtime. Like a username or an app name for example.\x3c\/p\x3e\n\x3cp\x3eLet\x27s take a look at how to achieve this.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -135,7 +135,7 @@ if (!doNotTrack) {
   <h1>Python Log Messages With Dynamic Formatter Variables</h1>
   <time datetime=2020-04-02T16:07:28-0600 class="post-date">Thu, Apr 2, 2020</time>
 
-  <p>In this post I will explain how it is possible to replace logger formats with dynamic values. Take the following log message for example:</p>
+  <p>In this post I will explain how it is possible to replace logger formatter variables with dynamic values. Take the following log message for example:</p>
 <pre><code>[2020-04-02 15:37:01] myapp INFO: Logged in successfully.
 </code></pre><p>What if we wanted to add some additional data after the <code>INFO</code> part, <em>but</em> this data is dynamic, or is only available at runtime. Like a username or an app name for example.</p>
 <p>Let's take a look at how to achieve this.</p>
@@ -145,7 +145,7 @@ if (!doNotTrack) {
 
     <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#111">args</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#111">kwargs</span><span style="color:#111">)</span><span style="color:#111">:</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">username</span> <span style="color:#f92672">=</span> <span style="color:#111">username</span>
-</code></pre></div><p>We want to use this <code>username</code> value in the log message's <strong>format</strong>. There are different ways to achieve this in Python, but in this post I will explain how to achieve this using <strong>Log Filters</strong>.</p>
+</code></pre></div><p>We want to use this <code>username</code> value in the log message's <strong>formatter</strong>. There are different ways to achieve this in Python, but in this post I will explain how to achieve this using <strong>Log Filters</strong>.</p>
 <p>Log filters are used to add contextual information to log output. We can declare a custom log filter as follows:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">logging</span>
 
@@ -185,10 +185,11 @@ if (!doNotTrack) {
         <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">setLevel</span><span style="color:#111">(</span><span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">DEBUG</span><span style="color:#111">)</span>
 
         <span style="color:#111">handler</span> <span style="color:#f92672">=</span> <span style="color:#111">logging</span><span style="color:#f92672">.</span><span style="color:#111">StreamHandler</span><span style="color:#111">(</span><span style="color:#111">)</span>
-        <span style="color:#111">handler</span><span style="color:#f92672">.</span><span style="color:#111">setFormatter</span><span style="color:#111">(</span><span style="color:#111">formatter</span><span style="color:#111">)</span>  <span style="color:#75715e"># See the formatter we defined previously</span>
+        <span style="color:#111">handler</span><span style="color:#f92672">.</span><span style="color:#111">setFormatter</span><span style="color:#111">(</span><span style="color:#111">formatter</span><span style="color:#111">)</span>  <span style="color:#75715e"># See the previous formatter</span>
 
-        <span style="color:#75715e"># Filters attached to the parent logger DO NOT propagate to child</span>
-        <span style="color:#75715e"># loggers, this is why we attach the filter to the handler instead.</span>
+        <span style="color:#75715e"># Filters attached to the parent logger DO NOT propagate to</span>
+        <span style="color:#75715e"># child loggers, this is why we attach the filter to the</span>
+        <span style="color:#75715e"># handler instead.</span>
         <span style="color:#111">handler</span><span style="color:#f92672">.</span><span style="color:#111">addFilter</span><span style="color:#111">(</span><span style="color:#111">MyCustomLogFilter</span><span style="color:#111">(</span><span style="color:#111">username</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">username</span><span style="color:#111">)</span><span style="color:#111">)</span>
         <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">addHandler</span><span style="color:#111">(</span><span style="color:#111">handler</span><span style="color:#111">)</span>
 </code></pre></div><p>With the above setup we are ready to see the magic. In the same module we can try logging a message:</p>
