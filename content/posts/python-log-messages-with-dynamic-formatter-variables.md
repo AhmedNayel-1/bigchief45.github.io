@@ -4,7 +4,7 @@ date: 2020-04-02T16:07:28-06:00
 tags: [python]
 ---
 
-In this post I will explain how it is possible to replace logger formats with dynamic values. Take the following log message for example:
+In this post I will explain how it is possible to replace logger formatter variables with dynamic values. Take the following log message for example:
 
 ```
 [2020-04-02 15:37:01] myapp INFO: Logged in successfully.
@@ -27,7 +27,7 @@ class Session:
         self.username = username
 ```
 
-We want to use this `username` value in the log message's **format**. There are different ways to achieve this in Python, but in this post I will explain how to achieve this using **Log Filters**.
+We want to use this `username` value in the log message's **formatter**. There are different ways to achieve this in Python, but in this post I will explain how to achieve this using **Log Filters**.
 
 Log filters are used to add contextual information to log output. We can declare a custom log filter as follows:
 
@@ -82,10 +82,11 @@ class Session:
         logger.setLevel(logging.DEBUG)
 
         handler = logging.StreamHandler()
-        handler.setFormatter(formatter)  # See the formatter we defined previously
+        handler.setFormatter(formatter)  # See the previous formatter
 
-        # Filters attached to the parent logger DO NOT propagate to child
-        # loggers, this is why we attach the filter to the handler instead.
+        # Filters attached to the parent logger DO NOT propagate to
+        # child loggers, this is why we attach the filter to the
+        # handler instead.
         handler.addFilter(MyCustomLogFilter(username=self.username))
         logger.addHandler(handler)
 ```
