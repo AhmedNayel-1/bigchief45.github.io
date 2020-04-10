@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-02 16:07:28 -0600 CST",
-    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
+    "datePublished": "2020-04-10 16:27:41 -0600 CST",
+    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,48 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Processing Nova Live Migration Events in Zenoss</a>
+  </h1>
+  <time datetime="2017-01-23T00:00:00Z" class="post-date">Mon, Jan 23, 2017</time>
+  <p>When monitoring OpenStack using the OpenStack Infrastructure ZenPack integrated with Ceilometer, it is possible to get fast virtual machine state changes (on/off powering, etc.) by receiving events sent from Ceilometer to Zenoss.</p>
+<p>However I discovered that when trying to get the same effect for <strong>live migration</strong> (live migrating a virtual machine from one compute node to another) scenarios, this would not work. I proceeded to investigate why.</p>
+<h2 id="ceilometer-dispatcher-live-migration-events">Ceilometer Dispatcher Live Migration Events</h2>
+<p>I decided that the first thing to check was if the <a href="https://github.com/zenoss/ceilometer_zenoss">Zenoss Ceilometer dispatcher</a> was <strong>capturing</strong> and <strong>sending</strong> the live migration events to Zenoss. Indeed, the logs can be found in Ceilometer under <code>/var/log/ceilometer/ceilometer-collector.log</code>:</p>
+<pre><code>2017-01-23 14:22:02.593 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 3538a01c-ab8d-4e64-b0ff-6e8fe270e06a, compute.instance.live_migration.post.dest.start, 2017-01-23 06:22:02.584049, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
+
+2017-01-23 14:22:02.771 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: 8db64329-606c-4184-9b5b-eb815166cb17, compute.instance.live_migration.post.dest.end, 2017-01-23 06:22:02.761138, &lt;Trait: state_description 1 &gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3222&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
+
+2017-01-23 14:22:02.782 25667 INFO ceilometer_zenoss.dispatcher.zenoss [-] record_events called (events=[&lt;Event: d0dc4f4a-454a-42c5-b767-386dc3e0d1f3, compute.instance.live_migration._post.end, 2017-01-23 06:22:02.776665, &lt;Trait: state_description 1 migrating&gt; &lt;Trait: memory_mb 2 512&gt; &lt;Trait: ephemeral_gb 2 0&gt; &lt;Trait: fixed_ips 1 [{u'version': 4, u'vif_mac': u'fa:16:3e:6e:02:e9', u'floating_ips': [], u'label': u'admin-net', u'meta': {}, u'address': u'192.168.0.15', u'type': u'fixed'}]&gt; &lt;Trait: user_id 1 6d581c230c86475abf70cce41440e8a1&gt; &lt;Trait: service 1 compute&gt; &lt;Trait: priority 1 info&gt; &lt;Trait: state 1 active&gt; &lt;Trait: launched_at 4 2017-01-23 05:06:41&gt; &lt;Trait: flavor_name 1 m1.tiny&gt; &lt;Trait: disk_gb 2 1&gt; &lt;Trait: display_name 1 pdcmtest&gt; &lt;Trait: root_gb 2 1&gt; &lt;Trait: tenant_id 1 10296907e44248d2a707689f77d59ef6&gt; &lt;Trait: instance_id 1 87be4b45-e214-4ca3-8f5c-1bd31159f9e4&gt; &lt;Trait: vcpus 2 1&gt; &lt;Trait: host_name 1 ndc27-3205&gt; &lt;Trait: request_id 1 req-d4c27d06-6329-4ce0-adb5-370b8ca83a22&gt;&gt;])
+</code></pre><p>Notice the <code>live_migration.post.dest.start</code> and <code>live_migration.post.dest.end</code> logs.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/nova" class="label label-default">nova</a></li>
+  
+    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="https://aalvarez.me/tags/rabbitmq" class="label label-default">rabbitmq</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/processing-nova-live-migration-events-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/appending-modeler-plugins-in-zenpacks/">Appending Modeler Plugins in ZenPacks</a>
@@ -286,37 +328,6 @@ zProperties<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners/">JavaScript Gotchas for Beginners</a>
-  </h1>
-  <time datetime="2017-01-06T00:00:00Z" class="post-date">Fri, Jan 6, 2017</time>
-  <p>When starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.</p>
-<h2 id="the-global-object">The Global Object</h2>
-<p>The <strong>global scope</strong> is the space in which global variables live and it can also be approached as an object. Each global variable is present as a <strong>property</strong> of this object. In browsers, the global scope object is stored in the <code>window</code> variable:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">v</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
-<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v&#34;</span> <span style="color:#00a8c8">in</span> <span style="color:#111">window</span><span style="color:#111">)</span><span style="color:#111">;</span>
-<span style="color:#75715e">// &gt; true
-</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">v</span><span style="color:#111">)</span><span style="color:#111">;</span>
-<span style="color:#75715e">// &gt; 10
-</span></code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners/">Read More…</a>
     </div>
   
 </article>

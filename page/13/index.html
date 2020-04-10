@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-02 16:07:28 -0600 CST",
-    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
+    "datePublished": "2020-04-10 16:27:41 -0600 CST",
+    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,56 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/">Reworking Ace&#39;s HAML Syntax Highlighting</a>
+  </h1>
+  <time datetime="2017-04-10T00:00:00Z" class="post-date">Mon, Apr 10, 2017</time>
+  <p><a href="https://github.com/ajaxorg/ace">Ace</a> is a great web text editor and the default editor for <a href="https://c9.io">Cloud 9 IDE</a>. I have been using it for many years without any complaints at all. However I was not very satisfied with the HAML syntax highlighting, which seemed to have some problems caused by indentation when highlighting some tokens. Additionally, it didn't support correct highlighting of some HAML stuff such as HAML comments (which begin with <code>-#</code>) or block comments.</p>
+<p>This is how Ace's HAML syntax highlighting issues look like:</p>
+<p><img src="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/haml_bad_highlighting.jpg" alt="HAML Highlighting Issues"></p>
+<p>I proceeded to study Ace's logic for syntax highlighting. It consists basically on a lexer that reads the input through different regular expressions and proceeds to different stages depending on the regular expression caught. Basically, a <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state machine</a>. The source where this happens is found in <a href="https://github.com/ajaxorg/ace/blob/master/lib/ace/mode/haml_highlight_rules.js"><code>lib/ace/mode/haml_highlight_rules.js</code></a></p>
+<h2 id="defining-states">Defining States</h2>
+<p>A few states have to be defined to represent where the lexer currently &ldquo;stands&rdquo; in regards to the code. For example, entering a multi-block comment could represent entering a new state, since everything parsed in this state would belong to this block comment until the block ends, this will also mean another change of state.</p>
+<p>In Ace, all syntax highlighting lexers must begin with a <code>start</code> state. From this state we can switch to other defined states. The example below shows how we begin from the <code>start</code> state and can jump to a comment block state when the code matches a regular expression that represents this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">$rules</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+    <span style="color:#d88200">&#34;start&#34;</span><span style="color:#f92672">:</span> <span style="color:#111">[</span>
+        <span style="color:#111">{</span>
+            <span style="color:#75af00">token</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment.block&#34;</span><span style="color:#111">,</span> <span style="color:#75715e">// multiline HTML comment
+</span><span style="color:#75715e"></span>            <span style="color:#75af00">regex</span><span style="color:#f92672">:</span> <span style="color:#d88200">/^\/$/</span><span style="color:#111">,</span>
+            <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment&#34;</span>
+        <span style="color:#111">}</span><span style="color:#111">,</span>
+        <span style="color:#111">{</span>
+            <span style="color:#75af00">token</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment.block&#34;</span><span style="color:#111">,</span> <span style="color:#75715e">// multiline HAML comment
+</span><span style="color:#75715e"></span>            <span style="color:#75af00">regex</span><span style="color:#f92672">:</span> <span style="color:#d88200">/^\-#$/</span><span style="color:#111">,</span>
+            <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;comment&#34;</span>
+<span style="color:#111">}</span><span style="color:#111">,</span>
+
+<span style="color:#75715e">/* ... */</span>
+</code></pre></div><p>Notice that we define 2 different comment types, since HAML <a href="http://haml.info/docs/yardoc/file.REFERENCE.html">supports</a> HAML (not rendered in HTML) and HTML (rendered in HTML) comments. Both of these different regular expressions will make the lexer parse them as <code>comment.block</code> <strong>tokens</strong>, and will also make the lexer jump to a <code>comment</code> state, denoted by the <code>next</code> keyword.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/haml" class="label label-default">haml</a></li>
+  
+    <a href="https://aalvarez.me/tags/ace" class="label label-default">ace</a></li>
+  
+    <a href="https://aalvarez.me/tags/open-source" class="label label-default">open source</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/cloud9" class="label label-default">cloud9</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/understanding-ceilometer-transformers/">Understanding Ceilometer Transformers</a>
@@ -329,43 +379,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/">Setting Up an OpenStack Dev Environment</a>
-  </h1>
-  <time datetime="2017-03-22T00:00:00Z" class="post-date">Wed, Mar 22, 2017</time>
-  <p>Before beginning to <a href="https://aalvarez.me/posts/getting-started-on-contributing-to-openstack.html">contribute to OpenStack</a>, it is necessary that we setup an ideal development environment for a smoother workflow.</p>
-<p>In this post I will cover how to setup a Devstack development environment in a <strong>Ubuntu 16.04</strong> virtual machine using <a href="http://www.vmware.com/">VMware Player</a>.</p>
-<h2 id="setting-up-the-ubuntu-virtual-machine">Setting Up the Ubuntu Virtual Machine</h2>
-<p>Make sure you have <a href="http://download.cnet.com/VMware-Player/3000-2094_4-10470784.html">VMware Player</a> installed in your system. Then we need to choose an appropriate Ubuntu ISO image for our virtual machine. In my case I am using a <a href="http://releases.ubuntu.com/xenial/">Ubuntu Desktop 16.04.2 LTS (Xenial Xerus)</a> for <strong>32-bit PC i836</strong>.</p>
-<p>In VMware Player, create a new virtual machine using the wizard. Assign your preferred amount of memory and storage space. Now start the machine, and select the Ubuntu <code>.iso</code> image file when prompted. Proceed with the installation and select the <em>Erase Disk and Install Ubuntu</em> option when prompted.</p>
-<p>~&gt; I tried using <a href="https://www.virtualbox.org/">VirtualBox</a> for virtualization but I could not successfully install Devstack with it. Probably due to issues on using the correct network adapter. I also tried using Ubuntu 14.04 without success as well. This is why I recommend <strong>Ubuntu 16.04</strong>.</p>
-<p>Once the installation is finished, restart the virtual machine.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
-  
-    <a href="https://aalvarez.me/tags/devstack" class="label label-default">devstack</a></li>
-  
-    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
-  
-    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/">Read More…</a>
     </div>
   
 </article>

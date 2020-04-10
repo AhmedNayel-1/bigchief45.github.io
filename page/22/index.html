@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-02 16:07:28 -0600 CST",
-    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
+    "datePublished": "2020-04-10 16:27:41 -0600 CST",
+    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,38 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/managing-debian-package-dependencies/">Managing Debian Package Dependencies</a>
+  </h1>
+  <time datetime="2016-10-14T00:00:00Z" class="post-date">Fri, Oct 14, 2016</time>
+  <p>In a previous post, I talked about <a href="2016-10-11-debian-packaging-in-ubuntu.html">building a simple Debian package in Ubuntu</a>, however I did not go into details on how to manage the dependencies that your Debian package might require. In this post I will cover exactly that.</p>
+<h2 id="dpkg-and-dependencies">dpkg and Dependencies</h2>
+<p>Previously we installed our package using the <!-- raw HTML omitted -->dpkg -i<!-- raw HTML omitted --> command. However, the problem with <code>dpkg</code> is that by itself, it is not capable of managing repositories. Therefore, higher level tools (such as <code>apt-get</code>) are required to fetch dependencies from repositories.</p>
+<blockquote>
+<p>dkpg is only the core tool that installs/removes/configures packages, taking care of dependencies and other factors. apt-get and aptitude are tools that manage repositories, download data from them, and use dkpg to install/remove packages from them. This means, that apt-get and aptitude can resolve dependencies and get required packages from repository, but dpkg cannot, because it knows nothing about repositories.</p>
+</blockquote>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="https://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="https://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="https://aalvarez.me/tags/packaging" class="label label-default">packaging</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/managing-debian-package-dependencies/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/creating-python-packages/">Creating Python Packages</a>

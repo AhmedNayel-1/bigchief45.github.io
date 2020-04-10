@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-02 16:07:28 -0600 CST",
-    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
+    "datePublished": "2020-04-10 16:27:41 -0600 CST",
+    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,29 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/gracefully-exiting-python-context-managers-on-ctrl-c/">Gracefully Exiting Python Context Managers on Ctrl&#43;C</a>
+  </h1>
+  <time datetime="2020-04-10T16:27:41-0600" class="post-date">Fri, Apr 10, 2020</time>
+  <p>In this post I will show you how you can exit gracefully from within a context manager in your Python application.</p>
+<p>Suppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even the user interrupts the program with <!-- raw HTML omitted -->Ctrl+C<!-- raw HTML omitted --> key.</p>
+<p>This is how we can achieve that:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/gracefully-exiting-python-context-managers-on-ctrl-c/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/python-log-messages-with-dynamic-formatter-variables/">Python Log Messages With Dynamic Formatter Variables</a>
@@ -243,31 +266,6 @@ r = Rectangle(2, 7, 30 8)
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/coding-challenge-longest-substring-without-repeating-characters/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/custom-log-files-with-django-and-elastic-beanstalk/">Custom Log Files With Django and Elastic Beanstalk</a>
-  </h1>
-  <time datetime="2019-02-22T17:49:21Z" class="post-date">Fri, Feb 22, 2019</time>
-  <p>With Amazon ElasticBeanstalk it is possible to view log files of your deployed application. However, ElasticBeanstalk by default only returns certain logs like <code>/var/log/httpd/error_log</code> or <code>/var/log/httpd/access_log</code> if you are using Apache httpd.</p>
-<p>If you are generating custom logs in your Django application and using file handlers to save them to log files, you will probably want to be able to access and read them easily from the ElasticBeanstalk console.</p>
-<p>In this post I will show you how to achieve this, using Django as our backend framework.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
-  
-    <a href="https://aalvarez.me/tags/elasticbeanstalk" class="label label-default">elasticbeanstalk</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/custom-log-files-with-django-and-elastic-beanstalk/">Read More…</a>
     </div>
   
 </article>

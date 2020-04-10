@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-02 16:07:28 -0600 CST",
-    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
+    "datePublished": "2020-04-10 16:27:41 -0600 CST",
+    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,45 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/">Modifying the Zenoss Infrastructure Grid</a>
+  </h1>
+  <time datetime="2016-11-10T00:00:00Z" class="post-date">Thu, Nov 10, 2016</time>
+  <p>Continuing from my previous post, where I explained <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar.html">how to modify the device detail bar from a ZenPack using ExtJS</a>, in this post I will explain how we can modify the device list grid shown in the infrastructure page.</p>
+<h2 id="the-infrastructure-grid">The Infrastructure Grid</h2>
+<p>This is the table in the infrastructure page that shows all devices being monitored by Zenoss. Default columns include <em>device name</em>, <em>device class</em>, <em>IP address</em>, <em>production state</em>, and <em>events</em>, as shown in the image below:</p>
+<p><img src="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/zenoss_device_grid.png" alt="Zenoss Infrastructure Grid"></p>
+<p>However it would be nice to also include the power status we added to the device detail bar in the previous post, maybe even add the ping status as well (why Zenoss doesn't do this by default is beyond me).</p>
+<h2 id="devicepanelsjs">DevicePanels.js</h2>
+<p>The source code for the grid is found in <code>$ZENHOME/Products/ZenUI/browser/resources/js/zenoss/DevicePanels.js</code>. A quick glance at it and you will quickly find the definitions of the columns I mentioned earlier, defined in an array called <code>deviceColumns</code>.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/modifying-the-zenoss-infrastructure-grid/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/modifying-the-zenoss-device-detail-bar/">Modifying the Zenoss Device Detail Bar</a>
@@ -367,48 +406,6 @@ can normalize that data into a common unit.</p>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/zenoss-monitoring-template-data-points/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/">Triggering Commands From Events in Zenoss</a>
-  </h1>
-  <time datetime="2016-10-31T00:00:00Z" class="post-date">Mon, Oct 31, 2016</time>
-  <p>In Zenoss Core 4, we can configure some <strong><em>email</em></strong> notifications that produce and send emails based on conditions defined in a trigger, when an event is created.</p>
-<p>Additionally, Zenoss Core 4 also provides <strong><em>command</em></strong> type notifications that allow us to execute commands in the Zenoss machine when the trigger criterias are met.</p>
-<p>For example, let's say we want to execute a script everytime we ping a device and get no response. This scenario would involve the following:</p>
-<ol>
-<li>The device is suddenly down.</li>
-<li>Zenoss pings the device and gets no response.</li>
-<li>The device status is then changed to <em>DOWN</em>.</li>
-<li>An Event with an event class of <code>/Status/Ping</code> and a severity of <em>Critical</em> is created.</li>
-</ol>
-<p>With this information, we can create a trigger that will represent this exact scenario. Moreover, we can configure a command notification to be executed when this trigger is fired.</p>
-<h2 id="configuring-a-trigger">Configuring a Trigger</h2>
-<ol>
-<li>Navigate to Events &gt; Triggers</li>
-<li>Create a new trigger.</li>
-<li>Add the rules that represent the scenario mentioned before. In this case, all of these rules must apply:</li>
-</ol>
-<p><img src="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/edit_trigger.png" alt="Edit Trigger"></p>
-<p>=&gt; Because we want to make sure the device is truly <em>DOWN</em>, and has been so for quite a while, we also want to add a condition that checks that the event count is greater than a certain number, only then the trigger will be fired, and consequently, the command.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss/">Read More…</a>
     </div>
   
 </article>

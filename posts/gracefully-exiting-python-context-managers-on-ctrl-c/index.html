@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.61.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/aalvarez.me\/"
+    },
+    "articleSection" : "posts",
+    "name" : "Gracefully Exiting Python Context Managers on Ctrl\x2bC",
+    "headline" : "Gracefully Exiting Python Context Managers on Ctrl\x2bC",
+    "description" : "\x3cp\x3eIn this post I will show you how you can exit gracefully from within a context manager in your Python application.\x3c\/p\x3e\n\x3cp\x3eSuppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even the user interrupts the program with \x3c!-- raw HTML omitted --\x3eCtrl\x2bC\x3c!-- raw HTML omitted --\x3e key.\x3c\/p\x3e\n\x3cp\x3eThis is how we can achieve that:\x3c\/p\x3e",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-04-10 16:27:41 -0600 CST",
+    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "url" : "https:\/\/aalvarez.me\/posts\/gracefully-exiting-python-context-managers-on-ctrl-c\/",
+    "wordCount" : "228",
+    "keywords" : [ "python","Blog" ]
+}
+</script>
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  <title>Gracefully Exiting Python Context Managers on Ctrl&#43;C &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/hyde.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/extra.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/overrides.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://aalvarez.me/"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://aalvarez.me/">Home</a> </li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvrz_" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Gracefully Exiting Python Context Managers on Ctrl&#43;C</h1>
+  <time datetime=2020-04-10T16:27:41-0600 class="post-date">Fri, Apr 10, 2020</time>
+
+  <p>In this post I will show you how you can exit gracefully from within a context manager in your Python application.</p>
+<p>Suppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even the user interrupts the program with <!-- raw HTML omitted -->Ctrl+C<!-- raw HTML omitted --> key.</p>
+<p>This is how we can achieve that:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">sys</span>
+<span style="color:#f92672">import</span> <span style="color:#111">time</span>
+<span style="color:#f92672">from</span> <span style="color:#111">signal</span> <span style="color:#f92672">import</span> <span style="color:#111">signal</span><span style="color:#111">,</span> <span style="color:#111">SIGINT</span>
+
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">Session</span><span style="color:#111">:</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__enter__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#111">signal</span><span style="color:#111">(</span><span style="color:#111">SIGINT</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_sigint_handler</span><span style="color:#111">)</span>
+
+        <span style="color:#111">time</span><span style="color:#f92672">.</span><span style="color:#111">sleep</span><span style="color:#111">(</span><span style="color:#ae81ff">100000000000</span><span style="color:#111">)</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#111">__exit__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">type</span><span style="color:#111">,</span> <span style="color:#111">value</span><span style="color:#111">,</span> <span style="color:#111">traceback</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Exiting session...</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_do_cleanup</span><span style="color:#111">(</span><span style="color:#111">)</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_do_cleanup</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Cleaning up...</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">_sigint_handler</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">signal_received</span><span style="color:#111">,</span> <span style="color:#111">frame</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Ctrl + C handler called</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__exit__</span><span style="color:#111">(</span><span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">None</span><span style="color:#111">)</span>
+        <span style="color:#111">sys</span><span style="color:#f92672">.</span><span style="color:#111">exit</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+
+
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">__main__</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">with</span> <span style="color:#111">Session</span><span style="color:#111">(</span><span style="color:#111">)</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">Session started</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+</code></pre></div><p>If you run the program above, the program will sleep and block for a long time. When you press <!-- raw HTML omitted -->Ctrl+C<!-- raw HTML omitted -->, the handler we registered (<code>_sigint_handler</code>) will be called instead of a <code>KeyboardInterrupt</code> error being raised. In this method we <strong>manually</strong> call the context manager's <code>__exit__</code> method, passing a value of <code>None</code> for all 3 arguments. This is what is actually passed when <code>__exit__</code> is routinely called when the context manager is finished.</p>
+<p>Notice that after manually calling <code>__exit__</code>, we are also manually terminating the program with <code>sys.exit(0)</code>. This is necessary, since omitting this will cause our program to keep running. Pressing <!-- raw HTML omitted -->Ctrl+C<!-- raw HTML omitted --> <strong>will not terminate the program</strong>.</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

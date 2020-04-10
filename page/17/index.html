@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-02 16:07:28 -0600 CST",
-    "dateModified" : "2020-04-02 16:07:28 -0600 CST",
+    "datePublished": "2020-04-10 16:27:41 -0600 CST",
+    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,37 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners/">JavaScript Gotchas for Beginners</a>
+  </h1>
+  <time datetime="2017-01-06T00:00:00Z" class="post-date">Fri, Jan 6, 2017</time>
+  <p>When starting to learn JavaScript, there are a few details and gotchas that are always important to remember. Memorizing and understanding these concepts will make you a better and faster JavaScript programmer overall and it is why I am listing a few of these concepts (which are best learned at the beginner level) in this post.</p>
+<h2 id="the-global-object">The Global Object</h2>
+<p>The <strong>global scope</strong> is the space in which global variables live and it can also be approached as an object. Each global variable is present as a <strong>property</strong> of this object. In browsers, the global scope object is stored in the <code>window</code> variable:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#00a8c8">var</span> <span style="color:#75af00">v</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v&#34;</span> <span style="color:#00a8c8">in</span> <span style="color:#111">window</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#75715e">// &gt; true
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">v</span><span style="color:#111">)</span><span style="color:#111">;</span>
+<span style="color:#75715e">// &gt; 10
+</span></code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/custom-pages-in-zenoss/">Custom Pages in Zenoss</a>
@@ -303,42 +334,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/custom-zenoss-api-endpoints/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/">SSH Monitoring in ZenPacks</a>
-  </h1>
-  <time datetime="2016-12-14T00:00:00Z" class="post-date">Wed, Dec 14, 2016</time>
-  <p>Zenoss usually monitors and collects information using <strong>SNMP</strong> and <strong>SSH</strong> methods. A good example of is the <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">linux monitor ZenPack</a> which can collect information such as hard disks, interfaces, and file systems using <strong>both</strong> methods.</p>
-<p>SNMP works by installing and configuring an SNMP agent on the machine we want to monitor. This agent will poll the machine for data, and this data can be retrieved by Zenoss using <strong><a href="http://www.net-snmp.org/">net-snmp</a></strong>.</p>
-<p>On the other hand, SSH works by configuring a username and password or a path to an SSH key zProperties. This will allow Zenoss to remotely access the host using SSH and execute the corresponding commands and return the corresponding information.</p>
-<p>When developing ZenPacks, data collection using SNMP is a relatively common practice. There is even a very good tutorial on <a href="https://zenpacklib.zenoss.com/en/latest/tutorial-snmp-device/index.html">SNMP monitoring using zenpacklib</a>. When using SNMP, the modeler plugins are <code>SnmpPlugin</code> plugins that typically work using a set of <a href="http://www.dpstele.com/snmp/what-does-oid-network-elements.php">OIDs</a> to determine exactly which data is to be modeled.</p>
-<h2 id="ssh-in-modeler-plugins">SSH in Modeler Plugins</h2>
-<p>In order to make a modeler plugin utilize SSH as it's polling method we need to use a different type of plugin, the <code>CommandPlugin</code> plugin. The structure of this type of plugin is very similar to the <code>SnmpPlugin</code>, however there is one critical variable that must be implemented.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ssh" class="label label-default">ssh</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/bash" class="label label-default">bash</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/ssh-monitoring-in-zenpacks/">Read More…</a>
     </div>
   
 </article>
