@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -135,6 +135,32 @@ if (!doNotTrack) {
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/recursive-python-aws-lambda-functions/">Recursive Python AWS Lambda Functions</a>
+  </h1>
+  <time datetime="2018-09-18T00:00:00Z" class="post-date">Tue, Sep 18, 2018</time>
+  <p>There are times where some processing task cannot be completed under the AWS Lambda timeout limit (a maximum of 5 minutes as of this writing). A possible solution for these kind of situations is to implement a recursive approach to perform the processing task.</p>
+<p>Basically, if you are able to separate the task into multiple chunks or batches, then you could make each batch to be processed by a different Lambda function. The amount of Lambda functions necessary to finish the task will scale accordingly.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/aws-lambda" class="label label-default">aws lambda</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/serverless" class="label label-default">serverless</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/recursive-python-aws-lambda-functions/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/displaying-images-in-netbeans-platform-node-tooltips/">Displaying Images in Netbeans Platform Node Tooltips</a>
   </h1>
   <time datetime="2018-08-14T00:00:00Z" class="post-date">Tue, Aug 14, 2018</time>
@@ -237,34 +263,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/netbeans-platform-status-bars/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/">Implementing Auto Updates for a Netbeans Platform Maven Application Using Github Pages</a>
-  </h1>
-  <time datetime="2018-07-17T00:00:00Z" class="post-date">Tue, Jul 17, 2018</time>
-  <p>Being able to update an application when a new version is released is something of critical importance for desktop applications. Otherwise, the process of updating the application is extremely tedious since you have to download more installers all the time.</p>
-<p>Luckily, Netbeans Platform comes with integrated support for enabling your custom applications to be able to be updated when a new version is released.</p>
-<p>In this post I will go over how to implement this on a <strong>Maven</strong> based Netbeans Platform application.</p>
-<h2 id="how-netbeans-update-center-works">How Netbeans Update Center Works</h2>
-<p>The <strong>Update Center</strong> is how we can achieve this functionality. The way it works is that you publish your module's NBM files to a web server, along with a XML catalog file that contains information about the modules such as latest release timestamp, latest version, etc.</p>
-<p>When you configure an update center in your application, you will configure this web server's URL so that the update center client knows where to poll and where to download the new module files to install.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
-  
-    <a href="https://aalvarez.me/tags/maven" class="label label-default">maven</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/implementing-auto-updates-for-a-netbeans-platform-maven-application-using-github-pages/">Read More…</a>
     </div>
   
 </article>

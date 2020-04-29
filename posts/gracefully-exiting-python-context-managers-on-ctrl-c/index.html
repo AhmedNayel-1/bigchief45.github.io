@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Gracefully Exiting Python Context Managers on Ctrl\x2bC",
     "headline" : "Gracefully Exiting Python Context Managers on Ctrl\x2bC",
-    "description" : "\x3cp\x3eIn this post I will show you how you can exit gracefully from within a context manager in your Python application.\x3c\/p\x3e\n\x3cp\x3eSuppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even the user interrupts the program with \x3c!-- raw HTML omitted --\x3eCtrl\x2bC\x3c!-- raw HTML omitted --\x3e key.\x3c\/p\x3e\n\x3cp\x3eThis is how we can achieve that:\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn this post I will show you how you can exit gracefully from within a context manager in your Python application.\x3c\/p\x3e\n\x3cp\x3eSuppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even when the user interrupts the program with \x3c!-- raw HTML omitted --\x3eCtrl\x2bC\x3c!-- raw HTML omitted --\x3e key.\x3c\/p\x3e\n\x3cp\x3eThis is how we can achieve that:\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2020-04-10 16:27:41 -0600 CST",
     "dateModified" : "2020-04-10 16:27:41 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/posts\/gracefully-exiting-python-context-managers-on-ctrl-c\/",
-    "wordCount" : "228",
+    "wordCount" : "229",
     "keywords" : [ "python","Blog" ]
 }
 </script>
@@ -136,7 +136,7 @@ if (!doNotTrack) {
   <time datetime=2020-04-10T16:27:41-0600 class="post-date">Fri, Apr 10, 2020</time>
 
   <p>In this post I will show you how you can exit gracefully from within a context manager in your Python application.</p>
-<p>Suppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even the user interrupts the program with <!-- raw HTML omitted -->Ctrl+C<!-- raw HTML omitted --> key.</p>
+<p>Suppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even when the user interrupts the program with <!-- raw HTML omitted -->Ctrl+C<!-- raw HTML omitted --> key.</p>
 <p>This is how we can achieve that:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">sys</span>
 <span style="color:#f92672">import</span> <span style="color:#111">time</span>

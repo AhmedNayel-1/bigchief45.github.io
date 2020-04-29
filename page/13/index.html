@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,40 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/understanding-ceilometer-publishers/">Understanding Ceilometer Publishers</a>
+  </h1>
+  <time datetime="2017-04-11T00:00:00Z" class="post-date">Tue, Apr 11, 2017</time>
+  <p>Continuing with my study of the Ceilometer pipeline, this post now covers Ceilometer <strong>publishers</strong>. Publishers are components that make it possible to save the data into a persistent storage through the message bus, or to send it to one or more external consumers.</p>
+<p>Publishers are specified in the <code>publishers</code> section for each pipeline that is defined in the <code>pipeline.yaml</code> and the <code>event_pipeline.yaml</code> files.</p>
+<p>Many different publishers are available. The following are the most common and important publishers:</p>
+<h3 id="gnocchi">Gnocchi</h3>
+<p><img src="http://gnocchi.xyz/_images/gnocchi-logo.jpg" alt="Gnocchi Logo"></p>
+<p>Gnocchi is a multi-tenant timeseries, metrics and resources database. It provides an HTTP REST interface to create and manipulate the data. It is designed to store metrics at a very large scale while providing access to metrics and resources information and history.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ceilometer" class="label label-default">ceilometer</a></li>
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="https://aalvarez.me/tags/panko" class="label label-default">panko</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/understanding-ceilometer-publishers/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/reworking-ace-s-haml-syntax-highlighting/">Reworking Ace&#39;s HAML Syntax Highlighting</a>
@@ -334,51 +368,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/">Using Objects and Ranges With Cases in Ruby</a>
-  </h1>
-  <time datetime="2017-03-29T00:00:00Z" class="post-date">Wed, Mar 29, 2017</time>
-  <p>Ruby's <a href="http://www.techotopia.com/index.php/The_Ruby_case_Statement"><code>case</code> statement</a> provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of <code>if</code> statements and I actually found a pretty neat way to implement using the Ruby <code>case</code>.</p>
-<p>In my application I have a Rails model called <code>Entry</code> which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3's nice <a href="http://getbootstrap.com/components/#progress">progress bars</a> and I want the progress bar's contextual class to be changed and determined by the range in which this data point sits in.</p>
-<p>If we take <a href="https://en.wikipedia.org/wiki/Cholesterol">total cholesterol</a> as an example, a quick Google search indicates that an ideal value would be less than 200 mg/dL, a high value (not good) would be between 200-239 mg/dL, and a very high value (definitely not good) would be above 240 mg/dL.</p>
-<p>To implement this, I created a <code>Recommendations</code> module under the <code>/models</code> directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:</p>
-<pre><code>app/models/
-├── application_record.rb
-├── concerns
-├── entry.rb
-├── recommendations
-│   ├── blood_glucose.rb
-│   ├── diastolic_pressure.rb
-│   ├── hdl.rb
-│   ├── ldl.rb
-│   ├── systolic_pressure.rb
-│   └── total_cholesterol.rb
-└── user.rb
-</code></pre>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-    <a href="https://aalvarez.me/tags/bootstrap" class="label label-default">bootstrap</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/">Read More…</a>
     </div>
   
 </article>

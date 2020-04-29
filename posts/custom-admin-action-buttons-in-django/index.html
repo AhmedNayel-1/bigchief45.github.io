@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.61.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/aalvarez.me\/"
+    },
+    "articleSection" : "posts",
+    "name" : "Custom Admin Action Buttons in Django",
+    "headline" : "Custom Admin Action Buttons in Django",
+    "description" : "\x3cp\x3eIn this post I will explain how you can add custom action buttons in the admind detail view of for objects in the Django admin.\x3c\/p\x3e\n\x3cp\x3eThis is the final result we want to achieve:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-admin-action-buttons-in-django\/custom_admin_buttons.png\x22 alt=\x22Custom Admin Buttons\x22\x3e\x3c\/p\x3e\n\x3cp\x3eThese buttons can trigger custom actions we want to perform on these objects.\x3c\/p\x3e",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "url" : "https:\/\/aalvarez.me\/posts\/custom-admin-action-buttons-in-django\/",
+    "wordCount" : "460",
+    "keywords" : [ "django","Blog" ]
+}
+</script>
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  <title>Custom Admin Action Buttons in Django &middot; Andrés Álvarez</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/hyde.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/extra.css">
+  <link type="text/css" rel="stylesheet" href="https://aalvarez.me/css/overrides.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://aalvarez.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://aalvarez.me/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Andrés Álvarez" />
+
+  
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://aalvarez.me/"><h1>Andrés Álvarez</h1></a>
+      <p class="lead">
+       Software Engineer &amp; Web Developer 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://aalvarez.me/">Home</a> </li>
+        <li><a href="https://aalvarez.me/tags/">Tags</a></li>
+        <li><a href="https://aalvarez.me/about/"> About Me </a></li><li><a href="https://aalvarez.me/portfolio/"> Portfolio </a></li>
+      </ul>
+    </nav>
+
+    
+    <ul id="social-media" class="list-inline">
+      
+        <li>
+           <a href="mailto:andresalvarez353@gmail.com" target="_blank"><i class="fa fa-envelope fa-2x" title="E-Mail"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://linkedin.com/in/aalvarez4" target="_blank"><i class="fa fa-linkedin fa-2x" title="LinkedIn"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://www.instagram.com/aalvrz_" target="_blank"><i class="fa fa-instagram fa-2x" title="Instagram"></i></a>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://aalvarez.me/index.xml" target="_blank"><i class="fa fa-rss fa-2x" title="RSS"></i></a>
+        </li>
+      
+    </ul>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Custom Admin Action Buttons in Django</h1>
+  <time datetime=2020-04-29T12:06:31-0600 class="post-date">Wed, Apr 29, 2020</time>
+
+  <p>In this post I will explain how you can add custom action buttons in the admind detail view of for objects in the Django admin.</p>
+<p>This is the final result we want to achieve:</p>
+<p><img src="https://aalvarez.me/posts/custom-admin-action-buttons-in-django/custom_admin_buttons.png" alt="Custom Admin Buttons"></p>
+<p>These buttons can trigger custom actions we want to perform on these objects.</p>
+<h2 id="creating-the-template">Creating The Template</h2>
+<p>In order to add these buttons. We need to override the existing admin template that Django provides. For our use case, this template is called <code>change_form.html</code>.</p>
+<p>The path will depend on the name of the app our model is located in, and the name of our model. So for a <code>Book</code> model in a <code>books</code> app, the path of the template would be <code>templates/admin/books/book/change_form.html</code>.</p>
+<p>Go ahead and create that HTML template file with that directory path structure inside your Django <strong>project</strong> directory. Here is an example:</p>
+<pre><code>myproject/
+├── asgi.py
+├── __init__.py
+├── settings.py
+├── templates
+│   └── admin
+│       └── books
+│           └── book
+│               └── change_form.html
+├── urls.py
+└── wsgi.py
+</code></pre><p>In order for Django to recognize this template path, add it to your template discovery configuration in <code>settings.py</code>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">TEMPLATES</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
+    <span style="color:#111">{</span>
+        <span style="color:#75715e"># ...</span>
+
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">DIRS</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">naughtee/templates</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">,</span>
+    <span style="color:#111">}</span><span style="color:#111">,</span>
+<span style="color:#111">]</span>
+</code></pre></div><p>Now open the HTML template file and add the following:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{% extends &#34;admin/change_form.html&#34; %}
+
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    <span style="color:#111">&lt;</span><span style="color:#f92672">li</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+        <span style="color:#111">&lt;</span><span style="color:#f92672">a</span> <span style="color:#75af00">href</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;{% url opts|admin_urlname:&#39;history&#39; original.pk|admin_urlquote %}&#34;</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;historylink&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>{% trans &#34;History&#34; %}<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">a</span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">li</span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;</span><span style="color:#f92672">li</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+        <span style="color:#111">&lt;</span><span style="color:#f92672">a</span> <span style="color:#75af00">href</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;{% url &#39;books:bust-cache&#39; original.pk %}?next={% url &#39;admin:books_book_change&#39; original.id %}&#34;</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;historylink&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>Bust Cache<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">a</span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">li</span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;</span><span style="color:#f92672">li</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+        <span style="color:#111">&lt;</span><span style="color:#f92672">a</span> <span style="color:#75af00">href</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;{% url &#39;books:schedule-maintenance&#39; original.pk %}?next={% url &#39;admin:books_book_change&#39; original.id %}&#34;</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;historylink&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>Schedule For Maintenance<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">a</span><span style="color:#111">&gt;</span>
+    <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">li</span><span style="color:#111">&gt;</span>
+    {% if has_absolute_url %}
+        <span style="color:#111">&lt;</span><span style="color:#f92672">li</span><span style="color:#111"></span><span style="color:#111">&gt;</span>
+            <span style="color:#111">&lt;</span><span style="color:#f92672">a</span> <span style="color:#75af00">href</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;{% url &#39;admin:view_on_site&#39; content_type_id original.pk %}&#34;</span> <span style="color:#75af00">class</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;viewsitelink&#34;</span><span style="color:#111"></span><span style="color:#111">&gt;</span>{% trans &#34;View on site&#34; %}<span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">a</span><span style="color:#111">&gt;</span>
+        <span style="color:#111">&lt;</span><span style="color:#111">/</span><span style="color:#f92672">li</span><span style="color:#111">&gt;</span>
+    {% endif %}
+{% endblock %}
+</code></pre></div><p>This will load the original admin template for this view, but also allows us to add extra content. In our case, two new buttons.</p>
+<p>Notice how we are specifying new URLS for the new buttons. This allows us to call custom functions using a <code>GET</code> request when the buttons are clicked.</p>
+<h2 id="creating-the-views">Creating the Views</h2>
+<p>We can create simple function-based views to execute our custom business logic:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># books/views.py</span>
+<span style="color:#f92672">from</span> <span style="color:#111">django.contrib.admin.views.decorators</span> <span style="color:#f92672">import</span> <span style="color:#111">staff_member_required</span>
+
+
+<span style="color:#75af00">@staff_member_required</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">bust_book_cache</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">book_id</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">pass</span>
+
+
+<span style="color:#75af00">@staff_member_required</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">schedule_book_maintenance</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">book_id</span><span style="color:#111">)</span><span style="color:#111">:</span>
+    <span style="color:#00a8c8">pass</span>
+</code></pre></div><p>It is important that we use the <code>staff_member_required</code> decorator for these functions. Since they are supposed to be executed strictly from the Django admin, which means only logged in admins are allowed to trigger these functions.</p>
+<p>Now let's go ahead and define the URLs first. In <code>urls.py</code> of the <code>books</code> app:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">django.urls</span> <span style="color:#f92672">import</span> <span style="color:#111">path</span>
+
+<span style="color:#f92672">from</span> <span style="color:#111">.</span> <span style="color:#f92672">import</span> <span style="color:#111">views</span>
+
+<span style="color:#111">app_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">books</span><span style="color:#d88200">&#39;</span>
+
+<span style="color:#111">urlpatterns</span> <span style="color:#f92672">=</span> <span style="color:#111">[</span>
+    <span style="color:#111">path</span><span style="color:#111">(</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">&lt;int:book_id&gt;/bust-cache</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+        <span style="color:#111">views</span><span style="color:#f92672">.</span><span style="color:#111">bust_book_cache</span><span style="color:#111">,</span>
+        <span style="color:#111">name</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">bust-book-cache</span><span style="color:#d88200">&#39;</span>
+    <span style="color:#111">)</span><span style="color:#111">,</span>
+    <span style="color:#111">path</span><span style="color:#111">(</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">&lt;int:book_id&gt;/schedule-maintenance</span><span style="color:#d88200">&#39;</span><span style="color:#111">,</span>
+        <span style="color:#111">views</span><span style="color:#f92672">.</span><span style="color:#111">schedule_book_maintenance</span><span style="color:#111">,</span>
+        <span style="color:#111">name</span><span style="color:#f92672">=</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">schedule-maintenance</span><span style="color:#d88200">&#39;</span>
+    <span style="color:#111">)</span><span style="color:#111">,</span>
+<span style="color:#111">]</span>
+</code></pre></div><p>All done! Now try clicking on the buttons yourself, and your functions should be succesfully called. Nice Django admin custom actions made simple! 🎉</p>
+</div>
+
+
+<div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+</div>
+
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "aalvarez-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-131322667-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

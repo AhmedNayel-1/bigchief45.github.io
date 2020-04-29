@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,34 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics/">Understanding Gnocchi Metrics</a>
+  </h1>
+  <time datetime="2017-05-18T00:00:00Z" class="post-date">Thu, May 18, 2017</time>
+  <p>Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store <strong>measures</strong>, and the way they do this is defined by <strong>archive policies</strong>. These are concepts that I will cover in future articles.</p>
+<p>Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
+<p><img src="http://gnocchi.xyz/_images/architecture.png" alt="Gnocchi Architecture"></p>
+<p>In the Gnocchi architecture, the <strong>storage</strong> back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/testing-a-rails-api-with-rspec/">Testing a Rails API With RSpec</a>
@@ -327,40 +355,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/working-with-rrdtool/">Working With RRDTool</a>
-  </h1>
-  <time datetime="2017-05-02T00:00:00Z" class="post-date">Tue, May 2, 2017</time>
-  <p>Zenoss makes a lot of use of <a href="http://oss.oetiker.ch/rrdtool/">RRDTool</a> for <a href="https://aalvarez.me/posts/using-rrdtool-in-zenoss.html">storing monitored performance data and generating graphs</a>. In this post I want to go into more detail on the components of RRDTool and how works.</p>
-<h2 id="round-robin-databases">Round Robin Databases</h2>
-<p>RRDTool is a program that works with Round Robin databases (hence RRD). This type of database is more geared and limited towards storing <strong>time series</strong> data.</p>
-<p>Moreover, rrdtool also <strong>doesn't</strong> store the data handed to it. Instead, it first <strong>re-samples</strong> the data and <em>then</em> stores this re-sampled data. Since rrdtool deals with time series data, it knows that certain data is meant to be stored every certain period of time (i.e 5 minutes). This newly re-sampled data will be the same as the original data, but the stored numbers will be different.</p>
-<p>This means that if for example, we were to store some data every 5 minutes, a data sample that arrives at the <code>03</code> minute mark cannot go into the database, therefore it has to be re-adjusted into the correct slots. While rrdtool makes this adjustment, it will also change the value, so that this new value still represents the space in the curve.</p>
-<p>In rrdtool, each database table is stored in a separate <code>.rrd</code> file. This means that one file represents one table.</p>
-<p>We can create a database using the following command:</p>
-<pre><code>rrdtool create ex5.rrd --step=5 DS:input:GAUGE:10:0:1000000 RRA:LAST:0.5:1:603
-</code></pre><h3 id="data-re-sampling-step">Data Re-sampling: Step</h3>
-<p>One important parameter here is the <code>step</code> parameter. This means that rrdtool will re-sample all the data that is fed into the database to a 300 second interval. Still, data can be fed as quickly as desired (i.e a lot of data in one second), however the data will be re-sampled to 300 seconds on storage. <strong>This means that it only stores data every 300 seconds</strong>. Because of this re-sampling, rrdtool will not accept data from the past.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/working-with-rrdtool/">Read More…</a>
     </div>
   
 </article>

@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,51 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/">Using Objects and Ranges With Cases in Ruby</a>
+  </h1>
+  <time datetime="2017-03-29T00:00:00Z" class="post-date">Wed, Mar 29, 2017</time>
+  <p>Ruby's <a href="http://www.techotopia.com/index.php/The_Ruby_case_Statement"><code>case</code> statement</a> provides some nice functionality to be used with objects and ranges. I was recently developing a small application in Ruby on Rails using blood test data where I had to check if a certain test item (i.e. HDL Cholesterol) value belonged to a certain range. I did not want to use a bunch of <code>if</code> statements and I actually found a pretty neat way to implement using the Ruby <code>case</code>.</p>
+<p>In my application I have a Rails model called <code>Entry</code> which represents a blood test result with a lot of field data such as blood glucose level, blood pressure level, etc. etc. I want to display this data in the view using Bootstrap 3's nice <a href="http://getbootstrap.com/components/#progress">progress bars</a> and I want the progress bar's contextual class to be changed and determined by the range in which this data point sits in.</p>
+<p>If we take <a href="https://en.wikipedia.org/wiki/Cholesterol">total cholesterol</a> as an example, a quick Google search indicates that an ideal value would be less than 200 mg/dL, a high value (not good) would be between 200-239 mg/dL, and a very high value (definitely not good) would be above 240 mg/dL.</p>
+<p>To implement this, I created a <code>Recommendations</code> module under the <code>/models</code> directory. All classes belonging to this module will have different ranges to represent what I explained above. This is what the model directory tree looks like:</p>
+<pre><code>app/models/
+├── application_record.rb
+├── concerns
+├── entry.rb
+├── recommendations
+│   ├── blood_glucose.rb
+│   ├── diastolic_pressure.rb
+│   ├── hdl.rb
+│   ├── ldl.rb
+│   ├── systolic_pressure.rb
+│   └── total_cholesterol.rb
+└── user.rb
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+    <a href="https://aalvarez.me/tags/bootstrap" class="label label-default">bootstrap</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/using-objects-and-ranges-with-cases-in-ruby/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/setting-up-an-openstack-dev-environment/">Setting Up an OpenStack Dev Environment</a>
@@ -262,56 +307,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/python-tricks-for-better-code/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/">Integrating TravisCI With Rails and Heroku</a>
-  </h1>
-  <time datetime="2017-03-07T00:00:00Z" class="post-date">Tue, Mar 7, 2017</time>
-  <p>Adding <a href="https://travis-ci.org/">TravisCI</a> to your application's deployment flow will enable you to spot any build fails or test fails during deployment without affecting your production environment.</p>
-<p>In this post I go over on how to integrate TravisCI with a Rails 4 application that uses Postgresql, Rspec, and is later deployed to Heroku if the Travis build is successful.</p>
-<h2 id="setting-up-travisci">Setting up TravisCI</h2>
-<p>Assuming you already have an account in TravisCI, look for the Github repository of the Rails application and enable it. Then we will want to add a <code>.travis.yml</code> file to the application's root directory with the following contents:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">language<span style="color:#111">:</span> Ruby
-rvm<span style="color:#111">:</span>
-  - <span style="color:#ae81ff">2.3</span><span style="color:#ae81ff">.0</span>
-</code></pre></div><p>The configuration above tells TravisCI that our application will use Ruby 2.3.0. Once you commit and push the change above to the master branch, Travis will begin creating the build, which might take a few minutes.</p>
-<h3 id="configure-postgresql">Configure Postgresql</h3>
-<p>Seems our Rails application uses Postgresql, we need to configure TravisCI to run our build with a Postgresql database. To do this we will add the following configuration to <code>.travis.yml</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">services<span style="color:#111">:</span>
-  - postgresql
-</code></pre></div><p>Then we will add another configuration that will make Travis create a Postgresql database with username <code>postgres</code> and blank password for the build:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">before_script<span style="color:#111">:</span>
-  - psql -c <span style="color:#d88200">&#39;create database travis_ci_test;&#39;</span> -U postgres
-</code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/rspec" class="label label-default">rspec</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-    <a href="https://aalvarez.me/tags/travisci" class="label label-default">travisci</a></li>
-  
-    <a href="https://aalvarez.me/tags/github" class="label label-default">github</a></li>
-  
-    <a href="https://aalvarez.me/tags/git" class="label label-default">git</a></li>
-  
-    <a href="https://aalvarez.me/tags/heroku" class="label label-default">heroku</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/integrating-travisci-with-rails-and-heroku/">Read More…</a>
     </div>
   
 </article>

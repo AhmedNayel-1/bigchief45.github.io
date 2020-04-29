@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,45 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/">Using Lambdas in Case Statements in Ruby</a>
+  </h1>
+  <time datetime="2017-06-12T00:00:00Z" class="post-date">Mon, Jun 12, 2017</time>
+  <p>In a <a href="http://aalvarez.me/blog/posts/using-objects-and-ranges-with-cases-in-ruby.html">previous post</a> I talked about how we could use Ruby ranges inside case statements. This was a very neat way of using case statements that would make our code more readable and less repetitive.</p>
+<p>The other day I was trying to solve the <a href="http://exercism.io/submissions/03c3c93f23b8420faff3107e2ad18286">Bob Ruby exercise in Exercism</a>, and I came up with another very cool way to use case statements: with Lambdas.</p>
+<h2 id="the-problem">The Problem</h2>
+<p>The Bob problem is very simple. The program receives some input, and it returns some output based on the contents of the input. A strong indication for using a case statement. From the problem's README file:</p>
+<pre><code>Bob is a lackadaisical teenager. In conversation, his responses are very limited.
+
+Bob answers 'Sure.' if you ask him a question.
+
+He answers 'Whoa, chill out!' if you yell at him.
+
+He says 'Fine. Be that way!' if you address him without actually saying anything.
+
+He answers 'Whatever.' to anything else.
+</code></pre><h2 id="solutions">Solutions</h2>
+<p>The test provided by Exercism indicates that we should create a <code>Bob</code> class with a <code>hey</code> class method that receives a remark. We could then use a case statement with this remark and evaluate if the remark is a question, yelling, or whatever else needs to be determined according to the instructions. We could create some class methods to determine each of these possibilities:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/programming" class="label label-default">programming</a></li>
+  
+    <a href="https://aalvarez.me/tags/exercism" class="label label-default">exercism</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/zenoss-custom-notification-actions-using-subscribers/">Zenoss Custom Notification Actions Using Subscribers</a>
@@ -260,34 +299,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/understanding-gnocchi-measures/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics/">Understanding Gnocchi Metrics</a>
-  </h1>
-  <time datetime="2017-05-18T00:00:00Z" class="post-date">Thu, May 18, 2017</time>
-  <p>Metrics are one of the main object types in Gnocchi. They are identified by a UUID and they can also be attached to a resource by using a resource name. Metrics store <strong>measures</strong>, and the way they do this is defined by <strong>archive policies</strong>. These are concepts that I will cover in future articles.</p>
-<p>Basically, a metric designates any thing that can be measured: the CPU usage of a server, the temperature of a room or the number of bytes sent by a network interface.</p>
-<p><img src="http://gnocchi.xyz/_images/architecture.png" alt="Gnocchi Architecture"></p>
-<p>In the Gnocchi architecture, the <strong>storage</strong> back-end is responsible for storing measures of created metrics. It receives timestamps and values, and pre-computes aggregations according to the defined archive policies.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
-  
-    <a href="https://aalvarez.me/tags/openstack" class="label label-default">openstack</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics/">Read More…</a>
     </div>
   
 </article>

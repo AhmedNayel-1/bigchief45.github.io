@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,41 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/configuring-a-local-apt-repository/">Configuring a local apt repository</a>
+  </h1>
+  <time datetime="2016-10-17T00:00:00Z" class="post-date">Mon, Oct 17, 2016</time>
+  <p>Setting up a local apt repository can allow you to use <code>apt-get install</code> command to install your own packages. This is a better approach than using <code>dpkg -i</code> because apt will fetch and install the required dependencies (which should also be located in your local repository) in an <strong>offline</strong> fashion.</p>
+<h2 id="add-local-repository-to-sources">Add Local Repository to Sources</h2>
+<p>First we need to add our local repository to <code>apt</code>'s list of source repositories, this can be found in <code>/etc/apt/sources.list</code>. To add our local repository, we add the following line at the top of the file:</p>
+<pre><code>/path/to/local-deb-repo/ ./
+</code></pre><p>Where <em>local-deb-repo</em> is the name of our local repository directory.</p>
+<h2 id="add-debian-packages">Add Debian Packages</h2>
+<p>Now we create local repository's directory just like we specified it in the previous step:</p>
+<pre><code>mkdir /path/to/local-deb-repo/
+</code></pre><p>Once we've done that, we can proceed to put the Debian package files (<code>.deb</code>) and their dependencies inside the directory.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="https://aalvarez.me/tags/apt" class="label label-default">apt</a></li>
+  
+    <a href="https://aalvarez.me/tags/aptitude" class="label label-default">aptitude</a></li>
+  
+    <a href="https://aalvarez.me/tags/repository" class="label label-default">repository</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/configuring-a-local-apt-repository/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/managing-debian-package-dependencies/">Managing Debian Package Dependencies</a>

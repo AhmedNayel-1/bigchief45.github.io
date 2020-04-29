@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,42 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/">Django AJAX Search With Elasticsearch</a>
+  </h1>
+  <time datetime="2018-01-10T00:00:00Z" class="post-date">Wed, Jan 10, 2018</time>
+  <p>In this post I want to go over how I implemented a very neat AJAX search using Elasticsearch in Django. Let's get started!</p>
+<h2 id="the-search-template">The Search Template</h2>
+<p>The starting point of our search feature will be the search template. That is, the template that contains the input field where the user will type in the search keywords.</p>
+<p>This template is extremely simple and does not need a <code>&lt;form&gt;</code> tag. I will create it as a partial under <code>templates/search.html</code>:</p>
+<pre><code class="language-liquid" data-lang="liquid">{% csrf_token %}
+&lt;input id=&quot;search&quot; name=&quot;q&quot; placeholder=&quot;Search...&quot;&gt;
+</code></pre><p>Notice how we have given the input a <code>name</code> with the value of <code>q</code>. This will be important when our view receives the query from this input field.</p>
+<p>I can then render this partial in the main template like this:</p>
+<pre><code class="language-liquid" data-lang="liquid">{% include 'search.html' %}
+</code></pre>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/elasticsearch" class="label label-default">elasticsearch</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/django-ajax-search-with-elasticsearch/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/java-jtable-tricks/">Java JTable Tricks</a>
@@ -257,48 +293,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/">Querying Nested Documents in ElasticSearch</a>
-  </h1>
-  <time datetime="2017-10-23T00:00:00Z" class="post-date">Mon, Oct 23, 2017</time>
-  <p>The other day I was using ElasticSearch to build an index that would contain book documents. These book documents would then contain many pages, each page indicating its page number in the book, and its content as text, extrated from its own PDF file.</p>
-<p>I wanted to perform some queries on a specific book so that ElasticSearch would return all the pages in the book which contained a certain word in its <code>text</code> field.</p>
-<h2 id="nested-documents">Nested Documents</h2>
-<p>ElasticSearch 5 supports <a href="">nested documents</a>. These are internally separate documents that will belong to a certain parent, in this case, a book. Before creating any books, we must first define a <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-mapping.html">nested object mapping</a> for the index:</p>
-<pre><code>PUT /my_index
-
-{
-  &quot;mappings&quot;: {
-    &quot;book&quot;: {
-      &quot;properties&quot;: {
-        &quot;pages&quot;: {
-          &quot;type&quot;: &quot;nested&quot;,
-          &quot;properties&quot;: {
-            &quot;id&quot;:    { &quot;type&quot;: &quot;integer&quot;  },
-            &quot;text&quot;: { &quot;type&quot;: &quot;text&quot;  },
-          }
-        }
-      }
-    }
-  }
-}
-</code></pre><p>Notice how the mapping is created using a <code>PUT</code> request at the <strong>index</strong> level.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/elasticsearch" class="label label-default">elasticsearch</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/">Read More…</a>
     </div>
   
 </article>

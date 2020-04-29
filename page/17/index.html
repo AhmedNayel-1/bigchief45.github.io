@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-10 16:27:41 -0600 CST",
-    "dateModified" : "2020-04-10 16:27:41 -0600 CST",
+    "datePublished": "2020-04-29 12:06:31 -0600 CST",
+    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,37 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/">Fixing Zenoss Device Network Interface Graphs</a>
+  </h1>
+  <time datetime="2017-01-13T00:00:00Z" class="post-date">Fri, Jan 13, 2017</time>
+  <p>When testing the monitoring of the OpenStack compute node devices in Zenoss (using <a href="http://wiki.zenoss.org/ZenPack:OpenStack_(Provider_View)">OpenStack Infrastructure ZenPack</a>), I noticed that I could not get any graphs for the <strong>network interfaces</strong> of the device, although we could still get and model all the available interfaces:</p>
+<p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces.png" alt="Network Interfaces"></p>
+<p>This was indeed strange because I could perfectly get the graphs for other devices. After a lot of head scratching and prying around the code and interface, I finally found the reason, which I explain below.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/javascript-gotchas-for-beginners/">JavaScript Gotchas for Beginners</a>
@@ -283,57 +314,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/extending-zenoss-navigations/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/custom-zenoss-api-endpoints/">Custom Zenoss API Endpoints</a>
-  </h1>
-  <time datetime="2016-12-20T00:00:00Z" class="post-date">Tue, Dec 20, 2016</time>
-  <p>In a <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">previous post</a> I went over the Zenoss JSON API and how it works inside the Zenoss Core. In this post we will apply the concepts learned in that post in order to create custom API endpoints within Zenoss, which can be accessed by the JavaScript front-end, <em>curl</em>, API clients, etc. All this new functionality added from a basic ZenPack.</p>
-<h2 id="creating-an-endpoint">Creating an Endpoint</h2>
-<p>Assuming that we are starting with a new and fresh ZenPack created with <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, we will proceed to create a simple endpoint.</p>
-<p>Let's go ahead and create a file named <code>api.py</code> (can be any name) under the ZenPack's top directory. In this file we will import necessary modules, implement interfaces, and define our <strong>routers</strong> and <strong>facades</strong>. If you still don't know what routers and facades are and what they do, I suggest you first take a look at <a href="https://aalvarez.me/posts/the-zenoss-json-api.html">The Zenoss JSON API</a> post.</p>
-<p>First, let's take a quick look at the imports:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">os.path</span>
-<span style="color:#f92672">from</span> <span style="color:#111">urlparse</span> <span style="color:#f92672">import</span> <span style="color:#111">urlparse</span>
-<span style="color:#f92672">import</span> <span style="color:#111">subprocess</span>
-
-<span style="color:#f92672">from</span> <span style="color:#111">zope.event</span> <span style="color:#f92672">import</span> <span style="color:#111">notify</span>
-<span style="color:#f92672">from</span> <span style="color:#111">zope.interface</span> <span style="color:#f92672">import</span> <span style="color:#111">implements</span>
-<span style="color:#f92672">from</span> <span style="color:#111">ZODB.transact</span> <span style="color:#f92672">import</span> <span style="color:#111">transact</span>
-
-<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Ext</span> <span style="color:#f92672">import</span> <span style="color:#111">DirectRouter</span><span style="color:#111">,</span> <span style="color:#111">DirectResponse</span>
-<span style="color:#f92672">from</span> <span style="color:#111">Products</span> <span style="color:#f92672">import</span> <span style="color:#111">Zuul</span>
-<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.catalog.events</span> <span style="color:#f92672">import</span> <span style="color:#111">IndexingEvent</span>
-<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.facades</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulFacade</span>
-<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.interfaces</span> <span style="color:#f92672">import</span> <span style="color:#111">IFacade</span>
-<span style="color:#f92672">from</span> <span style="color:#111">Products.Zuul.utils</span> <span style="color:#f92672">import</span> <span style="color:#111">ZuulMessageFactory</span> <span style="color:#00a8c8">as</span> <span style="color:#111">_t</span>
-<span style="color:#f92672">from</span> <span style="color:#111">Products.ZenUtils.Utils</span> <span style="color:#f92672">import</span> <span style="color:#111">zenPath</span>
-</code></pre></div><p>Some imports are probably not needed, but the ones that are of our interest are imports such as <code>DirectRouter</code> and <code>DirectResponse</code>, which you might remember from the previous post. Additionally we are also importing the necessary facade, events, and interfaces imports.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/api" class="label label-default">api</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/custom-zenoss-api-endpoints/">Read More…</a>
     </div>
   
 </article>
