@@ -6,7 +6,7 @@ tags: [python]
 
 In this post I will show you how you can exit gracefully from within a context manager in your Python application.
 
-Suppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even the user interrupts the program with <kbd>Ctrl+C</kbd> key.
+Suppose that we provide a context manager that can be used as a session to perform certain tasks. When the context manager is closed, there is some cleanup work to be done. We want this to happen even when the user interrupts the program with <kbd>Ctrl+C</kbd> key.
 
 This is how we can achieve that:
 
