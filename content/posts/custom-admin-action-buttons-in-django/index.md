@@ -4,13 +4,13 @@ date: 2020-04-29T12:06:31-06:00
 tags: [django]
 ---
 
-In this post I will explain how you can add custom action buttons in the admind detail view of for objects in the Django admin.
+In this post I will explain how you can add custom action buttons in the admin detail view of objects in the Django admin.
 
 This is the final result we want to achieve:
 
 ![Custom Admin Buttons](/posts/custom-admin-action-buttons-in-django/custom_admin_buttons.png)
 
-These buttons can trigger custom actions we want to perform on these objects.
+These buttons can trigger custom actions that we want to perform on these objects.
 
 <!--more-->
 
@@ -18,7 +18,7 @@ These buttons can trigger custom actions we want to perform on these objects.
 
 In order to add these buttons. We need to override the existing admin template that Django provides. For our use case, this template is called `change_form.html`.
 
-The path will depend on the name of the app our model is located in, and the name of our model. So for a `Book` model in a `books` app, the path of the template would be `templates/admin/books/book/change_form.html`.
+The template path will depend on the name of the app our model is located in, and the name of our model. So for a `Book` model in a `books` app, the path of the template would be `templates/admin/books/book/change_form.html`.
 
 Go ahead and create that HTML template file with that directory path structure inside your Django **project** directory. Here is an example:
 
@@ -43,7 +43,7 @@ TEMPLATES = [
     {
         # ...
 
-        'DIRS': ['naughtee/templates'],
+        'DIRS': ['myproject/templates'],
     },
 ]
 ```
@@ -96,7 +96,7 @@ def schedule_book_maintenance(request, book_id):
     pass
 ```
 
-It is important that we use the `staff_member_required` decorator for these functions. Since they are supposed to be executed strictly from the Django admin, which means only logged in admins are allowed to trigger these functions.
+It is important that we use the `staff_member_required` decorator for these functions. Since they are supposed to be executed strictly from the Django admin, which means only logged in admins should be allowed to trigger these functions.
 
 Now let's go ahead and define the URLs first. In `urls.py` of the `books` app:
 
