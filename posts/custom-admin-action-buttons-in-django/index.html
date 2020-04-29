@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Custom Admin Action Buttons in Django",
     "headline" : "Custom Admin Action Buttons in Django",
-    "description" : "\x3cp\x3eIn this post I will explain how you can add custom action buttons in the admind detail view of for objects in the Django admin.\x3c\/p\x3e\n\x3cp\x3eThis is the final result we want to achieve:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-admin-action-buttons-in-django\/custom_admin_buttons.png\x22 alt=\x22Custom Admin Buttons\x22\x3e\x3c\/p\x3e\n\x3cp\x3eThese buttons can trigger custom actions we want to perform on these objects.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn this post I will explain how you can add custom action buttons in the admin detail view of objects in the Django admin.\x3c\/p\x3e\n\x3cp\x3eThis is the final result we want to achieve:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-admin-action-buttons-in-django\/custom_admin_buttons.png\x22 alt=\x22Custom Admin Buttons\x22\x3e\x3c\/p\x3e\n\x3cp\x3eThese buttons can trigger custom actions that we want to perform on these objects.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -31,7 +31,7 @@
     "datePublished": "2020-04-29 12:06:31 -0600 CST",
     "dateModified" : "2020-04-29 12:06:31 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/posts\/custom-admin-action-buttons-in-django\/",
-    "wordCount" : "460",
+    "wordCount" : "462",
     "keywords" : [ "django","Blog" ]
 }
 </script>
@@ -135,13 +135,13 @@ if (!doNotTrack) {
   <h1>Custom Admin Action Buttons in Django</h1>
   <time datetime=2020-04-29T12:06:31-0600 class="post-date">Wed, Apr 29, 2020</time>
 
-  <p>In this post I will explain how you can add custom action buttons in the admind detail view of for objects in the Django admin.</p>
+  <p>In this post I will explain how you can add custom action buttons in the admin detail view of objects in the Django admin.</p>
 <p>This is the final result we want to achieve:</p>
 <p><img src="https://aalvarez.me/posts/custom-admin-action-buttons-in-django/custom_admin_buttons.png" alt="Custom Admin Buttons"></p>
-<p>These buttons can trigger custom actions we want to perform on these objects.</p>
+<p>These buttons can trigger custom actions that we want to perform on these objects.</p>
 <h2 id="creating-the-template">Creating The Template</h2>
 <p>In order to add these buttons. We need to override the existing admin template that Django provides. For our use case, this template is called <code>change_form.html</code>.</p>
-<p>The path will depend on the name of the app our model is located in, and the name of our model. So for a <code>Book</code> model in a <code>books</code> app, the path of the template would be <code>templates/admin/books/book/change_form.html</code>.</p>
+<p>The template path will depend on the name of the app our model is located in, and the name of our model. So for a <code>Book</code> model in a <code>books</code> app, the path of the template would be <code>templates/admin/books/book/change_form.html</code>.</p>
 <p>Go ahead and create that HTML template file with that directory path structure inside your Django <strong>project</strong> directory. Here is an example:</p>
 <pre><code>myproject/
 ├── asgi.py
@@ -159,7 +159,7 @@ if (!doNotTrack) {
     <span style="color:#111">{</span>
         <span style="color:#75715e"># ...</span>
 
-        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">DIRS</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">naughtee/templates</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">,</span>
+        <span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">DIRS</span><span style="color:#d88200">&#39;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200"></span><span style="color:#d88200">&#39;</span><span style="color:#d88200">myproject/templates</span><span style="color:#d88200">&#39;</span><span style="color:#111">]</span><span style="color:#111">,</span>
     <span style="color:#111">}</span><span style="color:#111">,</span>
 <span style="color:#111">]</span>
 </code></pre></div><p>Now open the HTML template file and add the following:</p>
@@ -199,7 +199,7 @@ if (!doNotTrack) {
 <span style="color:#75af00">@staff_member_required</span>
 <span style="color:#00a8c8">def</span> <span style="color:#75af00">schedule_book_maintenance</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">book_id</span><span style="color:#111">)</span><span style="color:#111">:</span>
     <span style="color:#00a8c8">pass</span>
-</code></pre></div><p>It is important that we use the <code>staff_member_required</code> decorator for these functions. Since they are supposed to be executed strictly from the Django admin, which means only logged in admins are allowed to trigger these functions.</p>
+</code></pre></div><p>It is important that we use the <code>staff_member_required</code> decorator for these functions. Since they are supposed to be executed strictly from the Django admin, which means only logged in admins should be allowed to trigger these functions.</p>
 <p>Now let's go ahead and define the URLs first. In <code>urls.py</code> of the <code>books</code> app:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">django.urls</span> <span style="color:#f92672">import</span> <span style="color:#111">path</span>
 
