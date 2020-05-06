@@ -60,6 +60,6 @@ myTable.getColumnModel().getColumn(index).setCellEditor(new FileChooserCellEdito
 
 We will have to manually create and define this `FileChooserCellEditor` class in a `FileChooserCellEditor.java` file:
 
-{{< gist 4aefbece5d88182424123a3a50519cf2 >}}
+{{< gist BigChief45 4aefbece5d88182424123a3a50519cf2 >}}
 
 With this implementation you can now double click on the cell, and a nice file chooser will appear. After selecting the file, its absolute path value will be assigned and shown in the cell.
