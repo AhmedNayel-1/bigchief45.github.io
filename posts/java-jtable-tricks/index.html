@@ -163,7 +163,7 @@ if (!doNotTrack) {
 <p>To achieve this, we need to set a custom cell editor to the column. Assuming we know the index of this special column, we can set it like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#111">myTable</span><span style="color:#f92672">.</span><span style="color:#75af00">getColumnModel</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#75af00">getColumn</span><span style="color:#f92672">(</span><span style="color:#111">index</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#75af00">setCellEditor</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">FileChooserCellEditor</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
 </code></pre></div><p>We will have to manually create and define this <code>FileChooserCellEditor</code> class in a <code>FileChooserCellEditor.java</code> file:</p>
-<script type="text/javascript" src="https://gist.github.com/4aefbece5d88182424123a3a50519cf2.js"></script>
+<script type="application/javascript" src="https://gist.github.com/BigChief45/4aefbece5d88182424123a3a50519cf2.js"></script>
 
 <p>With this implementation you can now double click on the cell, and a nice file chooser will appear. After selecting the file, its absolute path value will be assigned and shown in the cell.</p>
 </div>
