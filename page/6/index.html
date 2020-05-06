@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,32 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/">Creating Toolbars for MultiView Elements in Netbeans Platform</a>
+  </h1>
+  <time datetime="2018-04-23T00:00:00Z" class="post-date">Mon, Apr 23, 2018</time>
+  <p>On a <a href="https://aalvarez.me/posts/custom-file-types-in-netbeans-platform.html">previous post</a> I talked about creating a new file type that Netbeans Platform can recognize and display the file's data in different ways by creating different visual editors that implement the <code>MultiViewElement</code> interface.</p>
+<p>However, that tutorial did not cover how to add a custom toolbar to each multi view. Like the one Netbeans already provides when editing source code:</p>
+<p><img src="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/netbeans_multiview_toolbar.png" alt="Netbeans MultiView Toolbar"></p>
+<p>This is a very handy toolbar that can be used to add buttons that perform different kinds of actions with the current active file.</p>
+<h2 id="a-deeper-look-into-the-multiviewelement-object">A Deeper Look Into the MultiViewElement Object</h2>
+<p>If you recall from the previous post, a <code>JPanel</code> that implements <code>MultiViewElement</code> was created after finishing the wizard. This <code>MultiViewElement</code> object has some very important characteristics that are key to this tutorial:</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/creating-toolbars-for-multiview-elements-in-netbeans-platform/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/django-formsets-with-generic-formviews/">Django Formsets with Generic FormViews</a>
@@ -262,29 +288,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/building-a-django-continuous-integration-and-delivery-pipeline-to-aws/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/">Django Dynamic Queryset Filtering With Pagination</a>
-  </h1>
-  <time datetime="2018-01-17T00:00:00Z" class="post-date">Wed, Jan 17, 2018</time>
-  <p><a href="https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html">This blog article</a> does a very good job at explaining how to setup dynamic queryset filtering in Django. However, it doesn't go into paginating the filtered queryset results.</p>
-<p>I had a very hard time trying to implement this pagination feature using <strong>class based views</strong>. More specifically, using the <code>FilterView</code> that comes with the <a href="https://github.com/carltongibson/django-filter">django-filter</a> package.</p>
-<p>In the end it turned out to be very simple. The <a href="https://django-filter.readthedocs.io/en/master/guide/usage.html#generic-view-configuration">documentation</a> was a bit misleading on this so it took a while to understand and find the solution.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/django" class="label label-default">django</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/django-dynamic-queryset-filtering-with-pagination/">Read More…</a>
     </div>
   
 </article>

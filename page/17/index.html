@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,49 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/understanding-snmp-and-net-snmp/">Understanding SNMP and Net-SNMP</a>
+  </h1>
+  <time datetime="2017-01-16T00:00:00Z" class="post-date">Mon, Jan 16, 2017</time>
+  <p><a href="http://net-snmp.sourceforge.net/">Net-SNMP</a> is a suite of tools used to implement SNMP (Simple Network Management Protocol). SNMP is a widely used protocol for monitoring the health and welfare of network equipment (eg. routers), computer equipment and even devices like UPSs. Net-SNMP includes tools with capabilities such as:</p>
+<ul>
+<li>An extensible agent</li>
+<li>An SNMP library</li>
+<li>Tools to request or set information from SNMP agents</li>
+<li>Tools to generate and handle SNMP traps</li>
+<li>A version of the unix &lsquo;netstat&rsquo; command using SNMP</li>
+<li>A graphical Perl/Tk/SNMP based mib browser</li>
+</ul>
+<h2 id="how-snmp-works">How SNMP Works</h2>
+<p>SNMP allows a management station to treat its network as a distributed database of health and configuration information. SNMP contains a small set of operations:</p>
+<ul>
+<li>GET: Retrieve data from a network node</li>
+<li>GETNEXT: Retrieve the next element from a network node</li>
+<li>SET: Send configuration or control commands to a network node</li>
+<li>TRAP: A network node can send a notification to the management station</li>
+<li>INFORM: An acknowledged trap (network nodes can try and send it again if no acknowledgement is received)</li>
+</ul>
+<p><img src="http://computernetworkingsimplified.com/wp-content/uploads/2014/02/snmparchitecture1.jpg" alt="SNMP Architecture"></p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/snmp" class="label label-default">snmp</a></li>
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/understanding-snmp-and-net-snmp/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/">Fixing Zenoss Device Network Interface Graphs</a>
@@ -267,53 +310,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/cracking-passwords-with-aircrack-ng/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/extending-zenoss-navigations/">Extending Zenoss Navigation Bars</a>
-  </h1>
-  <time datetime="2016-12-21T00:00:00Z" class="post-date">Wed, Dec 21, 2016</time>
-  <p>It is possible to extend the functionality of Zenoss's navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.</p>
-<h2 id="configurezcml">configure.zcml</h2>
-<p>Zenoss ZenPacks can contain a file in the ZenPack top directory called <code>configure.zcml</code>. I've mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.</p>
-<p>It is in this file where we will declare and create new navigational links from our ZenPack.</p>
-<p>~&gt; In this post we assume that the ZenPack is created using <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.</p>
-<p>Usually this file begins with some required boilerplate code:</p>
-<p><strong>configure.zcml</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
-<span style="color:#f92672">&lt;configure</span>
-  <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
-  <span style="color:#75af00">xmlns:browser=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/browser&#34;</span>
-  <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#f92672">&gt;</span>
-
-  <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Our custom code here </span><span style="color:#75715e">--&gt;</span>
-  <span style="color:#f92672">&lt;include</span> <span style="color:#75af00">package=</span><span style="color:#d88200">&#34;.browser&#34;</span> <span style="color:#f92672">/&gt;</span>
-<span style="color:#f92672">&lt;/configure&gt;</span>
-</code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/xml" class="label label-default">xml</a></li>
-  
-    <a href="https://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/extending-zenoss-navigations/">Read More…</a>
     </div>
   
 </article>

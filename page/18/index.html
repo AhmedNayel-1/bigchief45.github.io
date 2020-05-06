@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,53 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/extending-zenoss-navigations/">Extending Zenoss Navigation Bars</a>
+  </h1>
+  <time datetime="2016-12-21T00:00:00Z" class="post-date">Wed, Dec 21, 2016</time>
+  <p>It is possible to extend the functionality of Zenoss's navigations from within our custom ZenPacks. This means that we can add or remove links to the navigation bars we frequently use to access the infrastructure page or event console.</p>
+<h2 id="configurezcml">configure.zcml</h2>
+<p>Zenoss ZenPacks can contain a file in the ZenPack top directory called <code>configure.zcml</code>. I've mentioned and talked about this particular file in previous posts. This file basically acts as a configuration glue between back-end functions and front-end components.</p>
+<p>It is in this file where we will declare and create new navigational links from our ZenPack.</p>
+<p>~&gt; In this post we assume that the ZenPack is created using <a href="https://zenpacklib.zenoss.com/en/latest/">zenpacklib</a>, which is a Python library that makes creating ZenPacks much easier. Zenpacklib also makes the integration between the back-end and front-end much easier as well.</p>
+<p>Usually this file begins with some required boilerplate code:</p>
+<p><strong>configure.zcml</strong>:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configure</span>
+  <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zope&#34;</span>
+  <span style="color:#75af00">xmlns:browser=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/browser&#34;</span>
+  <span style="color:#75af00">xmlns:zcml=</span><span style="color:#d88200">&#34;http://namespaces.zope.org/zcml&#34;</span><span style="color:#f92672">&gt;</span>
+
+  <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Our custom code here </span><span style="color:#75715e">--&gt;</span>
+  <span style="color:#f92672">&lt;include</span> <span style="color:#75af00">package=</span><span style="color:#d88200">&#34;.browser&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/configure&gt;</span>
+</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/xml" class="label label-default">xml</a></li>
+  
+    <a href="https://aalvarez.me/tags/ui" class="label label-default">ui</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/extending-zenoss-navigations/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/custom-zenoss-api-endpoints/">Custom Zenoss API Endpoints</a>
@@ -285,50 +332,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/working-with-zenoss-events/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/the-zenoss-json-api/">The Zenoss JSON API</a>
-  </h1>
-  <time datetime="2016-11-24T00:00:00Z" class="post-date">Thu, Nov 24, 2016</time>
-  <p>The <a href="http://wiki.zenoss.org/Working_with_the_JSON_API">Zenoss JSON API</a> allows us to obtain very important information of what is going on in Zenoss, such as device information and events. This API can be queried using <a href="https://curl.haxx.se/">cURL</a> or with some wrappers provided by Zenoss, available in languages such as Bashscript, Python, and Java.</p>
-<p>The API documentation can be downloaded <a href="https://www.zenoss.com/sites/default/files/documentation/Zenoss_JSON_API_r5.0.4_d28.15.180_0.zip">here</a>. In the documentation you can see the available endpoints and methods that can be used to obtain the data we need.</p>
-<p>In this post I will cover how the Zenoss back-end JSON API works, and how the Zenoss's front-end (made using <a href="https://www.sencha.com/products/extjs/">ExtJS</a>) interacts with it.</p>
-<p>~&gt; Even though Zenoss calls its API a <em>JSON API</em> (Simply because it returns data in JSON format), the API <strong>is not</strong> <a href="http://jsonapi.org/">JSON API specification</a> compliant.</p>
-<h2 id="querying-the-api">Querying the API</h2>
-<p>To see the API in action, we can begin by making a simple query using <code>cURL</code>. Let's say we want to obtain all the available information of a specific device:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -u <span style="color:#d88200">&#34;admin:zenoss&#34;</span> -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#39;{&#34;action&#34;: &#34;DeviceRouter&#34;, &#34;method&#34;: &#34;getInfo&#34;, &#34;data&#34;: [{&#34;uid&#34;: &#34;/zport/dmd/Devices/Server/SSH/Linux/NovaHost/devices/$DEVICE_IP&#34;}], &#34;tid&#34;: 1}&#39;</span> http://<span style="color:#111">$ZENOSS_HOST</span>:8080/zport/dmd/device_router
-</code></pre></div><p>The above request will return the information of the device in JSON format, assuming that we replace <code>$ZENOSS_HOST</code> with the IP address of our Zenoss server, and <code>$DEVICE_IP</code> with the IP address of the device we want to query.</p>
-<p>This is all fine if all we need is querying the API and nothing else. But what if we really want to know <strong><em>how</em></strong> the API back-end works? How the endpoints are created? What are routers?</p>
-<p>This is what we are gonna learn next.</p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/json" class="label label-default">json</a></li>
-  
-    <a href="https://aalvarez.me/tags/api" class="label label-default">api</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/extjs" class="label label-default">extjs</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/curl" class="label label-default">curl</a></li>
-  
-    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/the-zenoss-json-api/">Read More…</a>
     </div>
   
 </article>

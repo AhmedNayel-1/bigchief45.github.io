@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -135,6 +135,29 @@ if (!doNotTrack) {
 
 <article class="post">
   <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/cancellable-tasks-in-netbeans-platform/">Cancellable Tasks in Netbeans Platform</a>
+  </h1>
+  <time datetime="2018-11-28T00:00:00Z" class="post-date">Wed, Nov 28, 2018</time>
+  <p>I was trying to implement cancellable tasks in Netbeans Platform using <a href="https://rubenlaguna.com/post/2010-01-18-cancellable-tasks-and-progress-indicators-netbeans-platform/">this blog post</a> as reference.</p>
+<p>However I never managed to make it work. The tasks's thread would never get interrupted even after the confirmation dialog, the task would just keep running.</p>
+<p>After some digging on the Netbeans Platform and IDE <a href="https://github.com/apache/incubator-netbeans">source code</a>, I think I managed to find a way to properly and <strong>easily</strong> implement cancellable tasks.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/cancellable-tasks-in-netbeans-platform/">Read More…</a>
+    </div>
+  
+</article>
+<article class="post">
+  <h1 class="post-title">
     <a href="https://aalvarez.me/posts/recursive-python-aws-lambda-functions/">Recursive Python AWS Lambda Functions</a>
   </h1>
   <time datetime="2018-09-18T00:00:00Z" class="post-date">Tue, Sep 18, 2018</time>
@@ -234,35 +257,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/loosely-coupled-node-actions-in-netbeans-platform/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/netbeans-platform-status-bars/">Netbeans Platform Status Bars</a>
-  </h1>
-  <time datetime="2018-07-19T00:00:00Z" class="post-date">Thu, Jul 19, 2018</time>
-  <p>In desktop applications, status bars are a great way to convey information to the user about the current status of certain items in the application, such as connection status, total amount of items, current mode, current row and column number in an editor, etc.</p>
-<p>Implementing custom status bars to a Netbeans Platform application is extremely easy. In this article I will go over how we can achieve really cool things with status bars and lookups.</p>
-<h2 id="creating-and-registering-a-new-status-bar">Creating and Registering a New Status Bar</h2>
-<p>To create a new status bar, create a new Java class that implements the <code>StatusLineElementProvider</code> interface. To register it as a status bar, we use the <code>@ServiceProvider</code> annotation:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@ServiceProvider</span><span style="color:#f92672">(</span><span style="color:#111">service</span> <span style="color:#f92672">=</span> <span style="color:#111">StatusLineElementProvider</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">position</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span>
-<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStatusBar</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">StatusLineElementProvider</span> <span style="color:#f92672">{</span>
-
-<span style="color:#f92672">}</span>
-</code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/netbeans-platform" class="label label-default">netbeans platform</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/netbeans-platform-status-bars/">Read More…</a>
     </div>
   
 </article>

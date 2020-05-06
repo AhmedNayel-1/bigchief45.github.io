@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,36 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/understanding-gnocchi-measures/">Understanding Gnocchi Measures</a>
+  </h1>
+  <time datetime="2017-05-24T00:00:00Z" class="post-date">Wed, May 24, 2017</time>
+  <p>Measures are simple objects that represent the timeseries data. They simply contain a <strong>timestamp</strong> and a <strong>value</strong>, and they belong to <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics.html">metrics</a>. You could say that a measure <em>has many</em> metrics.</p>
+<h2 id="adding-measures-to-a-metric">Adding Measures to a Metric</h2>
+<p>Using the REST API, we can easily add measures to a metric:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">POST</span> <span style="color:#111">/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+<span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
+<span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">198</span>
+
+</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/understanding-gnocchi-measures/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics/">Understanding Gnocchi Metrics</a>
@@ -285,76 +315,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/rails-api-with-nested-resources/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Custom Triggers and Notifications in a ZenPack</a>
-  </h1>
-  <time datetime="2017-05-04T00:00:00Z" class="post-date">Thu, May 4, 2017</time>
-  <p>In a <a href="https://aalvarez.me/posts/triggering-commands-from-events-in-zenoss.html">previous post</a> I talked about how to use <strong>triggers</strong> and <strong>command notifications</strong> in Zenoss to trigger custom actions when certain events occur. All of this was done using the Zenoss user interface.</p>
-<p>In this post we will achieve something similar, but from a custom ZenPack. At the end of this post, our custom ZenPack will be able to create new custom triggers and notifications when installed.</p>
-<h2 id="defining-zenpack-triggers--notifications">Defining ZenPack Triggers &amp; Notifications</h2>
-<p>Triggers and notifications within a ZenPack are actually defined using JSON. To do so, you must create a file named <code>actions.json</code> in a directory called <code>zep</code> (create it if it doesn't exist), within the ZenPack's top directory.</p>
-<p><strong>actions.json</strong>:</p>
-<pre><code class="language-json?line_numbers=false" data-lang="json?line_numbers=false">{
-  &quot;triggers&quot;: [
-    {
-      &quot;name&quot;: &quot;Critical_death_event&quot;,
-      &quot;uuid&quot;: &quot;4c055067-98b7-483e-8f49-2820b4f2f721&quot;,
-      &quot;enabled&quot;: false,
-      &quot;rule&quot;: {
-        &quot;api_version&quot;: 1,
-        &quot;type&quot;: 1,
-        &quot;source&quot;: &quot;(evt.event_class.startswith(\&quot;/Status/Ping\&quot;)) and (evt.status == 0) and (evt.severity &gt; 2)&quot;
-      }
-    }
-  ],
-
-  &quot;notifications&quot;: [
-    {
-      &quot;id&quot;: &quot;send_sms_message&quot;,
-      &quot;description&quot;: &quot;Send SMS using Twilio&quot;,
-      &quot;action&quot;: &quot;command&quot;,
-      &quot;guid&quot;: &quot;2606439f-5ef7-40dc-90e4-3f3bee11cfe6&quot;,
-      &quot;enabled&quot;: false,
-      &quot;action_timeout&quot;: 60,
-      &quot;delay_seconds&quot;: 0,
-      &quot;repeat_seconds&quot;: 0,
-      &quot;send_initial_occurrence&quot;: false,
-      &quot;send_clear&quot;: false,
-      &quot;body_format&quot;: &quot;echo \&quot;Hello World!\&quot;&quot;,
-      &quot;clear_body_format&quot;: &quot;&quot;,
-      &quot;subscriptions&quot;: [&quot;4c055067-98b7-483e-8f49-2820b4f2f721&quot;]
-    }
-  ]
-}
-</code></pre>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpack" class="label label-default">zenpack</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/zendmd" class="label label-default">zendmd</a></li>
-  
-    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
-  
-    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/custom-triggers-and-notifications-in-a-zenpack/">Read More…</a>
     </div>
   
 </article>

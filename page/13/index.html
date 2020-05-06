@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,42 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/debian-package-versioning/">Debian Package Versioning</a>
+  </h1>
+  <time datetime="2017-04-13T00:00:00Z" class="post-date">Thu, Apr 13, 2017</time>
+  <p>In a previous post I talked about <a href="https://aalvarez.me/posts/managing-debian-package-dependencies.html">managing Debian package dependencies</a>. However I did not go into detail about the structure the versioning of packages must have.</p>
+<p>To recap, let's see how we can specify a specific package version of a dependency that our package needs:</p>
+<pre><code>Depends: erlang (&gt;= 1.2)
+</code></pre><p>In the example above, the required version for erlang is simply <code>1.2</code> or greater. A package's version format however, can be a bit more complex than this.</p>
+<h2 id="version-format-and-components">Version Format and Components</h2>
+<p>The official format of a Debian package's version is:</p>
+<pre><code>[epoch:]upstream_version[-debian_revision]
+</code></pre><p>Let's go into detail about each of the components in that format.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="https://aalvarez.me/tags/debian" class="label label-default">debian</a></li>
+  
+    <a href="https://aalvarez.me/tags/ubuntu" class="label label-default">ubuntu</a></li>
+  
+    <a href="https://aalvarez.me/tags/aptitude" class="label label-default">aptitude</a></li>
+  
+    <a href="https://aalvarez.me/tags/apt" class="label label-default">apt</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/debian-package-versioning/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/understanding-ceilometer-publishers/">Understanding Ceilometer Publishers</a>
@@ -329,45 +365,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/ceilometer-and-openstack-notifications/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/">Using Rails With Webpack in Cloud 9</a>
-  </h1>
-  <time datetime="2017-04-03T00:00:00Z" class="post-date">Mon, Apr 3, 2017</time>
-  <p>The <a href="https://github.com/rails/webpacker">rails/webpacker</a> project allows integration of <a href="https://webpack.github.io/">Webpack</a> with a Rails application. However, setting this up in a <a href="https://c9.io">Cloud 9</a> development environment needs a few tweaks to be able to work correctly. This post explains how to achieve this.</p>
-<h2 id="creating-the-application">Creating the Application</h2>
-<p>We will first create a regular Rails application and then use the webpacker gem to install Webpack.</p>
-<pre><code>rails new webpack-app
-</code></pre><p>Add the gem to <code>Gemfile</code>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gemfile</span>
-
-<span style="color:#111">gem</span> <span style="color:#d88200">&#39;webpacker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">github</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;rails/webpacker&#39;</span>
-</code></pre></div><p>Install Webpacker</p>
-<pre><code>rails webpacker:install
-</code></pre>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/cloud9" class="label label-default">cloud9</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/webpack" class="label label-default">webpack</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web-dev</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/using-rails-with-webpack-in-cloud-9/">Read More…</a>
     </div>
   
 </article>

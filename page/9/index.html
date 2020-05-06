@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,62 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/easy-notification-system-in-rails/">Easy Notification System in Rails</a>
+  </h1>
+  <time datetime="2017-09-04T00:00:00Z" class="post-date">Mon, Sep 4, 2017</time>
+  <p>Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.</p>
+<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver's In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
+<p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
+<h2 id="models-and-routes">Models and Routes</h2>
+<p>Before starting with the models, lets quickly define the application resources in our routes:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
+<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
+
+  <span style="color:#111">devise_for</span> <span style="color:#d88200">:users</span>
+
+  <span style="color:#111">resources</span> <span style="color:#d88200">:posts</span> <span style="color:#00a8c8">do</span>
+    <span style="color:#111">resources</span> <span style="color:#d88200">:comments</span>
+  <span style="color:#00a8c8">end</span>
+
+  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span>
+
+<span style="color:#00a8c8">end</span>
+</code></pre></div><h3 id="the-notification-model">The Notification Model</h3>
+<p>We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:</p>
+<pre><code>rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
+</code></pre><p>Here is an explanation for some of the fields for the above model:</p>
+<ul>
+<li><code>recipient_id</code>: Represents the user in your application which will receive the notification.</li>
+<li><code>actor_id</code>: Represents the user in your application which <em>triggered</em> the notification.</li>
+<li><code>read_at</code>: The time when the notification was read. A value of <code>nil</code> is used for unread notifications.</li>
+<li><code>notifiable_id</code>: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.</li>
+<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object's class.</li>
+</ul>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
+  
+    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
+  
+    <a href="https://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
+  
+    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
+  
+    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/easy-notification-system-in-rails/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/integrating-devise-with-rolify-in-rails/">Integrating Devise With Rolify in Rails</a>
@@ -299,59 +355,6 @@ if (!doNotTrack) {
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/getting-started-with-love2d-basics/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/">Extending Device Python Classes From Other ZenPacks</a>
-  </h1>
-  <time datetime="2017-06-27T00:00:00Z" class="post-date">Tue, Jun 27, 2017</time>
-  <p>Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from <code>Device</code>. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html">Python data source</a>.</p>
-<p>The <code>zenpack.yaml</code> file for the first and main ZenPack would look something like this:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ZenPack1</span>
-
-classes<span style="color:#111">:</span>
-  SpecialServer<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Special Server
-
-  SpecialComponent<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Special Component
-    properties<span style="color:#111">:</span>
-      <span style="color:#75715e"># ...</span>
-
-  AmazingComponent<span style="color:#111">:</span>
-    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
-    label<span style="color:#111">:</span> Amazing Component
-    properties<span style="color:#111">:</span>
-      <span style="color:#75715e"># ...</span>
-
-class_relationships<span style="color:#111">:</span>
-  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC SpecialComponent
-  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent
-</code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/">Read More…</a>
     </div>
   
 </article>

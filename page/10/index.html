@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,59 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/">Extending Device Python Classes From Other ZenPacks</a>
+  </h1>
+  <time datetime="2017-06-27T00:00:00Z" class="post-date">Tue, Jun 27, 2017</time>
+  <p>Recently I was struggling with trying to make two custom ZenPacks work together with device objects in the Zenoss database. My issue was that a main ZenPack (which would be installed first) would create a custom class that inherits from <code>Device</code>. This ZenPack would add a lot of properties and relationships with custom components. Then, a second optional ZenPack could be installed which would extend this same class with an additional property that would work along with a <a href="https://aalvarez.me/posts/working-with-zenoss-python-data-sources.html">Python data source</a>.</p>
+<p>The <code>zenpack.yaml</code> file for the first and main ZenPack would look something like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># ZenPack1</span>
+
+classes<span style="color:#111">:</span>
+  SpecialServer<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Device<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Special Server
+
+  SpecialComponent<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Special Component
+    properties<span style="color:#111">:</span>
+      <span style="color:#75715e"># ...</span>
+
+  AmazingComponent<span style="color:#111">:</span>
+    base<span style="color:#111">:</span> <span style="color:#111">[</span>zenpacklib.Component<span style="color:#111">]</span>
+    label<span style="color:#111">:</span> Amazing Component
+    properties<span style="color:#111">:</span>
+      <span style="color:#75715e"># ...</span>
+
+class_relationships<span style="color:#111">:</span>
+  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC SpecialComponent
+  - SpecialServer <span style="color:#ae81ff">1</span><span style="color:#111">:</span>MC AmazingComponent
+</code></pre></div>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacklib" class="label label-default">zenpacklib</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
+  
+    <a href="https://aalvarez.me/tags/zope" class="label label-default">zope</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/extending-device-python-classes-from-other-zenpacks/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/using-lambdas-in-case-statements-in-ruby/">Using Lambdas in Case Statements in Ruby</a>
@@ -269,36 +322,6 @@ He answers 'Whatever.' to anything else.
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/testing-json-api-strong-parameters-in-rails/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/understanding-gnocchi-measures/">Understanding Gnocchi Measures</a>
-  </h1>
-  <time datetime="2017-05-24T00:00:00Z" class="post-date">Wed, May 24, 2017</time>
-  <p>Measures are simple objects that represent the timeseries data. They simply contain a <strong>timestamp</strong> and a <strong>value</strong>, and they belong to <a href="https://aalvarez.me/posts/understanding-gnocchi-metrics.html">metrics</a>. You could say that a measure <em>has many</em> metrics.</p>
-<h2 id="adding-measures-to-a-metric">Adding Measures to a Metric</h2>
-<p>Using the REST API, we can easily add measures to a metric:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">POST</span> <span style="color:#111">/v1/metric/511b61a1-8d67-42d5-8add-66d4209a0469/measures</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-<span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">application/json</span>
-<span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">198</span>
-
-</code></pre></div>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/gnocchi" class="label label-default">gnocchi</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/understanding-gnocchi-measures/">Read More…</a>
     </div>
   
 </article>

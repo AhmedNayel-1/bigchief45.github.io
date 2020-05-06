@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,43 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/">Monitoring CPU Utilization in Zenoss</a>
+  </h1>
+  <time datetime="2016-11-04T00:00:00Z" class="post-date">Fri, Nov 4, 2016</time>
+  <p>While taking a look at the CPU Utilization graphs offered Zenoss Core's <a href="http://wiki.zenoss.org/ZenPack:Linux_Monitor">Linux Monitor ZenPack</a> (v1.2.1), I noticed that the percentage values for <em>Idle</em> were ridiculously high:</p>
+<p><img src="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/cpu_utilization_1.jpg" alt="High Idle CPU Utilization"></p>
+<p>This made sense since this particular device contains 16 cores. However, this then means that the monitoring template isn't really taking this into consideration, and instead just spits out the total value from all cores.</p>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/monitoring" class="label label-default">monitoring</a></li>
+  
+    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
+  
+    <a href="https://aalvarez.me/tags/linux" class="label label-default">linux</a></li>
+  
+    <a href="https://aalvarez.me/tags/devops" class="label label-default">devops</a></li>
+  
+    <a href="https://aalvarez.me/tags/cpu" class="label label-default">cpu</a></li>
+  
+    <a href="https://aalvarez.me/tags/sysadmin" class="label label-default">sysadmin</a></li>
+  
+    <a href="https://aalvarez.me/tags/rrdtool" class="label label-default">rrdtool</a></li>
+  
+    <a href="https://aalvarez.me/tags/rpn" class="label label-default">rpn</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/monitoring-cpu-utilization-in-zenoss/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/zenoss-monitoring-template-data-points/">Zenoss Monitoring Template Data Points</a>
@@ -347,32 +384,6 @@ requires<span style="color:#111">:</span>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/zenoss-renderers/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/">Changing Zenoss Dashboard Portlets Using CLI</a>
-  </h1>
-  <time datetime="2016-10-26T00:00:00Z" class="post-date">Wed, Oct 26, 2016</time>
-  <p>The Zenoss <a href="http://wiki.zenoss.org/ZenPack:Dashboard">ZenPacks.zenoss.Dashboard</a> ZenPack adds a very nice and new dashboard to our Zenoss Core 4 deployment, replacing the old default dashboard that comes with the installation.</p>
-<p><img src="http://wiki.zenoss.org/images/0/01/Separate_dashboard.png" alt="ZenPack Dashboard"></p>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/zenoss" class="label label-default">zenoss</a></li>
-  
-    <a href="https://aalvarez.me/tags/python" class="label label-default">python</a></li>
-  
-    <a href="https://aalvarez.me/tags/zenpacks" class="label label-default">zenpacks</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/changing-zenoss-dashboard-portlets-using-cli/">Read More…</a>
     </div>
   
 </article>

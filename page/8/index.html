@@ -28,8 +28,8 @@
     "accountablePerson" : "",
     "copyrightHolder" : "",
     "copyrightYear" : "2020",
-    "datePublished": "2020-04-29 12:06:31 -0600 CST",
-    "dateModified" : "2020-04-29 12:06:31 -0600 CST",
+    "datePublished": "2020-05-06 15:27:47 -0600 CST",
+    "dateModified" : "2020-05-06 15:27:47 -0600 CST",
     "url" : "https:\/\/aalvarez.me\/",
     "wordCount" : "0",
     "keywords" : [ "Blog" ]
@@ -133,6 +133,35 @@ if (!doNotTrack) {
     <main class="content container">
     <div class="posts">
 
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Creating an Upload Progress Dialog in Java</a>
+  </h1>
+  <time datetime="2017-11-16T00:00:00Z" class="post-date">Thu, Nov 16, 2017</time>
+  <p>Many Java file upload <a href="http://www.codejava.net/coding/swing-application-to-upload-files-to-ftp-server-with-progress-bar">tutorials</a> teach you how to show the current progress of a file upload using a JProgressBar in the user interface, usually placed in the main JFrame.</p>
+<p>However I was trying make this much more visually appealing, like the way <a href="https://winscp.net/eng/index.php">WinSCP</a> does it:</p>
+<p><img src="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/scp_file_upload.png" alt="SCP File Upload"></p>
+<p>This will require the use of another Swing class: JDialog. Basically the flow of the program will be like this:</p>
+<ol>
+<li>Main class with main method calls <code>SwingWorker</code> class.</li>
+<li><code>SwingWorker</code> is in charge of doing the <em>actual</em> upload. It will also create an instance of a <code>JDialog</code> to show the current upload progress.</li>
+<li><code>JDialog</code> class will contain the progress bar and other useful upload information.</li>
+</ol>
+
+  
+  <div style="margin: 20px 0px;">
+  
+    <a href="https://aalvarez.me/tags/java" class="label label-default">java</a></li>
+  
+</div>
+
+
+  
+    <div class="read-more-link">
+      <a href="https://aalvarez.me/posts/creating-an-upload-progress-dialog-in-java/">Read More…</a>
+    </div>
+  
+</article>
 <article class="post">
   <h1 class="post-title">
     <a href="https://aalvarez.me/posts/querying-nested-documents-in-elasticsearch/">Querying Nested Documents in ElasticSearch</a>
@@ -297,62 +326,6 @@ umask:</p>
   
     <div class="read-more-link">
       <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2/">Read More…</a>
-    </div>
-  
-</article>
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://aalvarez.me/posts/easy-notification-system-in-rails/">Easy Notification System in Rails</a>
-  </h1>
-  <time datetime="2017-09-04T00:00:00Z" class="post-date">Mon, Sep 4, 2017</time>
-  <p>Having a notification system is very common for a web application. In this post I will go over how to implement your own simple and easy notification system for your Rails application.</p>
-<p>This post is heavily inspired by <a href="https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1">Chris Oliver's In-App Navbar Notifications tutorial</a>, with a few personal changes and additions.</p>
-<p><em>Read <a href="https://aalvarez.me/posts/easy-notification-system-in-rails-part-2.html">part 2</a> of this series.</em></p>
-<h2 id="models-and-routes">Models and Routes</h2>
-<p>Before starting with the models, lets quickly define the application resources in our routes:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
-<span style="color:#00a8c8">Rails</span><span style="color:#f92672">.</span><span style="color:#111">application</span><span style="color:#f92672">.</span><span style="color:#111">routes</span><span style="color:#f92672">.</span><span style="color:#111">draw</span> <span style="color:#00a8c8">do</span>
-
-  <span style="color:#111">devise_for</span> <span style="color:#d88200">:users</span>
-
-  <span style="color:#111">resources</span> <span style="color:#d88200">:posts</span> <span style="color:#00a8c8">do</span>
-    <span style="color:#111">resources</span> <span style="color:#d88200">:comments</span>
-  <span style="color:#00a8c8">end</span>
-
-  <span style="color:#111">resources</span> <span style="color:#d88200">:notifications</span><span style="color:#111">,</span> <span style="color:#d88200">only</span><span style="color:#111">:</span> <span style="color:#f92672">[</span><span style="color:#d88200">:index</span><span style="color:#f92672">]</span>
-
-<span style="color:#00a8c8">end</span>
-</code></pre></div><h3 id="the-notification-model">The Notification Model</h3>
-<p>We will manually generate the notification model which will handle the storing of notifications in the database. We can generate a very basic model like this:</p>
-<pre><code>rails g model Notification recipient_id:integer actor_id:integer read_at:datetime action:string notifiable_id:integer notifiable_type:string
-</code></pre><p>Here is an explanation for some of the fields for the above model:</p>
-<ul>
-<li><code>recipient_id</code>: Represents the user in your application which will receive the notification.</li>
-<li><code>actor_id</code>: Represents the user in your application which <em>triggered</em> the notification.</li>
-<li><code>read_at</code>: The time when the notification was read. A value of <code>nil</code> is used for unread notifications.</li>
-<li><code>notifiable_id</code>: The object that represents this notification (a post, comment, etc). This will be a polymorphic association.</li>
-<li><code>notifiable_type</code>: Type of the notifiable object. This is usually represented by a humanized (and optionally, internationalized) string form of the object's class.</li>
-</ul>
-
-  
-  <div style="margin: 20px 0px;">
-  
-    <a href="https://aalvarez.me/tags/ruby" class="label label-default">ruby</a></li>
-  
-    <a href="https://aalvarez.me/tags/rails" class="label label-default">rails</a></li>
-  
-    <a href="https://aalvarez.me/tags/coffeescript" class="label label-default">coffeescript</a></li>
-  
-    <a href="https://aalvarez.me/tags/javascript" class="label label-default">javascript</a></li>
-  
-    <a href="https://aalvarez.me/tags/web-dev" class="label label-default">web dev</a></li>
-  
-</div>
-
-
-  
-    <div class="read-more-link">
-      <a href="https://aalvarez.me/posts/easy-notification-system-in-rails/">Read More…</a>
     </div>
   
 </article>
