@@ -15,7 +15,7 @@ In this post I want to change and improve this by using _**subscribers**_ functi
 
 ## The Pager Action
 
-Using Zenoss Core 4's pager action's [source code](https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449) as reference is a good starting point, since we are going to use the pager field for SMS.
+Using Zenoss Core 4's pager action's [source code](https://github.com/aalvrz/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449) as reference is a good starting point, since we are going to use the pager field for SMS.
 
 We can see that this action class implements a `executeOnTarget` method instead of a `execute` method we used in the previous post.
 
@@ -69,4 +69,4 @@ With all this we should be good to go. If you create some users and assign a val
 
 ## References
 
-1. [Zenoss Core 4.2.5 Pager Action](https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449)
+1. [Zenoss Core 4.2.5 Pager Action](https://github.com/aalvrz/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449)

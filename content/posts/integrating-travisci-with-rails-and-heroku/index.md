@@ -130,5 +130,5 @@ Finally, let's add a nice build badge to the repository's README file. In the Tr
 If we click on it we can get some generated code in different formats. To add to our README file we will choose the Markdown format. We can then copy the snippet and paste it in the repository's `README.md` file, next to the file's title:
 
 ```markdown
-# Hourglass [![Build Status](https://travis-ci.org/BigChief45/Hourglass.svg?branch=master)](https://travis-ci.org/BigChief45/Hourglass)
+# Hourglass [![Build Status](https://travis-ci.org/aalvrz/Hourglass.svg?branch=master)](https://travis-ci.org/aalvrz/Hourglass)
 ```

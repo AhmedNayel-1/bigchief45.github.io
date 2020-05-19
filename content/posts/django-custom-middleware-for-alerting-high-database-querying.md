@@ -11,7 +11,7 @@ Let's begin by creating a `middleware.py` file (a nice convention) where we will
 <!--more-->
 
 
-{{< gist BigChief45 ae3984fc084117876bdaa3beb16a5341 >}}
+{{< gist aalvrz ae3984fc084117876bdaa3beb16a5341 >}}
 
 You can customize the threshold value as you see fit.
 

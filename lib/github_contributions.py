@@ -7,7 +7,7 @@ from github import Github
 load_dotenv()
 
 
-USERNAME = 'BigChief45'
+USERNAME = 'aalvrz'
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), '../data/open_source.json')
 
 REPOSITORIES = [

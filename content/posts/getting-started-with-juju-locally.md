@@ -62,11 +62,11 @@ However, we want to focus on deploying our custom services from our custom local
 mkdir -p /home/$USER/charms/trusty/
 ```
 
-We will place the Juju charm directories inside that directory. For example, I can clone my [Zenoss Core 4 charm](https://github.com/BigChief45/zenoss-charm) into that directory and then Zenoss Core:
+We will place the Juju charm directories inside that directory. For example, I can clone my [Zenoss Core 4 charm](https://github.com/aalvrz/zenoss-charm) into that directory and then Zenoss Core:
 
 ```
 cd $/home/$USER/charms/trusty/
-git clone https://github.com/BigChief45/zenoss-charm.git
+git clone https://github.com/aalvrz/zenoss-charm.git
 
 juju deploy --repository=/home/$USER/charms/ local:trusty/zenoss
 ```

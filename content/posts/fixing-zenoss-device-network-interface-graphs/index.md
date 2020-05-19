@@ -97,7 +97,7 @@ A possible solution to this is to create a new custom ZenPack that applies all t
 
 So I proceeded to create a new ZenPack using zenpacklib and define everything that is already defined in `/Devices`'s ethernetCsmacd, but now into `/Server/SSH/Linux/NovaHost`. These definitions are constructed inside the ZenPack's `zenpack.yaml` file.
 
--> I have uploaded this ZenPack to my [GitHub](https://github.com/BigChief45/ZenPacks.itri.EthernetCsmacd) and you can browse the source code or just install it in your Zenoss Core to fix the issue. I am sure there are identical or similar ZenPacks out there to address this particular issue.
+-> I have uploaded this ZenPack to my [GitHub](https://github.com/aalvrz/ZenPacks.itri.EthernetCsmacd) and you can browse the source code or just install it in your Zenoss Core to fix the issue. I am sure there are identical or similar ZenPacks out there to address this particular issue.
 
 After finishing the ZenPack and installing it, we can check that ethernetCsmacd has a new location `/Server/SSH/Linux/NovaHost` with all the elements needed. Our devices will now surely use this template since they both possess the same device class.
 
