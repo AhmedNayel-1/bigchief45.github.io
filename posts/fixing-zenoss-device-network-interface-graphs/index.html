@@ -109,7 +109,7 @@ if (!doNotTrack) {
 
       
         <li>
-          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+          <a href="https://github.com/aalvrz" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
         </li>
       
 
@@ -199,7 +199,7 @@ if (!doNotTrack) {
 <h2 id="implementing-a-solution">Implementing a Solution</h2>
 <p>A possible solution to this is to create a new custom ZenPack that applies all the datasources, datapoints, thresholds, and graphs from ethernetCsmacd in <code>/Devices</code> into ethernetCsmacd in <code>/Server/SSH/Linux/NovaHost</code>.</p>
 <p>So I proceeded to create a new ZenPack using zenpacklib and define everything that is already defined in <code>/Devices</code>'s ethernetCsmacd, but now into <code>/Server/SSH/Linux/NovaHost</code>. These definitions are constructed inside the ZenPack's <code>zenpack.yaml</code> file.</p>
-<p>-&gt; I have uploaded this ZenPack to my <a href="https://github.com/BigChief45/ZenPacks.itri.EthernetCsmacd">GitHub</a> and you can browse the source code or just install it in your Zenoss Core to fix the issue. I am sure there are identical or similar ZenPacks out there to address this particular issue.</p>
+<p>-&gt; I have uploaded this ZenPack to my <a href="https://github.com/aalvrz/ZenPacks.itri.EthernetCsmacd">GitHub</a> and you can browse the source code or just install it in your Zenoss Core to fix the issue. I am sure there are identical or similar ZenPacks out there to address this particular issue.</p>
 <p>After finishing the ZenPack and installing it, we can check that ethernetCsmacd has a new location <code>/Server/SSH/Linux/NovaHost</code> with all the elements needed. Our devices will now surely use this template since they both possess the same device class.</p>
 <p>If re-model our devices and check the Interfaces components, we can see that indeed we now have network interface graphs (Throughput, Packets, Errors) for our the OpenStack devices:</p>
 <p><img src="https://aalvarez.me/posts/fixing-zenoss-device-network-interface-graphs/network_interfaces_graphs.png" alt="Network Interfaces Graphs"></p>

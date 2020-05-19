@@ -838,7 +838,7 @@ He answers &#39;Whatever.&#39; to anything else.
 &lt;p&gt;&lt;img src=&#34;https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg&#34; alt=&#34;Notification Content&#34;&gt;&lt;/p&gt;
 &lt;p&gt;In this post I want to change and improve this by using &lt;em&gt;&lt;strong&gt;subscribers&lt;/strong&gt;&lt;/em&gt; functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the &lt;em&gt;Pager&lt;/em&gt; field instead.&lt;/p&gt;
 &lt;h2 id=&#34;the-pager-action&#34;&gt;The Pager Action&lt;/h2&gt;
-&lt;p&gt;Using Zenoss Core 4&#39;s pager action&#39;s &lt;a href=&#34;https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449&#34;&gt;source code&lt;/a&gt; as reference is a good starting point, since we are going to use the pager field for SMS.&lt;/p&gt;
+&lt;p&gt;Using Zenoss Core 4&#39;s pager action&#39;s &lt;a href=&#34;https://github.com/aalvrz/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449&#34;&gt;source code&lt;/a&gt; as reference is a good starting point, since we are going to use the pager field for SMS.&lt;/p&gt;
 &lt;p&gt;We can see that this action class implements a &lt;code&gt;executeOnTarget&lt;/code&gt; method instead of a &lt;code&gt;execute&lt;/code&gt; method we used in the previous post.&lt;/p&gt;</description>
     </item>
     

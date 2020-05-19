@@ -20,7 +20,7 @@
     "articleSection" : "posts",
     "name" : "Zenoss Custom Notification Actions Using Subscribers",
     "headline" : "Zenoss Custom Notification Actions Using Subscribers",
-    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/custom-notification-action-types-in-zenoss.html\x22\x3eprevious post\x3c\/a\x3e I talked about how we could create custom notifications actions in Zenoss. Like a \x3cem\x3eSMS\x3c\/em\x3e notification, for example. In that post we required a valid cellphone number using a text field in the notification\x27s content pane, as shown below:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-notification-action-types-in-zenoss\/sms_action.jpg\x22 alt=\x22Notification Content\x22\x3e\x3c\/p\x3e\n\x3cp\x3eIn this post I want to change and improve this by using \x3cem\x3e\x3cstrong\x3esubscribers\x3c\/strong\x3e\x3c\/em\x3e functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the \x3cem\x3ePager\x3c\/em\x3e field instead.\x3c\/p\x3e\n\x3ch2 id=\x22the-pager-action\x22\x3eThe Pager Action\x3c\/h2\x3e\n\x3cp\x3eUsing Zenoss Core 4\x27s pager action\x27s \x3ca href=\x22https:\/\/github.com\/BigChief45\/zenoss-core-425\/blob\/master\/usr\/local\/zenoss\/Products\/ZenModel\/actions.py#L449\x22\x3esource code\x3c\/a\x3e as reference is a good starting point, since we are going to use the pager field for SMS.\x3c\/p\x3e\n\x3cp\x3eWe can see that this action class implements a \x3ccode\x3eexecuteOnTarget\x3c\/code\x3e method instead of a \x3ccode\x3eexecute\x3c\/code\x3e method we used in the previous post.\x3c\/p\x3e",
+    "description" : "\x3cp\x3eIn a \x3ca href=\x22\/posts\/custom-notification-action-types-in-zenoss.html\x22\x3eprevious post\x3c\/a\x3e I talked about how we could create custom notifications actions in Zenoss. Like a \x3cem\x3eSMS\x3c\/em\x3e notification, for example. In that post we required a valid cellphone number using a text field in the notification\x27s content pane, as shown below:\x3c\/p\x3e\n\x3cp\x3e\x3cimg src=\x22\/posts\/custom-notification-action-types-in-zenoss\/sms_action.jpg\x22 alt=\x22Notification Content\x22\x3e\x3c\/p\x3e\n\x3cp\x3eIn this post I want to change and improve this by using \x3cem\x3e\x3cstrong\x3esubscribers\x3c\/strong\x3e\x3c\/em\x3e functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the \x3cem\x3ePager\x3c\/em\x3e field instead.\x3c\/p\x3e\n\x3ch2 id=\x22the-pager-action\x22\x3eThe Pager Action\x3c\/h2\x3e\n\x3cp\x3eUsing Zenoss Core 4\x27s pager action\x27s \x3ca href=\x22https:\/\/github.com\/aalvrz\/zenoss-core-425\/blob\/master\/usr\/local\/zenoss\/Products\/ZenModel\/actions.py#L449\x22\x3esource code\x3c\/a\x3e as reference is a good starting point, since we are going to use the pager field for SMS.\x3c\/p\x3e\n\x3cp\x3eWe can see that this action class implements a \x3ccode\x3eexecuteOnTarget\x3c\/code\x3e method instead of a \x3ccode\x3eexecute\x3c\/code\x3e method we used in the previous post.\x3c\/p\x3e",
     "inLanguage" : "en-US",
     "author" : "",
     "creator" : "",
@@ -109,7 +109,7 @@ if (!doNotTrack) {
 
       
         <li>
-          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+          <a href="https://github.com/aalvrz" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
         </li>
       
 
@@ -139,7 +139,7 @@ if (!doNotTrack) {
 <p><img src="https://aalvarez.me/posts/custom-notification-action-types-in-zenoss/sms_action.jpg" alt="Notification Content"></p>
 <p>In this post I want to change and improve this by using <em><strong>subscribers</strong></em> functionality instead. Similar to the e-mail (or pager) notification, which sends an e-mail to all the subscribed users using their e-mail address configured in their user settings. Since there is no SMS mobile number that we can configure in the user settings, we will have to use the <em>Pager</em> field instead.</p>
 <h2 id="the-pager-action">The Pager Action</h2>
-<p>Using Zenoss Core 4's pager action's <a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
+<p>Using Zenoss Core 4's pager action's <a href="https://github.com/aalvrz/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">source code</a> as reference is a good starting point, since we are going to use the pager field for SMS.</p>
 <p>We can see that this action class implements a <code>executeOnTarget</code> method instead of a <code>execute</code> method we used in the previous post.</p>
 <p>This method is very similar to <code>execute</code>, but it receives an additional <code>target</code> parameter:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">PageAction</span><span style="color:#111">(</span><span style="color:#111">IActionBase</span><span style="color:#111">,</span> <span style="color:#111">TargetableAction</span><span style="color:#111">)</span><span style="color:#111">:</span>
@@ -170,7 +170,7 @@ if (!doNotTrack) {
 <p>With all this we should be good to go. If you create some users and assign a valid mobile number in their <em>pager</em> field, add the users to the notification as subscribers, then the notification should successfully pick up the mobile number.</p>
 <h2 id="references">References</h2>
 <ol>
-<li><a href="https://github.com/BigChief45/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">Zenoss Core 4.2.5 Pager Action</a></li>
+<li><a href="https://github.com/aalvrz/zenoss-core-425/blob/master/usr/local/zenoss/Products/ZenModel/actions.py#L449">Zenoss Core 4.2.5 Pager Action</a></li>
 </ol>
 </div>
 

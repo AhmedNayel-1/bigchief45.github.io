@@ -109,7 +109,7 @@ if (!doNotTrack) {
 
       
         <li>
-          <a href="https://github.com/BigChief45" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
+          <a href="https://github.com/aalvrz" target="_blank"><i class="fa fa-github fa-2x" title="Github"></i></a>
         </li>
       
 
@@ -156,9 +156,9 @@ juju switch local
 <pre><code>juju deploy wordpress
 </code></pre><p>However, we want to focus on deploying our custom services from our custom local charms. Let's create a directory for our local charms:</p>
 <pre><code>mkdir -p /home/$USER/charms/trusty/
-</code></pre><p>We will place the Juju charm directories inside that directory. For example, I can clone my <a href="https://github.com/BigChief45/zenoss-charm">Zenoss Core 4 charm</a> into that directory and then Zenoss Core:</p>
+</code></pre><p>We will place the Juju charm directories inside that directory. For example, I can clone my <a href="https://github.com/aalvrz/zenoss-charm">Zenoss Core 4 charm</a> into that directory and then Zenoss Core:</p>
 <pre><code>cd $/home/$USER/charms/trusty/
-git clone https://github.com/BigChief45/zenoss-charm.git
+git clone https://github.com/aalvrz/zenoss-charm.git
 
 juju deploy --repository=/home/$USER/charms/ local:trusty/zenoss
 </code></pre><p>Juju will fetch for the charm under that directory and begin deploying the service. I can then monitor the status of the deployment using:</p>
